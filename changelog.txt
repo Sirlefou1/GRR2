@@ -1,0 +1,487 @@
+|==================|
+|= CHANGELOG GRR  =|
+|==================|
+
+
+GRR-1.9.7
+===================
+
+Corrections de bugs et améliorations
+------------------------------------
+- BUG : correction d'une faille de sécurité. La faille nécessitait d'avoir un compte avec les droits "Usager" (injection de code HTML et JavaScript sur les champs nom et prénom).
+- Dans admin_save_mysql.php remplacement de la fonction addslashes() par mysql_real_escape_string() pour éviter des erreurs lors de la restauration d'un fichier sql
+- BUG : correction d'un bug sur le "header information" dans report.php
+- BUG : erreur de niveau 'notice' sur session.inc.php en raison d'un offset manquant sur un tableau de propriétés ('etat' et 'default_site').
+- SSO : lorsque l'admin a empêcher l'accès à la page de login (en dirigeant l'utilisateur vers une adresse spécifiée) il est possible d'accéder à la page de login par une adresse du type http://.../grr/login.php?local
+- Ajout du numéro de version de Grr dans le fichier de sauvegarde.
+- BUG : Message de modération émis à tord lorsqu'un administrateur modifie une ressource faite par un usager et déjà modérée.
+- Ajout de l'affichage des types de réservation dans month.php
+- BUG sur la limitation du nombre de ressources par domaine lorsqu'on sélectionne plusieurs ressources pour un même créneau lors de la réservation (ctrl + clic).
+- Possibilité avec la variable $id_room_autorise de permettre à un simple visiteur de réserver plusieurs ressources (et non pas une seule comme auparavant)
+- BUG : dans Config générale -> Accès et droits -> Accès à l'outil de recherche/rapport/stat, le choix "administrateur seul" n'était pas pris en compte après validation.
+- Remplacement du module FCKeditor par CKeditor
+- BUG d'affichage dans certaines pages dans le cas où $unicode_encoding = 1;
+- BUG d'affichage des mini-calendrier dans le cas où un jour de la semaine n'est pas affiché, la première ligne d'entête du tableau est mal formatée.
+- BUG dans edit_entry lorqu'une réservation déjà modérée est copiée (un mail était envoyé à l'administrateur)
+- BUG dans admin_room.php : erreur de syntaxe (admin_edit_room?id_area... au lieu de admin_edit_room.php?id_area..)
+- Amélioration de la fonction toTimeString() qui permet de formater les durées en années/semaines/jours/heures/minutes/secondes (merci à David M - E-Concept Applications).
+- Amélioration du formulaire de réservation dans le cas d'une modification d'une réservation effectuée au nom d'un utilisateur inactif dans la base ou supprimé de la base.
+- Amélioration de la page de contact : ajout d'un champ obligatoire pour le sujet du mail envoyé.
+- Possibilité de dupliquer une ressource.
+- Possibilité de dupliquer un domaine.
+- Amélioration de l'ergonomie de la page d'administration "Gestion des ressources" (merci à Jean-Eudes Lherbier)
+- Amélioration de l'ergonomie de la page d'administration "Administration des domaines" (merci à Jean-Eudes Lherbier)
+- BUG : On ne pouvait affecter un utilisateur qu'à une seule domaine restreint.
+- BUG : dans certaine configuration, l'utilisateur n'avait pas accès à son compte (script my_account.php)
+- BUG : outils de Recherche - Rapports - Stats -> les liens du tableau des résultats permettant de trier les résultats ne fonctionnaient pas.
+- BUG : Dans certaines configurations, l'admin ne pouvait pas modifier des réservations effectuées par un utilisateur au nom d'un autre utilisateur.
+- BUG : dans la fonctionnalité "Possibilité de créer des utilisateur à authentification extérieure" (une coquille dans le script admin_user_modify.php
+- BUG : La fonctionnalité permettant de rendre périodique une réservation ponctuelle provoque la suppression de toutes les réservations du domaine
+- Bug dans le calcul de la durée par défaut d'une réservation dans le formulaire de réservation.
+- SSO CAS : correction d'un bug lié à la fonction "phpCAS::getAttribute()" qui n'est pas implémentée dans "CAS/CAS.php".
+- BUG : un utilisateur ne pouvait être affecté en tant qu'administrateur à plusieurs domaine.
+
+- Possibilité de copier une réservation (merci à Jean-Charles Prin)
+- Possibilité, sous certaines conditions, de changer l'affectation d'une ressource à un domaine.
+- SSO CAS : lorsqu'un utilisateur n'est pas authentifié, possibilité de le rediriger vers la page d'accueil de GRR plutôt que vers le portail d'authentification CAS
+- Les administrateurs généraux de GRR peuvent également être administrateur de domaines (ceci afin de gérer plus souplement l'envoi de mails automatiques).
+- Possibilité de créer des utilisateur à authentification extérieure (sans attendre qu'il se connecte une première fois dans GRR pour être insérer dans la base).
+- Nouveau paramètre permettant de définir qui peut utiliser les types de réservation selon leur rôle (administrateur, gestionnaire, etc.). Ceci permet d'avoir un type, par exemple "En réparation", mais qui n'est disponible au moment de la réservation que par le gestionnaire.
+- Nouveau paramètre permettant d'afficher (ou non) la description complète d'une ressource dans les plannings Mois et semaines. Peut permettre par exemple de donner des consignes visibles par les utilisateurs avant leur réservation.
+- SSO CAS : amélioration de la récupération dans GRR d'attributs des utilisateurs depuis l’annuaire LDAP via le serveur CAS
+- Authentification HTTP ; possibilité de récupérer les noms, prénoms et email d'un utilisateur via le tableau $_SERVER
+- SSO : nouveau paramètres permettant d'empêcher l'accès à la page de login. Permet de forcer tous les visiteurs à s'authentifier via le SSO?
+- SSO/LDAP : nouvelle fonctionnalité permettant de purger les utilisateurs externes et les réservations associées.
+- Modification de deux requêtes MySql dans admin_access_area.php et functions.inc.php afin de les rendre compatibles avec des version MySql inférieures à 4.1
+- Modification de la taille des champs beneficiaire et create_by dans les tables grr_entry, grr_entry, grr_repeat, grr_entry_moderate
+- Bug quand la directive get_magic_quotes_gpc est activée : mots de passe stockés avec caractères d'échappements
+- Bug dans le script admin_config_imap.php : grr_setting n'avait pas été remplacé par ".TABLE_PREFIX."_setting
+- Bug dans la gestion des jours à afficher sur les différents plannings : il était possible de réserver en dehors de ces jours.
+- Bug dans la gestion des jours à afficher sur le planning "jour" : dans le cas où un seul jour était à afficher, les liens "Voir le jour suivant" et "Voir le jour précédent" étaient erronés.
+- Bug dans edit_entry avec Firefox (v. 3.5.5) : après un clic sur le lien d'affichage des options de périodicité, l'option cochée par défaut changeait à chaque actualisation du navigateur.
+- Bug dans la suppression des réservations avec périodicité : quand on modifiait une périodicité dans qui commencait dans le passé, l'impossibilité de réserver dans la passé pour un utilisateur normal entrainait la suppression des réservations passées.
+- Bug dans le calcul des numéros de semaine qui allait au-dela de 54.
+- Correction d'un bug de notification dans le cas ou la variable $_SERVER['REQUEST_URI'] n'est pas définie.
+- Bug dans le calcul de la page d'accueil après connexion?
+- Bug dans le script edit_entry.php concernant la réservation "au nom de".
+- Bug dans l'envoi de mails automatiques : dans certains cas, un mail de confirmation était envoyé à un utilisateur modifiant sa propre réservation.
+- Bug dans le script edit_entry.php : le champ "brève description" n'était pas mis à jour quand on sélectionnait un utilisateur dans la liste déroulante "réservation au nom de" (cas où l'option "La rubrique brève description contient, par défaut, le nom de l'usager" est sélectionnée dans "Configuration générale"->"Contenu / Apparence")
+- Bug dans "Configuration générale"->"Contenu / Apparence" : il était impossible de choisir un logo portant le nom "logo.jpg", "logo.png" ou "logo.gif".
+
+GRR-1.9.6
+===================
+
+Corrections de bugs et améliorations
+------------------------------------
+- Cas d'une ressource modérée : les mails automatiques n'étaient pas envoyés aux administrateur d'un site
+- Authentification IMAP/POP (contribution de Damien LARRIEU)
+- Bug GRR-1.9.6RC1 : sur la fenêtre popup "Fiche de présentation d'une ressource" -> Message d'erreur "Erreur Chargement settings".
+- L'accès d'un utilisateur à « Gérer mon compte » était supprimé quand l'administrateur retirait le droit aux utilisateurs de modifier les nom et prenom et le mot de passe.
+- Plannings jours et semaines : pour plus de clarté, dans les colonnes "heure" les plages horaires apparaissent maintenant sous la forme "heure de début - heure de fin".
+- Ergonomie : meilleure lisibilité de la date du jour et du mois en cours dans les mini-calendriers
+- Ergonomie : amélioration de la navigation entre les différents plannings (boutons "aujourd'hui", "jour", "semaine" et "mois" dans l'entête)
+- Ergonomie : ajout de popups  de confirmation dans les pages de configuration admin_configX.php.
+- Ergonomie : modification de la feuille de style admin_grr.css pour éviter la disparition momentanée des liens au passage de la souris
+- correction du code html dans month.php et month_all.php lorsque le mois débute le premier jours de la semaine.
+- correction du code html dans edit_entry, edit_entry_champs_add et edit_entry_types.php.
+- Bug : dans admin_config_calend2.php, les noms des jours de la semaine ne s'affichaient pas
+- Bug d'affichage dans day.php sur le titre.
+- Formulaire de saisie des domaines et ressources (admin_edit_room) : amélioration de la mise en page, correction de bug sur les créneaux, correction d'un bug sur le bouton Retour.
+(Merci à Sylvain Payeur pour ces 9 premiers points)
+- Ergonomie : suppression des liens d'édition et de suppression d'un réservation touchée par la limitation de temps en-deçà duquel un utilisateur ne peut pas réserver ou modifier une réservation.
+- Ergonomie : ajout d'un lien vers la fiche de présentation d'une ressource sur la page month.php
+- Optimisation de la fonction plages_libre_semaine_ressource afin d'améliorer le temps d'affichage du planning week_all.php
+- Suppression d'une ressource ou d'un domaine : certaines tables de jointure n'étaient pas correctement nettoyées.
+- Changement des dates de début et fin de réservation : la table grr_calendar n'était pas correctement nettoyée.
+- Dans plusieurs pages d'administration, les identifiants d'utilisateurs comportant un espace n'étaient pas correctement enregistrés.
+- Possibilité de créer des identifiants comportant les caractères suivants : "espace", "-" et "@"
+- Amélioration de la fonctionnalité "ressources empruntées".
+- ldap : correction d'un bug sur le mode de modification du fichier config_ldap.inc.php dans le script admin_config_ldap.php
+- ldap : correction d'un bug sur le stockage du mot de passe dans le fichier config_ldap.inc.php (utilisation des simples quotes au lieu des guillements doubles).
+- l'option "ressource" : "Ne pas permettre aux utilisateurs (hormis les gestionnaires et les administrateurs) de modifier ou de supprimer leurs propres réservations" était buggué depuis la version 195.
+- Les résultats de modération ne sont plus visible sur la fiche de réservation par les simples visiteurs.
+- Cas où les créneaux sont basés mais sur des intitulés pré-définis : correction d'un bug de calcul des créneaux/jours (fonction "toPeriodString()").
+- Recherche - Rapports - Stats. (script report.php) : correction d'un bug d'affichage de ("Notice: Undefined index: login... ") lorsque GRR est configuré de façon à ce que les utilisateurs n’aient pas besoin de se connecter pour effectuer une recherche.
+- Lors de l'importation d'utilisateurs par fichier CSV, le champ "password" n'était pas vide bien que le type d'authentification soit "ext".
+- Dans "Administration"->"Configuration générale"->"onglet Interactivité", l'option "Mettre les destinataires en copie cachée" était mal enregistrée.
+- Correction d'un bug sur la gestion des thèmes sur la page "Recherche - Rapports - Stats" (report.php)
+- Correction d'un bug qui autorisait les utilisateurs à réserver en dehors des créneaux fixés par l'administrateur.
+- Correction d'un bug dans "Administration" -> "Calendrier hors réservation" qui avait pour conséquence dans certaines circonstances la suppression de réservations sans rapport avec les jours cochés.
+- Correction d'un bug dans week_all.php : une réservation effectuée un dimanche sur le dernier créneau n'apparaissait pas sur le planning.
+- Correction d'un bug : un administrateur de site peut créer ses domaines mais ne peut les supprimer!
+- Remplacement des fonctions ereg() et ereg_replace() par preg_match() et preg_replace().
+- Correction d'un bug dans la configuration par adresse IP afin de définir un domaine par défaut.
+- Dans le cas où une réservation était effectuée au nom d'une personne extérieure tous les utilisateurs pouvaient modifier la réservation.
+- Les réservations effectuées au nom d'un autre utilisateur n'étaient pas modifiables par les propriétaires.
+- Quand une ressource réservée était marquée empruntée, si la réservation était modifiée l'attribut 'emprunté' etait effacé.
+- Description complète d'une ressource : la lettre d est remplacée par "...".
+- "Réservation à confirmer" : la suppression automatique par le script verif_auto_grr.php n'envoyait pas de mail à l'emprunteur.
+- "Réservation à confirmer" : Bug dans le script verif_auto_grr.php qui faisait apparaître le mot de passe.
+- Bug d'affichage sur le planning journée (day.php) dans le cas où toutes les ressources d'un domaine sont accessibles uniquement par des utilisateurs connectés.
+- Bug d'affichage sur le planning semaines toutes ressources (weel_all.php) dans le cas où une ressource est indisponible : cela n'était pas signalé comme tel.
+- Bug sur un test de validité sur l'identifiant dans session.inc.php
+
+
+Nouvelles fonctionnalités
+-------------------------
+- SSO CAS : Modifications liées à la prise en compte du Single Sign-Out (voir notes-SSO-CAS.txt)
+- Ajout de deux boutons "définir par défaut" dans le formulaire de réservation permettant de fixer un bénéficiaire par défaut et un type par défaut
+- SSO : lorsque la prise en charge par un SSO est activée, nouveau paramètre permettant de supprimer le lien "Se déconnecter" dans le bandeau supérieur les personnes authentifiées à GRR par SSO.
+- SSO : lorsque la prise en charge par un SSO est activée, nouveau paramètre permettant de spécifier une adresse internet (http://...) afin de faire apparaître, dans le bandeau supérieur, un lien "Portail d'accueil" pointant vers cette adresse.
+- Nouvelle fonctionnalité "multi-sites" permettant de définir des "sites", qui sont des unités qui regroupent des domaines.
+- Possibilité de définir des "administrateurs de sites".
+- Possibilité de définir un préfixe pour les noms des tables de la base de données (indispensable lorsque l'on souhaite installer plusieurs GRR dans la même base de données).
+- Amélioration de la conformité du code HTML.
+- Nouveau paramètre : nombre maximal de réservations par utilisateur, pour toutes les ressources d'un domaine.
+- Nouvelle fonction de restauration de la base mysql (Sylvain Payeur)
+- Possibilité d'utiliser le BBcode pour mettre en forme les champs "brève description", "description complète" et les champs additionnels.
+- Possibilité de configuration des liens email : utiliser un formulaire d'envoi de mails ou bien utiliser les balises "mailto".
+- Possibilité d'indiquer plusieurs adresses séparées par des points-virgules dans l'adresse email du gestionnaire du site et dans l'adresse email email du support technique.
+- Quand une ressource n'est pas restituée, le symbole "main rouge" apparait maintenant également sur la ressource, avec un lien vers la réservation en cause.
+- Nouveau paramètre permettant de fixer la hauteur maximale de la liste déroulante des ressources dans le formulaire de réservation.
+- Ajout de liens permettant de nouvelles réservation dans le planning mois (month.php).
+- Ajout d'un thème "terre de Sienne" (Sylvain Payeur)
+- Configuration de GRR : ajout d'un paramètre pour l'autorisation de la visualisation de la fiche détaillée de réservation d'une ressources (view_entry.php)
+- Configuration de GRR : ajout d'un paramètre pour l'autorisation de la visualisation des adresses email sur les fiches détaillées de réservation d'une ressources (view_entry.php)
+- Configuration de GRR : possibilité de définir quel type d'utilisateur (visiteur, utilisateur, gestionnaire, ...) a accès ou non à chaque ressource.
+- Configuration de GRR : possibilité d'insérer un logo dans le coin gauche du bandeau supérieur.
+- Configuration de GRR : possibilité de définir le nombre de calendriers à afficher sur les plannings de réservation.
+- Après identification, l'utilisateur est redirigé vers la page à partir de laquelle il s'est connecté ou bien il a été déconnecté.
+- SSO CAS : Récupération des information (nom, prénom, email) dans l'annuaire LDAP, lors de l'importation du profil à la première connexion à GRR. (contribution de Maza benjamin).
+- Possibilité d'Ajouter simultanément plusieurs utilisateurs à la liste des personnes ayant accès aux domaines restreints (script admin_access_area.php)
+- Possibilité d'attribuer un domaine par défaut pour une adresse IP ou une plage d’adresse IP (fonctionnalité à activer dans config.inc.php).
+- Possibilité de définir un champ additionnel numérique
+- Possibilité de personnaliser les fichiers de langue par domaine.
+- Possibilité d'exécuter automatiquement les sauvegardes (tache "cron")
+- LDAP : mise à jour des infos LDAP même si le compte est déjà créé dans la base locale.
+
+GRR-1.9.5.c
+===================
+Corrections de bugs
+-------------------
+- Affichage des planning : les guillemets ne s'affichaient pas correctement.
+- LDAP : Lors d'une connexion LDAP avec l'option UTF-8 activée, le mot de passe n'était pas correctement converti.
+- Correction d'un bug dans la réservation par blocs sur le type de réservation
+- Correction d'un bug dans la réservation par blocs : les réservations restaient à confirmer avant le 01 janvier 1970 et n'étaient donc pas définitives.
+- Correction d'un bug d'affichage dans view_entry.php.
+- Correction d'un bug : mauvais enregistrement des données quand on définit un nouveau domaine basés sur des intitulés prédéfinis.
+- Le lien "format imprimable" du script report.php ne fonctionnait pas.
+- Correction d'un bug dans le script edit_entry.php : l'encodage des caractères n'est pas correct dans la liste déroulante des types quand la variable unicode_encoding est positionnée à 1 dans le fichier config.inc.php.
+- Correction d'un bug dans le script edit_entry.php : l'encodage des caractères n'est pas correct dans les champs additionnels quand la variable unicode_encoding est positionnée à 1 dans le fichier config.inc.php.
+
+Améliorations
+------------------------------------
+- Ajout de boutons Journée, semaine et mois dans l'entête
+- Fonctionnalité SE3 non documentée (Palissy - Saintes - philippe.duval@ac-poitiers.fr) : voir le fichier session.inc.php
+- Importation ldap : Forcer les majuscules pour le début des noms et prénoms
+
+GRR-1.9.5
+==============================
+Corrections de bugs et améliorations
+------------------------------------
+- Champs additionnels : possibilité de spécifier une valeur par défaut dans le cas des listes à option
+- Correction d'un bug d'affichage sur le planning "plusieurs mois" (year.php), lorsque qu'une réservation est à cheval sur plusieurs mois, une partie de la réservation ne s'affiche pas.
+- Correction d'un mauvais affichage des caractères accentuées des champs additionnels dans le formulaire de réservation.
+- Correction d'un mauvais affichage de certains caractères spéciaux des champs additionnels dans les différentes vues (jours, semaines, ...)
+- Affichage semaine - toutes les ressources : si une ressource était reservée pour la journée entiere, il n'y avait plus possibilité de reserver ce jour pour les autres ressources.
+- Affichage des personnes connectés dans l'entête pour les administrateurs
+- Ajout de l'affichage des "jours cycle" sur les différentes vues
+- Ajout d'une option d'affichage automatique du nom du réservant dans la description d'une réservation (Sylvain Payeur)
+- correction de "petits" bugs d'affichage sur plusieurs pages
+- Conversion des images PNG pour un affichage avec la transparence dans Internet explorer
+- Ajustement du thème "volcan"
+- meilleure gestion du retour au formulaire de réservation en cas d'erreur rencontrée après validation
+(Merci à Sylvain Payeur pour les 6 derniers points)
+- Correction d'un bug sur la fonctionnalité "types d'utilisateurs ayant le droit de faire des réservations au nom d'autres utilisateurs".
+- Nouveau paramètre pour une ressource donnée permettant d'activer ou non la fonctionnalité "ressource empruntée/restituée".
+- Champs additionnels : possibilité de spécifier des champs additionnels dont le contenu est confidentiel.
+- Utilisateurs : nouveau paramètre permettant de spécifier les types d'utilisateurs autorisés à modifier leur email.
+- Mails automatiques : nouveau paramètre permettant l'envoi systématique d'une mail à un utilisateur qui réserve une ressource, modifie ou bien supprime une réservation pour lui-même (dont il est bénéficiaire).
+
+GRR-1.9.5 RC1
+==============================
+Corrections de bugs
+-------------------
+- Bug : possibilité d'exécuter du code javascript en utilisant le champ description complète.
+- Dans le cas où on choisit pour une ressource, l'affichage "date/heure de début de réservation et date/heure de fin de réservation", l'heure de fin (pour une nouvelle réservation) n'est pas proposée par défaut en respectant le réglage "Durée par défaut d'une réservation".
+- Dans le cas où un administrateur utilise l'interface de admin_user_modify.php (plutôt que cette de my_account.php) pour modifier ses paramètres (nom, prénom ...) il est enregistré avec le statut "inactif".
+- Dans le cas où une journée "hors réservation" était strictement incluse dans une réservation de plusieurs jours, la réservation n'était pas possible.
+- Lorsque un gestionnaire d'une ressource modérée fait une réservation pour un ressource qu'il gère, il est obligé de modérer sa propre demande.
+- Dans le cas où les créneaux sont basés mais sur des intitulés pré-définis, le "Nombre max. de réservations par utilisateur" pour une ressource donnée, ne prend pas en compte les ressource du jour même.
+
+Nouvelles fonctionnalités
+-------------------------
+- Nouveaux paramètres : email et nom de l'expéditeur des mails automatiques
+- Nouveau thème "toulouse" (merci à Laurent CLOAREC - Université Toulouse 1)
+
+GRR-1.9.5 RC1
+==============================
+Nouvelles fonctionnalités
+-------------------------
+- Nouveau paramètre permettant de rendre facultatif ou non le remplissage du champ "brève description".
+- Nouveau paramètre permettant d'afficher ou non la brève description de la réservation dans les vues jours, semaine et mois.
+- Paramétrage du lien aide figurant sur le bandeau supérieur.
+- Distinction nouvelle entre propriétaire d'une réservation et bénéficiaire.
+- Possibilité de réservation au nom d'un autre utilisateur (ou d'une personne extérieure).
+- Possibilité de notifier par email un retard en cas de non restitution d'une ressource empruntée.
+- Possibilité d'afficher un champ additionnel dans le calendrier (affichage par journée, semaine ou mois).
+- Possibilité d'afficher un champ additionnel dans les mails automatiques.
+- Adapter les fichiers de langue. Afin de préserver la compatibilité avec les futures versions de GRR, vous avez la possibilité de substituer des messages ou libellés officiels par vos propres textes, sans pour autant modifier les fichiers fournis avec GRR.
+- Nouveau paramètre : nombre maximal de réservations par utilisateur toutes ressources confondues.
+- Utilisation de la librairie PhpMailer pour l'envoi des mails automatiques.
+- Nouveau paramètre pour un domaine donné : durée maximale d'un réservation (contribution de l'entreprise DCNS : http://www.dcns.fr)
+- Nouveau paramètre pour un domaine donné : durée par défaut d'une réservation.
+- Nouvelle vue permettant de voir les réservations sur plusieurs mois pour toutes les ressources d'un domaine.
+- Nouveau module de configuration "jours cycle" (voir documentation).
+- Paramétrage en ligne du paramètre "$verif_reservation_auto" définie auparavant dans le fichier include/config.inc.php (la variable $verif_reservation_auto définie auparavant dans le fichier include/config.inc.php est donc maintenant inutile.
+- Ldap : amélioration du support LDAP (mode "diagnostic", paramétrage de l'attribut utilisé pour la recherche dans l'annuaire, ...).
+- Ldap : nouveau paramètre permettant de spécifier si les données (noms, prénom...) sont stockées (ou non) en UTF-8 dans l'annuaire.
+- SSO : prise en charge du SSO LASSO (contribution de Cliss XXI (http://www.cliss21.com/).
+
+Corrections de bugs
+-------------------
+- une personne non connectée n'avait pas accès à l'outil de recherche quand l'option suivante était sélectionnée : "N'importe qui allant sur le site peut accéder à l'outil de recherche,même s'il n'est pas connecté"
+- Correction d'un bug permettant à un utilisateur de supprimer une de ses réservations passées.
+- Bug d’affichage (UTF8) sur la page de Recherche - Rapports - Statistiques (colonne "Dernière mise à jour").
+- Bug d'affichage : sur le planning "journée", deux réservations à cheval sur le même créneaux provoquait un bug d'affichage.
+- Bug d'affichage des réservation sur le planning "semaine - toutes les ressources d'un domaine", dans le cas où plusieurs ressources portaient le même nom dans un domaine
+- Bug d'affichage : sur le planning "semaine - toutes les ressources d'un domaine", la possibilité existait d'enregistrer une réservation, même si tous les créneaux de la journée étaient réservés.
+- Bug d'affichage : sur la page d'affichage des réservations par mois (month.php) les réservation prenaient la couleur du type de la première réservation de la cellule.
+- Bug d'affichage : lorsqu'un utilisateur n'est pas autorisé à modifier ses nom/prénom/mail, un message "les champs marqués d'un * sont obligatoires" est affiché.
+- Les administrateurs de domaines restreints n'avait pas accès à la rubrique "Mails automatiques" dans l'administration.
+- Résolution d'un bug de déconnexion intempestive qui touchait Internet Explorer avec certaines installations de GRR (Modification des champs USER_AGENT et REFERER de la table ".TABLE_PREFIX."_log en leur donnant une taille de 255 caractères)
+- Nouvelle numérotation des semaines qui respecte la norme ISO-8601.
+- Réservation avec modération : correction d'un bug lorsqu'un modérateur accepte une réservation et toutes les réservations liées par périodicité.
+- Un mot de passe comportant une apostrophe renvoie une erreur lors de la tentative de connexion.
+- Configuration générale -> Contenu / Apparence : la fonction "Affichage de la description complète de la réservation dans les vues semaine et mois" ne fonctionne que partiellement.
+- Cas d'un fonctionnement dans un environnement LCS : dans le menu "Utilisateurs", la mise à jour ou le Nettoyage de la base locale ne fonctionne pas.
+- Cas d'un fonctionnement dans un environnement LCS : correction d'un bug lorsque que l'admin faisait une mise à jour de de Grr sans avoir au préalable ouvert de session.GRR-1.9.4
+- Bug sur week.php : lors d'un changement de mois, certains liens "journée" ne pointaient pas sur le bon mois.
+
+GRR-1.9.4
+==============================
+
+==============================
+Nouvelles fonctionnalités
+-------------------------
+- Format imprimable : désormais, les petites croix vertes ou rouges au milieu des cases n'apparaissent plus dans le format imprimable.
+- Cas d'une authentification SSO CAS : nouveau paramètre $Url_CAS_setFixedServiceURL utilisé dans la méthode phpCAS::setFixedServiceURL()
+- Authentification HTTP (contribution de Jean-Yves Migeon)
+- Paramètrage en ligne d'un grand nombre de variables définies auparavant dans le fichier include/config.inc.php. Les varables suivantes définies auparavant dans le fichier include/config.inc.php sont donc maintenant inutiles : $authentification_obli, $default_report_days, $pass_leng, $javascript_info_disabled, $display_full_description=1, $display_info_bulle, $default_report_days, $allow_search_for_not_connected, $allow_user_delete_after_beginning.
+- Transfert des variables suivantes du fichier include/config.inc.php vers le fichier include/mis.inc.php : $resolution, $morningstarts, $eveningends, $eveningends_minutes, $weekstarts, $twentyfourhour_format.
+- Ajout d'un système de modération des réservations (http://grr.mutualibre.org/documentation/?id=14) (Nicolas Hoizey  et Olivier Mansour de Clever Age : http://www.clever-age.com)
+- Possibilité de définir par domaine un type par défaut lors d'une nouvelle réservation.
+- Encodage des adresses emails sur quelques pages de GRR pour éviter que celles-ci ne soient récupérées par les robots-spameurs.
+- Amélioration du code maintenant compatible "XHTML 1.0 Transitional".
+- Amélioration de la procédure de clôture de session.
+- Amélioration de la fonction d'importation dans GRR d'un fichier d'utilisateurs au format CSV.
+- Amélioration de la procédure permettant de réserver ou de libérer très rapidement des journées entières simultanément sur plusieurs ressources de plusieurs domaines et selon un calendrier : désormais, il est possible de spécifier des créneaux plutôt que journées entières.
+- Amélioration du système d'aide en ligne et de la documentation.
+- Amélioration de l'outil de recherche/rapports/stats, notamment possibilité de recherche sur les champs additionnels.
+- Possibilité pour l'administrateur général de spécifier un nom de réservant différent du sien lors d'une nouvelle réservation ou bien de modifier le nom d'un réservant d'une réservation existante.
+- Utilisateurs : ajout d'un nouveau statut de "gestionnaire des utilisateurs" pouvant ajouter/modifier/supprimer des utilisateurs,
+- Utilisateurs : nouveau paramètre permettant de spécifier les types d'utilisateurs autorisés à modifier leur nom, prénom et email,
+- Utilisateurs : nouveau paramètre permettant de spécifier les types d'utilisateurs autorisés à modifier leur mot de passe,
+- Champs additionnels : possibilité de définir des champs additionnels de type "liste déroulante".
+- Champs additionnels : possibilité de spécifier des champs additionnels dont le remplissage est obligatoire lors de la réservation.
+- La page de modification de la configuration d'une ressource utilise désormais pour le champ "description complète" l'application FckEditor permettant une mise en forme "wysiwyg" de la page. (il est possible de désactiver cette fonctionnalité dans la page de configuration)
+- Ajout sur certaines pages d'administration d'un bouton "enregistrement et retour" en plus des boutons "enregistrer" et "retour".
+- Possibilité de paramétrer jusqu'à 100 types de réservation (au lieu de 26 précédemment).
+- Configuration de GRR : nouveau paramètre qui permet de spécifier si un gestionnaire d'une ressource a le droit ou non de modifier et supprimer les réservations autres que les siennes.
+- Configuration de GRR : ajout d'un paramètre pour l'autorisation de la visualisation de la fiche de description d'une ressource.
+- Configuration de GRR : nouveau paramètre permettant l'autorisation ou non de créer une nouvelle réservation dans un créneau entamé.
+- Fichier config.inc.php : nouveau paramètre $use_function_html_entity_decode afin de permettre une compatibilité avec les versions de PHP inférieures à 4.3.0. (fonction html_entity_decode() disponible uniquement à partir de la version 4.3.0 de php).
+- Ldap : Possibilité de définir un filtre supplémentaire de recherche.
+- Ldap : dans le cas particulier des serveur SE3 ou LCS, possibilité de préciser une liste de groupes LDAP autorisés à accéder à GRR.
+- Ldap : cas où GRR est intégré dans un SSO ou interfacé avec LDAP. Si un utilisateur est importé dans la base de GRR avec un nom vide ou un prénom vide et si les utilisateurs sont autorisés à modifier leurs informations personnelles, il y a redirection automatique à l'ouverture d'une session vers la page "gérer mon compte" afin que l'utilisateur renseigne les champs vides.
+- Ldap : correction du filtre ldap dans /include/session.inc.php afin d'améliorer la prise en charge à la fois par Active Directory et les autres annuaires LDAP
+- Modification de la gestion des popup indiquant que "les modifications ont été enregistrées".
+
+Corrections de bugs
+-------------------
+- correction d'un bug d'affichage dans certaines listes déroulantes (Choix des paramètres d'affichage par défaut) lorsque des noms de ressources comportent des guillemets doubles.
+- Correction d'un bug lié à une mauvaise interpretation des variables $_SERVER["SCRIPT_NAME"] ou $_SERVER['PHP_SELF'] dans certaine configurations (reverse proxy) entraînant des liens erronés sur certaines pages.
+- ldap : une erreur de frappe dans le fichier include/session.inc.php avait pour conséquence que systématiquement le port par défaut (389) était utilisé au lieu du port spécifié dans le fichier include/config_ldap.inc.php
+- Suppression d'un domaine : les champs additionnels n'étaient pas supprimés dans la base.
+- Outil de Recherche/Rapports/Stats : une erreur dans la requête SQL pouvait survenir quand on choisissait de trier par "type".
+- Outil de Recherche/Rapports/Stats : bug lorsque que deux ou plusieurs champs additionnels portaient le même nom dans des domaines différents.
+- Problème de non-affichage des images sur certaines configurations : modification du script admin_edit_room.php pour forcer un "chmod(0666)" sur les images téléchargées.
+- Mail automatique : dans le cas où il y avait plusieurs personnes à prévenir par mail automatiquement, les mails n'étaient pas envoyés !
+- Si un domaine était supprimé alors qu'il était défini comme domaine par défaut, cela pouvait engendrer des bugs d'affichage.
+- Si un utilisateur n'avait pas défini ses "Domaine et ressource par défaut", il était automatiquement dirigé vers l'affichage "journée" de toutes les ressources du premier domaine, même si un affichage par semaine avait été défini dans la configuration générale (attention, la correction de bug ne concerne que les utilisateurs nouvellement créés).
+- Lorsqu'un utilisateur changeait son nom ou son prénom dans "Gérer mon compte", l'en-tête ne reprenait les nouvelles valeurs qu'après reconnexion.
+- Champs additionnels : l'interface ne permet plus de specifier un champ additionnel de type Liste comme obligatoire.
+- Champs additionnels : Classement des champs additionnels selon l'ordre alphabétique (auparavant, ils n'étaient pas classés !).
+- bug dans le script d'importation d'un fichier d'utilisateurs au format CSV : faute de frappe "usager" au lieu de "utilisateur".
+- Cas d'une authentification LCS : correction d'un bug admin_user.php
+- Réservation avec modération : si un usager (avec les droit suffisants) modifiait une réservation en attente de modération, aucun email ne prévenait les administrateurs de ce changement.
+
+- Correction d'un bug d'affichage dans les vues semaines lié au changement d'heure été/hiver.
+- Dans le cas ou session.use_trans_sid = 1 dans PHP.ini et $authentification_obli = 0 dans GRR, correction d'un bug ancien qui rejetait la première tentative de connexion obligeant les utilisateur à faire une deuxième tentative.
+- Correction d'un bug mineur dans le message automatique envoyé par GRR lors d'une réservation avec périodicité : la date de début de réservation figurant dans le message était erronée et correspondait à la dernière réservation de la série.
+- Correction d'un bug mineur d'affichage de la fin de réservation dans view.php dans le cas où les créneaux de réservation sont basés sur des intitulés pré-définis.
+- Correction d'un bug dans la procédure de "Réservation journées entières" lorsque les  créneaux de réservation sont basés sur des intitulés pré-définis : seul le premier créneau était effectivement réservé.
+- Correction du bug de déconnexions après un login correct observé sur certaines configurations avec Internet Explorer
+- En gestion des utilisateurs, l'administrateur pouvait se rendre inactif, se coupant ainsi la branche sur laquelle il était assis !
+- La table grr_overload n'était pas sauvegardée lors d'une sauvegarde avec l'outil intégré de GRR.
+- Dans le cas d'une réservation avec périodicité, lorsque différents créneaux se chevauchaient, l'erreur n'était pas détectée. A présent, la réservation est impossible lorsque les créneaux de réservation et la périodicité sont tels que certains créneaux se chevauchent.
+- Dans les rapports sous forme CSV, certains caractères spéciaux apparaissaient sous la forme d'entités HTML peu lisibles.
+- Lorsque, pour un domaine, on désactivait les jours pour qu'ils n'apparaissent pas dans le calendrier : en phase de navigation (jour précédent, jour suivant) ils étaient visibles.
+
+GRR-1.9.3a
+==============================
+
+Nouvelles fonctionnalités
+-------------------------
+- Possibilité de paramétrage du fuseau horaire dans config.inc.php(imposer à GRR un fuseau horaire différent de celui du serveur)
+
+Corrections de bugs
+-------------------
+- Dans les messages automatiques, certains caractères spéciaux apparaissaient sous la forme d'entités HTML peu lisibles.
+- Correction d'un pb d'affichage apparu avec la version 1.9.3. si réservation sur plusieurs jours d'une ressource, l'affichage de la semaine pour cette ressource présente des bugs.
+- Correction d'un bug d'affichage : dans la rubrique "configuration générale" la liste des ressources était incomplète.
+- Correction d'un bug d'affichage dans la vue month_all2.php (toutes réservations par mois pour un domaine) : lors d'un changement d'heure été->hiver, le dernier jour d'octobre n'était pas afiché.
+- Changement de noms de plusieurs fonctions dans session.inc.php et mysql.inc.php (ajout d'un suffixe "grr_" pour rendre compatibles sur les serveurs LCS les plugins GRR et GEPI).
+
+GRR-1.9.3
+==============================
+
+Nouvelles fonctionnalités
+-------------------------
+- Nouvelle variable dans config.inc.php pour le paramétrage du fuseau horaire (permet d'mposer à GRR un fuseau horaire différent de celui du serveur).
+- Ajout d’un module d'authentification SSO pour LCS permettant l'intégration et la prise en charge de GRR sur une serveur LCS (http://lcs.ac-caen.fr/).
+- Ajout d'un système de surcharge des réservations afin de gérer des champs additionnels lors de la saisie ou de la consultation de réservations.
+- Possibilité, domaine par domaine, de n'afficher que les jours de son choix (par exemple, ne pas afficher les samedis et dimanches).
+- Possibilité de définir une url de déconnexion : lorsqu'un utilisateur se déconnecte, après fermeture de la session, le navigateur est redirigé vers la page de son choix.
+- Restructuration complète de l'arborescence du programme afin de mieux prendre en compte des améliorations (css, ...)
+- Dans les rapports, les noms et prénoms des utilisateurs ayant effectué des réservations apparaissent plutôt que l'identifiant.
+- Dans le tableau des vues "semaine"/"Toutes les ressources pour un domaine", des liens vers
+l'affichage "jour"/"Toutes les ressources" sont maintenant disponibles dans les en-têtes de jours,
+ainsi que vers l'affichage "semaine"/"une_ressource" dans les en-têtes de ressources.
+- Dans le tableau des vues "semaine"/"Toutes les ressources pour un domaine", des boutons dans les cellules permettent d'accéder directement à l'interface de réservation.
+- Amélioration de la lisibilité des plannings "journées" et "semaine"/"une ressource" : regroupement de toutes les cellules d'une même réservation en une seule.
+- Nouveau paramètre dans config.inc.php afin de permettre à un utilisateur non connecté (dans le cas ou $authentification_obli = 0) d'accéder à l'outil de recherche.
+- Nouveau paramètre dans config.inc.php afin de permettre une compatibilité avec les versions de PHP inférieures à 4.3.0. (cas de la fonction mysql_real_escape_string() disponible uniquement à partir de la version 4.3.0 de php).
+
+Corrections de bugs
+-------------------
+- Correction d'un bug dans l'affichage semaine d'une ressource : les réservations pouvaient déborder du tableau d'affichage dans certains cas.
+- Dans le cas des créneaux basés sur les intitulés (et non sur le temps), il était toujours possible de réserver avant midi et impossible de réserver au delà de midi. Le bug est corrigé : il est maintenant possible de modifier/réserver/supprimer tout au long d'une journée, même si l'heure est passée. Amélioration prévue dans une prochaine version en introduisant pour chaque créneau une heure limite de réservation.
+- Ajout d'un bouton "retour" lors d'une réservation erronée permettant de récupérer les données précédemment remplies sans avoir à tout ressaisir (ne fonctionne pas avec les champs complémentaires).
+- Correction de problème d'affichage (help_fr.php, help_it.php) lorsque la variable d'encodage UTF-8 est activée
+- Les styles des utilisateurs sont remis à zéro pour éviter le problème de CSS lors du passage de la 1.9.2 à la 1.9.3.
+- Désormais, lorsque l'on fixe la plage horaire de réservations d'une ressource, si l'heure saisie de fin est inférieure à l'heure de début, elle est changée pour être égale à l'heure de début.
+- Correction d'un bug lié au changement d'heure (passage à l'heure d'hiver) sur la page week.php (vue "semaine" des réservations d'une ressource) et sur la page week_all.php (vue "semaine" des réservations d'un domaine)
+- Correction du javascript permettant l'affichage des périodicités. Il fonctionne désormais avec IE5/6 sur XP SP1.
+- Correction d'un bug d'affichage : sur les  vues "mois", pour une ressource, il n'y avait pas le surlignage de couleur correspondant au type.
+- Correction d'un bug d'affichage : dans la rubrique "gérer mon compte" la liste des ressources était incomplète.
+- Correction d'un bug d'affichage : dans certaines conditions, certaines légendes de types de réservations apparaissaient en doublons en bas des plannings et dans la liste déroulante du formulaire de réservation.
+- Correction d'un bug d'affichage lors de l'envoi de message automatique après suppression automatique  d'une "réservation sous réserve" non confirmée.
+- Correction d'un bug dans l'édition des rapports (script report.php) constaté avec des versions anciennes de mysql
+- Correction d'un bug dans l'édition des fichiers CSV des rapports et des résumés : les critères "types" et "Créateur" n'étaient pas pris en compte.
+- Correction d'un bug : le changement de nom de la session PHP dans le fichier config.inc.php (SESSION_NAME) pour une autre valeur que GRR entraînait une impossibilité de se connecter.
+- Ajout des légendes des types de réservation en bas des vues semaines et mois (toutes les ressources).
+
+GRR-1.9.2 (09/01/2006)
+==============================
+
+Nouvelles fonctionnalités
+-------------------------
+- Possibilité de configurer un calendrier des jours fériés : les journées de ce calendrier ne sont donc pas touchées par les réservations avec ou sans périodicité.
+- Dans la page de modification des paramètres d'une ressource, l'administrateur a la possibilité d'activer la fonction « Poser des réservations sous réserve ». Dans le cas, la personne effectuant une réservation a la possibilité de remplir un champ supplémentaire : « Réservation à confirmer au plus tard le ... ». Si l'utilisateur ne confirme pas sa réservation avant la date indiquée, la réservation est automatiquement supprimée et un mail automatique est envoyé aux personnes concernées.
+- Possibilité d'afficher pour un utilisateur, la liste de tous les privilèges (administration de domaines, gestion de ressources, mails automatiques, accès aux domaines restreints)
+- Possibilité d'afficher pour un domaine ou une ressource, la liste de tous les utilisateurs ayant des privilèges sur celui-ci.
+- Ajout de la langue Espagnole (traduction complète à 95 %)
+- Compatibité UTF-8
+- Possibilité de définir, ressource par ressource, en mode modif/création d'une réservation, si l'utilisateur spécifie une durée de réservation ou bien les date et heure de fin de réservation.
+- Possibilité pour chaque ressource de ne pas permettre aux utilisateurs (hormis les gestionnaires et les administrateurs) de modifier ou de supprimer leurs propres réservations
+- Possibilité de trier le résultat des rapports de réservation par domaine, ressource, date de début de réservation, type, créateur (identifiant) ou brève description (script report.php)
+- Nouveau champ "type" dans le formulaire permettant d'éditer des rapports de réservation (report.php)
+- Possibilité de définir les différents types de réservation directement en ligne (et non plus "en dur" dans le fichier config.inc.php).
+- Possibilité de définir des types de réservation domaine par domaine.
+- Possibilité de définir le type de créneaux par domaine : les créneaux de réservation peuvent être soient basés sur le temps (comme anciennement), soient basés sur des intitulés pré-définis (nouveau !).
+- Pour une réservation effectuée sur une ressource d'un domaine, possibilité de déplacer la réservation vers une autre ressource.
+- Nouveau style "volcan" (merci à Cyrille Bicorne).
+- Nouveau style "argent" (merci à Frédéric Grégoire).
+- Déclenchement d'emails automatiques vers le créateur et vers l'utilisateur déclaré pour les mails auto, lorsqu’une nouvelle réservation entre en conflit avec des réservations existantes et que l'administrateur du domaine force la nouvelle réservation en supprimant les réservations qui entrent en conflit.
+- Titre des pages HTML affichées par les navigateurs : rajout derrière GRR du nom de l'organisme.
+- Nouveau paramètre de configuration dans config.inc.php ($display_info_bulle) du contenu des "info-bulles" des réservations, dans les vues journées, semaine et mois.
+- Nouveau paramètre de configuration dans config.inc.php ($correct_diff_time_local_serveur) qui permet de corriger une différence d'heure entre le serveur et les postes clients (voir explication dans config.inc.php)
+- Nouveau paramètre de configuration dans config.inc.php ($correct_heure_ete_hiver) qui permet de prendre en compte ou non, les changements d'heure été/hiver
+- Nouvelle taille maximale de la longueur d'un identifiant : 40 (au lieu de 20).
+- Sur les plannings d'affichage par mois de toutes les réservations d'un domaine, les réservation apparaissent en couleur, selon le type de la réservation.
+
+Corrections de bugs
+-------------------
+- On impose maintenant un fond blanc pour les pages au format imprimable (lorsque le navigateur est configuré pour imprimer les couleurs d'arrière-plan, le document est imprimé en couleur sur fond blanc pour économiser l'encre).
+- Ajout de la table grr_j_useradmin_area dans la liste des tables à sauvegarder, dans le fichier misc.inc.php.
+- Dans la page de réservation, quand on choisissait de réserver sur plusieurs jours et si on cochait la case "journée entière", seule une journée était réservée.
+- Dans la page de configuration ldap (admin_config_ldap.php), un bug sur des variables faussait un test de connexion à l'annuaire ldap.
+- Correction d'un bug pouvant entrainer un denis de service : envoyer autre chose qu'un nombre dans un des champs year, month, day, sur les pages d'affichage des plannings provoquait une
+boucle infinie dans le code PHP.
+- Révision complète du code pour corriger des failles de type SQL Injection.
+- Correction d'un bug d'affichage dans les vues semaines quand 24*3600 n'était pas un multiple de la résolution choisie (en secondes).
+- Correction d'un bug sur la page week_all.php (vue "semaine" de toutes les réservations d'un domaine) : lorsque deux ressources portaient le même nom dans deux domaines différents, les réservations affichées étaient erronées.
+- Correction d'un bug sur la page « Gérer mon compte » : concernant la ressource à afficher par défaut, l'utilisateur voyait également s'afficher dans la liste déroulante, les domaines à accès restreint auxquels il n'avait pas accès.
+- Correction d'un bug lié au changement d'heure été/hiver sur la page week.php (vue "semaine" des réservations d'une ressource) et sur la page week_all.php (vue "semaine" des réservations d'un domaine)
+- Correction d'un bug dans l'affichage "semaine" de toutes les ressources (weel_all.php), lorsqu'on effectuait une réservation d'une ressource sur une durée de plusieurs jours, et à cheval sur deux mois
+
+GRR-1.9.1 (09/01/2006)
+==============================
+
+Nouvelles fonctionnalités
+-------------------------
+"LemonLdapisation" de GRR : ajout d’un module d’authentification Lemonldap SSO permettant la prise en charge de GRR dans un environnement Lemonldap SSO.
+
+Corrections de bugs
+-------------------
+- La valeur du champ USER_AGENT dans la table "log" est passée à 100.
+- Lorqu'un administrateur modifiait le réglage de la langue par défaut, son réglage personnel était écrasé et prenait la valeur du réglage par défaut.
+- Amélioration du code du fichier language.inc.php pour tenir compte de la syntaxe de la fonction setlocale des versions php < 1.3.0.
+- Correction d'un bug dans la procédure de mise à jour de GRR pour des versions inférieures ou égales à 1.7.
+- Correction d'un bug dans la page de modification d'une ressource : impossibilité de télécharger une image pour la ressource.
+
+GRR-1.9 (03/01/2006)
+==============================
+
+Nouvelles fonctionnalités
+-------------------------
+- Nouvelle procédure permettant de réserver ou de libérer très rapidement des journées entières simultanément sur plusieurs ressources de plusieurs domaines et selon un calendrier.
+- Amélioration du support ldap dans le cas de l'ActiveDirectory.
+- Nouveau paramètre : pour une ressource donnée, permettre ou non les réservation dans le passé ainsi que les modifications/suppressions de réservations passées.
+- Lorsqu'une nouvelle réservation entre en conflit avec des réservations existantes, les administrateur d'un domaine peuvent désormais forcer la nouvelle réservation en supprimant les réservations qui entrent en conflit.
+- Possibilité de désactiver les messages "pop-up" d'information dans config.inc.php
+- Amélioration de la prise en charge de l'affichage des dates en français (modification de language.inc.php.
+- Ajout de la langue Italien (traduction complète à 95 %) - Contribution d'Anthony Audouard.
+- Ajout d’une nouvelle feuille de style "Orange" - Contribution d'Anthony Audouard
+- Gestion améliorée des messages d'avertissement (pop-up).
+- Possibilité d'attribuer un ordre d'affichage des ressources à l'intérieur d'un domaine
+- Amélioration de la fonction d'envoi automatique de mail (paramètre supplémentaire "parametre_additionnel" à définir dans config.inc.php). Explications dans le fichier config.inc.php.
+- Possibilité de fixer, pour chaque ressource, un temps en minutes en-deça duquel l'utilisateur ne peut pas réserver ou modifier une réservation existante.
+- Possibilité de fixer, pour chaque ressource, un nombre maximal de jours au-delà duquel l'utilisateur ne peut pas réserver ou modifier une réservation existante.
+- Personnalisation par domaine des paramètres d'affichage du planning (heures de début et fin de journée, plus petit bloc réservable, ...)
+- Nouveau paramètre dans "config.inc.php" ($nb_year_calendar) : permet de fixer la plage de choix de l'année dans le choix des dates de début et fin des réservations.
+- Nouveau paramètre dans "config.inc.php" ($display_full_description) permettant d'afficher ou non la description complète de la réservation dans les vues jours, semaine et mois.
+- Domaine et ressource par défaut : ajout de la possibilité de choisir l'affichage semaine des
+réservations de toutes les ressources d'un domaine.
+- Dans le cas de la vue des réservations de toutes les ressources d'un domaine sur un mois : possibilité d'afficher une vue supplémentaire donnant les réservations, ressource par ressource (contribution de Yannick Léa).
+- Amélioration de la navigation entre les différentes vues (journée/semaine/mois).
+- Amélioration du support CAS.
+- Optimisation de la function authGetUserLevel qui améliore des soucis de lenteur dans le cas où il y a de nombreux utilisateurs dans la base.
+- Dans le cas où une réservation est en cours d'utilisation, dans week_all.php, ajout de l'icône correspondante.
+
+
+Corrections de bugs
+-------------------
+- Correction mineure dans l'affichage des réservations dans day.php et week.php.
+- Correction de code pour rendre GRR compatible avec le navigateur SAFARI
+- Correction d'un bug apparu avec la version 1.8 : l'aide n'était plus accessible quand on n'était pas connecté.
+- Correction d'un bug : lorsque l'administrateur associait plus d'une ressource à un utilisateur pour l'administration, le bouton administration n'était plus visible.
+- Correction d'un bug : dans le cas où la variable register_globals du fichier php.ini était positionnée sur "On" (non recommandé), la langue par défaut de l'utilisateur était mal gérée.
+- Correction d'un bug : dans le cas où la variable register_globals du fichier php.ini était positionnée sur "On" (non recommandé), l'affichage des résultats de recherche au-delà de la première page ne fonctionnait pas.
+- Correction d'un bug : dans le cas où il y avait changement de langue sur des pages comportant des paramètres passés dans l'url, ces paramètres n'étaient pas conservés après le changement de langue (clic sur une drapeau).
+- Correction d'un bug lors de l'édition d'une réservation avec périodicité, si on édite une des réservations qui n'est pas la première de la série, et qu'on met la périodicité à "aucune", GRR signale un conflit avec la première réservation de la série.
+- Correction d'un bug dans month_all.php et week_all.php : le retour, après suppression d'une réservation à partir d'une de ces pages, ne se faisait pas vers la page d'origine.
+-Correction d'un bug : lors d'une recherche par un utilisateur non administrateur, si la
+table j_area_user était vide (pas de gestionnaire), alors aucun résultat n'était trouvé.
+-Correction d'un bug : lors de l'édition d'un rapport par un utilisateur non administrateur, si la table j_area_user était vide (pas de gestionnaire), alors aucun résultat n'était trouvé.

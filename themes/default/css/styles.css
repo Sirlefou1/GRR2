@@ -1,0 +1,73 @@
+ body
+{ 
+    font-size: 14px;
+    font-family:arial,verdana,sans-serif;
+    background-color:#1E7FCB;
+    width: 98%;
+    margin :0 auto ;
+}
+#toTop {
+	width:100px;
+        border:1px solid #ccc;
+        background:#f7f7f7;
+        text-align:center;
+        padding:5px;
+        position:fixed; /* this is the magic */
+        bottom:10px; /* together with this to put the div at the bottom*/
+        
+        /*MAJ David VOUE - Placement du bouton 'retour en haut de la page à droite et changement de la police de 11px À 14px
+         * 13/01/2014 */
+         
+        right:100px;
+        /*right:100px;*/
+        cursor:pointer;
+        color:#333;
+        font-family:verdana;
+        font-size: 14px;
+        /*MAJ David VOUE - Modification de la bordure
+         * 14/01/2014*/
+        border-radius: 5px;
+        /*font-size: 11px;*/
+}
+
+legend
+{
+	color: #BB0B0B;
+	font-size: 18px;
+}
+
+label
+{
+	font-size: 16px;
+	text-align: center;
+}
+
+input
+{
+	color: #4682B4;
+	background-color: #BBAE98;
+	border-radius: 5px;
+	font-weight: bold;
+	font-size: 20px;
+	
+}
+
+textarea
+{
+	color: #4682B4;
+	background-color: #BBAE98;
+	border-radius: 5px;
+	font-weight: bold;
+	font-size: 20px;
+	
+}
+
+.imageform
+{
+	position: absolute;
+	width: 555px;
+	height: 555px;
+}
+
+
+

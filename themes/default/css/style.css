@@ -1,0 +1,537 @@
+ body {
+ 	font-size: 14px;
+ 	font-family:arial,verdana,sans-serif;
+ 	background-color:white;
+ 	width: 98%;
+ 	margin :0 auto ;
+ }
+
+ p
+ {
+ 	font-size: 10pt;
+ 	font-family:arial,sans-serif;
+ 	background-color:white;
+ }
+
+ input,textarea,submit {
+ 	color:black;
+ 	font-size: 11pt;
+ 	font-family:arial,sans-serif;
+ }
+ form {margin-bottom:5pt;
+ 	margin-top : 5pt;
+ }
+
+ .formModifie{
+ 	margin-bottom:0pt;
+ 	margin-top : 0pt;
+ 	display: inline;
+ }
+
+ .styleBoutton {
+ 	color : black;
+ }
+ .small {font-size:0.8em}
+ .larger {font-size:1.4em}
+ a:link {color:#000066; font-weight: bold; text-decoration: none;}
+ a:visited {color:#000066; font-weight: bold; text-decoration: none}
+ a:hover {color:#e60002;}
+ h1 {color:black; font-family:verdana,sans-serif; font-size:16pt}
+ h2 {color:black; font-family:verdana,sans-serif; font-size:14pt}
+ h3 {color:black; font-family:verdana,sans-serif; font-size:12pt}
+ td {font-size:10pt; font-family:arial,sans-serif; border-width:1px; vertical-align:top}
+ td.CR { vertical-align: middle; text-align: right}
+ td.CL { vertical-align: middle; text-align: left}
+ td.BR { vertical-align: baseline; text-align: right}
+ td.BL { vertical-align: baseline; text-align: left}
+ td.TR { vertical-align: top; text-align: right}
+ td.TL { vertical-align: top; text-align: left}
+
+ .clock {
+ 	font-size: 1em;
+ }
+ .fontcolor1{color:white}
+ .fontcolor2{color:#99CCFF}
+ .fontcolor3{color:#99CCFF}
+ .fontcolor4{color:#000066}
+ #header {
+ 	border : 1px solid #005394;
+ 	position: relative;
+ 	width : 100%;
+ }
+
+ .image {
+ 	border: none;
+ 	vertical-align: middle;
+ }
+ .logo{
+ 	width: 0.1%;
+ 	height: 0.1%;
+ 	border : 0px solid red;
+ }
+ .accueil
+ {
+ 	background-color : white;
+ 	width : 32%;
+ 	border : 0px solid red;
+ }
+ .administration {
+ 	background-color : white;
+ 	width : 20%;
+ 	border : 0px solid red;
+ }
+
+ .configuration {
+ 	background-color : white;
+ 	width : 20% ;
+ 	vertical-align: middle;
+ 	text-align: center;
+ 	border : 0px solid red;
+ }
+
+ .contactformulaire {
+ 	background-color : white;
+ 	width : 20% ;
+ 	vertical-align: middle;
+ 	text-align: center;
+ 	border : 0px solid red;
+ }
+
+ #Réserver {
+ 	color:#00009b;
+ 	-moz-box-shadow: 0px 0px 10px #343434;
+ 	-webkit-box-shadow: 0px 0px 10px #343434;
+ 	-o-box-shadow: 0px 0px 10px #343434;
+ 	box-shadow: 0px 0px 10px #343434;
+ 	-moz-border-radius: 12px;
+ 	-webkit-border-radius: 12px;
+ 	border-radius: 6px;
+ 	border: 8px outset #9b9b9b;
+ 	background:#cfcfcf;
+ 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#cfcfcf", endColorstr="#656565"); /* Pour IE seulement et mode gradient à linear */
+ 	background: -webkit-gradient(linear, left top, left bottom, from(#cfcfcf), to(#656565));
+ 	background: -webkit-linear-gradient(#cfcfcf, #656565);
+ 	background: -moz-linear-gradient(#cfcfcf, #656565);
+ 	background: -o-linear-gradient(#cfcfcf, #656565);
+ 	background: -ms-linear-gradient(#cfcfcf, #656565);
+ 	background: linear-gradient(#cfcfcf, #656565); 
+ 	font-size : 50px;
+ 	font-family: Arial;
+ }
+
+ #Réserver:hover {
+
+ 	color : #A9EAFE;
+ 	font-size : 50px;
+ 	font-family: Arial;
+ 	cursor: pointer;
+ }
+
+ #menuGauche {
+ 	background-color:#005394;
+  	float : left;
+ 	height: 100%;
+ 	min-width : 200px;
+ 	width : 300px;
+ 	padding-bottom: 10px;
+ }
+
+ #menuGaucheMonthAll2{
+ 	display : none;
+ 	background-color:#005394;
+ 	border-bottom : 3px solid #497fe5;
+ 	float : left;
+ 	height: 100%;
+ 	min-width : 200px;
+ 	width : 300px;
+ 	padding-bottom: 10px;
+ }
+
+ .cal_current_day {
+ 	color: black;
+ 	vertical-align: middle;
+ 	text-align: center;
+ 	line-height: 30px;
+ }
+
+ .week td a {
+ 	background-color:#497fe5;
+ 	text-align: center ;
+ 	vertical-align: middle;
+ 	text-align: center;
+ 	color : blue;
+ 	height: 100%;
+ 	width : 100%;
+ }
+ table.calendar {
+ 	text-align: center;
+ 	height : 100%;
+ 	width : 99%;
+ 	padding : 1px;
+ 	margin: auto ;
+ 	background-color: #fff;
+ }
+ .calendar caption {
+ 	background-color: #497fe5;
+ }
+
+ .dayBouton{
+ 	width:80px ;
+ }
+
+ .dayBoutonJourApres{
+ 	*/width:125px;*/
+ }
+
+ a.calendar{
+ 	display:block;
+ 	color : #497fe5;
+ 	height: 100%;
+ 	width : 100%;
+ 	vertical-align: middle;
+ 	text-align: center;
+ }
+
+ .calendarcol1{
+ 	padding: 0px;
+ 	font-weight: bold;
+ 	background-color: #fff;
+ 	text-align: center;
+ 	height: 30px;
+ 	width: 40px;
+ 	line-height: 30px;
+ 	}
+
+ #lienSemaine a{
+ 	height:100%;
+ 	width:100%;
+ 	display:block;
+ 	vertical-align: middle;
+ 	text-align: center;
+ }
+
+ .cellcalendar{
+ 	background : #005394;
+ 	color : #497fe5;
+ 	vertical-align: middle;
+ 	text-align: center;
+ 	height: 30px;
+ 	width: 40px;
+ 	line-height: 30px;
+ }
+ a.lienPlanning:link {
+ 	color : white;
+ 	display:block;
+ }
+ a.lienPlanning:visited{
+ 	color : white;
+ 	display:block;
+ }
+ a.lienPlanning:hover{
+ 	color : red;
+ 	display:block;
+ }
+ #chargement {
+ 	left:35%;
+ 	top:322px;
+ 	position:absolute;
+ 	display:none;
+ 	z-index : 10;
+ }
+
+ #chargement p {
+ 	padding : 0px;
+ 	background-color:grey;
+ }
+
+ #chargement img{
+ 	border : solid 2px black;
+ }
+
+ .ressource {
+ 	text-align: center;
+ }
+
+ #item:hover
+ {
+ 	cursor: pointer;
+ }
+
+b, strong{
+color: #000;
+text-align: center;
+}
+
+#liste_select {
+ 	color : #497fe5;
+ 	font-weight: bold;
+ }
+
+ #liste  {
+ 	color : #CCCCFF;
+ }
+
+
+ table.legende {
+ 	width: 250px;
+ }
+
+
+ .pied_menuGauche {
+ 	border-top:  3px solid #005394;
+ }
+
+ th {
+ 	color:#eeeeee;
+ 	font-size:10pt;
+ 	font-family:verdana,sans-serif;
+ 	background-color:#045491;
+ 	vertical-align:top
+ }
+
+ td.cell_hours {
+ 	color: #fff;
+ 	background-color: #497fe5;
+ 	text-align: center;
+ 	font-size: 1em;
+ 	height: 20px;
+ 	line-height: 20px;
+ }
+
+ td.cell_month {
+ 	background-color:white;
+ }
+
+ .cell_month a{
+ 	color : black;
+ 	font-weight:400;
+ 	border-radius: 5px;
+ }
+ .cell_month a:hover{
+ 	color : black;
+ 	font-weight:bold;
+ }
+
+ td.cell_month_o {
+ 	background-color:#cccccc;
+ }
+
+.empty_cell {
+ 	background-color: White;
+ 	text-align: center;
+ 	vertical-align: middle;
+ }
+
+ .monthday {
+ 	font-size: 2.1em;
+ 	itext-align: center;
+ 	border-radius: 5px;
+ }
+
+ .center {
+ 	width: 100%;
+ 	margin-left: auto;
+ 	margin-right: auto;
+ 	text-align: center;
+ }
+
+ .avertissement {
+ 	background-color:#FF8585;
+ 	text-align:center;
+ }
+
+ td.calendar2 {text-align:center; border:2px; font-size: 8pt}
+ td.calendarHeader2 {text-align:center; border:0px; font-size: 10pt; width: 200px;}
+ .formo {width: 100%; background-color: #FFF0E0; background-position: center bottom; float: none; color: #000000}
+ .fondo {background-color: #FFF0E0; background-position: center bottom; float: none; color: #000000}
+ .fondl {background-color: #CCCCCC; background-position: center bottom; float: none; color: #000000}
+
+ #colgauche fieldset{
+ 	border:1px solid #000000;
+ 	margin:10px;
+ 	padding:10px;
+ }
+ #colgauche  fieldset legend{
+ 	color:#000000;
+ 	margin-bottom:5px;
+ }
+ #colgauche  fieldset ul{
+ 	margin: 0;
+ 	padding-bottom:0;
+ 	padding-top:0;
+ 	padding-left:10px;
+ }
+ #colgauche  fieldset ul li{
+ 	list-style-type:disc;
+ }
+ td.colgauche_admin {
+ 	width: 25%;
+ }
+
+ div.tooltip{
+ 	color: #000;
+ 	margin-bottom: 5pt;
+ 	background: #FFB200;
+ 	margin: 5px;
+ 	padding: 5px;
+ }
+
+ #planning{
+ 	position: relative;
+ 	background-color: #497fe5;
+ 	margin-left : 300px;
+ 	height: 100%;
+ 	width : auto;
+ }
+ #planningMonthAll2{
+ 	margin-left : 0px;
+ }
+
+ .titre_planning {
+ 	position: relative;
+ 	background-color: #497fe5;
+ 	height: 100%;
+ 	color: black;
+ 	text-align: center;
+ 	font-size: 1.2em;
+ }
+
+ .titre_planning_week{
+ 	background-color: #497fe5;
+ 	height: 100%;
+ 	color: black;
+ 	text-align: center;
+ 	font-size: 1.2em;
+
+ }
+
+ .contenu_planning {
+ 	position: relative;
+ 	background-color: #497fe5;
+ 	height: 100%;
+ 	max-width : 100%;
+ }
+ .contenu_planning a{
+ 	display : block;
+ }
+
+ a.poplight{
+ 	display: block;
+ 	color : black;
+ 	font-weight:normal;
+ 	font-size: 14px;
+ 	height: 100%;
+ 	width : 100%;
+ 	vertical-align: middle;
+ 	text-align: center;
+
+ }
+ a:hover.poplight{
+ 	color : black;
+ 	font-weight:bold;
+ 	display : block;
+ 	text-align : center;
+ }
+
+ a.lienCellule  {
+ 	color : black;
+ 	font-weight:normal;
+ 	display : block ;
+ }
+
+ a:hover.lienCellule  {
+ 	color : black;
+ 	font-weight:bold;
+ 	display : block ;
+ }
+
+ .small_planning {
+ 	font-size: 0.9em;
+ }
+
+ .texte_ress_tempo_indispo {
+ 	color: #BA2828;
+ 	font-weight: bold;
+ }
+
+ .texte_ress_moderee {
+ 	color: #BA2828;
+ 	font-weight: bold;
+ }
+
+ th.tableau_month2
+ {
+ 	padding : 2px;
+ }
+ #lienPrecedent a{
+ 	text-align : left;
+ 	font-size : 20px;
+ }
+
+ .tableau_month_all2{
+ 	font-size: 0.8em;
+ }
+
+
+ #fade { /*--Masque opaque noir de fond--*/
+ 	display: none; /*--masqué par défaut--*/
+ 	background: #000;
+ 	position: fixed; left: 0; top: 0;
+ 	width: 100%; height: 100%;
+ 	opacity: .80;
+ 	z-index: 9999;
+ }
+ .popup_block{
+ 	display: none; /*--masqué par défaut--*/
+ 	background: #fff;
+ 	padding: 20px;
+ 	border: 20px solid #ddd;
+ 	float: left;
+ 	font-size: 1.2em;
+ 	position: fixed;
+ 	top: 10%; left: 50%;
+ 	z-index: 99999;
+ 	/*--Les différentes définitions de Box Shadow en CSS3--*/
+ 	-webkit-box-shadow: 0px 0px 20px #000;
+ 	-moz-box-shadow: 0px 0px 20px #000;
+ 	box-shadow: 0px 0px 20px #000;
+ 	/*--Coins arrondis en CSS3--*/
+ }
+
+ img.btn_close {
+ 	position:relative;
+ 	z-index:5;
+ 	border:0;
+ 	float: right;
+ 	margin: -15px -15px 0 0;
+ }
+ *html #fade {
+ 	position: absolute;
+ }
+ *html .popup_block {
+ 	position: absolute;
+ }
+
+ #toTop {
+ 	width:100px;
+ 	border:1px solid #ccc;
+ 	background:#f7f7f7;
+ 	text-align:center;
+ 	padding:5px;
+ 	position:fixed; /* this is the magic */
+ 	bottom:10px; /* together with this to put the div at the bottom*/
+ 	right:100px;
+ 	cursor:pointer;
+ 	color:#333;
+ 	font-family:verdana;
+ 	font-size: 14px;
+ }
+#toTop b{
+	color: #000;
+}
+ a.buttonsReservation
+ {
+ 	background-color: purple;
+ 	color: purple;
+ 	cursor:pointer;
+ }

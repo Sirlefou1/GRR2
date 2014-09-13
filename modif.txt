@@ -1,0 +1,59 @@
+/*-----MAJ Lois THOMAS  -->  -----*/
+
+MAJ faite dans le but d'une installation tactile et d'une amélioration de l'ergonomie.
+Principales fonctionnalités :
+	-Modifications css,
+	-Liens sous forme d'item afin de faciliter l'utilisation du tactile,
+	-Ajouts des heures des RDV sur les plannings,
+	-Ajout du genre sur les plannings,
+	-Adaptation du calendrier pour facilitier l'utilisation du tactile,
+	-Possibilité de choisir la langues xpour tout visiteurs,
+	-Création de l'horloge pour toutes les langues,
+	-Possibilité de supprimer la légendes dans la configuration
+	-Désactivé la selection sur les différents pages pour les utilisateurs non connecté. 
+	
+#Style géneral des pages des visiteurs:
+
+	-Ajout d'une barre de chargement 
+		.image : chargement.gif
+		.function charger() dans le fichier functions.js
+		.création de la page chargement.php
+		.css : style #chargement 
+
+	-Modifications du css 
+		.Ajout de 3 blocs principaux :  header
+						menu_gauche
+						planning(titre_planning et contenu_planning).
+	
+	-Ajout du genre des réservations pour les pages :
+		.day.php
+		.month.php
+		.month_all.php
+		.week_all.php
+		.week.php
+
+	-Création d'un lien précédent sur la page login.php 
+	-Création de lien précédent au format imprimable pour les pages :
+		.day.php
+		.month.php
+		.month_all.php
+		.week_all.php
+		.week.php
+
+#functions.inc.php
+	-Création des fonctions :
+		.make_site_item_html(...) sur le modéle de make_site_select_html()
+		.make_area_item_html(...) sur le modéle de make_area_select_html()
+		.make_room_item_html(...) sur le modéle de make_room_select_html()
+
+
+#Admin config 
+
+- Choix de l'affichage des réservations.Soit dans une page(view_entry.php) ou sous forme d'un popup
+- Choix de l'affichage de la légende 
+
+
+
+
+
+

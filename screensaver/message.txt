@@ -1,0 +1,5 @@
+a:1:{i:1;s:260:"<p>
+	<img alt="" src="ftp://ftp.talmont-saint-hilaire.fr/talmont/signatures/divers/mairie.gif" style="width: 350px; height: 152px; float: left;" /><span style="font-size:22px;">Message public</span></p>
+<p>
+	<span style="font-size:26px;">Blabla</span></p>
+";}
