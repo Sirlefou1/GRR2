@@ -2,15 +2,15 @@
 # Les quatre lignes suivantes sont à modifier selon votre configuration
 # ligne suivante : l'adresse de l'annuaire LDAP.
 # Si c'est le même que celui qui heberge les scripts, mettre "localhost"
-$ldap_adresse='';
+$ldap_adresse='toto';
 # ligne suivante : le port utilisé
-$ldap_port='';
+$ldap_port='dsfdsf';
 # ligne suivante : l'identifiant et le mot de passe dans le cas d'un accès non anonyme
-$ldap_login='';
+$ldap_login='dsfdsf';
 # Remarque : des problèmes liés à un mot de passe contenant un ou plusieurs caractères accentués ont déjà été constatés.
-$ldap_pwd='';
+$ldap_pwd='dsfdsf';
 # ligne suivante : le chemin d'accès dans l'annuaire
-$ldap_base='';
+$ldap_base='fdsf';
 # ligne suivante : filtre LDAP supplémentaire (facultatif)
 $ldap_filter='';
 # ligne suivante : utiliser TLS
