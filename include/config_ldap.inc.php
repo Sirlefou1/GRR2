@@ -10,7 +10,7 @@ $ldap_login='dsfdsf';
 # Remarque : des problèmes liés à un mot de passe contenant un ou plusieurs caractères accentués ont déjà été constatés.
 $ldap_pwd='dsfdsf';
 # ligne suivante : le chemin d'accès dans l'annuaire
-$ldap_base='fdsf';
+$ldap_base='';
 # ligne suivante : filtre LDAP supplémentaire (facultatif)
 $ldap_filter='';
 # ligne suivante : utiliser TLS
