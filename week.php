@@ -352,16 +352,16 @@ if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
 			</td>
 		</tr>
 	</table>";
-		/*-----MAJ David VOUE --> Ajout de la balise </table> * 14/01/2014*/ 
-		}
-		/*-----MAJ Loïs THOMAS  --> Lien qui permet de  le menu à gauche -----*/
-		echo "<table><tr>";
+	/*-----MAJ David VOUE --> Ajout de la balise </table> * 14/01/2014*/ 
+}
+/*-----MAJ Loïs THOMAS  --> Lien qui permet de  le menu à gauche -----*/
+echo "<table><tr>";
 		//Test si le format est imprimable
-		$setting = getSettingValue("menu_gauche");
-		if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
-		{
-			if ($setting == 0)
-			{
+$setting = getSettingValue("menu_gauche");
+if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
+{
+	if ($setting == 0)
+	{
 				/*echo "<td align=\"left\"> ";
 				echo "<input type=\"button\" id=\"cacher\" value=\"cacher le menu à gauche.\" onClick=\"divcache()\" style=\"display:inline;\"/>";
 				echo "<input type=\"button\" id=\"voir\" value=\"afficher le menu à gauche.\" onClick=\"divaffiche()\" style=\"display:none;\" /> ";
@@ -373,14 +373,18 @@ if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
 		echo " ".ucfirst($this_area_name)." - $this_room_name $this_room_name_des</strong>";
 		echo "</td>";
 		echo " </tr></table>";
-	echo "</div>\n";
+		echo "</div>\n";
  //Lien précedent dans le format imprimable
-	if ($_GET['pview'] == 1 AND $_GET['precedent'] == 1) {
-		echo "<span id=\"lienPrecedent\">
-		<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript:history.back();\">Précedent</button>
-	</span>";
-}
-echo " <div class=\"contenu_planning\">" ;
+		if (isset($_GET['precedent']))
+		{
+			if ($_GET['pview'] == 1 AND $_GET['precedent'] == 1) {
+				echo "<span id=\"lienPrecedent\">
+				<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript:history.back();\">Précedent</button>
+			</span>";
+		}
+	}
+	
+	echo " <div class=\"contenu_planning\">" ;
 #Get all appointments for this week in the room that we care about
 # row[0] = Start time
 # row[1] = End time
@@ -392,10 +396,10 @@ echo " <div class=\"contenu_planning\">" ;
 # row[7] = Full description
 # The range predicate (starts <= week_end && ends > week_start) is
 # equivalent but more efficient than the original 3-BETWEEN clauses.
-$sql = "SELECT start_time, end_time, type, name, id, beneficiaire, statut_entry, description, option_reservation, moderate, beneficiaire_ext
-FROM ".TABLE_PREFIX."_entry
-WHERE room_id=$room
-AND start_time < ".($week_end+$resolution)." AND end_time > $week_start ORDER BY start_time";
+	$sql = "SELECT start_time, end_time, type, name, id, beneficiaire, statut_entry, description, option_reservation, moderate, beneficiaire_ext
+	FROM ".TABLE_PREFIX."_entry
+	WHERE room_id=$room
+	AND start_time < ".($week_end+$resolution)." AND end_time > $week_start ORDER BY start_time";
 
 # Chaque tableau row retourné par la requête est une réservation.
 # On construit alors un tableau de la forme :
@@ -407,17 +411,17 @@ AND start_time < ".($week_end+$resolution)." AND end_time > $week_start ORDER BY
 # Note: weekday here is relative to the $weekstarts configuration variable.
 # If 0, then weekday=0 means Sunday. If 1, weekday=0 means Monday.
 
-$first_slot = $morningstarts * 3600 / $resolution;
-$last_slot = ($eveningends * 3600 + $eveningends_minutes * 60) / $resolution;
+	$first_slot = $morningstarts * 3600 / $resolution;
+	$last_slot = ($eveningends * 3600 + $eveningends_minutes * 60) / $resolution;
 
-if ($debug_flag) echo "<br />DEBUG: query=$sql <br />first_slot=$first_slot - last_slot=$last_slot\n";
+	if ($debug_flag) echo "<br />DEBUG: query=$sql <br />first_slot=$first_slot - last_slot=$last_slot\n";
 
-$res = grr_sql_query($sql);
-if (! $res) echo grr_sql_error();
-else for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
-{
-	if ($debug_flag)
-		echo "<br />DEBUG: result $i, id $row[4], starts $row[0] (".affiche_date($row[0])."), ends $row[1] (".affiche_date($row[1]).")\n";
+	$res = grr_sql_query($sql);
+	if (! $res) echo grr_sql_error();
+	else for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
+	{
+		if ($debug_flag)
+			echo "<br />DEBUG: result $i, id $row[4], starts $row[0] (".affiche_date($row[0])."), ends $row[1] (".affiche_date($row[1]).")\n";
 
 		# Fill in slots for the meeting. Start at the meeting start time or
 		# week start (which ever is later), and end one slot before the meeting
@@ -425,16 +429,16 @@ else for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 		# Note: int casts on database rows for min and max is needed for PHP3.
 
 		// Pour la réservation en cours, on détermine le début de la journée $debut_jour
-	$month_current = date("m",$row[0]);
-	$day_current = date("d",$row[0]);
-	$year_current  = date("Y",$row[0]);
-	$debut_jour=mktime($morningstarts,0,0,$month_current,$day_current,$year_current);
+		$month_current = date("m",$row[0]);
+		$day_current = date("d",$row[0]);
+		$year_current  = date("Y",$row[0]);
+		$debut_jour=mktime($morningstarts,0,0,$month_current,$day_current,$year_current);
 
-	$t = max(round_t_down($row[0], $resolution, $debut_jour), $week_start);
-	$end_t = min((int)round_t_up((int)$row[1],
-		(int)$resolution, $debut_jour),
-	(int)$week_end+1);
-	$weekday = (date("w", $t) + 7 - $weekstarts) % 7;
+		$t = max(round_t_down($row[0], $resolution, $debut_jour), $week_start);
+		$end_t = min((int)round_t_up((int)$row[1],
+			(int)$resolution, $debut_jour),
+		(int)$week_end+1);
+		$weekday = (date("w", $t) + 7 - $weekstarts) % 7;
 
 		$prev_weekday = -1; # Invalid value to force initial label.
 		$slot = ($t - $week_midnight) % 86400 / $resolution;
