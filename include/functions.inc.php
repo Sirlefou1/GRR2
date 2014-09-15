@@ -1981,7 +1981,7 @@ function make_room_list_html($link,$current_area, $current_room, $year, $month, 
 		function make_site_item_html($link,$current_site,$year,$month,$day,$user)
 		{
 			global $vocab;
-			$out_html = '<b><i>'.get_vocab('sites').get_vocab('deux_points').'</i></b>
+			$out_html = '<ul class="list-group"><li class="list-group-item">'.get_vocab('sites').get_vocab('deux_points').'</li></ul>
 			<form class="ressource" id="site_001" action="'.$_SERVER['PHP_SELF'].'">
 				<div>';
 	// On vient lister les sites qui ont un domaine lié
@@ -2091,7 +2091,7 @@ function make_area_item_html( $link, $current_site, $current_area, $year, $month
 		FROM ".TABLE_PREFIX."_area
 		ORDER BY order_display, area_name";
 	}
-	$out_html = "<b><i>".get_vocab("areas")."</i></b>\n";
+	$out_html = "<br /><ul class=\"list-group\"><li class=\"list-group-item\"><h4>".get_vocab("areas")."</h4></li></ul>\n";
 	$out_html .= "<form class=\"ressource\" id=\"area_001\" action=\"".$_SERVER['PHP_SELF']."\">\n";
 	$res = grr_sql_query($sql);
 	if ($res) for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
@@ -2103,15 +2103,15 @@ function make_area_item_html( $link, $current_site, $current_area, $year, $month
 			if ($current_area != null)
 			{
 				if ($current_area == $row[0]){
-					$out_html .= "<input id=\"item_select\" type=\"button\" class=\"btn btn-primary btn-lg\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])."\" onclick=\"location.href='$link2' ;charger();\"/><br />";
+					$out_html .= "<input id=\"item_select\" type=\"button\" class=\"btn btn-primary btn-lg btn-block\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])."\" onclick=\"location.href='$link2' ;charger();\"/>";
 				}
 				else
 				{
-					$out_html .= "<input id=\"item\" type=\"button\" class=\"btn btn-default btn-lg\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])."\" onclick=\"location.href='$link2' ;charger();\"/><br />";
+					$out_html .= "<input id=\"item\" type=\"button\" class=\"btn btn-default btn-lg btn-block\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])."\" onclick=\"location.href='$link2' ;charger();\"/>";
 				}
 			}
 			else {
-				$out_html .= "<input id=\"item\" type=\"button\" class=\"btn btn-default btn-lg\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])." \" onclick=\"location.href='$link2' ;charger();\"/><br />";
+				$out_html .= "<input id=\"item\" type=\"button\" class=\"btn btn-default btn-lg btn-block\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])." \" onclick=\"location.href='$link2' ;charger();\"/>";
 			}
 		}
 	}
@@ -2122,7 +2122,7 @@ function make_area_item_html( $link, $current_site, $current_area, $year, $month
 function make_room_item_html( $link, $current_area, $current_room, $year, $month, $day, $user )
 {
 	global $vocab;
-	$out_html = "<b><i>".get_vocab('rooms').get_vocab("deux_points")."</i></b><br /><form class=\"ressource\" id=\"room_001\" action=\"".$_SERVER['PHP_SELF']."\"> ";
+	$out_html = "<ul class=\"list-group\"><li class=\"list-group-item\"><h4>".get_vocab('rooms').get_vocab("deux_points")."</h3></li></ul><form class=\"ressource\" id=\"room_001\" action=\"".$_SERVER['PHP_SELF']."\"> ";
 	$sql = "select id, room_name, description from ".TABLE_PREFIX."_room where area_id='".protect_data_sql($current_area)."' order by order_display,room_name";
 	$res = grr_sql_query($sql);
 	if ($res) for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
@@ -2136,22 +2136,22 @@ function make_room_item_html( $link, $current_area, $current_room, $year, $month
 			{
 				if (isset($all_ressource) && $all_ressource == 0)
 				{
-					$out_html .= "<input id=\"item_select\" type=\"button\" class=\"btn btn-primary btn-lg\" name=\"all_room\" value=\"Toutes les ressources \" onclick=\"location.href='$link_all_room' ;charger();\"/><br />";
+					$out_html .= "<input id=\"item_select\" type=\"button\" class=\"btn btn-primary btn-lg btn-block\" name=\"all_room\" value=\"Toutes les ressources \" onclick=\"location.href='$link_all_room' ;charger();\"/>";
 				}
-				$out_html .= "<input id=\"item\" type=\"button\" class=\"btn btn-default btn-lg\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])." \" onclick=\"location.href='$link2' ;charger();\"/><br />";
+				$out_html .= "<input id=\"item\" type=\"button\" class=\"btn btn-default btn-lg btn-block\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])." \" onclick=\"location.href='$link2' ;charger();\"/>";
 				$all_ressource = 1;
 			}
 			else
 			{
 				if (isset($all_ressource) && $all_ressource == 0)
 				{
-					$out_html .= "<input id=\"item\" type=\"button\" class=\"btn btn-primary btn-lg\" name=\"all_room\" value=\"Toutes les ressources \" onclick=\"location.href='$link_all_room' ;charger();\"/><br />";
+					$out_html .= "<input id=\"item\" type=\"button\" class=\"btn btn-primary btn-lg btn-block\" name=\"all_room\" value=\"Toutes les ressources \" onclick=\"location.href='$link_all_room' ;charger();\"/>";
 				}
 				$all_ressource = 1;
 				if ($current_room == $row[0])
-					$out_html .= "<input id=\"item_select\" type=\"button\" class=\"btn btn-primary btn-lg\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])."\" onclick=\"location.href=' $link2';charger();\"/><br />";
+					$out_html .= "<input id=\"item_select\" type=\"button\" class=\"btn btn-primary btn-lg btn-block\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])."\" onclick=\"location.href=' $link2';charger();\"/>";
 				else
-					$out_html .= "<input id=\"item\" type=\"button\" class=\"btn btn-default btn-lg\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])." \" onclick=\"location.href=' $link2' ;charger();\" /><br />";
+					$out_html .= "<input id=\"item\" type=\"button\" class=\"btn btn-default btn-lg btn-block\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])." \" onclick=\"location.href=' $link2' ;charger();\" />";
 			}
 		}
 	}

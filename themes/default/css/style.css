@@ -1,9 +1,10 @@
  body {
  	font-size: 14px;
  	font-family:arial,verdana,sans-serif;
- 	background-color:white;
+ 	background-color:#222222;
  	width: 98%;
  	margin :0 auto ;
+
  }
 
  p
@@ -33,9 +34,9 @@
  }
  .small {font-size:0.8em}
  .larger {font-size:1.4em}
- a:link {color:#000066; font-weight: bold; text-decoration: none;}
- a:visited {color:#000066; font-weight: bold; text-decoration: none}
- a:hover {color:#e60002;}
+ a:link {color:#FFF; font-weight: bold; text-decoration: none;}
+ a:visited {color:#FFF; font-weight: bold; text-decoration: none}
+ a:hover {color:#FFF;}
  h1 {color:black; font-family:verdana,sans-serif; font-size:16pt}
  h2 {color:black; font-family:verdana,sans-serif; font-size:14pt}
  h3 {color:black; font-family:verdana,sans-serif; font-size:12pt}
@@ -53,9 +54,9 @@
  .fontcolor1{color:white}
  .fontcolor2{color:#99CCFF}
  .fontcolor3{color:#99CCFF}
- .fontcolor4{color:#000066}
+ .fontcolor4{color:#FFF}
  #header {
- 	border : 1px solid #005394;
+ 	border : 1px solid #222222;
  	position: relative;
  	width : 100%;
  }
@@ -128,7 +129,7 @@
  }
 
  #menuGauche {
- 	background-color:#005394;
+ 	background-color:#222222;
   	float : left;
  	height: 100%;
  	min-width : 200px;
@@ -138,8 +139,8 @@
 
  #menuGaucheMonthAll2{
  	display : none;
- 	background-color:#005394;
- 	border-bottom : 3px solid #497fe5;
+ 	background-color:#222222;
+ 	border-bottom : 3px solid #222222;
  	float : left;
  	height: 100%;
  	min-width : 200px;
@@ -155,11 +156,11 @@
  }
 
  .week td a {
- 	background-color:#497fe5;
+ 	background-color:#8b8b8b;
  	text-align: center ;
  	vertical-align: middle;
  	text-align: center;
- 	color : blue;
+
  	height: 100%;
  	width : 100%;
  }
@@ -172,7 +173,7 @@
  	background-color: #fff;
  }
  .calendar caption {
- 	background-color: #497fe5;
+ 	background-color: #222222;
  }
 
  .dayBouton{
@@ -185,7 +186,7 @@
 
  a.calendar{
  	display:block;
- 	color : #497fe5;
+ 	color : #FFF;
  	height: 100%;
  	width : 100%;
  	vertical-align: middle;
@@ -208,11 +209,14 @@
  	display:block;
  	vertical-align: middle;
  	text-align: center;
+ 	color: #000
  }
-
+.titre {
+	color: #fff;
+}
  .cellcalendar{
- 	background : #005394;
- 	color : #497fe5;
+ 	background : #222222;
+ 	color : #222222;
  	vertical-align: middle;
  	text-align: center;
  	height: 30px;
@@ -228,7 +232,6 @@
  	display:block;
  }
  a.lienPlanning:hover{
- 	color : red;
  	display:block;
  }
  #chargement {
@@ -263,7 +266,7 @@ text-align: center;
 }
 
 #liste_select {
- 	color : #497fe5;
+ 	color : #222222;
  	font-weight: bold;
  }
 
@@ -278,20 +281,20 @@ text-align: center;
 
 
  .pied_menuGauche {
- 	border-top:  3px solid #005394;
+ 	border-top:  3px solid #222222;
  }
 
  th {
  	color:#eeeeee;
  	font-size:10pt;
  	font-family:verdana,sans-serif;
- 	background-color:#045491;
+ 	background-color:#222222;
  	vertical-align:top
  }
 
  td.cell_hours {
  	color: #fff;
- 	background-color: #497fe5;
+ 	background-color: #222222;
  	text-align: center;
  	font-size: 1em;
  	height: 20px;
@@ -378,7 +381,7 @@ text-align: center;
 
  #planning{
  	position: relative;
- 	background-color: #497fe5;
+ 	background-color: #222222;
  	margin-left : 300px;
  	height: 100%;
  	width : auto;
@@ -389,7 +392,7 @@ text-align: center;
 
  .titre_planning {
  	position: relative;
- 	background-color: #497fe5;
+ 	background-color: #222222;
  	height: 100%;
  	color: black;
  	text-align: center;
@@ -397,7 +400,7 @@ text-align: center;
  }
 
  .titre_planning_week{
- 	background-color: #497fe5;
+ 	background-color: #222222;
  	height: 100%;
  	color: black;
  	text-align: center;
@@ -407,7 +410,7 @@ text-align: center;
 
  .contenu_planning {
  	position: relative;
- 	background-color: #497fe5;
+ 	background-color: #222222;
  	height: 100%;
  	max-width : 100%;
  }
