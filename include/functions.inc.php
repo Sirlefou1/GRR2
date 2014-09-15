@@ -922,8 +922,8 @@ function heure_ete_hiver($type, $annee, $heure)
 						echo "<td class=\"logo\"><a href=\"".page_accueil('yes')."day=$day&amp;year=$year&amp;month=$month\"><img src=\"".$nom_picture."\" alt=\"logo\"/></a></td>\n";
 					//Accueil
 					echo "<td class=\"accueil\">\n";
-					echo "&nbsp;<a href=\"".page_accueil('yes')."day=$day&amp;year=$year&amp;month=$month\">".get_vocab("welcome")."";
-					echo " - <b>".getSettingValue("company")."</b></a>";
+					echo "&nbsp;<h2><a href=\"".page_accueil('yes')."day=$day&amp;year=$year&amp;month=$month\">".get_vocab("welcome")."";
+					echo " - <b>".getSettingValue("company")."</b></a></h2>";
 					//Mail réservartion
 					if (isset($use_tooltip_js))
 						echo "<script type=\"text/javascript\" src=\"./include/tooltip.js\"></script>";

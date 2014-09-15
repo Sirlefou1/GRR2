@@ -365,13 +365,13 @@ else
 			*/
 		}
 		echo "<td>";
-		echo "<strong>" . ucfirst(utf8_strftime($dformat, $am7));
+		echo "<h4 class=\"titre\">" . ucfirst(utf8_strftime($dformat, $am7));
 		if (getSettingValue("jours_cycles_actif") == "Oui" && intval($jour_cycle) >- 1)
 			if (intval($jour_cycle) > 0)
 				echo " - ".get_vocab("rep_type_6")." ".$jour_cycle;
 			else
 				echo " - ".$jour_cycle;
-			echo " ".ucfirst($this_area_name)." - ".get_vocab("all_areas")."</strong>\n";
+			echo " ".ucfirst($this_area_name)." - ".get_vocab("all_areas")."</h4>\n";
 			echo "</td>";
 			echo "</tr>"  ;
 			echo "</table>";
