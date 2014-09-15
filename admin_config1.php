@@ -452,8 +452,8 @@ if (isset($_POST['begin_day']) && isset($_POST['begin_month']) && isset($_POST['
 	while (!checkdate($_POST['begin_month'], $_POST['begin_day'], $_POST['begin_year']))
 		$_POST['begin_day']--;
 	$begin_bookings = mktime(0, 0, 0, $_POST['begin_month'], $_POST['begin_day'], $_POST['begin_year']);
-	$test_del1 = mysql_num_rows(mysql_query("select * from ".TABLE_PREFIX."_entry WHERE (end_time < '$begin_bookings' )"));
-	$test_del2 = mysql_num_rows(mysql_query("select * from ".TABLE_PREFIX."_repeat WHERE (end_date < '$begin_bookings')"));
+	$test_del1 = mysqli_num_rows(mysqli_query($GLOBALS['db_c'], "select * from ".TABLE_PREFIX."_entry WHERE (end_time < '$begin_bookings' )"));
+	$test_del2 = mysqli_num_rows(mysqli_query($GLOBALS['db_c'], "select * from ".TABLE_PREFIX."_repeat WHERE (end_date < '$begin_bookings')"));
 	if (($test_del1 != 0) or ($test_del2 != 0))
 		$demande_confirmation = 'yes';
 	else
@@ -469,8 +469,8 @@ if (isset($_POST['end_day']) && isset($_POST['end_month']) && isset($_POST['end_
 	$end_bookings = mktime(0, 0, 0, $_POST['end_month'], $_POST['end_day'] ,$_POST['end_year']);
 	if ($end_bookings < $begin_bookings)
 		$end_bookings = $begin_bookings;
-	$test_del1 = mysql_num_rows(mysql_query("select * from ".TABLE_PREFIX."_entry WHERE (start_time > '$end_bookings' )"));
-	$test_del2 = mysql_num_rows(mysql_query("select * from ".TABLE_PREFIX."_repeat WHERE (start_time > '$end_bookings')"));
+	$test_del1 = mysqli_num_rows(mysqli_query($GLOBALS['db_c'], "select * from ".TABLE_PREFIX."_entry WHERE (start_time > '$end_bookings' )"));
+	$test_del2 = mysqli_num_rows(mysqli_query($GLOBALS['db_c'], "select * from ".TABLE_PREFIX."_repeat WHERE (start_time > '$end_bookings')"));
 	if (($test_del1 != 0) or ($test_del2 != 0))
 		$demande_confirmation = 'yes';
 	else

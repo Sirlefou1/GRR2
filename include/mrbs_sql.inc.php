@@ -625,10 +625,10 @@ function mrbsGetRepeatEntryList($time, $enddate, $rep_type, $rep_opt, $max_ittr,
             // Si la périodicité est par Jours/Cycle
             case 6:
                 $sql = "SELECT * FROM ".TABLE_PREFIX."_calendrier_jours_cycle WHERE DAY >= '".$time2."' AND DAY <= '".$enddate."' AND Jours = '".$rep_jour_c."'";
-                $result = mysql_query($sql);
+                $result = mysqli_query($GLOBALS['db_c'], $sql);
                 $kk = 0;
                 $tableFinale = array();
-                while ($table = mysql_fetch_array($result)){
+                while ($table = mysqli_fetch_array($result)){
                     $day   = date("d", $table['DAY']);
                     $month = date("m", $table['DAY']);
                     $year  = date("Y", $table['DAY']);

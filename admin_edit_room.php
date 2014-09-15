@@ -313,7 +313,7 @@ if ((!empty($room)) || (isset($area_id)))
 			statut_room='".$statut_room."'";
 			if (grr_sql_command($sql) < 0)
 				fatal_error(1, "<p>" . grr_sql_error());
-			$room = mysql_insert_id();
+			$room = mysqli_insert_id($GLOBALS['db_c']);
 		}
 		#Si room_name est vide on le change maintenant que l'on a l'id room
 		if ($room_name == '')

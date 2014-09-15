@@ -69,7 +69,7 @@ if (isset($_GET['module_multisite']))
 				SET sitecode='1', sitename='site par défaut'";
 				if (grr_sql_command($sql) < 0)
 					fatal_error(0,'<p>'.grr_sql_error().'</p>');
-				$id_site = mysql_insert_id();
+				$id_site = mysqli_insert_id($GLOBALS['db_c']);
 			}
 						// On affecte tous les domaines à un site.
 			$sql = "select id from ".TABLE_PREFIX."_area";

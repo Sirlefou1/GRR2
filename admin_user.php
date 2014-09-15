@@ -136,10 +136,10 @@ if ((isset($_GET['action'])) and ($_GET['action'] =="nettoyage") and (getSetting
             // L'utilisateur n'est plus présent dans la base LCS, on le supprime
             // Etablir à nouveau la connexion à la base
             if (empty($db_nopersist))
-                $db_c = mysql_pconnect($dbHost, $dbUser, $dbPass);
+                $db_c = mysqli_connect('p:'.$dbHost, $dbUser, $dbPass);
             else
-                $db_c = mysql_connect($dbHost, $dbUser, $dbPass);
-            if (!$db_c || !mysql_select_db ($dbDb))
+                $db_c = mysqli_connect($dbHost, $dbUser, $dbPass);
+            if (!$db_c || !mysqli_select_db ($db_c, $dbDb))
                echo "\n<p>\n" . get_vocab('failed_connect_db') . "\n";
             $sql = "DELETE FROM ".TABLE_PREFIX."_utilisateurs WHERE login='".$user_login."'";
             if (grr_sql_command($sql) < 0) {fatal_error(1, "<p>" . grr_sql_error());}  else {
@@ -170,10 +170,10 @@ if ((isset($_GET['action'])) and ($_GET['action'] =="synchro") and (getSettingVa
     $liste_pb_update = "";
     // Etablir à nouveau la connexion à la base
     if (empty($db_nopersist))
-        $db_c = mysql_pconnect($dbHost, $dbUser, $dbPass);
+        $db_c = mysqli_connect('p:'.$dbHost, $dbUser, $dbPass);
     else
-        $db_c = mysql_connect($dbHost, $dbUser, $dbPass);
-    if (!$db_c || !mysql_select_db ($dbDb))
+        $db_c = mysqli_connect($dbHost, $dbUser, $dbPass);
+    if (!$db_c || !mysqli_select_db ($db_c, $dbDb))
     echo "\n<p>\n" . get_vocab('failed_connect_db') . "\n";
     for ( $loop=0; $loop<count($users); $loop++ ) {
         $user_login = $users[$loop]["uid"];

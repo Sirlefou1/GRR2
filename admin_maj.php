@@ -92,8 +92,8 @@ include "include/language.inc.php";
 function traite_requete($requete = "")
 {
 	$retour="";
-	$res = mysql_query($requete);
-	$erreur_no = mysql_errno();
+	$res = mysqli_query($GLOBALS['db_c'], $requete);
+	$erreur_no = mysqli_errno($GLOBALS['db_c']);
 	if (!$erreur_no)
 		$retour = "";
 	else
@@ -110,7 +110,7 @@ function traite_requete($requete = "")
 			break;
 			case "1062":
 			// Présence d'un doublon : création de la cléf impossible
-			$retour = "<span style=\"color:#FF0000;\">Erreur (<b>non critique</b>) sur la requête : <i>".$requete."</i> (".mysql_errno()." : ".mysql_error().")</span><br />\n";
+			$retour = "<span style=\"color:#FF0000;\">Erreur (<b>non critique</b>) sur la requête : <i>".$requete."</i> (".mysqli_errno($GLOBALS['db_c'])." : ".mysqli_error($GLOBALS['db_c']).")</span><br />\n";
 			break;
 			case "1068":
 			// Des cléfs existent déjà : pas de problème
@@ -121,7 +121,7 @@ function traite_requete($requete = "")
 			$retour = "";
 			break;
 			default:
-			$retour = "<span style=\"color:#FF0000;\">Erreur sur la requête : <i>".$requete."</i> (".mysql_errno()." : ".mysql_error().")</span><br />\n";
+			$retour = "<span style=\"color:#FF0000;\">Erreur sur la requête : <i>".$requete."</i> (".mysqli_errno($GLOBALS['db_c'])." : ".mysqli_error($GLOBALS['db_c']).")</span><br />\n";
 			break;
 		}
 	}

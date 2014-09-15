@@ -167,7 +167,7 @@
        			fax='".protect_data_sql($fax)."'";
          if (grr_sql_command($sql) < 0)
            fatal_error(0,'<p>'.grr_sql_error().'</p>');
-           $site = mysql_insert_id();
+           $site = mysqli_insert_id($GLOBALS['db_c']);
      }
      // On affiche le tableau des sites
      read_sites();
@@ -313,7 +313,7 @@ echo '          </td>
           where id='".$id."'";
          if (grr_sql_command($sql) < 0)
            fatal_error(0,'<p>'.grr_sql_error().'</p>');
-           $site = mysql_insert_id();
+           $site = mysqli_insert_id($GLOBALS['db_c']);
      }
      // On affiche le tableau des sites
      read_sites();

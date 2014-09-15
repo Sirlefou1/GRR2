@@ -145,8 +145,8 @@ function grr_sql_row_keyed ($r, $i)
         mysqli_free_result($r);
         return 0;
     }
-    mysql_data_seek($r, $i);
-    return mysql_fetch_array($r);
+    mysqi_data_seek($r, $i);
+    return mysqli_fetch_array($r);
 }
 
 // Return the number of rows returned by a result handle from grr_sql_query.

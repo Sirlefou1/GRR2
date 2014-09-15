@@ -155,7 +155,7 @@ function grr_opensession($_login, $_password, $_user_ext_authentifie = '', $tab_
                    //  On détecte si Nom, Prénom ou Email ont changé,
                    // Si c'est le cas, on met à jour les champs
                    $req = grr_sql_query("select nom, prenom, email from ".TABLE_PREFIX."_utilisateurs where login ='".protect_data_sql($_login)."'");
-                   $res = mysql_fetch_array($req);
+                   $res = mysqli_fetch_array($req);
                    $nom_en_base = $res[0];
                    $prenom_en_base = $res[1];
                    $email_en_base = $res[2];
@@ -713,7 +713,7 @@ Par ailleurs, pour que cette fonctionnalité soit complète et dans l'esprit de GR
 	// Début de la fonctionnalité SE3
 	$grp=@grr_sql_query("SELECT groupe, id_area_room, statut FROM ".TABLE_PREFIX."_j_groupe_se3");
 	if ($grp) { // si la table ".TABLE_PREFIX."_j_groupe_se3 est implantée et non vide
-		while ($resgrp=@mysql_fetch_array($grp)) {	// balaye tous les groupes présents dans la table ".TABLE_PREFIX."_j_groupadmin_area
+		while ($resgrp=@mysqli_fetch_array($grp)) {	// balaye tous les groupes présents dans la table ".TABLE_PREFIX."_j_groupadmin_area
 	    $statut_se3 = $resgrp['statut'];		$area_se3 = $resgrp['id_area_room'];
 		if ($statut_se3 == 'administrateur')	{ $table_user_se3 = "".TABLE_PREFIX."_j_useradmin_area"; $type_res = 'id_area'; }
 		if ($statut_se3 == 'acces_restreint')	{ $table_user_se3 = "".TABLE_PREFIX."_j_user_area"; $type_res = 'id_area'; }

@@ -3352,7 +3352,7 @@ function MajMysqlModeDemo() {
 				$query = fgets($fd, 5000);
 				$query = trim($query);
 				if ($query != '') {
-					$reg = mysql_query($query);
+					$reg = mysqli_query($GLOBALS['db_c'], $query);
 				}
 			}
 			fclose($fd);
