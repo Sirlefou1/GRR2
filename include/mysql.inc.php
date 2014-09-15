@@ -85,7 +85,7 @@ function grr_sql_free($r)
 function grr_sql_command ($sql)
 {
     if (mysqli_query($GLOBALS['db_c'], $sql))
-        return mysql_affected_rows();
+        return mysqli_affected_rows($GLOBALS['db_c']);
     return -1;
 }
 
@@ -159,7 +159,7 @@ function grr_sql_count ($r)
 // Must be called right after an insert on that table!
 function grr_sql_insert_id($table, $field)
 {
-    return mysql_insert_id();
+    return mysqli_insert_id($GLOBALS['db_c']);
 }
 
 // Return the text of the last error message.

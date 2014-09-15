@@ -2737,7 +2737,7 @@ function auth_visiteur($user,$id_room)
 	if ((!isset($user)) or (!isset($id_room))) return 0;
 	$res = grr_sql_query("SELECT statut FROM ".TABLE_PREFIX."_utilisateurs WHERE login ='".protect_data_sql($user)."'");
 	if (!$res || grr_sql_count($res) == 0) return 0;
-	$status = mysql_fetch_row($res);
+	$status = mysqli_fetch_row($res);
 	if (strtolower($status[0]) == 'visiteur') {
 		if ((in_array($id_room,$id_room_autorise)) and ($id_room_autorise != ""))
 			return 1;
