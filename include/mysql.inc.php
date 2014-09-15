@@ -145,7 +145,7 @@ function grr_sql_row_keyed ($r, $i)
         mysqli_free_result($r);
         return 0;
     }
-    mysqi_data_seek($r, $i);
+    mysqli_data_seek($r, $i);
     return mysqli_fetch_array($r);
 }
 
