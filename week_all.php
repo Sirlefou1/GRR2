@@ -458,12 +458,16 @@ $res = grr_sql_query($sql);
 # else
 
  //Lien précedent dans le format imprimable
-if ($_GET['pview'] == 1 AND $_GET['precedent'] == 1)
+if (isset($_GET['precedent']))
 {
-	echo "<span id=\"lienPrecedent\">
-	<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript:history.back();\">Précedent</button>
-</span>";
+	if ($_GET['pview'] == 1 && $_GET['precedent'] == 1)
+	{
+		echo "<span id=\"lienPrecedent\">
+		<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript:history.back();\">Précedent</button>
+	</span>";
 }
+}
+
 
 if (!$res)
 	fatal_error(0, grr_sql_error());
@@ -479,7 +483,7 @@ else
 	echo "<div id=\"planning\">";
 	include "chargement.php";
 	echo "<div class=\"titre_planning\"><table width=\"100%\">";
- 	//Test si le format est imprimable
+	//Test si le format est imprimable
 	if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
 	{
 	#Show Go to week before and after links

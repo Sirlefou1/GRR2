@@ -307,6 +307,10 @@ text-align: center;
  	line-height: 20px;
  }
 
+ td.cell_hours a {
+ 	color: #fff;
+ }
+
  td.cell_month {
  	background-color:white;
  }

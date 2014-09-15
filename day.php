@@ -377,8 +377,11 @@ else
 			echo "</table>";
 			echo " </div>\n";
  			//Lien précedent dans le format imprimable
-			if ($_GET['pview'] == 1 && $_GET['precedent'] == 1)
-				echo "<span id=\"lienPrecedent\"><button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript:history.back();\">Précedent</button></span>";
+			if (isset($_GET['precedent']))
+			{
+				if ($_GET['pview'] == 1 && $_GET['precedent'] == 1)
+					echo "<span id=\"lienPrecedent\"><button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript:history.back();\">Précedent</button></span>";
+			}			
 			echo " <div class=\"contenu_planning\">" ;
 			#This is where we start displaying stuff
 			echo "<table  cellspacing=\"0\" border=\"1\" width=\"100%\">";

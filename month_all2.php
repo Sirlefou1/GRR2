@@ -531,29 +531,36 @@ for ($ir = 0; ($row = grr_sql_row($res, $ir)); $ir++)
                 $n = count($d[$cday]["id"]);
                 # Show the start/stop times, 2 per line, linked to view_entry.
                 # If there are 12 or fewer, show them, else show 11 and "...".
-                for ($i = 0; $i < $n; $i++) {
-                    if ($i == 11 && $n > 12) {
+                for ($i = 0; $i < $n; $i++)
+                {
+                    if ($i == 11 && $n > 12)
+                    {
                         echo " ...\n";
                         break;
                     }
-                    for ($i = 0; $i < $n; $i++) {
-                      if ($d[$cday]["room"][$i]==$row[0]) {
+                    for ($i = 0; $i < $n; $i++)
+                    {
+                      if ($d[$cday]["room"][$i] == $row[0])
+                      {
                         #if ($i > 0 && $i % 2 == 0) echo "<br />"; else echo " ";
                         echo "\n<br /><table width='100%'><tr>";
                         tdcell($d[$cday]["color"][$i]);
-                        if ($d[$cday]["res"][$i]!='-') echo "&nbsp;<img src=\"img_grr/buzy.png\" alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("ressource actuellement empruntee")."\" width=\"20\" height=\"20\" class=\"image\" />&nbsp;\n";
+                        if ($d[$cday]["res"][$i] != '-') 
+                          echo "&nbsp;<img src=\"img_grr/buzy.png\" alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("ressource actuellement empruntee")."\" width=\"20\" height=\"20\" class=\"image\" />&nbsp;\n";
                         // si la réservation est à confirmer, on le signale
-                        if ((isset($d[$cday]["option_reser"][$i])) and ($d[$cday]["option_reser"][$i]!=-1)) echo "&nbsp;<img src=\"img_grr/small_flag.png\" alt=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."\" title=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."&nbsp;".time_date_string_jma($d[$cday]["option_reser"][$i],$dformat)."\" width=\"20\" height=\"20\" class=\"image\" />&nbsp;\n";
+                        if ((isset($d[$cday]["option_reser"][$i])) && ($d[$cday]["option_reser"][$i] != -1))
+                          echo "&nbsp;<img src=\"img_grr/small_flag.png\" alt=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."\" title=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."&nbsp;".time_date_string_jma($d[$cday]["option_reser"][$i],$dformat)."\" width=\"20\" height=\"20\" class=\"image\" />&nbsp;\n";
                         // si la réservation est à modérer, on le signale
-                        if ((isset($d[$cday]["moderation"][$i])) and ($d[$cday]["moderation"][$i]==1))
+                        if ((isset($d[$cday]["moderation"][$i])) && ($d[$cday]["moderation"][$i] == 1))
                             echo "&nbsp;<img src=\"img_grr/flag_moderation.png\" alt=\"".get_vocab("en_attente_moderation")."\" title=\"".get_vocab("en_attente_moderation")."\" class=\"image\" />&nbsp;\n";
                         echo "<span class=\"small_planning\">";
 
                         if ($acces_fiche_reservation)
                         {
                                 /*MAJ Loïs THOMAS <-----Test permettant de savoir le format d'ouverture pour les informations sur les réservations----->  */
-                            if (getSettingValue("display_level_view_entry")==0){
-                                $currentPage ='month_all2';
+                            if (getSettingValue("display_level_view_entry") == 0)
+                            {
+                                $currentPage = 'month_all2';
                                 $id =   $d[$cday]["id"][$i];
                                 echo "<a title=\"".htmlspecialchars($d[$cday]["who"][$i])."\" href=\"#?w=500\" onclick=\"request($id,$cday,$month,$year,'$currentPage',readData);\" rel=\"popup_name\" class=\"poplight\">" .$d[$cday]["who1"][$i]{0}."</a>";
                                 echo  "<div id=\"popup_name\" class=\"popup_block\" ></div>";

@@ -3,7 +3,7 @@
  * login.php
  * interface de connexion
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2009-12-16 14:52:31 $
+ * DerniÃ¨re modification : $Date: 2009-12-16 14:52:31 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @author    Marc-Henri PAMISEUX <marcori@users.sourceforge.net>
  * @copyright Copyright 2003-2008 Laurent Delineau
@@ -69,24 +69,24 @@ require_once("./include/settings.inc.php");
 //Chargement des valeurs de la table settingS
 if (!loadSettings()) die("Erreur chargement settings");
 
-// Paramètres langage
+// ParamÃ¨tres langage
 include "include/language.inc.php";
 
 // Session related functions
 require_once("./include/session.inc.php");
 
 
-// Vérification du numéro de version et renvoi automatique vers la page de mise à jour
+// VÃ©rification du numÃ©ro de version et renvoi automatique vers la page de mise Ã  jour
 if (verif_version()) {
     header("Location: ./admin_maj.php");
     exit();
 }
 // User wants to be authentified
 if (isset($_POST['login']) && isset($_POST['password'])) {
-    // Détruit toutes les variables de session au cas où une session existait auparavant
+    // DÃ©truit toutes les variables de session au cas oÃ¹ une session existait auparavant
     $_SESSION = array();
     $result = grr_opensession($_POST['login'], unslashes($_POST['password']));
-    // On écrit les données de session et ferme la session
+    // On Ã©crit les donnÃ©es de session et ferme la session
     session_write_close();
     if ($result=="2") {
         $message = get_vocab("echec_connexion_GRR");
@@ -137,7 +137,7 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
         }
     }
 }
-// Dans le cas d'une démo, on met à jour la base une fois par jour.
+// Dans le cas d'une dÃ©mo, on met Ã  jour la base une fois par jour.
 MajMysqlModeDemo();
 
 //si on a interdit l'acces a la page login
@@ -225,8 +225,8 @@ if (getSettingValue("webmaster_email") != "") {
     if ($lien != "")
         echo "<p>[".$lien."]</p>";
 }
-/*-----MAJ Loïs THOMAS  --> lien qui permet de revenir en arrière -----*/
-echo "<a href=\"javascript:history.back()\">Précedent";
+/*-----MAJ LoÃ¯s THOMAS  --> lien qui permet de revenir en arriÃ¨re -----*/
+echo "<a href=\"javascript:history.back()\">PrÃ©cedent";
 echo " - <b>".getSettingValue("company")."</b></a>";
 ?>
 <br />
@@ -234,7 +234,7 @@ echo " - <b>".getSettingValue("company")."</b></a>";
 
 <?php
 
-//Hugo - Mise a jour temporaire du lien à afficher
+//Hugo - Mise a jour temporaire du lien Ã  afficher
 //11/06/2013
 $grr_devel_url = "http://sourceforge.net/projects/grrv2/";
 
