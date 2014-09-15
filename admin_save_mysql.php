@@ -112,18 +112,18 @@ function php_version()
 
 function mysql_version()
 {
-   $result = mysql_query('SELECT VERSION() AS version');
-   if ($result != FALSE && @mysql_num_rows($result) > 0)
+   $result = mysqli_query($GLOBALS['db_c'], 'SELECT VERSION() AS version');
+   if ($result != FALSE && mysqli_num_rows($result) > 0)
    {
-      $row = mysql_fetch_array($result);
+      $row = mysqli_fetch_array($result);
       $match = explode('.', $row['version']);
    }
    else
    {
-      $result = @mysql_query('SHOW VARIABLES LIKE \'version\'');
-      if ($result != FALSE && @mysql_num_rows($result) > 0)
+      $result = mysqli_query($GLOBALS['db_c'], 'SHOW VARIABLES LIKE \'version\'');
+      if ($result != FALSE && mysqli_num_rows($result) > 0)
       {
-         $row = mysql_fetch_row($result);
+         $row = mysqli_fetch_row($result);
          $match = explode('.', $row[1]);
       }
    }
@@ -169,8 +169,8 @@ if (isset($_SERVER['REMOTE_ADDR'])) $fd.="# IP Client : ".$_SERVER['REMOTE_ADDR'
                 $fd.="DROP TABLE IF EXISTS `$temp`;\n";
                 // requete de creation de la table
                 $query = "SHOW CREATE TABLE $temp";
-                $resCreate = mysql_query($query);
-                $row = mysql_fetch_array($resCreate);
+                $resCreate = mysqli_query($GLOBALS['db_c'], $query);
+                $row = mysqli_fetch_array($resCreate);
                 $schema = $row[1].";";
                 $fd.="$schema\n";
             }
@@ -179,14 +179,14 @@ if (isset($_SERVER['REMOTE_ADDR'])) $fd.="# IP Client : ".$_SERVER['REMOTE_ADDR'
                 // les données de la table
                 $fd.="#\n# Données de $temp\n#\n";
                 $query = "SELECT * FROM $temp";
-                $resData = @mysql_query($query);
+                $resData = mysqli_query($GLOBALS['db_c'], $query);
                 //peut survenir avec la corruption d'une table, on prévient
                 if (!$resData) {
                     $fd.="Problème avec les données de $temp, corruption possible !\n";
                 } else {
-                    if (@mysql_num_rows($resData) > 0) {
+                    if (mysqli_num_rows($resData) > 0) {
                         $sFieldnames = "";
-                        $num_fields = mysql_num_fields($resData);
+                        $num_fields = mysqli_field_count($GLOBALS['db_c']);
                         if ($insertComplet) {
                             for($k=0; $k < $num_fields; $k++) {
                                 $sFieldnames .= "`".mysql_field_name($resData, $k) ."`";
@@ -196,10 +196,10 @@ if (isset($_SERVER['REMOTE_ADDR'])) $fd.="# IP Client : ".$_SERVER['REMOTE_ADDR'
                             $sFieldnames = "($sFieldnames)";
                         }
                         $sInsert = "INSERT INTO $temp $sFieldnames values ";
-                        while ($rowdata = mysql_fetch_row($resData)) {
+                        while ($rowdata = mysqli_fetch_row($resData)) {
                             $lesDonnees = "";
                             for ($mp = 0; $mp < $num_fields; $mp++) {
-                                $lesDonnees .= "'" . mysql_real_escape_string($rowdata[$mp]) . "'";
+                                $lesDonnees .= "'" . mysqli_real_escape_string($GLOBALS['db_c'], $rowdata[$mp]) . "'";
                                 //on ajoute à la fin une virgule si nécessaire
                                 if ($mp<$num_fields-1) $lesDonnees .= ", ";
                             }

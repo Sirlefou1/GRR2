@@ -52,23 +52,31 @@
 
 // Etablir la connexion à la base
 if (empty($db_nopersist))
-    $db_c = @mysql_pconnect($dbHost, $dbUser, $dbPass);
+   $GLOBALS['db_c'] = mysqli_connect('p:'.$dbHost, $dbUser, $dbPass);
 else
-    $db_c = @mysql_connect($dbHost, $dbUser, $dbPass);
+   $GLOBALS['db_c'] = mysqli_connect($dbHost, $dbUser, $dbPass);
 
-if (!$db_c || !mysql_select_db ($dbDb))
+if (!$GLOBALS['db_c'] || !mysqli_select_db ($GLOBALS['db_c'], $dbDb))
 {
     echo "\n<p>Database connection failure</p>\n";
     exit;
 }
-mysql_query("SET NAMES UTF8");
+mysqli_query($GLOBALS['db_c'], "SET NAMES UTF8");
 
+
+function mysqli_result($res, $row, $field = 0)
+{
+    $res->data_seek($row);
+    $datarow = $res->fetch_array();
+    return $datarow[$field];
+}
 // Free a results handle. You need not call this if you call grr_sql_row or
 // grr_sql_row_keyed until the row returns 0, since grr_sql_row frees the results
 // handle when you finish reading the rows.
 function grr_sql_free($r)
 {
-    @mysql_free_result($r);
+    if (is_object($r) && $r instanceof mysqli_result && is_resource($r))
+        mysqli_free_result($r);
 }
 
 // Execute a non-SELECT SQL command (insert/update/delete).
@@ -76,7 +84,8 @@ function grr_sql_free($r)
 // Returns -1 on error; use grr_sql_error to get the error message.
 function grr_sql_command ($sql)
 {
-    if (mysql_query($sql)) return mysql_affected_rows();
+    if (mysqli_query($GLOBALS['db_c'], $sql))
+        return mysql_affected_rows();
     return -1;
 }
 
@@ -88,11 +97,12 @@ function grr_sql_command ($sql)
 // a MIN or MAX aggregate function applied over no rows.
 function grr_sql_query1 ($sql)
 {
-    $r = mysql_query($sql);
-    if (! $r) return -1;
-    if (mysql_num_rows($r) != 1 || mysql_num_fields($r) != 1
-        || ($result_ = mysql_result($r, 0, 0)) == "") $result_ = -1;
-    mysql_free_result($r);
+    $r = mysqli_query($GLOBALS['db_c'], $sql);
+    if (!$r)
+        return -1;
+    if (mysqli_num_rows($r) != 1 || mysqli_field_count($GLOBALS['db_c']) != 1 || ($result_ = mysqli_result($r, 0, 0)) == "")
+        $result_ = -1;
+    mysqli_free_result($r);
     return $result_;
 }
 
@@ -101,7 +111,7 @@ function grr_sql_query1 ($sql)
 // Returns 0 on error; use grr_sql_error to get the error message.
 function grr_sql_query($sql)
 {
-    $r = mysql_query($sql);
+    $r = mysqli_query($GLOBALS['db_c'], $sql);
     return $r;
 }
 
@@ -113,13 +123,13 @@ function grr_sql_query($sql)
 
 function grr_sql_row ($r, $i)
 {
-    if ($i >= mysql_num_rows($r))
+    if ($i >= mysqli_num_rows($r))
     {
-        mysql_free_result($r);
+        mysqli_free_result($r);
         return 0;
     }
-    mysql_data_seek($r, $i);
-    return mysql_fetch_row($r);
+    mysqli_data_seek($r, $i);
+    return mysqli_fetch_row($r);
 }
 
 // Return a row from a result as an associative array keyed by field name.
@@ -130,9 +140,9 @@ function grr_sql_row ($r, $i)
 // the query and returns 0.
 function grr_sql_row_keyed ($r, $i)
 {
-    if ($i >= mysql_num_rows($r))
+    if ($i >= mysqli_num_rows($r))
     {
-        mysql_free_result($r);
+        mysqli_free_result($r);
         return 0;
     }
     mysql_data_seek($r, $i);
@@ -142,7 +152,7 @@ function grr_sql_row_keyed ($r, $i)
 // Return the number of rows returned by a result handle from grr_sql_query.
 function grr_sql_count ($r)
 {
-    return mysql_num_rows($r);
+    return mysqli_num_rows($r);
 }
 
 // Return the value of an autoincrement field from the last insert.
@@ -155,7 +165,7 @@ function grr_sql_insert_id($table, $field)
 // Return the text of the last error message.
 function grr_sql_error()
 {
-    return mysql_error();
+    return mysqli_error($GLOBALS['db_c']);
 }
 
 // Begin a transaction, if the database supports it. This is used to

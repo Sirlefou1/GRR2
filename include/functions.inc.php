@@ -738,9 +738,9 @@ function heure_ete_hiver($type, $annee, $heure)
 			$_value = stripslashes($_value);
 		if (!is_numeric($_value)) {
 			if (isset($use_function_mysql_real_escape_string) and ($use_function_mysql_real_escape_string==0))
-				$_value = mysql_escape_string($_value);
+				$_value = mysqli_real_escape_string($GLOBALS['db_c'], $_value);
 			else
-				$_value = mysql_real_escape_string($_value);
+				$_value = mysqli_real_escape_string($GLOBALS['db_c'], $_value);
 		}
 		return $_value;
 	}
