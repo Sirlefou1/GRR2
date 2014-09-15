@@ -1,9 +1,9 @@
 <?php
 /**
  * mysql.inc.php
- * Bibliothèque de fonctions pour le support mysql
+ * BibliothÃ¨que de fonctions pour le support mysql
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2009-09-29 18:02:57 $
+ * DerniÃ¨re modification : $Date: 2009-09-29 18:02:57 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -50,7 +50,7 @@
 // Including this file connects you to the database, or exits on error.
 
 
-// Etablir la connexion à la base
+// Etablir la connexion Ã  la base
 if (empty($db_nopersist))
    $GLOBALS['db_c'] = mysqli_connect('p:'.$dbHost, $dbUser, $dbPass);
 else
@@ -274,7 +274,7 @@ function grr_sql_syntax_caseless_contains_overload($fieldname, $s, $id_overload,
         return " $fieldname NOT LIKE '%@".$id_overload."@%$s%@\/".$id_overload."@%' ";
 
 }
-// Utilisé dans language.inc.php
+// UtilisÃ© dans language.inc.php
 $fichier_mysql_inc_est_present = 1;
 
 ?>
