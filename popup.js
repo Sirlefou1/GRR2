@@ -63,7 +63,6 @@ function request(id,day,month,year,currentPage,callback) {
     var Month = month ;
     var Year = year ;
     var Page = currentPage ;
-
     var xhr = getXMLHttpRequest();
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
@@ -71,7 +70,7 @@ function request(id,day,month,year,currentPage,callback) {
         }
     };
 
-
+    xhr.overrideMimeType('text/html; charset=UTF-8');
     xhr.open("GET","view_entry.php?id="+Id+"&day="+Day+"&month="+Month+"&year="+Year+"&page="+Page+"", true);
     xhr.send(null);
 
@@ -79,8 +78,3 @@ function request(id,day,month,year,currentPage,callback) {
 function readData(sData) {
     document.getElementById('popup_name').innerHTML +='<a class=\"close\" href=\"#\" title=\"Fermeture\" ><img class=\"btn_close\" src=\"images/croix.jpeg\"/></a>'+sData + '<a class=\"close\" href=\"#\" title=\"Fermeture\" >Fermer </a></div> ';
 }
-
-
-
-
-

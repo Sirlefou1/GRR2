@@ -836,10 +836,9 @@ function begin_page($title,$page="with_session")
 		}
 	}
 	global $vocab, $charset_html, $unicode_encoding, $clock_file;
-	header("Content-Type: text/html;charset=". ((isset($unicode_encoding) && ($unicode_encoding == 1)) ? "utf-8" : $charset_html)); header("Pragma: no-cache");
-	header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+	header('Content-Type: text/html; charset=utf-8');
 	$a = '<!DOCTYPE html>'."\n";
-	$a.='<html><head><link rel="stylesheet" href="'.$sheetcss.'" type="text/css" />'."\n";
+	$a.='<html><head><meta charset="utf-8"><link rel="stylesheet" href="'.$sheetcss.'" type="text/css" />'."\n";
 	$a.='<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css" />'."\n";
 	$a.='<link href="include/admin_grr.css" rel="stylesheet" type="text/css" />'."\n";
 	// Pour le format imprimable, on impose un fond de page blanc
@@ -870,7 +869,7 @@ function begin_page($title,$page="with_session")
 	$a .='<script type="text/javascript" src="uploadify/jquery.uploadify.js"></script>'.PHP_EOL;
 	$a .='<link rel="stylesheet" type="text/css" href="uploadify/uploadify.css"/>'.PHP_EOL;
 	$a .='<script src="appeldelete.js" type="text/javascript" ></script>'.PHP_EOL;
-	$a .='<script src="popup.js" type="text/javascript" ></script>'.PHP_EOL;
+	$a .='<script src="popup.js" type="text/javascript" charset="utf-8"></script>'.PHP_EOL;
 	$a .='<script type="text/javascript" src="oXHR.js"></script>'.PHP_EOL;
 	$a .='<script src="functions.js" type="text/javascript" ></script>'.PHP_EOL;
 	if (!isset($_SESSION['selection']))
