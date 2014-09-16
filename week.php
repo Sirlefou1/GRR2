@@ -81,7 +81,6 @@ include "include/functions.inc.php";
 include "include/$dbsys.inc.php";
 include "include/mincals.inc.php";
 include "include/mrbs_sql.inc.php";
-include "include/language.inc.php";
 $grr_script_name = "week.php";
 // Settings
 require_once("./include/settings.inc.php");
