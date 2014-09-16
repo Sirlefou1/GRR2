@@ -3,7 +3,7 @@
  * day.php
  * Permet l'affichage de la page d'accueil lorsque l'on est en mode d'affichage "jour".
  * Ce script fait partie de l'application GRR
- * DerniËre modification : $Date: 2009-12-02 20:11:07 $
+ * Derni√®re modification : $Date: 2009-12-02 20:11:07 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -85,14 +85,14 @@ include "include/$dbsys.inc.php";
 include "include/mincals.inc.php";
 include "include/language.inc.php";
 $grr_script_name = "day.php";
-#ParamËtres de connection
+#Param√®tres de connection
 require_once("./include/settings.inc.php");
 #Chargement des valeurs de la table settings
 if (!loadSettings())
 	die("Erreur chargement settings");
-#Fonction relative ‡ la session
+#Fonction relative √† la session
 require_once("./include/session.inc.php");
-	 #Si nous ne savons pas la date, nous devons la crÈer
+	 #Si nous ne savons pas la date, nous devons la cr√©er
 $date_now = time();
 if (!isset($day) || !isset($month) || !isset($year))
 {
@@ -108,7 +108,7 @@ if (!isset($day) || !isset($month) || !isset($year))
 }
 else
 {
-		// VÈrification des dates
+		// V√©rification des dates
 	settype($month,"integer");
 	settype($day,"integer");
 	settype($year,"integer");
@@ -120,7 +120,7 @@ else
 	if ($month > 12) $month = 12;
 	if ($year < $minyear) $year = $minyear;
 	if ($year > $maxyear) $year = $maxyear;
-		#Si la date n'est pas valide, ils faut la modifier (Si le nombre de jours est suppÈrieur au nombre de jours dans un mois)
+		#Si la date n'est pas valide, ils faut la modifier (Si le nombre de jours est supp√©rieur au nombre de jours dans un mois)
 	while (!checkdate($month, $day, $year))
 		$day--;
 }
@@ -152,9 +152,9 @@ if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))
 	$type_session = "no_session";
 else
 	$type_session = "with_session";
-// RÈcupÈration des donnÈes concernant l'affichage du planning du domaine
+// R√©cup√©ration des donn√©es concernant l'affichage du planning du domaine
 get_planning_area_values($area);
-// Si aucun domaine n'est dÈfini
+// Si aucun domaine n'est d√©fini
 if ($area <= 0)
 {
 	print_header($day, $month, $year, $area,$type_session);
@@ -179,10 +179,10 @@ if (check_begin_end_bookings($day, $month, $year))
 	showNoBookings($day, $month, $year, $area, $back, $type_session);
 	exit();
 }
-// On vÈrifie une fois par jour si le dÈlai de confirmation des rÈservations est dÈpassÈ
-// Si oui, les rÈservations concernÈes sont supprimÈes et un mail automatique est envoyÈ.
-// On vÈrifie une fois par jour que les ressources ont ÈtÈ rendue en fin de rÈservation
-// Si non, une notification email est envoyÈe
+// On v√©rifie une fois par jour si le d√©lai de confirmation des r√©servations est d√©pass√©
+// Si oui, les r√©servations concern√©es sont supprim√©es et un mail automatique est envoy√©.
+// On v√©rifie une fois par jour que les ressources ont √©t√© rendue en fin de r√©servation
+// Si non, une notification email est envoy√©e
 if (getSettingValue("verif_reservation_auto") == 0)
 {
 	verify_confirm_reservation();
@@ -244,12 +244,12 @@ else
 		#row[3] = short description
 		#row[4] = id of this booking
 		#row[5] = type (internal/external)
-		#row[6] = identifiant du rÈservant
+		#row[6] = identifiant du r√©servant
 		#row[7] = satut of the booking
 		#row[8] = Full description
 		#row[9] = option_reservation
-		#row[10] = Ètat de modÈration de la rÈservation
-		#row[11] = bÈnÈficiaire extÈrieur
+		#row[10] = √©tat de mod√©ration de la r√©servation
+		#row[11] = b√©n√©ficiaire ext√©rieur
 		# $today is a map of the screen that will be displayed
 		# It looks like:
 		#     $today[Room ID][Time][id]
@@ -264,7 +264,7 @@ else
 		# start or end at a recognized time still appear.
 		$start_t = max(round_t_down($row[1], $resolution, $am7), $am7);
 		$end_t = min(round_t_up($row[2], $resolution, $am7) - $resolution, $pm7);
-		// Calcul du nombre de crÈneaux qu'occupe la rÈservation
+		// Calcul du nombre de cr√©neaux qu'occupe la r√©servation
 		$cellules[$row[4]] = ($end_t - $start_t) / $resolution + 1;
 		// Initialisation du compteur
 		$compteur[$row[4]] = 0;
@@ -277,7 +277,7 @@ else
 			$today[$row[0]][$t]["statut"] 		= $row[7];
 			$today[$row[0]][$t]["moderation"] 	= $row[10];
 			$today[$row[0]][$t]["option_reser"] = $row[9];
-			// Construction des infos ‡ afficher sur le planning
+			// Construction des infos √† afficher sur le planning
 			$today[$row[0]][$t]["description"] 	= affichage_resa_planning($row[8], $row[4]);
 		}
 		# Show the name of the booker in the first segment that the booking
@@ -349,15 +349,15 @@ else
 		 //Test si le format est imprimable
 		if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
 		{
-			/*-----MAJ LoÔs THOMAS ca --> Lien qui permet de  le menu ‡ gauche -----*/
-			/*-----Maj David VOUE Suppression du bouton "Cacher le menu ‡ gauche"
+			/*-----MAJ Lo√Øs THOMAS ca --> Lien qui permet de  le menu √† gauche -----*/
+			/*-----Maj David VOUE Suppression du bouton "Cacher le menu √† gauche"
 	 		* 13/01/2013
 	 		* 
 			echo "<table width=\"100%\">
 					<tr>
 					<td align=\"left\">";
-			echo "<input type=\"button\" id=\"cacher\" value=\"cacher le menu ‡ gauche.\" onClick=\"divcache()\" style=\"display:inline;\"/>";
-			echo "<input type=\"button\" id=\"voir\" value=\"afficher le menu ‡ gauche.\" onClick=\"divaffiche()\" style=\"display:none;\" /> ";
+			echo "<input type=\"button\" id=\"cacher\" value=\"cacher le menu √† gauche.\" onClick=\"divcache()\" style=\"display:inline;\"/>";
+			echo "<input type=\"button\" id=\"voir\" value=\"afficher le menu √† gauche.\" onClick=\"divaffiche()\" style=\"display:none;\" /> ";
 			echo "</td>";
 			*/
 		}
@@ -373,16 +373,16 @@ else
 			//echo "</tr>"  ;
 			//echo "</table>";
 			echo " </div>\n";
- 			//Lien prÈcedent dans le format imprimable
+ 			//Lien pr√©cedent dans le format imprimable
 			if (isset($_GET['precedent']))
 			{
 				if ($_GET['pview'] == 1 && $_GET['precedent'] == 1)
-					echo "<span id=\"lienPrecedent\"><button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript:history.back();\">PrÈcedent</button></span>";
+					echo "<span id=\"lienPrecedent\"><button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript:history.back();\">Pr√©cedent</button></span>";
 			}			
 			echo " <div class=\"contenu_planning\">" ;
 			#This is where we start displaying stuff
 			echo "<table  cellspacing=\"0\" border=\"1\" width=\"100%\">";
-			// PremiËre ligne du tableau
+			// Premi√®re ligne du tableau
 			echo "<tr>\n<th style=\"width:5%;\">";
 			if ($enable_periods=='y')
 				echo get_vocab("period");
@@ -404,7 +404,7 @@ else
 					$room_name[$i] = $row[0];
 					$statut_room[$id_room[$i]] =  $row[4];
 					$statut_moderate[$id_room[$i]] =  $row[7];
-					// Calcul du niveau d'accËs aux fiche de rÈservation dÈtaillÈes des ressources
+					// Calcul du niveau d'acc√®s aux fiche de r√©servation d√©taill√©es des ressources
 					$acces_fiche_reservation = verif_acces_fiche_reservation(getUserName(), $id_room[$i]);
 					if ($row[1])
 						$temp = "<br /><span class=\"small\">($row[1] ".($row[1] >1 ? get_vocab("number_max2") : get_vocab("number_max")).")</span>";
@@ -418,7 +418,7 @@ else
 					// Si la ressource est temporairement indisponible, on le signale
 					if ($statut_room[$id_room[$i]] == "0")
 						echo " class='avertissement' ";
-					/*-----MAJ LoÔs THOMAS  --> crÈation d'un lien avec des boutons qui apparaissent : mois/semaines sous le nom des ressources quand elles sont cliquÈes  -----*/
+					/*-----MAJ Lo√Øs THOMAS  --> cr√©ation d'un lien avec des boutons qui apparaissent : mois/semaines sous le nom des ressources quand elles sont cliqu√©es  -----*/
 					$a = $a +1;
 					echo "><a id=\"afficherBoutonSelection$a\" class=\"lienPlanning\" href=\"#\" onclick=\"afficherMoisSemaine($a)\" style=\"display:inline;\">" . htmlspecialchars($row[0])."</a>\n";
 					echo "<a id=\"cacherBoutonSelection$a\" class=\"lienPlanning\" href=\"#\" onclick=\"cacherMoisSemaine($a)\" style=\"display:none;\">" . htmlspecialchars($row[0])."</a>\n";
@@ -436,16 +436,16 @@ else
 					<img src=\"img_grr/details.png\" alt=\"d&eacute;tails\" class=\"".$class_image."\"  /></a>";
 					if (authGetUserLevel(getUserName(),$id_room[$i]) > 2 && $_GET['pview'] != 1)
 						echo "<a href='admin_edit_room.php?room=$id_room[$i]'><img src=\"img_grr/editor.png\" alt=\"configuration\" title=\"".get_vocab("Configurer la ressource")."\" width=\"30\" height=\"30\" class=\"".$class_image."\"  /></a><br/>";
-					// La ressource est-elle empruntÈe ?
+					// La ressource est-elle emprunt√©e ?
 					affiche_ressource_empruntee($id_room[$i]);
-					//MAJ Hugo FORESTIER - Reparation des boutons prÈcÈdent ne fonctionnant pas (dans semaine, mois lorsqu'on se trouve sur day.php)
+					//MAJ Hugo FORESTIER - Reparation des boutons pr√©c√©dent ne fonctionnant pas (dans semaine, mois lorsqu'on se trouve sur day.php)
 					//17/05/2013
 					echo "<span  id=\"boutonSelection$a\"  style=\"display:none;\">
 					<input type=\"button\" class=\"btn btn-default btn-xs\" title=\"".htmlspecialchars(get_vocab("see_week_for_this_room"))."\" onclick=\"charger();javascript: location.href='week.php?year=$year&amp;month=$month&amp;cher=$day&amp;room=$id_room[$i]';\" value=\" ".get_vocab('week')." \"/>
 					<input type=\"button\"  class=\"btn btn-default btn-xs\" title=\"".htmlspecialchars(get_vocab("see_month_for_this_room"))."\" onclick=\"charger();javascript: location.href='month.php?year=$year&amp;month=$month&amp;day=$day&amp;room=$id_room[$i]';\" value=\" ".get_vocab('month')." \"/>";
 					echo "</span>";
 					echo "</th>";
-					// stockage de la premiËre ligne :
+					// stockage de la premi√®re ligne :
 					$tab[1][$i + 1] = htmlspecialchars($row[0]);
 					if (htmlspecialchars($row[3]. $temp != ''))
 					{
@@ -457,10 +457,10 @@ else
 					$tab[1][$i+1] .= "<br />";
 					if (verif_display_fiche_ressource(getUserName(), $id_room[$i]))
 						$tab[1][$i+1] .= "<a href='javascript:centrerpopup(\"view_room.php?id_room=$id_room[$i]\",600,480,\"scrollbars=yes,statusbar=no,resizable=yes\")' title=\"".get_vocab("fiche_ressource")."\">
-					<img src=\"img_grr/details.png\" alt=\"dÈtails\" class=\"".$class_image."\"  /></a>";
+					<img src=\"img_grr/details.png\" alt=\"d√©tails\" class=\"".$class_image."\"  /></a>";
 					if (authGetUserLevel(getUserName(),$id_room[$i]) > 2 && $_GET['pview'] != 1)
 						$tab[1][$i+1] .= "<a href='admin_edit_room.php?room=$id_room[$i]'><img src=\"img_grr/editor.png\" alt=\"configuration\" title=\"".get_vocab("Configurer la ressource")."\" width=\"30\" height=\"30\" class=\"".$class_image."\"  /></a>";
-					// fin stockage de la premiËre ligne :
+					// fin stockage de la premi√®re ligne :
 					$rooms[] = $row[2];
 					$delais_option_reservation[$row[2]] = $row[6];
 				}
@@ -471,7 +471,7 @@ else
 				include "include/trailer.inc.php";
 				exit;
 			}
-			// DeuxiËme ligne et lignes suivantes du tableau
+			// Deuxi√®me ligne et lignes suivantes du tableau
 			echo "<tr>\n<th style=\"width:5%;\">";
 			//echo "<tr>\n";
 			//echo "</td>\n</td>\n";
@@ -481,7 +481,7 @@ else
 				$tab[2][] = get_vocab('time');
 			echo "\n</tr>\n";
 			$tab_ligne = 3;
-			// DÈbut premiËre boucle sur le temps
+			// D√©but premi√®re boucle sur le temps
 			for ($t = $am7; $t <= $pm7; $t += $resolution)
 			{
 				# Show the time linked to the URL for highlighting that time
@@ -499,13 +499,13 @@ else
 					echo affiche_heure_creneau($t,$resolution)."</td>\n";
 					$tab[$tab_ligne][] = affiche_heure_creneau($t,$resolution);
 				}
-				// DÈbut DeuxiËme boucle sur la liste des ressources du domaine
+				// D√©but Deuxi√®me boucle sur la liste des ressources du domaine
 				while (list($key, $room) = each($rooms))
 				{
 					// On affiche pas toutes les ressources
 					if (verif_acces_ressource(getUserName(), $room))
 					{
-						if (isset($today[$room][$t]["id"])) // il y a une rÈservation sur le crÈneau
+						if (isset($today[$room][$t]["id"])) // il y a une r√©servation sur le cr√©neau
 						{
 							$id    = $today[$room][$t]["id"];
 							$color = $today[$room][$t]["color"];
@@ -523,27 +523,27 @@ else
 						{
 							if ( $compteur[$id] == 0 )
 							{
-								// Y-a-il chevauchement de deux blocs dans le cas o˘ la hauteur du bloc est supÈrieure ‡ 1 ?
+								// Y-a-il chevauchement de deux blocs dans le cas o√π la hauteur du bloc est sup√©rieure √† 1 ?
 								if ($cellules[$id] != 1)
 								{
-									// Dans ce cas, on s'intÈresse ‡ la derniËre ligne du bloc
+									// Dans ce cas, on s'int√©resse √† la derni√®re ligne du bloc
 									if (isset($today[$room][$t + ($cellules[$id] - 1) * $resolution]["id"]))
 									{
-										// Il y a chevaussement seulement si l'id correspondant est diffÈrent de l'id actuel
+										// Il y a chevaussement seulement si l'id correspondant est diff√©rent de l'id actuel
 										$id_derniere_ligne_du_bloc = $today[$room][$t + ($cellules[$id] - 1) * $resolution]["id"];
-										// Dan ce cas, on rÈduit la taille du bloc pour Èviter le chevaussement
+										// Dan ce cas, on r√©duit la taille du bloc pour √©viter le chevaussement
 										if ($id_derniere_ligne_du_bloc != $id)
 											$cellules[$id] = $cellules[$id]-1;
 									}
 								}
 								tdcell_rowspan ($c, $cellules[$id]);
 							}
-							$compteur[$id] = 1; // on incrÈmente le compteur initialement ‡ zÈro
+							$compteur[$id] = 1; // on incr√©mente le compteur initialement √† z√©ro
 						}
 						else
-							tdcell ($c); // il s'agit d'un crÈneau libre  -> <td> normal
+							tdcell ($c); // il s'agit d'un cr√©neau libre  -> <td> normal
 						// Si $compteur[$id] a atteint == $cellules[$id]+1
-						if ((!isset($id)) || (est_hors_reservation(mktime(0, 0, 0, $month, $day, $year), $area))) // Le crÈneau est libre
+						if ((!isset($id)) || (est_hors_reservation(mktime(0, 0, 0, $month, $day, $year), $area))) // Le cr√©neau est libre
 						{
 							$hour = date("H",$t);
 							$minute  = date("i",$t);
@@ -563,7 +563,7 @@ else
 									}
 									else
 									{									
-										/*MAJ David VOUE----Redimenssionnement de l'icÙne +	* 14/01/2014*/						
+										/*MAJ David VOUE----Redimenssionnement de l'ic√¥ne +	* 14/01/2014*/						
 										/*echo "<a href=\"edit_entry.php?room=$room&amp;hour=$hour&amp;minute=$minute&amp;year=$year&amp;month=$month&amp;day=$day&amp;page=day\" title=\"".get_vocab("cliquez_pour_effectuer_une_reservation")."\" ><img src=\"img_grr/new.gif\" class=\"".$class_image."\" alt=\"".get_vocab("add")."\" /></a>";
 										$tab[$tab_ligne][] =  "<a href=\"edit_entry.php?room=$room&amp;hour=$hour&amp;minute=$minute&amp;year=$year&amp;month=$month&amp;day=$day&amp;page=day\" title=\"".get_vocab("cliquez_pour_effectuer_une_reservation")."\" ><img src=\"img_grr/new.gif\" class=\"".$class_image."\" alt=\"".get_vocab("add")."\ /></a>";*/
 										echo "<a href=\"edit_entry.php?room=$room&amp;hour=$hour&amp;minute=$minute&amp;year=$year&amp;month=$month&amp;day=$day&amp;page=day\" title=\"".get_vocab("cliquez_pour_effectuer_une_reservation")."\" ><img src=\"img_grr/new.gif\" class=\"".$class_image."\" alt=\"".get_vocab("add")."\" width=\"16\" height=\"16\" /></a>";
@@ -579,19 +579,19 @@ else
 							}
 							elseif ($descr != "")
 							{
-								// si la rÈservation est "en cours", on le signale
+								// si la r√©servation est "en cours", on le signale
 								if ((isset($today[$room][$t]["statut"])) && ($today[$room][$t]["statut"] != '-'))
 								{
 									echo "&nbsp;<img src=\"img_grr/buzy.png\" alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("ressource actuellement empruntee")."\" width=\"20\" height=\"20\" class=\"image\" />&nbsp;\n";
 									$tab[$tab_ligne][] = "&nbsp;<img src=\"img_grr/buzy.png\" alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("ressource actuellement empruntee")."\" width=\"20\" height=\"20\" class=\"image\" />&nbsp;\n";
 								}
-								// si la rÈservation est ‡ confirmer, on le signale
+								// si la r√©servation est √† confirmer, on le signale
 								if (($delais_option_reservation[$room] > 0) && (isset($today[$room][$t]["option_reser"])) && ($today[$room][$t]["option_reser"] != -1))
 								{
 									echo "&nbsp;<img src=\"img_grr/small_flag.png\" alt=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."\" title=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."&nbsp;".time_date_string_jma($today[$room][$t]["option_reser"],$dformat)."\" width=\"20\" height=\"20\" class=\"image\" />&nbsp;\n";
 									$tab[$tab_ligne][] = "&nbsp;<img src=\"img_grr/small_flag.png\" alt=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."\" title=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."&nbsp;".time_date_string_jma($today[$room][$t]["option_reser"],$dformat)."\" width=\"20\" height=\"20\" class=\"image\" />&nbsp;\n";
 								}
-								// si la rÈservation est ‡ modÈrer, on le signale
+								// si la r√©servation est √† mod√©rer, on le signale
 								if ((isset($today[$room][$t]["moderation"])) && ($today[$room][$t]["moderation"] == '1'))
 								{
 									echo "&nbsp;<img src=\"img_grr/flag_moderation.png\" alt=\"".get_vocab("en_attente_moderation")."\" title=\"".get_vocab("en_attente_moderation")."\" class=\"image\" />&nbsp;\n";
@@ -602,7 +602,7 @@ else
 								{
 									if ($acces_fiche_reservation)
 									{
-										/*MAJ LoÔs THOMAS <-----Test permettant de savoir le format d'ouverture pour les informations sur les rÈservations----->  */
+										/*MAJ Lo√Øs THOMAS <-----Test permettant de savoir le format d'ouverture pour les informations sur les r√©servations----->  */
 										if (getSettingValue("display_level_view_entry")==0)
 										{
 											$currentPage = 'day';
@@ -619,7 +619,7 @@ else
 										echo " $descr";
 										$tab[$tab_ligne][] = " $descr";
 									}
-									/*-----MAJ LoÔs THOMAS  -->Requete permetttant d'avoir le genre -----*/
+									/*-----MAJ Lo√Øs THOMAS  -->Requete permetttant d'avoir le genre -----*/
 									$sql = "SELECT type_name,start_time,end_time FROM ".TABLE_PREFIX."_type_area ,".TABLE_PREFIX."_entry  WHERE  ".TABLE_PREFIX."_entry.id= ".$today[$room][$t]["id"]." AND ".TABLE_PREFIX."_entry.type= ".TABLE_PREFIX."_type_area.type_letter";
 									$res = grr_sql_query($sql);
 									for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
@@ -627,9 +627,9 @@ else
 										$type_name  = $row[0];
 										$start_time = $row[1];
 										$end_time   = $row[2];
-										/*-----MAJ LoÔs THOMAS  -->Affichage de l'horaire de la rÈservation -----*/
+										/*-----MAJ Lo√Øs THOMAS  -->Affichage de l'horaire de la r√©servation -----*/
 										echo "<br/>".date('H:i', $start_time)."~".date('H:i', $end_time)."<br/>";
-										/*-----MAJ LoÔs THOMAS  -->Affichage du genre -----*/
+										/*-----MAJ Lo√Øs THOMAS  -->Affichage du genre -----*/
 										if ($type_name != -1)
 											echo  $type_name;
 									}
@@ -649,7 +649,7 @@ else
 							}
 						}
 					}
-					// Fin DeuxiËme boucle sur la liste des ressources du domaine
+					// Fin Deuxi√®me boucle sur la liste des ressources du domaine
 					echo "</tr>\n";
 					reset($rooms);
 					$tab_ligne++;
@@ -683,12 +683,12 @@ else
 				echo "</tr>";
 			}*/
 			if ($_GET['pview'] != 1)
-				/*-----MAJ LoÔs THOMAS  --> Lien permettant de revenir en haut de la page -----*/
+				/*-----MAJ Lo√Øs THOMAS  --> Lien permettant de revenir en haut de la page -----*/
 			/*echo "<button class=\"btn btn-default btn-xs\" onclick=\"javascript: location.href='#haut_de_page';\">Haut de page</button>";*/
 			//MAJ Hugo FORESTIER - Mise en place d'un bouton 'retour en haut' de la page en jQuery
 			//14/05/2013
 			//echo "<div id=\"toTop\"> ^ Haut de la page";
-			//MAJ David VOUE - Mise en place du get_vocab ("top_of_page") conÁernant le haut de la page
+			//MAJ David VOUE - Mise en place du get_vocab ("top_of_page") con√ßernant le haut de la page
 			//07/02/2014
 			echo "<div id=\"toTop\"><b>".get_vocab("top_of_page")."</b>";
 			bouton_retour_haut ();
