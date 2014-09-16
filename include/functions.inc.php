@@ -847,26 +847,26 @@ function heure_ete_hiver($type, $annee, $heure)
 				$a .= $charset_html;
 			$a .= "\" />";
 			$a .="\n<meta name=\"Robots\" content=\"noindex\" />";
-			$a .="\n</head>\n<body >";
+			$a .="\n</head>\n<body>\n";
 			// Anthony Archambeau - Inclusion des différents éléments de jspdf.
-			$a .='<script src="jspdf/jspdf.js"></script>';
-			$a .='<script src="jspdf/libs/FileSaver.js/FileSaver.js"></script>';
-			$a .='<script src="jspdf/jspdf.plugin.from_html.js"></script>';
-			$a .='<script src="jspdf/jspdf.plugin.standard_fonts_metrics.js"></script>';
-			$a .='<script src="jspdf/jspdf.plugin.split_text_to_size.js"></script>';
-			$a .='<script src="jspdf/libs/Blob.js/BlobBuilder.js"></script>';
-			$a .='<script src="pdf.js" type="text/javascript" ></script>';
-			$a .='<script src="jquery-1.8.3.min.js"></script>';
-			$a .='<script type="text/javascript" src="uploadify/jquery.uploadify.js"></script>';
-			$a .='<link rel="stylesheet" type="text/css" href="uploadify/uploadify.css"/>';
-			$a .='<script src="appeldelete.js" type="text/javascript" ></script>';
-			$a .='<script src="popup.js" type="text/javascript" ></script>';
-			$a .='<script type="text/javascript" src="oXHR.js"></script>';
-			$a .='<script src="functions.js" type="text/javascript" ></script>';
+			$a .='<script src="jspdf/jspdf.js"></script>'.PHP_EOL;
+			$a .='<script src="jspdf/libs/FileSaver.js/FileSaver.js"></script>'.PHP_EOL;
+			$a .='<script src="jspdf/jspdf.plugin.from_html.js"></script>'.PHP_EOL;
+			$a .='<script src="jspdf/jspdf.plugin.standard_fonts_metrics.js"></script>'.PHP_EOL;
+			$a .='<script src="jspdf/jspdf.plugin.split_text_to_size.js"></script>'.PHP_EOL;
+			$a .='<script src="jspdf/libs/Blob.js/BlobBuilder.js"></script>'.PHP_EOL;
+			$a .='<script src="pdf.js" type="text/javascript" ></script>'.PHP_EOL;
+			$a .='<script src="jquery-1.8.3.min.js"></script>'.PHP_EOL;
+			$a .='<script type="text/javascript" src="uploadify/jquery.uploadify.js"></script>'.PHP_EOL;
+			$a .='<link rel="stylesheet" type="text/css" href="uploadify/uploadify.css"/>'.PHP_EOL;
+			$a .='<script src="appeldelete.js" type="text/javascript" ></script>'.PHP_EOL;
+			$a .='<script src="popup.js" type="text/javascript" ></script>'.PHP_EOL;
+			$a .='<script type="text/javascript" src="oXHR.js"></script>'.PHP_EOL;
+			$a .='<script src="functions.js" type="text/javascript" ></script>'.PHP_EOL;
 			if (!isset($_SESSION['selection']))
-				$a .='<script src="selection.js" type="text/javascript" ></script>';
+				$a .='<script src="selection.js" type="text/javascript" ></script>'.PHP_EOL;
 			if (@file_exists($clock_file))
-				$a .='<script type="text/javascript" src="'.$clock_file.'"></script>';
+				$a .='<script type="text/javascript" src="'.$clock_file.'"></script>'.PHP_EOL;
 			# show a warning if this is using a low version of php
 			if (substr(phpversion(), 0, 1) == 3) 
 				$a .=get_vocab('not_php3');
@@ -954,10 +954,7 @@ function heure_ete_hiver($type, $annee, $heure)
 							echo "<a href='admin_accueil.php?day=$day&amp;month=$month&amp;year=$year'>".get_vocab("admin")."</a>\n";
 							if (authGetUserLevel(getUserName(), -1,'area') >= 6)
 							{
-								echo "<br />\n<form action=\"admin_save_mysql.php\" method=\"get\"><div>\n
-								<input type=\"hidden\" name=\"flag_connect\" value=\"yes\" />\n
-								<input type=\"submit\" value=\"".get_vocab("submit_backup")."\" /></div>\n
-							</form>";
+								echo "<br />\n<form action=\"admin_save_mysql.php\" method=\"get\"><div>\n<input type=\"hidden\" name=\"flag_connect\" value=\"yes\" />\n<input type=\"submit\" value=\"".get_vocab("submit_backup")."\" /></div>\n</form>";
 							how_many_connected();
 						}
 						echo "\n</td>";
@@ -965,17 +962,17 @@ function heure_ete_hiver($type, $annee, $heure)
 				}
 				//Empêcher la selection du texte aux visiteurs
 				if ($type_session != "with_session")
-					echo "<script>selection()</script>";
+					echo "<script>selection()</script>\n";
 				?>
 				<td class="configuration" align="center">
 					<?php
 					if (@file_exists($clock_file)) {
 						echo "<script type=\"text/javascript\">";
 						//echo "<!--\n";
-						echo "new LiveClock();\n";
+						echo "new LiveClock();";
 						//echo "//-->";
 						echo "</script>";
-						echo"<br/>";
+						echo"<br/>\n";
 					}
 					//Modif pour ques les visiteurs peuvent traduire en plusieurs langues
 					//Drapeau des langues
