@@ -133,8 +133,6 @@ function get_request_uri()
 	{
 		if (!isset($_SERVER['QUERY_STRING']))
 			$_SERVER['QUERY_STRING'] = "";
-		// Dans certaines configuration (reverse proxy, ...) les variables $_SERVER["SCRIPT_NAME"] ou $_SERVER['PHP_SELF']
-		// sont mal interprétées entraînant des liens erronés sur certaines pages.
 		if ((getSettingValue("use_grr_url") == "y") && (getSettingValue("grr_url") != ""))
 		{
 			if (substr(getSettingValue("grr_url"), -1) != "/")
@@ -215,14 +213,19 @@ function affiche_lien_contact($_cible,$_type_cible,$option_affichage)
 	{
 		?>
 		<script type="text/javascript">
-			function encode_adresse(user,domain,debut) {
+			function encode_adresse(user,domain,debut)
+			{
 				var address = user+'@'+domain;
 				var toWrite = '';
-				if (debut > 0) {toWrite += '<'+'a href="mailto:';} else {toWrite +=';'};
+				if (debut > 0)
+					toWrite += '<'+'a href="mailto:';
+				else
+					toWrite +=';';
 				toWrite +=address
 				document.write(toWrite);
 			}
-			function encode_fin_adresse(label) {
+			function encode_fin_adresse(label)
+			{
 				var toWrite = '';
 				toWrite +='">'+label+'</'+'a>';
 				document.write(toWrite);
@@ -249,7 +252,7 @@ function affiche_lien_contact($_cible,$_type_cible,$option_affichage)
 					$domain = $item_email_explode[1];
 					if ($i == 1)
 					{ 
-									// Première adresse
+						// Première adresse
 						$affichage .= "<script type=\"text/javascript\">";
 						$affichage .=  "encode_adresse('".$person."','".$domain."',1);";
 					}
@@ -474,8 +477,9 @@ function bbCode($t,$type)
  * FUNCTION: how_many_connected()
  * DESCRIPTION: Si c'est un admin qui est connecté, affiche le nombre de personnes actuellement connectées.
  */
-function how_many_connected() {
-	if (authGetUserLevel(getUserName(),-1) >= 6)
+function how_many_connected()
+{
+	if (authGetUserLevel(getUserName(), -1) >= 6)
 	{
 		$sql = "SELECT LOGIN FROM ".TABLE_PREFIX."_log WHERE END > now()";
 		$res = grr_sql_query($sql);
@@ -485,7 +489,7 @@ function how_many_connected() {
 			echo "<a href='admin_view_connexions.php'>".$nb_connect.get_vocab("one_connected")."</a>";
 		else
 			echo "<a href='admin_view_connexions.php'>".$nb_connect.get_vocab("several_connected")."</a>";
-				// Vérification du numéro de version
+		// Vérification du numéro de version
 		if (verif_version())
 			affiche_pop_up(get_vocab("maj_bdd_not_update").get_vocab("please_go_to_admin_maj.php"),"force");
 	}
@@ -500,20 +504,20 @@ $year_week : année
 Renvoie vraie s'il reste des plages non réservées sur la journée
 Renvoie faux dans le cas contraire
 */
-function plages_libre_semaine_ressource($id_room, $month_week, $day_week, $year_week) {
+function plages_libre_semaine_ressource($id_room, $month_week, $day_week, $year_week)
+{
 	global $morningstarts, $eveningends, $eveningends_minutes, $resolution, $enable_periods;
 	$date_end = mktime($eveningends, $eveningends_minutes, 0, $month_week, $day_week, $year_week);
-	$date_start = mktime($morningstarts,0,0,$month_week,$day_week,$year_week);
-	$t = $date_start-1;
+	$date_start = mktime($morningstarts, 0, 0, $month_week, $day_week, $year_week);
+	$t = $date_start - 1;
 	$plage_libre = FALSE;
 	$plage_libre = 0;
-	while ($t < $date_end) {
+	while ($t < $date_end)
+	{
 		$t += $resolution;
-		$test = grr_sql_query1("SELECT id FROM ".TABLE_PREFIX."_entry where
-			room_id='".$id_room."' and
-			start_time <= ".$t." AND
-			end_time >= ".$t." ");
-		if ($test == -1) {
+		$test = grr_sql_query1("SELECT id FROM ".TABLE_PREFIX."_entry WHERE room_id='".$id_room."' AND start_time <= ".$t." AND end_time >= ".$t." ");
+		if ($test == -1)
+		{
 			$plage_libre = TRUE;
 			break;
 		}
@@ -558,44 +562,47 @@ return $tag_help;
  Cette fonction retourne "oui" ou "non" selon que $uid appartient au groupe $grp, ou bien "faux" si l'interrogation du LDAP échoue
  Seuls les groupes de type "posixGroup" sont supportés (les groupes de type "groupOfNames" ne sont pas supportés).
 */
- function se3_grp_members ($grp,$uid) {
-	include "config_ldap.inc.php";
-	$est_membre="non";
+ function se3_grp_members ($grp, $uid)
+ {
+ 	include "config_ldap.inc.php";
+ 	$est_membre="non";
 		// LDAP attributs
-	$members_attr = array (
+ 	$members_attr = array (
 		"memberUid"   // Recherche des Membres du groupe
 		);
 		// Avec des GroupOfNames, ce ne serait pas ça.
-	$ds=@ldap_connect($ldap_adresse,$ldap_port);
-	if ($ds){
-				$r=@ldap_bind ( $ds ); // Bind anonyme
-				if ($r){
-						// La requête est adaptée à un serveur SE3...
-					$result=@ldap_read($ds,"cn=$grp,ou=Groups,$ldap_base","cn=*",$members_attr);
-						// Peut-être faudrait-il dans le $tab_grp_autorise mettre des chaines 'cn=$grp,ou=Groups'
-					if ($result){
-						$info=@ldap_get_entries($ds,$result);
-						if ($info["count"]==1){
-							$init=0;
-							for($loop=0;$loop<$info[0]["memberuid"]["count"];$loop++){
-								if ($info[0]["memberuid"][$loop]==$uid){
-									$est_membre="oui";
-								}
-							}
-						}
-						@ldap_free_result($result);
+ 	$ds = @ldap_connect($ldap_adresse, $ldap_port);
+ 	if ($ds)
+ 	{
+		$r = @ldap_bind ($ds); // Bind anonyme
+		if ($r)
+		{
+					// La requête est adaptée à un serveur SE3...
+			$result = @ldap_read($ds,"cn=$grp,ou=Groups,$ldap_base","cn=*",$members_attr);
+					// Peut-être faudrait-il dans le $tab_grp_autorise mettre des chaines 'cn=$grp,ou=Groups'
+			if ($result)
+			{
+				$info = @ldap_get_entries($ds, $result);
+				if ($info["count"] == 1)
+				{
+					$init = 0;
+					for ($loop = 0; $loop < $info[0]["memberuid"]["count"]; $loop++)
+					{
+						if ($info[0]["memberuid"][$loop] == $uid)
+							$est_membre="oui";
 					}
 				}
-				else{
-					return false;
-				}
-				@ldap_close($ds);
+				@ldap_free_result($result);
 			}
-			else{
-				return false;
-			}
-			return $est_membre;
 		}
+		else
+			return FALSE;
+		@ldap_close($ds);
+	}
+	else
+		return FALSE;
+	return $est_membre;
+}
 /*
 Arguments :
 $id_entry : identifiant de la réservation
@@ -603,13 +610,15 @@ $login_moderateur : identifiant du modérateur
 $motivation_moderation : texte facultatif
 Insère dans la table ".TABLE_PREFIX."_entry_moderate les valeurs de ".TABLE_PREFIX."_entry dont l'identifiant est $id_entry
 */
-function  grr_backup($id_entry,$login_moderateur,$motivation_moderation) {
+function  grr_backup($id_entry, $login_moderateur, $motivation_moderation)
+{
 	$sql = "SELECT * FROM ".TABLE_PREFIX."_entry WHERE id='".$id_entry."'";
 	$res = grr_sql_query($sql);
-	if (! $res)  return FALSE;
+	if (!$res)
+		return FALSE;
 	$row = grr_sql_row_keyed($res, 0);
 	grr_sql_free($res);
-	$req = "insert into ".TABLE_PREFIX."_entry_moderate set
+	$req = "INSERT INTO ".TABLE_PREFIX."_entry_moderate SET
 	id = '".$row['id']."',
 	start_time = '".$row['start_time']."',
 	end_time  = '".$row['end_time']."',
@@ -629,9 +638,10 @@ function  grr_backup($id_entry,$login_moderateur,$motivation_moderation) {
 	motivation_moderation = '".protect_data_sql(strip_tags($motivation_moderation))."',
 	login_moderateur = '".protect_data_sql($login_moderateur)."'";
 	$res = grr_sql_query($req);
-	if (! $res)
+	if (!$res)
 		return FALSE;
-	else {
+	else
+	{
 		grr_sql_free($res);
 		return TRUE;
 	}
@@ -643,55 +653,49 @@ En effet, la fonction html_entity_decode() est disponible a partir de la version
 function html_entity_decode_all_version ($string)
 {
 	global $use_function_html_entity_decode;
-	if (isset($use_function_html_entity_decode) and ($use_function_html_entity_decode == 0)) {
-			// Remplace les entités numériques
+	if (isset($use_function_html_entity_decode) && ($use_function_html_entity_decode == 0))
+	{
+		// Remplace les entités numériques
 		$string = preg_replace('~&#x([0-9a-f]+);~ei', 'chr(hexdec("\\1"))', $string);
 		$string = preg_replace('~&#([0-9]+);~e', 'chr(\\1)', $string);
-			// Remplace les entités litérales
+		// Remplace les entités litérales
 		$trans_tbl = get_html_translation_table (HTML_ENTITIES);
 		$trans_tbl = array_flip ($trans_tbl);
 		return strtr ($string, $trans_tbl);
-	} else
-	return html_entity_decode($string);
-}
-function verif_version() {
-	global $version_grr, $version_grr_RC;
-		$_version_grr = $version_grr; // On préserve la variable $version_grr
-		$_version_grr_RC = $version_grr_RC;// On préserve la variable $version_grr_RC
-		$version_old = getSettingValue("version");
-		$versionRC_old = getSettingValue("versionRC");
-		// S'il s'agit de la version stable, on positionne malgré tout $versionRC_old = 9 pour la cohérence du test
-		if ($versionRC_old == "") $versionRC_old = 9;
-		// S'il s'agit de la version stable, on positionne malgré tout $versionRC_old = 9 pour la cohérence du test
-		if ($_version_grr_RC == "") $_version_grr_RC = 9;
-		if (
-			($version_old =='')
-			or ($_version_grr > $version_old)
-			or (($_version_grr == $version_old) and ($_version_grr_RC > $versionRC_old))
-			)
-			return true;
-		else
-			return false;
 	}
-//MAJ Hugo FORESTIER - On enleve temporairement la lettre de sous version
-// Affiche le numéro de version de GRR selon les cas sous la forme "GRR x.x.x_RCx" ou "GRR x.x.x
-	function affiche_version() {
-		global $version_grr, $version_grr_RC, $sous_version_grr;
-		//if (getSettingValue("versionRC")!="")
-				//return "GRR ".getSettingValue("version")."_RC".getSettingValue("versionRC").$sous_version_grr;
-		//else
-				return "GRR ".getSettingValue("version");//.$sous_version_grr;
-			}
-/*
-*/
-function affiche_date($x) {
-	$j   = date("d",$x);
+	else
+		return html_entity_decode($string);
+}
+function verif_version()
+{
+	global $version_grr, $version_grr_RC;
+	$_version_grr = $version_grr;
+	$_version_grr_RC = $version_grr_RC;
+	$version_old = getSettingValue("version");
+	$versionRC_old = getSettingValue("versionRC");	
+	if ($versionRC_old == "")
+		$versionRC_old = 9;
+	if ($_version_grr_RC == "")
+		$_version_grr_RC = 9;
+	if (($version_old == '') || ($_version_grr > $version_old) || (($_version_grr == $version_old) && ($_version_grr_RC > $versionRC_old)))
+		return true;
+	else
+		return false;
+}
+function affiche_version()
+{
+	global $version_grr, $version_grr_RC, $sous_version_grr;
+	return "GRR ".getSettingValue("version");
+}
+function affiche_date($x)
+{
+	$j = date("d",$x);
 	$m = date("m",$x);
-	$a  = date("Y",$x);
-	$h  = date("H",$x);
+	$a = date("Y",$x);
+	$h = date("H",$x);
 	$mi = date("i",$x);
 	$s = date("s",$x);
-//$result = $h.":".$mi.":".$s.": le ".$j."/".$m."/".$a;
+	//$result = $h.":".$mi.":".$s.": le ".$j."/".$m."/".$a;
 	$result = $j."/".$m."/".$a;
 	return $result;
 }
@@ -703,355 +707,361 @@ function affiche_date($x) {
 function heure_ete_hiver($type, $annee, $heure)
 {
 	if ($type == "ete")
-			$debut = mktime($heure,0,0,03,31,$annee); // 31-03-$annee
-		else
-			$debut = mktime($heure,0,0,10,31,$annee); // 31-10-$annee
-		while (date("D", $debut ) !='Sun')
-		{
-			$debut = mktime($heure,0,0,date("m",$debut), date("d",$debut)-1, date("Y",$debut)); //On retire 1 jour par rapport à la date examinée
-		}
-		return $debut;
-	}
+		$debut = mktime($heure, 0, 0, 03, 31, $annee); // 31-03-$annee
+	else
+		$debut = mktime($heure,0, 0, 10, 31, $annee); // 31-10-$annee
+	while (date("D", $debut ) !='Sun')
+		$debut = mktime($heure, 0, 0, date("m", $debut), date("d", $debut) - 1, date("Y", $debut)); //On retire 1 jour par rapport à la date examinée
+	return $debut;
+}
 # Remove backslash-escape quoting if PHP is configured to do it with
 # magic_quotes_gpc. Use this whenever you need the actual value of a GET/POST
 # form parameter (which might have special characters) regardless of PHP's
 # magic_quotes_gpc setting.
-	function unslashes($s)
-	{
-//    if (get_magic_quotes_gpc())
-		if (function_exists('get_magic_quotes_gpc') && @get_magic_quotes_gpc())
-			return stripslashes($s);
-		else
-			return $s;
-	}
+function unslashes($s)
+{
+	if (function_exists('get_magic_quotes_gpc') && @get_magic_quotes_gpc())
+		return stripslashes($s);
+	else
+		return $s;
+}
 // Corrige les caracteres degoutants utilises par les Windozeries
-	function corriger_caracteres($texte) {
-		// 145,146,180 = simple quote ; 147,148 = double quote ; 150,151 = tiret long
-		$texte = strtr($texte, chr(145).chr(146).chr(180).chr(147).chr(148).chr(150).chr(151), "'''".'""--');
-		return $texte;
-	}
+function corriger_caracteres($texte)
+{
+	// 145,146,180 = simple quote ; 147,148 = double quote ; 150,151 = tiret long
+	$texte = strtr($texte, chr(145).chr(146).chr(180).chr(147).chr(148).chr(150).chr(151), "'''".'""--');
+	return $texte;
+}
 // Traite les données avant insertion dans une requête SQL
-	function protect_data_sql($_value) {
-		global $use_function_mysql_real_escape_string;
-//    if (get_magic_quotes_gpc())
-		if (function_exists('get_magic_quotes_gpc') && @get_magic_quotes_gpc())
-			$_value = stripslashes($_value);
-		if (!is_numeric($_value)) {
-			if (isset($use_function_mysql_real_escape_string) and ($use_function_mysql_real_escape_string==0))
-				$_value = mysqli_real_escape_string($GLOBALS['db_c'], $_value);
-			else
-				$_value = mysqli_real_escape_string($GLOBALS['db_c'], $_value);
-		}
-		return $_value;
-	}
-// Traite les données envoyées par la methode GET de la variable $_GET["page"]
-	function verif_page() {
-		if (isset($_GET["page"]))
-			if (($_GET["page"] == "day") or ($_GET["page"] == "week") or ($_GET["page"] == "month") or ($_GET["page"] == "week_all") or ($_GET["page"] == "month_all"))
-				return $_GET["page"];
-			else
-				return "day";
-			else
-				return "day";
-		}
-		function page_accueil($param='no') {
-	// Definition de $defaultroom
-			if (isset($_SESSION['default_room']) and ($_SESSION['default_room'] >0)) {
-				$defaultroom = $_SESSION['default_room'];
-			} else {
-				$defaultroom = getSettingValue("default_room");
-			}
-	// Definition de $defaultsite
-			if (isset($_SESSION['default_site']) and ($_SESSION['default_site'] >0)) {
-				$defaultsite = $_SESSION['default_site'];
-			} else if (getSettingValue("default_site") > 0) {
-				$defaultsite = getSettingValue("default_site");
-			} else
-			$defaultsite = get_default_site();
-	// Definition de $defaultarea
-			if (isset($_SESSION['default_area']) and ($_SESSION['default_area'] >0)) {
-				$defaultarea = $_SESSION['default_area'];
-			} else if (getSettingValue("default_area") > 0) {
-				$defaultarea = getSettingValue("default_area");
-			} else
-			$defaultarea = get_default_area($defaultsite);
-	// Calcul de $page_accueil
-			if ($defaultarea == -1) {
-			$page_accueil="day.php?noarea="; // le paramètre noarea ne sert à rien, il est juste là pour éviter un cas particulier à traiter avec &amp;id_site= et $param
-		} else if ($defaultroom == -1) {
-			$page_accueil="day.php?area=$defaultarea";
-		} else if ($defaultroom == -2) {
-			$page_accueil="week_all.php?area=$defaultarea";
-		} else if ($defaultroom == -3) {
-			$page_accueil="month_all.php?area=$defaultarea";
-		} else if ($defaultroom == -4) {
-			$page_accueil="month_all2.php?area=$defaultarea";
-		} else {
-			$page_accueil="week.php?area=$defaultarea&amp;room=$defaultroom";
-		}
-		if ((getSettingValue("module_multisite") == "Oui") and ($defaultsite>0))
-			$page_accueil .= "&amp;id_site=".$defaultsite;
-		if ($param=='yes') $page_accueil .= "&amp;";
-		return $page_accueil ;
-	}
-	function begin_page($title,$page="with_session")
+function protect_data_sql($_value)
+{
+	global $use_function_mysql_real_escape_string;
+	//if (get_magic_quotes_gpc())
+	if (function_exists('get_magic_quotes_gpc') && @get_magic_quotes_gpc())
+		$_value = stripslashes($_value);
+	if (!is_numeric($_value))
 	{
-		if ($page=="with_session")
+		if (isset($use_function_mysql_real_escape_string) && ($use_function_mysql_real_escape_string==0))
+			$_value = mysqli_real_escape_string($GLOBALS['db_c'], $_value);
+		else
+			$_value = mysqli_real_escape_string($GLOBALS['db_c'], $_value);
+	}
+	return $_value;
+}
+// Traite les données envoyées par la methode GET de la variable $_GET["page"]
+function verif_page()
+{
+	if (isset($_GET["page"]))
+	{
+		if (($_GET["page"] == "day") || ($_GET["page"] == "week") || ($_GET["page"] == "month") || ($_GET["page"] == "week_all") || ($_GET["page"] == "month_all"))
+			return $_GET["page"];
+		else
+			return "day";
+	}	
+	else
+		return "day";
+}
+function page_accueil($param = 'no')
+{
+	// Definition de $defaultroom
+	if (isset($_SESSION['default_room']) && ($_SESSION['default_room'] > 0))
+		$defaultroom = $_SESSION['default_room'];
+	else
+		$defaultroom = getSettingValue("default_room");
+	// Definition de $defaultsite
+	if (isset($_SESSION['default_site']) && ($_SESSION['default_site'] > 0)) 
+		$defaultsite = $_SESSION['default_site'];
+	else if (getSettingValue("default_site") > 0)
+		$defaultsite = getSettingValue("default_site");
+	else
+		$defaultsite = get_default_site();
+	// Definition de $defaultarea
+	if (isset($_SESSION['default_area']) && ($_SESSION['default_area'] > 0))
+		$defaultarea = $_SESSION['default_area'];
+	else if (getSettingValue("default_area") > 0)
+		$defaultarea = getSettingValue("default_area");
+	else
+		$defaultarea = get_default_area($defaultsite);
+	// Calcul de $page_accueil
+	if ($defaultarea == - 1)
+		$page_accueil = "day.php?noarea="; // le paramètre noarea ne sert à rien, il est juste là pour éviter un cas particulier à traiter avec &amp;id_site= et $param
+	else if ($defaultroom == - 1)
+		$page_accueil = "day.php?area=$defaultarea";
+	else if ($defaultroom == - 2)
+		$page_accueil = "week_all.php?area=$defaultarea";
+	else if ($defaultroom == - 3)
+		$page_accueil="month_all.php?area=$defaultarea";
+	else if ($defaultroom == -4)
+		$page_accueil = "month_all2.php?area=$defaultarea";
+	else
+		$page_accueil = "week.php?area=$defaultarea&amp;room=$defaultroom";
+	if ((getSettingValue("module_multisite") == "Oui") && ($defaultsite > 0))
+		$page_accueil .= "&amp;id_site=".$defaultsite;
+	if ($param == 'yes')
+		$page_accueil .= "&amp;";
+	return $page_accueil ;
+}
+function begin_page($title,$page="with_session")
+{
+	if ($page == "with_session")
+	{
+		if (isset($_SESSION['default_style']))
+			$sheetcss = "themes/".$_SESSION['default_style']."/css/style.css";
+		else
+			$sheetcss="themes/default/css/style.css";
+		if (isset($_GET['default_language']))
 		{
-			if (isset($_SESSION['default_style'])) $sheetcss = "themes/".$_SESSION['default_style']."/css/style.css";
-			else $sheetcss="themes/default/css/style.css";
-			if (isset($_GET['default_language']))
-			{
-				$_SESSION['default_language'] = $_GET['default_language'];
-				if (isset($_SESSION['chemin_retour']) and ($_SESSION['chemin_retour'] != ''))
-					header("Location: ".$_SESSION['chemin_retour']);
-				else
-					header("Location: ".traite_grr_url());
-				die();
-			}
-		}
-		else {
-			if (getSettingValue("default_css")) $sheetcss = "themes/".getSettingValue("default_css")."/css/style.css";
-			else $sheetcss="themes/default/css/style.css";
-			if (isset($_GET['default_language']))
-			{
-				$_SESSION['default_language'] = $_GET['default_language'];
-				if (isset($_SESSION['chemin_retour']) and ($_SESSION['chemin_retour'] != ''))
-					header("Location: ".$_SESSION['chemin_retour']);
-				else
-					header("Location: ".traite_grr_url());
-				die();
-			}
-		}
-		global $vocab, $charset_html, $unicode_encoding, $clock_file;
-		header("Content-Type: text/html;charset=". ((isset($unicode_encoding) and ($unicode_encoding==1)) ? "utf-8" : $charset_html)); header("Pragma: no-cache");
-		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-		$a='<!DOCTYPE html>'."\n";
-		$a.='<html>
-		<head>
-			<link rel="stylesheet" href="'.$sheetcss.'" type="text/css" />'."\n";
-			$a.='<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css" />'."\n";
-			$a.='<link href="include/admin_grr.css" rel="stylesheet" type="text/css" />'."\n";
-			// Pour le format imprimable, on impose un fond de page blanc
-			if ((isset($_GET['pview'])) and ($_GET['pview'] == 1))
-				$a .= '<link rel="stylesheet" href="themes/print/css/style.css" type="text/css" />'."\n";
-			$a.='<style type="text/css">div#fixe   { position: fixed; bottom: 5%; right: 5%;}</style>'."\n";
-			$a.='<style type="text/css">div#file_upload-queue  { position: fixed; bottom: 10%; right: 5%;}</style>'."\n";
-			$a.='<style type="text/css">div#file_upload   { position: fixed; bottom: 25%; right: 5%;}</style>'."\n";
-			$a.='<link rel="SHORTCUT ICON" href="./favicon.ico" />';
-			$a .="\n<title>$title</title>";
-			$a .="\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=";
-			if ($unicode_encoding)
-				$a .= "utf-8";
+			$_SESSION['default_language'] = $_GET['default_language'];
+			if (isset($_SESSION['chemin_retour']) && ($_SESSION['chemin_retour'] != ''))
+				header("Location: ".$_SESSION['chemin_retour']);
 			else
-				$a .= $charset_html;
-			$a .= "\" />";
-			$a .="\n<meta name=\"Robots\" content=\"noindex\" />";
-			$a .="\n</head>\n<body>\n";
-			// Anthony Archambeau - Inclusion des différents éléments de jspdf.
-			$a .='<script src="jspdf/jspdf.js"></script>'.PHP_EOL;
-			$a .='<script src="jspdf/libs/FileSaver.js/FileSaver.js"></script>'.PHP_EOL;
-			$a .='<script src="jspdf/jspdf.plugin.from_html.js"></script>'.PHP_EOL;
-			$a .='<script src="jspdf/jspdf.plugin.standard_fonts_metrics.js"></script>'.PHP_EOL;
-			$a .='<script src="jspdf/jspdf.plugin.split_text_to_size.js"></script>'.PHP_EOL;
-			$a .='<script src="jspdf/libs/Blob.js/BlobBuilder.js"></script>'.PHP_EOL;
-			$a .='<script src="pdf.js" type="text/javascript" ></script>'.PHP_EOL;
-			$a .='<script src="jquery-1.8.3.min.js"></script>'.PHP_EOL;
-			$a .='<script type="text/javascript" src="uploadify/jquery.uploadify.js"></script>'.PHP_EOL;
-			$a .='<link rel="stylesheet" type="text/css" href="uploadify/uploadify.css"/>'.PHP_EOL;
-			$a .='<script src="appeldelete.js" type="text/javascript" ></script>'.PHP_EOL;
-			$a .='<script src="popup.js" type="text/javascript" ></script>'.PHP_EOL;
-			$a .='<script type="text/javascript" src="oXHR.js"></script>'.PHP_EOL;
-			$a .='<script src="functions.js" type="text/javascript" ></script>'.PHP_EOL;
-			if (!isset($_SESSION['selection']))
-				$a .='<script src="selection.js" type="text/javascript" ></script>'.PHP_EOL;
-			if (@file_exists($clock_file))
-				$a .='<script type="text/javascript" src="'.$clock_file.'"></script>'.PHP_EOL;
+				header("Location: ".traite_grr_url());
+			die();
+		}
+	}
+	else
+	{
+		if (getSettingValue("default_css"))
+			$sheetcss = "themes/".getSettingValue("default_css")."/css/style.css";
+		else
+			$sheetcss="themes/default/css/style.css";
+		if (isset($_GET['default_language']))
+		{
+			$_SESSION['default_language'] = $_GET['default_language'];
+			if (isset($_SESSION['chemin_retour']) && ($_SESSION['chemin_retour'] != ''))
+				header("Location: ".$_SESSION['chemin_retour']);
+			else
+				header("Location: ".traite_grr_url());
+			die();
+		}
+	}
+	global $vocab, $charset_html, $unicode_encoding, $clock_file;
+	header("Content-Type: text/html;charset=". ((isset($unicode_encoding) && ($unicode_encoding == 1)) ? "utf-8" : $charset_html)); header("Pragma: no-cache");
+	header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+	$a = '<!DOCTYPE html>'."\n";
+	$a.='<html><head><link rel="stylesheet" href="'.$sheetcss.'" type="text/css" />'."\n";
+	$a.='<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css" />'."\n";
+	$a.='<link href="include/admin_grr.css" rel="stylesheet" type="text/css" />'."\n";
+	// Pour le format imprimable, on impose un fond de page blanc
+	if ((isset($_GET['pview'])) and ($_GET['pview'] == 1))
+		$a .= '<link rel="stylesheet" href="themes/print/css/style.css" type="text/css" />'."\n";
+	$a.='<style type="text/css">div#fixe   { position: fixed; bottom: 5%; right: 5%;}</style>'."\n";
+	$a.='<style type="text/css">div#file_upload-queue  { position: fixed; bottom: 10%; right: 5%;}</style>'."\n";
+	$a.='<style type="text/css">div#file_upload   { position: fixed; bottom: 25%; right: 5%;}</style>'."\n";
+	$a.='<link rel="SHORTCUT ICON" href="./favicon.ico" />';
+	$a .="\n<title>$title</title>";
+	$a .="\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=";
+	if ($unicode_encoding)
+		$a .= "utf-8";
+	else
+		$a .= $charset_html;
+	$a .= "\" />";
+	$a .="\n<meta name=\"Robots\" content=\"noindex\" />";
+	$a .="\n</head>\n<body>\n";
+	// Anthony Archambeau - Inclusion des différents éléments de jspdf.
+	$a .='<script src="jspdf/jspdf.js"></script>'.PHP_EOL;
+	$a .='<script src="jspdf/libs/FileSaver.js/FileSaver.js"></script>'.PHP_EOL;
+	$a .='<script src="jspdf/jspdf.plugin.from_html.js"></script>'.PHP_EOL;
+	$a .='<script src="jspdf/jspdf.plugin.standard_fonts_metrics.js"></script>'.PHP_EOL;
+	$a .='<script src="jspdf/jspdf.plugin.split_text_to_size.js"></script>'.PHP_EOL;
+	$a .='<script src="jspdf/libs/Blob.js/BlobBuilder.js"></script>'.PHP_EOL;
+	$a .='<script src="pdf.js" type="text/javascript" ></script>'.PHP_EOL;
+	$a .='<script src="jquery-1.8.3.min.js"></script>'.PHP_EOL;
+	$a .='<script type="text/javascript" src="uploadify/jquery.uploadify.js"></script>'.PHP_EOL;
+	$a .='<link rel="stylesheet" type="text/css" href="uploadify/uploadify.css"/>'.PHP_EOL;
+	$a .='<script src="appeldelete.js" type="text/javascript" ></script>'.PHP_EOL;
+	$a .='<script src="popup.js" type="text/javascript" ></script>'.PHP_EOL;
+	$a .='<script type="text/javascript" src="oXHR.js"></script>'.PHP_EOL;
+	$a .='<script src="functions.js" type="text/javascript" ></script>'.PHP_EOL;
+	if (!isset($_SESSION['selection']))
+		$a .='<script src="selection.js" type="text/javascript" ></script>'.PHP_EOL;
+	if (@file_exists($clock_file))
+		$a .='<script type="text/javascript" src="'.$clock_file.'"></script>'.PHP_EOL;
 			# show a warning if this is using a low version of php
-			if (substr(phpversion(), 0, 1) == 3) 
-				$a .=get_vocab('not_php3');
-			return $a;
-		}
-		function print_header($day = '', $month = '', $year = '', $area = '', $type_session = 'with_session', $page = 'no_admin', $room = '')
-		{
-			global $vocab, $search_str, $grrSettings, $clock_file, $desactive_VerifNomPrenomUser, $grr_script_name;
-			global $use_prototype, $use_tooltip_js, $desactive_bandeau_sup, $id_site;
-			if (!($desactive_VerifNomPrenomUser))
-				$desactive_VerifNomPrenomUser = 'n';
+	if (substr(phpversion(), 0, 1) == 3) 
+		$a .=get_vocab('not_php3');
+	return $a;
+}
+function print_header($day = '', $month = '', $year = '', $area = '', $type_session = 'with_session', $page = 'no_admin', $room = '')
+{
+	global $vocab, $search_str, $grrSettings, $clock_file, $desactive_VerifNomPrenomUser, $grr_script_name;
+	global $use_prototype, $use_tooltip_js, $desactive_bandeau_sup, $id_site;
+	if (!($desactive_VerifNomPrenomUser))
+		$desactive_VerifNomPrenomUser = 'n';
 			// On vérifie que les noms et prénoms ne sont pas vides
-			VerifNomPrenomUser($type_session);
-			if ($type_session == "with_session")
-				echo begin_page(get_vocab("mrbs").get_vocab("deux_points").getSettingValue("company"),"with_session");
-			else
-				echo begin_page(get_vocab("mrbs").get_vocab("deux_points").getSettingValue("company"),"no_session");
+	VerifNomPrenomUser($type_session);
+	if ($type_session == "with_session")
+		echo begin_page(get_vocab("mrbs").get_vocab("deux_points").getSettingValue("company"),"with_session");
+	else
+		echo begin_page(get_vocab("mrbs").get_vocab("deux_points").getSettingValue("company"),"no_session");
 			// Si nous ne sommes pas dans un format imprimable
-			if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
-			{
+	if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
+	{
 				# If we dont know the right date then make it up
-				if (!isset($day) || !isset($month) || !isset($year) || ($day == '') || ($month == '') || ($year == ''))
-				{
-					$date_now = time();
-					if ($date_now < getSettingValue("begin_bookings"))
-						$date_ = getSettingValue("begin_bookings");
-					else if ($date_now > getSettingValue("end_bookings"))
-						$date_ = getSettingValue("end_bookings");
-					else
-						$date_ = $date_now;
-					$day   = date("d",$date_);
-					$month = date("m",$date_);
-					$year  = date("Y",$date_);
-				}
-				if (!(isset($search_str))) $search_str = get_vocab("search_for");
-				if (empty($search_str)) $search_str = "";
-				if (!(isset($desactive_bandeau_sup) && ($desactive_bandeau_sup == 1) && ($type_session != 'with_session')))
-				{
+		if (!isset($day) || !isset($month) || !isset($year) || ($day == '') || ($month == '') || ($year == ''))
+		{
+			$date_now = time();
+			if ($date_now < getSettingValue("begin_bookings"))
+				$date_ = getSettingValue("begin_bookings");
+			else if ($date_now > getSettingValue("end_bookings"))
+				$date_ = getSettingValue("end_bookings");
+			else
+				$date_ = $date_now;
+			$day   = date("d",$date_);
+			$month = date("m",$date_);
+			$year  = date("Y",$date_);
+		}
+		if (!(isset($search_str))) $search_str = get_vocab("search_for");
+		if (empty($search_str)) $search_str = "";
+		if (!(isset($desactive_bandeau_sup) && ($desactive_bandeau_sup == 1) && ($type_session != 'with_session')))
+		{
 					// On fabrique une date valide pour la réservation si ce n'est pas le cas
-					$date_ = mktime(0, 0, 0, $month, $day, $year);
-					if ($date_ < getSettingValue("begin_bookings"))
-						$date_ = getSettingValue("begin_bookings");
-					else if ($date_ > getSettingValue("end_bookings"))
-						$date_ = getSettingValue("end_bookings");
-					$day   = date("d",$date_);
-					$month = date("m",$date_);
-					$year  = date("Y",$date_);
-					echo "<table width=\"100%\" border=\"1\" id=\"header\">";
-					echo "<tr>";
+			$date_ = mktime(0, 0, 0, $month, $day, $year);
+			if ($date_ < getSettingValue("begin_bookings"))
+				$date_ = getSettingValue("begin_bookings");
+			else if ($date_ > getSettingValue("end_bookings"))
+				$date_ = getSettingValue("end_bookings");
+			$day   = date("d",$date_);
+			$month = date("m",$date_);
+			$year  = date("Y",$date_);
+			echo "<table width=\"100%\" border=\"1\" id=\"header\">";
+			echo "<tr>";
 					//Logo
-					$nom_picture = "./images/".getSettingValue("logo");
-					if ((getSettingValue("logo")!='') and (@file_exists($nom_picture)))
-						echo "<td class=\"logo\"><a href=\"".page_accueil('yes')."day=$day&amp;year=$year&amp;month=$month\"><img src=\"".$nom_picture."\" alt=\"logo\"/></a></td>\n";
+			$nom_picture = "./images/".getSettingValue("logo");
+			if ((getSettingValue("logo")!='') and (@file_exists($nom_picture)))
+				echo "<td class=\"logo\"><a href=\"".page_accueil('yes')."day=$day&amp;year=$year&amp;month=$month\"><img src=\"".$nom_picture."\" alt=\"logo\"/></a></td>\n";
 					//Accueil
-					echo "<td class=\"accueil\">\n";
-					echo "&nbsp;<h2><a href=\"".page_accueil('yes')."day=$day&amp;year=$year&amp;month=$month\">".get_vocab("welcome")."";
-					echo " - <b>".getSettingValue("company")."</b></a></h2>";
+			echo "<td class=\"accueil\">\n";
+			echo "&nbsp;<h2><a href=\"".page_accueil('yes')."day=$day&amp;year=$year&amp;month=$month\">".get_vocab("welcome")."";
+			echo " - <b>".getSettingValue("company")."</b></a></h2>";
 					//Mail réservartion
-					if (isset($use_tooltip_js))
-						echo "<script type=\"text/javascript\" src=\"./include/tooltip.js\"></script>";
-					echo getSettingValue('message_accueil');
-					?>
-					<?php
-					$sql = "SELECT VALUE FROM ".TABLE_PREFIX."_setting WHERE NAME='mail_etat_destinataire'";
-					$res = grr_sql_query1($sql);
+			if (isset($use_tooltip_js))
+				echo "<script type=\"text/javascript\" src=\"./include/tooltip.js\"></script>";
+			echo getSettingValue('message_accueil');
+			?>
+			<?php
+			$sql = "SELECT VALUE FROM ".TABLE_PREFIX."_setting WHERE NAME='mail_etat_destinataire'";
+			$res = grr_sql_query1($sql);
 					//Libère le résultat de la mémoire 
-					grr_sql_free($res);
-					if ($res == 1)
-					{
-						if ($type_session == "no_session")
-						{						
-							echo "<td class=\"contactformulaire\">";
-							echo "<a href=\"contactFormulaire.php\"><input type=\"submit\" id=\"Réserver\" rel=\"popup_name\" class=\"poplight\" value=\"Réserver\" </a>";
-							echo "</td>";
-						}
-					}
-					?>
-					<?php
-					// Administration div Sauvegarde
-					if ($type_session == "with_session")
-					{
-						if ((authGetUserLevel(getUserName(), -1,'area') >= 4) || (authGetUserLevel(getUserName(), -1,'user') == 1))
-						{
-							echo "<td class=\"administration\" align=\"center\">";
-							echo "<a href='admin_accueil.php?day=$day&amp;month=$month&amp;year=$year'>".get_vocab("admin")."</a>\n";
-							if (authGetUserLevel(getUserName(), -1,'area') >= 6)
-							{
-								echo "<br />\n<form action=\"admin_save_mysql.php\" method=\"get\"><div>\n<input type=\"hidden\" name=\"flag_connect\" value=\"yes\" />\n<input type=\"submit\" value=\"".get_vocab("submit_backup")."\" /></div>\n</form>";
-							how_many_connected();
-						}
-						echo "\n</td>";
-					}
+			grr_sql_free($res);
+			if ($res == 1)
+			{
+				if ($type_session == "no_session")
+				{						
+					echo "<td class=\"contactformulaire\">";
+					echo "<a href=\"contactFormulaire.php\"><input type=\"submit\" id=\"Réserver\" rel=\"popup_name\" class=\"poplight\" value=\"Réserver\" </a>";
+					echo "</td>";
 				}
-				//Empêcher la selection du texte aux visiteurs
-				if ($type_session != "with_session")
-					echo "<script>selection()</script>\n";
-				?>
-				<td class="configuration" align="center">
-					<?php
-					if (@file_exists($clock_file)) {
-						echo "<script type=\"text/javascript\">";
-						//echo "<!--\n";
-						echo "new LiveClock();";
-						//echo "//-->";
-						echo "</script>";
-						echo"<br/>\n";
+			}
+			?>
+			<?php
+					// Administration div Sauvegarde
+			if ($type_session == "with_session")
+			{
+				if ((authGetUserLevel(getUserName(), -1,'area') >= 4) || (authGetUserLevel(getUserName(), -1,'user') == 1))
+				{
+					echo "<td class=\"administration\" align=\"center\">";
+					echo "<a href='admin_accueil.php?day=$day&amp;month=$month&amp;year=$year'>".get_vocab("admin")."</a>\n";
+					if (authGetUserLevel(getUserName(), -1,'area') >= 6)
+					{
+						echo "<br />\n<form action=\"admin_save_mysql.php\" method=\"get\"><div>\n<input type=\"hidden\" name=\"flag_connect\" value=\"yes\" />\n<input type=\"submit\" value=\"".get_vocab("submit_backup")."\" /></div>\n</form>";
+						how_many_connected();
 					}
+					echo "\n</td>";
+				}
+			}
+				//Empêcher la selection du texte aux visiteurs
+			if ($type_session != "with_session")
+				echo "<script>selection()</script>\n";
+			?>
+			<td class="configuration" align="center">
+				<?php
+				if (@file_exists($clock_file)) {
+					echo "<script type=\"text/javascript\">";
+						//echo "<!--\n";
+					echo "new LiveClock();";
+						//echo "//-->";
+					echo "</script>";
+					echo"<br/>\n";
+				}
 					//Modif pour ques les visiteurs peuvent traduire en plusieurs langues
 					//Drapeau des langues
-					$parametres_url = '';
-					$_SESSION['chemin_retour'] = '';
-					if (isset($_SERVER['QUERY_STRING']) and ($_SERVER['QUERY_STRING'] != ''))
-					{
+				$parametres_url = '';
+				$_SESSION['chemin_retour'] = '';
+				if (isset($_SERVER['QUERY_STRING']) and ($_SERVER['QUERY_STRING'] != ''))
+				{
 					// Il y a des paramètres à passer
-						$parametres_url = htmlspecialchars($_SERVER['QUERY_STRING'])."&amp;";
-						$_SESSION['chemin_retour'] = traite_grr_url($grr_script_name)."?". $_SERVER['QUERY_STRING'];
-						echo "<a onclick=\"charger();\" href=\"".traite_grr_url($grr_script_name)."?".$parametres_url."default_language=fr\"><img src=\"img_grr/fr_dp.png\" alt=\"France\" title=\"france\" width=\"20\" height=\"13\" class=\"image\" /></a>\n";
-						echo "<a onclick=\"charger();\" href=\"".traite_grr_url($grr_script_name)."?".$parametres_url."default_language=de\"><img src=\"img_grr/de_dp.png\" alt=\"Deutch\" title=\"deutch\" width=\"20\" height=\"13\" class=\"image\" /></a>\n";
-						echo "<a onclick=\"charger();\" href=\"".traite_grr_url($grr_script_name)."?".$parametres_url."default_language=en\"><img src=\"img_grr/en_dp.png\" alt=\"English\" title=\"English\" width=\"20\" height=\"13\" class=\"image\" /></a>\n";
-						echo "<a onclick=\"charger();\" href=\"".traite_grr_url($grr_script_name)."?".$parametres_url."default_language=it\"><img src=\"img_grr/it_dp.png\" alt=\"Italiano\" title=\"Italiano\" width=\"20\" height=\"13\" class=\"image\" /></a>\n";
-						echo "<a onclick=\"charger();\" href=\"".traite_grr_url($grr_script_name)."?".$parametres_url."default_language=es\"><img src=\"img_grr/es_dp.png\" alt=\"Spanish\" title=\"Spanish\" width=\"20\" height=\"13\" class=\"image\" /></a>\n";
-					}
+					$parametres_url = htmlspecialchars($_SERVER['QUERY_STRING'])."&amp;";
+					$_SESSION['chemin_retour'] = traite_grr_url($grr_script_name)."?". $_SERVER['QUERY_STRING'];
+					echo "<a onclick=\"charger();\" href=\"".traite_grr_url($grr_script_name)."?".$parametres_url."default_language=fr\"><img src=\"img_grr/fr_dp.png\" alt=\"France\" title=\"france\" width=\"20\" height=\"13\" class=\"image\" /></a>\n";
+					echo "<a onclick=\"charger();\" href=\"".traite_grr_url($grr_script_name)."?".$parametres_url."default_language=de\"><img src=\"img_grr/de_dp.png\" alt=\"Deutch\" title=\"deutch\" width=\"20\" height=\"13\" class=\"image\" /></a>\n";
+					echo "<a onclick=\"charger();\" href=\"".traite_grr_url($grr_script_name)."?".$parametres_url."default_language=en\"><img src=\"img_grr/en_dp.png\" alt=\"English\" title=\"English\" width=\"20\" height=\"13\" class=\"image\" /></a>\n";
+					echo "<a onclick=\"charger();\" href=\"".traite_grr_url($grr_script_name)."?".$parametres_url."default_language=it\"><img src=\"img_grr/it_dp.png\" alt=\"Italiano\" title=\"Italiano\" width=\"20\" height=\"13\" class=\"image\" /></a>\n";
+					echo "<a onclick=\"charger();\" href=\"".traite_grr_url($grr_script_name)."?".$parametres_url."default_language=es\"><img src=\"img_grr/es_dp.png\" alt=\"Spanish\" title=\"Spanish\" width=\"20\" height=\"13\" class=\"image\" /></a>\n";
+				}
 					// Bouton de session + Nom à la connexion
-					if ($type_session == 'no_session')
+				if ($type_session == 'no_session')
+				{
+					if ((getSettingValue('sso_statut') == 'cas_visiteur') || (getSettingValue('sso_statut') == 'cas_utilisateur'))
 					{
-						if ((getSettingValue('sso_statut') == 'cas_visiteur') || (getSettingValue('sso_statut') == 'cas_utilisateur'))
-						{
-							echo "<br />&nbsp;<a href='index.php?force_authentification=y'>".get_vocab("authentification")."</a>";
+						echo "<br />&nbsp;<a href='index.php?force_authentification=y'>".get_vocab("authentification")."</a>";
 							//echo "<br />&nbsp;<small><i><a href='login.php?url=".rawurlencode(str_replace('&amp;','&',get_request_uri()))."'>".get_vocab("connect_local")."</a></i></small>";
 							//corrige un bug dans le calcul de la page d'accueil après connexion.
-							echo "<br />&nbsp;<small><i><a href='login.php'>".get_vocab("connect_local")."</a></i></small>";
-						}
-						else
-						{
-							// echo "<br />&nbsp;<a href='login.php?url=".rawurlencode(str_replace('&amp;','&',get_request_uri()))."'>".get_vocab("connect")."</a>";
-							// corrige un bug dans le calcul de la page d'accueil après connexion.
-							echo "<br />&nbsp;<a href='login.php'>".get_vocab("connect")."</a>";
-						}
+						echo "<br />&nbsp;<small><i><a href='login.php'>".get_vocab("connect_local")."</a></i></small>";
 					}
 					else
 					{
-						echo "<br />&nbsp;<b>".get_vocab("welcome_to").htmlspecialchars($_SESSION['prenom'])." ".htmlspecialchars($_SESSION['nom'])."</b>";
-						echo "<br />&nbsp;<a href=\"my_account.php?day=".$day."&amp;year=".$year."&amp;month=".$month."\">".get_vocab("manage_my_account")."</a><br/>";
-						if (verif_access_search(getUserName()))
-							echo "<a href=\"report.php\">".get_vocab("report")."</a>";
-						$disconnect_link = false;
-						if (!((getSettingValue("cacher_lien_deconnecter") == 'y') && (isset($_SESSION['est_authentifie_sso']))))
-						{
-							// on n'affiche pas le lien logout dans le cas d'un utilisateur LCS connecté.
-							$disconnect_link = true;
-							if (getSettingValue("authentification_obli") == 1)
-								echo "<br />&nbsp;<a href=\"./logout.php?auto=0\" >".get_vocab('disconnect')."</a>";
-							else
-								echo "<br />&nbsp;<a href=\"./logout.php?auto=0&amp;redirect_page_accueil=yes\" >".get_vocab('disconnect')."</a>";
-						}
-						if ((getSettingValue("Url_portail_sso")!='') && (isset($_SESSION['est_authentifie_sso'])))
-						{
-							if ($disconnect_link)
-								echo "&nbsp;-&nbsp;";
-							else
-								echo "<br />&nbsp;";
-							echo('<a href="'.getSettingValue("Url_portail_sso").'">'.get_vocab("Portail_accueil").'</a>');
-						}
-						// Cas d'une authentification LASSO
-						if ((getSettingValue('sso_statut') == 'lasso_visiteur') || (getSettingValue('sso_statut') == 'lasso_utilisateur'))
-						{
-							echo "<br />&nbsp;";
-							if ($_SESSION['lasso_nameid'] == NULL)
-								echo "<a href=\"lasso/federate.php\">".get_vocab('lasso_federate_this_account')."</a>";
-							else
-								echo "<a href=\"lasso/defederate.php\">".get_vocab('lasso_defederate_this_account')."</a>";
-						}
+							// echo "<br />&nbsp;<a href='login.php?url=".rawurlencode(str_replace('&amp;','&',get_request_uri()))."'>".get_vocab("connect")."</a>";
+							// corrige un bug dans le calcul de la page d'accueil après connexion.
+						echo "<br />&nbsp;<a href='login.php'>".get_vocab("connect")."</a>";
 					}
-					?>
-				</td>
-			</tr>
-		</table>
-		<?php
-	}
-	if (isset($use_prototype))
-		echo "<link rel=\"stylesheet\" href=\"http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css\" />";
-	echo "<script src=\"jquery-ui.js\"></script>";
-	echo "<script src=\"jquery.validate.js\"></script>";
-	echo "<script src=\"jquery-ui-timepicker-addon.js\"></script>";
-	echo "<link href=\"themes/default/css/jquery-ui-timepicker-addon.css\" rel=\"stylesheet\" type=\"text/css\">";
+				}
+				else
+				{
+					echo "<br />&nbsp;<b>".get_vocab("welcome_to").htmlspecialchars($_SESSION['prenom'])." ".htmlspecialchars($_SESSION['nom'])."</b>";
+					echo "<br />&nbsp;<a href=\"my_account.php?day=".$day."&amp;year=".$year."&amp;month=".$month."\">".get_vocab("manage_my_account")."</a><br/>";
+					if (verif_access_search(getUserName()))
+						echo "<a href=\"report.php\">".get_vocab("report")."</a>";
+					$disconnect_link = false;
+					if (!((getSettingValue("cacher_lien_deconnecter") == 'y') && (isset($_SESSION['est_authentifie_sso']))))
+					{
+							// on n'affiche pas le lien logout dans le cas d'un utilisateur LCS connecté.
+						$disconnect_link = true;
+						if (getSettingValue("authentification_obli") == 1)
+							echo "<br />&nbsp;<a href=\"./logout.php?auto=0\" >".get_vocab('disconnect')."</a>";
+						else
+							echo "<br />&nbsp;<a href=\"./logout.php?auto=0&amp;redirect_page_accueil=yes\" >".get_vocab('disconnect')."</a>";
+					}
+					if ((getSettingValue("Url_portail_sso")!='') && (isset($_SESSION['est_authentifie_sso'])))
+					{
+						if ($disconnect_link)
+							echo "&nbsp;-&nbsp;";
+						else
+							echo "<br />&nbsp;";
+						echo('<a href="'.getSettingValue("Url_portail_sso").'">'.get_vocab("Portail_accueil").'</a>');
+					}
+						// Cas d'une authentification LASSO
+					if ((getSettingValue('sso_statut') == 'lasso_visiteur') || (getSettingValue('sso_statut') == 'lasso_utilisateur'))
+					{
+						echo "<br />&nbsp;";
+						if ($_SESSION['lasso_nameid'] == NULL)
+							echo "<a href=\"lasso/federate.php\">".get_vocab('lasso_federate_this_account')."</a>";
+						else
+							echo "<a href=\"lasso/defederate.php\">".get_vocab('lasso_defederate_this_account')."</a>";
+					}
+				}
+				?>
+			</td>
+		</tr>
+	</table>
+	<?php
+}
+if (isset($use_prototype))
+	echo "<link rel=\"stylesheet\" href=\"http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css\" />";
+echo "<script src=\"jquery-ui.js\"></script>";
+echo "<script src=\"jquery.validate.js\"></script>";
+echo "<script src=\"jquery-ui-timepicker-addon.js\"></script>";
+echo "<link href=\"themes/default/css/jquery-ui-timepicker-addon.css\" rel=\"stylesheet\" type=\"text/css\">";
 }
 }
 
@@ -3014,75 +3024,75 @@ function UserRoomMaxBooking($user, $id_room, $number) {
  $date_now : la date actuelle
 */
  function verif_booking_date($user, $id, $id_room, $date_booking, $date_now, $enable_periods, $endtime='') {
-	global $correct_diff_time_local_serveur, $can_delete_or_create;
-	$can_delete_or_create="y";
+ 	global $correct_diff_time_local_serveur, $can_delete_or_create;
+ 	$can_delete_or_create="y";
 	// On teste si l'utilisateur est administrateur
-	$sql = "select statut from ".TABLE_PREFIX."_utilisateurs WHERE login = '".protect_data_sql($user)."'";
-	$statut_user = grr_sql_query1($sql);
-	if ($statut_user == 'administrateur') {
-		return true;
-		die();
-	}
+ 	$sql = "select statut from ".TABLE_PREFIX."_utilisateurs WHERE login = '".protect_data_sql($user)."'";
+ 	$statut_user = grr_sql_query1($sql);
+ 	if ($statut_user == 'administrateur') {
+ 		return true;
+ 		die();
+ 	}
 	// A-t-on le droit d'agir dans le passé ?
-	$allow_action_in_past = grr_sql_query1("select allow_action_in_past from ".TABLE_PREFIX."_room where id = '".protect_data_sql($id_room)."'");
-	if ($allow_action_in_past == 'y') {
-		return true;
-		die();
-	}
+ 	$allow_action_in_past = grr_sql_query1("select allow_action_in_past from ".TABLE_PREFIX."_room where id = '".protect_data_sql($id_room)."'");
+ 	if ($allow_action_in_past == 'y') {
+ 		return true;
+ 		die();
+ 	}
 	// Correction de l'avance en nombre d'heure du serveur sur les postes clients
-	if ((isset($correct_diff_time_local_serveur)) and ($correct_diff_time_local_serveur!=0))
-		$date_now -= 3600*$correct_diff_time_local_serveur;
+ 	if ((isset($correct_diff_time_local_serveur)) and ($correct_diff_time_local_serveur!=0))
+ 		$date_now -= 3600*$correct_diff_time_local_serveur;
 	// Créneaux basés sur les intitulés
 	// Dans ce cas, on prend comme temps présent le jour même à minuit.
 	// Cela signifie qu'il est possible de modifier/réserver/supprimer tout au long d'une journée
 	// même si l'heure est passée.
 	// Cela demande donc à être améliorer en introduisant pour chaque créneau une heure limite de réservation.
-	if ($enable_periods == "y") {
-		$month =  date("m",$date_now);
-		$day =  date("d",$date_now);
-		$year = date("Y",$date_now);
-		$date_now = mktime(0, 0, 0, $month, $day, $year);
-	}
-	if ($id != -1) {
+ 	if ($enable_periods == "y") {
+ 		$month =  date("m",$date_now);
+ 		$day =  date("d",$date_now);
+ 		$year = date("Y",$date_now);
+ 		$date_now = mktime(0, 0, 0, $month, $day, $year);
+ 	}
+ 	if ($id != -1) {
 		// il s'agit de l'edition d'une réservation existante
-		if (($endtime != '') and ($endtime < $date_now)) {
-			return false;
-			die();
-		}
-		if ((getSettingValue("allow_user_delete_after_begin") == 1) or (getSettingValue("allow_user_delete_after_begin") == 2))
-			$sql = "SELECT end_time FROM ".TABLE_PREFIX."_entry WHERE id = '".protect_data_sql($id)."'";
-		else
-			$sql = "SELECT start_time FROM ".TABLE_PREFIX."_entry WHERE id = '".protect_data_sql($id)."'";
-		$date_booking = grr_sql_query1($sql);
-		if ($date_booking < $date_now) {
-			return false;
-			die();
-		} else {
+ 		if (($endtime != '') and ($endtime < $date_now)) {
+ 			return false;
+ 			die();
+ 		}
+ 		if ((getSettingValue("allow_user_delete_after_begin") == 1) or (getSettingValue("allow_user_delete_after_begin") == 2))
+ 			$sql = "SELECT end_time FROM ".TABLE_PREFIX."_entry WHERE id = '".protect_data_sql($id)."'";
+ 		else
+ 			$sql = "SELECT start_time FROM ".TABLE_PREFIX."_entry WHERE id = '".protect_data_sql($id)."'";
+ 		$date_booking = grr_sql_query1($sql);
+ 		if ($date_booking < $date_now) {
+ 			return false;
+ 			die();
+ 		} else {
 			// dans le cas où le créneau est entamé, on teste si l'utilisateur a le droit de supprimer la réservation
 			// Si oui, on transmet la variable $only_modify = TRUE avant que la fonction de retourne true.
-			if (getSettingValue("allow_user_delete_after_begin") == 2) {
-				$date_debut = grr_sql_query1("SELECT start_time FROM ".TABLE_PREFIX."_entry WHERE id = '".protect_data_sql($id)."'");
-				if ($date_debut < $date_now) $can_delete_or_create = "n"; else $can_delete_or_create = "y";
-			}
-			return true;
-		}
-	} else {
-		if (getSettingValue("allow_user_delete_after_begin")==1) {
-			$id_area = grr_sql_query1("select area_id from ".TABLE_PREFIX."_room where id = '".protect_data_sql($id_room)."'");
-			$resolution_area = grr_sql_query1("select resolution_area from ".TABLE_PREFIX."_area where id = '".$id_area."'");
-			if ($date_booking>$date_now-$resolution_area) {
-				return true;
-			} else {
-				return false;
-			}
-		} else {
-			if ($date_booking>$date_now) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-	}
+ 			if (getSettingValue("allow_user_delete_after_begin") == 2) {
+ 				$date_debut = grr_sql_query1("SELECT start_time FROM ".TABLE_PREFIX."_entry WHERE id = '".protect_data_sql($id)."'");
+ 				if ($date_debut < $date_now) $can_delete_or_create = "n"; else $can_delete_or_create = "y";
+ 			}
+ 			return true;
+ 		}
+ 	} else {
+ 		if (getSettingValue("allow_user_delete_after_begin")==1) {
+ 			$id_area = grr_sql_query1("select area_id from ".TABLE_PREFIX."_room where id = '".protect_data_sql($id_room)."'");
+ 			$resolution_area = grr_sql_query1("select resolution_area from ".TABLE_PREFIX."_area where id = '".$id_area."'");
+ 			if ($date_booking>$date_now-$resolution_area) {
+ 				return true;
+ 			} else {
+ 				return false;
+ 			}
+ 		} else {
+ 			if ($date_booking>$date_now) {
+ 				return true;
+ 			} else {
+ 				return false;
+ 			}
+ 		}
+ 	}
  }
 // function verif_duree_max_resa_area($user, $id_room, $starttime, $endtime)
 // $user : le login de l'utilisateur
@@ -3091,25 +3101,25 @@ function UserRoomMaxBooking($user, $id_room, $number) {
 // $endtime : fin de la réservation
 //
  function verif_duree_max_resa_area($user, $id_room, $starttime, $endtime) {
-	if (authGetUserLevel($user,$id_room) >= 3) {
+ 	if (authGetUserLevel($user,$id_room) >= 3) {
 	// On teste si l'utilisateur est gestionnaire de la ressource
-		return true;
-		die();
-	}
-	$id_area = grr_sql_query1("select area_id from ".TABLE_PREFIX."_room where id='".protect_data_sql($id_room)."'");
-	$duree_max_resa_area = grr_sql_query1("select duree_max_resa_area from ".TABLE_PREFIX."_area where id='".$id_area."'");
-	$enable_periods =  grr_sql_query1("select enable_periods from ".TABLE_PREFIX."_area where id='".$id_area."'");
-	if ($enable_periods == 'y') $duree_max_resa_area = $duree_max_resa_area*24*60;
-	if ($duree_max_resa_area < 0) {
-		return true;
-		die();
-	} else if ($endtime - $starttime > $duree_max_resa_area*60) {
-		return false;
-		die();
-	} else {
-		return true;
-		die();
-	}
+ 		return true;
+ 		die();
+ 	}
+ 	$id_area = grr_sql_query1("select area_id from ".TABLE_PREFIX."_room where id='".protect_data_sql($id_room)."'");
+ 	$duree_max_resa_area = grr_sql_query1("select duree_max_resa_area from ".TABLE_PREFIX."_area where id='".$id_area."'");
+ 	$enable_periods =  grr_sql_query1("select enable_periods from ".TABLE_PREFIX."_area where id='".$id_area."'");
+ 	if ($enable_periods == 'y') $duree_max_resa_area = $duree_max_resa_area*24*60;
+ 	if ($duree_max_resa_area < 0) {
+ 		return true;
+ 		die();
+ 	} else if ($endtime - $starttime > $duree_max_resa_area*60) {
+ 		return false;
+ 		die();
+ 	} else {
+ 		return true;
+ 		die();
+ 	}
  }
 // function verif_delais_max_resa_room($user, $id_room, $date_booking)
 // $user : le login de l'utilisateur
@@ -3118,61 +3128,61 @@ function UserRoomMaxBooking($user, $id_room, $number) {
 // $date_now : la date actuelle
 //
  function verif_delais_max_resa_room($user, $id_room, $date_booking) {
-	$day   = date("d");
-	$month = date("m");
-	$year  = date("Y");
-	$datenow = mktime(0,0,0,$month,$day,$year);
-	if (authGetUserLevel($user,$id_room) >= 3) {
+ 	$day   = date("d");
+ 	$month = date("m");
+ 	$year  = date("Y");
+ 	$datenow = mktime(0,0,0,$month,$day,$year);
+ 	if (authGetUserLevel($user,$id_room) >= 3) {
 	// On teste si l'utilisateur est administrateur
-		return true;
-		die();
-	}
-	$delais_max_resa_room = grr_sql_query1("select delais_max_resa_room from ".TABLE_PREFIX."_room where id='".protect_data_sql($id_room)."'");
-	if ($delais_max_resa_room == -1) {
-		return true;
-		die();
-	} else if ($datenow + $delais_max_resa_room*24*3600 +1 < $date_booking) {
-		return false;
-		die();
-	} else {
-		return true;
-		die();
-	}
+ 		return true;
+ 		die();
+ 	}
+ 	$delais_max_resa_room = grr_sql_query1("select delais_max_resa_room from ".TABLE_PREFIX."_room where id='".protect_data_sql($id_room)."'");
+ 	if ($delais_max_resa_room == -1) {
+ 		return true;
+ 		die();
+ 	} else if ($datenow + $delais_max_resa_room*24*3600 +1 < $date_booking) {
+ 		return false;
+ 		die();
+ 	} else {
+ 		return true;
+ 		die();
+ 	}
  }
 // function verif_access_search : vérifier l'accès à l'outil de recherche
 // $user : le login de l'utilisateur
 // $id_room : l'id de la ressource.
 //
  function verif_access_search($user) {
-	if (authGetUserLevel($user,-1) >= getSettingValue("allow_search_level"))
-		return TRUE;
-	else
-		return FALSE;
+ 	if (authGetUserLevel($user,-1) >= getSettingValue("allow_search_level"))
+ 		return TRUE;
+ 	else
+ 		return FALSE;
  }
 // function verif_display_fiche_ressource : vérifier l'accès à la visualisation de la fiche d'une ressource
 // $user : le login de l'utilisateur
 // $id_room : l'id de la ressource.
 //
  function verif_display_fiche_ressource($user, $id_room) {
-	$show_fic_room = grr_sql_query1("select show_fic_room from ".TABLE_PREFIX."_room where id='".$id_room."'");
-	if ($show_fic_room == "y") {
-		if (authGetUserLevel($user,$id_room) >= getSettingValue("visu_fiche_description"))
-			return TRUE;
-		else
-			return FALSE;
-	} else {
-		return FALSE;
-	}
+ 	$show_fic_room = grr_sql_query1("select show_fic_room from ".TABLE_PREFIX."_room where id='".$id_room."'");
+ 	if ($show_fic_room == "y") {
+ 		if (authGetUserLevel($user,$id_room) >= getSettingValue("visu_fiche_description"))
+ 			return TRUE;
+ 		else
+ 			return FALSE;
+ 	} else {
+ 		return FALSE;
+ 	}
  }
 // function verif_acces_fiche_reservation : vérifier l'accès à la fiche de réservation d'une ressource
 // $user : le login de l'utilisateur
 // $id_room : l'id de la ressource.
 //
  function verif_acces_fiche_reservation($user, $id_room) {
-	if (authGetUserLevel($user,$id_room) >= getSettingValue("acces_fiche_reservation"))
-		return TRUE;
-	else
-		return FALSE;
+ 	if (authGetUserLevel($user,$id_room) >= getSettingValue("acces_fiche_reservation"))
+ 		return TRUE;
+ 	else
+ 		return FALSE;
  }
 /* function verif_display_email : vérifier l'accès à l'adresse email
  *$user : le login de l'utilisateur
@@ -4121,12 +4131,12 @@ die();
 */
  function effectuer_correspondance_profil_statut($codefonction, $libellefonction) {
 		# On récupère le statut par défaut des utilisateurs CAS
-	$sso = getSettingValue("sso_statut");
-	if ($sso == "cas_visiteur") $_statut = "visiteur";
-	else if ($sso == "cas_utilisateur") $_statut = "utilisateur";
+ 	$sso = getSettingValue("sso_statut");
+ 	if ($sso == "cas_visiteur") $_statut = "visiteur";
+ 	else if ($sso == "cas_utilisateur") $_statut = "utilisateur";
 		# Le code fonction est défini
-	if ($codefonction != "") {
-		$sql = grr_sql_query1("select statut_grr from ".TABLE_PREFIX."_correspondance_statut where code_fonction='".$codefonction."'");
+ 	if ($codefonction != "") {
+ 		$sql = grr_sql_query1("select statut_grr from ".TABLE_PREFIX."_correspondance_statut where code_fonction='".$codefonction."'");
 				if ($sql != -1) { // Si la fonction existe dans la table de correspondance, on retourne le statut_grr associé
 					return $sql;
 				}	else {
