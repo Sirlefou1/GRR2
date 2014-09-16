@@ -487,16 +487,16 @@ else
 	if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
 	{
 	#Show Go to week before and after links
-		echo "\n
+		echo "
 		<tr>
 			<td align=\"left\">
-				<input type=\"button\"  onclick=\"charger();javascript: location.href='week_all.php?year=$yy&amp;month=$ym&amp;day=$yd&amp;area=$area';\" value=\"&lt;&lt; ".get_vocab("weekbefore")." \"/>
+				<input type=\"button\" onclick=\"charger();javascript: location.href='week_all.php?year=$yy&amp;month=$ym&amp;day=$yd&amp;area=$area';\" value=\"&lt;&lt; ".get_vocab("weekbefore")." \"/>
 			</td>
 			<td>";
 				include "include/trailer.inc.php";
 				echo "</td>
 				<td align=\"right\">
-					<input type=\"button\"  class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='week_all.php?year=$ty&amp;month=$tm&amp;day=$td&amp;area=$area';\"  value=\" ".get_vocab('weekafter')."  &gt;&gt;\"/>
+					<input type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='week_all.php?year=$ty&amp;month=$tm&amp;day=$td&amp;area=$area';\" value=\" ".get_vocab('weekafter')."  &gt;&gt;\"/>
 				</td>
 			</tr>
 		</table>";
@@ -505,7 +505,7 @@ else
 	  * 14/01/2014*/ 
 
 	  /*-----MAJ Loïs THOMAS  --> Lien qui permet de  le menu à gauche -----*/
-	  echo "<tr>";
+	  //echo "<table><tr>";
 			 //Test si le format est imprimable
 	  if ((!isset($_GET['pview'])) or ($_GET['pview'] != 1)) {
 			/*-----Maj David VOUE Suppression du bouton "Cacher le menu à gauche"
@@ -517,22 +517,18 @@ else
 				echo "</td>";
 				*/
 			}
-			echo "<td>";
+			//echo "<td align=\"center\">";
 			echo "<h2 class=\"titre\">".utf8_strftime($dformat, $date_start)." au ". utf8_strftime($dformat, $date_end)
 			. " $this_area_name - ".get_vocab("all_rooms")."</h2>";
-			echo "</td>";
-			echo " </tr>
-		</table>
-	</div>";
-
-
-	echo " <div class=\"contenu_planning\">" ;
-
-	echo "<table cellspacing=\"0\"  border=\"1\" width=\"100%\">\n";
-	// Affichage de la première ligne contenant le nom des jours (lundi, mardi, ...) et les dates ("10 juil", "11 juil", ...)
-	echo "<th style=\"width:10%;\">&nbsp;</th>\n"; // Première cellule vide
+			//echo "</td>";
+			//echo " </tr>
+		//</table>";
+	echo "</div>";
+	echo "\n<div class=\"contenu_planning\">\n" ;
+	echo "<table cellspacing=\"0\" border=\"1\" width=\"100%\">\n<thead><tr>";
+	echo "<th width=\"10%\">&nbsp;</th>\n";
 	$t = $time;
-	$num_week_day = $weekstarts; // Pour le calcul des jours à afficher
+	$num_week_day = $weekstarts;
 	for ($weekcol = 0; $weekcol < 7; $weekcol++)
 	{
 		$num_day = strftime("%d", $t);
@@ -541,34 +537,32 @@ else
 		$temp_year = strftime("%Y", $t);
 		$jour_cycle = grr_sql_query1("SELECT Jours FROM ".TABLE_PREFIX."_calendrier_jours_cycle WHERE DAY='$t'");
 		$t += 86400;
-		if (!isset($correct_heure_ete_hiver) or ($correct_heure_ete_hiver == 1)) {
-			// Correction dans le cas d'un changement d'heure
-			if  (heure_ete_hiver("hiver",$temp_year,0) == mktime(0,0,0,$temp_month,$num_day,$temp_year))
-				$t +=3600;
-			if (date("H",$t) == "01")
-				$t -=3600;
+		if (!isset($correct_heure_ete_hiver) or ($correct_heure_ete_hiver == 1))
+		{
+			if (heure_ete_hiver("hiver",$temp_year,0) == mktime(0, 0, 0, $temp_month, $num_day, $temp_year))
+				$t += 3600;
+			if (date("H", $t) == "01")
+				$t -= 3600;
 		}
-		if ($display_day[$num_week_day] == 1) {// on n'affiche pas tous les jours de la semaine
-		echo "<th style=\"width:10%;\";><a onclick=\"charger()\" class=\"lienPlanning\" href='day.php?year=".$temp_year."&amp;month=".$temp_month."&amp;day=".$num_day."&amp;area=".$area."'>"  . day_name(($weekcol + $weekstarts)%7) . " ".$num_day. " ".$temp_month2."</a>";
-		if (getSettingValue("jours_cycles_actif") == "Oui" and intval($jour_cycle)>-1)
-			if (intval($jour_cycle)>0)
-				echo "<br />".get_vocab("rep_type_6")." ".$jour_cycle;
-			else
-				echo "<br />".$jour_cycle;
-			echo "</th>\n";
+		if ($display_day[$num_week_day] == 1)
+		{
+			echo "<th width=\"10%\"><a onclick=\"charger()\" class=\"lienPlanning\" href='day.php?year=".$temp_year."&amp;month=".$temp_month."&amp;day=".$num_day."&amp;area=".$area."'>"  . day_name(($weekcol + $weekstarts)%7) . " ".$num_day. " ".$temp_month2."</a>";
+			if (getSettingValue("jours_cycles_actif") == "Oui" && intval($jour_cycle) >- 1)
+				if (intval($jour_cycle) > 0)
+					echo "<br />".get_vocab("rep_type_6")." ".$jour_cycle;
+				else
+					echo "<br />".$jour_cycle;
+				echo "</th>\n";
+			}
+			$num_week_day++;
+			$num_week_day = $num_week_day % 7;
 		}
-		$num_week_day++;// Pour le calcul des jours à afficher
-		$num_week_day = $num_week_day % 7;// Pour le calcul des jours à afficher
-	}
-	echo "</tr>";
-	// Fin Affichage de la première ligne contenant les jour
-
-	$li=0;
-  // Boucle sur les ressources
-	for ($ir = 0; ($row = grr_sql_row($res, $ir)); $ir++)
-	{
+		echo "</tr></thead>";
+		$li = 0;
+		for ($ir = 0; ($row = grr_sql_row($res, $ir)); $ir++)
+		{
    // calcul de l'acc?s ? la ressource en fonction du niveau de l'utilisateur
-		$verif_acces_ressource = verif_acces_ressource(getUserName(), $row[2]);
+			$verif_acces_ressource = verif_acces_ressource(getUserName(), $row[2]);
    if ($verif_acces_ressource) {  // on n'affiche pas toutes les ressources
 	// Calcul du niveau d'acc?s aux fiche de r?servation d?taill?es des ressources
    $acces_fiche_reservation = verif_acces_fiche_reservation(getUserName(), $row[2]);

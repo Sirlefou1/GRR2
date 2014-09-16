@@ -12,13 +12,9 @@ if ($_GET['pview'] != 1) {
 	$path = $_SERVER['PHP_SELF'];
 	$file = basename ($path);
 	if ( $file== 'month_all2.php')
-	{
-		echo "<div id=\"menuGaucheMonthAll2\">";
-	}
+		echo "\n<div id=\"menuGaucheMonthAll2\">";
 	else
-	{
-		echo "<div id=\"menuGauche\">";
-	}
+		echo "\n<div id=\"menuGauche\">";
 
 //MAJ Hugo - Reparation du problème des liens vers les semaines du calendrier pour
 //21/05/2013

@@ -96,7 +96,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 			$monthName = utf8_strftime("%B", $date);
 			$prevMonth = $this->getCalendarLink($this->month - 1 >   0 ? $this->month - 1 : 12, $this->month - 1 >   0 ? $this->year : $this->year - 1);
 			$nextMonth = $this->getCalendarLink($this->month + 1 <= 12 ? $this->month + 1 :  1, $this->month + 1 <= 12 ? $this->year : $this->year + 1);
-			$s .= " <table border = \"0\" class=\"calendar\">\n";
+			$s .= "\n<table border = \"0\" class=\"calendar\">\n";
 			$s .= "<caption>";
 			if (($this->h) && (($this->dmy == 'month') || ($this->dmy == 'month_all') || ($this->dmy == 'month_all2')))
 				$bg_lign = "week";

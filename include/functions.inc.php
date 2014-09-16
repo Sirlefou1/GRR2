@@ -2140,6 +2140,7 @@ function make_room_item_html( $link, $current_area, $current_room, $year, $month
 			}
 		}
 	}
+	$out_html .= " </form>";
 	return $out_html;
 }
 # end make_room_item_html
