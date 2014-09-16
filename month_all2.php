@@ -1,9 +1,9 @@
 <?php
 /**
  * month_all2.php
- * Interface d'accueil avec affichage par mois des réservation de toutes les ressources d'un domaine
+ * Interface d'accueil avec affichage par mois des rÃ©servation de toutes les ressources d'un domaine
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2009-12-02 20:11:07 $
+ * DerniÃ¨re modification : $Date: 2009-12-02 20:11:07 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -92,10 +92,10 @@ if (!grr_resumeSession()) {
 // Construction des identifiants de la ressource $room, du domaine $area, du site $id_site
 Definition_ressource_domaine_site();
 
-// Récupération des données concernant l'affichage du planning du domaine
+// RÃ©cupÃ©ration des donnÃ©es concernant l'affichage du planning du domaine
 get_planning_area_values($area);
 
-// Paramètres langage
+// ParamÃ¨tres langage
 include "include/language.inc.php";
 
 
@@ -154,10 +154,10 @@ function cmp3($a, $b)
     return "> ";
 }
 
-// On vérifie une fois par jour si le délai de confirmation des réservations est dépassé
-// Si oui, les réservations concernées sont supprimées et un mail automatique est envoyé.
-// On vérifie une fois par jour que les ressources ont été rendue en fin de réservation
-// Si non, une notification email est envoyée
+// On vÃ©rifie une fois par jour si le dÃ©lai de confirmation des rÃ©servations est dÃ©passÃ©
+// Si oui, les rÃ©servations concernÃ©es sont supprimÃ©es et un mail automatique est envoyÃ©.
+// On vÃ©rifie une fois par jour que les ressources ont Ã©tÃ© rendue en fin de rÃ©servation
+// Si non, une notification email est envoyÃ©e
 if (getSettingValue("verif_reservation_auto")==0) {
     verify_confirm_reservation();
     verify_retard_reservation();
@@ -242,7 +242,7 @@ echo "<div class=\"titre_planning\"><table width=\"100%\">";
 
     //Test si le format est imprimable
   if ((!isset($_GET['pview'])) or ($_GET['pview'] != 1)) {
- /*-----MAJ Loïs THOMAS  --> Lien qui permet de  le menu à gauche -----*/
+ /*-----MAJ LoÃ¯s THOMAS  --> Lien qui permet de  le menu Ã  gauche -----*/
  
 
       echo "<tr>";
@@ -250,9 +250,9 @@ echo "<div class=\"titre_planning\"><table width=\"100%\">";
       $month_all2= 1;
       /*-----MAJ David VOUE  --> Bouton qui permet uniquement d'afficher le menu gauche -----
        * 14/01/2014*/
-      /*echo "<input type=\"button\" id=\"cacher\" value=\"cacher le menu à gauche.\" onClick=\"divcache($month_all2)\" style=\"display:inline;\"/>";
-       *echo "<input type=\"button\" id=\"voir\" value=\"Afficher le menu à gauche.\" onClick=\"divaffiche($month_all2)\" style=\"display:none;\" /> ";*/
-      echo "<input type=\"button\" id=\"voir\" value=\"Afficher le menu à gauche.\" onClick=\"divaffiche($month_all2)\" style=\"display:inline;\" /> ";
+      /*echo "<input type=\"button\" id=\"cacher\" value=\"cacher le menu Ã  gauche.\" onClick=\"divcache($month_all2)\" style=\"display:inline;\"/>";
+       *echo "<input type=\"button\" id=\"voir\" value=\"Afficher le menu Ã  gauche.\" onClick=\"divaffiche($month_all2)\" style=\"display:none;\" /> ";*/
+      echo "<input type=\"button\" id=\"voir\" value=\"Afficher le menu Ã  gauche.\" onClick=\"divaffiche($month_all2)\" style=\"display:inline;\" /> ";
       echo "</td>";
   }
      echo " <td>";
@@ -264,10 +264,10 @@ echo "<div class=\"titre_planning\"><table width=\"100%\">";
 echo "</table>";
 
  echo "</div>\n";
-//Lien précedent dans le format imprimable
+//Lien prÃ©cedent dans le format imprimable
 if ($_GET['pview'] == 1 AND $_GET['precedent'] == 1) {
 echo "<span id=\"lienPrecedent\">
-    <button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript:history.back();\">Précedent</button>
+    <button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript:history.back();\">PrÃ©cedent</button>
     </span>";
 }
 
@@ -285,7 +285,7 @@ $all_day = preg_replace("/ /", " ", get_vocab("all_day"));
 # row[4] = beneficiaire of the booking
 # row[5] = Nom de la ressource
 # row[6] = statut
-# row[7] = Description complète
+# row[7] = Description complÃ¨te
 
 
 
@@ -303,7 +303,7 @@ $res = grr_sql_query($sql);
 if (! $res) echo grr_sql_error();
 else {
 
-/* Permet d'afficher aucune réservation
+/* Permet d'afficher aucune rÃ©servation
 if (grr_sql_count($res) == 0) {
     echo "<div class=\"titre_planning\"><h3>".get_vocab("nothing_found")."</h3></div></body></html>";
     die();
@@ -330,7 +330,8 @@ for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
         $midnight = mktime(0, 0, 0, $month, $day_num, $year);
     while ($t < $end_t)
     {
-        if ($debug_flag) echo "<br />DEBUG: Entry $row[2] day $day_num\n";
+        if ($debug_flag)
+          echo "<br />DEBUG: Entry $row[2] day $day_num\n";
         $d[$day_num]["id"][] = $row[2];
         // Info-bulle
         $temp = "";
@@ -339,7 +340,8 @@ for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
         else if (getSettingValue("display_info_bulle") == 2)
             $temp = $row[7];
 
-        if ($temp != "") $temp = " - ".$temp;
+        if ($temp != "")
+          $temp = " - ".$temp;
         $d[$day_num]["who1"][] = affichage_lien_resa_planning($row[3],$row[2]);
         $d[$day_num]["room"][]=$row[5] ;
         $d[$day_num]["res"][] = $row[6];
@@ -464,23 +466,23 @@ echo "</tr>\n";*/
 $sql = "select room_name, capacity, id, description from ".TABLE_PREFIX."_room where area_id=$area order by order_display,room_name";
 $res = grr_sql_query($sql);
 
-// Début affichage de la première ligne
+// DÃ©but affichage de la premiÃ¨re ligne
 echo "<tr><th></th>\n";
-//Corrige un bug avec certains fuseaux horaires (par exemple GMT-05:00 celui du Québec) :
-//plusieurs mois débutent par le dernier jours du mois précédent.
-//En changeant "gmmktime" par "mktime" le bug est corrigé
+//Corrige un bug avec certains fuseaux horaires (par exemple GMT-05:00 celui du QuÃ©bec) :
+//plusieurs mois dÃ©butent par le dernier jours du mois prÃ©cÃ©dent.
+//En changeant "gmmktime" par "mktime" le bug est corrigÃ©
 //$t2=gmmktime(0,0,0,$month,1,$year);
 $t2=mktime(0,0,0,$month,1,$year);
 for ($k = 0; $k<$days_in_month; $k++) {
     $cday = date("j", $t2);
     $cweek = date("w", $t2);
-    /*MAJ Loïs THOMAS  Par souci de taille du tableau on supprime le Nom abrégé du jours */
+    /*MAJ LoÃ¯s THOMAS  Par souci de taille du tableau on supprime le Nom abrÃ©gÃ© du jours */
     $name_day = ucfirst(utf8_strftime("%a %d", $t2));
     //$name_day = ucfirst(utf8_strftime("%d", $t2));
     $temp = mktime(0,0,0,$month,$cday,$year);
   	$jour_cycle = grr_sql_query1("SELECT Jours FROM ".TABLE_PREFIX."_calendrier_jours_cycle WHERE DAY='$temp'");
     $t2 += 86400;
-    // On inscrit le numéro du mois dans la deuxième ligne
+    // On inscrit le numÃ©ro du mois dans la deuxiÃ¨me ligne
     if ($display_day[$cweek]==1)
 		{
         echo "<th class=\"tableau_month_all2\">$name_day";
@@ -496,23 +498,23 @@ for ($k = 0; $k<$days_in_month; $k++) {
 	}
 }
 echo "</tr>";
-// Fin affichage de la première ligne
+// Fin affichage de la premiÃ¨re ligne
 
 $li=0;
 for ($ir = 0; ($row = grr_sql_row($res, $ir)); $ir++)
 {
-   // calcul de l'accès à la ressource en fonction du niveau de l'utilisateur
+   // calcul de l'accÃ¨s Ã  la ressource en fonction du niveau de l'utilisateur
    $verif_acces_ressource = verif_acces_ressource(getUserName(), $row[2]);
    if ($verif_acces_ressource) {  // on n'affiche pas toutes les ressources
 
-    // Calcul du niveau d'accès aux fiche de réservation détaillées des ressources
+    // Calcul du niveau d'accÃ¨s aux fiche de rÃ©servation dÃ©taillÃ©es des ressources
     $acces_fiche_reservation = verif_acces_fiche_reservation(getUserName(), $row[2]);
 
     echo "<tr><th class=\"tableau_month_all2\">" . htmlspecialchars($row[0]) ."</th>\n";
     $li++;
-    //Corrige un bug avec certains fuseaux horaires (par exemple GMT-05:00 celui du Québec) :
-    //plusieurs mois débutent par le dernier jours du mois précédent.
-    //En changeant "gmmktime" par "mktime" le bug est corrigé
+    //Corrige un bug avec certains fuseaux horaires (par exemple GMT-05:00 celui du QuÃ©bec) :
+    //plusieurs mois dÃ©butent par le dernier jours du mois prÃ©cÃ©dent.
+    //En changeant "gmmktime" par "mktime" le bug est corrigÃ©
     //$t2=gmmktime(0,0,0,$month,1,$year);
     $t2=mktime(0,0,0,$month,1,$year);
     for ($k = 0; $k<$days_in_month; $k++)
@@ -520,7 +522,7 @@ for ($ir = 0; ($row = grr_sql_row($res, $ir)); $ir++)
         $cday = date("j", $t2);
         $cweek = date("w", $t2);
         $t2 += 86400;
-       if ($display_day[$cweek]==1) { // Début condition "on n'affiche pas tous les jours de la semaine"
+       if ($display_day[$cweek]==1) { // DÃ©but condition "on n'affiche pas tous les jours de la semaine"
         echo "<td valign=\"top\" class=\"cell_month\">&nbsp;";
         if (est_hors_reservation(mktime(0,0,0,$month,$cday,$year),$area)) {
             echo "<div class=\"empty_cell\">";
@@ -547,22 +549,22 @@ for ($ir = 0; ($row = grr_sql_row($res, $ir)); $ir++)
                         tdcell($d[$cday]["color"][$i]);
                         if ($d[$cday]["res"][$i] != '-') 
                           echo "&nbsp;<img src=\"img_grr/buzy.png\" alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("ressource actuellement empruntee")."\" width=\"20\" height=\"20\" class=\"image\" />&nbsp;\n";
-                        // si la réservation est à confirmer, on le signale
+                        // si la rÃ©servation est Ã  confirmer, on le signale
                         if ((isset($d[$cday]["option_reser"][$i])) && ($d[$cday]["option_reser"][$i] != -1))
                           echo "&nbsp;<img src=\"img_grr/small_flag.png\" alt=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."\" title=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."&nbsp;".time_date_string_jma($d[$cday]["option_reser"][$i],$dformat)."\" width=\"20\" height=\"20\" class=\"image\" />&nbsp;\n";
-                        // si la réservation est à modérer, on le signale
+                        // si la rÃ©servation est Ã  modÃ©rer, on le signale
                         if ((isset($d[$cday]["moderation"][$i])) && ($d[$cday]["moderation"][$i] == 1))
                             echo "&nbsp;<img src=\"img_grr/flag_moderation.png\" alt=\"".get_vocab("en_attente_moderation")."\" title=\"".get_vocab("en_attente_moderation")."\" class=\"image\" />&nbsp;\n";
                         echo "<span class=\"small_planning\">";
 
                         if ($acces_fiche_reservation)
                         {
-                                /*MAJ Loïs THOMAS <-----Test permettant de savoir le format d'ouverture pour les informations sur les réservations----->  */
+                                /*MAJ LoÃ¯s THOMAS <-----Test permettant de savoir le format d'ouverture pour les informations sur les rÃ©servations----->  */
                             if (getSettingValue("display_level_view_entry") == 0)
                             {
                                 $currentPage = 'month_all2';
                                 $id =   $d[$cday]["id"][$i];
-                                echo "<a title=\"".htmlspecialchars($d[$cday]["who"][$i])."\" href=\"#?w=500\" onclick=\"request($id,$cday,$month,$year,'$currentPage',readData);\" rel=\"popup_name\" class=\"poplight\">" .$d[$cday]["who1"][$i]{0}."</a>";
+                                echo "<a title=\"".htmlspecialchars($temp)."\" href=\"#?w=500\" onclick=\"request($id,$cday,$month,$year,'$currentPage',readData);\" rel=\"popup_name\" class=\"poplight\">" .$d[$cday]["who1"][$i]{0}."</a>";
                                 echo  "<div id=\"popup_name\" class=\"popup_block\" ></div>";
                                 }
                             else
@@ -602,7 +604,7 @@ echo "</table>";
 
 if ($_GET['pview'] != 1)
 
-/*-----MAJ Loïs THOMAS  --> Lien permettant de revenir en haut de la page -----*/
+/*-----MAJ LoÃ¯s THOMAS  --> Lien permettant de revenir en haut de la page -----*/
 /*echo "<button class=\"btn btn-default btn-xs\" onclick=\"javascript: location.href='#haut_de_page';\">Haut de page</button>";*/
 
 
