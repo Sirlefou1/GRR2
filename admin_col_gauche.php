@@ -74,7 +74,7 @@ function affichetableau($liste,$titre='')
 		echo "<fieldset>\n";
 		echo "<legend>$titre</legend><ul>\n";
 		$k = 0;
-		foreach($liste as $key)
+		foreach ($liste as $key)
 		{
 			if ($chaine == $key)
 				echo "<li><span class=\"bground\"><b>".get_vocab($key)."</b></span></li>\n";

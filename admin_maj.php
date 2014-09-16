@@ -161,7 +161,7 @@ if (getSettingValue('sso_statut') == 'lcs')
 		$lcs_tab_login["email"] = $user["email"];
 		$long = strlen($user["fullname"]) - strlen($user["nom"]);
 		$lcs_tab_login["fullname"] = substr($user["fullname"], 0, $long) ;
-		foreach($groups as $value)
+		foreach ($groups as $value)
 			$lcs_groups[] = $value["cn"];
 		// A ce stade, l'utilisateur est authentifié par LCS
 		// Etablir à nouveau la connexion à la base
@@ -277,7 +277,7 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 					if (isset($_POST['maj']) || isset($_GET['force_maj']))
 					{
 						// On commence la mise à jour
-						if  ($version_old < "1.4.9")
+						if ($version_old < "1.4.9")
 						{
 							$result .= "<b>Mise à jour jusqu'à la version 1.4 :</b><br />";
 							$result_inter .= traite_requete("ALTER TABLE mrbs_area ADD order_display TINYINT NOT NULL;");

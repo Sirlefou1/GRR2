@@ -771,7 +771,7 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 					this._.editor.fire( 'dialogShow', this );
 
 					// Save the initial values of the dialog.
-					this.foreach( function( contentObj ) { contentObj.setInitValue && contentObj.setInitValue(); } );
+					this.foreach ( function( contentObj ) { contentObj.setInitValue && contentObj.setInitValue(); } );
 
 				},
 				100, this );
@@ -801,13 +801,13 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 		reset : (function()
 		{
 			var fn = function( widget ){ if ( widget.reset ) widget.reset( 1 ); };
-			return function(){ this.foreach( fn ); return this; };
+			return function(){ this.foreach ( fn ); return this; };
 		})(),
 
 		setupContent : function()
 		{
 			var args = arguments;
-			this.foreach( function( widget )
+			this.foreach ( function( widget )
 				{
 					if ( widget.setup )
 						widget.setup.apply( widget, args );
@@ -817,7 +817,7 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 		commitContent : function()
 		{
 			var args = arguments;
-			this.foreach( function( widget )
+			this.foreach ( function( widget )
 				{
 					if ( widget.commit )
 						widget.commit.apply( widget, args );
@@ -883,7 +883,7 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 
 			delete this._.parentDialog;
 			// Reset the initial values of the dialog.
-			this.foreach( function( contentObj ) { contentObj.resetInitValue && contentObj.resetInitValue(); } );
+			this.foreach ( function( contentObj ) { contentObj.resetInitValue && contentObj.resetInitValue(); } );
 		},
 
 		/**

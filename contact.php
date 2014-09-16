@@ -136,7 +136,7 @@ case "envoi":
   $m->SetLanguage("fr","./phpmailer/language/");
   setlocale(LC_ALL,$locale);
   $tab_destinataire = explode(';',preg_replace("/ /", "",$destinataire));
-  foreach($tab_destinataire as $item_email){
+  foreach ($tab_destinataire as $item_email){
       $m->AddAddress($item_email);
   }
   $m->Subject = $sujet;

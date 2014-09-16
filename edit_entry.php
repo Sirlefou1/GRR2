@@ -661,7 +661,7 @@ if ($enable_periods!='y')
 		return false;
 	}
 	<?php } ?>
-	if  (document.forms["main"].type.value=='0')
+	if (document.forms["main"].type.value=='0')
 	{
 		alert("<?php echo get_vocab("choose_a_type"); ?>");
 		return false;
@@ -790,7 +790,7 @@ echo "<form id=\"main\" action=\"edit_entry_handler.php\" method=\"get\">\n";
 					$sql2 = "select id, room_name from ".TABLE_PREFIX."_room where area_id='".$row[0]."'";
 					// on ne cherche pas parmi les ressources invisibles pour l'utilisateur
 					$tab_rooms_noaccess = verif_acces_ressource(getUserName(), 'all');
-					foreach($tab_rooms_noaccess as $key){
+					foreach ($tab_rooms_noaccess as $key){
 						$sql2 .= " and id != $key ";
 					}
 					$sql2 .= " order by room_name";
@@ -1131,7 +1131,7 @@ echo "<tr><td class=\"E\"><b>".get_vocab("rooms").get_vocab("deux_points")."</b>
 $sql = "select id, room_name, description from ".TABLE_PREFIX."_room where area_id=$area_id ";
 // on ne cherche pas parmi les ressources invisibles pour l'utilisateur
 $tab_rooms_noaccess = verif_acces_ressource(getUserName(), 'all');
-foreach($tab_rooms_noaccess as $key)
+foreach ($tab_rooms_noaccess as $key)
 	$sql .= " and id != $key ";
 $sql .= " order by order_display,room_name";
 $res = grr_sql_query($sql);

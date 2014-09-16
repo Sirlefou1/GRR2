@@ -378,7 +378,7 @@ class CKEditor
 		}
 
 		if (!empty($_events)) {
-			foreach($_events as $eventName => $handlers) {
+			foreach ($_events as $eventName => $handlers) {
 				if (empty($handlers)) {
 					continue;
 				}

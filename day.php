@@ -474,12 +474,12 @@ else
 			// Deuxième ligne et lignes suivantes du tableau
 			echo "<tr>\n<th style=\"width:5%;\">";
 			//echo "<tr>\n";
-			echo "</td>\n";
+			//echo "</td>\n</td>\n";
 			if ($enable_periods == 'y')
 				$tab[2][] = get_vocab('period');
 			else
 				$tab[2][] = get_vocab('time');
-			echo "</td>\n</tr>\n";
+			echo "\n</tr>\n";
 			$tab_ligne = 3;
 			// Début première boucle sur le temps
 			for ($t = $am7; $t <= $pm7; $t += $resolution)
@@ -513,13 +513,13 @@ else
 						}
 						else
 							unset($id);						
-						if  ((isset($id)) && (!est_hors_reservation(mktime(0,0,0,$month,$day,$year),$area)))
+						if ((isset($id)) && (!est_hors_reservation(mktime(0,0,0,$month,$day,$year),$area)))
 							$c = $color;
 						else if ($statut_room[$room] == "0")
 							$c = "avertissement";
 						else
 							$c = "empty_cell";
-						if  ((isset($id)) && (!est_hors_reservation(mktime(0, 0, 0, $month, $day, $year), $area)))
+						if ((isset($id)) && (!est_hors_reservation(mktime(0, 0, 0, $month, $day, $year), $area)))
 						{
 							if ( $compteur[$id] == 0 )
 							{
@@ -654,7 +654,7 @@ else
 					reset($rooms);
 					$tab_ligne++;
 				}
-				echo "</div>";
+				//echo "</div>";
 				echo "</table>";
 			}
 			grr_sql_free($res);

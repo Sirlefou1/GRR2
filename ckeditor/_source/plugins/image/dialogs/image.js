@@ -73,7 +73,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			var inlineStyleField = this.getContentElement( 'advanced', 'txtdlgGenStyle' );
 			inlineStyleField && inlineStyleField.commit.apply( inlineStyleField, args );
 
-			this.foreach( function( widget )
+			this.foreach ( function( widget )
 			{
 				if ( widget.commit &&  widget.id != 'txtdlgGenStyle' )
 					widget.commit.apply( widget, args );

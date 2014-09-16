@@ -999,7 +999,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				}
 			}
 
-			if  ( !lockedSelection || !restore )
+			if ( !lockedSelection || !restore )
 			{
 				this.isLocked = 0;
 				this.reset();

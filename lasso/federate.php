@@ -63,7 +63,7 @@ else
   echo "<ul>";
   echo "<li>" . get_vocab('lasso_local_user') . ": <code>" . lassospkit_userid() . "</code></li>";
   $idps = lassospkit_nameid();
-  foreach($idps as $idp => $nameid)
+  foreach ($idps as $idp => $nameid)
     {
       echo "<li>";
       echo get_vocab('lasso_nameid_for_idp') . " <code>$idp</code> : <code>$nameid</code>";

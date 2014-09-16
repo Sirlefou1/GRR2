@@ -94,7 +94,7 @@ CKEDITOR.keystrokeHandler = function( editor )
 				cancel = ( editor.execCommand( command, data ) !== false );
 			}
 
-			if  ( !cancel )
+			if ( !cancel )
 			{
 				var handler = editor.specialKeys[ keyCombination ];
 				cancel = ( handler && handler( editor ) === true );

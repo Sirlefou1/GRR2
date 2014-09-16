@@ -215,7 +215,7 @@ if (($weekday = (date("w", $time) - $weekstarts + 7) % 7) > 0)
 }
 if (!isset($correct_heure_ete_hiver) or ($correct_heure_ete_hiver == 1)) {
 	// Si le dimanche correspondant au changement d'heure est entre $time et $time_old, on corrige de +1 h ou -1 h.
-	if  ((heure_ete_hiver("ete",$year,0) <= $time_old) and (heure_ete_hiver("ete",$year,0) >= $time) and ($time_old != $time) and (date("H", $time)== 23))
+	if ((heure_ete_hiver("ete",$year,0) <= $time_old) and (heure_ete_hiver("ete",$year,0) >= $time) and ($time_old != $time) and (date("H", $time)== 23))
 		$decal = 3600;
 	else
 		$decal = 0;
@@ -341,7 +341,7 @@ else for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 		$midnight_tonight = $midnight + 86400;
 		if (!isset($correct_heure_ete_hiver) or ($correct_heure_ete_hiver == 1)) {
 			// on s'arrange pour que l'heure $midnight_tonight corresponde à 0 h (00:00:00: )
-			if  (heure_ete_hiver("hiver",$year_num,0) == mktime(0,0,0,$month_num,$day_num,$year_num))
+			if (heure_ete_hiver("hiver",$year_num,0) == mktime(0,0,0,$month_num,$day_num,$year_num))
 				$midnight_tonight +=3600;
 			if (date("H",$midnight_tonight) == "01")
 				$midnight_tonight -=3600;
@@ -518,8 +518,8 @@ else
 				*/
 			}
 			//echo "<td align=\"center\">";
-			echo "<h2 class=\"titre\">".utf8_strftime($dformat, $date_start)." au ". utf8_strftime($dformat, $date_end)
-			. " $this_area_name - ".get_vocab("all_rooms")."</h2>";
+			echo "<h4 class=\"titre\">".utf8_strftime($dformat, $date_start)." au ". utf8_strftime($dformat, $date_end)
+			. " $this_area_name - ".get_vocab("all_rooms")."</h4>";
 			//echo "</td>";
 			//echo " </tr>
 		//</table>";
@@ -607,7 +607,7 @@ else
 			$temp_month = strftime("%m", $t2);
 			$temp_year = strftime("%Y", $t2);
 			// on s'arrange pour que l'heure $t2 corresponde ? 0 h (00:00:00: )
-			if  (heure_ete_hiver("hiver",$temp_year,0) == mktime(0,0,0,$temp_month,$temp_day,$temp_year))
+			if (heure_ete_hiver("hiver",$temp_year,0) == mktime(0,0,0,$temp_month,$temp_day,$temp_year))
 				$t2 +=3600;
 			if (date("H",$t2) == "01")
 				$t2 -=3600;

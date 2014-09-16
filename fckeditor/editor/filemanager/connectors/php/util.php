@@ -137,7 +137,7 @@ function DetectHtml( $filePath )
 
 	$tags = array( '<body', '<head', '<html', '<img', '<pre', '<script', '<table', '<title' ) ;
 
-	foreach( $tags as $tag )
+	foreach ( $tags as $tag )
 	{
 		if ( false !== strpos( $chunk, $tag ) )
 		{

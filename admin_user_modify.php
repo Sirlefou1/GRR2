@@ -133,7 +133,7 @@ if ($valid == "yes") {
         if ((isset($new_login)) and ($new_login!='') and ($test_login=="") ) {
             // un gestionnaire d'utilisateurs ne peut pas créer un administrateur général ou un gestionnaire d'utilisateurs
             $test_statut = TRUE;
-            if  (authGetUserLevel(getUserName(),-1) < 6) {
+            if (authGetUserLevel(getUserName(),-1) < 6) {
                 if (($reg_statut == "administrateur") or ($reg_statut == "gestionnaire_utilisateur"))
                     $test_statut = FALSE;
             }
@@ -193,7 +193,7 @@ if ($valid == "yes") {
         } else if ((isset($user_login)) and ($user_login!='')) {
             // un gestionnaire d'utilisateurs ne peut pas modifier un administrateur général ou un gestionnaire d'utilisateurs
             $test_statut = TRUE;
-            if  (authGetUserLevel(getUserName(),-1) < 6) {
+            if (authGetUserLevel(getUserName(),-1) < 6) {
                 $old_statut = grr_sql_query1("select statut from ".TABLE_PREFIX."_utilisateurs where login='".protect_data_sql($user_login)."'");
                 if (((($old_statut == "administrateur") or ($old_statut == "gestionnaire_utilisateur")) and ($old_statut !=$reg_statut))
                 or ((($old_statut == "utilisateur") or ($old_statut == "visiteur")) and (($reg_statut == "administrateur") or ($reg_statut == "gestionnaire_utilisateur"))))
@@ -422,7 +422,7 @@ echo "<td><select name=\"reg_statut\" size=\"1\">\n";
 echo "<option value=\"visiteur\" "; if ($user_statut == "visiteur") { echo "selected=\"selected\"";}; echo ">".get_vocab("statut_visitor")."</option>\n";
 echo "<option value=\"utilisateur\" "; if ($user_statut == "utilisateur") { echo "selected=\"selected\"";}; echo ">".get_vocab("statut_user")."</option>\n";
 // un gestionnaire d'utilisateurs ne peut pas créer un administrateur général ou un gestionnaire d'utilisateurs
-if  (authGetUserLevel(getUserName(),-1) >= 6) {
+if (authGetUserLevel(getUserName(),-1) >= 6) {
   echo "<option value=\"gestionnaire_utilisateur\" "; if ($user_statut == "gestionnaire_utilisateur") { echo "selected=\"selected\"";}; echo ">".get_vocab("statut_user_administrator")."</option>\n";
   echo "<option value=\"administrateur\" "; if ($user_statut == "administrateur") { echo "selected=\"selected\"";}; echo ">".get_vocab("statut_administrator")."</option>\n";
 }

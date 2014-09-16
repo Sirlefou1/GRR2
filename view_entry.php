@@ -545,7 +545,7 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 
 					echo " - <a href=\"edit_entry.php?id=$id&amp;day=$day&amp;month=$month&amp;year=$year&amp;page=$page&amp;copy\">".get_vocab("copyentry")."</a>";
 
-					if  ($can_delete_or_create=="y")
+					if ($can_delete_or_create=="y")
 					{
 						$message_confirmation = str_replace ( "'"  , "\\'"  , get_vocab("confirmdel").get_vocab("deleteentry"));
 						?>

@@ -231,7 +231,7 @@ $html .= "<td>&nbsp;</td></tr>\n";
 $html .= "\n<tr><td>";
 $html .= "<select name=\"id_area\" size=\"1\">";
 
-foreach( $userdomain as $key=>$value )
+foreach ( $userdomain as $key=>$value )
 {
   $html .= "<option value=\"$key\">".$userdomain[$key]."</option>\n";
 }
@@ -264,7 +264,7 @@ $breakkey = "";
 $ouvre_table=false;
 $ferme_table=false;
 $ind_div = 0;
-foreach( $userdomain as $key=>$value )
+foreach ( $userdomain as $key=>$value )
 {
   $res = grr_sql_query("select id, fieldname, fieldtype, obligatoire, fieldlist, affichage, overload_mail, confidentiel from ".TABLE_PREFIX."_overload where id_area=$key order by fieldname;");
   if (! $res) fatal_error(0, grr_sql_error());

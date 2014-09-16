@@ -216,7 +216,7 @@ if (isset($_GET['change_type'])) {
     echo "<p>".get_vocab("type_color").get_vocab("deux_points")."</p>";
     echo "<table border=\"2\"><tr>\n";
     $nct = 0;
-    foreach($tab_couleur as $key=>$value)
+    foreach ($tab_couleur as $key=>$value)
     {
       $checked = " ";
       if ($key == $row["couleur"])

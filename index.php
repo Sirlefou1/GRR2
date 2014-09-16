@@ -287,7 +287,7 @@ else if (getSettingValue('sso_statut') == 'lcs')
 		$lcs_tab_login["email"] = $user["email"];
 		$long = strlen($user["fullname"]) - strlen($user["nom"]);
 		$lcs_tab_login["fullname"] = substr($user["fullname"], 0, $long) ;
-		foreach($groups as $value)
+		foreach ($groups as $value)
 			$lcs_groups[] = $value["cn"];
 		// A ce stade, l'utilisateur est authentifié par LCS
 		// Etablir à nouveau la connexion à la base

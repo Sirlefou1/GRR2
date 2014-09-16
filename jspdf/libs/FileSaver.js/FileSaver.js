@@ -163,7 +163,7 @@ var saveAs = saveAs
 										fs_error();
 									}
 								};
-								"writestart progress write abort".split(" ").forEach(function(event) {
+								"writestart progress write abort".split(" ").foreach (function(event) {
 									writer["on" + event] = filesaver["on" + event];
 								});
 								writer.write(blob);

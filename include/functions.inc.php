@@ -242,7 +242,7 @@ function affiche_lien_contact($_cible,$_type_cible,$option_affichage)
 		{
 			$tab_email = explode(';',trim($_email));
 			$i = 0;
-			foreach($tab_email as $item_email)
+			foreach ($tab_email as $item_email)
 			{
 				$item_email_explode = explode('@',$item_email);
 				$person = $item_email_explode[0];
@@ -534,7 +534,7 @@ Un lien sur l'image renvoie sur un article de la documentation sur le site http:
 function grr_help($mot_clef,$ancre = "")
 {
 	// lien aide sur la page d'accueil
-	if  ($mot_clef == "")
+	if ($mot_clef == "")
 	{
 		if (getSettingValue("gestion_lien_aide") == 'perso')
 		{
@@ -2357,7 +2357,7 @@ if ($beneficiaire != "") {
 				if (count($tab_id_moderes) == 0 )
 					$message .= "\n".traite_grr_url("","y")."view_entry.php?id=".$id_entry;
 				else {
-					foreach($tab_id_moderes as $id_moderes) {
+					foreach ($tab_id_moderes as $id_moderes) {
 						$message .= "\n".traite_grr_url("","y")."view_entry.php?id=".$id_moderes;
 					}
 				}
@@ -2455,7 +2455,7 @@ if ($beneficiaire != "") {
 						$tab_destinataire[] = $row[0];
 					}
 				}
-				foreach($tab_destinataire as $value) {
+				foreach ($tab_destinataire as $value) {
 					if (getSettingValue("grr_mail_Bcc") == "y")
 						$m->AddBCC( $value );
 					else
@@ -2477,7 +2477,7 @@ if ($beneficiaire != "") {
 			if ($action == 7)  {
 				$mail_admin = find_user_room ($room_id);
 				if (count($mail_admin) > 0) {
-					foreach($mail_admin as $value) {
+					foreach ($mail_admin as $value) {
 						if (getSettingValue("grr_mail_Bcc") == "y")
 							$m->AddBCC( $value );
 						else
@@ -2536,7 +2536,7 @@ if ($beneficiaire != "") {
 			if ($action == 5)  {
 				$mail_admin = find_user_room ($room_id);
 				if (count($mail_admin) > 0) {
-					foreach($mail_admin as $value) {
+					foreach ($mail_admin as $value) {
 						if (getSettingValue("grr_mail_Bcc") == "y")
 							$m->AddBCC( $value );
 						else
@@ -4289,7 +4289,7 @@ function supprimerReservationsUtilisateursEXT($avec_resa,$avec_privileges)
 		// Table grr_entry
 		$req_suppr_table_entry = "DELETE FROM ".TABLE_PREFIX."_entry WHERE create_by = ";
 		$first=1; // 1er tour
-		foreach($logins as $log) {
+		foreach ($logins as $log) {
 			if ($first == 1) { // pas de OR devant le login
 				$req_suppr_table_entry .= "'$log' OR beneficiaire='$log'";
 				$first=0;
@@ -4302,7 +4302,7 @@ function supprimerReservationsUtilisateursEXT($avec_resa,$avec_privileges)
 		// Table grr_repeat
 		$req_suppr_table_repeat = "DELETE FROM ".TABLE_PREFIX."_repeat WHERE create_by = ";
 		$first=1; // 1er tour
-		foreach($logins as $log) {
+		foreach ($logins as $log) {
 			if ($first == 1) { // pas de OR devant le login
 				$req_suppr_table_repeat .= "'$log' OR beneficiaire='$log'";
 				$first=0;
@@ -4315,7 +4315,7 @@ function supprimerReservationsUtilisateursEXT($avec_resa,$avec_privileges)
 		// Table grr_entry_moderate
 		$req_suppr_table_entry_moderate = "DELETE FROM ".TABLE_PREFIX."_entry_moderate WHERE create_by = ";
 		$first=1; // 1er tour
-		foreach($logins as $log) {
+		foreach ($logins as $log) {
 			if ($first == 1) { // pas de OR devant le login
 				$req_suppr_table_entry_moderate .= "'$log' OR beneficiaire='$log'";
 				$first=0;
@@ -4330,7 +4330,7 @@ function supprimerReservationsUtilisateursEXT($avec_resa,$avec_privileges)
 	$req_j_user_room = "";
 	$req_j_useradmin_area = "";
 	$req_j_useradmin_site = "";
-	foreach($logins as $log) {
+	foreach ($logins as $log) {
 			// Table grr_j_mailuser_room
 		$test = grr_sql_query1("select count(login) from ".TABLE_PREFIX."_j_mailuser_room WHERE login='".$log."'");
 		if ($test >=1 ) {
@@ -4441,7 +4441,7 @@ function supprimerReservationsUtilisateursEXT($avec_resa,$avec_privileges)
 			echo "<p class='avertissement'>".get_vocab("table_utilisateurs").get_vocab("deux_points").$s.get_vocab("entres_supprimees")."</p>\n";
 		} else {
 			$n=0;
-			foreach($logins as $log) {
+			foreach ($logins as $log) {
 				if (!in_array(strtolower($log),$logins_liaison)) {
 					grr_sql_command("DELETE FROM ".TABLE_PREFIX."_utilisateurs WHERE login='".$log."'");
 					$n++;

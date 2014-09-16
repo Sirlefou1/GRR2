@@ -969,7 +969,7 @@ function grr_ldap_search_user($ds, $basedn, $login_attr, $login, $filtre_sup="",
 	$res = @ldap_search($ds, $basedn, $filter, array ("dn", $login_attr),0,0);
   if ($res) {
       $info = @ldap_get_entries($ds, $res);
-      if  ((!is_array($info)) or ($info['count'] == 0)) {
+      if ((!is_array($info)) or ($info['count'] == 0)) {
 	        // Mode diagnostic
   	      if ($diagnostic!="no")
              return "error_2"; // aucune entrée ne correspond au filtre
@@ -1049,7 +1049,7 @@ function grr_connect_imap($i_adresse,$i_port,$i_login,$i_pwd,$use_type,$use_ssl,
         $errors = imap_errors();
         if (is_array($errors)) {
           $num=0;
-          foreach( $errors as $key ){
+          foreach ( $errors as $key ){
             $num++;
             echo "<br /><span style=\"color:red;\">Erreur $num : ".$key. "&nbsp;</span>";
           }
@@ -1057,7 +1057,7 @@ function grr_connect_imap($i_adresse,$i_port,$i_login,$i_pwd,$use_type,$use_ssl,
         $alert = imap_alerts();
         if (is_array($alert)) {
           $num=0;
-          foreach( $alert as $key ){
+          foreach ( $alert as $key ){
             $num++;
             echo "<br /><span style=\"color:red;\">Alerte $num : ".$key. "&nbsp;</span>";
           }

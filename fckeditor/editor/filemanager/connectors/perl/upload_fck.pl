@@ -240,7 +240,7 @@ eval("use File::Path;");
 	} elsif ($ENV{'CONTENT_LENGTH'}) {
 		read(STDIN,$Buffer,$ENV{'CONTENT_LENGTH'});
 	}
-	foreach(split(/&/,$Buffer),split(/&/,$ENV{'QUERY_STRING'})) {
+	foreach (split(/&/,$Buffer),split(/&/,$ENV{'QUERY_STRING'})) {
 		my($name, $value) = split(/=/);
 		$name	=~ tr/+/ /;
 		$name	=~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C", hex($1))/eg;

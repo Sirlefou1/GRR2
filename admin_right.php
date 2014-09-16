@@ -131,7 +131,7 @@ if ($test_user == "multi") {
 
         $sql = "select id from ".TABLE_PREFIX."_room where area_id=$id_area";
         // on ne cherche pas parmi les ressources invisibles pour l'utilisateur
-        foreach($tab_rooms_noaccess as $key){
+        foreach ($tab_rooms_noaccess as $key){
           $sql .= " and id != $key ";
         }
 
@@ -203,7 +203,7 @@ if ($test_user == "simple") {
 
         $sql = "select id from ".TABLE_PREFIX."_room where area_id=$id_area";
         // on ne cherche pas parmi les ressources invisibles pour l'utilisateur
-        foreach($tab_rooms_noaccess as $key){
+        foreach ($tab_rooms_noaccess as $key){
           $sql .= " and id != $key ";
         }
 
@@ -243,7 +243,7 @@ if ($action) {
 
         $sql = "select id from ".TABLE_PREFIX."_room where area_id=$id_area ";
         // on ne cherche pas parmi les ressources invisibles pour l'utilisateur
-        foreach($tab_rooms_noaccess as $key){
+        foreach ($tab_rooms_noaccess as $key){
           $sql .= " and id != $key ";
         }
         $sql .= " order by room_name";
@@ -325,7 +325,7 @@ $out_html = "<form id=\"room\" action=\"admin_right.php\" method=\"post\">\n<div
 $out_html .= "<option value=\"admin_right.php?id_area=$id_area&amp;room=-1\">".get_vocab('select_all')."</option>\n";
 
     $sql = "select id, room_name, description from ".TABLE_PREFIX."_room where area_id=$id_area ";
-    foreach($tab_rooms_noaccess as $key){
+    foreach ($tab_rooms_noaccess as $key){
           $sql .= " and id != $key ";
     };
     $sql .= " order by order_display,room_name";
@@ -393,7 +393,7 @@ if ($room != -1) {
     {
         $is_admin='yes';
         $sql2 = "select id, room_name, description from ".TABLE_PREFIX."_room where area_id=$id_area ";
-        foreach($tab_rooms_noaccess as $key){
+        foreach ($tab_rooms_noaccess as $key){
           $sql2 .= " and id != $key ";
         };
         $sql2 .= " order by order_display,room_name";

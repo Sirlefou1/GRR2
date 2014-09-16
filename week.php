@@ -207,7 +207,7 @@ if (($weekday = (date("w", $time) - $weekstarts + 7) % 7) > 0)
 }
 // Si le dimanche correspondant au changement d'heure est entre $time et $time_old, on corrige de +1 h ou -1 h.
 if (!isset($correct_heure_ete_hiver) or ($correct_heure_ete_hiver == 1)) {
-	if  ((heure_ete_hiver("ete",$year,0) <= $time_old) and (heure_ete_hiver("ete",$year,0) >= $time) and ($time_old != $time) and (date("H", $time)== 23))
+	if ((heure_ete_hiver("ete",$year,0) <= $time_old) and (heure_ete_hiver("ete",$year,0) >= $time) and ($time_old != $time) and (date("H", $time)== 23))
 		$decal = 3600;
 	else
 		$decal = 0;
@@ -355,7 +355,7 @@ if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
 	/*-----MAJ David VOUE --> Ajout de la balise </table> * 14/01/2014*/ 
 }
 /*-----MAJ Loïs THOMAS  --> Lien qui permet de  le menu à gauche -----*/
-echo "<table><tr>";
+//echo "<table><tr>";
 		//Test si le format est imprimable
 $setting = getSettingValue("menu_gauche");
 if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
@@ -368,11 +368,11 @@ if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
 				echo "</td>";*/
 			}
 		}
-		echo "<td width=\"100%\">";
-		echo "<strong> ".get_vocab("week").get_vocab("deux_points").utf8_strftime($dformat, $week_start)." - ". utf8_strftime($dformat, $week_end);
-		echo " ".ucfirst($this_area_name)." - $this_room_name $this_room_name_des</strong>";
-		echo "</td>";
-		echo " </tr></table>";
+		//echo "<td width=\"100%\">";
+		echo "<h4 class=\"titre\">".get_vocab("week").get_vocab("deux_points").utf8_strftime($dformat, $week_start)." - ". utf8_strftime($dformat, $week_end);
+		echo " ".ucfirst($this_area_name)." - $this_room_name $this_room_name_des</h4>";
+		//echo "</td>";
+		//echo " </tr></table>";
 		echo "</div>\n";
  //Lien précedent dans le format imprimable
 		if (isset($_GET['precedent']))
@@ -548,7 +548,7 @@ for ($t = $week_start; $t <= $week_end; $t += 86400) {
 		if (!isset($correct_heure_ete_hiver) or ($correct_heure_ete_hiver == 1)) {
 			$num_day = strftime("%d", $t);
 				// Si le dernier dimanche d'octobre est dans la semaine, on avance d'une heure
-			if  (heure_ete_hiver("hiver",$year,0) == mktime(0,0,0,$month,$num_day,$year))
+			if (heure_ete_hiver("hiver",$year,0) == mktime(0,0,0,$month,$num_day,$year))
 				$t +=3600;
 			if ((date("H",$t) == "13") or (date("H",$t) == "02"))
 				$t -=3600;
@@ -611,11 +611,11 @@ for ($t = $week_start; $t <= $week_end; $t += 86400) {
 						// Gestion du passage à l'heure d'été
 				$temp =   mktime(0,0,0,$wmonth,$wday,$wyear);
 						// On regarde s'il s'agit du dernier dimanche de mars
-				if  (heure_ete_hiver("ete",$wyear,0) == $temp) {
+				if (heure_ete_hiver("ete",$wyear,0) == $temp) {
 					$semaine_changement_heure_ete = 'yes';
 					$temp2 =   mktime($hour,0,0,$wmonth,$wday,$wyear);
 								// 2 h du matin
-					if  (heure_ete_hiver("ete", $wyear,2) == $temp2) {
+					if (heure_ete_hiver("ete", $wyear,2) == $temp2) {
 										// On insère une case vide
 						if ($display_day[$num_week_day] == 1)
 							echo tdcell($empty_color)."-</td>\n";
@@ -623,23 +623,23 @@ for ($t = $week_start; $t <= $week_end; $t += 86400) {
 						$nb_case++;
 						$insere_case = 'y';
 								// Après deux heures du matin, on avance d'une heure
-					} else if  (heure_ete_hiver("ete", $wyear,2) < $temp2) {
+					} else if (heure_ete_hiver("ete", $wyear,2) < $temp2) {
 						$hour = date("H",$wt-3600);
 						$decale_slot = 1;
 						$insere_case = 'n';
 					}
 						// On regarde s'il s'agit du dernier dimanche d'octobre
-				} else if  (heure_ete_hiver("hiver",$wyear,0) == $temp) {
+				} else if (heure_ete_hiver("hiver",$wyear,0) == $temp) {
 					$semaine_changement_heure_hiver = 'yes';
 					$temp2 =   mktime($hour,0,0,$wmonth,$wday,$wyear);
 								// 2 h du matin
-					if  (heure_ete_hiver("hiver", $wyear,2) == $temp2) {
+					if (heure_ete_hiver("hiver", $wyear,2) == $temp2) {
 										// On compte le nombre de cases
 						$nb_case = $nb_case + 0.5;
 										// On n'insère pas de cellule
 						$insere_case = 'n';
 								// Après deux heures du matin, on retarde d'une heure
-					} else if  (heure_ete_hiver("hiver", $wyear,2) < $temp2) {
+					} else if (heure_ete_hiver("hiver", $wyear,2) < $temp2) {
 						$hour = date("H",$wt+3600);
 						$decale_slot = -1;
 						$insere_case = 'n';

@@ -69,7 +69,7 @@ CKEDITOR.dialog.add( 'textfield', function( editor )
 					element.removeAttribute( this.id );
 			};
 
-			this.foreach( function( contentObj )
+			this.foreach ( function( contentObj )
 				{
 					if ( autoAttributes[ contentObj.id ] )
 					{

@@ -54,7 +54,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				// Delete control selections to avoid IE bugs on pasteHTML.
 				if ( $sel.type == 'Control' )
 					$sel.clear();
-				else if  ( selection.getType() == CKEDITOR.SELECTION_TEXT )
+				else if ( selection.getType() == CKEDITOR.SELECTION_TEXT )
 				{
 					// Due to IE bugs on handling contenteditable=false blocks
 					// (#6005), we need to make some checks and eventually

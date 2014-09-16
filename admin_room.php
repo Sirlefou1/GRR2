@@ -288,7 +288,7 @@ if (grr_sql_count($res) != 0) {
         $sql = "select id, room_name, description, capacity, max_booking, statut_room from ".TABLE_PREFIX."_room where area_id=$id_area ";
         // on ne cherche pas parmi les ressources invisibles pour l'utilisateur
         $tab_rooms_noaccess = verif_acces_ressource(getUserName(), 'all');
-        foreach($tab_rooms_noaccess as $key){
+        foreach ($tab_rooms_noaccess as $key){
           $sql .= " and id != $key ";
         }
         $sql .= "order by order_display, room_name";

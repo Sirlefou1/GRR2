@@ -624,7 +624,7 @@ if (isset($_GET["is_posted"]))
         $sql .= " WHERE e.room_id = r.id AND r.area_id = a.id";
         // on ne cherche pas parmi les ressources invisibles pour l'utilisateur
         $tab_rooms_noaccess = verif_acces_ressource(getUserName(), 'all');
-        foreach($tab_rooms_noaccess as $key){
+        foreach ($tab_rooms_noaccess as $key){
           $sql .= " and r.id != $key ";
         }
 

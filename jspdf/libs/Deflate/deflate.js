@@ -2024,7 +2024,7 @@ function Deflater(level) {
             }
         } while (z.avail_in > 0 || z.avail_out === 0);
         array = new Uint8Array(bufferSize);
-        buffers.forEach(function(chunk) {
+        buffers.foreach (function(chunk) {
             array.set(chunk, bufferIndex);
             bufferIndex += chunk.length;
         });
@@ -2044,7 +2044,7 @@ function Deflater(level) {
         } while (z.avail_in > 0 || z.avail_out === 0);
         z.deflateEnd();
         array = new Uint8Array(bufferSize);
-        buffers.forEach(function(chunk) {
+        buffers.foreach (function(chunk) {
             array.set(chunk, bufferIndex);
             bufferIndex += chunk.length;
         });

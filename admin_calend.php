@@ -437,7 +437,7 @@ else if ($etape == 2)
 					alert("<?php echo get_vocab("choose_a_room"); ?>");
 					return false;
 				}
-				else if  (document.getElementById("main").type_.value == '0')
+				else if (document.getElementById("main").type_.value == '0')
 				{
 					alert("<?php echo get_vocab("choose_a_type"); ?>");
 					return false;
@@ -515,7 +515,7 @@ else if ($etape == 2)
 		// tableau des ressources auxquelles l'utilisateur n'a pas accès
 		$tab_rooms_noaccess = verif_acces_ressource(getUserName(), 'all');
 		// on ne cherche pas parmi les ressources invisibles pour l'utilisateur
-		foreach($tab_rooms_noaccess as $key)
+		foreach ($tab_rooms_noaccess as $key)
 			$sql .= " and id != $key ";
 		$sql .= "order by order_display,room_name";
 		$res = grr_sql_query($sql);

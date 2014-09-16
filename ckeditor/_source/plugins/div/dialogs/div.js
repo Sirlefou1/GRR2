@@ -91,7 +91,7 @@
 		 */
 		function setupFields()
 		{
-			this.foreach( function( field )
+			this.foreach ( function( field )
 			{
 				// Exclude layout container elements
 				if ( /^(?!vbox|hbox)/.test( field.type ) )
