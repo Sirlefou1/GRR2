@@ -333,17 +333,14 @@ else
 	//Test si le format est imprimable
 	if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
 	{
-		#Show Go to week before and after links
-		//MAJ Hugo FORESTIER - Reparation du bouton "Jour précédent" et "Jour suivant" ne fonctionnant pas
-		//17/05/2013
-		echo "\n
-		<table width=\"100%\"> <tr>
+		echo "<table width=\"100%\">
+		<tr>
 			<td align=\"left\">
 				<input type=\"button\" class=\"btn btn-default btn-xs\"  onclick=\"charger();javascript: location.href='day.php?year=$yy&amp;month=$ym&amp;day=$yd&amp;area=$area';\" value=\"&lt;&lt; ".get_vocab('daybefore')." \" />
 			</td>
 			<td>";
-				include "include/trailer.inc.php";
-				echo "</td>
+			include "include/trailer.inc.php";
+			echo "</td>
 				<td align=\"right\">
 					<input type=\"button\" class=\"btn btn-default btn-xs\"  onclick=\"charger();javascript: location.href='day.php?year=$ty&amp;month=$tm&amp;day=$td&amp;area=$area';\" value=\" ".get_vocab('dayafter')."  &gt;&gt;  \" />
 				</td>
@@ -364,17 +361,17 @@ else
 			echo "</td>";
 			*/
 		}
-		echo "<td>";
+		//echo "<td>";
 		echo "<h4 class=\"titre\">" . ucfirst(utf8_strftime($dformat, $am7));
 		if (getSettingValue("jours_cycles_actif") == "Oui" && intval($jour_cycle) >- 1)
 			if (intval($jour_cycle) > 0)
 				echo " - ".get_vocab("rep_type_6")." ".$jour_cycle;
 			else
 				echo " - ".$jour_cycle;
-			echo " ".ucfirst($this_area_name)." - ".get_vocab("all_areas")."</h4>\n";
-			echo "</td>";
-			echo "</tr>"  ;
-			echo "</table>";
+			echo " ".ucfirst($this_area_name)." - ".get_vocab("all_areas")."</h4>";
+			//echo "</td>";
+			//echo "</tr>"  ;
+			//echo "</table>";
 			echo " </div>\n";
  			//Lien précedent dans le format imprimable
 			if (isset($_GET['precedent']))
@@ -423,7 +420,7 @@ else
 						echo " class='avertissement' ";
 					/*-----MAJ Loïs THOMAS  --> création d'un lien avec des boutons qui apparaissent : mois/semaines sous le nom des ressources quand elles sont cliquées  -----*/
 					$a = $a +1;
-					echo "><a id=\"afficherBoutonSelection$a\" class=\"lienPlanning\"href=\"#\" onclick=\"afficherMoisSemaine($a)\" style=\"display:inline;\">" . htmlspecialchars($row[0])."</a>\n";
+					echo "><a id=\"afficherBoutonSelection$a\" class=\"lienPlanning\" href=\"#\" onclick=\"afficherMoisSemaine($a)\" style=\"display:inline;\">" . htmlspecialchars($row[0])."</a>\n";
 					echo "<a id=\"cacherBoutonSelection$a\" class=\"lienPlanning\" href=\"#\" onclick=\"cacherMoisSemaine($a)\" style=\"display:none;\">" . htmlspecialchars($row[0])."</a>\n";
 					if (htmlspecialchars($row[3]. $temp != ''))
 					{

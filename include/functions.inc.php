@@ -559,15 +559,15 @@ return $tag_help;
  Seuls les groupes de type "posixGroup" sont supportés (les groupes de type "groupOfNames" ne sont pas supportés).
 */
  function se3_grp_members ($grp,$uid) {
- 	include "config_ldap.inc.php";
- 	$est_membre="non";
+	include "config_ldap.inc.php";
+	$est_membre="non";
 		// LDAP attributs
- 	$members_attr = array (
+	$members_attr = array (
 		"memberUid"   // Recherche des Membres du groupe
 		);
 		// Avec des GroupOfNames, ce ne serait pas ça.
- 	$ds=@ldap_connect($ldap_adresse,$ldap_port);
- 	if ($ds){
+	$ds=@ldap_connect($ldap_adresse,$ldap_port);
+	if ($ds){
 				$r=@ldap_bind ( $ds ); // Bind anonyme
 				if ($r){
 						// La requête est adaptée à un serveur SE3...
@@ -971,9 +971,9 @@ function heure_ete_hiver($type, $annee, $heure)
 					<?php
 					if (@file_exists($clock_file)) {
 						echo "<script type=\"text/javascript\">";
-						echo "<!--\n";
+						//echo "<!--\n";
 						echo "new LiveClock();\n";
-						echo "//-->";
+						//echo "//-->";
 						echo "</script>";
 						echo"<br/>";
 					}
@@ -1058,8 +1058,8 @@ function heure_ete_hiver($type, $annee, $heure)
 }
 }
 
-	function VerifNomPrenomUser($type)
-	{
+function VerifNomPrenomUser($type)
+{
 		global $desactive_VerifNomPrenomUser; // ne pas prendre en compte la page my_account.php
 		if (($type == "with_session") and ($desactive_VerifNomPrenomUser!='y') and (IsAllowedToModifyProfil())) {
 			$test = grr_sql_query1("select login from ".TABLE_PREFIX."_utilisateurs where (login = '".getUserName()."' and (nom='' or prenom = ''))");
@@ -1965,7 +1965,7 @@ function make_room_list_html($link,$current_area, $current_room, $year, $month, 
 	}
 }
 //Affichage par bouton
-		/**
+/**
  * TODO: Enter description here...
  *
  * @param unknown_type $link
@@ -1977,96 +1977,79 @@ function make_room_list_html($link,$current_area, $current_room, $year, $month, 
  * @param unknown_type $user
  * @return unknown
  */
-		/*-----MAJ Loïs THOMAS  --> Création des sites du menu gauche sous forme d'item -----*/
-		function make_site_item_html($link,$current_site,$year,$month,$day,$user)
-		{
-			global $vocab;
-			$out_html = '<ul class="list-group"><li class="list-group-item">'.get_vocab('sites').get_vocab('deux_points').'</li></ul>
-			<form class="ressource" id="site_001" action="'.$_SERVER['PHP_SELF'].'">
-				<div>';
-	// On vient lister les sites qui ont un domaine lié
-	// Pour mysql >= 4.1
-	/*
-	$sql = "SELECT id,sitename
-					FROM ".TABLE_PREFIX."_site
-					WHERE ".TABLE_PREFIX."_site.id IN (SELECT id_site FROM ".TABLE_PREFIX."_j_site_area GROUP BY id_site)
-					ORDER BY id ASC";
-	*/
-	// Pour mysql < 4.1
-					$sql = "SELECT id, sitename
-					FROM ".TABLE_PREFIX."_site
-					left join ".TABLE_PREFIX."_j_site_area on ".TABLE_PREFIX."_site.id = ".TABLE_PREFIX."_j_site_area.id_site
-					where ".TABLE_PREFIX."_j_site_area.id_site is not null
-					GROUP BY id_site
-					ORDER BY id ASC
-					";
-					$res = grr_sql_query($sql);
-					if ($res)
+function make_site_item_html($link, $current_site, $year, $month, $day,$user)
+{
+	global $vocab;
+	$out_html = '<ul class="list-group"><li class="list-group-item">'.get_vocab('sites').get_vocab('deux_points').'</li></ul>
+	<form class="ressource" id="site_001" action="'.$_SERVER['PHP_SELF'].'">
+		<div>';
+			$sql = "SELECT id, sitename
+			FROM ".TABLE_PREFIX."_site
+			left join ".TABLE_PREFIX."_j_site_area on ".TABLE_PREFIX."_site.id = ".TABLE_PREFIX."_j_site_area.id_site
+			where ".TABLE_PREFIX."_j_site_area.id_site is not null
+			GROUP BY id_site
+			ORDER BY id ASC
+			";
+			$res = grr_sql_query($sql);
+			if ($res)
+			{
+				$nb_sites_a_afficher = 0;
+				for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
+				{
+					$sql = "SELECT id_area FROM ".TABLE_PREFIX."_j_site_area WHERE ".TABLE_PREFIX."_j_site_area.id_site='".$row[0]."'";
+					$res2 = grr_sql_query($sql);
+					$default_area = -1;
+					if ($res2 && grr_sql_count($res2) > 0)
 					{
-						$nb_sites_a_afficher = 0;
-						for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
+						$row2 = grr_sql_row($res2, 0);
+						for ($j = 0; ($row2 = grr_sql_row($res2, $j)); $j++)
 						{
-			// Pour chaque site, on détermine le premier domaine disponible
-							$sql = "SELECT id_area
-							FROM ".TABLE_PREFIX."_j_site_area
-							WHERE ".TABLE_PREFIX."_j_site_area.id_site='".$row[0]."'";
-							$res2 = grr_sql_query($sql);
-			// A on un résultat ?
-							$default_area=-1;
-							if ($res2 && grr_sql_count($res2) > 0)
+							if (authUserAccesArea($user,$row2[0]) == 1)
 							{
-								$row2 = grr_sql_row($res2, 0);
-								for ($j = 0; ($row2 = grr_sql_row($res2, $j)); $j++)
-								{
-									if (authUserAccesArea($user,$row2[0])==1) {
-						// on a trouvé un domaine autorisé
-										$default_area=$row2[0];
-						$j=grr_sql_count($res2)+1; // On arrête la boucle
+								$default_area = $row2[0];
+								$j = grr_sql_count($res2) + 1;
+							}
+						}
 					}
+					grr_sql_free($res2);
+					if ($default_area != -1)
+					{
+						$nb_sites_a_afficher++;
+						$link2 = $link.'?year='.$year.'&amp;month='.$month.'&amp;day='.$day.'&amp;area='.$default_area;
+						$out_html .="\n";
+					}
+					if ($current_site != null)
+					{
+						if ($current_site == $row[0])
+							$out_html .= "<input id=\"item_select\" type=\"button\" class=\"btn btn-primary btn-xs\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])."\" onclick=\"location.href='$link2';charger();\" /><br />";
+						else
+							$out_html .= "<input id=\"item\" type=\"button\" class=\"btn btn-default btn-xs\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])." \" onclick=\"location.href='$link2';charger();\" /><br />";
+					}
+					else
+						$out_html .= "<input id=\"item\" type=\"button\" class=\"btn btn-default btn-xs\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])." \" onclick=\"location.href='$link2';charger();\" /><br />";
 				}
 			}
-			// On libère la ressource2
-			grr_sql_free($res2);
-			if ($default_area != -1)
+			if ($nb_sites_a_afficher > 1)
 			{
-			// on affiche le site uniquement si au moins un domaine est visible par l'utilisateur
-				$nb_sites_a_afficher++;
-				$link2 = $link.'?year='.$year.'&amp;month='.$month.'&amp;day='.$day.'&amp;area='.$default_area;
-				$out_html .="\n";
-			}
-			/* Couleur du site selectionné*/
-			if ($current_site != null)
-			{
-				if ($current_site == $row[0])
-					$out_html .= "<input id=\"item_select\" type=\"button\" class=\"btn btn-primary btn-xs\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])."\" onclick=\"location.href='$link2';charger();\" /><br />";
-				else
-					$out_html .= "<input id=\"item\" type=\"button\" class=\"btn btn-default btn-xs\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])." \" onclick=\"location.href='$link2';charger();\" /><br />";
-			}
-			else
-				$out_html .= "<input id=\"item\" type=\"button\" class=\"btn btn-default btn-xs\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])." \" onclick=\"location.href='$link2';charger();\" /><br />";
-		}
-	}
-	if ($nb_sites_a_afficher > 1)
-	{
 		// s'il y a au moins deux sites à afficher, on met une liste déroulante, sinon, on affiche rien.
-		$out_html .= '
-	</div></form>
-	<script type="text/javascript">
-		<!--
-		function site_go()
-		{
-			box = document.getElementById("site_001").site;
-			destination = box.options[box.selectedIndex].value;
-			if (destination) location.href = destination;
-		}
+				$out_html .= '
+			</div></form>
+			<script type="text/javascript">
+				<!--
+				function site_go()
+				{
+					box = document.getElementById("site_001").site;
+					destination = box.options[box.selectedIndex].value;
+					if (destination) location.href = destination;
+				}
 				// -->
-	</script>
-	<noscript>
-		<div><input type="submit" value="change" /></div>
-	</noscript>
-</form>';
-return $out_html;
-}
+			</script>
+			<noscript>
+				<div><input type="submit" value="change" /></div>
+			</noscript>
+		</form>';
+		return $out_html;
+	}
 }
 # generates some html that can be used to select which area should be
 # displayed.
@@ -2078,15 +2061,17 @@ function make_area_item_html( $link, $current_site, $current_area, $year, $month
 		$use_multi_site = 'y';
 	else
 		$use_multi_site = 'n';
-	if ($use_multi_site=='y') { // on a activé les sites
-		if ($current_site!=-1)
+	if ($use_multi_site == 'y') { // on a activé les sites
+		if ($current_site != -1)
 			$sql = "SELECT a.id, a.area_name,a.access
 		FROM ".TABLE_PREFIX."_area a, ".TABLE_PREFIX."_j_site_area j
 		WHERE a.id=j.id_area and j.id_site=$current_site
 		ORDER BY a.order_display, a.area_name";
 		else
 			$sql = "";
-	} else {
+	}
+	else
+	{
 		$sql = "SELECT id, area_name,access
 		FROM ".TABLE_PREFIX."_area
 		ORDER BY order_display, area_name";
@@ -2103,15 +2088,15 @@ function make_area_item_html( $link, $current_site, $current_area, $year, $month
 			if ($current_area != null)
 			{
 				if ($current_area == $row[0]){
-					$out_html .= "<input id=\"item_select\" type=\"button\" class=\"btn btn-primary btn-lg btn-block\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])."\" onclick=\"location.href='$link2' ;charger();\"/>";
+					$out_html .= "<input id=\"item_select\" type=\"button\" class=\"btn btn-primary btn-lg btn-block\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])."\" onclick=\"location.href='$link2' ;charger();\"/>\n";
 				}
 				else
 				{
-					$out_html .= "<input id=\"item\" type=\"button\" class=\"btn btn-default btn-lg btn-block\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])."\" onclick=\"location.href='$link2' ;charger();\"/>";
+					$out_html .= "<input id=\"item\" type=\"button\" class=\"btn btn-default btn-lg btn-block\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])."\" onclick=\"location.href='$link2' ;charger();\"/>\n";
 				}
 			}
 			else {
-				$out_html .= "<input id=\"item\" type=\"button\" class=\"btn btn-default btn-lg btn-block\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])." \" onclick=\"location.href='$link2' ;charger();\"/>";
+				$out_html .= "<input id=\"item\" type=\"button\" class=\"btn btn-default btn-lg btn-block\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])." \" onclick=\"location.href='$link2' ;charger();\"/>\n";
 			}
 		}
 	}
@@ -2122,7 +2107,7 @@ function make_area_item_html( $link, $current_site, $current_area, $year, $month
 function make_room_item_html( $link, $current_area, $current_room, $year, $month, $day, $user )
 {
 	global $vocab;
-	$out_html = "<br /><ul class=\"list-group\"><li class=\"list-group-item\"><h4>".get_vocab('rooms').get_vocab("deux_points")."</h3></li></ul><form class=\"ressource\" id=\"room_001\" action=\"".$_SERVER['PHP_SELF']."\"> ";
+	$out_html = "<br /><ul class=\"list-group\"><li class=\"list-group-item\"><h4>".get_vocab('rooms').get_vocab("deux_points")."</h4></li></ul><form class=\"ressource\" id=\"room_001\" action=\"".$_SERVER['PHP_SELF']."\">\n";
 	$sql = "select id, room_name, description from ".TABLE_PREFIX."_room where area_id='".protect_data_sql($current_area)."' order by order_display,room_name";
 	$res = grr_sql_query($sql);
 	if ($res) for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
@@ -2136,22 +2121,22 @@ function make_room_item_html( $link, $current_area, $current_room, $year, $month
 			{
 				if (isset($all_ressource) && $all_ressource == 0)
 				{
-					$out_html .= "<input id=\"item_select\" type=\"button\" class=\"btn btn-primary btn-lg btn-block\" name=\"all_room\" value=\"Toutes les ressources \" onclick=\"location.href='$link_all_room' ;charger();\"/>";
+					$out_html .= "<input id=\"item_select\" type=\"button\" class=\"btn btn-primary btn-lg btn-block\" name=\"all_room\" value=\"Toutes les ressources \" onclick=\"location.href='$link_all_room' ;charger();\"/>\n";
 				}
-				$out_html .= "<input id=\"item\" type=\"button\" class=\"btn btn-default btn-lg btn-block\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])." \" onclick=\"location.href='$link2' ;charger();\"/>";
+				$out_html .= "<input id=\"item\" type=\"button\" class=\"btn btn-default btn-lg btn-block\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])." \" onclick=\"location.href='$link2' ;charger();\"/>\n";
 				$all_ressource = 1;
 			}
 			else
 			{
 				if (isset($all_ressource) && $all_ressource == 0)
 				{
-					$out_html .= "<input id=\"item\" type=\"button\" class=\"btn btn-primary btn-lg btn-block\" name=\"all_room\" value=\"Toutes les ressources \" onclick=\"location.href='$link_all_room' ;charger();\"/>";
+					$out_html .= "<input id=\"item\" type=\"button\" class=\"btn btn-primary btn-lg btn-block\" name=\"all_room\" value=\"Toutes les ressources \" onclick=\"location.href='$link_all_room' ;charger();\"/>\n";
 				}
 				$all_ressource = 1;
 				if ($current_room == $row[0])
-					$out_html .= "<input id=\"item_select\" type=\"button\" class=\"btn btn-primary btn-lg btn-block\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])."\" onclick=\"location.href=' $link2';charger();\"/>";
+					$out_html .= "<input id=\"item_select\" type=\"button\" class=\"btn btn-primary btn-lg btn-block\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])."\" onclick=\"location.href=' $link2';charger();\"/>\n";
 				else
-					$out_html .= "<input id=\"item\" type=\"button\" class=\"btn btn-default btn-lg btn-block\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])." \" onclick=\"location.href=' $link2' ;charger();\" />";
+					$out_html .= "<input id=\"item\" type=\"button\" class=\"btn btn-default btn-lg btn-block\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])." \" onclick=\"location.href=' $link2' ;charger();\" />\n";
 			}
 		}
 	}
@@ -3031,75 +3016,75 @@ function UserRoomMaxBooking($user, $id_room, $number) {
  $date_now : la date actuelle
 */
  function verif_booking_date($user, $id, $id_room, $date_booking, $date_now, $enable_periods, $endtime='') {
- 	global $correct_diff_time_local_serveur, $can_delete_or_create;
- 	$can_delete_or_create="y";
+	global $correct_diff_time_local_serveur, $can_delete_or_create;
+	$can_delete_or_create="y";
 	// On teste si l'utilisateur est administrateur
- 	$sql = "select statut from ".TABLE_PREFIX."_utilisateurs WHERE login = '".protect_data_sql($user)."'";
- 	$statut_user = grr_sql_query1($sql);
- 	if ($statut_user == 'administrateur') {
- 		return true;
- 		die();
- 	}
+	$sql = "select statut from ".TABLE_PREFIX."_utilisateurs WHERE login = '".protect_data_sql($user)."'";
+	$statut_user = grr_sql_query1($sql);
+	if ($statut_user == 'administrateur') {
+		return true;
+		die();
+	}
 	// A-t-on le droit d'agir dans le passé ?
- 	$allow_action_in_past = grr_sql_query1("select allow_action_in_past from ".TABLE_PREFIX."_room where id = '".protect_data_sql($id_room)."'");
- 	if ($allow_action_in_past == 'y') {
- 		return true;
- 		die();
- 	}
+	$allow_action_in_past = grr_sql_query1("select allow_action_in_past from ".TABLE_PREFIX."_room where id = '".protect_data_sql($id_room)."'");
+	if ($allow_action_in_past == 'y') {
+		return true;
+		die();
+	}
 	// Correction de l'avance en nombre d'heure du serveur sur les postes clients
- 	if ((isset($correct_diff_time_local_serveur)) and ($correct_diff_time_local_serveur!=0))
- 		$date_now -= 3600*$correct_diff_time_local_serveur;
+	if ((isset($correct_diff_time_local_serveur)) and ($correct_diff_time_local_serveur!=0))
+		$date_now -= 3600*$correct_diff_time_local_serveur;
 	// Créneaux basés sur les intitulés
 	// Dans ce cas, on prend comme temps présent le jour même à minuit.
 	// Cela signifie qu'il est possible de modifier/réserver/supprimer tout au long d'une journée
 	// même si l'heure est passée.
 	// Cela demande donc à être améliorer en introduisant pour chaque créneau une heure limite de réservation.
- 	if ($enable_periods == "y") {
- 		$month =  date("m",$date_now);
- 		$day =  date("d",$date_now);
- 		$year = date("Y",$date_now);
- 		$date_now = mktime(0, 0, 0, $month, $day, $year);
- 	}
- 	if ($id != -1) {
+	if ($enable_periods == "y") {
+		$month =  date("m",$date_now);
+		$day =  date("d",$date_now);
+		$year = date("Y",$date_now);
+		$date_now = mktime(0, 0, 0, $month, $day, $year);
+	}
+	if ($id != -1) {
 		// il s'agit de l'edition d'une réservation existante
- 		if (($endtime != '') and ($endtime < $date_now)) {
- 			return false;
- 			die();
- 		}
- 		if ((getSettingValue("allow_user_delete_after_begin") == 1) or (getSettingValue("allow_user_delete_after_begin") == 2))
- 			$sql = "SELECT end_time FROM ".TABLE_PREFIX."_entry WHERE id = '".protect_data_sql($id)."'";
- 		else
- 			$sql = "SELECT start_time FROM ".TABLE_PREFIX."_entry WHERE id = '".protect_data_sql($id)."'";
- 		$date_booking = grr_sql_query1($sql);
- 		if ($date_booking < $date_now) {
- 			return false;
- 			die();
- 		} else {
+		if (($endtime != '') and ($endtime < $date_now)) {
+			return false;
+			die();
+		}
+		if ((getSettingValue("allow_user_delete_after_begin") == 1) or (getSettingValue("allow_user_delete_after_begin") == 2))
+			$sql = "SELECT end_time FROM ".TABLE_PREFIX."_entry WHERE id = '".protect_data_sql($id)."'";
+		else
+			$sql = "SELECT start_time FROM ".TABLE_PREFIX."_entry WHERE id = '".protect_data_sql($id)."'";
+		$date_booking = grr_sql_query1($sql);
+		if ($date_booking < $date_now) {
+			return false;
+			die();
+		} else {
 			// dans le cas où le créneau est entamé, on teste si l'utilisateur a le droit de supprimer la réservation
 			// Si oui, on transmet la variable $only_modify = TRUE avant que la fonction de retourne true.
- 			if (getSettingValue("allow_user_delete_after_begin") == 2) {
- 				$date_debut = grr_sql_query1("SELECT start_time FROM ".TABLE_PREFIX."_entry WHERE id = '".protect_data_sql($id)."'");
- 				if ($date_debut < $date_now) $can_delete_or_create = "n"; else $can_delete_or_create = "y";
- 			}
- 			return true;
- 		}
- 	} else {
- 		if (getSettingValue("allow_user_delete_after_begin")==1) {
- 			$id_area = grr_sql_query1("select area_id from ".TABLE_PREFIX."_room where id = '".protect_data_sql($id_room)."'");
- 			$resolution_area = grr_sql_query1("select resolution_area from ".TABLE_PREFIX."_area where id = '".$id_area."'");
- 			if ($date_booking>$date_now-$resolution_area) {
- 				return true;
- 			} else {
- 				return false;
- 			}
- 		} else {
- 			if ($date_booking>$date_now) {
- 				return true;
- 			} else {
- 				return false;
- 			}
- 		}
- 	}
+			if (getSettingValue("allow_user_delete_after_begin") == 2) {
+				$date_debut = grr_sql_query1("SELECT start_time FROM ".TABLE_PREFIX."_entry WHERE id = '".protect_data_sql($id)."'");
+				if ($date_debut < $date_now) $can_delete_or_create = "n"; else $can_delete_or_create = "y";
+			}
+			return true;
+		}
+	} else {
+		if (getSettingValue("allow_user_delete_after_begin")==1) {
+			$id_area = grr_sql_query1("select area_id from ".TABLE_PREFIX."_room where id = '".protect_data_sql($id_room)."'");
+			$resolution_area = grr_sql_query1("select resolution_area from ".TABLE_PREFIX."_area where id = '".$id_area."'");
+			if ($date_booking>$date_now-$resolution_area) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			if ($date_booking>$date_now) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
  }
 // function verif_duree_max_resa_area($user, $id_room, $starttime, $endtime)
 // $user : le login de l'utilisateur
@@ -3108,25 +3093,25 @@ function UserRoomMaxBooking($user, $id_room, $number) {
 // $endtime : fin de la réservation
 //
  function verif_duree_max_resa_area($user, $id_room, $starttime, $endtime) {
- 	if (authGetUserLevel($user,$id_room) >= 3) {
+	if (authGetUserLevel($user,$id_room) >= 3) {
 	// On teste si l'utilisateur est gestionnaire de la ressource
- 		return true;
- 		die();
- 	}
- 	$id_area = grr_sql_query1("select area_id from ".TABLE_PREFIX."_room where id='".protect_data_sql($id_room)."'");
- 	$duree_max_resa_area = grr_sql_query1("select duree_max_resa_area from ".TABLE_PREFIX."_area where id='".$id_area."'");
- 	$enable_periods =  grr_sql_query1("select enable_periods from ".TABLE_PREFIX."_area where id='".$id_area."'");
- 	if ($enable_periods == 'y') $duree_max_resa_area = $duree_max_resa_area*24*60;
- 	if ($duree_max_resa_area < 0) {
- 		return true;
- 		die();
- 	} else if ($endtime - $starttime > $duree_max_resa_area*60) {
- 		return false;
- 		die();
- 	} else {
- 		return true;
- 		die();
- 	}
+		return true;
+		die();
+	}
+	$id_area = grr_sql_query1("select area_id from ".TABLE_PREFIX."_room where id='".protect_data_sql($id_room)."'");
+	$duree_max_resa_area = grr_sql_query1("select duree_max_resa_area from ".TABLE_PREFIX."_area where id='".$id_area."'");
+	$enable_periods =  grr_sql_query1("select enable_periods from ".TABLE_PREFIX."_area where id='".$id_area."'");
+	if ($enable_periods == 'y') $duree_max_resa_area = $duree_max_resa_area*24*60;
+	if ($duree_max_resa_area < 0) {
+		return true;
+		die();
+	} else if ($endtime - $starttime > $duree_max_resa_area*60) {
+		return false;
+		die();
+	} else {
+		return true;
+		die();
+	}
  }
 // function verif_delais_max_resa_room($user, $id_room, $date_booking)
 // $user : le login de l'utilisateur
@@ -3135,61 +3120,61 @@ function UserRoomMaxBooking($user, $id_room, $number) {
 // $date_now : la date actuelle
 //
  function verif_delais_max_resa_room($user, $id_room, $date_booking) {
- 	$day   = date("d");
- 	$month = date("m");
- 	$year  = date("Y");
- 	$datenow = mktime(0,0,0,$month,$day,$year);
- 	if (authGetUserLevel($user,$id_room) >= 3) {
+	$day   = date("d");
+	$month = date("m");
+	$year  = date("Y");
+	$datenow = mktime(0,0,0,$month,$day,$year);
+	if (authGetUserLevel($user,$id_room) >= 3) {
 	// On teste si l'utilisateur est administrateur
- 		return true;
- 		die();
- 	}
- 	$delais_max_resa_room = grr_sql_query1("select delais_max_resa_room from ".TABLE_PREFIX."_room where id='".protect_data_sql($id_room)."'");
- 	if ($delais_max_resa_room == -1) {
- 		return true;
- 		die();
- 	} else if ($datenow + $delais_max_resa_room*24*3600 +1 < $date_booking) {
- 		return false;
- 		die();
- 	} else {
- 		return true;
- 		die();
- 	}
+		return true;
+		die();
+	}
+	$delais_max_resa_room = grr_sql_query1("select delais_max_resa_room from ".TABLE_PREFIX."_room where id='".protect_data_sql($id_room)."'");
+	if ($delais_max_resa_room == -1) {
+		return true;
+		die();
+	} else if ($datenow + $delais_max_resa_room*24*3600 +1 < $date_booking) {
+		return false;
+		die();
+	} else {
+		return true;
+		die();
+	}
  }
 // function verif_access_search : vérifier l'accès à l'outil de recherche
 // $user : le login de l'utilisateur
 // $id_room : l'id de la ressource.
 //
  function verif_access_search($user) {
- 	if (authGetUserLevel($user,-1) >= getSettingValue("allow_search_level"))
- 		return TRUE;
- 	else
- 		return FALSE;
+	if (authGetUserLevel($user,-1) >= getSettingValue("allow_search_level"))
+		return TRUE;
+	else
+		return FALSE;
  }
 // function verif_display_fiche_ressource : vérifier l'accès à la visualisation de la fiche d'une ressource
 // $user : le login de l'utilisateur
 // $id_room : l'id de la ressource.
 //
  function verif_display_fiche_ressource($user, $id_room) {
- 	$show_fic_room = grr_sql_query1("select show_fic_room from ".TABLE_PREFIX."_room where id='".$id_room."'");
- 	if ($show_fic_room == "y") {
- 		if (authGetUserLevel($user,$id_room) >= getSettingValue("visu_fiche_description"))
- 			return TRUE;
- 		else
- 			return FALSE;
- 	} else {
- 		return FALSE;
- 	}
+	$show_fic_room = grr_sql_query1("select show_fic_room from ".TABLE_PREFIX."_room where id='".$id_room."'");
+	if ($show_fic_room == "y") {
+		if (authGetUserLevel($user,$id_room) >= getSettingValue("visu_fiche_description"))
+			return TRUE;
+		else
+			return FALSE;
+	} else {
+		return FALSE;
+	}
  }
 // function verif_acces_fiche_reservation : vérifier l'accès à la fiche de réservation d'une ressource
 // $user : le login de l'utilisateur
 // $id_room : l'id de la ressource.
 //
  function verif_acces_fiche_reservation($user, $id_room) {
- 	if (authGetUserLevel($user,$id_room) >= getSettingValue("acces_fiche_reservation"))
- 		return TRUE;
- 	else
- 		return FALSE;
+	if (authGetUserLevel($user,$id_room) >= getSettingValue("acces_fiche_reservation"))
+		return TRUE;
+	else
+		return FALSE;
  }
 /* function verif_display_email : vérifier l'accès à l'adresse email
  *$user : le login de l'utilisateur
@@ -4138,12 +4123,12 @@ die();
 */
  function effectuer_correspondance_profil_statut($codefonction, $libellefonction) {
 		# On récupère le statut par défaut des utilisateurs CAS
- 	$sso = getSettingValue("sso_statut");
- 	if ($sso == "cas_visiteur") $_statut = "visiteur";
- 	else if ($sso == "cas_utilisateur") $_statut = "utilisateur";
+	$sso = getSettingValue("sso_statut");
+	if ($sso == "cas_visiteur") $_statut = "visiteur";
+	else if ($sso == "cas_utilisateur") $_statut = "utilisateur";
 		# Le code fonction est défini
- 	if ($codefonction != "") {
- 		$sql = grr_sql_query1("select statut_grr from ".TABLE_PREFIX."_correspondance_statut where code_fonction='".$codefonction."'");
+	if ($codefonction != "") {
+		$sql = grr_sql_query1("select statut_grr from ".TABLE_PREFIX."_correspondance_statut where code_fonction='".$codefonction."'");
 				if ($sql != -1) { // Si la fonction existe dans la table de correspondance, on retourne le statut_grr associé
 					return $sql;
 				}	else {

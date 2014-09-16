@@ -3,7 +3,7 @@
  * install_mysql.php
  * Interface d'installation de GRR pour un environnement mysql
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2009-10-09 07:55:48 $
+ * DerniÃ¨re modification : $Date: 2009-10-09 07:55:48 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -57,7 +57,7 @@ $choix_db = isset($_GET["choix_db"]) ? $_GET["choix_db"] : NULL;
 $table_new = isset($_GET["table_new"]) ? $_GET["table_new"] : NULL;
 $table_prefix = isset($_GET["table_prefix"]) ? $_GET["table_prefix"] : NULL;
 
-// Pour cette page uniquement, on désactive l'UTF8 et on impose l'ISO-8859-1
+// Pour cette page uniquement, on dÃ©sactive l'UTF8 et on impose l'ISO-8859-1
 $unicode_encoding = 0;
 $charset_html = "iso-8859-1";
 
@@ -99,13 +99,13 @@ if (@file_exists($nom_fic)) {
                 echo begin_page("Installation de GRR");
                 begin_html();
                 if ($etape == 5) {
-                    echo "<br /><h2>Dernière étape : C'est terminé !</h2>";
+                    echo "<br /><h2>DerniÃ¨re Ã©tape : C'est terminÃ© !</h2>";
                     echo "<p>";
-                    echo "<p>Vous pouvez maintenant commencer à utiliser le système de réservation de ressources ...</p>";
-                    echo "<p>Pour vous connecter la première fois en tant qu'administrateur, utilisez le nom de connection <b>\"administrateur\"</b> et le mot de passe <b>\"azerty\"</b>. N'oubliez pas de changer le mot de passe !</p>";
-                    echo "<br /><center><a href = 'login.php'>Se connecter à GRR</a></center>";
+                    echo "<p>Vous pouvez maintenant commencer Ã  utiliser le systÃ¨me de rÃ©servation de ressources ...</p>";
+                    echo "<p>Pour vous connecter la premiÃ¨re fois en tant qu'administrateur, utilisez le nom de connection <b>\"administrateur\"</b> et le mot de passe <b>\"azerty\"</b>. N'oubliez pas de changer le mot de passe !</p>";
+                    echo "<br /><center><a href = 'login.php'>Se connecter Ã  GRR</a></center>";
                 } else {
-                    echo "<h2>Espace interdit - GRR est déjà installé.</h2>";
+                    echo "<h2>Espace interdit - GRR est dÃ©jÃ  installÃ©.</h2>";
                 }
                 end_html();
                 die();
@@ -130,7 +130,7 @@ if ($etape == 4) {
     echo begin_page("Installation de GRR");
     begin_html();
 
-    echo "<br /><h2>Quatrième étape : Création des tables de la base</h2>";
+    echo "<br /><h2>QuatriÃ¨me Ã©tape : CrÃ©ation des tables de la base</h2>";
 
     $link = mysql_connect("$adresse_db", "$login_db", "$pass_db");
 
@@ -168,9 +168,9 @@ if ($etape == 4) {
                 $ok = 'no';
             } else {
                 $conn = "<"."?php\n";
-                $conn .= "# Les quatre lignes suivantes sont à modifier selon votre configuration\n";
+                $conn .= "# Les quatre lignes suivantes sont Ã  modifier selon votre configuration\n";
                 $conn .= "# ligne suivante : le nom du serveur qui herberge votre base sql.\n";
-                $conn .= "# Si c'est le même que celui qui heberge les scripts, mettre \"localhost\"\n";
+                $conn .= "# Si c'est le mÃªme que celui qui heberge les scripts, mettre \"localhost\"\n";
                 $conn .= "\$dbHost=\"$adresse_db\";\n";
                 $conn .= "# ligne suivante : le nom de votre base sql\n";
                 $conn .= "\$dbDb=\"$sel_db\";\n";
@@ -178,7 +178,7 @@ if ($etape == 4) {
                 $conn .= "\$dbUser=\"$login_db\";\n";
                 $conn .= "# ligne suivante : le mot de passe de l'utilisateur sql ci-dessus\n";
                 $conn .= "\$dbPass=\"$pass_db\";\n";
-                $conn .= "# ligne suivante : préfixe du nom des tables de données\n";
+                $conn .= "# ligne suivante : prÃ©fixe du nom des tables de donnÃ©es\n";
                 $conn .= "\$table_prefix=\"$table_prefix\";\n";
 
                 $conn .= "?".">";
@@ -186,7 +186,7 @@ if ($etape == 4) {
                 if (!@fclose($f)) $ok='no';
             }
             if ($ok == 'yes') {
-                echo "<b>La structure de votre base de données est installée.</b><br />Vous pouvez passer à l'étape suivante.";
+                echo "<b>La structure de votre base de donnÃ©es est installÃ©e.</b><br />Vous pouvez passer Ã  l'Ã©tape suivante.";
                 echo "<form action='install_mysql.php' method='get'>";
                 echo "<input type='hidden' name='etape' value='5' />";
                 echo "<div style=\"text-align:right;\"><input type='submit' class='fondl' name='Valider' value='Suivant &gt;&gt;' /><div>";
@@ -195,10 +195,10 @@ if ($etape == 4) {
         }
 
         if (($result_ok != 'yes') or ($ok != 'yes')) {
-            echo "<p><b>L'opération a échoué.</b> Retournez à la page précédente, sélectionnez une autre base ou créez-en une nouvelle. Vérifiez les informations fournies par votre hébergeur.</p>";
+            echo "<p><b>L'opÃ©ration a Ã©chouÃ©.</b> Retournez Ã  la page prÃ©cÃ©dente, sÃ©lectionnez une autre base ou crÃ©ez-en une nouvelle. VÃ©rifiez les informations fournies par votre hÃ©bergeur.</p>";
         }
     } else {
-        echo "<p><b>Impossible de sélectionner la base. GRR n'a peut-être pas pu créer la base.</b></p>";
+        echo "<p><b>Impossible de sÃ©lectionner la base. GRR n'a peut-Ãªtre pas pu crÃ©er la base.</b></p>";
     }
 
     end_html();
@@ -209,7 +209,7 @@ else if ($etape == 3) {
     echo begin_page("Installation de GRR");
     begin_html();
 
-    echo "<br /><h2>Troisième étape : Choix de votre base</h2>\n";
+    echo "<br /><h2>TroisiÃ¨me Ã©tape : Choix de votre base</h2>\n";
 
     echo "<form action='install_mysql.php' method='get'><div>\n";
     echo "<input type='hidden' name='etape' value='4' />\n";
@@ -223,7 +223,7 @@ else if ($etape == 3) {
     echo "<fieldset><label><b>Choisissez votre base :</b><br /></label>\n";
 
     if ($result AND (($n = @mysql_num_rows($result)) > 0)) {
-        echo "<p><b>Le serveur $dbsys contient plusieurs bases de données.<br />Sélectionnez celle dans laquelle vous voulez implanter GRR</b></p>\n";
+        echo "<p><b>Le serveur $dbsys contient plusieurs bases de donnÃ©es.<br />SÃ©lectionnez celle dans laquelle vous voulez implanter GRR</b></p>\n";
         echo "<ul>\n";
         $bases = "";
         $checked = FALSE;
@@ -243,7 +243,7 @@ else if ($etape == 3) {
         echo "ou... ";
     }
     else {
-        echo "<b>Le programme d'installation n'a pas pu lire les noms des bases de données installées.</b>Soit aucune base n'est disponible, soit la fonction permettant de lister les bases a été désactivée pour des raisons de sécurité.<br />\n";
+        echo "<b>Le programme d'installation n'a pas pu lire les noms des bases de donnÃ©es installÃ©es.</b>Soit aucune base n'est disponible, soit la fonction permettant de lister les bases a Ã©tÃ© dÃ©sactivÃ©e pour des raisons de sÃ©curitÃ©.<br />\n";
         if ($login_db) {
             echo "Dans la seconde alternative, il est probable qu'une base portant votre nom de login soit utilisable :";
             echo "<ul>\n";
@@ -256,18 +256,18 @@ else if ($etape == 3) {
     }
     echo "<input name=\"choix_db\" value=\"new_grr\" type=\"radio\" id='nou'";
     if (!$checked) echo " checked=\"checked\"";
-    echo " />\n<label for='nou'>Créer une nouvelle base de données :</label>\n";
+    echo " />\n<label for='nou'>CrÃ©er une nouvelle base de donnÃ©es :</label>\n";
     echo "<input type='text' name='table_new' class='fondo' value=\"grr\" size='20' /></fieldset>\n";
 
-    echo "<br /><fieldset><label><b>Préfixe des tables :</b><br /></label>\n";
-    echo "Vous pouvez modifier le préfixe du nom des tables de données (ceci est indispensable lorsque l'on souhaite installer plusieurs sites GRR dans la même base de données). Ce préfixe s'écrit en <b>lettres minuscules, non accentuées, et sans espace</b>.";
+    echo "<br /><fieldset><label><b>PrÃ©fixe des tables :</b><br /></label>\n";
+    echo "Vous pouvez modifier le prÃ©fixe du nom des tables de donnÃ©es (ceci est indispensable lorsque l'on souhaite installer plusieurs sites GRR dans la mÃªme base de donnÃ©es). Ce prÃ©fixe s'Ã©crit en <b>lettres minuscules, non accentuÃ©es, et sans espace</b>.";
     echo "<br /><input type='text' name='table_prefix' class='fondo' value=\"grr\" size='10' />\n";
     echo "</fieldset>\n";
 
-    echo "<br /><b>Attention</b> : lors de la prochaine étape :\n";
+    echo "<br /><b>Attention</b> : lors de la prochaine Ã©tape :\n";
     echo "<ul>\n";
-    echo "<li>le fichier \"".$nom_fic."\" sera actualisé avec les données que vous avez fourni,</li>\n";
-    echo "<li>les tables GRR seront créées dans la base sélectionnée. Si celle-ci contient déjà des tables GRR, ces tables, ainsi que les données qu'elles contiennent, seront supprimées et remplacées par une nouvelle structure.</li>\n</ul>\n";
+    echo "<li>le fichier \"".$nom_fic."\" sera actualisÃ© avec les donnÃ©es que vous avez fourni,</li>\n";
+    echo "<li>les tables GRR seront crÃ©Ã©es dans la base sÃ©lectionnÃ©e. Si celle-ci contient dÃ©jÃ  des tables GRR, ces tables, ainsi que les donnÃ©es qu'elles contiennent, seront supprimÃ©es et remplacÃ©es par une nouvelle structure.</li>\n</ul>\n";
 
     echo "<div style=\"text-align:right;\"><input type='submit' class='fondl' name='Valider' value='Suivant &gt;&gt;' /></div>\n";
 
@@ -282,7 +282,7 @@ else if ($etape == 2) {
     echo begin_page("Installation de GRR");
     begin_html();
 
-    echo "<br /><h2>Deuxième étape : Essai de connexion au serveur $dbsys</h2>\n";
+    echo "<br /><h2>DeuxiÃ¨me Ã©tape : Essai de connexion au serveur $dbsys</h2>\n";
 
     //echo "<!--";
     $link = mysql_connect($adresse_db,$login_db,$pass_db);
@@ -294,7 +294,7 @@ else if ($etape == 2) {
     }
 
     if (($db_connect=="0") && $link){
-        echo "<b>La connexion a réussi.</b><p> Vous pouvez passer à l'étape suivante.</p>\n";
+        echo "<b>La connexion a rÃ©ussi.</b><p> Vous pouvez passer Ã  l'Ã©tape suivante.</p>\n";
 
         echo "<form action='install_mysql.php' method='get'>\n";
         echo "<div><input type='hidden' name='etape' value='3' />\n";
@@ -306,8 +306,8 @@ else if ($etape == 2) {
         echo "</div></form>\n";
     }
     else {
-        echo "<b>La connexion au serveur $dbsys a échoué.</b>";
-        echo "<p>Revenez à la page précédente, et vérifiez les informations que vous avez fournies.</p>";
+        echo "<b>La connexion au serveur $dbsys a Ã©chouÃ©.</b>";
+        echo "<p>Revenez Ã  la page prÃ©cÃ©dente, et vÃ©rifiez les informations que vous avez fournies.</p>";
     }
 
     end_html();
@@ -317,9 +317,9 @@ else if ($etape == 1) {
     echo begin_page("Installation de GRR");
     begin_html();
 
-    echo "<br /><h2>Première étape : la connexion $dbsys</h2>";
+    echo "<br /><h2>PremiÃ¨re Ã©tape : la connexion $dbsys</h2>";
 
-    echo "<p>Vous devez avoir en votre possession les codes de connexion au serveur $dbsys. Si ce n'est pas le cas, contactez votre hébergeur ou bien l'administrateur technique du serveur sur lequel vous voulez implanter GRR.</p>";
+    echo "<p>Vous devez avoir en votre possession les codes de connexion au serveur $dbsys. Si ce n'est pas le cas, contactez votre hÃ©bergeur ou bien l'administrateur technique du serveur sur lequel vous voulez implanter GRR.</p>";
 
     $adresse_db = 'localhost';
     $login_db = '';
@@ -327,8 +327,8 @@ else if ($etape == 1) {
 
     echo "<form action='install_mysql.php' method='get'>\n";
     echo "<div><input type='hidden' name='etape' value='2' />\n";
-    echo "<fieldset><label><b>Adresse de la base de donnée</b><br /></label>\n";
-    echo "(Souvent cette adresse correspond à celle de votre site, parfois elle correspond à la mention &laquo;localhost&raquo;, parfois elle est laissée totalement vide.)<br />\n";
+    echo "<fieldset><label><b>Adresse de la base de donnÃ©e</b><br /></label>\n";
+    echo "(Souvent cette adresse correspond Ã  celle de votre site, parfois elle correspond Ã  la mention &laquo;localhost&raquo;, parfois elle est laissÃ©e totalement vide.)<br />\n";
     echo "<input type='text' name='adresse_db' class='formo' value=\"$adresse_db\" size='40' /></fieldset>\n";
     echo "<fieldset><label><b>Le login de connexion</b><br /></label>\n";
     echo "<input type='text' name='login_db' class='formo' value=\"$login_db\" size='40' /></fieldset>\n";
@@ -343,10 +343,10 @@ else if ($etape == 1) {
     $erreur = '';
     if (@file_exists($nom_fic)) {
         $f = @fopen($nom_fic, "r+");
-        if (!$f) $erreur = "<p>Le fichier \"".$nom_fic."\" n'est pas accessible en écriture.</p>";
+        if (!$f) $erreur = "<p>Le fichier \"".$nom_fic."\" n'est pas accessible en Ã©criture.</p>";
     } else {
         $f = @fopen($nom_fic, "w");
-        if (!$f) $erreur = "<p>Impossible de créer le fichier \"".$nom_fic."\".</p>";
+        if (!$f) $erreur = "<p>Impossible de crÃ©er le fichier \"".$nom_fic."\".</p>";
     }
     if ($f)
       if (!@fclose($f))
@@ -355,15 +355,15 @@ else if ($etape == 1) {
     if ($erreur!='') {
         echo begin_page("Installation de GRR");
         begin_html();
-        echo "<h2>Installation de la base $dbsys : problème de droits d'accès</h2>";
+        echo "<h2>Installation de la base $dbsys : problÃ¨me de droits d'accÃ¨s</h2>";
         echo $erreur;
         if (@file_exists($nom_fic))
-            echo "<p>Vous pouvez également renseigner manuellement le fichier \"".$nom_fic."\".</p>";
+            echo "<p>Vous pouvez Ã©galement renseigner manuellement le fichier \"".$nom_fic."\".</p>";
         else if (@file_exists($nom_fic.".ori")) {
             echo "<p>Vous pouvez renommer manuellement le fichier \"".$nom_fic.".ori\" en \"".$nom_fic."\", et lui donner les droits suffisants.</p>";
-            echo "<p>Une fois le fichier \"".$nom_fic.".ori\" renommé en \"".$nom_fic."\", vous pouvez également renseigner manuellement le fichier \"".$nom_fic."\".</p>";
+            echo "<p>Une fois le fichier \"".$nom_fic.".ori\" renommÃ© en \"".$nom_fic."\", vous pouvez Ã©galement renseigner manuellement le fichier \"".$nom_fic."\".</p>";
         }
-        echo "<p>Vous pouvez par exemple utilisez votre client FTP afin de régler ce problème ou bien contactez l'administrateur technique. Une fois cette manipulation effectuée, vous pourrez continuer.</p>";
+        echo "<p>Vous pouvez par exemple utilisez votre client FTP afin de rÃ©gler ce problÃ¨me ou bien contactez l'administrateur technique. Une fois cette manipulation effectuÃ©e, vous pourrez continuer.</p>";
         echo "<p><form action='install_mysql.php' method='get'>";
         echo "<input type='hidden' name='etape' value='' />";
         echo "<input type='submit' class='fondl' name='Continuer' />";

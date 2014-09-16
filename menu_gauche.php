@@ -43,35 +43,35 @@ if ($_GET['pview'] != 1) {
 		if ($area_list_format == "select")
 		{
 		# Sélection sous la forme de listes déroulantes
-		echo "<td>\n";
-		echo make_site_select_html('week_all.php',$id_site,$year,$month,$day,getUserName());
-		echo make_area_select_html('week_all.php',$id_site, $area, $year, $month, $day, getUserName()); # from functions.inc.php
-		echo make_room_select_html('week', $area, $room, $year, $month, $day,getUserName());
-		echo "</td>\n";
+		//echo "<td>\n";
+		echo make_site_select_html('week_all.php', $id_site, $year, $month, $day, getUserName());
+		echo make_area_select_html('week_all.php', $id_site, $area, $year, $month, $day, getUserName());
+		echo make_room_select_html('week', $area, $room, $year, $month, $day, getUserName());
+		//echo "</td>\n";
 	}
 	else
 	{
 		#Sélection sous la forme d'items
-		echo "<td>\n";
-		echo make_site_item_html('week_all.php',$id_site,$year,$month,$day,getUserName());
-		echo make_area_item_html('week_all.php',$id_site, $area, $year, $month, $day, getUserName()); # from functions.inc.php
-		echo make_room_item_html('week', $area, $room, $year, $month, $day,getUserName());
-		echo "</td>\n";
+		//echo "<td>\n";
+		echo make_site_item_html('week_all.php', $id_site, $year, $month, $day, getUserName());
+		echo make_area_item_html('week_all.php',$id_site, $area, $year, $month, $day, getUserName());
+		echo make_room_item_html('week', $area, $room, $year, $month, $day, getUserName());
+		//echo "</td>\n";
 	}
 }
 else
 {
 	# Sélection sous la forme de listes
-	echo "<td>\n";
+	//echo "<td>\n";
 	echo make_site_list_html('week_all.php',$id_site,$year,$month,$day,getUserName());
-	echo "</td> <td>";
-	make_area_list_html('week_all.php',$id_site, $area, $year, $month, $day, getUserName()); # from functions.inc.php
-	echo "</td> <td>";
+	//echo "</td> <td>";
+	make_area_list_html('week_all.php',$id_site, $area, $year, $month, $day, getUserName());
+	//echo "</td> <td>";
 	make_room_list_html('week.php', $area, $room, $year, $month, $day,getUserName());
-	echo "</td>\n";
+	//echo "</td>\n";
 }
 //Affichage de la légende
-if (getSettingValue("legend")== '0')
+if (getSettingValue("legend") == '0')
 	show_colour_key($area);
 //Afficher Aide +Administreur
 echo "<br/><div class=\"pied_menuGauche\">";
@@ -85,8 +85,8 @@ if ($type_session == "with_session")
 	else
 		echo affiche_lien_contact("contact_administrateur","identifiant:non","seulement_si_email");
 }
-echo"</div>";
+echo"</div>\n";
 //Fermeture id menuGauche
-echo "</div> ";
+echo "</div>\n";
 }
 ?>
