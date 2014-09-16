@@ -2122,7 +2122,7 @@ function make_area_item_html( $link, $current_site, $current_area, $year, $month
 function make_room_item_html( $link, $current_area, $current_room, $year, $month, $day, $user )
 {
 	global $vocab;
-	$out_html = "<ul class=\"list-group\"><li class=\"list-group-item\"><h4>".get_vocab('rooms').get_vocab("deux_points")."</h3></li></ul><form class=\"ressource\" id=\"room_001\" action=\"".$_SERVER['PHP_SELF']."\"> ";
+	$out_html = "<br /><ul class=\"list-group\"><li class=\"list-group-item\"><h4>".get_vocab('rooms').get_vocab("deux_points")."</h3></li></ul><form class=\"ressource\" id=\"room_001\" action=\"".$_SERVER['PHP_SELF']."\"> ";
 	$sql = "select id, room_name, description from ".TABLE_PREFIX."_room where area_id='".protect_data_sql($current_area)."' order by order_display,room_name";
 	$res = grr_sql_query($sql);
 	if ($res) for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
