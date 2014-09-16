@@ -141,14 +141,13 @@ if (!isset($day) or !isset($month) or !isset($year))
 		$day--;
 }
 
-if ((getSettingValue("authentification_obli")==0) and (getUserName()=='')) {
+if ((getSettingValue("authentification_obli") == 0) && (getUserName()== '' ))
 	$type_session = "no_session";
-} else {
+else
 	$type_session = "with_session";
-}
 $back = '';
-if (isset($_SERVER['HTTP_REFERER'])) $back = htmlspecialchars($_SERVER['HTTP_REFERER']);
-
+if (isset($_SERVER['HTTP_REFERER']))
+	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
 // Construction des identifiants de la ressource $room, du domaine $area, du site $id_site
 Definition_ressource_domaine_site();
 
@@ -184,7 +183,8 @@ function cmp3($a, $b)
 // Si oui, les r?servations concern?es sont supprim?es et un mail automatique est envoy?.
 // On v?rifie une fois par jour que les ressources ont ?t? rendue en fin de r?servation
 // Si non, une notification email est envoy?e
-if (getSettingValue("verif_reservation_auto")==0) {
+if (getSettingValue("verif_reservation_auto") == 0)
+{
 	verify_confirm_reservation();
 	verify_retard_reservation();
 }
@@ -194,7 +194,8 @@ if (getSettingValue("verif_reservation_auto")==0) {
 get_planning_area_values($area);
 
 
-if ($enable_periods=='y') {
+if ($enable_periods == 'y')
+{
 	$resolution = 60;
 	$morningstarts = 12;
 	$morningstarts_minutes = 0;
@@ -210,10 +211,9 @@ $time_old = $time;
 // on recule la date jusqu'au pr?c?dent d?but de semaine
 // Evidemment, probl?me possible avec les changement ?t?-hiver et hiver-?t?
 if (($weekday = (date("w", $time) - $weekstarts + 7) % 7) > 0)
-{
 	$time -= $weekday * 86400;
-}
-if (!isset($correct_heure_ete_hiver) or ($correct_heure_ete_hiver == 1)) {
+if (!isset($correct_heure_ete_hiver) || ($correct_heure_ete_hiver == 1))
+{
 	// Si le dimanche correspondant au changement d'heure est entre $time et $time_old, on corrige de +1 h ou -1 h.
 	if ((heure_ete_hiver("ete",$year,0) <= $time_old) and (heure_ete_hiver("ete",$year,0) >= $time) and ($time_old != $time) and (date("H", $time)== 23))
 		$decal = 3600;
@@ -297,7 +297,8 @@ ORDER by start_time, end_time, ".TABLE_PREFIX."_entry.id";
 #  d[monthday]["id"][] = ID of each entry, for linking.
 #  d[monthday]["data"][] = "start-stop" times of each entry.
 $res = grr_sql_query($sql);
-if (! $res) echo grr_sql_error();
+if (!$res)
+	echo grr_sql_error();
 else for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 {
 	# Fill in data for each day during the month that this meeting covers.

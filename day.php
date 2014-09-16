@@ -79,10 +79,10 @@
 include "include/connect.inc.php";
 include "include/config.inc.php";
 include "include/misc.inc.php";
-include "include/mrbs_sql.inc.php";
 include "include/functions.inc.php";
 include "include/$dbsys.inc.php";
 include "include/mincals.inc.php";
+include "include/mrbs_sql.inc.php";
 include "include/language.inc.php";
 $grr_script_name = "day.php";
 #Paramètres de connection
@@ -202,7 +202,7 @@ $yy = date("Y",$i);
 $ym = date("m",$i);
 $yd = date("d",$i);
 $i = mktime(0, 0, 0, $month, $day, $year);
-$jour_cycle = grr_sql_query1("SELECT Jours FROM ".TABLE_PREFIX."_calendrier_jours_cycle WHERE DAY='$i'");
+$jour_cycle = grr_sql_query1("SELECT Jours FROM ".TABLE_PREFIX."_calendrier_jours_cycle WHERE day='$i'");
 $ind = 1;
 $test = 0;
 while (($test == 0) && ($ind <= 7))
@@ -218,7 +218,7 @@ $td = date("d",$i);
 $am7 = mktime($morningstarts, 0, 0, $month, $day, $year);
 $pm7 = mktime($eveningends, $eveningends_minutes, 0, $month, $day, $year);
 #Show current date
-$this_area_name = grr_sql_query1("select area_name from ".TABLE_PREFIX."_area where id='".protect_data_sql($area)."'");
+$this_area_name = grr_sql_query1("SELECT area_name FROM ".TABLE_PREFIX."_area WHERE id='".protect_data_sql($area)."'");
 #We want to build an array containing all the data we want to show
 #and then spit it out.
 #Get all appointments for today in the area that we care about
@@ -336,13 +336,13 @@ else
 		echo "<table width=\"100%\">
 		<tr>
 			<td align=\"left\">
-				<input type=\"button\" class=\"btn btn-default btn-xs\"  onclick=\"charger();javascript: location.href='day.php?year=$yy&amp;month=$ym&amp;day=$yd&amp;area=$area';\" value=\"&lt;&lt; ".get_vocab('daybefore')." \" />
+				<input type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='day.php?year=$yy&amp;month=$ym&amp;day=$yd&amp;area=$area';\" value=\"&lt;&lt; ".get_vocab('daybefore')." \" />
 			</td>
 			<td>";
 			include "include/trailer.inc.php";
 			echo "</td>
 				<td align=\"right\">
-					<input type=\"button\" class=\"btn btn-default btn-xs\"  onclick=\"charger();javascript: location.href='day.php?year=$ty&amp;month=$tm&amp;day=$td&amp;area=$area';\" value=\" ".get_vocab('dayafter')."  &gt;&gt;  \" />
+					<input type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='day.php?year=$ty&amp;month=$tm&amp;day=$td&amp;area=$area';\" value=\" ".get_vocab('dayafter')."  &gt;&gt;  \" />
 				</td>
 			</tr></table>";
 		}

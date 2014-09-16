@@ -1,9 +1,9 @@
 <?php
 /**
  * edit_entry.php
- * Interface d'édition d'une réservation
+ * Interface d'Ã©dition d'une rÃ©servation
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2010-04-07 15:38:14 $
+ * DerniÃ¨re modification : $Date: 2010-04-07 15:38:14 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -91,7 +91,7 @@ if (isset($period))
 $edit_type = isset($_GET["edit_type"]) ? $_GET["edit_type"] : NULL;
 if (!isset($edit_type))
 	$edit_type = "";
-// si $edit_type = "series", cela signifie qu'on édite une "périodicité"
+// si $edit_type = "series", cela signifie qu'on Ã©dite une "pÃ©riodicitÃ©"
 $page = verif_page();
 if (isset($_GET["hour"]))
 {
@@ -113,14 +113,14 @@ else
 	$minute = NULL;
 $rep_num_weeks='';
 global $twentyfourhour_format;
-//Si nous ne savons pas la date, nous devons la créer
+//Si nous ne savons pas la date, nous devons la crÃ©er
 if (!isset($day) || !isset($month) || !isset($year))
 {
 	$day   = date("d");
 	$month = date("m");
 	$year  = date("Y");
 }
-// s'il s'agit d'une modification, on récupère l'id de l'area et l'id de la room
+// s'il s'agit d'une modification, on rÃ©cupÃ¨re l'id de l'area et l'id de la room
 if (isset($id))
 {
 	if ($info = mrbsGetEntryInfo($id))
@@ -136,18 +136,18 @@ if (isset($id))
 }
 else
 {
-	// Il s'agit d'une nouvelle réservation
+	// Il s'agit d'une nouvelle rÃ©servation
 	// Construction des identifiants de la ressource $room, du domaine $area, du site $id_site
 	Definition_ressource_domaine_site();
 }
 // Fichiers de personnalisation de langue pour le domaine
 if (@file_exists("language/lang_subst_".$area.".".$locale))
 	include "language/lang_subst_".$area.".".$locale;
-// Récupération des données concernant l'affichage du planning du domaine
+// RÃ©cupÃ©ration des donnÃ©es concernant l'affichage du planning du domaine
 get_planning_area_values($area);
-// Affiche-t-on le message "Les champs marqués d'un * sont obligatoires." ?
+// Affiche-t-on le message "Les champs marquÃ©s d'un * sont obligatoires." ?
 $affiche_mess_asterisque = false;
-// Récupération d'info sur la rerssource
+// RÃ©cupÃ©ration d'info sur la rerssource
 $type_affichage_reser = grr_sql_query1("select type_affichage_reser from ".TABLE_PREFIX."_room where id='".$room."'");
 $delais_option_reservation  = grr_sql_query1("select delais_option_reservation from ".TABLE_PREFIX."_room where id='".$room."'");
 $qui_peut_reserver_pour  = grr_sql_query1("select qui_peut_reserver_pour from ".TABLE_PREFIX."_room where id='".$room."'");
@@ -158,7 +158,7 @@ if (isset($_SERVER['HTTP_REFERER']))
 $longueur_liste_ressources_max = getSettingValue("longueur_liste_ressources_max");
 if ($longueur_liste_ressources_max == '')
 	$longueur_liste_ressources_max = 20;
-//Vérification de la présence de réservations
+//VÃ©rification de la prÃ©sence de rÃ©servations
 if (check_begin_end_bookings($day, $month, $year))
 {
 	if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))
@@ -168,7 +168,7 @@ if (check_begin_end_bookings($day, $month, $year))
 	showNoBookings($day, $month, $year, $area, $back, $type_session);
 	exit();
 }
-//Vérification des droits d''accès
+//VÃ©rification des droits d''accÃ¨s
 if ((authGetUserLevel(getUserName(), -1) < 2) && (auth_visiteur(getUserName(), $room) == 0))
 {
 	showAccessDenied($day, $month, $year, $area,$back);
@@ -180,30 +180,30 @@ if (authUserAccesArea(getUserName(), $area) == 0)
 	exit();
 }
 if (isset($id) && ($id!=0))
-	$compt = 0; // il s'agit d'une modification : on ne compte pas cette résa dans le nombre de réservations déjà effectuées
+	$compt = 0; // il s'agit d'une modification : on ne compte pas cette rÃ©sa dans le nombre de rÃ©servations dÃ©jÃ  effectuÃ©es
 else
-	$compt = 1; // il s'agit d'une nouvelle réservation : on la compte dans le nombre de réservations déjà effectuées
+	$compt = 1; // il s'agit d'une nouvelle rÃ©servation : on la compte dans le nombre de rÃ©servations dÃ©jÃ  effectuÃ©es
 
 if (UserRoomMaxBooking(getUserName(), $room, $compt) == 0)
 {
 	showAccessDeniedMaxBookings($day, $month, $year, $area, $room, $back);
 	exit();
 }
-//Vérification si l'on édite une périodicité ($edit_type = "series") ou bien une réservation simple
+//VÃ©rification si l'on Ã©dite une pÃ©riodicitÃ© ($edit_type = "series") ou bien une rÃ©servation simple
 /*
-* Cette page peut ajouter ou modifier une réservation
+* Cette page peut ajouter ou modifier une rÃ©servation
 * Nous devons savoir:
-*  - Le nom de la personne qui a réservé
-*  - La description de la réservation
-*  - La Date (option de sélection pour le jour, mois, année)
+*  - Le nom de la personne qui a rÃ©servÃ©
+*  - La description de la rÃ©servation
+*  - La Date (option de sÃ©lection pour le jour, mois, annÃ©e)
 *  - L'heure
-*  - La durée
-*  - Le statut de la réservation en cours
-* Premièrement nous devons savoir si c'est une nouvelle réservation ou bien une modification
-* Si c'est une modification, nous devons reprendre toute les informations de cette réservation
-* Si l'ID est présente, c'est une modification
+*  - La durÃ©e
+*  - Le statut de la rÃ©servation en cours
+* PremiÃ¨rement nous devons savoir si c'est une nouvelle rÃ©servation ou bien une modification
+* Si c'est une modification, nous devons reprendre toute les informations de cette rÃ©servation
+* Si l'ID est prÃ©sente, c'est une modification
 */
-//Hugo - Mise en place de la page view entry avec des rows quand la réservation existe deja
+//Hugo - Mise en place de la page view entry avec des rows quand la rÃ©servation existe deja
 if (isset($id))
 {
 	$sql = "select name, beneficiaire, description, start_time, end_time,
@@ -222,7 +222,7 @@ if (isset($id))
 	$create_by    		= $row[11];
 	$description 		= $row[2];
 	$statut_entry 		= $row[13];
-	$start_day   = strftime('%d', $row[3]); // On utilise la fonction strftime pour repasser la date en format UNIX au format francçais
+	$start_day   = strftime('%d', $row[3]); // On utilise la fonction strftime pour repasser la date en format UNIX au format francÃ§ais
 	$start_month = strftime('%m', $row[3]);
 	$start_year  = strftime('%Y', $row[3]);
 	$start_hour  = strftime('%H', $row[3]);
@@ -241,7 +241,7 @@ if (isset($id))
 	$jours_c = $row[10];
 	$modif_option_reservation = 'n';
 	if ($entry_type >= 1)
-	// il s'agit d'une réservation à laquelle est associée une périodicité
+	// il s'agit d'une rÃ©servation Ã  laquelle est associÃ©e une pÃ©riodicitÃ©
 	{
 		$sql = "SELECT rep_type, start_time, end_date, rep_opt, rep_num_weeks, end_time, type, name, beneficiaire, description
 		FROM ".TABLE_PREFIX."_repeat WHERE id='".protect_data_sql($rep_id)."'";
@@ -257,7 +257,7 @@ if (isset($id))
 			$rep_num_weeks = $row[4];
 		if ($edit_type == "series")
 		{
-			// on edite la périodicité associée à la réservation et non la réservation elle-même
+			// on edite la pÃ©riodicitÃ© associÃ©e Ã  la rÃ©servation et non la rÃ©servation elle-mÃªme
 			$start_day   = (int)strftime('%d', $row[1]);
 			$start_month = (int)strftime('%m', $row[1]);
 			$start_year  = (int)strftime('%Y', $row[1]);
@@ -292,19 +292,19 @@ if (isset($id))
 		}
 		else
 		{
-			// on edite la réservation elle-même et non pas de périodicité associée
+			// on edite la rÃ©servation elle-mÃªme et non pas de pÃ©riodicitÃ© associÃ©e
 			$rep_end_date = strftime($dformat,$row[2]);
 			$rep_opt      = $row[3];
-			// On récupère les dates de début et de fin pour l'affichage des infos de périodicité
+			// On rÃ©cupÃ¨re les dates de dÃ©but et de fin pour l'affichage des infos de pÃ©riodicitÃ©
 			$start_time = $row[1];
 			$end_time 	= $row[5];
 		}
 	}
 	else
 	{
-		// il s'agit d'une réservation sans periodicité associée
-		$flag_periodicite = 'y'; // on permet d'afficher les options de périodicité
-		// On initialise les périodicité
+		// il s'agit d'une rÃ©servation sans periodicitÃ© associÃ©e
+		$flag_periodicite = 'y'; // on permet d'afficher les options de pÃ©riodicitÃ©
+		// On initialise les pÃ©riodicitÃ©
 		$rep_id        = 0;
 		$rep_type      = 0;
 		$rep_end_day   = $day;
@@ -316,7 +316,7 @@ if (isset($id))
 }
 else
 {
-	//Ici, c'est une nouvelle réservation, les donnée arrivent quelque soit le boutton selectionné. (A VOIR)
+	//Ici, c'est une nouvelle rÃ©servation, les donnÃ©e arrivent quelque soit le boutton selectionnÃ©. (A VOIR)
 	if ($enable_periods == 'y')
 		$duration    = 60;
 	else
@@ -336,15 +336,15 @@ else
 	$tab_benef["email"] = "";
 	$create_by    = getUserName();
 	$description = "";
-	$start_day   = $day; // $day est le jour passé dans l'url
+	$start_day   = $day; // $day est le jour passÃ© dans l'url
 	$start_month = $month; // dans l'url
 	$start_year  = $year; // dans l'url
 	$start_hour  = $hour; // dans l'url
 	(isset($minute)) ? $start_min = $minute : $start_min ='00';
-	//On met la date de fin de periodicité
+	//On met la date de fin de periodicitÃ©
 	if ($enable_periods=='y')
 	{
-		$end_day   = $day; // $day est le jour passé dans l'url
+		$end_day   = $day; // $day est le jour passÃ© dans l'url
 		$end_month = $month;  //dans l'url
 		$end_year  = $year; // dans l'url
 		$end_hour  = $hour; // dans l'url
@@ -369,7 +369,7 @@ else
 	$rep_end_day 	= $day;
 	$rep_end_month 	= $month;
 	$rep_end_year  	= $year;
-	$rep_day       	= array(0, 0, 0, 0, 0, 0, 0); //tableau des jours de répétition
+	$rep_day       	= array(0, 0, 0, 0, 0, 0, 0); //tableau des jours de rÃ©pÃ©tition
 	$rep_jour      	= 0;  // pour les Jours/Cycle
 	//$option_reservation = mktime(0,0,0,date("m"),date("d"),date("Y"));
 	$option_reservation = -1;
@@ -389,7 +389,7 @@ if (!getWritable($beneficiaire, getUserName(),$id))
 	showAccessDenied($day, $month, $year, $area,$back);
 	exit;
 }
-// On cherche s'il y a d'autres domaines auxquels l'utilisateur a accès
+// On cherche s'il y a d'autres domaines auxquels l'utilisateur a accÃ¨s
 $nb_areas = 0;
 $sql = "select id, area_name from ".TABLE_PREFIX."_area";
 $res = grr_sql_query($sql);
@@ -403,8 +403,8 @@ if ($res)
 			$nb_areas++;
 	}
 }
-// Utilisation de la bibliothèque !prototype! dans ce script
-//MAJ Hugo FORESTIER - La bibliothèque prototype est remplacé par la bibliothèque jQuery (sans changer le nom de la variable) => A FAIRE
+// Utilisation de la bibliothÃ¨que !prototype! dans ce script
+//MAJ Hugo FORESTIER - La bibliothÃ¨que prototype est remplacÃ© par la bibliothÃ¨que jQuery (sans changer le nom de la variable) => A FAIRE
 //25/05/2013
 $use_prototype = 'y';
 //Hugo - Enlever le header pour permettre un meilleure affichage de edit_entry en mode popup (A VOIR)
@@ -420,13 +420,13 @@ function insertTypes(){
 function insertProfilBeneficiaire(){
 	new Ajax.Updater($('div_profilBeneficiaire'),"edit_entry_beneficiaire.php",{method: 'get', parameters: $('beneficiaire').serialize(true)+'&'+'identifiant_beneficiaire=<?php echo $beneficiaire; ?>'});
 }
-//MAJ Hugo FORESTIER - Mise à jour des fonctions précedentes (prototype) en jQuery
+//MAJ Hugo FORESTIER - Mise Ã  jour des fonctions prÃ©cedentes (prototype) en jQuery
 //27/05/2013
 jQuery.ajax({
 	type: 'GET',
-  url: 'edit_entry_champs_add.php', // La requete est envoyé vers edit_entry_champs_add.php
+  url: 'edit_entry_champs_add.php', // La requete est envoyÃ© vers edit_entry_champs_add.php
   data: {
-	areas:'<?php echo $area; ?>', // Les donnees envoyés au serveur au format JSON
+	areas:'<?php echo $area; ?>', // Les donnees envoyÃ©s au serveur au format JSON
 	id: '<?php echo $id; ?>',
 	room: '<?php echo $room; ?>',
 },
@@ -469,7 +469,7 @@ error: function(data){
 	alert('Erreur lors de l execution de la commande AJAX pour le edit_entry_beneficiaire.php ');
 }
 });
-//Vérification de la forme
+//VÃ©rification de la forme
 // lors d'un clic dans une option
 function check_1 ()
 {
@@ -520,7 +520,7 @@ function check_3 ()
 {
 	document.forms["main"].rep_type[3].checked=true;
 }
-// lors d'un clic dans la liste des bénéficiaires
+// lors d'un clic dans la liste des bÃ©nÃ©ficiaires
 function check_4 ()
 {
 	menu = document.getElementById('menu4');
@@ -552,7 +552,7 @@ function check_4 ()
 		}
 	}
 }
-// lors de l'ouverture et la fermeture de la périodicité
+// lors de l'ouverture et la fermeture de la pÃ©riodicitÃ©
 function check_5 ()
 {
 	var menu; var menup; var menu2;
@@ -593,24 +593,24 @@ function Save_entry ()
 {
 	setCookie('Grr_entry',getFormString(document.forms["main"],true));
 }
-//Hugo - Fonction de validation et sauvegarde de la réservation
+//Hugo - Fonction de validation et sauvegarde de la rÃ©servation
 function validate_and_submit ()
 {
-//Si le nom du bénéficaire est fournis on execute :
+//Si le nom du bÃ©nÃ©ficaire est fournis on execute :
 if (document.forms["main"].benef_ext_nom)
 {
-//Si "(personne extérieure)" est selectionné et que le champ "nom du bénéficiaire" est vide on affiche une alerte et on retourne false
+//Si "(personne extÃ©rieure)" est selectionnÃ© et que le champ "nom du bÃ©nÃ©ficiaire" est vide on affiche une alerte et on retourne false
 if ((document.forms["main"].beneficiaire.options[0].selected) &&(document.forms["main"].benef_ext_nom.value == ""))
 {
 	alert ( "<?php echo get_vocab('you_have_not_entered').":" . '\n' . strtolower(get_vocab('nom beneficiaire')) ?>");
 	return false;
 }
 }
-//Si on a définis que le remplissage de la description brève est obligatoire, on execute
+//Si on a dÃ©finis que le remplissage de la description brÃ¨ve est obligatoire, on execute
 <?php if (getSettingValue("remplissage_description_breve")=='1')
 {
 	?>
-//Si le champs "description brève" est vide on affiche une alerte et on retourne false
+//Si le champs "description brÃ¨ve" est vide on affiche une alerte et on retourne false
 if (document.forms["main"].name.value == "")
 {
 	alert ( "<?php echo get_vocab('you_have_not_entered') . '\n' . get_vocab('brief_description') . '\n' ?>");
@@ -622,16 +622,16 @@ if (document.forms["main"].name.value == "")
   // Boucle sur tous les areas
 foreach ($allareas_id as $idtmp)
 {
-	   // On récupère les infos sur le champ add
+	   // On rÃ©cupÃ¨re les infos sur le champ add
 	$overload_fields = mrbsOverloadGetFieldslist($idtmp);
 	  // Boucle sur tous les champs additionnels de l'area
 	  //$overload_fiel est un "array"
-	  //$fieldname : nom des champs input (brève description, description complète...)
+	  //$fieldname : nom des champs input (brÃ¨ve description, description complÃ¨te...)
 	foreach ($overload_fields as $fieldname=>$fieldtype)
 	{
 		if ($overload_fields[$fieldname]["obligatoire"] == 'y')
 		{
-		// Le champ est obligatoire : si le tableau est affiché (area sélectionné) et que le champ est vide alors on affiche un message d'avertissement
+		// Le champ est obligatoire : si le tableau est affichÃ© (area sÃ©lectionnÃ©) et que le champ est vide alors on affiche un message d'avertissement
 			if ($overload_fields[$fieldname]["type"] != "list")
 				echo "if ((document.getElementById('id_".$idtmp."_".$overload_fields[$fieldname]["id"]."')) && (document.forms[\"main\"].addon_".$overload_fields[$fieldname]["id"].".value == \"\")) {\n";
 			else
@@ -639,7 +639,7 @@ foreach ($allareas_id as $idtmp)
 			echo "alert (\"".$vocab["required"]."\");\n";
 			echo "return false\n}\n";
 		}
-		// Si le champ est numérique....
+		// Si le champ est numÃ©rique....
 		if ($overload_fields[$fieldname]["type"] == "numeric")
 		{
 			echo "if (isNaN((document.getElementById('id_".$idtmp."_".$overload_fields[$fieldname]["id"]."')) && (document.forms[\"main\"].addon_".$overload_fields[$fieldname]["id"].".value))) {\n";
@@ -698,7 +698,7 @@ return true;
 </script>
 <?php
 
-//$id = 0 : c'est une nouvelle réservation
+//$id = 0 : c'est une nouvelle rÃ©servation
 if ($id==0)
 //$A = "ajouter une reservation"
 	$A = get_vocab("addentry");
@@ -706,25 +706,25 @@ else
 
 
 	if ($edit_type == "series")
-	//si le type est "series" on affiche "Modifier la périodicité (et toutes les réservations associées)"
+	//si le type est "series" on affiche "Modifier la pÃ©riodicitÃ© (et toutes les rÃ©servations associÃ©es)"
 		$A = get_vocab("editseries").grr_help("aide_grr_periodicite");
 	else
 
-	//sinon si $copy est definis dans l'url on affiche "Copier cette réservation"
+	//sinon si $copy est definis dans l'url on affiche "Copier cette rÃ©servation"
 		if (isset($_GET["copy"])) $A = get_vocab("copyentry");
-		//sinon on affiche "Modifier cette réservation"
+		//sinon on affiche "Modifier cette rÃ©servation"
 	else $A = get_vocab("editentry");
 
-$B = get_vocab("namebooker"); //Brève description
+$B = get_vocab("namebooker"); //BrÃ¨ve description
 if (getSettingValue("remplissage_description_breve")=='1') {
 	$B .= " *";
 	$affiche_mess_asterisque=true;
 }
 $B .= get_vocab("deux_points");
 $C = htmlspecialchars($breve_description);
-$D = get_vocab("fulldescription"); //description complète
+$D = get_vocab("fulldescription"); //description complÃ¨te
 $E = htmlspecialchars ( $description );
-$F = get_vocab("date").get_vocab("deux_points"); //Début de la réservation
+$F = get_vocab("date").get_vocab("deux_points"); //DÃ©but de la rÃ©servation
 
 //Determine l'ID de "area" de la "room"
 $sql = "select area_id from ".TABLE_PREFIX."_room where id=$room_id";
@@ -732,7 +732,7 @@ $res = grr_sql_query($sql);
 $row = grr_sql_row($res, 0);
 $area_id = $row[0];
 
-// Détermine si la ressource est moderée
+// DÃ©termine si la ressource est moderÃ©e
 $moderate = grr_sql_query1("select moderate from ".TABLE_PREFIX."_room where id='".$room_id."'");
 echo "<h2>$A</h2>\n";
 if ($moderate)
@@ -798,7 +798,7 @@ echo "<form id=\"main\" action=\"edit_entry_handler.php\" method=\"get\">\n";
 					if ($res2)
 					{
 						$len = grr_sql_count($res2); // nombre de ressources
-						print "roomsObj.size=".min($longueur_liste_ressources_max,$len).";"; // calcul de la longueur de la liste à afficher.
+						print "roomsObj.size=".min($longueur_liste_ressources_max,$len).";"; // calcul de la longueur de la liste Ã  afficher.
 						for ($j = 0; ($row2 = grr_sql_row($res2, $j)); $j++)
 							print "        roomsObj.options[$j] = new Option(\"".str_replace('"','\\"',$row2[1])."\",".$row2[0] .")\n";
 						// select the first entry by default to ensure
@@ -815,15 +815,15 @@ echo "<form id=\"main\" action=\"edit_entry_handler.php\" method=\"get\">\n";
 }
 </script>
 <?php
-// On construit un tableau pour afficher la partie réservation hors périodicité à gauche et la partie périodicité à droite
+// On construit un tableau pour afficher la partie rÃ©servation hors pÃ©riodicitÃ© Ã  gauche et la partie pÃ©riodicitÃ© Ã  droite
 echo "<table width=\"100%\" border=\"1\"><tr>\n";
-// Première colonne (sans périodicité)
+// PremiÃ¨re colonne (sans pÃ©riodicitÃ©)
 echo "<td style=\"width:50%; vertical-align:top;\">\n";
-// Début du tableau de la colonne de gauche
+// DÃ©but du tableau de la colonne de gauche
 echo "<table width=\"100%\" border=\"0\" class=\"EditEntryTable\">\n";
-// Pour pouvoir réserver au nom d'un autre utilisateur il faut :
-// - avoir le droit spécifique sur cette ressource ET
-// - dans le cas d'une réservation existante, il faut être propriétaire de la réservation
+// Pour pouvoir rÃ©server au nom d'un autre utilisateur il faut :
+// - avoir le droit spÃ©cifique sur cette ressource ET
+// - dans le cas d'une rÃ©servation existante, il faut Ãªtre propriÃ©taire de la rÃ©servation
 if (((authGetUserLevel(getUserName(), -1, "room") >= $qui_peut_reserver_pour) || (authGetUserLevel(getUserName(), $area, "area") >= $qui_peut_reserver_pour)) && (($id == 0) || (($id!=0) && (authGetUserLevel(getUserName(),$room) > 2) )))
 {
 	$flag_qui_peut_reserver_pour = "yes";
@@ -837,7 +837,7 @@ if (((authGetUserLevel(getUserName(), -1, "room") >= $qui_peut_reserver_pour) ||
 		for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 		{
 			echo "<option value=\"".$row[0]."\" ";
-				//Récupère le cookie par defaut
+				//RÃ©cupÃ¨re le cookie par defaut
 			if ($id == 0 && isset($_COOKIE['beneficiaire_default']))
 				$cookie = $_COOKIE['beneficiaire_default'];
 			else
@@ -847,13 +847,13 @@ if (((authGetUserLevel(getUserName(), -1, "room") >= $qui_peut_reserver_pour) ||
 			echo ">$row[1] $row[2]</option>";
 		}
 	}
-	// Si le bénéficiaire actuellement enregistré n'est plus dans la base,
+	// Si le bÃ©nÃ©ficiaire actuellement enregistrÃ© n'est plus dans la base,
 	$test = grr_sql_query1("SELECT login FROM ".TABLE_PREFIX."_utilisateurs WHERE login='".$beneficiaire."'");
 	if (($test == -1) && ($beneficiaire != ''))
 		echo "<option value=\"-1\" selected=\"selected\" >".get_vocab("utilisateur_inconnu").$beneficiaire.")</option>\n";
 echo "</select>&nbsp;<input type=\"button\" value=\"".get_vocab("definir par defaut")."\" onclick=\"setdefault('beneficiaire_default',document.getElementById('main').beneficiaire.options[document.getElementById('main').beneficiaire.options.selectedIndex].value)\" />";
 echo "<div id=\"div_profilBeneficiaire\">";
-	// Ici, on insère des données avec l'ajax concernant des précisions sur le bénéficiaire sélectionné dans la liste "Réservation au nom de".
+	// Ici, on insÃ¨re des donnÃ©es avec l'ajax concernant des prÃ©cisions sur le bÃ©nÃ©ficiaire sÃ©lectionnÃ© dans la liste "RÃ©servation au nom de".
 echo "</div>";
 if (isset($statut_beneficiaire))
 	echo $statut_beneficiaire;
@@ -877,18 +877,18 @@ echo "<tr><td class=\"E\"><b>$B</b></td></tr>
 <tr><td class=\"E\"><b>$D</b></td></tr>
 <tr><td class=\"TL\"><textarea name=\"description\" rows=\"2\" cols=\"80\">$E</textarea></td></tr>";
 echo "<tr><td><div id=\"div_champs_add\">";
-// Ici, on insère tous ce qui concerne les champs additionnels avec de l'ajax !
+// Ici, on insÃ¨re tous ce qui concerne les champs additionnels avec de l'ajax !
 echo "</div>";
 echo "</td></tr>\n";
-// Début réservation
+// DÃ©but rÃ©servation
 echo "<tr><td class=\"E\"><b>$F</b></td></tr>\n";
 echo "<tr><td class=\"CL\">";
 echo "<table border=\"0\"><tr><td>";
-//MAJ Hugo FORESTIER - Appel de la fonction jQuery_DatePicker pour la date de début
+//MAJ Hugo FORESTIER - Appel de la fonction jQuery_DatePicker pour la date de dÃ©but
 //17/05/2013
 jQuery_DatePicker('start');
 echo "</td><td class=\"E\"><b>";
-// Heure ou créneau de début de réservation
+// Heure ou crÃ©neau de dÃ©but de rÃ©servation
 if ($enable_periods=='y')
 {
 	echo get_vocab("period")."</b>\n";
@@ -908,24 +908,24 @@ else
 //28/05/2013
 	echo get_vocab("time")."</b>";
 
-//MAJ Hugo FORESTIER - Mise en place du isset dans le cas ou on modifie une réservation
+//MAJ Hugo FORESTIER - Mise en place du isset dans le cas ou on modifie une rÃ©servation
 //05/06/2013
 	if (isset ($_GET['id']))
 	{
-//MAJ David VOUE Ajout du paramètre $resolution
+//MAJ David VOUE Ajout du paramÃ¨tre $resolution
 //30/01/2013
-//MAJ David VOUE - Rangement des paramètres
+//MAJ David VOUE - Rangement des paramÃ¨tres
 //31/01/2013
 //jQuery_TimePicker ('start','',$start_hour,$start_min,$resolution,'','');
 		jQuery_TimePicker ('start','','','',$start_hour,$start_min,$resolution);
-//MAJ David VOUE - Rangement des paramètres
+//MAJ David VOUE - Rangement des paramÃ¨tres
 //31/01/2013
 //jQuery_TimePicker ('end','end_','','',$end_hour,$end_min,$resolution);
 	}
-//Le cas ou on creer une réservation ($start_hour, $start_min, $end_hour, $end_min ne sont donc pas definis)
+//Le cas ou on creer une rÃ©servation ($start_hour, $start_min, $end_hour, $end_min ne sont donc pas definis)
 	else
 	{
-//MAJ David VOUE - Ajout du paramètre $resolution
+//MAJ David VOUE - Ajout du paramÃ¨tre $resolution
 //30/01/2013
 		jQuery_TimePicker ('start','','','','','',$resolution);
 //jQuery_TimePicker ('end','end_','','','','',$resolution);
@@ -942,7 +942,7 @@ echo "</td></tr></table>\n";
 echo "</td></tr>";
 if ($type_affichage_reser == 0)
 {
-  // Durée
+  // DurÃ©e
 	echo "<tr><td class=\"E\"><b>".get_vocab("duration")."</b></td></tr>\n";
   //echo "<tr><td class=\"CL\"><input name=\"duration\" size=\"7\" value=\"".$duration."\" />";
 	echo "<tr><td class=\"CL\">";
@@ -952,7 +952,7 @@ if ($type_affichage_reser == 0)
 		$units = array("periods", "days");
 	else
 	{
-		//Test de la durée max de réservation
+		//Test de la durÃ©e max de rÃ©servation
 		$duree_max_resa_area = grr_sql_query1("select duree_max_resa_area from ".TABLE_PREFIX."_area where id='".$area."'");
 		if ($duree_max_resa_area < 0)
 			$units = array("minutes", "hours", "days", "weeks");
@@ -972,8 +972,8 @@ if ($type_affichage_reser == 0)
 		echo ">".get_vocab($unit)."</option>\n";
 	}
 	echo "</select>\n";
-	// Affichage du créneau "journée entière"
-	// Il reste un bug lorsque l'heure finale dépasse 24 h
+	// Affichage du crÃ©neau "journÃ©e entiÃ¨re"
+	// Il reste un bug lorsque l'heure finale dÃ©passe 24 h
 	//A VOIR
 	$fin_jour = $eveningends;
 	$minute = $resolution/60;
@@ -996,7 +996,7 @@ if ($type_affichage_reser == 0)
 }
 else
 {
-  // Date de fin de réservation
+  // Date de fin de rÃ©servation
 	echo "<tr><td class=\"E\"><b>".get_vocab("fin_reservation").get_vocab("deux_points")."</b></td></tr>\n";
 	echo "<tr><td class=\"CL\" >";
 	echo "<table border=\"0\"><tr><td>\n";
@@ -1004,7 +1004,7 @@ else
 	//17/05/2013
 	jQuery_DatePicker('end');
 	echo "</td>";
-	//Heure ou créneau de fin de réservation
+	//Heure ou crÃ©neau de fin de rÃ©servation
 	if ($enable_periods == 'y')
 	{
 		echo "<td class=\"E\"><b>".get_vocab("period")."</b></td>\n";
@@ -1024,13 +1024,13 @@ else
 		//MAJ Hugo FORESTIER - Mise en place du TimePicker
 		//28/05/2013
 		echo "<td class=\"E\"><b>".get_vocab("time")."</b><td class=\"CL\">";
-		//MAJ Hugo FORESTIER - Mise en place du isset dans le cas ou on modifie une réservation
+		//MAJ Hugo FORESTIER - Mise en place du isset dans le cas ou on modifie une rÃ©servation
 		//05/06/2013
-		//MAJ David VOUE - Ajout du paramètre $resolution
+		//MAJ David VOUE - Ajout du paramÃ¨tre $resolution
 		//30/01/2013
 		if (isset ($_GET['id']))
 			jQuery_TimePicker ('end', 'end_', '', '', $end_hour, $end_min, $resolution);
-		//Le cas ou on creer une réservation ($start_hour, $start_min, $end_hour, $end_min ne sont donc pas definis)
+		//Le cas ou on creer une rÃ©servation ($start_hour, $start_min, $end_hour, $end_min ne sont donc pas definis)
 		else
 			jQuery_TimePicker ('end', 'end_', '', '', '', '', $resolution);
 		if (!$twentyfourhour_format)
@@ -1044,7 +1044,7 @@ else
 	}
 	echo "</tr></table>\n</td></tr>";
 }
-// Option de réservation
+// Option de rÃ©servation
 if (($delais_option_reservation > 0) && (($modif_option_reservation == 'y') || ((($modif_option_reservation == 'n') && ($option_reservation != -1)) ) ))
 {
 	$day   = date("d");
@@ -1137,7 +1137,7 @@ $sql .= " order by order_display,room_name";
 $res = grr_sql_query($sql);
 $len = grr_sql_count($res);
 echo "<tr><td class=\"CL\" style=\"vertical-align:top;\"><table border=\"0\"><tr><td><select name=\"rooms[]\" size=\"".min($longueur_liste_ressources_max,$len)."\" multiple=\"multiple\">";
-//Sélection de la "room" dans l'"area"
+//SÃ©lection de la "room" dans l'"area"
 if ($res)
 {
 	for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
@@ -1150,10 +1150,10 @@ if ($res)
 echo "</select></td><td>".get_vocab("ctrl_click")."</td></tr></table>\n";
 echo "</td></tr>\n";
 echo "<tr><td><div id=\"div_types\">";
-// Ici, on insère tous ce qui concerne les types avec de l'ajax !
+// Ici, on insÃ¨re tous ce qui concerne les types avec de l'ajax !
 echo "</div></td></tr>";
 echo "<tr><td class=\"E\">";
-// au chargement de la page, on affiche les champs additionnels et les types après que l'id 'areas' ait été définie.
+// au chargement de la page, on affiche les champs additionnels et les types aprÃ¨s que l'id 'areas' ait Ã©tÃ© dÃ©finie.
 ?>
 <script type="text/javascript" >
 	insertChampsAdd();
@@ -1168,31 +1168,31 @@ echo "&nbsp;</td></tr>\n";
 echo "</table>\n";
 // Fin de la colonne de gauche
 echo "</td>\n";
-// Début colonne de droite
+// DÃ©but colonne de droite
 echo "<td style=\"vertical-align:top;\">\n";
-// Début tableau de la colonne de droite
+// DÃ©but tableau de la colonne de droite
 echo "<table width=\"100%\" border=\"0\">";
-// on récupère la liste des domaines et on génère tous les formulaires.
+// on rÃ©cupÃ¨re la liste des domaines et on gÃ©nÃ¨re tous les formulaires.
 $sql = "select id from ".TABLE_PREFIX."_area;";
 $res = grr_sql_query($sql);
-// Dans le cas d'une nouvelle réservation, ou bien si on édite une réservation existante
+// Dans le cas d'une nouvelle rÃ©servation, ou bien si on Ã©dite une rÃ©servation existante
 // *****************************************
-// Edition de la partie périodique
+// Edition de la partie pÃ©riodique
 //
 // *****************************************
 echo "\n<!-- ************* Periodic edition ***************** -->\n";
 // Tableau des "une semaine sur n"
 $weeklist = array("unused","every week","week 1/2","week 1/3","week 1/4","week 1/5");
 /*
-Explications sur les différents cas de périodicité:
-$rep_type = 0 -> Aucune périodicité
-$rep_type = 1 -> Chaque jour (sélectionné)
-$rep_type = 2 -> "Une semaine sur n". La valeur "n" est alors enregistrée dans $rep_num_weeks
-$rep_type = 3 -> Chaque mois, la même date
-$rep_type = 5 -> Chaque mois, même jour de la semaine
-Attention : dans le formualaire de réservation, les deux cas $rep_type = 3 et $rep_type = 5
-sont regroupés dans une liste déroulante correspondant au cas $i = 3 ci-dessous
-$rep_type = 4 -> Chaque année, même date
+Explications sur les diffÃ©rents cas de pÃ©riodicitÃ©:
+$rep_type = 0 -> Aucune pÃ©riodicitÃ©
+$rep_type = 1 -> Chaque jour (sÃ©lectionnÃ©)
+$rep_type = 2 -> "Une semaine sur n". La valeur "n" est alors enregistrÃ©e dans $rep_num_weeks
+$rep_type = 3 -> Chaque mois, la mÃªme date
+$rep_type = 5 -> Chaque mois, mÃªme jour de la semaine
+Attention : dans le formualaire de rÃ©servation, les deux cas $rep_type = 3 et $rep_type = 5
+sont regroupÃ©s dans une liste dÃ©roulante correspondant au cas $i = 3 ci-dessous
+$rep_type = 4 -> Chaque annÃ©e, mÃªme date
 $rep_type = 6 -> Jours cycle
 */
 if (($edit_type == "series") || (isset($flag_periodicite)))
@@ -1201,27 +1201,27 @@ if (($edit_type == "series") || (isset($flag_periodicite)))
 	echo "<tr><td><table border=\"0\" style=\"display:none\" id=\"menu1\" width=\"100%\">\n ";
 	echo "<tr><td class=\"F\"><b>".get_vocab("rep_type")."</b></td></tr><tr><td class=\"CL\">\n";
 	echo "<table border=\"0\"  width=\"100%\" >\n";
-	//Vérifie si le jour cycle est activé ou non
+	//VÃ©rifie si le jour cycle est activÃ© ou non
 	if (getSettingValue("jours_cycles_actif") == "Oui")
-		$max = 7; //$max = 7 Pour afficher l'option Jour cycle dans les péridocidités
+		$max = 7; //$max = 7 Pour afficher l'option Jour cycle dans les pÃ©ridociditÃ©s
 	else
-		$max = 6; //max = 6 Pour ne pas afficher l'option Jour cycle dans les péridocidités
+		$max = 6; //max = 6 Pour ne pas afficher l'option Jour cycle dans les pÃ©ridociditÃ©s
 	for($i = 0; $i < $max ; $i++)
 	{
-	  if ($i != 5) // Le cas rep_type = 5 (chaque mois, même jour de la semaine)  est traité plus bas comme un sous cas de $i = 3
+	  if ($i != 5) // Le cas rep_type = 5 (chaque mois, mÃªme jour de la semaine)  est traitÃ© plus bas comme un sous cas de $i = 3
 	  {
 	  	echo "<tr><td><input name=\"rep_type\" type=\"radio\" value=\"" . $i . "\"";
 	  	if ($i == $rep_type)
 	  		echo " checked=\"checked\"";
-		// si rep_type = 5 (chaque mois, même jour de la semaine), on sélectionne l'option 3
+		// si rep_type = 5 (chaque mois, mÃªme jour de la semaine), on sÃ©lectionne l'option 3
 	  	if (($i == 3) && ($rep_type == 5))
 	  		echo " checked=\"checked\"";
 	  	echo " onclick=\"check_1()\" /></td><td>";
-		// Dans le cas des semaines et des mois, on affichera plutôt un menu déroulant
+		// Dans le cas des semaines et des mois, on affichera plutÃ´t un menu dÃ©roulant
 	  	if (($i != 2) && ($i != 3))
 	  		echo get_vocab("rep_type_$i");
 	  	echo "\n";
-		// Dans le cas d'une périodicité semaine, on précise toutes les n-semaines
+		// Dans le cas d'une pÃ©riodicitÃ© semaine, on prÃ©cise toutes les n-semaines
 	  	if ($i == '2')
 	  	{
 	  		echo "<select name=\"rep_num_weeks\" size=\"1\" onfocus=\"check_2()\" onclick=\"check_2()\">\n";
@@ -1252,20 +1252,20 @@ if (($edit_type == "series") || (isset($flag_periodicite)))
 	  }
 	}
 	echo "</table>\n\n";
-	echo "<!-- ***** Fin de périodidité ***** -->\n";
+	echo "<!-- ***** Fin de pÃ©riodiditÃ© ***** -->\n";
 	echo "</td></tr>";
 	//echo "\n<tr><td>\n";
 	echo "<tr><td class=\"F\"><b>".get_vocab("rep_end_date")."</b></td></tr>\n";
 	echo "<tr><td class=\"CL\">";
-	//Appel de la fonction jQuery_DatePicker pour la date de fin de répétition */
+	//Appel de la fonction jQuery_DatePicker pour la date de fin de rÃ©pÃ©tition */
 	//17/05/2013
 	jQuery_DatePicker('rep_end');
 	echo "</td></tr></table>\n";
-	// Tableau des jours de la semaine à cocher si on choisit une périodicité "une semaine sur n"
+	// Tableau des jours de la semaine Ã  cocher si on choisit une pÃ©riodicitÃ© "une semaine sur n"
 	echo "<table style=\"display:none\" id=\"menu2\" width=\"100%\">\n";
 	echo "<tr><td class=\"F\"><b>".get_vocab("rep_rep_day")."</b></td></tr>\n";
 	echo "<tr><td class=\"CL\">";
-	//Affiche les checkboxes du jour en fonction de la date de début de semaine.
+	//Affiche les checkboxes du jour en fonction de la date de dÃ©but de semaine.
 	for ($i = 0; $i < 7; $i++)
 	{
 		$wday = ($i + $weekstarts) % 7;
@@ -1274,7 +1274,7 @@ if (($edit_type == "series") || (isset($flag_periodicite)))
 		echo " onclick=\"check_1()\" />" . day_name($wday) . "\n";
 	}
 	echo "</td></tr>\n</table>\n";
-	// Tableau des jours cycle à cocher si on choisit une périodicité "Jours Cycle"
+	// Tableau des jours cycle Ã  cocher si on choisit une pÃ©riodicitÃ© "Jours Cycle"
 	echo "<table style=\"display:none\" id=\"menuP\" width=\"100%\">\n";
 	echo "<tr><td class=\"F\"><b>Jours/Cycle</b></td></tr>\n";
 	echo "<tr><td class=\"CL\">";
@@ -1295,7 +1295,7 @@ if (($edit_type == "series") || (isset($flag_periodicite)))
 }
 else
 {
-	// On affiche les informations liées à la périodicité
+	// On affiche les informations liÃ©es Ã  la pÃ©riodicitÃ©
 	echo "<tr><td class=\"E\"><b>".get_vocab('periodicite_associe').get_vocab('deux_points')."</b></td></tr>\n";
 	if ($rep_type == 2)
 		$affiche_period = get_vocab($weeklist[$rep_num_weeks]);
@@ -1308,7 +1308,7 @@ else
 		if ($rep_type == 2)
 		{
 			$nb = 0;
-			//Affiche les checkboxes du jour en fonction de la date de début de semaine.
+			//Affiche les checkboxes du jour en fonction de la date de dÃ©but de semaine.
 			for ($i = 0; $i < 7; $i++)
 			{
 				$wday = ($i + $weekstarts) % 7;
@@ -1427,7 +1427,7 @@ if ($id != 0)
 		echo "check_4();";
 	if (($id <> "") && (!isset($flag_periodicite)))
 		echo "clicMenu('1'); check_5();\n";
-	// Si Err=yes il faut recharger la saisie après 1/2 seconde d'attente
+	// Si Err=yes il faut recharger la saisie aprÃ¨s 1/2 seconde d'attente
 	if (isset($Err) && $Err=="yes")
 		echo "timeoutID = window.setTimeout(\"Load_entry();check_5();\",500);\n";
 	?>

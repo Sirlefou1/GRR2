@@ -1,9 +1,9 @@
 <?php
 /**
  * year.php
- * Interface d'accueil avec affichage par mois sur plusieurs mois des réservation de toutes les ressources d'un domaine
+ * Interface d'accueil avec affichage par mois sur plusieurs mois des rÃ©servation de toutes les ressources d'un domaine
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2009-12-02 20:11:08 $
+ * DerniÃ¨re modification : $Date: 2009-12-02 20:11:08 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -92,10 +92,10 @@ if (!grr_resumeSession()) {
 // Construction des identifiants de la ressource $room, du domaine $area, du site $id_site
 Definition_ressource_domaine_site();
 
-// Récupération des données concernant l'affichage du planning du domaine
+// RÃ©cupÃ©ration des donnÃ©es concernant l'affichage du planning du domaine
 get_planning_area_values($area);
 
-// Paramètres langage
+// ParamÃ¨tres langage
 include "include/language.inc.php";
 
 // On affiche le lien "format imprimable" en bas de la page
@@ -186,10 +186,10 @@ function cmp3($a, $b)
     return "> ";
 }
 
-// On vérifie une fois par jour si le délai de confirmation des réservations est dépassé
-// Si oui, les réservations concernées sont supprimées et un mail automatique est envoyé.
-// On vérifie une fois par jour que les ressources ont été rendue en fin de réservation
-// Si non, une notification email est envoyée
+// On vÃ©rifie une fois par jour si le dÃ©lai de confirmation des rÃ©servations est dÃ©passÃ©
+// Si oui, les rÃ©servations concernÃ©es sont supprimÃ©es et un mail automatique est envoyÃ©.
+// On vÃ©rifie une fois par jour que les ressources ont Ã©tÃ© rendue en fin de rÃ©servation
+// Si non, une notification email est envoyÃ©e
 if (getSettingValue("verif_reservation_auto")==0) {
     verify_confirm_reservation();
     verify_retard_reservation();
@@ -275,7 +275,7 @@ $all_day = preg_replace("/ /", "&nbsp;", get_vocab("all_day"));
 # row[4] = beneficiaire of the booking
 # row[5] = Nom de la ressource
 # row[6] = statut
-# row[7] = Description complète
+# row[7] = Description complÃ¨te
 $sql = "SELECT start_time, end_time,".TABLE_PREFIX."_entry.id, name, beneficiaire, room_name, statut_entry, ".TABLE_PREFIX."_entry.description, ".TABLE_PREFIX."_entry.option_reservation, ".TABLE_PREFIX."_room.delais_option_reservation, type, ".TABLE_PREFIX."_entry.moderate, beneficiaire_ext
    FROM ".TABLE_PREFIX."_entry inner join ".TABLE_PREFIX."_room on ".TABLE_PREFIX."_entry.room_id=".TABLE_PREFIX."_room.id
    WHERE (start_time <= $month_end AND end_time > $month_start and area_id='".$area."')
@@ -290,7 +290,7 @@ $res = grr_sql_query($sql);
 if (! $res) echo grr_sql_error();
 else {
 
-/* Permet d'afficher aucune réservation
+/* Permet d'afficher aucune rÃ©servation
 if (grr_sql_count($res) == 0) {
     echo "<div class=\"titre_planning\"><h3>".get_vocab("nothing_found")."</h3></div></body></html>";
     die();
@@ -432,13 +432,13 @@ echo "<table border=\"2\">\n";
 $sql = "select room_name, capacity, id, description from ".TABLE_PREFIX."_room where area_id=$area order by order_display,room_name";
 $res = grr_sql_query($sql);
 
-// Début affichage de la première ligne
+// DÃ©but affichage de la premiÃ¨re ligne
 echo "<tr>";
 tdcell("cell_hours");
 echo "&nbsp;</td>\n";
-//Corrige un bug avec certains fuseaux horaires (par exemple GMT-05:00 celui du Québec) :
-//plusieurs mois débutent par le dernier jours du mois précédent.
-//En changeant "gmmktime" par "mktime" le bug est corrigé
+//Corrige un bug avec certains fuseaux horaires (par exemple GMT-05:00 celui du QuÃ©bec) :
+//plusieurs mois dÃ©butent par le dernier jours du mois prÃ©cÃ©dent.
+//En changeant "gmmktime" par "mktime" le bug est corrigÃ©
 //$t2=gmmktime(0,0,0,$month_num,1,$year_num);
 $t2=mktime(0,0,0,$month_num,1,$year_num);
 for ($k = 0; $k<$days_in_month; $k++) {
@@ -450,7 +450,7 @@ for ($k = 0; $k<$days_in_month; $k++) {
     $temp = mktime(0,0,0,$cmonth,$cday,$cyear);
 	$jour_cycle = grr_sql_query1("SELECT Jours FROM ".TABLE_PREFIX."_calendrier_jours_cycle WHERE DAY='$temp'");
     $t2 += 86400;
-    // On inscrit le numéro du mois dans la deuxième ligne
+    // On inscrit le numÃ©ro du mois dans la deuxiÃ¨me ligne
     if ($display_day[$cweek]==1) {
         echo tdcell("cell_hours");
         echo "<div><a title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day"))."\"   href=\"day.php?year=$year_num&amp;month=$month_num&amp;day=$cday&amp;area=$area\">$name_day</a>";
@@ -466,25 +466,25 @@ for ($k = 0; $k<$days_in_month; $k++) {
     }
 }
 echo "</tr>";
-// Fin affichage de la première ligne
+// Fin affichage de la premiÃ¨re ligne
 
 $li=0;
 for ($ir = 0; ($row = grr_sql_row($res, $ir)); $ir++)
 {
-   // calcul de l'accès à la ressource en fonction du niveau de l'utilisateur
+   // calcul de l'accÃ¨s Ã  la ressource en fonction du niveau de l'utilisateur
    $verif_acces_ressource = verif_acces_ressource(getUserName(), $row[2]);
    if ($verif_acces_ressource) {  // on n'affiche pas toutes les ressources
 
-    // Calcul du niveau d'accès aux fiche de réservation détaillées des ressources
+    // Calcul du niveau d'accÃ¨s aux fiche de rÃ©servation dÃ©taillÃ©es des ressources
     $acces_fiche_reservation = verif_acces_fiche_reservation(getUserName(), $row[2]);
 
     echo "<tr>";
     tdcell("cell_hours");
     echo htmlspecialchars($row[0]) ."</td>\n";
     $li++;
-    //Corrige un bug avec certains fuseaux horaires (par exemple GMT-05:00 celui du Québec) :
-    //plusieurs mois débutent par le dernier jours du mois précédent.
-    //En changeant "gmmktime" par "mktime" le bug est corrigé
+    //Corrige un bug avec certains fuseaux horaires (par exemple GMT-05:00 celui du QuÃ©bec) :
+    //plusieurs mois dÃ©butent par le dernier jours du mois prÃ©cÃ©dent.
+    //En changeant "gmmktime" par "mktime" le bug est corrigÃ©
     //$t2=gmmktime(0,0,0,$month_num,1,$year_num);
     $t2=mktime(0,0,0,$month_num,1,$year_num);
     for ($k = 0; $k<$days_in_month; $k++)
@@ -492,7 +492,7 @@ for ($ir = 0; ($row = grr_sql_row($res, $ir)); $ir++)
         $cday = date("j", $t2);
         $cweek = date("w", $t2);
         $t2 += 86400;
-       if ($display_day[$cweek]==1) { // Début condition "on n'affiche pas tous les jours de la semaine"
+       if ($display_day[$cweek]==1) { // DÃ©but condition "on n'affiche pas tous les jours de la semaine"
         echo "<td valign=\"top\" class=\"cell_month\">&nbsp;\n";
     if (est_hors_reservation(mktime(0,0,0,$month_num,$cday,$year_num),$area)) {
             echo "<div class=\"empty_cell\">";
@@ -523,9 +523,9 @@ for ($ir = 0; ($row = grr_sql_row($res, $ir)); $ir++)
 
 
            if ($d[$cday][$cmonth][$cyear]["res"][$i]!='-') echo "&nbsp;<img src=\"img_grr/buzy.png\" alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("ressource actuellement empruntee")."\" width=\"20\" height=\"20\" class=\"image\" />&nbsp;\n";
-           // si la réservation est à confirmer, on le signale
+           // si la rÃ©servation est Ã  confirmer, on le signale
              if ((isset($d[$cday][$cmonth][$cyear]["option_reser"][$i])) and ($d[$cday][$cmonth][$cyear]["option_reser"][$i]!=-1)) echo "&nbsp;<img src=\"img_grr/small_flag.png\" alt=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."\" title=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."&nbsp;".time_date_string_jma($d[$cday][$cmonth][$cyear]["option_reser"][$i],$dformat)."\" width=\"20\" height=\"20\" class=\"image\" />&nbsp;\n";
-           // si la réservation est à modérer, on le signale
+           // si la rÃ©servation est Ã  modÃ©rer, on le signale
            if ((isset($d[$cday][$cmonth][$cyear]["moderation"][$i])) and ($d[$cday][$cmonth][$cyear]["moderation"][$i]==1))
                echo "&nbsp;<img src=\"img_grr/flag_moderation.png\" alt=\"".get_vocab("en_attente_moderation")."\" title=\"".get_vocab("en_attente_moderation")."\" class=\"image\" />&nbsp;\n";
 

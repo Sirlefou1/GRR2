@@ -7,7 +7,7 @@
 
 //<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 
-//Création du popup
+//CrÃ©ation du popup
 $(document).ready(function() {
     //Lorsque vous cliquez sur un lien de la classe poplight et que le href commence par #
 
@@ -15,10 +15,10 @@ $(document).ready(function() {
         var popID = $(this).attr('rel'); //Trouver la pop-up correspondante
         var popURL = $(this).attr('href'); //Retrouver la largeur dans le href
 
-        //Récupérer les variables depuis le lien
+        //RÃ©cupÃ©rer les variables depuis le lien
         var query= popURL.split('?');
         var dim= query[1].split('&');
-        var popWidth = dim[0].split('=')[1]; //La première valeur du lien
+        var popWidth = dim[0].split('=')[1]; //La premiÃ¨re valeur du lien
 
         //Faire apparaitre la pop-up et ajouter le bouton de fermeture
         $('#' + popID).fadeIn().css({
@@ -26,7 +26,7 @@ $(document).ready(function() {
         })
         .prepend('');
 
-        //Récupération du margin, qui permettra de centrer la fenêtre - on ajuste de 80px en conformité avec le CSS
+        //RÃ©cupÃ©ration du margin, qui permettra de centrer la fenÃªtre - on ajuste de 80px en conformitÃ© avec le CSS
         var popMargTop = ($('#' + popID).height() + 80) / 2;
         var popMargLeft = ($('#' + popID).width() + 80) / 2;
 
