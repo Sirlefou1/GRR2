@@ -256,7 +256,7 @@ echo "<div class=\"titre_planning\"><table width=\"100%\">";
       echo "</td>";
   }
      echo " <td>";
-     echo "<strong>" . ucfirst(utf8_strftime("%B %Y", $month_start)). " ".ucfirst($this_area_name)." - ".get_vocab("all_areas")."</strong>";
+     echo "<h4 class=\"titre\">" . ucfirst(utf8_strftime("%B %Y", $month_start)). " ".ucfirst($this_area_name)." - ".get_vocab("all_areas")."</h4>";
 
  if ($_GET['pview'] != 1) echo " <a href=\"month_all.php?year=$year&amp;month=$month&amp;area=$area\"><img src=\"img_grr/change_view.png\" alt=\"".get_vocab("change_view")."\" title=\"".get_vocab("change_view")."\" class=\"image\" /></a>";
      echo " </td>";
@@ -564,7 +564,7 @@ for ($ir = 0; ($row = grr_sql_row($res, $ir)); $ir++)
                             {
                                 $currentPage = 'month_all2';
                                 $id =   $d[$cday]["id"][$i];
-                                echo "<a title=\"".htmlspecialchars($temp)."\" href=\"#?w=500\" onclick=\"request($id,$cday,$month,$year,'$currentPage',readData);\" rel=\"popup_name\" class=\"poplight\">" .$d[$cday]["who1"][$i]{0}."</a>";
+                                echo "<a title=\"".htmlspecialchars($temp)."\" href=\"#?w=500\" onclick=\"request($id,$cday,$month,$year,'$currentPage',readData);\" rel=\"popup_name\" class=\"poplight\">" .$d[$cday]["who1"][$i]."</a>";
                                 echo  "<div id=\"popup_name\" class=\"popup_block\" ></div>";
                                 }
                             else

@@ -298,7 +298,7 @@ echo "<div class=\"titre_planning\"><table width=\"100%\">";
       */
   }
       echo " <td>";
-       echo "<strong>" . ucfirst(utf8_strftime("%B %Y", $month_start)) . " ".ucfirst($this_area_name)." - ".get_vocab("all_areas")."</strong>";
+       echo "<h4 class=\"titre\">" . ucfirst(utf8_strftime("%B %Y", $month_start)) . " ".ucfirst($this_area_name)." - ".get_vocab("all_areas")."</h4>";
 
        if ($_GET['pview'] != 1) echo " <a href=\"month_all2.php?year=$year&amp;month=$month&amp;area=$area\"><img src=\"img_grr/change_view.png\" alt=\"".get_vocab("change_view")."\" title=\"".get_vocab("change_view")."\" class=\"image\" /></a>";
       echo " </td>";
