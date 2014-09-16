@@ -1,1 +1,3 @@
 include/config_ldap.inc.php
+include/config.inc.php
+include/connect.inc.php
