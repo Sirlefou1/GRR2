@@ -35,32 +35,35 @@
  *
  */
 
-error_reporting (E_ALL ^ E_NOTICE ^ E_WARNING);
-	// Appel de la classe phpmailer
-require 'phpmailer/PHPMailerAutoload.php';
-define("GRR_FROM",getSettingValue("grr_mail_from"));
-define("GRR_FROMNAME",getSettingValue("grr_mail_fromname"));
+    error_reporting (E_ALL ^ E_NOTICE ^ E_WARNING);
+    // Appel de la classe phpmailer
+    require "./phpmailer/class.phpmailer.php";
 
-class my_phpmailer extends phpmailer
-	{
-		// Set default variables for all new objects
-
-$mail = new PHPMailer();
-$mail->isSMTP();
-$mail->SMTPDebug = 0;
-//Ask for HTML-friendly debug output
-$mail->Debugoutput = 'html';
-//Set the hostname of the mail server
-$mail->Host = getSettingValue("grr_mail_smtp");
-//Set the SMTP port number - likely to be 25, 465 or 587
-$mail->Port = 25;
-//Whether to use SMTP authentication
-$mail->SMTPAuth = true;
-//Username to use for SMTP authentication
-$mail->Username =  getSettingValue("grr_mail_Username");
-//Password to use for SMTP authentication
-$mail->Password = getSettingValue("grr_mail_Password");
-//Set who the message is to be sent from
-$mail->setFrom(GRR_FROM, GRR_FROMNAME);
-}
+    define("GRR_FROM",getSettingValue("grr_mail_from"));
+    define("GRR_FROMNAME",getSettingValue("grr_mail_fromname"));
+    class my_phpmailer extends phpmailer {
+        // Set default variables for all new objects
+        var $From = GRR_FROM;
+        var $FromName = GRR_FROMNAME;
+        var $Port = 25;
+        var $Priority = 3;
+        var $Encoding = "8bit";
+        var $CharSet = "utf-8";
+        var $checkAddress = false;
+        var $IsHTML= false;
+        var $WordWrap = 75;
+        function my_phpmailer() {
+            if (getSettingValue("grr_mail_method")  == "smtp") {
+                $this->Host = getSettingValue("grr_mail_smtp");
+                $this->Mailer = "smtp";
+                if (getSettingValue("grr_mail_Username")!="") {
+                    $this->SMTPAuth  = true;
+                    $this->Username = getSettingValue("grr_mail_Username");
+                    $this->Password = getSettingValue("grr_mail_Password");
+                } else {
+                    $this->SMTPAuth  = false;
+                }
+            }
+        }
+    }
 ?>
