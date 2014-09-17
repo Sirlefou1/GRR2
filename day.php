@@ -83,12 +83,20 @@ include "include/functions.inc.php";
 include "include/$dbsys.inc.php";
 include "include/mincals.inc.php";
 include "include/mrbs_sql.inc.php";
-include "include/language.inc.php";
 $grr_script_name = "day.php";
 require_once("./include/settings.inc.php");
 if (!loadSettings())
 	die("Erreur chargement settings");
 require_once("./include/session.inc.php");
+if (!grr_resumeSession())
+{
+	if ((getSettingValue("authentification_obli") == 1) || ((getSettingValue("authentification_obli") == 0) && (isset($_SESSION['login']))))
+	{
+		header("Location: ./logout.php?auto=1&url=$url");
+		die();
+	}
+}
+include "include/language.inc.php";
 $date_now = time();
 if (!isset($day) || !isset($month) || !isset($year))
 {
