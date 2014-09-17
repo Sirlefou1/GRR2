@@ -61,8 +61,6 @@
  *
  *
  */
-
-
 if (isset($_POST['title_home_page']))
 {
 	if (!saveSetting("title_home_page", $_POST['title_home_page']))
@@ -229,7 +227,7 @@ if (isset($_POST['menu_gauche']))
 		die();
 	}
 }
-// ANTHONY ARCHAMBEAU -- UPLOAD FICHIERS 
+// ANTHONY ARCHAMBEAU -- UPLOAD FICHIERS
 if (isset($_POST['file']))
 {
 	if (!saveSetting("file", $_POST['file']))
@@ -371,7 +369,6 @@ if (isset($_POST["ok"]))
 				$msg .= "Erreur lors de l'enregistrement du logo !\\n";
 				$ok = 'no';
 			}
-
 		}
 	}
   	// Enregistrement du logo
@@ -379,7 +376,7 @@ if (isset($_POST["ok"]))
 	if (preg_match("`\.([^.]+)$`", $doc_file['name'], $match))
 	{
 		$ext = strtolower($match[1]);
-		if ($ext!='jpg' && $ext!='png'&& $ext!='gif')
+		if ($ext != 'jpg' && $ext != 'png' && $ext != 'gif')
 		{
 			$msg .= "L\'image n\'a pas pu être enregistrée : les seules extentions autorisées sont gif, png et jpg.\\n";
 			$ok = 'no';
@@ -454,7 +451,7 @@ if (isset($_POST['begin_day']) && isset($_POST['begin_month']) && isset($_POST['
 	$begin_bookings = mktime(0, 0, 0, $_POST['begin_month'], $_POST['begin_day'], $_POST['begin_year']);
 	$test_del1 = mysqli_num_rows(mysqli_query($GLOBALS['db_c'], "select * from ".TABLE_PREFIX."_entry WHERE (end_time < '$begin_bookings' )"));
 	$test_del2 = mysqli_num_rows(mysqli_query($GLOBALS['db_c'], "select * from ".TABLE_PREFIX."_repeat WHERE (end_date < '$begin_bookings')"));
-	if (($test_del1 != 0) or ($test_del2 != 0))
+	if (($test_del1 != 0) || ($test_del2 != 0))
 		$demande_confirmation = 'yes';
 	else
 	{
@@ -471,7 +468,7 @@ if (isset($_POST['end_day']) && isset($_POST['end_month']) && isset($_POST['end_
 		$end_bookings = $begin_bookings;
 	$test_del1 = mysqli_num_rows(mysqli_query($GLOBALS['db_c'], "select * from ".TABLE_PREFIX."_entry WHERE (start_time > '$end_bookings' )"));
 	$test_del2 = mysqli_num_rows(mysqli_query($GLOBALS['db_c'], "select * from ".TABLE_PREFIX."_repeat WHERE (start_time > '$end_bookings')"));
-	if (($test_del1 != 0) or ($test_del2 != 0))
+	if (($test_del1 != 0) || ($test_del2 != 0))
 		$demande_confirmation = 'yes';
 	else
 	{
@@ -614,7 +611,8 @@ echo "<h3>".get_vocab("message perso")."</h3>\n";
 echo "<p>".get_vocab("message perso explain");
 if (getSettingValue("use_fckeditor") != 1)
 	echo " ".get_vocab("description complete2");
-if (getSettingValue("use_fckeditor") == 1) {
+if (getSettingValue("use_fckeditor") == 1)
+{
 	echo "<textarea class=\"ckeditor\" id=\"editor1\" name=\"message_accueil\" rows=\"8\" cols=\"120\">\n";
 	echo htmlspecialchars(getSettingValue('message_accueil'));
 	echo "</textarea>\n";
@@ -635,7 +633,6 @@ if (getSettingValue("use_fckeditor") == 1) {
 			['Image','Table','HorizontalRule','SpecialChar','PageBreak'],
 			]
 		});
-
 		//]]>
 	</script>
 	<?php
@@ -664,14 +661,9 @@ echo "<hr /><h3>".get_vocab("title_begin_end_bookings")."</h3>\n";
 		<td>&nbsp;</td>
 	</tr>
 </table>
-<?php echo "<p><i>".get_vocab("begin_bookings_explain")."</i>";
-
-?>
+<?php echo "<p><i>".get_vocab("begin_bookings_explain")."</i>"; ?>
 <br /><br />
-
 </p>
-
-
 <table border='0'>
 	<tr
 	><td>
@@ -772,9 +764,6 @@ else
 	echo '<input type="hidden" id="id_site" name="id_site" value="-1" />
 	<table>';
 	}
-// ----------------------------------------------------------------------------
-// Liste domaines
-// ----------------------------------------------------------------------------
 /**
   * Liste des domaines
  */
@@ -809,7 +798,6 @@ while ($i < count($liste_themes))
 	$i++;
 }
 echo "</select></td></tr></table>\n";
-
 //
 // Choix de la langue
 //
@@ -897,20 +885,20 @@ echo "<hr /><h3>".get_vocab("display_mail_etat_destinataire")."</h3>\n";
 echo "<p>".get_vocab("display_mail_etat_destinataire_1")."</p>";
 echo "<table>";
 echo "<tr><td>".get_vocab("display_mail_etat_destinataire_2")."</td><td>";
-echo "<input type='radio' id=\'mail_etat_destinataire\' name='mail_etat_destinataire' value='0' ";
+echo "<input type='radio' id='mail_etat_destinataire' name='mail_etat_destinataire' value='0' ";
 if (getSettingValue("mail_etat_destinataire") == '0')
-	echo "checked=\"checked\""; 
+	echo "checked=\"checked\"";
 echo " />";
 echo "</td></tr>";
 echo "<tr><td>".get_vocab("display_mail_etat_destinataire_3")."</td><td>";
-echo "<input type='radio' id=\'mail_etat_destinataire\' name='mail_etat_destinataire' value='1'";
+echo "<input type='radio' id='mail_etat_destinataire' name='mail_etat_destinataire' value='1'";
 if (getSettingValue("mail_etat_destinataire") == '1')
 	echo "checked=\"checked\"";
 echo " />";
 echo "</td></tr>";
-echo "<td><tr></td></tr>";
+//echo "<td><tr></td></tr>";
 echo "<tr><td>".get_vocab("display_mail_destinataire")."</td><td>";
-echo "</tr></td>";
+echo "</tr>";
 echo "<tr><td><input type=\"text\" id=\"mail_destinataire\" name=\"mail_destinataire\" value=\"".getSettingValue("mail_destinataire")."\" size=\"30\">\n";
 echo "</td>";
 echo "</tr>";
@@ -1155,7 +1143,6 @@ echo "</form>";
 		}
 	});
 </script>
-
 <script type="text/javascript">
 	document.getElementById('title_home_page').focus();
 </script>
