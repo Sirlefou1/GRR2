@@ -27,55 +27,6 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-/**
- * $Log: day.php,v $
- * Revision 1.20  2009-12-02 20:11:07  grr
- * *** empty log message ***
- *
- * Revision 1.19  2009-10-09 07:55:48  grr
- * *** empty log message ***
- *
- * Revision 1.18  2009-09-29 18:02:56  grr
- * *** empty log message ***
- *
- * Revision 1.17  2009-04-14 12:59:17  grr
- * *** empty log message ***
- *
- * Revision 1.16  2009-04-09 14:52:31  grr
- * *** empty log message ***
- *
- * Revision 1.15  2009-03-24 13:30:07  grr
- * *** empty log message ***
- *
- * Revision 1.14  2009-02-27 22:05:03  grr
- * *** empty log message ***
- *
- * Revision 1.13  2009-01-28 16:01:31  grr
- * *** empty log message ***
- *
- * Revision 1.12  2009-01-20 07:19:17  grr
- * *** empty log message ***
- *
- * Revision 1.11  2008-11-16 22:00:58  grr
- * *** empty log message ***
- *
- * Revision 1.10  2008-11-14 07:29:09  grr
- * *** empty log message ***
- *
- * Revision 1.9  2008-11-13 21:32:51  grr
- * *** empty log message ***
- *
- * Revision 1.8  2008-11-11 22:01:14  grr
- * *** empty log message ***
- *
- * Revision 1.7  2008-11-10 08:17:34  grr
- * *** empty log message ***
- *
- * Revision 1.6  2008-11-10 07:06:39  grr
- * *** empty log message ***
- *
- *
- */
 include "include/connect.inc.php";
 include "include/config.inc.php";
 include "include/misc.inc.php";
