@@ -877,7 +877,7 @@ function begin_page($title,$page="with_session")
 	if (@file_exists($clock_file))
 		$a .='<script type="text/javascript" src="'.$clock_file.'"></script>'.PHP_EOL;
 			# show a warning if this is using a low version of php
-	if (substr(phpversion(), 0, 1) == 3) 
+	if (substr(phpversion(), 0, 1) == 3)
 		$a .=get_vocab('not_php3');
 	return $a;
 }
@@ -910,8 +910,10 @@ function print_header($day = '', $month = '', $year = '', $area = '', $type_sess
 			$month = date("m",$date_);
 			$year  = date("Y",$date_);
 		}
-		if (!(isset($search_str))) $search_str = get_vocab("search_for");
-		if (empty($search_str)) $search_str = "";
+		if (!(isset($search_str)))
+			$search_str = get_vocab("search_for");
+		if (empty($search_str))
+			$search_str = "";
 		if (!(isset($desactive_bandeau_sup) && ($desactive_bandeau_sup == 1) && ($type_session != 'with_session')))
 		{
 					// On fabrique une date valide pour la réservation si ce n'est pas le cas
@@ -941,12 +943,12 @@ function print_header($day = '', $month = '', $year = '', $area = '', $type_sess
 			<?php
 			$sql = "SELECT VALUE FROM ".TABLE_PREFIX."_setting WHERE NAME='mail_etat_destinataire'";
 			$res = grr_sql_query1($sql);
-					//Libère le résultat de la mémoire 
+					//Libère le résultat de la mémoire
 			grr_sql_free($res);
 			if ($res == 1)
 			{
 				if ($type_session == "no_session")
-				{						
+				{
 					echo "<td class=\"contactformulaire\">";
 					echo "<a href=\"contactFormulaire.php\"><input type=\"submit\" id=\"Réserver\" rel=\"popup_name\" class=\"poplight\" value=\"Réserver\" </a>";
 					echo "</td>";
