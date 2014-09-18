@@ -42,7 +42,6 @@
     define("GRR_FROM",getSettingValue("grr_mail_from"));
     define("GRR_FROMNAME",getSettingValue("grr_mail_fromname"));
     class my_phpmailer extends phpmailer {
-        // Set default variables for all new objects
         var $From = GRR_FROM;
         var $FromName = GRR_FROMNAME;
         var $Port = 25;
@@ -55,7 +54,7 @@
         function my_phpmailer() {
             if (getSettingValue("grr_mail_method")  == "smtp") {
                 $this->Host = getSettingValue("grr_mail_smtp");
-                $this->Mailer = "smtp";
+                $this->isSMTP();
                 if (getSettingValue("grr_mail_Username")!="") {
                     $this->SMTPAuth  = true;
                     $this->Username = getSettingValue("grr_mail_Username");

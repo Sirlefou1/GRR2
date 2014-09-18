@@ -13,57 +13,19 @@
  *
  * This file is part of GRR.
  *
- * GRR is free software;
-you can redistribute it and/or modify
+ * GRR is free software;you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation;
-either version 2 of the License, or
+ * the Free Software Foundation;either version 2 of the License, or
  * (at your option) any later version.
  *
  * GRR is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY;
-without even the implied warranty of
+ * but WITHOUT ANY WARRANTY;without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with GRR;
-if not, write to the Free Software
+ * along with GRR;if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
-/**
- * $Log: view_entry.php,v $
- * Revision 1.16  2010-04-07 15:38:14  grr
- * *** empty log message ***
- *
- * Revision 1.15  2009-09-29 18:02:57  grr
- * *** empty log message ***
- *
- * Revision 1.14  2009-04-14 12:59:17  grr
- * *** empty log message ***
- *
- * Revision 1.13  2009-04-09 14:52:31  grr
- * *** empty log message ***
- *
- * Revision 1.12  2009-03-24 13:30:07  grr
- * *** empty log message ***
- *
- * Revision 1.11  2009-01-20 07:19:17  grr
- * *** empty log message ***
- *
- * Revision 1.10  2008-11-16 22:00:59  grr
- * *** empty log message ***
- *
- * Revision 1.9  2008-11-11 22:01:14  grr
- * *** empty log message ***
- *
- * Revision 1.8  2008-11-10 08:17:34  grr
- * *** empty log message ***
- *
- * Revision 1.7  2008-11-10 07:06:39  grr
- * *** empty log message ***
- *
- *
  */
 echo"<div>";
 include_once('include/connect.inc.php');

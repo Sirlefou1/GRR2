@@ -28,96 +28,6 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-/**
- * $Log: functions.inc.php,v $
- * Revision 1.33  2010-04-07 15:38:14  grr
- * *** empty log message ***
- *
- * Revision 1.32  2010-03-03 14:41:57  grr
- * *** empty log message ***
- *
- * Revision 1.31  2010-01-06 10:21:19  grr
- * *** empty log message ***
- *
- * Revision 1.30  2009-12-16 14:52:31  grr
- * *** empty log message ***
- *
- * Revision 1.29  2009-12-02 21:37:20  grr
- * *** empty log message ***
- *
- * Revision 1.28  2009-12-02 20:11:08  grr
- * *** empty log message ***
- *
- * Revision 1.27  2009-10-09 07:55:48  grr
- * *** empty log message ***
- *
- * Revision 1.26  2009-09-29 18:02:57  grr
- * *** empty log message ***
- *
- * Revision 1.25  2009-06-04 20:52:24  grr
- * *** empty log message ***
- *
- * Revision 1.24  2009-06-04 15:30:17  grr
- * *** empty log message ***
- *
- * Revision 1.23  2009-04-14 12:59:17  grr
- * *** empty log message ***
- *
- * Revision 1.22  2009-04-10 21:05:45  grr
- * *** empty log message ***
- *
- * Revision 1.21  2009-04-09 14:52:31  grr
- * *** empty log message ***
- *
- * Revision 1.20  2009-03-24 14:03:10  grr
- * *** empty log message ***
- *
- * Revision 1.19  2009-03-24 13:30:07  grr
- * *** empty log message ***
- *
- * Revision 1.18  2009-02-27 22:05:03  grr
- * *** empty log message ***
- *
- * Revision 1.17  2009-01-28 16:01:31  grr
- * *** empty log message ***
- *
- * Revision 1.16  2009-01-20 07:19:17  grr
- * *** empty log message ***
- *
- * Revision 1.15  2008-11-16 22:00:59  grr
- * *** empty log message ***
- *
- * Revision 1.14  2008-11-14 07:29:09  grr
- * *** empty log message ***
- *
- * Revision 1.13  2008-11-13 21:32:51  grr
- * *** empty log message ***
- *
- * Revision 1.12  2008-11-11 22:01:15  grr
- * *** empty log message ***
- *
- * Revision 1.11  2008-11-10 08:17:34  grr
- * *** empty log message ***
- *
- * Revision 1.10  2008-11-10 07:06:39  grr
- * *** empty log message ***
- *
- * Revision 1.9  2008-11-07 21:39:41  grr
- * *** empty log message ***
- *
- *
- */
-/*
-Affiche un lien email
-$option_affichage
------------------
-Si $option_affichage="afficher_toujours", en l'absence de mail, on affiche quand même l'intitulé
-Sinon, en l'absence de mail, on affiche rien.
-$_type_cible
-------------
-si "identifiant:non" -> $_cible n'est pas l'identifiant d'un utilisateur de la base
-si "identifiant:oui" -> $_cible est l'identifiant d'un utilisateur de la base
-*/
 header("Cache-Control:no-cache");
 function get_request_uri()
 {
@@ -240,7 +150,7 @@ function affiche_lien_contact($_cible,$_type_cible,$option_affichage)
 		}
 		else
 		{
-			$tab_email = explode(';',trim($_email));
+			$tab_email = explode(';', trim($_email));
 			$i = 0;
 			foreach ($tab_email as $item_email)
 			{
@@ -251,8 +161,7 @@ function affiche_lien_contact($_cible,$_type_cible,$option_affichage)
 					$i++;
 					$domain = $item_email_explode[1];
 					if ($i == 1)
-					{ 
-						// Première adresse
+					{
 						$affichage .= "<script type=\"text/javascript\">";
 						$affichage .=  "encode_adresse('".$person."','".$domain."',1);";
 					}
@@ -276,27 +185,21 @@ function Definition_ressource_domaine_site()
 	{
 		$room = $_GET['room'];
 		settype($room,"integer");
-		// Todo : s'agit-il d'une ressource valide ?
-		// la ressource est définie, on peut en déduire le domaine et le site
 		$area = mrbsGetRoomArea($room);
 		$id_site = mrbsGetAreaSite($area);
 	}
 	else
 	{
-		$room=NULL;
-		// la ressource n'est pas définie
+		$room = NULL;
 		if (isset($_GET['area']))
 		{
 			$area = $_GET['area'];
 			settype($area,"integer");
-			// Le domaine est définie, on peut en déduire le site
-			// Todo : s'agit-il d'un domaine valide ?
 			$id_site = mrbsGetAreaSite($area);
 		}
 		else
 		{
-			$area=NULL;
-			// le domaine n'est pas définie
+			$area = NULL;
 			if (isset($_GET["id_site"]))
 			{
 				$id_site = $_GET["id_site"];
@@ -336,7 +239,7 @@ function affiche_ressource_empruntee
 - $id_room : identifiant de la ressource
 - Si la ressource est empruntée, affiche une icône avec un lien vers la réservation pour laquelle la ressource est empruntée.
 */
-function affiche_ressource_empruntee($id_room, $type="logo")
+function affiche_ressource_empruntee($id_room, $type = "logo")
 {
 	$active_ressource_empruntee = grr_sql_query1("select active_ressource_empruntee from ".TABLE_PREFIX."_room where id = '".$id_room."'");
 	if ($active_ressource_empruntee == 'y')
@@ -345,12 +248,12 @@ function affiche_ressource_empruntee($id_room, $type="logo")
 		if ($id_resa != -1)
 		{
 			if ($type=="logo")
-				echo "<a href='view_entry.php?id=$id_resa'><img src=\"img_grr/buzy_big.png\"  alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("reservation_en_cours")."\" width=\"30\" height=\"30\" class=\"image\"  /></a>";
+				echo "<a href='view_entry.php?id=$id_resa'><img src=\"img_grr/buzy_big.png\" alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("reservation_en_cours")."\" width=\"30\" height=\"30\" class=\"image\" /></a>";
 			else if ($type=="texte")
 			{
 				$beneficiaire = grr_sql_query1("select beneficiaire from ".TABLE_PREFIX."_entry where room_id = '".$id_room."' and statut_entry='y'");
 				$beneficiaire_ext = grr_sql_query1("select beneficiaire_ext from ".TABLE_PREFIX."_entry where room_id = '".$id_room."' and statut_entry='y'");
-				echo "<br /><b><span class='avertissement'><img src=\"img_grr/buzy_big.png\" alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("ressource actuellement empruntee")."\" width=\"30\" height=\"30\" class=\"image\"  />
+				echo "<br /><b><span class='avertissement'><img src=\"img_grr/buzy_big.png\" alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("ressource actuellement empruntee")."\" width=\"30\" height=\"30\" class=\"image\" />
 				&nbsp;".get_vocab("ressource actuellement empruntee")." ".get_vocab("nom emprunteur").get_vocab("deux_points").affiche_nom_prenom_email($beneficiaire,$beneficiaire_ext,"withmail").
 				". <a href='view_entry?id=$id_resa'>".get_vocab("entryid").$id_resa.
 				"</a></span></b>";
@@ -361,78 +264,58 @@ function affiche_ressource_empruntee($id_room, $type="logo")
 	}
 }
 function bbCode($t,$type)
-// remplace les balises BBCode par des balises HTML
 {
- // on nettoie le bbcode
 	if ($type == "nobbcode")
 	{
-	// barre horizontale
 		$t = str_replace("[/]", "", $t);
 		$t = str_replace("[hr]", "", $t);
-	// alignement centré
 		$t = str_replace("[center]", "", $t);
 		$t = str_replace("[/center]", "", $t);
-	// alignement à droite
 		$t = str_replace("[right]", "", $t);
 		$t = str_replace("[/right]", "", $t);
-	// alignement justifié
 		$t = str_replace("[justify]", "", $t);
 		$t = str_replace("[/justify]", "", $t);
-	// lien
 		$regLienSimple = "`\[url\] ?([^\[]*) ?\[/url\]`";
 		$regLienEtendu = "`\[url ?=([^\[]*) ?] ?([^]]*) ?\[/url\]`";
 		if (preg_match($regLienSimple, $t))
 			$t = preg_replace($regLienSimple, "\\1", $t);
 		else
 			$t = preg_replace($regLienEtendu, "\\1", $t);
-	// mail
 		$regMailSimple = "`\[email\] ?([^\[]*) ?\[/email\]`";
 		$regMailEtendu = "`\[email ?=([^\[]*) ?] ?([^]]*) ?\[/email\]`";
 		if (preg_match($regMailSimple, $t))
 			$t = preg_replace($regMailSimple, "\\1", $t);
 		else
 			$t = preg_replace($regMailEtendu, "\\1", $t);
-	// image
 		$regImage = "`\[img\] ?([^\[]*) ?\[/img\]`";
 		$regImageAlternatif = "`\[img ?= ?([^\[]*) ?\]`";
 		if (preg_match($regImage, $t))
 			$t = preg_replace($regImage, "", $t);
 		else
 			$t = preg_replace($regImageAlternatif, "", $t);
-	// gras 
 		$t = str_replace("[b]", "", $t);
 		$t = str_replace("[/b]", "", $t);
-	// italique
 		$t = str_replace("[i]", "", $t);
 		$t = str_replace("[/i]", "", $t);
-	// soulignement
 		$t = str_replace("[u]", "", $t);
 		$t = str_replace("[/u]", "", $t);
-	// couleur
 		$t = str_replace("[/color]", "</span>", $t);
 		$regCouleur = "`\[color= ?(([[:alpha:]]+)|(#[[:digit:][:alpha:]]{6})) ?\]`";
 		$t = preg_replace($regCouleur, "", $t);
-	// taille des caractères
 		$t = str_replace("[/size]", "</span>", $t);
 		$regCouleur = "`\[size= ?([[:digit:]]+) ?\]`";
 		$t = preg_replace($regCouleur, "", $t);
 	}
- // Dans le titre des réservations
 	if ($type != "titre")
 	{
-	// barre horizontale
 		$t = str_replace("[/]", "<hr width=\"100%\" size=\"1\" />", $t);
 		$t = str_replace("[hr]", "<hr width=\"100%\" size=\"1\" />", $t);
-	// alignement centré
 		$t = str_replace("[center]", "<div style=\"text-align: center\">", $t);
 		$t = str_replace("[/center]", "</div>", $t);
-	// alignement à droite
 		$t = str_replace("[right]", "<div style=\"text-align: right\">", $t);
 		$t = str_replace("[/right]", "</div>", $t);
-	// alignement justifié
 		$t = str_replace("[justify]", "<div style=\"text-align: justify\">", $t);
 		$t = str_replace("[/justify]", "</div>", $t);
-	// lien
 		$regLienSimple = "`\[url\] ?([^\[]*) ?\[/url\]`";
 		$regLienEtendu = "`\[url ?=([^\[]*) ?] ?([^]]*) ?\[/url\]`";
 		if (preg_match($regLienSimple, $t))
@@ -440,34 +323,27 @@ function bbCode($t,$type)
 		else
 			$t = preg_replace($regLienEtendu, "<a href=\"\\1\" target=\"_blank\">\\2</a>", $t);
 	}
-	// mail
 	$regMailSimple = "`\[email\] ?([^\[]*) ?\[/email\]\`";
 	$regMailEtendu = "`\[email ?=([^\[]*) ?] ?([^]]*) ?\[/email\]`";
 	if (preg_match("'".$regMailSimple."'", $t))
 		$t = preg_replace($regMailSimple, "<a href=\"mailto:\\1\">\\1</a>", $t);
 	else
 		$t = preg_replace($regMailEtendu, "<a href=\"mailto:\\1\">\\2</a>", $t);
-	// image
 	$regImage = "`\[img\] ?([^\[]*) ?\[/img\]`";
 	$regImageAlternatif = "`\[img ?= ?([^\[]*) ?\]`";
 	if (preg_match($regImage, $t))
 		$t = preg_replace($regImage, "<img src=\"\\1\" alt=\"\" class=\"image\" />", $t);
 	else
 		$t = preg_replace($regImageAlternatif, "<img src=\"\\1\" alt=\"\" class=\"image\" />", $t);
-	// gras
 	$t = str_replace("[b]", "<strong>", $t);
 	$t = str_replace("[/b]", "</strong>", $t);
-	// italique
 	$t = str_replace("[i]", "<em>", $t);
 	$t = str_replace("[/i]", "</em>", $t);
-	// soulignement
 	$t = str_replace("[u]", "<u>", $t);
 	$t = str_replace("[/u]", "</u>", $t);
-	// couleur
 	$t = str_replace("[/color]", "</span>", $t);
 	$regCouleur = "/\[color= ?(([[:alpha:]]+)|(#[[:digit:][:alpha:]]{6})) ?\]/";
 	$t = preg_replace($regCouleur, "<span style=\"color: \\1\">", $t);
-	// taille des caractères
 	$t = str_replace("[/size]", "</span>", $t);
 	$regCouleur = "`\[size= ?([[:digit:]]+) ?\]`";
 	$t = preg_replace($regCouleur, "<span style=\"font-size: \\1px\">", $t);
@@ -489,7 +365,6 @@ function how_many_connected()
 			echo "<a href='admin_view_connexions.php'>".$nb_connect.get_vocab("one_connected")."</a>";
 		else
 			echo "<a href='admin_view_connexions.php'>".$nb_connect.get_vocab("several_connected")."</a>";
-		// Vérification du numéro de version
 		if (verif_version())
 			affiche_pop_up(get_vocab("maj_bdd_not_update").get_vocab("please_go_to_admin_maj.php"),"force");
 	}
@@ -2283,7 +2158,7 @@ function send_mail($id_entry, $action, $dformat, $tab_id_moderes = array())
 			$sujet .= " (".$vocab["en_attente_moderation"].")";
 		$message .= $vocab["the_user"].affiche_nom_prenom_email($user_login,"","formail");
 		$message = $message.$vocab["modify_booking"];
-		$message=$message.$vocab["the_room"].$room_name." (".$area_name.") ";
+		$message = $message.$vocab["the_room"].$room_name." (".$area_name.") ";
 	}
 	else if ($action == 3)
 	{
