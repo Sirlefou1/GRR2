@@ -294,6 +294,7 @@
 	background-color:#5c2862;
 	vertical-align:top;
 	text-align:center !important;
+	border: none;
  }
 
  td.cell_hours {
@@ -405,6 +406,10 @@
 	color: black;
 	text-align: center;
 	font-size: 1.2em;
+ }
+
+ .titre_planning table{
+ 	border: none;
  }
 
  .titre_planning_week{
