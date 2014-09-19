@@ -800,7 +800,7 @@ function print_header($day = '', $month = '', $year = '', $area = '', $type_sess
 			$day   = date("d",$date_);
 			$month = date("m",$date_);
 			$year  = date("Y",$date_);
-			echo "<table width=\"100%\" border=\"1\" id=\"header\">";
+			echo "<table width=\"100%\" id=\"header\">";
 			echo "<tr>";
 					//Logo
 			$nom_picture = "./images/".getSettingValue("logo");
