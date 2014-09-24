@@ -846,27 +846,22 @@ function print_header($day = '', $month = '', $year = '', $area = '', $type_sess
 					echo "\n</td>";
 				}
 			}
-				//Empêcher la selection du texte aux visiteurs
 			if ($type_session != "with_session")
 				echo "<script>selection()</script>\n";
 			?>
 			<td class="configuration" align="center">
 				<?php
-				if (@file_exists($clock_file)) {
+				if (@file_exists($clock_file))
+				{
 					echo "<script type=\"text/javascript\">";
-						//echo "<!--\n";
 					echo "new LiveClock();";
-						//echo "//-->";
 					echo "</script>";
 					echo"<br/>\n";
 				}
-					//Modif pour ques les visiteurs peuvent traduire en plusieurs langues
-					//Drapeau des langues
 				$parametres_url = '';
 				$_SESSION['chemin_retour'] = '';
 				if (isset($_SERVER['QUERY_STRING']) and ($_SERVER['QUERY_STRING'] != ''))
 				{
-					// Il y a des paramètres à passer
 					$parametres_url = htmlspecialchars($_SERVER['QUERY_STRING'])."&amp;";
 					$_SESSION['chemin_retour'] = traite_grr_url($grr_script_name)."?". $_SERVER['QUERY_STRING'];
 					echo "<a onclick=\"charger();\" href=\"".traite_grr_url($grr_script_name)."?".$parametres_url."default_language=fr\"><img src=\"img_grr/fr_dp.png\" alt=\"France\" title=\"france\" width=\"20\" height=\"13\" class=\"image\" /></a>\n";
@@ -875,22 +870,15 @@ function print_header($day = '', $month = '', $year = '', $area = '', $type_sess
 					echo "<a onclick=\"charger();\" href=\"".traite_grr_url($grr_script_name)."?".$parametres_url."default_language=it\"><img src=\"img_grr/it_dp.png\" alt=\"Italiano\" title=\"Italiano\" width=\"20\" height=\"13\" class=\"image\" /></a>\n";
 					echo "<a onclick=\"charger();\" href=\"".traite_grr_url($grr_script_name)."?".$parametres_url."default_language=es\"><img src=\"img_grr/es_dp.png\" alt=\"Spanish\" title=\"Spanish\" width=\"20\" height=\"13\" class=\"image\" /></a>\n";
 				}
-					// Bouton de session + Nom à la connexion
 				if ($type_session == 'no_session')
 				{
 					if ((getSettingValue('sso_statut') == 'cas_visiteur') || (getSettingValue('sso_statut') == 'cas_utilisateur'))
 					{
 						echo "<br />&nbsp;<a href='index.php?force_authentification=y'>".get_vocab("authentification")."</a>";
-							//echo "<br />&nbsp;<small><i><a href='login.php?url=".rawurlencode(str_replace('&amp;','&',get_request_uri()))."'>".get_vocab("connect_local")."</a></i></small>";
-							//corrige un bug dans le calcul de la page d'accueil après connexion.
 						echo "<br />&nbsp;<small><i><a href='login.php'>".get_vocab("connect_local")."</a></i></small>";
 					}
 					else
-					{
-							// echo "<br />&nbsp;<a href='login.php?url=".rawurlencode(str_replace('&amp;','&',get_request_uri()))."'>".get_vocab("connect")."</a>";
-							// corrige un bug dans le calcul de la page d'accueil après connexion.
 						echo "<br />&nbsp;<a href='login.php'>".get_vocab("connect")."</a>";
-					}
 				}
 				else
 				{
@@ -901,7 +889,6 @@ function print_header($day = '', $month = '', $year = '', $area = '', $type_sess
 					$disconnect_link = false;
 					if (!((getSettingValue("cacher_lien_deconnecter") == 'y') && (isset($_SESSION['est_authentifie_sso']))))
 					{
-							// on n'affiche pas le lien logout dans le cas d'un utilisateur LCS connecté.
 						$disconnect_link = true;
 						if (getSettingValue("authentification_obli") == 1)
 							echo "<br />&nbsp;<a href=\"./logout.php?auto=0\" >".get_vocab('disconnect')."</a>";
@@ -916,7 +903,6 @@ function print_header($day = '', $month = '', $year = '', $area = '', $type_sess
 							echo "<br />&nbsp;";
 						echo('<a href="'.getSettingValue("Url_portail_sso").'">'.get_vocab("Portail_accueil").'</a>');
 					}
-						// Cas d'une authentification LASSO
 					if ((getSettingValue('sso_statut') == 'lasso_visiteur') || (getSettingValue('sso_statut') == 'lasso_utilisateur'))
 					{
 						echo "<br />&nbsp;";

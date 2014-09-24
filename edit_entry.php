@@ -34,7 +34,7 @@ $grr_script_name = "edit_entry.php";
 if (isset($_GET["id"]))
 {
 	$id = $_GET["id"];
-	settype($id, "integer");
+	settype($id,"integer");
 }
 else
 	$id = NULL;
@@ -50,9 +50,8 @@ $page = verif_page();
 if (isset($_GET["hour"]))
 {
 	$hour = $_GET["hour"];
-	settype($hour, "integer");
-	if ($hour < 10)
-		$hour = "0".$hour;
+	settype($hour,"integer");
+	if ($hour < 10) $hour = "0".$hour;
 }
 else
 	$hour = NULL;
@@ -67,7 +66,7 @@ else
 	$minute = NULL;
 $rep_num_weeks = '';
 global $twentyfourhour_format;
-if (!isset($day) || !isset($month) || !isset($year))
+if (!isset($day) or !isset($month) or !isset($year))
 {
 	$day   = date("d");
 	$month = date("m");
@@ -77,7 +76,7 @@ if (isset($id))
 {
 	if ($info = mrbsGetEntryInfo($id))
 	{
-		$area = mrbsGetRoomArea($info["room_id"]);
+		$area  = mrbsGetRoomArea($info["room_id"]);
 		$room = $info["room_id"];
 	}
 	else
@@ -103,28 +102,27 @@ if ($longueur_liste_ressources_max == '')
 	$longueur_liste_ressources_max = 20;
 if (check_begin_end_bookings($day, $month, $year))
 {
-	if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))
+	if ((getSettingValue("authentification_obli") == 0) and (getUserName()==''))
 		$type_session = "no_session";
 	else
 		$type_session = "with_session";
-	showNoBookings($day, $month, $year, $area, $back, $type_session);
+	showNoBookings($day, $month, $year, $area,$back,$type_session);
 	exit();
 }
-if ((authGetUserLevel(getUserName(), -1) < 2) && (auth_visiteur(getUserName(), $room) == 0))
+if ((authGetUserLevel(getUserName(),-1) < 2) and (auth_visiteur(getUserName(),$room) == 0))
 {
 	showAccessDenied($day, $month, $year, $area,$back);
 	exit();
 }
-if (authUserAccesArea(getUserName(), $area) == 0)
+if (authUserAccesArea(getUserName(), $area)==0)
 {
 	showAccessDenied($day, $month, $year, $area,$back);
 	exit();
 }
-if (isset($id) && ($id!=0))
+if (isset($id) and ($id!=0))
 	$compt = 0;
 else
 	$compt = 1;
-
 if (UserRoomMaxBooking(getUserName(), $room, $compt) == 0)
 {
 	showAccessDeniedMaxBookings($day, $month, $year, $area, $room, $back);
@@ -132,7 +130,8 @@ if (UserRoomMaxBooking(getUserName(), $room, $compt) == 0)
 }
 if (isset($id))
 {
-	$sql = "SELECT name, beneficiaire, description, start_time, end_time, type, room_id, entry_type, repeat_id, option_reservation, jours, create_by, beneficiaire_ext, statut_entry FROM ".TABLE_PREFIX."_entry WHERE id=$id";
+	$sql = "SELECT name, beneficiaire, description, start_time, end_time,
+	type, room_id, entry_type, repeat_id, option_reservation, jours, create_by, beneficiaire_ext, statut_entry FROM ".TABLE_PREFIX."_entry WHERE id=$id";
 	$res = grr_sql_query($sql);
 	if (!$res)
 		fatal_error(1, grr_sql_error());
@@ -140,13 +139,13 @@ if (isset($id))
 		fatal_error(1, get_vocab('entryid') . $id . get_vocab('not_found'));
 	$row = grr_sql_row($res, 0);
 	grr_sql_free($res);
-	$breve_description  = $row[0];
-	$beneficiaire     	= $row[1];
+	$breve_description        = $row[0];
+	$beneficiaire   = $row[1];
 	$beneficiaire_ext   = $row[12];
-	$tab_benef 			= donne_nom_email($beneficiaire_ext);
-	$create_by    		= $row[11];
-	$description 		= $row[2];
-	$statut_entry 		= $row[13];
+	$tab_benef = donne_nom_email($beneficiaire_ext);
+	$create_by    = $row[11];
+	$description = $row[2];
+	$statut_entry = $row[13];
 	$start_day   = strftime('%d', $row[3]);
 	$start_month = strftime('%m', $row[3]);
 	$start_year  = strftime('%Y', $row[3]);
@@ -167,12 +166,11 @@ if (isset($id))
 	$modif_option_reservation = 'n';
 	if ($entry_type >= 1)
 	{
-		$sql = "SELECT rep_type, start_time, end_date, rep_opt, rep_num_weeks, end_time, type, name, beneficiaire, description FROM ".TABLE_PREFIX."_repeat WHERE id='".protect_data_sql($rep_id)."'";
+		$sql = "SELECT rep_type, start_time, end_date, rep_opt, rep_num_weeks, end_time, type, name, beneficiaire, description
+		FROM ".TABLE_PREFIX."_repeat WHERE id='".protect_data_sql($rep_id)."'";
 		$res = grr_sql_query($sql);
-		if (!$res)
-			fatal_error(1, grr_sql_error());
-		if (grr_sql_count($res) != 1)
-			fatal_error(1, get_vocab('repeat_id') . $rep_id . get_vocab('not_found'));
+		if (! $res) fatal_error(1, grr_sql_error());
+		if (grr_sql_count($res) != 1) fatal_error(1, get_vocab('repeat_id') . $rep_id . get_vocab('not_found'));
 		$row = grr_sql_row($res, 0);
 		grr_sql_free($res);
 		$rep_type = $row[0];
@@ -198,7 +196,7 @@ if (isset($id))
 			$breve_description = $row[7];
 			$beneficiaire = $row[8];
 			$description = $row[9];
-			if ($rep_type == 2)
+			if ($rep_type==2)
 			{
 				$rep_day[0] = $row[3][0] != '0';
 				$rep_day[1] = $row[3][1] != '0';
@@ -216,7 +214,7 @@ if (isset($id))
 			$rep_end_date = strftime($dformat,$row[2]);
 			$rep_opt      = $row[3];
 			$start_time = $row[1];
-			$end_time 	= $row[5];
+			$end_time = $row[5];
 		}
 	}
 	else
@@ -242,7 +240,7 @@ else
 			$duree_par_defaut_reservation_area = $resolution;
 		$duration = $duree_par_defaut_reservation_area ;
 	}
-	$edit_type = "series";
+	$edit_type   = "series";
 	if (getSettingValue("remplissage_description_breve") == '2')
 		$breve_description = $_SESSION['prenom']." ".$_SESSION['nom'];
 	else
@@ -256,31 +254,31 @@ else
 	$start_month = $month;
 	$start_year  = $year;
 	$start_hour  = $hour;
-	(isset($minute)) ? $start_min = $minute : $start_min = '00';
-	if ($enable_periods=='y')
+	(isset($minute)) ? $start_min = $minute : $start_min ='00';
+	if ($enable_periods == 'y')
 	{
 		$end_day   = $day;
 		$end_month = $month;
 		$end_year  = $year;
 		$end_hour  = $hour;
-		(isset($minute)) ? $end_min = $minute : $end_min = '00';
+		(isset($minute)) ? $end_min = $minute : $end_min ='00';
 	}
 	else
 	{
 		$now = mktime($hour, $minute, 0, $month, $day, $year);
 		$fin = $now + $duree_par_defaut_reservation_area;
-		$end_day   = date("d", $fin);
-		$end_month = date("m", $fin);
-		$end_year  = date("Y", $fin);
-		$end_hour  = date("H", $fin);
-		$end_min = date("i", $fin);
+		$end_day   = date("d",$fin);
+		$end_month = date("m",$fin);
+		$end_year  = date("Y",$fin);
+		$end_hour  = date("H",$fin);
+		$end_min = date("i",$fin);
 	}
 	$type        	= "";
-	$room_id    	= $room;
+	$room_id     	= $room;
 	$id				= 0;
-	$rep_id 		= 0;
-	$rep_type 		= 0;
-	$rep_end_day 	= $day;
+	$rep_id        	= 0;
+	$rep_type      	= 0;
+	$rep_end_day   	= $day;
 	$rep_end_month 	= $month;
 	$rep_end_year  	= $year;
 	$rep_day       	= array(0, 0, 0, 0, 0, 0, 0);
@@ -288,7 +286,7 @@ else
 	$option_reservation = -1;
 	$modif_option_reservation = 'y';
 }
-if (isset($_GET["Err"]))
+if ( isset($_GET["Err"]))
 	$Err = $_GET["Err"];
 if ($enable_periods == 'y')
 	toPeriodString($start_min, $duration, $dur_units);
@@ -303,31 +301,18 @@ $nb_areas = 0;
 $sql = "select id, area_name from ".TABLE_PREFIX."_area";
 $res = grr_sql_query($sql);
 $allareas_id = array();
-if ($res)
+if ($res) for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 {
-	for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
+	array_push($allareas_id,$row[0]);
+	if (authUserAccesArea(getUserName(),$row[0])==1)
 	{
-		array_push($allareas_id,$row[0]);
-		if (authUserAccesArea(getUserName(), $row[0]) == 1)
-			$nb_areas++;
+		$nb_areas++;
 	}
 }
 $use_prototype = 'y';
 print_header($day, $month, $year, $area);
 ?>
 <script type="text/javascript" >
-	function insertChampsAdd()
-	{
-		new Ajax.Updater($('div_champs_add'),"edit_entry_champs_add.php",{method: 'get', parameters: $('areas').serialize(true)+'&'+'id=<?php echo $id; ?>&'+'room=<?php echo $room; ?>'});
-	}
-	function insertTypes()
-	{
-		new Ajax.Updater($('div_types'),"edit_entry_types.php",{method: 'get',parameters: $('areas').serialize(true)+'&'+'type=<?php echo $type; ?>&'+'room=<?php echo $room; ?>'});
-	}
-	function insertProfilBeneficiaire()
-	{
-		new Ajax.Updater($('div_profilBeneficiaire'),"edit_entry_beneficiaire.php",{method: 'get', parameters: $('beneficiaire').serialize(true)+'&'+'identifiant_beneficiaire=<?php echo $beneficiaire; ?>'});
-	}
 	jQuery.ajax({
 		type: 'GET',
 		url: 'edit_entry_champs_add.php',
@@ -343,7 +328,6 @@ print_header($day, $month, $year, $area);
 			alert('Erreur lors de l execution de la commande AJAX pour le edit_entry_champs_add.php ');
 		}
 	});
-
 	jQuery.ajax({
 		type: 'GET',
 		url: 'edit_entry_types.php',
@@ -359,14 +343,12 @@ print_header($day, $month, $year, $area);
 			alert('Erreur lors de l execution de la commande AJAX pour le edit_entry_types.php ');
 		}
 	});
-
 	jQuery.ajax({
 		type: 'GET',
 		url: 'edit_entry_beneficiaire.php',
 		data: {
 			beneficiaire:'ADMINISTRATEUR',
 			identifiant_beneficiaire: '<?php echo $beneficiaire; ?>'
-
 		},
 		success: function(returnData){
 			$("#div_profilBeneficiaire").html(returnData);
@@ -378,8 +360,7 @@ print_header($day, $month, $year, $area);
 	function check_1 ()
 	{
 		menu = document.getElementById('menu2');
-		if (menu)
-		{
+		if (menu) {
 			if (!document.forms["main"].rep_type[2].checked)
 			{
 				document.forms["main"].elements['rep_day[0]'].checked=false;
@@ -390,60 +371,55 @@ print_header($day, $month, $year, $area);
 				document.forms["main"].elements['rep_day[5]'].checked=false;
 				document.forms["main"].elements['rep_day[6]'].checked=false;
 				menu.style.display = "none";
-
-			}
-			else
+			} else {
 				menu.style.display = "";
+			}
 		}
 		<?php
-		if (getSettingValue("jours_cycles_actif") == "Oui")
-		{
+		if (getSettingValue("jours_cycles_actif") == "Oui") {
 			?>
 			menu = document.getElementById('menuP');
-			if (menu)
-			{
+			if (menu) {
 				if (!document.forms["main"].rep_type[5].checked)
+				{
 					menu.style.display = "none";
-				else
+				} else {
 					menu.style.display = "";
+				}
 			}
 			<?php
 		}
 		?>
-
 	}
+
 	function check_2 ()
 	{
 		document.forms["main"].rep_type[2].checked=true;
 		check_1 ();
 	}
+
 	function check_3 ()
 	{
 		document.forms["main"].rep_type[3].checked=true;
 	}
+
 	function check_4 ()
 	{
 		menu = document.getElementById('menu4');
-		if (menu)
-		{
-			if (!document.forms["main"].beneficiaire.options[0].selected)
-			{
+		if (menu) {
+			if (!document.forms["main"].beneficiaire.options[0].selected) {
 				menu.style.display = "none";
 				<?php
-				if (getSettingValue("remplissage_description_breve") == '2')
-				{
+				if (getSettingValue("remplissage_description_breve")=='2') {
 					?>
 					document.forms["main"].name.value=document.forms["main"].beneficiaire.options[document.forms["main"].beneficiaire.options.selectedIndex].text;
 					<?php
 				}
 				?>
-			}
-			else
-			{
+			} else {
 				menu.style.display = "";
 				<?php
-				if (getSettingValue("remplissage_description_breve") == '2')
-				{
+				if (getSettingValue("remplissage_description_breve")=='2') {
 					?>
 					document.forms["main"].name.value="";
 					<?php
@@ -452,15 +428,14 @@ print_header($day, $month, $year, $area);
 			}
 		}
 	}
+
 	function check_5 ()
 	{
 		var menu; var menup; var menu2;
 		menu = document.getElementById('menu1');
 		menup = document.getElementById('menuP');
 		menu2 = document.getElementById('menu2');
-
-		if ((menu)&&(menu.style.display == "none"))
-		{
+		if ((menu)&&(menu.style.display == "none")) {
 			menup.style.display = "none";
 			menu2.style.display = "none";
 		}
@@ -479,8 +454,7 @@ print_header($day, $month, $year, $area);
 	{
 		recoverInputs(document.forms["main"],retrieveCookie('Grr_entry'),true);
 		<?php
-		if (!$id <> "")
-		{
+		if (!$id <> "") {
 			?>
 			if (!document.forms["main"].rep_type[0].checked)
 				clicMenu('1');
@@ -492,19 +466,24 @@ print_header($day, $month, $year, $area);
 	{
 		setCookie('Grr_entry',getFormString(document.forms["main"],true));
 	}
+
 	function validate_and_submit ()
 	{
+
 		if (document.forms["main"].benef_ext_nom)
 		{
-			if ((document.forms["main"].beneficiaire.options[0].selected) && (document.forms["main"].benef_ext_nom.value == ""))
+
+			if ((document.forms["main"].beneficiaire.options[0].selected) &&(document.forms["main"].benef_ext_nom.value == ""))
 			{
 				alert ( "<?php echo get_vocab('you_have_not_entered').":" . '\n' . strtolower(get_vocab('nom beneficiaire')) ?>");
 				return false;
 			}
 		}
-		<?php if (getSettingValue("remplissage_description_breve") == '1')
+
+		<?php if (getSettingValue("remplissage_description_breve")=='1')
 		{
 			?>
+
 			if (document.forms["main"].name.value == "")
 			{
 				alert ( "<?php echo get_vocab('you_have_not_entered') . '\n' . get_vocab('brief_description') . '\n' ?>");
@@ -514,16 +493,18 @@ print_header($day, $month, $year, $area);
 		}
 		foreach ($allareas_id as $idtmp)
 		{
-
 			$overload_fields = mrbsOverloadGetFieldslist($idtmp);
-			foreach ($overload_fields as $fieldname=>$fieldtype)
-			{
+			foreach ($overload_fields as $fieldname=>$fieldtype) {
 				if ($overload_fields[$fieldname]["obligatoire"] == 'y')
 				{
 					if ($overload_fields[$fieldname]["type"] != "list")
+					{
 						echo "if ((document.getElementById('id_".$idtmp."_".$overload_fields[$fieldname]["id"]."')) && (document.forms[\"main\"].addon_".$overload_fields[$fieldname]["id"].".value == \"\")) {\n";
+					}
 					else
+					{
 						echo "if ((document.getElementById('id_".$idtmp."_".$overload_fields[$fieldname]["id"]."')) && (document.forms[\"main\"].addon_".$overload_fields[$fieldname]["id"].".options[0].selected == true)) {\n";
+					}
 					echo "alert (\"".$vocab["required"]."\");\n";
 					echo "return false\n}\n";
 				}
@@ -532,197 +513,196 @@ print_header($day, $month, $year, $area);
 					echo "if (isNaN((document.getElementById('id_".$idtmp."_".$overload_fields[$fieldname]["id"]."')) && (document.forms[\"main\"].addon_".$overload_fields[$fieldname]["id"].".value))) {\n";
 					echo "alert (\"".preg_replace('/"/', '\"',$overload_fields[$fieldname]["name"]).preg_replace("/&nbsp;/", " ",$vocab["deux_points"]).$vocab["is_not_numeric"]."\");\n";
 					echo "return false\n}\n";
-
 				}
 			}
 		}
-
-		if ($enable_periods != 'y')
+		if ($enable_periods!='y')
 		{
-			?>
-			h = parseInt(document.forms["main"].hour.value);
+			?>   h = parseInt(document.forms["main"].hour.value);
 			m = parseInt(document.forms["main"].minute.value);
 			if (h > 23 || m > 59)
 			{
 				alert ("<?php echo get_vocab('you_have_not_entered') . '\n' . get_vocab('valid_time_of_day') ?>");
 				return false;
 			}
-			<?php } ?>
-			if (document.forms["main"].type.value == '0')
+			<?php
+		}
+		?>
+		if  (document.forms["main"].type.value=='0')
+		{
+			alert("<?php echo get_vocab("choose_a_type"); ?>");
+			return false;
+		}
+		<?php
+		if ($edit_type == "series")
+		{
+			?>
+
+			i1 = parseInt(document.forms["main"].id.value);
+			i2 = parseInt(document.forms["main"].rep_id.value);
+			n = parseInt(document.forms["main"].rep_num_weeks.value);
+			if ((document.forms["main"].elements['rep_day[0]'].checked || document.forms["main"].elements['rep_day[1]'].checked || document.forms["main"].elements['rep_day[2]'].checked || document.forms["main"].elements['rep_day[3]'].checked || document.forms["main"].elements['rep_day[4]'].checked || document.forms["main"].elements['rep_day[5]'].checked || document.forms["main"].elements['rep_day[6]'].checked) && (!document.forms["main"].rep_type[2].checked))
 			{
-				alert("<?php echo get_vocab("choose_a_type"); ?>");
+				alert("<?php echo get_vocab('no_compatibility_with_repeat_type'); ?>");
+				return false;
+			}
+			if ((!document.forms["main"].elements['rep_day[0]'].checked && !document.forms["main"].elements['rep_day[1]'].checked && !document.forms["main"].elements['rep_day[2]'].checked && !document.forms["main"].elements['rep_day[3]'].checked && !document.forms["main"].elements['rep_day[4]'].checked && !document.forms["main"].elements['rep_day[5]'].checked && !document.forms["main"].elements['rep_day[6]'].checked) && (document.forms["main"].rep_type[2].checked))
+			{
+				alert("<?php echo get_vocab('choose_a_day'); ?>");
 				return false;
 			}
 			<?php
-			if ($edit_type == "series")
-			{
+		}
+		?>
+		document.forms["main"].submit();
+		return true;
+	}
+</script>
+<?php
+if ($id == 0)
+	$A = get_vocab("addentry");
+else
+{
+	if ($edit_type == "series")
+		$A = get_vocab("editseries").grr_help("aide_grr_periodicite");
+	else
+	{
+		if (isset($_GET["copy"]))
+			$A = get_vocab("copyentry");
+		else
+			$A = get_vocab("editentry");
+	}
+}
+$B = get_vocab("namebooker");
+if (getSettingValue("remplissage_description_breve")=='1')
+{
+	$B .= " *";
+	$affiche_mess_asterisque=true;
+}
+$B .= get_vocab("deux_points");
+$C = htmlspecialchars($breve_description);
+$D = get_vocab("fulldescription");
+$E = htmlspecialchars ( $description );
+$F = get_vocab("date").get_vocab("deux_points");
+$sql = "select area_id from ".TABLE_PREFIX."_room where id=$room_id";
+$res = grr_sql_query($sql);
+$row = grr_sql_row($res, 0);
+$area_id = $row[0];
+$moderate = grr_sql_query1("select moderate from ".TABLE_PREFIX."_room where id='".$room_id."'");
+echo "<h2>$A</h2>\n";
+if ($moderate)
+	echo "<h3><span class='texte_ress_moderee'>".$vocab["reservations_moderees"]."</span></h3>\n";
+echo "<form id=\"main\" action=\"edit_entry_handler.php\" method=\"get\">\n";
+?>
+<script type="text/javascript" >
+	function changeResolution( formObj)
+	{
+		areasObj = eval( "formObj.areas" );
+		area = areasObj[areasObj.selectedIndex].value
+		resolutionsObj = eval( "formObj.elements['resolutions']" )
+		resolutionsObj.options[i] = null
+		return (changeResolution)
+	}
+	<?php
+	$sql2 = "select resolution_area from ".TABLE_PREFIX."_area where resolution_area = ".$resolution."'";
+	$res2 = grr_sql_query($sql2);
+	?>
+</script>
+<script type="text/javascript" >
+	function changeRooms( formObj )
+	{
+		areasObj = eval( "formObj.areas" );
+		area = areasObj[areasObj.selectedIndex].value
+		roomsObj = eval( "formObj.elements['rooms[]']" )
+		l=roomsObj.length;
+		for (i=l;i>0;i-- ) {
+			roomsObj.options[i] = null
+		}
+		switch (area)
+		{
+			<?php
+			if ($enable_periods == 'y')
+				$sql = "select id, area_name from ".TABLE_PREFIX."_area where id='".$area."' order by area_name";
+			else
+				$sql = "select id, area_name from ".TABLE_PREFIX."_area where enable_periods != 'y' order by area_name";
+			$res = grr_sql_query($sql);
+			if ($res)
+				for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
+				{
+					if (authUserAccesArea(getUserName(),$row[0])==1)
+					{
+						print "      case \"".$row[0]."\":\n";
+						$sql2 = "select id, room_name from ".TABLE_PREFIX."_room where area_id='".$row[0]."'";
+						$tab_rooms_noaccess = verif_acces_ressource(getUserName(), 'all');
+						foreach($tab_rooms_noaccess as $key){
+							$sql2 .= " and id != $key ";
+						}
+						$sql2 .= " order by room_name";
+						$res2 = grr_sql_query($sql2);
+						if ($res2) {
+							$len = grr_sql_count($res2);
+							print "roomsObj.size=".min($longueur_liste_ressources_max,$len).";";
+							for ($j = 0; ($row2 = grr_sql_row($res2, $j)); $j++)
+								print "        roomsObj.options[$j] = new Option(\"".str_replace('"','\\"',$row2[1])."\",".$row2[0] .")\n";
+							print "        roomsObj.options[0].selected = true\n";
+						}
+						print "        break\n";
+					}
+				}
 				?>
-				i1 = parseInt(document.forms["main"].id.value);
-				i2 = parseInt(document.forms["main"].rep_id.value);
-				n = parseInt(document.forms["main"].rep_num_weeks.value);
-				if ((document.forms["main"].elements['rep_day[0]'].checked || document.forms["main"].elements['rep_day[1]'].checked || document.forms["main"].elements['rep_day[2]'].checked || document.forms["main"].elements['rep_day[3]'].checked || document.forms["main"].elements['rep_day[4]'].checked || document.forms["main"].elements['rep_day[5]'].checked || document.forms["main"].elements['rep_day[6]'].checked) && (!document.forms["main"].rep_type[2].checked))
-				{
-					alert("<?php echo get_vocab('no_compatibility_with_repeat_type'); ?>");
-					return false;
-				}
-				if ((!document.forms["main"].elements['rep_day[0]'].checked && !document.forms["main"].elements['rep_day[1]'].checked && !document.forms["main"].elements['rep_day[2]'].checked && !document.forms["main"].elements['rep_day[3]'].checked && !document.forms["main"].elements['rep_day[4]'].checked && !document.forms["main"].elements['rep_day[5]'].checked && !document.forms["main"].elements['rep_day[6]'].checked) && (document.forms["main"].rep_type[2].checked))
-				{
-					alert("<?php echo get_vocab('choose_a_day'); ?>");
-					return false;
-				}
-				<?php
 			}
-
-
-			?>
-			document.forms["main"].submit();
-			return true;
 		}
 	</script>
 	<?php
-	if ($id == 0)
-		$A = get_vocab("addentry");
-	else
+	echo "<table width=\"100%\" border=\"1\"><tr>\n";
+	echo "<td style=\"width:50%; vertical-align:top;\">\n";
+	echo "<table width=\"100%\" border=\"0\" class=\"EditEntryTable\">\n";
+	if (((authGetUserLevel(getUserName(),-1,"room") >= $qui_peut_reserver_pour) or (authGetUserLevel(getUserName(),$area,"area") >= $qui_peut_reserver_pour)) and (($id == 0) or (($id!=0) and (authGetUserLevel(getUserName(),$room) > 2) )))
 	{
-		if ($edit_type == "series")
-			$A = get_vocab("editseries").grr_help("aide_grr_periodicite");
-		else
-			if (isset($_GET["copy"]))
-				$A = get_vocab("copyentry");
-			else
-				$A = get_vocab("editentry");
-		}
-
-		$B = get_vocab("namebooker");
-		if (getSettingValue("remplissage_description_breve")=='1') {
-			$B .= " *";
-			$affiche_mess_asterisque=true;
-		}
-		$B .= get_vocab("deux_points");
-		$C = htmlspecialchars($breve_description);
-		$D = get_vocab("fulldescription");
-		$E = htmlspecialchars ( $description );
-		$F = get_vocab("date").get_vocab("deux_points");
-		$sql = "SELECT area_id FROM ".TABLE_PREFIX."_room WHERE id=$room_id";
+		$flag_qui_peut_reserver_pour = "yes";
+		echo "<tr><td class=\"E\"><b>".ucfirst(trim(get_vocab("reservation au nom de"))).get_vocab("deux_points").grr_help("aide_grr_effectuer_reservation","modifier_reservant")."</b></td></tr>";
+		echo "<tr><td class=\"CL\"><select size=\"1\" name=\"beneficiaire\" id=\"beneficiaire\" onchange=\"setdefault('beneficiaire_default','');check_4();insertProfilBeneficiaire();\">\n";
+		echo "<option value=\"\" >".get_vocab("personne exterieure")."</option>\n";
+		$sql = "SELECT DISTINCT login, nom, prenom FROM ".TABLE_PREFIX."_utilisateurs WHERE  (etat!='inactif' and statut!='visiteur' ) or (login='".$beneficiaire."') order by nom, prenom";
 		$res = grr_sql_query($sql);
-		$row = grr_sql_row($res, 0);
-		$area_id = $row[0];
-		$moderate = grr_sql_query1("SELECT moderate FROM ".TABLE_PREFIX."_room WHERE id='".$room_id."'");
-		echo "<h2>$A</h2>\n";
-		if ($moderate)
-			echo "<h3><span class='texte_ress_moderee'>".$vocab["reservations_moderees"]."</span></h3>\n";
-		echo "<form id=\"main\" action=\"edit_entry_handler.php\" method=\"get\">\n";
-		?>
-		<script type="text/javascript" >
-			function changeResolution( formObj)
-			{
-				areasObj = eval( "formObj.areas" );
-				area = areasObj[areasObj.selectedIndex].value
-				resolutionsObj = eval( "formObj.elements['resolutions']" )
-				resolutionsObj.options[i] = null
-				return (changeResolution)
-			}
-			<?php
-			$sql2 = "select resolution_area from ".TABLE_PREFIX."_area where resolution_area = ".$resolution."'";
-			$res2 = grr_sql_query($sql2);
-			?>
-		</script>
-		<script type="text/javascript" >
-			function changeRooms( formObj )
-			{
-				areasObj = eval( "formObj.areas" );
-				area = areasObj[areasObj.selectedIndex].value
-				roomsObj = eval( "formObj.elements['rooms[]']" )
-				l = roomsObj.length;
-				for (i=l;i>0;i-- )
-					roomsObj.options[i] = null
-				switch (area)
-				{
-					<?php
-					if ($enable_periods == 'y')
-						$sql = "select id, area_name from ".TABLE_PREFIX."_area where id='".$area."' order by area_name";
-					else
-						$sql = "select id, area_name from ".TABLE_PREFIX."_area where enable_periods != 'y' order by area_name";
-					$res = grr_sql_query($sql);
-					if ($res)
-					{
-						for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
-						{
-							if (authUserAccesArea(getUserName(),$row[0])==1)
-							{
-								print "      case \"".$row[0]."\":\n";
-								$sql2 = "select id, room_name from ".TABLE_PREFIX."_room where area_id='".$row[0]."'";
-								$tab_rooms_noaccess = verif_acces_ressource(getUserName(), 'all');
-								foreach ($tab_rooms_noaccess as $key){
-									$sql2 .= " and id != $key ";
-								}
-								$sql2 .= " order by room_name";
-								$res2 = grr_sql_query($sql2);
-								if ($res2)
-								{
-									$len = grr_sql_count($res2);
-									print "roomsObj.size=".min($longueur_liste_ressources_max,$len).";";
-									for ($j = 0; ($row2 = grr_sql_row($res2, $j)); $j++)
-										print "        roomsObj.options[$j] = new Option(\"".str_replace('"','\\"',$row2[1])."\",".$row2[0] .")\n";
-									print "        roomsObj.options[0].selected = true\n";
-								}
-								print "        break\n";
-							}
-						}
-					}
-					?>
-				}
-			}
-		</script>
-		<?php
-		echo "<table width=\"100%\" border=\"1\"><tr>\n";
-		echo "<td style=\"width:50%; vertical-align:top;\">\n";
-		echo "<table width=\"100%\" border=\"0\" class=\"EditEntryTable\">\n";
-		if (((authGetUserLevel(getUserName(), -1, "room") >= $qui_peut_reserver_pour) || (authGetUserLevel(getUserName(), $area, "area") >= $qui_peut_reserver_pour)) && (($id == 0) || (($id != 0) && (authGetUserLevel(getUserName(),$room) > 2) )))
+		if ($res) for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 		{
-			$flag_qui_peut_reserver_pour = "yes";
-			echo "<tr><td class=\"E\"><b>".ucfirst(trim(get_vocab("reservation au nom de"))).get_vocab("deux_points").grr_help("aide_grr_effectuer_reservation","modifier_reservant")."</b></td></tr>";
-			echo "<tr><td class=\"CL\"><select size=\"1\" name=\"beneficiaire\" id=\"beneficiaire\" onchange=\"setdefault('beneficiaire_default','');check_4();insertProfilBeneficiaire();\">\n";
-			echo "<option value=\"\" >".get_vocab("personne exterieure")."</option>\n";
-			$sql = "SELECT DISTINCT login, nom, prenom FROM ".TABLE_PREFIX."_utilisateurs WHERE  (etat!='inactif' and statut!='visiteur' ) OR (login='".$beneficiaire."') ORDER BY nom, prenom";
-			$res = grr_sql_query($sql);
-			if ($res)
+			echo "<option value=\"".$row[0]."\" ";
+			if ($id == 0 and isset($_COOKIE['beneficiaire_default']))
+				$cookie = $_COOKIE['beneficiaire_default']; else $cookie="";
+			if ((!$cookie and strtolower($beneficiaire) == strtolower($row[0])) or ($cookie and $cookie==$row[0]))
 			{
-				for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
-				{
-					echo "<option value=\"".$row[0]."\" ";
-					if ($id == 0 && isset($_COOKIE['beneficiaire_default']))
-						$cookie = $_COOKIE['beneficiaire_default'];
-					else
-						$cookie = "";
-					if ((!$cookie && strtolower($beneficiaire) == strtolower($row[0])) || ($cookie && $cookie == $row[0]))
-						echo " selected=\"selected\" ";
-					echo ">$row[1] $row[2]</option>";
-				}
+				echo " selected=\"selected\" ";
 			}
-			$test = grr_sql_query1("SELECT login FROM ".TABLE_PREFIX."_utilisateurs WHERE login='".$beneficiaire."'");
-			if (($test == -1) && ($beneficiaire != ''))
-				echo "<option value=\"-1\" selected=\"selected\" >".get_vocab("utilisateur_inconnu").$beneficiaire.")</option>\n";
-			echo "</select>&nbsp;<input type=\"button\" value=\"".get_vocab("definir par defaut")."\" onclick=\"setdefault('beneficiaire_default',document.getElementById('main').beneficiaire.options[document.getElementById('main').beneficiaire.options.selectedIndex].value)\" />";
-			echo "<div id=\"div_profilBeneficiaire\">";
-			echo "</div>";
-			if (isset($statut_beneficiaire))
-				echo $statut_beneficiaire;
-			if (isset($statut_beneficiaire))
-				echo $statut_beneficiaire;
-			echo "</td></tr>\n";
-			if ($tab_benef["nom"] != "")
-				echo "<tr id=\"menu4\"><td>";
-			else
-				echo "<tr style=\"display:none\" id=\"menu4\"><td>";
-			echo get_vocab("nom beneficiaire")." *".get_vocab("deux_points")."<input type=\"text\" name=\"benef_ext_nom\" value=\"".htmlspecialchars($tab_benef["nom"])."\" size=\"20\" />";
-			$affiche_mess_asterisque = true;
-			if (getSettingValue("automatic_mail") == 'yes')
-				echo "<br />".get_vocab("email beneficiaire").get_vocab("deux_points")."<input type=\"text\" name=\"benef_ext_email\" value=\"".htmlspecialchars($tab_benef["email"])."\" size=\"20\" />";
-			echo "</td></tr>\n";
+			echo ">$row[1] $row[2]</option>";
 		}
-		else
-		$flag_qui_peut_reserver_pour = "no";
+		$test = grr_sql_query1("SELECT login FROM ".TABLE_PREFIX."_utilisateurs WHERE login='".$beneficiaire."'");
+		if (($test==-1) and ($beneficiaire!=''))
+		{
+			echo "<option value=\"-1\" selected=\"selected\" >".get_vocab("utilisateur_inconnu").$beneficiaire.")</option>\n";
+}
+echo "</select>&nbsp;<input type=\"button\" value=\"".get_vocab("definir par defaut")."\" onclick=\"setdefault('beneficiaire_default',document.getElementById('main').beneficiaire.options[document.getElementById('main').beneficiaire.options.selectedIndex].value)\" />";
+echo "<div id=\"div_profilBeneficiaire\">";
+echo "</div>";
+if (isset($statut_beneficiaire))
+	echo $statut_beneficiaire;
+if (isset($statut_beneficiaire))
+	echo $statut_beneficiaire;
+echo "</td></tr>\n";
+if ($tab_benef["nom"] != "")
+	echo "<tr id=\"menu4\"><td>";
+else
+	echo "<tr style=\"display:none\" id=\"menu4\"><td>";
+echo get_vocab("nom beneficiaire")." *".get_vocab("deux_points")."<input type=\"text\" name=\"benef_ext_nom\" value=\"".htmlspecialchars($tab_benef["nom"])."\" size=\"20\" />";
+$affiche_mess_asterisque=true;
+if (getSettingValue("automatic_mail") == 'yes')
+{
+	echo "<br />".get_vocab("email beneficiaire").get_vocab("deux_points")."<input type=\"text\" name=\"benef_ext_email\" value=\"".htmlspecialchars($tab_benef["email"])."\" size=\"20\" />";
+}
+echo "</td></tr>\n";
+}
+else
+	$flag_qui_peut_reserver_pour = "no";
 echo "<tr><td class=\"E\"><b>$B</b></td></tr>
 <tr><td class=\"CL\"><input id=\"name\" name=\"name\" size=\"80\" value=\"$C\" /></td></tr>
 <tr><td class=\"E\"><b>$D</b></td></tr>
@@ -742,7 +722,7 @@ if ($enable_periods=='y')
 	foreach ($periods_name as $p_num => $p_val)
 	{
 		echo "<option value=\"".$p_num."\"";
-		if (( isset( $period ) && $period == $p_num ) || $p_num == $start_min)
+		if ( ( isset( $period ) && $period == $p_num ) || $p_num == $start_min)
 			echo " selected=\"selected\"";
 		echo ">$p_val</option>\n";
 	}
@@ -752,9 +732,13 @@ else
 {
 	echo get_vocab("time")."</b>";
 	if (isset ($_GET['id']))
+	{
 		jQuery_TimePicker ('start','','','',$start_hour,$start_min,$resolution);
+	}
 	else
+	{
 		jQuery_TimePicker ('start','','','','','',$resolution);
+	}
 	if (!$twentyfourhour_format)
 	{
 		$checked = ($start_hour < 12) ? "checked=\"checked\"" : "";
@@ -775,14 +759,14 @@ if ($type_affichage_reser == 0)
 		$units = array("periods", "days");
 	else
 	{
-		$duree_max_resa_area = grr_sql_query1("SELECT duree_max_resa_area FROM ".TABLE_PREFIX."_area WHERE id='".$area."'");
+		$duree_max_resa_area = grr_sql_query1("select duree_max_resa_area from ".TABLE_PREFIX."_area where id='".$area."'");
 		if ($duree_max_resa_area < 0)
 			$units = array("minutes", "hours", "days", "weeks");
 		else if ($duree_max_resa_area < 60)
 			$units = array("minutes");
-		else if ($duree_max_resa_area < 60 * 24)
+		else if ($duree_max_resa_area < 60*24)
 			$units = array("minutes", "hours");
-		else if ($duree_max_resa_area < 60 * 24 * 7)
+		else if ($duree_max_resa_area < 60*24*7)
 			$units = array("minutes", "hours", "days");
 		else
 			$units = array("minutes", "hours", "days", "weeks");
@@ -790,18 +774,17 @@ if ($type_affichage_reser == 0)
 	while (list(,$unit) = each($units))
 	{
 		echo "<option value=\"".$unit."\"";
-		if ($dur_units == get_vocab($unit))
-			echo " selected=\"selected\"";
+		if ($dur_units ==  get_vocab($unit)) echo " selected=\"selected\"";
 		echo ">".get_vocab($unit)."</option>\n";
 	}
 	echo "</select>\n";
 	$fin_jour = $eveningends;
-	$minute = $resolution / 60;
+	$minute = $resolution/60;
 	$minute_restante = $minute % 60;
-	$heure_ajout = ($minute - $minute_restante) / 60;
+	$heure_ajout = ($minute - $minute_restante)/60;
 	if ($minute_restante < 10)
 		$minute_restante = "0".$minute_restante;
-	$heure_finale = round($fin_jour + $heure_ajout, 0);
+	$heure_finale = round($fin_jour+$heure_ajout,0);
 	if ($heure_finale > 24)
 	{
 		$heure_finale_restante = $heure_finale % 24;
@@ -821,7 +804,7 @@ else
 	echo "<table border=\"0\"><tr><td>\n";
 	jQuery_DatePicker('end');
 	echo "</td>";
-	if ($enable_periods == 'y')
+	if ($enable_periods=='y')
 	{
 		echo "<td class=\"E\"><b>".get_vocab("period")."</b></td>\n";
 		echo "<td class=\"CL\">\n";
@@ -829,7 +812,7 @@ else
 		foreach ($periods_name as $p_num => $p_val)
 		{
 			echo "<option value=\"".$p_num."\"";
-			if ((isset($end_period) && $end_period == $p_num ) || ($p_num+1) == $end_min)
+			if ( ( isset( $end_period ) && $end_period == $p_num ) || ($p_num+1) == $end_min)
 				echo " selected=\"selected\"";
 			echo ">$p_val</option>\n";
 		}
@@ -839,21 +822,25 @@ else
 	{
 		echo "<td class=\"E\"><b>".get_vocab("time")."</b><td class=\"CL\">";
 		if (isset ($_GET['id']))
-			jQuery_TimePicker ('end', 'end_', '', '', $end_hour, $end_min, $resolution);
+		{
+			jQuery_TimePicker ('end','end_','','',$end_hour,$end_min,$resolution);
+		}
 		else
-			jQuery_TimePicker ('end', 'end_', '', '', '', '', $resolution);
+		{
+			jQuery_TimePicker ('end','end_','','','','',$resolution);
+		}
 		if (!$twentyfourhour_format)
 		{
 			$checked = ($end_hour < 12) ? "checked=\"checked\"" : "";
-			echo "<input name=\"ampm\" type=\"radio\" value=\"am\" $checked />".date("a", mktime(1, 0, 0, 1, 1, 1970));
+			echo "<input name=\"ampm\" type=\"radio\" value=\"am\" $checked />".date("a",mktime(1,0,0,1,1,1970));
 			$checked = ($end_hour >= 12) ? "checked=\"checked\"" : "";
-			echo "<input name=\"ampm\" type=\"radio\" value=\"pm\" $checked />".date("a", mktime(13, 0, 0, 1, 1, 1970));
+			echo "<input name=\"ampm\" type=\"radio\" value=\"pm\" $checked />".date("a",mktime(13,0,0,1,1,1970));
 		}
 		echo "</td>";
 	}
 	echo "</tr></table>\n</td></tr>";
 }
-if (($delais_option_reservation > 0) && (($modif_option_reservation == 'y') || ((($modif_option_reservation == 'n') && ($option_reservation != -1)) ) ))
+if (($delais_option_reservation > 0) and (($modif_option_reservation == 'y') or ((($modif_option_reservation == 'n') and ($option_reservation!=-1)))))
 {
 	$day   = date("d");
 	$month = date("m");
@@ -865,11 +852,11 @@ if (($delais_option_reservation > 0) && (($modif_option_reservation == 'y') || (
 		$k = 0;
 		$selected = 'n';
 		$aff_options = "";
-		while ($k < $delais_option_reservation + 1)
+		while ($k < $delais_option_reservation+1)
 		{
-			$day_courant = $day + $k;
-			$date_courante = mktime(0, 0, 0, $month, $day_courant, $year);
-			$aff_date_courante = time_date_string_jma($date_courante, $dformat);
+			$day_courant = $day+$k;
+			$date_courante = mktime(0,0,0,$month,$day_courant,$year);
+			$aff_date_courante = time_date_string_jma($date_courante,$dformat);
 			$aff_options .= "<option value = \"".$date_courante."\" ";
 			if ($option_reservation == $date_courante)
 			{
@@ -880,8 +867,10 @@ if (($delais_option_reservation > 0) && (($modif_option_reservation == 'y') || (
 			$k++;
 		}
 		echo "<option value = \"-1\">".get_vocab("Reservation confirmee")."</option>\n";
-		if (($selected == 'n') && ($option_reservation != -1))
+		if (($selected == 'n') and ($option_reservation != -1))
+		{
 			echo "<option value = \"".$option_reservation."\" selected=\"selected\">".time_date_string_jma($option_reservation,$dformat)."</option>\n";
+		}
 		echo $aff_options;
 		echo "</select>";
 	}
@@ -893,7 +882,6 @@ if (($delais_option_reservation > 0) && (($modif_option_reservation == 'y') || (
 	}
 	echo "<br />".get_vocab("avertissement_reservation_a_confirmer")."</b>\n";
 	echo "</td></tr>\n";
-
 }
 echo "<tr ";
 if ($nb_areas == 1)
@@ -909,45 +897,32 @@ if ($enable_periods == 'y')
 else
 	$sql = "select id, area_name from ".TABLE_PREFIX."_area where enable_periods != 'y' order by area_name";
 $res = grr_sql_query($sql);
-if ($res)
+if ($res) for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 {
-	for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
-	{
-		if (authUserAccesArea(getUserName(),$row[0]) == 1)
-		{
-			$selected = "";
-			if ($row[0] == $area)
-				$selected = "selected=\"selected\"";
-			print "<option ".$selected." value=\"".$row[0]."\">".$row[1]."</option>\n";
-		}
+	if (authUserAccesArea(getUserName(),$row[0])==1) {
+		$selected = "";
+		if ($row[0] == $area) $selected = "selected=\"selected\"";
+		print "<option ".$selected." value=\"".$row[0]."\">".$row[1]."</option>\n";
 	}
 }
 echo "</select>\n";
 echo "</td></tr>\n";
-
-// *****************************************
-// Edition de la partie ressources
-// *****************************************
-
 echo "\n<!-- ************* Ressources edition ***************** -->\n";
-
 echo "<tr><td class=\"E\"><b>".get_vocab("rooms").get_vocab("deux_points")."</b></td></tr>\n";
 $sql = "select id, room_name, description from ".TABLE_PREFIX."_room where area_id=$area_id ";
 $tab_rooms_noaccess = verif_acces_ressource(getUserName(), 'all');
-foreach ($tab_rooms_noaccess as $key)
+foreach($tab_rooms_noaccess as $key){
 	$sql .= " and id != $key ";
+}
 $sql .= " order by order_display,room_name";
 $res = grr_sql_query($sql);
 $len = grr_sql_count($res);
 echo "<tr><td class=\"CL\" style=\"vertical-align:top;\"><table border=\"0\"><tr><td><select name=\"rooms[]\" size=\"".min($longueur_liste_ressources_max,$len)."\" multiple=\"multiple\">";
-if ($res)
+if ($res) for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 {
-	for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
-	{
-		$selected = "";
-		if ($row[0] == $room_id) $selected = "selected=\"selected\"";
-		echo "<option $selected value=\"".$row[0]."\">".$row[1]."</option>\n";
-	}
+	$selected = "";
+	if ($row[0] == $room_id) $selected = "selected=\"selected\"";
+	echo "<option $selected value=\"".$row[0]."\">".$row[1]."</option>\n";
 }
 echo "</select></td><td>".get_vocab("ctrl_click")."</td></tr></table>\n";
 echo "</td></tr>\n";
@@ -961,8 +936,7 @@ echo "<tr><td class=\"E\">";
 	insertProfilBeneficiaire();
 </script>
 <?php
-if ($affiche_mess_asterisque)
-	get_vocab("required");
+if ($affiche_mess_asterisque) get_vocab("required");
 echo "&nbsp;</td></tr>\n";
 echo "</table>\n";
 echo "</td>\n";
@@ -970,15 +944,22 @@ echo "<td style=\"vertical-align:top;\">\n";
 echo "<table width=\"100%\" border=\"0\">";
 $sql = "select id from ".TABLE_PREFIX."_area;";
 $res = grr_sql_query($sql);
-// *****************************************
-// Edition de la partie périodique
-//
-// *****************************************
 echo "\n<!-- ************* Periodic edition ***************** -->\n";
 $weeklist = array("unused","every week","week 1/2","week 1/3","week 1/4","week 1/5");
-if (($edit_type == "series") || (isset($flag_periodicite)))
+if (($edit_type == "series") or (isset($flag_periodicite)))
 {
-	echo "<tr><td id=\"ouvrir\" style=\"cursor: inherit\" align=\"center\" class=\"fontcolor4\"><span class=\"bground\"><b><a href='javascript:clicMenu(1);check_5()'>".get_vocab("click_here_for_series_open")."</a></b></span>".grr_help("aide_grr_periodicite")."</td></tr><tr><td style=\"display:none; cursor: inherit\" id=\"fermer\" align=\"center\" class=\"fontcolor4\"><span class=\"bground\"><b><a href='javascript:clicMenu(1);check_5()'>".get_vocab("click_here_for_series_close")."</a></b></span>".grr_help("aide_grr_periodicite")."</td></tr>";
+	echo "
+	<tr>
+		<td id=\"ouvrir\" style=\"cursor: inherit\" align=\"center\" class=\"fontcolor4\">
+			<span class=\"bground\"><b><a href='javascript:clicMenu(1);check_5()'>".get_vocab("click_here_for_series_open")."</a></b></span>".grr_help("aide_grr_periodicite")."
+		</td>
+	</tr>
+	<tr>
+		<td style=\"display:none; cursor: inherit\" id=\"fermer\" align=\"center\" class=\"fontcolor4\">
+			<span class=\"bground\"><b><a href='javascript:clicMenu(1);check_5()'>".get_vocab("click_here_for_series_close")."</a></b></span>".grr_help("aide_grr_periodicite")."
+		</td>
+	</tr>
+	";
 	echo "<tr><td><table border=\"0\" style=\"display:none\" id=\"menu1\" width=\"100%\">\n ";
 	echo "<tr><td class=\"F\"><b>".get_vocab("rep_type")."</b></td></tr><tr><td class=\"CL\">\n";
 	echo "<table border=\"0\"  width=\"100%\" >\n";
@@ -986,47 +967,43 @@ if (($edit_type == "series") || (isset($flag_periodicite)))
 		$max = 7;
 	else
 		$max = 6;
-	for($i = 0; $i < $max ; $i++)
+	for($i = 0; $i<$max ; $i++)
 	{
-	  if ($i != 5)
-	  {
-	  	echo "<tr><td><input name=\"rep_type\" type=\"radio\" value=\"" . $i . "\"";
-	  	if ($i == $rep_type)
-	  		echo " checked=\"checked\"";
-	  	if (($i == 3) && ($rep_type == 5))
-	  		echo " checked=\"checked\"";
-	  	echo " onclick=\"check_1()\" /></td><td>";
-	  	if (($i != 2) && ($i != 3))
-	  		echo get_vocab("rep_type_$i");
-	  	echo "\n";
-	  	if ($i == '2')
-	  	{
-	  		echo "<select name=\"rep_num_weeks\" size=\"1\" onfocus=\"check_2()\" onclick=\"check_2()\">\n";
-	  		echo "<option value=\"1\" >".get_vocab("every week")."</option>\n";
-	  		for ($weekit = 2; $weekit < 6; $weekit++)
-	  		{
-	  			echo "<option value=\"".$weekit."\"";
-	  			if ($rep_num_weeks == $weekit)
-	  				echo " selected=\"selected\"";
-	  			echo ">".get_vocab($weeklist[$weekit])."</option>\n";
-	  		}
-	  		echo "</select>\n";
-	  	}
-	  	if ($i == '3')
-	  	{
-	  		$monthrep3 = "";
-	  		$monthrep5 = "";
-	  		if ($rep_type == 3)
-	  			$monthrep3 = " selected=\"selected\" ";
-	  		if ($rep_type == 5)
-	  			$monthrep5 = " selected=\"selected\" ";
-	  		echo "<select name=\"rep_month\" size=\"1\" onfocus=\"check_3()\" onclick=\"check_3()\">\n";
-	  		echo "<option value=\"3\" $monthrep3>".get_vocab("rep_type_3")."</option>\n";
-	  		echo "<option value=\"5\" $monthrep5>".get_vocab("rep_type_5")."</option>\n";
-	  		echo "</select>\n";
-	  	}
-	  	echo "</td></tr>\n";
-	  }
+		if ($i != 5)
+		{
+			echo "<tr><td><input name=\"rep_type\" type=\"radio\" value=\"" . $i . "\"";
+			if ($i == $rep_type)
+				echo " checked=\"checked\"";
+			if (($i == 3) and ($rep_type==5))
+				echo " checked=\"checked\"";
+			echo " onclick=\"check_1()\" /></td><td>";
+			if (($i != 2) and ($i != 3))  echo get_vocab("rep_type_$i");
+			echo "\n";
+			if ($i == '2')
+			{
+				echo "<select name=\"rep_num_weeks\" size=\"1\" onfocus=\"check_2()\" onclick=\"check_2()\">\n";
+				echo "<option value=\"1\" >".get_vocab("every week")."</option>\n";
+				for ( $weekit=2 ; $weekit<6 ; $weekit++ )
+				{
+					echo "<option value=\"".$weekit."\"";
+					if ($rep_num_weeks == $weekit) echo " selected=\"selected\"";
+					echo ">".get_vocab($weeklist[$weekit])."</option>\n";
+				}
+				echo "</select>\n";
+			}
+			if ($i == '3')
+			{
+				$monthrep3 = "";
+				$monthrep5 = "";
+				if ($rep_type == 3) $monthrep3 = " selected=\"selected\" ";
+				if ($rep_type == 5) $monthrep5 = " selected=\"selected\" ";
+				echo "<select name=\"rep_month\" size=\"1\" onfocus=\"check_3()\" onclick=\"check_3()\">\n";
+				echo "<option value=\"3\" $monthrep3>".get_vocab("rep_type_3")."</option>\n";
+				echo "<option value=\"5\" $monthrep5>".get_vocab("rep_type_5")."</option>\n";
+				echo "</select>\n";
+			}
+			echo "</td></tr>\n";
+		}
 	}
 	echo "</table>\n\n";
 	echo "<!-- ***** Fin de périodidité ***** -->\n";
@@ -1042,15 +1019,14 @@ if (($edit_type == "series") || (isset($flag_periodicite)))
 	{
 		$wday = ($i + $weekstarts) % 7;
 		echo "<input name=\"rep_day[$wday]\" type=\"checkbox\"";
-		if ($rep_day[$wday])
-			echo " checked=\"checked\"";
+		if ($rep_day[$wday]) echo " checked=\"checked\"";
 		echo " onclick=\"check_1()\" />" . day_name($wday) . "\n";
 	}
 	echo "</td></tr>\n</table>\n";
 	echo "<table style=\"display:none\" id=\"menuP\" width=\"100%\">\n";
 	echo "<tr><td class=\"F\"><b>Jours/Cycle</b></td></tr>\n";
 	echo "<tr><td class=\"CL\">";
-	for ($i = 1; $i < (getSettingValue("nombre_jours_Jours/Cycles") + 1); $i++)
+	for ($i = 1; $i < (getSettingValue("nombre_jours_Jours/Cycles")+1); $i++)
 	{
 		$wday = $i;
 		echo "<input type=\"radio\" name=\"rep_jour_\" value=\"$wday\"";
@@ -1062,7 +1038,6 @@ if (($edit_type == "series") || (isset($flag_periodicite)))
 		echo " onclick=\"check_1()\" />".get_vocab("rep_type_6")." ".$wday. "\n";
 	}
 	echo "</td></tr>\n</table></td></tr>\n";
-
 }
 else
 {
@@ -1095,96 +1070,84 @@ else
 			$opt .= get_vocab('jour_cycle').' '.$jours_c;
 		}
 		if ($opt)
-		{
 			if ($nb == 1)
 				echo '<tr><td class="E"><b>'.get_vocab('rep_rep_day').'</b> '.$opt.'</td></tr>'."\n";
 			else
 				echo '<tr><td class="E"><b>'.get_vocab('rep_rep_days').'</b> '.$opt.'</td></tr>'."\n";
-			if ($enable_periods == 'y')
-				list( $start_period, $start_date) =  period_date_string($start_time);
-			else
-				$start_date = time_date_string($start_time,$dformat);
+			if ($enable_periods=='y') list( $start_period, $start_date) =  period_date_string($start_time);
+			else $start_date = time_date_string($start_time,$dformat);
 			$duration = $end_time - $start_time;
-			if ($enable_periods == 'y')
-				toPeriodString($start_period, $duration, $dur_units);
-			else
-				toTimeString($duration, $dur_units, true);
+			if ($enable_periods=='y') toPeriodString($start_period, $duration, $dur_units);
+			else toTimeString($duration, $dur_units, true);
 			echo '<tr><td class="E"><b>'.get_vocab("date").get_vocab("deux_points").'</b> '.$start_date.'</td></tr>'."\n";
 			echo '<tr><td class="E"><b>'.get_vocab("duration").'</b> '.$duration .' '. $dur_units.'</td></tr>'."\n";
 			echo '<tr><td class="E"><b>'.get_vocab('rep_end_date').'</b> '.$rep_end_date.'</td></tr>'."\n";
+
 		}
 	}
-}
-echo "\n</table>\n";
-echo "</td></tr></table>\n";
-?>
-<div id="fixe">
-	<?php
-
-$allowupload = getSettingValue("file");
-if ($allowupload != 0)
-{
-	if ((getUserName() != '') && (authGetUserLevel(getUserName(),$room_id) >= 3))
-	{
-		?>
-	<script type="text/javascript">
-		<?php
-		$timestamp = time();
-		?>
-		$(function() {
-			$('#file_upload').uploadify({
-				'formData'     : {
-					'timestamp' : '<?php echo $timestamp;?>',
-					'token'     : '<?php echo md5('unique_salt' . $timestamp);?>',
-					'id'     : '<?php echo $id ;?>'
-				},
-				'swf'      : '/uploadify/uploadify.swf',
-				'uploader' : '/uploadify/uploadify.php',
-				'buttonText'     : 'Lier fichiers ...' ,
-				'multi'    : true
-			});
-		});
-	</script>
-
-	<?php
-}
-}
-?>
-<input type="button" value="<?php echo get_vocab("cancel")?>" onclick="window.location.href='<?php echo $page.".php?year=".$year."&amp;month=".$month."&amp;day=".$day."&amp;area=".$area."&amp;room=".$room; ?>'" />
-<input type="button" value="<?php echo get_vocab("save")?>" onclick="Save_entry();validate_and_submit();" />
-<input type="hidden" name="rep_id"    value="<?php echo $rep_id?>" />
-<input type="hidden" name="edit_type" value="<?php echo $edit_type?>" />
-<input type="hidden" name="page" value="<?php echo $page?>" />
-<input type="hidden" name="room_back" value="<?php echo $room_id?>" />
-<?php
-if ($flag_qui_peut_reserver_pour == "no")
-	echo "<input type=\"hidden\" name=\"beneficiaire\" value=\"$beneficiaire\" />\n";
-if (!isset($statut_entry))
-	$statut_entry = "-";
-echo "<input type=\"hidden\" name=\"statut_entry\" value=\"$statut_entry\" />\n";
-echo "<input type=\"hidden\" name=\"create_by\" value=\"".$create_by."\" />";
-if ($id != 0)
-{
-	if (isset($_GET["copy"]))
-		$id = NULL;
-	else
-		echo "<input type=\"hidden\" name=\"id\" value=\"$id\" />\n";
-	echo "<input type=\"hidden\" name=\"type_affichage_reser\" value=\"$type_affichage_reser\" />\n";
-}
-?>
-</div>
-</form>
-<script type="text/javascript" >
-	document.getElementById('main').name.focus();
-	<?php
-	if (isset($cookie) && $cookie)
-		echo "check_4();";
-	if (($id <> "") && (!isset($flag_periodicite)))
-		echo "clicMenu('1'); check_5();\n";
-	if (isset($Err) && $Err=="yes")
-		echo "timeoutID = window.setTimeout(\"Load_entry();check_5();\",500);\n";
+	echo "\n</table>\n";
+	echo "</td></tr></table>\n";
 	?>
-</script>
-<?php
-include "include/trailer.inc.php";
-?>
+	<div id="fixe">
+		<?php
+		$allowupload = getSettingValue("file");
+		if ($allowupload != 0)
+		{
+			if ( (getUserName()!='') and (authGetUserLevel(getUserName(),$room_id) >= 3) )
+			{
+				?>
+				<script type="text/javascript">
+					<?php $timestamp = time();?>
+					$(function() {
+						$('#file_upload').uploadify({
+							'formData'     : {
+								'timestamp' : '<?php echo $timestamp;?>',
+								'token'     : '<?php echo md5('unique_salt' . $timestamp);?>',
+								'id'     : '<?php echo $id ;?>'
+							},
+							'swf'      : '/uploadify/uploadify.swf',
+							'uploader' : '/uploadify/uploadify.php',
+							'buttonText'     : 'Lier fichiers ...' ,
+							'multi'    : true
+						});
+					});
+				</script>
+				<?php
+			}
+		}
+		?>
+		<input type="button" value="<?php echo get_vocab("cancel")?>" onclick="window.location.href='<?php echo $page.".php?year=".$year."&amp;month=".$month."&amp;day=".$day."&amp;area=".$area."&amp;room=".$room; ?>'" />
+		<input type="button" value="<?php echo get_vocab("save")?>" onclick="Save_entry();validate_and_submit();" />
+		<input type="hidden" name="rep_id"    value="<?php echo $rep_id?>" />
+		<input type="hidden" name="edit_type" value="<?php echo $edit_type?>" />
+		<input type="hidden" name="page" value="<?php echo $page?>" />
+		<input type="hidden" name="room_back" value="<?php echo $room_id?>" />
+		<?php
+		if ($flag_qui_peut_reserver_pour == "no")
+		{
+			echo "<input type=\"hidden\" name=\"beneficiaire\" value=\"$beneficiaire\" />\n";
+		}
+		if (!isset($statut_entry))
+			$statut_entry = "-";
+		echo "<input type=\"hidden\" name=\"statut_entry\" value=\"$statut_entry\" />\n";
+		echo "<input type=\"hidden\" name=\"create_by\" value=\"".$create_by."\" />";
+		if ($id!=0)
+			if (isset($_GET["copy"]))
+				$id = NULL;
+			else
+				echo "<input type=\"hidden\" name=\"id\" value=\"$id\" />\n";
+			echo "<input type=\"hidden\" name=\"type_affichage_reser\" value=\"$type_affichage_reser\" />\n"; ?>
+		</div>
+	</form>
+	<script type="text/javascript" >
+		document.getElementById('main').name.focus();
+		<?php
+		if (isset($cookie) and $cookie)
+			echo "check_4();";
+		if (($id <> "") and (!isset($flag_periodicite)))
+			echo "clicMenu('1'); check_5();\n";
+		if (isset($Err) and $Err=="yes")
+			echo "timeoutID = window.setTimeout(\"Load_entry();check_5();\",500);\n";
+		?>
+	</script>
+	<?php include "include/trailer.inc.php" ?>

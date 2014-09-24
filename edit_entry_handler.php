@@ -316,7 +316,8 @@ else
 	}
 	if (!isset($_GET["end_day"]) || !isset($_GET["end_month"]) || !isset($_GET["end_year"]) || !isset($_GET["end_hour"]) || !isset($_GET["end_minute"]))
 		$erreur = 'y';
-	else {
+	else
+	{
 		$end_day = $_GET["end_day"];
 		$end_year = $_GET["end_year"];
 		$end_month = $_GET["end_month"];
@@ -344,6 +345,7 @@ else
 		if (!checkdate($end_month, $end_day, $end_year))
 			$erreur = 'y';
 		$starttime = mktime($hour, $minute, 0, $month, $day, $year);
+		var_dump($starttime);
 		$endtime   = mktime($end_hour, $end_minute, 0, $end_month, $end_day, $end_year);
 		if ($endtime <= $starttime)
 			$erreur = 'y';
