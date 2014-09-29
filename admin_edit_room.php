@@ -563,7 +563,7 @@ if ((!empty($room)) || (isset($area_id)))
 			echo " checked=\"checked\" ";
 		echo "/></td></tr>\n";
 		// Afficher la fiche de presentation de la ressource
-		echo "<tr><td>".get_vocab("montrer_fiche_présentation_ressource")."</td><td><input type=\"checkbox\" name=\"show_fic_room\" ";
+		echo "<tr><td>".get_vocab("montrer_fiche_presentation_ressource")."</td><td><input type=\"checkbox\" name=\"show_fic_room\" ";
 		if ($row['show_fic_room'] == "y")
 			echo " checked=\"checked\" ";
 		echo "/><a href='javascript:centrerpopup(\"view_room.php?id_room=$room\",600,480,\"scrollbars=yes,statusbar=no,resizable=yes\")' title=\"".get_vocab("fiche_ressource")."\"><img src=\"img_grr/details.png\"  alt=\"details\" class=\"image\"  /></a></td></tr>\n";
@@ -688,7 +688,7 @@ if ($row["qui_peut_reserver_pour"]==2)
 echo ">".get_vocab("tous les utilisateurs")."</option>\n
 </select></td></tr>\n";
 // Activer la fonctionalite "ressource empruntee/restituee"
-echo "<tr><td>".get_vocab("activer fonctionalité ressource empruntee restituee").grr_help("aide_grr_ressource_empruntee")."</td><td><input type=\"checkbox\" name=\"active_ressource_empruntee\" ";
+echo "<tr><td>".get_vocab("activer_fonctionalite_ressource_empruntee_restituee").grr_help("aide_grr_ressource_empruntee")."</td><td><input type=\"checkbox\" name=\"active_ressource_empruntee\" ";
 if ($row['active_ressource_empruntee'] == "y")
 	echo " checked=\"checked\" ";
 echo "/></td></tr>\n";

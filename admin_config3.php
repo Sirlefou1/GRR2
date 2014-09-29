@@ -290,8 +290,8 @@ echo "\n</td></tr>";
 echo "\n</table>";
 
 # tâche automatique de suppression
-echo "\n<hr /><h3>".get_vocab("suppression automatique des réservations")."</h3>";
-echo "\n<p>".get_vocab('Explications suppression automatique des réservations').grr_help("aide_grr_verif_auto_grr")."</p>";
+echo "\n<hr /><h3>".get_vocab("suppression_automatique_des_reservations")."</h3>";
+echo "\n<p>".get_vocab('Explications suppression_automatique_des_reservations').grr_help("aide_grr_verif_auto_grr")."</p>";
 echo "\n<table cellspacing=\"5\">";
 echo "\n<tr><td>".get_vocab("verif_reservation_auto0")."</td><td>";
 echo "\n<input type='radio' name='verif_reservation_auto' value='0' ";

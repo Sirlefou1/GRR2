@@ -13,7 +13,7 @@ $vocab['accessdenied'] = "Access denied";
 $vocab['accessdeniedtoomanybooking'] = "Access denied: Your reservation request has been rejected as it would be above the number of authorized reservations!";
 $vocab['acces_fiche_reservation_msg'] = "Who has access to the detailed reservation form of a resource?";
 $vocab['action'] = "Action";
-$vocab['activer fonctionalité ressource empruntee restituee'] = "Activate the functionality \"borrowed / restored resource\"";
+$vocab['activer_fonctionalite_ressource_empruntee_restituee'] = "Activate the functionality \"borrowed / restored resource\"";
 $vocab['Activer_module_jours_cycles'] = "Activate the functionalities \"cycle days\"";
 $vocab['Activer_module_multisite'] = "Activate the functionality \"multisite\"";
 $vocab['active_lcs'] = "Activate the taking into consideration of the service SSO of LCS";
@@ -391,7 +391,7 @@ $vocab['Explications des parametres configuration envoi automatique mails'] = "G
 The \"smtp\" method can be also used with a local server but it's better to privilege the \"mail\" method  with a local server because it is faster.";
 $vocab['Explications methode smtp 1'] = " If you choose the \"smtp\" method, specify the SMTP server ";
 $vocab['Explications methode smtp 2'] = "If you choose the \"smtp\" method, and the serveur needs an authentification, specify the user name and password.";
-$vocab['Explications suppression automatique des réservations'] = "The activation of some GRR funcionalities requires the possibility of setting up the automatic  execution of tasks.<br />For example the automatic deletion of some reservations in the case of the \"reservations to be confirmed\", or still the sending of a delay notification in case of non-restitution of a resource.
+$vocab['Explications suppression_automatique_des_reservations'] = "The activation of some GRR funcionalities requires the possibility of setting up the automatic  execution of tasks.<br />For example the automatic deletion of some reservations in the case of the \"reservations to be confirmed\", or still the sending of a delay notification in case of non-restitution of a resource.
 <br />To make these automatic tasks of suppression, two configurations are possible, each one getting its own disadvantages and advantages. Consult the help to have more details.
 ";
 $vocab['explications_active_type'] = "<b>Comment: </b> when a type is not ticked, it's no more available to users, but what is already made still appear on plannings with this type, although desactivated.";
@@ -542,9 +542,8 @@ $vocab['modify_booking'] = " has modified the reservation of ";
 $vocab['month'] = "Month";
 $vocab['monthafter'] = "View following month";
 $vocab['monthbefore'] = "View previous month";
-$vocab['montrer_fiche_présentation_ressource'] = "make visible the presentation card of the resource in the public interface.";
-$vocab['morningstarts_area'] = "day start hour
-";
+$vocab['montrer_fiche_presentation_ressource'] = "Make visible the presentation card of the resource in the public interface.";
+$vocab['morningstarts_area'] = "day start hour";
 $vocab['motif'] = "Reason";
 $vocab['mrbs'] = "GRR (Gestion et Reservation de Ressources - Management and Reservation of Resources) ";
 $vocab['msg_del_bookings'] = "Caution, the changes in reservation start and end dates that you have made are going to trigger definite deleting of reservations already made outside the new authorized dates!<br /><br />Are you sure you want to go on?";
@@ -774,7 +773,7 @@ $vocab['summary_header_resa'] = "Detailed account of reservations";
 $vocab['summary_only'] = "Summary";
 $vocab['sum_by_creator'] = "Creator";
 $vocab['sum_by_descrip'] = "Short description";
-$vocab['suppression automatique des réservations'] = "Automatic execution method of tasks";
+$vocab['suppression_automatique_des_reservations'] = "Automatic execution method of tasks";
 $vocab['suppression_automatique'] = "The delay of confirmation of the reservation is exceeded. Automatic suppression of the reservation of";
 $vocab['suppression_en_bloc'] = "Suppression of reservations";
 $vocab['suppression_en_bloc_result'] = "The suppression procedure of reservations is finished.<br /><b>Number of executed suppressions: </b>";
