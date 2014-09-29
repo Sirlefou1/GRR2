@@ -162,7 +162,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 			if (isset($_GET['room']) && $_GET['room'] != null)
 				$action .= "&amp;room=".$_GET['room'] ;
 			if (isset($_GET['id_site']) && $_GET['id_site'] != null)
-				$action .= "&amp;site=".$_GET['site'] ;
+				$action .= "&amp;site=".$_GET['id_site'] ;
 			//MAJ Hugo FORESTIER - Ajout d'un bouton "aujourd'hui" fonctionnel en utilisant la variable $action
 			//19/05/2013
 			$s.= "<br/><button title=\"".htmlspecialchars(get_vocab("gototoday"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='".$action."';\">".get_vocab("gototoday")."</button>";
