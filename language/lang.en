@@ -930,4 +930,6 @@ $vocab['display_file2'] = "The sending files is allowed ";
 $vocab['display_file3'] = "The sending files is not allowed ";
 $vocab['top_of_page'] = "^ Top of page";
 $vocab['nomR'] = "name";
+
+$vocab['Generer_pdf'] = "Generate PDF";
 ?>

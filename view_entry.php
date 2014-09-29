@@ -38,8 +38,15 @@ $grr_script_name = 'view_entry.php';
 require_once('include/settings.inc.php');
 if (!loadSettings())
 	die("Erreur chargement settings");
-require_once('include/session.inc.php');
-include_once('include/language.inc.php');
+require_once("./include/session.inc.php");
+// Resume session
+if (!grr_resumeSession())
+{
+	header("Location: ./logout.php?auto=1&url=$url");
+	die();
+}
+// Paramètres langage
+include "include/language.inc.php";
 if (getSettingValue("display_level_view_entry") == '0')
 	header('Content-Type: text/xml;	charset=utf-8');
 $fin_session = 'n';
@@ -591,7 +598,7 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 					if (!isset($room))
 						$room = 1;
 					if ((authGetUserLevel(getUserName(), $area_id, "area") > 1) || (authGetUserLevel(getUserName(), $room) >= 4))
-						echo "<a href=\"javascript:generationpdf()\" class=\"button\">Générer un PDF</a> ";
+						echo "<a href=\"javascript:generationpdf()\" class=\"button\">".get_vocab("Generer_pdf")."</a> ";
 					?>
 					<div id="file">
 					</div>

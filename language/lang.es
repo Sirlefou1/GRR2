@@ -913,5 +913,5 @@ $vocab['display_level_view_entry_0']= "Popup aparece." ;
 $vocab['display_level_view_entry_1']= "Aparece la página." ;
 
 
-
+$vocab['Generer_pdf'] = "Générer un PDF";
 ?>

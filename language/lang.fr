@@ -932,4 +932,5 @@ $vocab['display_file1'] = "Permettre de lier des fichiers aux réservations ";
 $vocab['display_file2'] = "L'envoie de fichiers est autorisé ";
 $vocab['display_file3'] = "L'envoie de fichiers n'est pas autorisé ";
 
+$vocab['Generer_pdf'] = "Générer un PDF";
 ?>

@@ -910,4 +910,5 @@ $vocab['display_level_view_entry']= "Visualizzazione delle riserve in forma popu
 $vocab['display_level_view_entry_0']= "Popup displays." ;
 $vocab['display_level_view_entry_1']= "Page displays." ;
 
+$vocab['Generer_pdf'] = "Générer un PDF";
 ?>

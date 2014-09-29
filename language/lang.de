@@ -911,4 +911,6 @@ $vocab['display_menu_3'] = "Linken Menüleiste wird angezeigt";
 $vocab['display_level_view_entry']= "Anzeige der Buchungen in Popup-Form" ;
 $vocab['display_level_view_entry_0']= "Popup displays." ;
 $vocab['display_level_view_entry_1']= "Page displays." ;
+
+$vocab['Generer_pdf'] = "Générer un PDF";
 ?>
