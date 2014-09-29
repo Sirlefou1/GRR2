@@ -145,7 +145,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 					$s .= "<button title=\"".htmlspecialchars(get_vocab("see_month_for_this_room"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='".$type_month_all.".php?year=$nextyear&amp;month=$nextmonth&amp;day=1&amp;area=$this->area';\">&gt;</button>\n";
 			}
 			// on ajoute un lien vers l'année suivante
-			if ($this->mois_suivant == 1) 
+			if ($this->mois_suivant == 1)
 			{
 				$tmp = mktime(0, 0, 0, ($this->month), 1, ($this->year) + 1);
 				$nextmonth = date("m",$tmp);
