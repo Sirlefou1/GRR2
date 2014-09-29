@@ -425,7 +425,9 @@ for ($cday = 1; $cday <= $days_in_month; $cday++)
 				# If there are 12 or fewer, show them, else show 11 and "...".
 				for ($i = 0; $i < $n; $i++)
 				{
-					if ($verif_acces_ressource[$d[$cday]["id_room"][$i]]) { // On n'affiche pas les réservation des ressources non visibles pour l'utilisateur.
+					if ($verif_acces_ressource[$d[$cday]["id_room"][$i]])
+					{
+					// On n'affiche pas les réservation des ressources non visibles pour l'utilisateur.
 					if ($i == 11 && $n > 12)
 					{
 						echo " ...\n";
@@ -436,9 +438,8 @@ for ($cday = 1; $cday <= $days_in_month; $cday++)
 					echo "<span class=\"small_planning\">";
 					if ($acces_fiche_reservation[$d[$cday]["id_room"][$i]])
 					{
-					 /*MAJ Loïs THOMAS <-----Test permettant de savoir le format d'ouverture pour les informations sur les réservations----->  */
-							 //Hugo - POPUP A VOIR
-					 if (getSettingValue("display_level_view_entry")==0){
+					 if (getSettingValue("display_level_view_entry")==0)
+					 {
 						$currentPage ='month_all';
 						$id =   $d[$cday]["id"][$i];
 						echo "<a title=\"".htmlspecialchars($d[$cday]["who"][$i])."\" href=\"#?w=500\" onclick=\"request($id,$cday,$month,$year,'$currentPage',readData);\" rel=\"popup_name\" class=\"poplight\">";
@@ -449,15 +450,15 @@ for ($cday = 1; $cday <= $days_in_month; $cday++)
 						. "&amp;day=$cday&amp;month=$month&amp;year=$year&amp;page=month_all\">";
 					}
 				}
-				echo  $d[$cday]["data"][$i]. "<br />". htmlspecialchars($d[$cday]["room"][$i]). "<br />".$d[$cday]["who1"][$i]." <br/>" ;
-				/*Requete permetttant d'avoir le genre */
+				echo $d[$cday]["data"][$i]. "<br />". htmlspecialchars($d[$cday]["room"][$i]). "<br />".$d[$cday]["who1"][$i]." <br/>" ;
 				$Son_GenreRepeat = grr_sql_query1("SELECT type_name FROM ".TABLE_PREFIX."_type_area ,".TABLE_PREFIX."_entry  WHERE  ".TABLE_PREFIX."_entry.id= ".$d[$cday]["id"][$i]." AND ".TABLE_PREFIX."_entry.type= ".TABLE_PREFIX."_type_area.type_letter");
-				echo  $Son_GenreRepeat."<br/>";
-					 //Affichage de la description
-				if ($d[$cday]["description"][$i]!= "") echo $d[$cday]["description"][$i]."<br/>";
-					 // si la réservation est à modérer, on le signale
-				if ((isset($d[$cday]["moderation"][$i])) and ($d[$cday]["moderation"][$i]==1)) echo "&nbsp;<img src=\"img_grr/flag_moderation.png\" alt=\"".get_vocab("en_attente_moderation")."\" title=\"".get_vocab("en_attente_moderation")."\" class=\"image\" />&nbsp;\n";
-				if ($acces_fiche_reservation[$d[$cday]["id_room"][$i]])echo "</a>";
+				echo $Son_GenreRepeat."<br/>";
+				if ($d[$cday]["description"][$i] != "")
+					echo $d[$cday]["description"][$i]."<br/>";
+				if ((isset($d[$cday]["moderation"][$i])) and ($d[$cday]["moderation"][$i] == 1))
+					echo "&nbsp;<img src=\"img_grr/flag_moderation.png\" alt=\"".get_vocab("en_attente_moderation")."\" title=\"".get_vocab("en_attente_moderation")."\" class=\"image\" />&nbsp;\n";
+				if ($acces_fiche_reservation[$d[$cday]["id_room"][$i]])
+					echo "</a>";
 				echo "</span></td></tr></table>\n";
 			}
 		}

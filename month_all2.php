@@ -211,7 +211,7 @@ else
 			if ($temp != "")
 				$temp = " - ".$temp;
 			$d[$day_num]["who1"][] = affichage_lien_resa_planning($row[3],$row[2]);
-			$d[$day_num]["room"][]=$row[5] ;
+			$d[$day_num]["room"][] = $row[5] ;
 			$d[$day_num]["res"][] = $row[6];
 			$d[$day_num]["color"][] = $row[10];
 			if ($row[9] > 0)
@@ -395,7 +395,7 @@ for ($k = 0; $k < $days_in_month; $k++)
 											{
 												$currentPage = 'month_all2';
 												$id =   $d[$cday]["id"][$i];
-												echo "<a title=\"".htmlspecialchars($temp)."\" href=\"#?w=500\" onclick=\"request($id,$cday,$month,$year,'$currentPage',readData);\" rel=\"popup_name\" class=\"poplight\">" .$d[$cday]["who1"][$i]."</a>";
+												echo "<a title=\"".htmlspecialchars($d[$cday]["who1"][$i])."\" href=\"#?w=500\" onclick=\"request($id,$cday,$month,$year,'$currentPage',readData);\" rel=\"popup_name\" class=\"poplight\">" .$d[$cday]["who1"][$i]."</a>";
 												echo  "<div id=\"popup_name\" class=\"popup_block\" ></div>";
 											}
 											else
