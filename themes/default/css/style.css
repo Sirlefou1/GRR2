@@ -349,6 +349,13 @@
  	height: 100%;
  	width : auto;
  }
+
+  #print_planning{
+ 	position: relative;
+ 	background-color: #5c2862;
+ 	height: 100%;
+ 	width : auto;
+ }
  #planningMonthAll2{
  	margin-left : 0px;
  }
