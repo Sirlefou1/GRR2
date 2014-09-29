@@ -66,34 +66,14 @@
  include_once('include/connect.inc.php');
  include_once('include/config.inc.php');
  include_once('include/misc.inc.php');
-/**
- * Chargement du fichier de définitions des fonctions standards
- */
  include_once('include/functions.inc.php');
-/**
- * Chargement du fichier de définitions des fonctions de base de données
- */
  require_once('include/'.$dbsys.'.inc.php');
-/**
- * Chargement du fichier de définitions des fonctions de Session
- */
  require_once('include/session.inc.php');
-/**
- * Chargement du fichier de paramètrage du langage
- */
- include_once('include/language.inc.php');
-/**
- * Chargement de la bibliothèques des fonctions Settings
- */
  include_once('include/settings.inc.php');
 
  $grr_script_name = 'my_account.php';
-
- // Chargement des valeurs de la table settings
  if (!loadSettings())
    die('Erreur chargement settings');
-
- // On désactive la fonction VerifNomPrenomUser
  $desactive_VerifNomPrenomUser='y';
 
  if (!grr_resumeSession())
@@ -101,34 +81,27 @@
    header('Location: logout.php?auto=1&url=$url');
    die();
  };
- // Construction des identifiants de la ressource $room, du domaine $area, du site $id_site
  Definition_ressource_domaine_site();
- // Si nous ne savons pas la date, nous devons la créer
  $day = isset($_POST['day']) ? $_POST['day'] : (isset($_GET['day']) ? $_GET['day'] : date('d'));
  $month = isset($_POST['month']) ? $_POST['month'] : (isset($_GET['month']) ? $_GET['month'] : date('m'));
  $year = isset($_POST['year']) ? $_POST['year'] : (isset($_GET['year']) ? $_GET['year'] : date('Y'));
 
  // Paramètres langage
  include_once('include/language.inc.php');
- 
+if (!grr_resumeSession())
+{
+  if ((getSettingValue("authentification_obli") == 1) || ((getSettingValue("authentification_obli") == 0) && (isset($_SESSION['login']))))
+  {
+    header("Location: ./logout.php?auto=1&url=$url");
+    die();
+  }
+}
  $back = '';
  if (isset($_SERVER['HTTP_REFERER']))
    $back = htmlspecialchars($_SERVER['HTTP_REFERER']);
-/*
- if (!(IsAllowedToModifyMdp()) and !(IsAllowedToModifyProfil()) and !(IsAllowedToModifyEmail()))
- {
-   if (authGetUserLevel(getUserName(),-1,'room') < min(getSettingValue('allow_users_modify_mdp'),getSettingValue('allow_users_modify_profil'),getSettingValue('allow_users_modify_email')))
-   {
-     showAccessDenied($day, $month, $year, $area,$back);
-     exit();
-   }
- }
-*/
  $user_login = isset($_POST['user_login']) ? $_POST['user_login'] : ($user_login = isset($_GET['user_login']) ? $_GET['user_login'] : NULL);
  $valid = isset($_POST['valid']) ? $_POST['valid'] : NULL;
  $msg='';
-
- // Si valid='yes', la page a été invoquée pour validation de son formulaire
  if ($valid == 'yes')
  {
   if (IsAllowedToModifyMdp()) {
