@@ -97,7 +97,7 @@ if (@file_exists("language/lang_subst." . $locale))
 
 // Fichiers de personnalisation de langue par domaine
 if (isset($_GET['area']))
-{ 
+{
 // Si l'id du domaine est passé en paramètre, on le récupère
 	$subst_id_area = $_GET['area'];
 }
@@ -272,7 +272,7 @@ if ($locale == 'fr') {
 			setlocale(LC_ALL, $lang_map_windows[strtolower($locale)]);
 			$windows_locale = $lang_map_windows[strtolower($locale)];
 		}
-	} 
+	}
 	else
 	{
 		if (!setlocale(LC_TIME,$locale))
@@ -309,31 +309,40 @@ if ($locale == 'fr') {
 	}
 }
 // Les autres langues que le français
-if ($locale != 'fr') {
+if ($locale != 'fr')
+{
 	$server_os = get_server_os();
 		// Si le serveur est sous windows
-	if ($server_os == "windows") {
-		if ($lang_map_windows[strtolower($locale)]) {
+	if ($server_os == "windows")
+	{
+		if ($lang_map_windows[strtolower($locale)])
+		{
 			setlocale(LC_ALL, $lang_map_windows[strtolower($locale)]);
 			$windows_locale = $lang_map_windows[strtolower($locale)];
 		}
-	} else {
+	}
+	else
+	{
 				// Si la locale sous la forme de deux lettre (de, en, ...) n'est pas reconue par le serveur,
 				// on tente de la mettre sous la forme de_DE, etc...
 				// cas perticulier de l'anglais :
-		if ($locale == 'en') $locale = "en_US";
+		if ($locale == 'en')
+			$locale = "en_US";
 				// Autre cas :
 		if (strlen($locale) == 2)
 		{
 					 # Convertit locale=xx en xx_XX, ce qui est approprié à certains système
 			$locale = strtolower($locale)."_".strtoupper($locale);
 		}
-		if ($unicode_encoding) {
-			$locale_utf8 .= $locale.".utf-8";
-			if (setlocale(LC_TIME,$locale_utf8) == TRUE) $ok = 'yes';
+		if ($unicode_encoding)
+		{
+			$locale_utf8 = $locale.".utf-8";
+			if (setlocale(LC_TIME, $locale_utf8) == TRUE)
+				$ok = 'yes';
 			else
 				setlocale(LC_TIME,$locale);
-		} else
+		}
+		else
 		setlocale(LC_TIME,$locale);
 	}
 }
