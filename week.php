@@ -174,7 +174,10 @@ if ($room <= 0)
 	exit;
 }
 include("menu_gauche.php");
-echo "<div id=\"planning\">";
+if ($_GET['pview'] != 1)
+	echo "<div id=\"planning\">";
+else
+	echo "<div id=\"print_planning\">";
 include "chargement.php";
 echo "<div class=\"titre_planning_week\">";
 if (($this_room_name_des) && ($this_room_name_des != "-1"))

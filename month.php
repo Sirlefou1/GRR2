@@ -172,7 +172,10 @@ $ty = date("Y",$i);
 $tm = date("n",$i);
 include("menu_gauche.php");
 include "chargement.php";
-echo "<div id=\"planning\">";
+	if ($_GET['pview'] != 1)
+		echo "<div id=\"planning\">";
+	else
+		echo "<div id=\"print_planning\">";
 echo "<div class=\"titre_planning\"><table width=\"100%\">";
 if ((!isset($_GET['pview'])) or ($_GET['pview'] != 1))
 {

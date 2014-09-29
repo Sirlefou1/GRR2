@@ -226,7 +226,10 @@ if (grr_sql_count($res) == 0)
 else
 {
 	include("menu_gauche.php");
-	echo "<div id=\"planning\">";
+	if ($_GET['pview'] != 1)
+		echo "<div id=\"planning\">";
+	else
+		echo "<div id=\"print_planning\">";
 	include "chargement.php";
 	echo "<div class=\"titre_planning\">";
 	if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
