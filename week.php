@@ -279,11 +279,11 @@ if (authGetUserLevel(getUserName(),$room) > 2 and $_GET['pview'] != 1)
 affiche_ressource_empruntee($room);
 
 if ($this_statut_room == "0")
-	echo "<br /><span class=\"texte_ress_tempo_indispo\">".get_vocab("ressource_temporairement_indisponible")."/>";
+	echo "<br /><span class=\"texte_ress_tempo_indispo\">".get_vocab("ressource_temporairement_indisponible")."</span>";
 if ($this_moderate_room == "1")
-	echo "<br /><span class=\"texte_ress_moderee\">".get_vocab("reservations_moderees")."/>";
+	echo "<br /><span class=\"texte_ress_moderee\">".get_vocab("reservations_moderees")."</span>";
 if ($this_area_show_comment == "y" and $_GET['pview'] != 1 and ($this_area_comment!="") and ($this_area_comment!=-1))
-	echo "<span style=\"text-align:center;\">".$this_area_comment."/>";
+	echo "<span style=\"text-align:center;\">".$this_area_comment."</span>";
 
 
 
