@@ -407,16 +407,7 @@ echo('
 </table>');
 if (getSettingValue("module_multisite") == "Oui")
 	echo ('
-		<h4>'.get_vocab('ex/*-----MAJ Loïs THOMAS  -->Style du menu à gauche-----*/
-#menuGauche {
-			background-color:#005394;
-			border-bottom : 3px solid #97947e;
-			float : left;
-			height: 100%;
-			min-width : 200px;
-			width : 300px;
-			padding-bottom: 10px;
-		}plain_default_area_and_room_and_site').'</h4>');
+		<h4>'.get_vocab('explain_default_area_and_room_and_site').'</h4>');
 else
 	echo ('
 		<h4>'.get_vocab('explain_default_area_and_room').'</h4>');

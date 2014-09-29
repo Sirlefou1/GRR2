@@ -347,7 +347,6 @@ for ($k = 0; $k < $days_in_month; $k++)
 		if ($verif_acces_ressource)
 		{
 			$acces_fiche_reservation = verif_acces_fiche_reservation(getUserName(), $row[2]);
-
 			echo "<tr><th class=\"tableau_month_all2\">" . htmlspecialchars($row[0]) ."</th>\n";
 			$li++;
 			$t2 = mktime(0, 0, 0,$month, 1, $year);
@@ -410,9 +409,7 @@ for ($k = 0; $k < $days_in_month; $k++)
 										echo "</span></td></tr></table>";
 									}
 								}
-
 							}
-
 						}
 					}
 					echo "</td>\n";
