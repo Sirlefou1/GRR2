@@ -37,8 +37,6 @@
  *
  *
  */
-setlocale (LC_ALL, "fr_FR"); 
-
 function minicals($year, $month, $day, $area, $room, $dmy)
 {
 	global $display_day, $vocab;
@@ -168,7 +166,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 			$s.= "<br/><button title=\"".htmlspecialchars(get_vocab("gototoday"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='".$action."';\">".get_vocab("gototoday")."</button>";
 			/*$s.= "<br /><input type=\"button\" class=\"btn btn-default btn-xs\" title=\"".htmlspecialchars(get_vocab("gototoday"))."\" onclick=\"charger();javascript: location.href='".$action."';\" value=\"> ".get_vocab("gototoday")." \" />;*/
 			$s .= "</caption>";
-			$s .= "<tr><td class=\"calendarcol1\">Sem</td>\n";
+			$s .= "<tr><td class=\"calendarcol1\">".get_vocab("semaine")."</td>\n";
 			$s .= getFirstDays();
 			$s .= "</tr>\n";
 			$d = 1 - $first;

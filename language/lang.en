@@ -917,7 +917,7 @@ $vocab['display_level_view_entry']= "Display of reservations in popup form" ;
 $vocab['display_level_view_entry_0']= "Popup displays." ;
 $vocab['display_level_view_entry_1']= "Page displays." ;
 
-// ANTHONY ARCHAMBEAU Ajout de vocabs 
+// ANTHONY ARCHAMBEAU Ajout de vocabs
 
 $vocab['display_mail_etat_destinataire'] = "Display the contact form (not stable)";
 $vocab['display_mail_etat_destinataire_1'] = "Select if the contact form will be displayed by default";
@@ -932,4 +932,5 @@ $vocab['top_of_page'] = "^ Top of page";
 $vocab['nomR'] = "name";
 
 $vocab['Generer_pdf'] = "Generate PDF";
+$vocab['semaine'] = "Wk";
 ?>
