@@ -1,9 +1,9 @@
 <?php
 /**
  * month_all.php
- * Interface d'accueil avec affichage par mois des réservation de toutes les ressources d'un domaine
+ * Interface d'accueil avec affichage par mois des rÃ©servation de toutes les ressources d'un domaine
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2009-12-02 20:11:07 $
+ * DerniÃ¨re modification : $Date: 2009-12-02 20:11:07 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -175,10 +175,10 @@ $all_day = preg_replace("/ /", " ", get_vocab("all_day2"));
 # row[3] = Entry name (brief description)
 # row[4] = beneficiaire of the booking
 # row[5] = Nom de la ressource
-# row[6] = Description complète
+# row[6] = Description complÃ¨te
 # row[7] = type
-# row[8] = Modération
-# row[9] = beneficiaire extérieur
+# row[8] = ModÃ©ration
+# row[9] = beneficiaire extÃ©rieur
 # row[10] = id de la ressource
 $sql = "SELECT start_time, end_time, ".TABLE_PREFIX."_entry.id, name, beneficiaire, room_name, ".TABLE_PREFIX."_entry.description, type, ".TABLE_PREFIX."_entry.moderate, beneficiaire_ext, ".TABLE_PREFIX."_room.id
 FROM ".TABLE_PREFIX."_entry inner join ".TABLE_PREFIX."_room on ".TABLE_PREFIX."_entry.room_id=".TABLE_PREFIX."_room.id
@@ -193,7 +193,7 @@ if (!$res)
 	echo grr_sql_error();
 else
 {
-/* Permet d'afficher aucune réservation
+/* Permet d'afficher aucune rÃ©servation
 if (grr_sql_count($res) == 0) {
 		echo "<div class=\"titre_planning\"><h3>".get_vocab("nothing_found")."</h3></div></body></html>";
 		die();
@@ -237,7 +237,7 @@ if (isset($_GET['precedent']))
 	if ($_GET['pview'] == 1 && $_GET['precedent'] == 1)
 	{
 		echo "<span id=\"lienPrecedent\">
-		<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript:history.back();\">Précedent</button>
+		<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript:history.back();\">PrÃ©cedent</button>
 	</span>";
 }
 }
@@ -371,9 +371,9 @@ for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 		}
 		echo "</pre>\n";
 	}
-// Début du tableau affichant le planning
+// DÃ©but du tableau affichant le planning
 	echo "<table  border=\"1\" width=\"100%\">\n";
-// Début affichage première ligne (intitulé des jours)
+// DÃ©but affichage premiÃ¨re ligne (intitulÃ© des jours)
 	echo "<tr>";
 	for ($weekcol = 0; $weekcol < 7; $weekcol++)
 	{
@@ -382,9 +382,9 @@ for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 		echo "<th style=\"width:14%;\">" . day_name($num_week_day) . "</th>\n";
 	}
 	echo "</tr>\n";
-// Fin affichage première ligne (intitulé des jours)
-// Début affichage des lignes affichant les réservations
-// On grise les cellules appartenant au mois précédent
+// Fin affichage premiÃ¨re ligne (intitulÃ© des jours)
+// DÃ©but affichage des lignes affichant les rÃ©servations
+// On grise les cellules appartenant au mois prÃ©cÃ©dent
 	$weekcol = 0;
 	if ($weekcol != $weekday_start) {
 		echo "<tr>";
@@ -395,7 +395,7 @@ for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 				echo "<td class=\"cell_month_o\" >&nbsp;</td>\n";
 		}
 	}
-// Début Première boucle sur les jours du mois
+// DÃ©but PremiÃ¨re boucle sur les jours du mois
 	for ($cday = 1; $cday <= $days_in_month; $cday++)
 	{
 		$num_week_day = ($weekcol + $weekstarts) % 7;
@@ -406,9 +406,9 @@ for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 			echo "<tr>\n";
 		if ($display_day[$num_week_day] == 1)
 		{
-		// début condition "on n'affiche pas tous les jours de la semaine"
+		// dÃ©but condition "on n'affiche pas tous les jours de la semaine"
 			echo "<td valign=\"top\" class=\"cell_month\">";
-		// On affiche les jours du mois dans le coin supérieur gauche de chaque cellule
+		// On affiche les jours du mois dans le coin supÃ©rieur gauche de chaque cellule
 			echo "<div class=\"monthday\"><a title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day"))."\" href=\"day.php?year=$year&amp;month=$month&amp;day=$cday&amp;area=$area\">".$name_day;
 			if (getSettingValue("jours_cycles_actif") == "Oui" and intval($jour_cycle) > -1)
 				if (intval($jour_cycle) > 0)
@@ -423,7 +423,7 @@ for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 				}
 				else
 				{
-		 // Des réservation à afficher pour ce jour ?
+		 // Des rÃ©servation Ã  afficher pour ce jour ?
 					if (isset($d[$cday]["id"][0]))
 					{
 						$n = count($d[$cday]["id"]);
@@ -433,7 +433,7 @@ for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 						{
 							if ($verif_acces_ressource[$d[$cday]["id_room"][$i]])
 							{
-					// On n'affiche pas les réservation des ressources non visibles pour l'utilisateur.
+					// On n'affiche pas les rÃ©servation des ressources non visibles pour l'utilisateur.
 								if ($i == 11 && $n > 12)
 								{
 									echo " ...\n";
@@ -477,7 +477,7 @@ for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 			echo "</tr>";
 		}
 	}
-// Fin Première boucle sur les jours du mois !
+// Fin PremiÃ¨re boucle sur les jours du mois !
 // On grise les cellules appartenant au mois suivant
 	if ($weekcol > 0) for (; $weekcol < 7; $weekcol++)
 	{
