@@ -3,7 +3,7 @@
  * month.php
  * Interface d'accueil avec affichage par mois
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2010-03-03 14:41:34 $
+ * DerniÃ¨re modification : $Date: 2010-03-03 14:41:34 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -40,9 +40,9 @@ require_once("./include/settings.inc.php");
 				#Chargement des valeurs de la table settings
 if (!loadSettings())
 	die("Erreur chargement settings");
-		#Fonction relative à la session
+		#Fonction relative Ã  la session
 require_once("./include/session.inc.php");
-		#Si il n'y a pas de session crée et que l'identification est requise, on déconnecte l'utilisateur.
+		#Si il n'y a pas de session crÃ©e et que l'identification est requise, on dÃ©connecte l'utilisateur.
 if ((!grr_resumeSession())and (getSettingValue("authentification_obli")==1))
 {
 	header("Location: ./logout.php?auto=1&url=$url");
@@ -50,9 +50,9 @@ if ((!grr_resumeSession())and (getSettingValue("authentification_obli")==1))
 };
 // Construction des identifiants de la ressource $room, du domaine $area, du site $id_site
 Definition_ressource_domaine_site();
-// Récupération des données concernant l'affichage du planning du domaine
+// RÃ©cupÃ©ration des donnÃ©es concernant l'affichage du planning du domaine
 get_planning_area_values($area);
-// Paramètres langage
+// ParamÃ¨tres langage
 include "include/language.inc.php";
 // On affiche le lien "format imprimable" en bas de la page
 $affiche_pview = '1';
@@ -64,18 +64,18 @@ if ($_GET['pview'] == 1)
 	$class_image = "print_image";
 else
 	$class_image = "image";
-// calcul de l'accès à la ressource en fonction du niveau de l'utilisateur
+// calcul de l'accÃ¨s Ã  la ressource en fonction du niveau de l'utilisateur
 $verif_acces_ressource = verif_acces_ressource(getUserName(), $room);
-// Calcul du niveau d'accès aux fiche de réservation détaillées des ressources
+// Calcul du niveau d'accÃ¨s aux fiche de rÃ©servation dÃ©taillÃ©es des ressources
 $acces_fiche_reservation = verif_acces_fiche_reservation(getUserName(), $room);
-// calcul du test si l'utilisateur a la possibilité d'effectuer une réservation, compte tenu
-// des limitations éventuelles de la ressources et du nombre de réservations déjà effectuées.
+// calcul du test si l'utilisateur a la possibilitÃ© d'effectuer une rÃ©servation, compte tenu
+// des limitations Ã©ventuelles de la ressources et du nombre de rÃ©servations dÃ©jÃ  effectuÃ©es.
 $UserRoomMaxBooking = UserRoomMaxBooking(getUserName(), $room, 1);
-// calcul du niverau de droit de réservation
+// calcul du niverau de droit de rÃ©servation
 $authGetUserLevel = authGetUserLevel(getUserName(),-1);
-// Determine si un visiteur peut réserver une ressource
+// Determine si un visiteur peut rÃ©server une ressource
 $auth_visiteur = auth_visiteur(getUserName(),$room);
-		#Paramètres par défaut
+		#ParamÃ¨tres par dÃ©faut
 if (empty($debug_flag)) $debug_flag = 0;
 if (empty($month) || empty($year) || !checkdate($month, 1, $year))
 {
@@ -93,7 +93,7 @@ else
 {
 	$type_session = "with_session";
 }
-		#Récupération des informations relatives au serveur.
+		#RÃ©cupÃ©ration des informations relatives au serveur.
 $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
@@ -124,16 +124,16 @@ function cmp3($a, $b)
 		return "= ";
 	return "> ";
 }
-// On vérifie une fois par jour si le délai de confirmation des réservations est dépassé
-// Si oui, les réservations concernées sont supprimées et un mail automatique est envoyé.
-// On vérifie une fois par jour que les ressources ont été rendue en fin de réservation
-// Si non, une notification email est envoyée
+// On vÃ©rifie une fois par jour si le dÃ©lai de confirmation des rÃ©servations est dÃ©passÃ©
+// Si oui, les rÃ©servations concernÃ©es sont supprimÃ©es et un mail automatique est envoyÃ©.
+// On vÃ©rifie une fois par jour que les ressources ont Ã©tÃ© rendue en fin de rÃ©servation
+// Si non, une notification email est envoyÃ©e
 if (getSettingValue("verif_reservation_auto")==0)
 {
 	verify_confirm_reservation();
 	verify_retard_reservation();
 }
-		#Heure de dénut du mois, cela ne sert à rien de reprndre les valeur morningstarts/eveningends
+		#Heure de dÃ©nut du mois, cela ne sert Ã  rien de reprndre les valeur morningstarts/eveningends
 $month_start = mktime(0, 0, 0, $month, 1, $year);
 		#Dans quel colonne l'affichage commence: 0 veut dire $weekstarts
 $weekday_start = (date("w", $month_start) - $weekstarts + 7) % 7;
@@ -172,10 +172,10 @@ $ty = date("Y",$i);
 $tm = date("n",$i);
 include("menu_gauche.php");
 include "chargement.php";
-	if ($_GET['pview'] != 1)
-		echo "<div id=\"planning\">";
-	else
-		echo "<div id=\"print_planning\">";
+if ($_GET['pview'] != 1)
+	echo "<div id=\"planning\">";
+else
+	echo "<div id=\"print_planning\">";
 echo "<div class=\"titre_planning\"><table width=\"100%\">";
 if ((!isset($_GET['pview'])) or ($_GET['pview'] != 1))
 {
@@ -202,7 +202,7 @@ echo " </tr>";
 echo "</table>";
 if (verif_display_fiche_ressource(getUserName(), $room) and $_GET['pview'] != 1)
 	echo "<a href='javascript:centrerpopup(\"view_room.php?id_room=$room\",600,480,\"scrollbars=yes,statusbar=no,resizable=yes\")' title=\"".get_vocab("fiche_ressource")."\">
-<img src=\"img_grr/details.png\" alt=\"détails\" class=\"".$class_image."\"  /></a>";
+<img src=\"img_grr/details.png\" alt=\"dÃ©tails\" class=\"".$class_image."\"  /></a>";
 if (authGetUserLevel(getUserName(),$room) > 2 and $_GET['pview'] != 1)
 	echo "<a href='admin_edit_room.php?room=$room'><img src=\"img_grr/editor.png\" alt=\"configuration\" title=\"".get_vocab("Configurer la ressource")."\" width=\"30\" height=\"30\" class=\"".$class_image."\"  /></a>";
 affiche_ressource_empruntee($room);
@@ -211,11 +211,15 @@ if ($this_statut_room == "0")
 if ($this_moderate_room == "1")
 	echo "<br /><span class=\"texte_ress_moderee\">".get_vocab("reservations_moderees")."</span>";
 echo " </div>\n";
-if ($_GET['pview'] == 1 AND $_GET['precedent'] == 1)
+
+if (isset($_GET['precedent']))
 {
-	echo "<span id=\"lienPrecedent\">
-	<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript:history.back();\">Précedent</button>
-</span>";
+	if ($_GET['pview'] == 1 && $_GET['precedent'] == 1)
+	{
+		echo "<span id=\"lienPrecedent\">
+		<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript:history.back();\">PrÃ©cedent</button>
+	</span>";
+}
 }
 if ($this_area_show_comment == "y" and $_GET['pview'] != 1 and ($this_area_comment!="") and ($this_area_comment!=-1))
 	echo "<div style=\"text-align:center;\">".$this_area_comment."</div>";
