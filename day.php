@@ -310,7 +310,7 @@ else
 						echo "<a href='javascript:centrerpopup(\"view_room.php?id_room=$id_room[$i]\",600,480,\"scrollbars=yes,statusbar=no,resizable=yes\")' title=\"".get_vocab("fiche_ressource")."\">
 					<img src=\"img_grr/details.png\" alt=\"d&eacute;tails\" class=\"".$class_image."\"  /></a>";
 					if (authGetUserLevel(getUserName(),$id_room[$i]) > 2 && $_GET['pview'] != 1)
-						echo "<a href='admin_edit_room.php?room=$id_room[$i]'><img src=\"img_grr/editor.png\" alt=\"configuration\" title=\"".get_vocab("Configurer la ressource")."\" width=\"30\" height=\"30\" class=\"".$class_image."\" /></a><br/>";
+						echo "<a href='admin_edit_room.php?room=$id_room[$i]'><span class=\"glyphcolor glyphicon glyphicon-cog\"></span></a><br/>";
 					affiche_ressource_empruntee($id_room[$i]);
 					echo "<span id=\"boutonSelection$a\" style=\"display:none;\">
 					<input type=\"button\" class=\"btn btn-default btn-xs\" title=\"".htmlspecialchars(get_vocab("see_week_for_this_room"))."\" onclick=\"charger();javascript: location.href='week.php?year=$year&amp;month=$month&amp;cher=$day&amp;room=$id_room[$i]';\" value=\" ".get_vocab('week')." \"/>
@@ -331,7 +331,7 @@ else
 						$tab[1][$i + 1] .= "<a href='javascript:centrerpopup(\"view_room.php?id_room=$id_room[$i]\",600,480,\"scrollbars=yes,statusbar=no,resizable=yes\")' title=\"".get_vocab("fiche_ressource")."\">
 					<img src=\"img_grr/details.png\" alt=\"détails\" class=\"".$class_image."\"  /></a>";
 					if (authGetUserLevel(getUserName(),$id_room[$i]) > 2 && $_GET['pview'] != 1)
-						$tab[1][$i + 1] .= "<a href='admin_edit_room.php?room=$id_room[$i]'><img src=\"img_grr/editor.png\" alt=\"configuration\" title=\"".get_vocab("Configurer la ressource")."\" width=\"30\" height=\"30\" class=\"".$class_image."\" /></a>";
+						$tab[1][$i + 1] .= "<a href='admin_edit_room.php?room=$id_room[$i]'><span class=\"glyphcolor glyphicon glyphicon-cog\"></span></a>";
 					$rooms[] = $row[2];
 					$delais_option_reservation[$row[2]] = $row[6];
 				}

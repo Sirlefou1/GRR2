@@ -204,7 +204,7 @@ if (verif_display_fiche_ressource(getUserName(), $room) && $_GET['pview'] != 1)
 	echo "<a href='javascript:centrerpopup(\"view_room.php?id_room=$room\",600,480,\"scrollbars=yes,statusbar=no,resizable=yes\")' title=\"".get_vocab("fiche_ressource")."\">
 <img src=\"img_grr/details.png\" alt=\"détails\" class=\"".$class_image."\"  /></a>";
 if (authGetUserLevel(getUserName(),$room) > 2 && $_GET['pview'] != 1)
-	echo "<a href='admin_edit_room.php?room=$room'><img src=\"img_grr/editor.png\" alt=\"configuration\" title=\"".get_vocab("Configurer la ressource")."\" width=\"30\" height=\"30\" class=\"".$class_image."\"  /></a>";
+	echo "<a href='admin_edit_room.php?room=$room'><span class=\"glyphcolor glyphicon glyphicon-cog\"></span></a>";
 affiche_ressource_empruntee($room);
 if ($this_statut_room == "0")
 	echo "<br /><span class=\"texte_ress_tempo_indispo\">".get_vocab("ressource_temporairement_indisponible")."</span>";
