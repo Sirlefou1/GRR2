@@ -308,7 +308,7 @@ else
 					echo "<br />";
 					if (verif_display_fiche_ressource(getUserName(), $id_room[$i]) && $_GET['pview'] != 1)
 						echo "<a href='javascript:centrerpopup(\"view_room.php?id_room=$id_room[$i]\",600,480,\"scrollbars=yes,statusbar=no,resizable=yes\")' title=\"".get_vocab("fiche_ressource")."\">
-					<img src=\"img_grr/details.png\" alt=\"d&eacute;tails\" class=\"".$class_image."\"  /></a>";
+					<span class=\"glyphcolor glyphicon glyphicon-search\"></span></a>";
 					if (authGetUserLevel(getUserName(),$id_room[$i]) > 2 && $_GET['pview'] != 1)
 						echo "<a href='admin_edit_room.php?room=$id_room[$i]'><span class=\"glyphcolor glyphicon glyphicon-cog\"></span></a><br/>";
 					affiche_ressource_empruntee($id_room[$i]);
@@ -329,7 +329,7 @@ else
 					$tab[1][$i + 1] .= "<br />";
 					if (verif_display_fiche_ressource(getUserName(), $id_room[$i]))
 						$tab[1][$i + 1] .= "<a href='javascript:centrerpopup(\"view_room.php?id_room=$id_room[$i]\",600,480,\"scrollbars=yes,statusbar=no,resizable=yes\")' title=\"".get_vocab("fiche_ressource")."\">
-					<img src=\"img_grr/details.png\" alt=\"détails\" class=\"".$class_image."\"  /></a>";
+					<span class=\"glyphcolor glyphicon glyphicon-search\"></span></a>";
 					if (authGetUserLevel(getUserName(),$id_room[$i]) > 2 && $_GET['pview'] != 1)
 						$tab[1][$i + 1] .= "<a href='admin_edit_room.php?room=$id_room[$i]'><span class=\"glyphcolor glyphicon glyphicon-cog\"></span></a>";
 					$rooms[] = $row[2];

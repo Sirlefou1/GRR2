@@ -420,7 +420,7 @@ else
 					echo "<span class=\"texte_ress_tempo_indispo\">".get_vocab("ressource_temporairement_indisponible")."</span><br />";
 				if (verif_display_fiche_ressource(getUserName(), $row[2]) && $_GET['pview'] != 1)
 					echo "<a href='javascript:centrerpopup(\"view_room.php?id_room=$row[2]\",600,480,\"scrollbars=yes,statusbar=no,resizable=yes\")' title=\"".get_vocab("fiche_ressource")."\">
-				<img src=\"img_grr/details.png\" alt=\"Détails\" class=\"".$class_image."\" /></a>";
+				<span class=\"glyphcolor glyphicon glyphicon-search\"></span></a>";
 				if (authGetUserLevel(getUserName(),$row[2]) > 2 && $_GET['pview'] != 1)
 					echo "<a href='admin_edit_room.php?room=$row[2]'><span class=\"glyphcolor glyphicon glyphicon-cog\"></span></a>";
 				affiche_ressource_empruntee($row[2]);

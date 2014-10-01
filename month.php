@@ -202,7 +202,7 @@ echo " </tr>";
 echo "</table>";
 if (verif_display_fiche_ressource(getUserName(), $room) and $_GET['pview'] != 1)
 	echo "<a href='javascript:centrerpopup(\"view_room.php?id_room=$room\",600,480,\"scrollbars=yes,statusbar=no,resizable=yes\")' title=\"".get_vocab("fiche_ressource")."\">
-<img src=\"img_grr/details.png\" alt=\"détails\" class=\"".$class_image."\"  /></a>";
+<span class=\"glyphcolor glyphicon glyphicon-search\"></span></a>";
 if (authGetUserLevel(getUserName(),$room) > 2 and $_GET['pview'] != 1)
 	echo "<a href='admin_edit_room.php?room=$room'><span class=\"glyphcolor glyphicon glyphicon-cog\"></span></a>";
 affiche_ressource_empruntee($room);
