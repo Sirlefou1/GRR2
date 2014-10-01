@@ -281,6 +281,7 @@
  	color : black;
  	font-weight:400;
  	border-radius: 5px;
+ 	text-align: center;
  }
  .cell_month a:hover{
  	color : black;
