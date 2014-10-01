@@ -29,54 +29,20 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-/**
- * $Log: login.php,v $
- * Revision 1.10  2009-12-16 14:52:31  grr
- * *** empty log message ***
- *
- * Revision 1.9  2009-12-02 20:11:07  grr
- * *** empty log message ***
- *
- * Revision 1.8  2009-06-04 15:30:17  grr
- * *** empty log message ***
- *
- * Revision 1.7  2009-04-10 21:05:45  grr
- * *** empty log message ***
- *
- * Revision 1.6  2009-04-09 14:52:31  grr
- * *** empty log message ***
- *
- * Revision 1.5  2009-01-20 07:19:17  grr
- * *** empty log message ***
- *
- * Revision 1.4  2008-11-16 22:00:58  grr
- * *** empty log message ***
- *
- * Revision 1.3  2008-11-11 22:01:14  grr
- * *** empty log message ***
- *
- *
- */
 include "include/connect.inc.php";
 include "include/config.inc.php";
 include "include/misc.inc.php";
 include "include/functions.inc.php";
 include "include/$dbsys.inc.php";
-
 // Settings
 require_once("./include/settings.inc.php");
-
 //Chargement des valeurs de la table settingS
 if (!loadSettings())
 	die("Erreur chargement settings");
-
 // Paramètres langage
 include "include/language.inc.php";
-
 // Session related functions
 require_once("./include/session.inc.php");
-
-
 // Vérification du numéro de version et renvoi automatique vers la page de mise à jour
 if (verif_version())
 {
@@ -271,6 +237,3 @@ echo begin_page(get_vocab("mrbs").get_vocab("deux_points").getSettingValue("comp
 </div>
 </body>
 </html>
-
-
-
