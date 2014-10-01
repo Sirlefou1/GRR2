@@ -466,14 +466,14 @@ else
 											{
 												echo "<a href=\"edit_entry.php?room=$room"
 												. "&amp;period=$time_t_stripped&amp;year=$wyear&amp;month=$wmonth"
-												. "&amp;day=$wday&amp;page=week\" title=\"".get_vocab("cliquez_pour_effectuer_une_reservation")."\"><img src=\"img_grr/new.gif\" alt=\"".get_vocab("add")."\" cz class=\"".$class_image."\"  />";
+												. "&amp;day=$wday&amp;page=week\" title=\"".get_vocab("cliquez_pour_effectuer_une_reservation")."\"><span class=\"glyphicon glyphicon-plus\"></span>";
 												echo "</a>";
 											}
 											else
 											{
 												echo "<a href=\"edit_entry.php?room=$room"
 												. "&amp;hour=$hour&amp;minute=$minute&amp;year=$wyear&amp;month=$wmonth"
-												. "&amp;day=$wday&amp;page=week\" title=\"".get_vocab("cliquez_pour_effectuer_une_reservation")."\"><img src=\"img_grr/new.gif\" alt=\"".get_vocab("add")."\" width=\"16\" height=\"16\" class=\"".$class_image."\"  />";
+												. "&amp;day=$wday&amp;page=week\" title=\"".get_vocab("cliquez_pour_effectuer_une_reservation")."\"><span class=\"glyphicon glyphicon-plus\"></span>";
 												echo "</a>";
 											}
 										}
