@@ -1,9 +1,9 @@
 <?php
 /**
  * verif_auto_grr.php
- * Exécution de taches automatiques
+ * ExÃ©cution de taches automatiques
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2009-10-09 07:55:48 $
+ * DerniÃ¨re modification : $Date: 2009-10-09 07:55:48 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -27,15 +27,6 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-
-
-/*
-MOT DE PASSE
-------------
-  L'exécution de ce script requiert un mot de passe défini dans l'interface en ligne de GRR (configuration générale -> Interactivité)
-
-*/
-
 $titre = "GRR - Ex&eacute;cution de t&acirc;ches automatiques";
 include "include/connect.inc.php";
 include "include/config.inc.php";
@@ -43,51 +34,49 @@ include "include/misc.inc.php";
 include "include/functions.inc.php";
 include "include/$dbsys.inc.php";
 include "include/mrbs_sql.inc.php";
-
 $grr_script_name = "verif_auto_grr.php";
 include("include/settings.inc.php");
 if (!loadSettings())
-    die("Erreur chargement settings");
-
-if ((!isset($_GET['mdp'])) and (!isset($argv[1]))) {
-    echo "Il manque des arguments pour executer ce script. Reportez-vous a la documentation.";
-    die();
+	die("Erreur chargement settings");
+if ((!isset($_GET['mdp'])) && (!isset($argv[1])))
+{
+	echo "Il manque des arguments pour executer ce script. Reportez-vous a la documentation.";
+	die();
 }
-
-// Début du script
-if (isset($argv[1])) {
-  DEFINE("CHEMIN_COMPLET_GRR",getSettingValue("chemin_complet_grr"));
-  chdir(CHEMIN_COMPLET_GRR);
+// DÃ©but du script
+if (isset($argv[1]))
+{
+	DEFINE("CHEMIN_COMPLET_GRR",getSettingValue("chemin_complet_grr"));
+	chdir(CHEMIN_COMPLET_GRR);
 }
 include "include/language.inc.php";
-
 if (!isset($_GET['mdp']))
-    $_GET['mdp']=$argv[1];
-
-if ((!isset($_GET['mdp'])) or ($_GET['mdp'] != getSettingValue("motdepasse_verif_auto_grr")) or (getSettingValue("motdepasse_verif_auto_grr")=='')) {
-    if (!isset($argv[1]))
-        echo begin_page($titre,$page="no_session")."<p>";
-    echo "Le mot de passe fourni est invalide.";
-    if (!isset($argv[1])) {
-        echo "</p>";
-        include "include/trailer.inc.php";
-    }
-    die();
+	$_GET['mdp']=$argv[1];
+if ((!isset($_GET['mdp'])) || ($_GET['mdp'] != getSettingValue("motdepasse_verif_auto_grr")) || (getSettingValue("motdepasse_verif_auto_grr") == ''))
+{
+	if (!isset($argv[1]))
+		echo begin_page($titre, $page = "no_session")."<p>";
+	echo "Le mot de passe fourni est invalide.";
+	if (!isset($argv[1]))
+	{
+		echo "</p>";
+		include "include/trailer.inc.php";
+	}
+	die();
 }
-
 if (!isset($argv[1]))
-    echo begin_page($titre,$page="no_session");
-// On vérifie une fois par jour si le délai de confirmation des réservations est dépassé
-// Si oui, les réservations concernées sont supprimées et un mail automatique est envoyé.
+	echo begin_page($titre,$page = "no_session");
+// On vÃ©rifie une fois par jour si le dÃ©lai de confirmation des rÃ©servations est dÃ©passÃ©
+// Si oui, les rÃ©servations concernÃ©es sont supprimÃ©es et un mail automatique est envoyÃ©.
 verify_confirm_reservation();
-
-// On vérifie une fois par jour que les ressources ont été rendue en fin de réservation
-// Si non, une notification email est envoyée
+// On vÃ©rifie une fois par jour que les ressources ont Ã©tÃ© rendue en fin de rÃ©servation
+// Si non, une notification email est envoyÃ©e
 verify_retard_reservation();
-if (!isset($argv[1])) {
-    echo "<p>Le script a été exécuté.</p>";
-    include "include/trailer.inc.php";
-} else {
-    echo "Le script a ete execute.";
+if (!isset($argv[1]))
+{
+	echo "<p>Le script a Ã©tÃ© exÃ©cutÃ©.</p>";
+	include "include/trailer.inc.php";
 }
+else
+	echo "Le script a ete execute.";
 ?>
