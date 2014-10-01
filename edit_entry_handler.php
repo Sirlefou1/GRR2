@@ -1,9 +1,9 @@
 <?php
 /**
  * edit_entry_handler.php
- * Permet de vérifier la validitée de l'édition ou de la création d'une réservation
+ * Permet de vÃ©rifier la validitÃ©e de l'Ã©dition ou de la crÃ©ation d'une rÃ©servation
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2010-03-03 14:41:34 $
+ * DerniÃ¨re modification : $Date: 2010-03-03 14:41:34 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -27,37 +27,6 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-/**
- * $Log: edit_entry_handler.php,v $
- * Revision 1.12  2010-03-03 14:41:34  grr
- * *** empty log message ***
- *
- * Revision 1.11  2010-01-06 10:21:19  grr
- * *** empty log message ***
- *
- * Revision 1.10  2009-12-02 20:11:07  grr
- * *** empty log message ***
- *
- * Revision 1.9  2009-09-29 18:02:56  grr
- * *** empty log message ***
- *
- * Revision 1.8  2009-06-04 15:30:17  grr
- * *** empty log message ***
- *
- * Revision 1.7  2009-04-14 12:59:17  grr
- * *** empty log message ***
- *
- * Revision 1.6  2009-01-20 07:19:17  grr
- * *** empty log message ***
- *
- * Revision 1.5  2008-11-16 22:00:58  grr
- * *** empty log message ***
- *
- * Revision 1.4  2008-11-11 22:01:14  grr
- * *** empty log message ***
- *
- *
- */
 include "include/connect.inc.php";
 include "include/config.inc.php";
 include "include/functions.inc.php";
@@ -78,7 +47,7 @@ if (!grr_resumeSession())
 	header("Location: ./logout.php?auto=1&url=$url");
 	die();
 }
-// Paramètres langage
+// ParamÃ¨tres langage
 include "include/language.inc.php";
 $erreur = 'n';
 $message_error = "";
@@ -130,7 +99,7 @@ if ($rep_num_weeks < 2)
 	$rep_num_weeks = 1;
 $rep_month = isset($_GET["rep_month"]) ? $_GET["rep_month"] : NULL;
 if (($rep_type == 3) && ($rep_month == 3))
-	$rep_type =3;
+	$rep_type = 3;
 if (($rep_type == 3) && ($rep_month == 5))
 	$rep_type =5;
 $create_by = isset($_GET["create_by"]) ? $_GET["create_by"] : NULL;
@@ -148,7 +117,7 @@ if (isset($room_back))
 	settype($room_back,"integer");
 $page = verif_page();
 if ($page == '')
-	$page="day";
+	$page = "day";
 $option_reservation = isset($_GET["option_reservation"]) ? $_GET["option_reservation"] : NULL;
 if (isset($option_reservation))
 	settype($option_reservation,"integer");
@@ -171,7 +140,7 @@ if (($beneficiaire) == "")
 	if ($beneficiaire_ext == "-2")
 	{
 		print_header();
-		echo "<h2>Adresse email du bénéficiaire incorrecte</h2>";
+		echo "<h2>Adresse email du bÃ©nÃ©ficiaire incorrecte</h2>";
 		include "include/trailer.inc.php";
 		die();
 	}
@@ -229,7 +198,7 @@ if (authGetUserLevel(getUserName(), -1) < 1)
 }
 if (check_begin_end_bookings($day, $month, $year))
 {
-	if ((getSettingValue("authentification_obli") == 0) and (getUserName() == ''))
+	if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))
 		$type_session = "no_session";
 	else
 		$type_session = "with_session";
@@ -300,7 +269,7 @@ if ($type_affichage_reser == 0)
 }
 else
 {
-	if ($enable_periods=='y')
+	if ($enable_periods == 'y')
 	{
 		$resolution = 60;
 		$hour = 12;
@@ -308,11 +277,11 @@ else
 		if (isset($_GET["period"]))
 			$minute = $_GET["period"];
 		else
-			$erreur='y';
+			$erreur = 'y';
 		if (isset($_GET["end_period"]))
-			$_GET["end_minute"] = $_GET["end_period"]+1;
+			$_GET["end_minute"] = $_GET["end_period"] + 1;
 		else
-			$erreur='y';
+			$erreur = 'y';
 	}
 	if (!isset($_GET["end_day"]) || !isset($_GET["end_month"]) || !isset($_GET["end_year"]) || !isset($_GET["end_hour"]) || !isset($_GET["end_minute"]))
 		$erreur = 'y';
@@ -385,7 +354,7 @@ $endtime_midnight = mktime(0, 0, 0, $month_temp, $day_temp, $year_temp);
 if (resa_est_hors_reservation($starttime_midnight , $endtime_midnight))
 {
 	print_header();
-	echo "<h2>Erreur dans la date de début ou de fin de réservation</h2>";
+	echo "<h2>Erreur dans la date de dÃ©but ou de fin de rÃ©servation</h2>";
 	echo "<a href=\"".$back."&amp;Err=yes\">".get_vocab('returnprev')."</a>";
 	include "include/trailer.inc.php";
 	die();
