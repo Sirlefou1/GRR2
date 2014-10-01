@@ -1,9 +1,9 @@
 <?php
 /**
  * report.php
- * interface afficheant un rapport des réservations
+ * interface afficheant un rapport des rÃ©servations
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2010-01-06 10:21:19 $
+ * DerniÃ¨re modification : $Date: 2010-01-06 10:21:19 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -54,14 +54,14 @@ include "include/functions.inc.php";
 include "include/$dbsys.inc.php";
 include "include/mrbs_sql.inc.php";
 $grr_script_name = "view_rights_room.php";
-//Paramètres de connection
+//ParamÃ¨tres de connection
 require_once("./include/settings.inc.php");
 //Chargement des valeurs de la table settings
 if (!loadSettings())
 	die("Erreur chargement settings");
-//Fonction relative à la session
+//Fonction relative Ã  la session
 require_once("./include/session.inc.php");
-//Si il n'y a pas de session crée, on déconnecte l'utilisateur.
+//Si il n'y a pas de session crÃ©e, on dÃ©connecte l'utilisateur.
 // Resume session
 if (!grr_resumeSession())
 {
@@ -71,14 +71,14 @@ if (!grr_resumeSession())
 		die();
 	}
 };
-// Paramètres langage
+// ParamÃ¨tres langage
 include "include/language.inc.php";
 // On affiche le lien "format imprimable" en bas de la page
 if (!isset($_GET['pview']))
 	$_GET['pview'] = 0;
 else
 	$_GET['pview'] = 1;
-//Récupération des informations relatives au serveur.
+//RÃ©cupÃ©ration des informations relatives au serveur.
 $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
@@ -97,7 +97,7 @@ if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))
 	$type_session = "no_session";
 else
 	$type_session = "with_session";
-//Champs de création du rapport.
+//Champs de crÃ©ation du rapport.
 $From_day = isset($_GET["From_day"]) ? $_GET["From_day"] : NULL;
 $From_month = isset($_GET["From_month"]) ? $_GET["From_month"] : NULL;
 $From_year = isset($_GET["From_year"]) ? $_GET["From_year"] : NULL;
@@ -127,7 +127,7 @@ if (!isset($_GET["sumby"]))
 else
 	settype($_GET["sumby"],"integer");
 $sortby = isset($_GET["sortby"]) ? $_GET["sortby"] : "a";
-	// Si la table j_user_area est vide, il faut modifier la requête
+	// Si la table j_user_area est vide, il faut modifier la requÃªte
 $test_grr_j_user_area = grr_sql_count(grr_sql_query("SELECT * from ".TABLE_PREFIX."_j_user_area"));
 	// Report on one entry. See below for columns in $row[].
 function reporton(&$row, $dformat)
@@ -170,28 +170,28 @@ function reporton(&$row, $dformat)
 	else
 		$description = "&nbsp;";
 	echo "<td>". $description . "</td>\n";
-		//Type de réservation
+		//Type de rÃ©servation
 	$et = grr_sql_query1("select type_name from ".TABLE_PREFIX."_type_area where type_letter='".$row[5]."'");
 	if ($et == -1)
 		$et = "?".$row[5]."?";
 	echo "<td>".$et."</td>\n";
-		//Affichage de "crée par"
+		//Affichage de "crÃ©e par"
 	$sql_beneficiaire = "SELECT prenom, nom FROM ".TABLE_PREFIX."_utilisateurs WHERE login = '".$row[6]."'";
 	$res_beneficiaire = grr_sql_query($sql_beneficiaire);
 	if ($res_beneficiaire)
 		$row_user = grr_sql_row($res_beneficiaire, 0);
 	echo "<td>".htmlspecialchars($row_user[0]) ." ". htmlspecialchars($row_user[1])."</td>";
-		//Affichage de la date de la dernière mise à jour
+		//Affichage de la date de la derniÃ¨re mise Ã  jour
 	echo "<td>". date_time_string($row[7],$dformat) . "</td>\n";
 	echo "</tr>\n";
 }
-// $breve_description est soit une "description brève" soit un "bénéficiaire", selon la valeur de $_GET["sumby"]
+// $breve_description est soit une "description brÃ¨ve" soit un "bÃ©nÃ©ficiaire", selon la valeur de $_GET["sumby"]
 // La fonction renvoie :
-// $count[$room][$breve_description] : nombre de réservation pour $room et $breve_description donné
-// $hours[$room][$breve_description] : nombre de d'heures de réservation pour $room et $breve_description donné
-// $room_hash[$room]  : tableau des $room concernés par le décompte
-// $breve_description_hash[$breve_description]  : tableau des $breve_description concernés par le décompte
-// Cela va devenir la colonne et la ligne d'entête de la table de statistique.'
+// $count[$room][$breve_description] : nombre de rÃ©servation pour $room et $breve_description donnÃ©
+// $hours[$room][$breve_description] : nombre de d'heures de rÃ©servation pour $room et $breve_description donnÃ©
+// $room_hash[$room]  : tableau des $room concernÃ©s par le dÃ©compte
+// $breve_description_hash[$breve_description]  : tableau des $breve_description concernÃ©s par le dÃ©compte
+// Cela va devenir la colonne et la ligne d'entÃªte de la table de statistique.'
 function accumulate(&$row, &$count, &$hours, $report_start, $report_end,
 	&$room_hash, &$breve_description_hash, $csv="n")
 {
@@ -206,11 +206,11 @@ function accumulate(&$row, &$count, &$hours, $report_start, $report_end,
 		$temp = "(Autres)";
 	if ($csv == "n")
 	{
-		//Description "Créer par":
-		// [3]   Descrition brêve,(HTML) -> e.name
+		//Description "CrÃ©er par":
+		// [3]   Descrition brÃªve,(HTML) -> e.name
 		// [4]   Descrition,(HTML) -> e.description
 		// [5]   Type -> e.type
-		// [6]   réservé par (nom ou IP), (HTML) -> e.beneficiaire
+		// [6]   rÃ©servÃ© par (nom ou IP), (HTML) -> e.beneficiaire
 		// [12]  les champs additionnele -> e.overload_desc
 		$breve_description = htmlspecialchars($temp);
 		//$row[8] : Area , $row[9]:Room
@@ -220,15 +220,15 @@ function accumulate(&$row, &$count, &$hours, $report_start, $report_end,
 	  //   $row[8] : Area , $row[9]:Room
 		$room = removeMailUnicode($row[9]) ." (". removeMailUnicode($row[8]).")";
 	}
-	//Ajoute le nombre de réservations pour cette "room" et nom.
+	//Ajoute le nombre de rÃ©servations pour cette "room" et nom.
 	@$count[$room][$breve_description]++;
-	//Ajoute le nombre d'heure ou la ressource est utilisée.
+	//Ajoute le nombre d'heure ou la ressource est utilisÃ©e.
 	@$hours[$room][$breve_description] += (min((int)$row[2], $report_end)
 		- max((int)$row[1], $report_start)) / 3600.0;
 	$room_hash[$room] = 1;
 	$breve_description_hash[$breve_description] = 1;
 }
-// Identique à la fonction accumulate mais adapté aux cas ou $enable_periode = 'y'
+// Identique Ã  la fonction accumulate mais adaptÃ© aux cas ou $enable_periode = 'y'
 function accumulate_periods(&$row, &$count, &$hours, $report_start, $report_end,
 	&$room_hash, &$breve_description_hash, $csv="n")
 {
@@ -377,7 +377,7 @@ function do_summary(&$count, &$hours, &$room_hash, &$breve_description_hash, $en
 	if ($csv == "n")
 		echo "</tr></table>\n";
 }
-   //Si nous ne savons pas la date, nous devons la créer
+   //Si nous ne savons pas la date, nous devons la crÃ©er
 if (!isset($day) || !isset($month) || !isset($year))
 {
 	$day   = date("d");
@@ -391,13 +391,13 @@ if (($summarize != 4) && ($summarize != 5))
 }
 if (isset($champ[0]))
 {
-	//Applique les paramètres par defaut.
-	//S'assurer que ces paramètres ne sont pas cités.
+	//Applique les paramÃ¨tres par defaut.
+	//S'assurer que ces paramÃ¨tres ne sont pas citÃ©s.
 	$k = 0;
 	while ($k < count($texte))
 	{
 		$texte[$k] = unslashes($texte[$k]);
-		//Mettre les valeurs par défaut quand le formulaire est réutilisé.
+		//Mettre les valeurs par dÃ©faut quand le formulaire est rÃ©utilisÃ©.
 		$texte_default[$k] = htmlspecialchars($texte[$k]);
 		$k++;
 	}
@@ -420,10 +420,10 @@ else
 }
 //$summarize:
 // 1=Rapport seulement,
-// 2=Résumé seulement,
+// 2=RÃ©sumÃ© seulement,
 // 3=Les deux,
-// 4=Télécharger le CSV du rapport
-// 5=Télécharger le CSV du résumé
+// 4=TÃ©lÃ©charger le CSV du rapport
+// 5=TÃ©lÃ©charger le CSV du rÃ©sumÃ©
 if (empty($summarize))
 	$summarize = 1;
 if (($summarize != 4) && ($summarize != 5))
@@ -491,7 +491,7 @@ if (($summarize != 4) && ($summarize != 5))
 								if (isset($champ[$k]) && ($champ[$k] == "login"))
 									echo " selected=\"selected\" ";
 								echo ">".get_vocab("match_login")."</option>\n";
-								// On récupère les infos sur le champ add
+								// On rÃ©cupÃ¨re les infos sur le champ add
 								$overload_fields = mrbsOverloadGetFieldslist("");
 								// Boucle sur tous les champs additionnels de l'area
 								foreach ($overload_fields as $fieldname=>$fieldtype)
@@ -536,10 +536,10 @@ if (($summarize != 4) && ($summarize != 5))
 									<br /></td></tr>
 									<tr><td class="CR"><?php echo get_vocab("summarize_by").get_vocab("summarize_by_precisions").get_vocab("deux_points");?></td>
 										<td class="CL"><?php
-											// [3]   Descrition brêve,(HTML) -> e.name
+											// [3]   Descrition brÃªve,(HTML) -> e.name
 											// [4]   Descrition,(HTML) -> e.description
 											// [5]   Type -> e.type
-											// [6]   réservé par (nom ou IP), (HTML) -> e.beneficiaire
+											// [6]   rÃ©servÃ© par (nom ou IP), (HTML) -> e.beneficiaire
 	 										// [12]  les champs additionnele -> e.overload_desc
 											echo "<select name=\"sumby\" size=\"1\">\n";
 											echo "<option value=\"6\" ";
@@ -554,7 +554,7 @@ if (($summarize != 4) && ($summarize != 5))
 											if ($_GET["sumby"] == "5")
 												echo " selected=\"selected\"";
 											echo ">".get_vocab("type")."</option>\n";
-											// On récupère les infos sur le champ add
+											// On rÃ©cupÃ¨re les infos sur le champ add
 											$overload_fields = mrbsOverloadGetFieldslist("");
 											// Boucle sur tous les champs additionnels de l'area
 											foreach ($overload_fields as $fieldname=>$fieldtype) {
@@ -582,7 +582,7 @@ if (($summarize != 4) && ($summarize != 5))
 						<?php
 // Fin de if (($summarize != 4) and ($summarize != 5)) {
 					}
-	// Résultats:
+	// RÃ©sultats:
 //if (isset($champ[0]))
 					if (isset($_GET["is_posted"]))
 					{
@@ -601,26 +601,26 @@ if (($summarize != 4) && ($summarize != 5))
 							echo '>' . get_vocab("ppreview") . '</a>
 						</p>';
 					}
-	//S'assurer que ces paramètres ne sont pas cités.
+	//S'assurer que ces paramÃ¨tres ne sont pas citÃ©s.
 					$k = 0;
 					while ($k < count($texte))
 					{
 						$texte[$k] = unslashes($texte[$k]);
 						$k++;
 					}
-	//Les heures de début et de fin sont aussi utilisés pour mettre l'heure dans le rapport.
+	//Les heures de dÃ©but et de fin sont aussi utilisÃ©s pour mettre l'heure dans le rapport.
 					$report_start = mktime(0, 0, 0, $From_month, $From_day, $From_year);
 					$report_end = mktime(0, 0, 0, $To_month, $To_day+1, $To_year);
-//   La requête SQL va contenir les colonnes suivantes:
+//   La requÃªte SQL va contenir les colonnes suivantes:
 // Col Index  Description:
-//   1  [0]   Entry ID, Non affiché -> e.id
-//   2  [1]   Date de début (Unix) -> e.start_time
+//   1  [0]   Entry ID, Non affichÃ© -> e.id
+//   2  [1]   Date de dÃ©but (Unix) -> e.start_time
 //   3  [2]   Date de fin (Unix) -> e.end_time
-//   4  [3]   Descrition brêve,(HTML) -> e.name
+//   4  [3]   Descrition brÃªve,(HTML) -> e.name
 //   5  [4]   Descrition,(HTML) -> e.description
 //   6  [5]   Type -> e.type
-//   7  [6]   réservé par (nom ou IP), (HTML) -> e.beneficiaire
-//   8  [7]   Timestamp (création), (Unix) -> e.timestamp
+//   7  [6]   rÃ©servÃ© par (nom ou IP), (HTML) -> e.beneficiaire
+//   8  [7]   Timestamp (crÃ©ation), (Unix) -> e.timestamp
 //   9  [8]   Area (HTML) -> a.area_name
 //  10  [9]   Room (HTML) -> r.room_name
 //  11  [10]  Room description -> r.description
@@ -632,7 +632,7 @@ if (($summarize != 4) && ($summarize != 5))
 					.  grr_sql_syntax_timestamp_to_unix("e.timestamp")
 					. ", a.area_name, r.room_name, r.description, a.id, e.overload_desc"
 					. " FROM ".TABLE_PREFIX."_entry e, ".TABLE_PREFIX."_area a, ".TABLE_PREFIX."_room r, ".TABLE_PREFIX."_type_area t";
-	// Si l'utilisateur n'est pas administrateur, seuls les domaines auxquels il a accès sont pris en compte
+	// Si l'utilisateur n'est pas administrateur, seuls les domaines auxquels il a accÃ¨s sont pris en compte
 					if (authGetUserLevel(getUserName(),-1) < 6)
 						if ($test_grr_j_user_area != 0)
 							$sql .= ", ".TABLE_PREFIX."_j_user_area j ";
@@ -643,7 +643,7 @@ if (($summarize != 4) && ($summarize != 5))
 						{
 							$sql .= " and r.id != $key ";
 						}
-	// Si l'utilisateur n'est pas administrateur, seuls les domaines auxquels il a accès sont pris en compte
+	// Si l'utilisateur n'est pas administrateur, seuls les domaines auxquels il a accÃ¨s sont pris en compte
 						if (authGetUserLevel(getUserName(),-1) < 6)
 							if ($test_grr_j_user_area == 0)
 								$sql .= " and a.access='a' ";
@@ -685,22 +685,22 @@ if (($summarize != 4) && ($summarize != 5))
 }
 $sql .= " AND  t.type_letter = e.type ";
 if ( $sortby == "a" )
-		//Trié par: Area, room, debut, date/heure.
+		//TriÃ© par: Area, room, debut, date/heure.
 	$sql .= " ORDER BY 9,r.order_display,10,t.type_name,2";
 else if ( $sortby == "r" )
-		//Trié par: room, area, debut, date/heure.
+		//TriÃ© par: room, area, debut, date/heure.
 	$sql .= " ORDER BY r.order_display,10,9,t.type_name,2";
 else if ( $sortby == "d" )
 		// Order by Start date/time, Area, Room
 	$sql .= " ORDER BY 2,9,r.order_display,10,t.type_name";
 else if ( $sortby == "t" )
-		//Trié par: type, Area, room, debut, date/heure.
+		//TriÃ© par: type, Area, room, debut, date/heure.
 	$sql .= " ORDER BY t.type_name,9,r.order_display,10,2";
 else if ( $sortby == "c" )
-		//Trié par: réservant, Area, room, debut, date/heure.
+		//TriÃ© par: rÃ©servant, Area, room, debut, date/heure.
 	$sql .= " ORDER BY e.beneficiaire,9,r.order_display,10,2";
 else if ( $sortby == "b" )
-		//Trié par: réservant, Area, room, debut, date/heure.
+		//TriÃ© par: rÃ©servant, Area, room, debut, date/heure.
 	$sql .= " ORDER BY e.name,9,r.order_display,10,2";
 	// echo $sql." <br /><br />";
 $res = grr_sql_query($sql);
@@ -769,7 +769,7 @@ else
 		else
 			echo "<b>&gt;&gt; ".get_vocab("namebooker")." &lt;&lt;</b>";
 		echo "</td>";
-				// Date de début
+				// Date de dÃ©but
 		echo "<td>";
 		if ($sortby != "d")
 		{
@@ -795,7 +795,7 @@ else
 		else
 			echo "<b>&gt;&gt; ".get_vocab("type")." &lt;&lt;</b>";
 		echo "</td>";
-			// Colonne bénéficiaire
+			// Colonne bÃ©nÃ©ficiaire
 		echo "<td>";
 		if ($sortby != "c")
 		{
@@ -807,13 +807,13 @@ else
 		else
 			echo "<b>&gt;&gt; ".get_vocab("match_login")." &lt;&lt;</b>";
 		echo "</td>";
-			// Colonne "dernière modification"
+			// Colonne "derniÃ¨re modification"
 		echo "<td>".get_vocab("lastupdate")."</td>";
 		echo "</tr>";
 	}
 	for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 	{
-			// Récupération des données concernant l'affichage du planning du domaine
+			// RÃ©cupÃ©ration des donnÃ©es concernant l'affichage du planning du domaine
 		get_planning_area_values($row[11]);
 		if (($summarize == 1) || ($summarize == 3))
 			reporton($row, $dformat);
@@ -836,18 +836,18 @@ else
 			echo "</table>";
 		if (($summarize == 2) || ($summarize == 3))
 		{
-			// Décompte des créneaux réservées
+			// DÃ©compte des crÃ©neaux rÃ©servÃ©es
 			if (isset($do_sum1))
 				do_summary($count, $hours, $room_hash, $breve_description_hash,'y','',"n");
-			// Décompte des heures réservées
+			// DÃ©compte des heures rÃ©servÃ©es
 			if (isset($do_sum2))
 				do_summary($count2, $hours2, $room_hash2, $breve_description_hash2,'n','',"n");
 		}
 		if ($summarize == 4) {
-		//Télécharger le fichier CSV
+		//TÃ©lÃ©charger le fichier CSV
 			header("Content-Type: application/csv-tab-delimited-table");
 			header("Content-disposition: filename=rapport.csv");
-			//Trié par: Area, room, debut, date/heure.
+			//TriÃ© par: Area, room, debut, date/heure.
 			$res = grr_sql_query($sql);
 			if (!$res)
 				fatal_error(0, grr_sql_error());
@@ -859,12 +859,12 @@ else
 			}
 			else
 			{
-				// Ligne d'en-tête
+				// Ligne d'en-tÃªte
 				echo html_entity_decode_all_version($vocab["reservee au nom de"]).";".html_entity_decode_all_version($vocab["areas"]).";".html_entity_decode_all_version($vocab["room"]).html_entity_decode_all_version(preg_replace("/&nbsp;/", " ",$vocab["deux_points"])).";".html_entity_decode_all_version($vocab["description"]).";".html_entity_decode_all_version($vocab["time"])." - ".html_entity_decode_all_version($vocab["duration"]).";".html_entity_decode_all_version($vocab["namebooker"]).html_entity_decode_all_version(preg_replace("/&nbsp;/", " ",$vocab["deux_points"])).";".html_entity_decode_all_version($vocab["match_descr"]).";".html_entity_decode_all_version($vocab["lastupdate"]).";\n";
 			}
 			for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 			{
-				//Affichage de "crée par" et de la date de la dernière mise à jour
+				//Affichage de "crÃ©e par" et de la date de la derniÃ¨re mise Ã  jour
 				echo ($row[6]) . ";";
 				//Area
 				echo (removeMailUnicode($row[8])) . ";";
@@ -872,16 +872,16 @@ else
 				echo (removeMailUnicode($row[9])) . ";";
 				//Description de la ressource
 				echo (removeMailUnicode($row[10])) . ";";
-				// Récupération des données concernant l'affichage du planning du domaine
+				// RÃ©cupÃ©ration des donnÃ©es concernant l'affichage du planning du domaine
 				get_planning_area_values($row[11]);
-				//Affichage de l'heure et de la durée de réservation
+				//Affichage de l'heure et de la durÃ©e de rÃ©servation
 				if ($enable_periods=='y')
 					echo describe_period_span($row[1], $row[2]) . ";";
 				else
 					echo describe_span($row[1], $row[2],$dformat) . ";";
 				//Destination
 				echo (removeMailUnicode(affichage_lien_resa_planning($row[3], $row[0]))) . ";";
-				//Description de la réservation
+				//Description de la rÃ©servation
 				$texte = str_replace(CHR(10)," ",removeMailUnicode($row[4]));
 				$texte = str_replace(CHR(13)," ",$texte);
 				echo ltrim(rtrim(($texte))) . ";";
@@ -892,7 +892,7 @@ else
 		}
 		if ($summarize == 5)
 		{
-			//Télécharger le fichier CSV
+			//TÃ©lÃ©charger le fichier CSV
 			header("Content-Type: application/csv-tab-delimited-table");
 			header("Content-disposition: filename=resume.csv");
 			$res = grr_sql_query($sql);
@@ -920,36 +920,36 @@ else
 			}
 			for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 			{
-				// Récupération des données concernant l'affichage du planning du domaine
+				// RÃ©cupÃ©ration des donnÃ©es concernant l'affichage du planning du domaine
 				get_planning_area_values($row[11]);
 				if ($enable_periods == 'y')
 				{
-					// pour le décompte des créneaux
+					// pour le dÃ©compte des crÃ©neaux
 					accumulate_periods($row, $count1, $hours1, $report_start, $report_end, $room_hash1, $breve_description_hash1, "y");
 					$do_sum1 = 'y';
 				}
 				else
 				{
-					// pour le décompte des heures
+					// pour le dÃ©compte des heures
 					accumulate($row, $count2, $hours2, $report_start, $report_end, $room_hash2, $breve_description_hash2, "y");
 					$do_sum2 = 'y';
 				}
-				// pour le décompte des réservations
+				// pour le dÃ©compte des rÃ©servations
 				accumulate($row, $count, $hours, $report_start, $report_end, $room_hash, $breve_description_hash,"y");
 			}
-			// Décompte des heures (cas ou $enable_periods != 'y')
+			// DÃ©compte des heures (cas ou $enable_periods != 'y')
 			if (isset($do_sum1))
 			{
 				echo "\r\n".html_entity_decode_all_version($vocab["summary_header"])."\r\n";
 				do_summary($count1, $hours1, $room_hash1, $breve_description_hash1, "n", "heure", "y");
 			}
-			// Décompte des créneaux (cas ou $enable_periods == 'y')
+			// DÃ©compte des crÃ©neaux (cas ou $enable_periods == 'y')
 			if (isset($do_sum2))
 			{
 				echo "\r\n".html_entity_decode_all_version($vocab["summary_header_per"])."\r\n";
 				do_summary($count2, $hours2, $room_hash2, $breve_description_hash2, "y", "heure", "y" );
 			}
-			// Décompte des réservations
+			// DÃ©compte des rÃ©servations
 			echo "\r\n\r\n\r\n".html_entity_decode_all_version($vocab["summary_header_resa"])."\r\n";
 			do_summary($count, $hours, $room_hash, $breve_description_hash, "", "resa", "y");
 		}
