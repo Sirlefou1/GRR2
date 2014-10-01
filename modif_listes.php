@@ -1,8 +1,8 @@
 <?php
 /**
  * modif_listes.php
- * Page "Ajax" utilisée pour générer les listes de domaines et de ressources
- * Dernière modification : $Date: 2009-04-14 12:59:17 $
+ * Page "Ajax" utilisÃ©e pour gÃ©nÃ©rer les listes de domaines et de ressources
+ * DerniÃ¨re modification : $Date: 2009-04-14 12:59:17 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -43,10 +43,10 @@
  *
  */
 
-/* Arguments passés par la méthode GET :
+/* Arguments passÃ©s par la mÃ©thode GET :
 $id_site : l'identifiant du site
 $area : domaine
-$room : ressource par défaut
+$room : ressource par dÃ©faut
 $session_login : identifiant
 $type : 'ressource'-> on actualise la liste des ressources
         'domaine'-> on actualise la liste des domaines
@@ -78,7 +78,7 @@ if ($_GET['type']=="domaine") {
  if (isset($_GET["session_login"])) {
   $session_login = $_GET["session_login"];
  } else die();
- if (getSettingValue("module_multisite") == "Oui") { // on a activé les sites
+ if (getSettingValue("module_multisite") == "Oui") { // on a activÃ© les sites
    if ($id_site!=-1)
      $sql = "SELECT a.id, a.area_name
            FROM ".TABLE_PREFIX."_area a, ".TABLE_PREFIX."_j_site_area j

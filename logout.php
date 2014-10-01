@@ -3,7 +3,7 @@
  * logout.php
  * script de deconnexion
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2009-06-04 15:30:17 $
+ * DerniÃ¨re modification : $Date: 2009-06-04 15:30:17 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -37,7 +37,7 @@ require_once("./include/settings.inc.php");
 //Chargement des valeurs de la table settingS
 if (!loadSettings())
 	die("Erreur chargement settings");
-// Paramètres langage
+// ParamÃ¨tres langage
 include "include/language.inc.php";
 require_once("./include/session.inc.php");
 if ((getSettingValue('sso_statut') == 'lasso_visiteur') || (getSettingValue('sso_statut') == 'lasso_utilisateur'))
@@ -47,7 +47,7 @@ if ((getSettingValue('sso_statut') == 'lasso_visiteur') || (getSettingValue('sso
 	@session_start();
 	if (@$_SESSION['lasso_nameid'] != NULL)
 	{
-		// Nous sommes authentifiés: on se déconnecte, puis on revient
+		// Nous sommes authentifiÃ©s: on se dÃ©connecte, puis on revient
 		lassospkit_set_userid(getUserName());
 		lassospkit_set_nameid($_SESSION['lasso_nameid']);
 		lassospkit_soap_logout();
@@ -61,7 +61,7 @@ if (isset($_GET['url']))
 	header("Location: login.php?url=".$url);
 	exit;
 }
-//redirection vers l'url de déconnexion
+//redirection vers l'url de dÃ©connexion
 $url = getSettingValue("url_disconnect");
 if ($url != '')
 {

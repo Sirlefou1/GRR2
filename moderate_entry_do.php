@@ -2,7 +2,7 @@
 /**
  * moderate_entry_do
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2009-04-14 12:59:17 $
+ * DerniÃ¨re modification : $Date: 2009-04-14 12:59:17 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -63,7 +63,7 @@ if (!loadSettings())
 // Session related functions
 require_once("./include/session.inc.php");
 
-// Paramètres langage
+// ParamÃ¨tres langage
 include "include/language.inc.php";
 
 // Resume session
@@ -84,7 +84,7 @@ else
   $type_session = "with_session";
 }
 
-// On vérifie que l'utilisateur a bien le droit d'être ici
+// On vÃ©rifie que l'utilisateur a bien le droit d'Ãªtre ici
 $room_id = grr_sql_query1("select room_id from ".TABLE_PREFIX."_entry where id='".$_POST['id']."'");
 $back = '';
 if (isset($_SERVER['HTTP_REFERER'])) $back = htmlspecialchars($_SERVER['HTTP_REFERER']);
@@ -124,8 +124,8 @@ if ($series==0) {
 
     if (!(grr_backup($_POST['id'],getUserName(),$_POST['description']))) fatal_error(0, grr_sql_error());
     $tab_id_moderes = array();
-} else { // cas d'une série
-    // on constitue le tableau des id de la périodicité
+} else { // cas d'une sÃ©rie
+    // on constitue le tableau des id de la pÃ©riodicitÃ©
     $sql = "select id from ".TABLE_PREFIX."_entry where repeat_id=".$repeat_id;
     $res = grr_sql_query($sql);
     if (! $res) fatal_error(0, grr_sql_error());
@@ -134,10 +134,10 @@ if ($series==0) {
         $tab_entry[] = $row['0'];
     }
     $tab_id_moderes = array();
-    // Boucle sur les résas
+    // Boucle sur les rÃ©sas
     foreach ($tab_entry as $entry_tom) {
         $test = grr_sql_query1("select count(id) from ".TABLE_PREFIX."_entry_moderate where id = '".$entry_tom."'");
-        // Si il existe déjà une entrée dans ".TABLE_PREFIX."_entry_moderate, cela signifie que la réservation a déjà été modérée.
+        // Si il existe dÃ©jÃ  une entrÃ©e dans ".TABLE_PREFIX."_entry_moderate, cela signifie que la rÃ©servation a dÃ©jÃ  Ã©tÃ© modÃ©rÃ©e.
         // Sinon :
         if ($test == 0) {
             //moderation de la ressource
@@ -150,35 +150,35 @@ if ($series==0) {
            if (! $res) fatal_error(0, grr_sql_error());
 
            if (!(grr_backup($entry_tom,getUserName(),$_POST['description']))) fatal_error(0, grr_sql_error());           // Backup : on enregistre les infos dans ".TABLE_PREFIX."_entry_moderate
-           // On constitue un tableau des réservations modérées
+           // On constitue un tableau des rÃ©servations modÃ©rÃ©es
            $tab_id_moderes[] = $entry_tom;
         }
     }
 }
 
-// Avant d'effacer la réservation, on procède à la notification par mail
+// Avant d'effacer la rÃ©servation, on procÃ¨de Ã  la notification par mail
 send_mail($_POST['id'],6,$dformat,$tab_id_moderes);
 
 //moderation de la ressource
 if ($_POST['moderate'] != 1) {
-    // on efface l'entrée de la base
+    // on efface l'entrÃ©e de la base
     if ($series==0) {
         $sql = "delete from ".TABLE_PREFIX."_entry where id = ".$_POST['id'];
         $res = grr_sql_query($sql);
         if (! $res) fatal_error(0, grr_sql_error());
     } else {
-        // On sélectionne toutes les réservation de la périodicité
+        // On sÃ©lectionne toutes les rÃ©servation de la pÃ©riodicitÃ©
         $res = grr_sql_query("select id from ".TABLE_PREFIX."_entry where repeat_id='".$repeat_id."'");
         if (! $res) fatal_error(0, grr_sql_error());
         for ($i = 0; ($row = grr_sql_row($res, $i)); $i++) {
             $entry_tom = $row['0'];
-            // Pour chaque réservation, on teste si celle-ci a été refusée
+            // Pour chaque rÃ©servation, on teste si celle-ci a Ã©tÃ© refusÃ©e
             $test = grr_sql_query1("select count(id) from ".TABLE_PREFIX."_entry_moderate where id = '".$entry_tom."' and moderate='3'");
-            // Si oui, on supprime la réservation
+            // Si oui, on supprime la rÃ©servation
             if ($test > 0)
                 $del = grr_sql_query("delete from ".TABLE_PREFIX."_entry where id = '".$entry_tom."'");
         }
-        // On supprime l'info de périodicité
+        // On supprime l'info de pÃ©riodicitÃ©
         $del_repeat = grr_sql_query("delete from ".TABLE_PREFIX."_repeat where id='".$repeat_id."'");
         $dupdate_repeat = grr_sql_query("update ".TABLE_PREFIX."_entry set repead_id = '0' where repead_id='".$repeat_id."'");
     }
