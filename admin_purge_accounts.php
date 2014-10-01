@@ -1,8 +1,8 @@
 <?php
 /**
  * admin_purge_accounts.php
- * interface de purge des comptes et réservations
- * Dernière modification : $Date: 2009-12-16 14:52:31 $
+ * interface de purge des comptes et rÃ©servations
+ * DerniÃ¨re modification : $Date: 2009-12-16 14:52:31 $
  * @author    Christian Daviau (GIP RECIA - Esco-Portail)
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau

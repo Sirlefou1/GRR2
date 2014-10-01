@@ -3,7 +3,7 @@
  * admin_room_del
  * Interface de confirmation de suppression d'un domaine ou d'une ressource
  * de l'application GRR
- * DerniËre modification : $Date: 2009-09-29 18:02:56 $
+ * Derni√®re modification : $Date: 2009-09-29 18:02:56 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -113,7 +113,7 @@ if ($type == "area")
 		for ($i = 0; ($field_row = grr_sql_row($result, $i)); $i++)
 		{
 			$id_overload = $field_row[0];
-			// Suppression des donnÈes dans les rÈservations dÈj‡ effectuÈes
+			// Suppression des donn√©es dans les r√©servations d√©j√† effectu√©es
 			grrDelOverloadFromEntries($id_overload);
 			$sql = "DELETE FROM ".TABLE_PREFIX."_overload WHERE id=$id_overload;";
 			grr_sql_command($sql);

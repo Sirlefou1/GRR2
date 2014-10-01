@@ -3,7 +3,7 @@
  * admin_room.php
  * Interface d'accueil
  * de Gestion des sites de l'application GRR
- * Dernière modification : $Date: 2009-09-29 18:02:56 $
+ * Derni?e modification : $Date: 2009-09-29 18:02:56 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @author    Marc-Henri PAMISEUX <marcori@users.sourceforge.net>
  * @copyright Copyright 2003-2008 Laurent Delineau
@@ -196,7 +196,7 @@ $id_site = $row[0];
 			echo "<td><a href=\"admin_edit_room.php?id_site=".$id_site."&amp;area_id=$id_area\">".get_vocab('addroom')."</a></td></tr>";
 		else
 			echo "<td>&nbsp;</td></tr>";
-		// Pas de site selectionné, donc pas de domaine, et encore moins de ressources.
+		// Pas de site selectionn? donc pas de domaine, et encore moins de ressources.
 		if ((getSettingValue("module_multisite") == "Oui") && ($id_site <= 0))
 		{
 			echo "</table>\n";
@@ -222,7 +222,7 @@ $id_site = $row[0];
 			echo "<table border=\"0\" cellpadding=\"3\" cellspacing=\"1\">\n";
 			for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 			{
-				// on affiche que les domaines que l'utilisateur connecté a le droit d'administrer
+				// on affiche que les domaines que l'utilisateur connect?a le droit d'administrer
 				if (authGetUserLevel(getUserName(),$row[0],'area') >= 4)
 				{
 					echo "<tr>";

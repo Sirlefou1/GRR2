@@ -2,7 +2,7 @@
 /**
  * admin_open_mysql.php
  *
- * Dernière modification : $Date: 2009-06-04 15:30:17 $
+ * DerniÃ¨re modification : $Date: 2009-06-04 15:30:17 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @author    Sylvain Payeur
  * @copyright Copyright 2003-2008 Laurent Delineau
@@ -70,7 +70,7 @@ if (!$file_name && !$sql_file['name'])
 	exit (get_vocab("admin_import_users_csv11")."<br /><a href=\"admin_config.php?page_config=4\">".get_vocab("back")."</a></div></body></html>");
 if (!$file_name)
 {
-	echo "<h3>Restauration à partir du ficher : ";
+	echo "<h3>Restauration Ã  partir du ficher : ";
 	echo $sql_file['name']."</h3>\n";
 	$file_name = str_replace("\\","/",dirname($sql_file['tmp_name'])."/".$sql_file['name']);
 	$ok = @copy($sql_file['tmp_name'],$file_name);
@@ -117,8 +117,8 @@ else
 	}
 	fclose($file);
 	unlink($file_name);
-	echo "<h3>La restauration est terminée !</h3>" ;
-	echo strlen($ok)." requêtes ont été exécutées " ;
+	echo "<h3>La restauration est terminÃ©e !</h3>" ;
+	echo strlen($ok)." requÃªtes ont Ã©tÃ© exÃ©cutÃ©es " ;
 	if (strrpos($ok, '0'))
 	{
 		echo "avec ".substr_count($ok,'0')." erreur(s) :";
