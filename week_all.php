@@ -51,9 +51,7 @@ if (!grr_resumeSession())
 		die();
 	}
 }
-// Param?tres langage
 include "include/language.inc.php";
-
 $affiche_pview = '1';
 if (!isset($_GET['pview']))
 	$_GET['pview'] = 0;
@@ -114,7 +112,7 @@ if (check_begin_end_bookings($day, $month, $year))
 	exit();
 }
 print_header($day, $month, $year, $area, $type_session);
-if ((authGetUserLevel(getUserName(),-1) < 1) and (getSettingValue("authentification_obli")==1))
+if ((authGetUserLevel(getUserName(),-1) < 1) && (getSettingValue("authentification_obli") == 1))
 {
 	showAccessDenied($day, $month, $year, $area,$back);
 	exit();
@@ -152,7 +150,7 @@ if (($weekday = (date("w", $time) - $weekstarts + 7) % 7) > 0)
 	$time -= $weekday * 86400;
 if (!isset($correct_heure_ete_hiver) || ($correct_heure_ete_hiver == 1))
 {
-	if ((heure_ete_hiver("ete",$year,0) <= $time_old) && (heure_ete_hiver("ete",$year,0) >= $time) && ($time_old != $time) && (date("H", $time)== 23))
+	if ((heure_ete_hiver("ete", $year,0) <= $time_old) && (heure_ete_hiver("ete",$year,0) >= $time) && ($time_old != $time) && (date("H", $time) == 23))
 		$decal = 3600;
 	else
 		$decal = 0;
@@ -165,8 +163,8 @@ $date_start = mktime($morningstarts, 0, 0, $month_week, $day_week, $year_week);
 $days_in_month = date("t", $date_start);
 if ($debug_flag)
 	echo "$month_week $day_week ";
-$date_end = mktime($eveningends, $eveningends_minutes, 0, $month_week, $day_week+6, $year_week);
-$this_area_name = grr_sql_query1("select area_name from ".TABLE_PREFIX."_area where id=$area");
+$date_end = mktime($eveningends, $eveningends_minutes, 0, $month_week, $day_week + 6, $year_week);
+$this_area_name = grr_sql_query1("SELECT area_name FROM ".TABLE_PREFIX."_area WHERE id=$area");
 switch ($dateformat)
 {
 	case "en":
@@ -176,11 +174,11 @@ switch ($dateformat)
 	$dformat = "%A %d %b";
 	break;
 }
-$i= mktime(0, 0, 0, $month_week, $day_week - 7, $year_week);
+$i = mktime(0, 0, 0, $month_week, $day_week - 7, $year_week);
 $yy = date("Y", $i);
 $ym = date("m", $i);
 $yd = date("d", $i);
-$i= mktime(0, 0, 0, $month_week, $day_week +7 , $year_week);
+$i = mktime(0, 0, 0, $month_week, $day_week +7 , $year_week);
 $ty = date("Y", $i);
 $tm = date("m", $i);
 $td = date("d", $i);
@@ -207,27 +205,27 @@ else
 		$month_num = date("m", $t);
 		$year_num = date("Y", $t);
 		if ($enable_periods == 'y')
-			$midnight = mktime(12,0,0,$month_num,$day_num,$year_num);
+			$midnight = mktime(12, 0, 0, $month_num, $day_num, $year_num);
 		else
 			$midnight = mktime(0, 0, 0, $month_num, $day_num, $year_num);
 		if ($debug_flag)
-			echo "<br />DEBUG: result $i, id $row[2], starts $row[0], ends $row[1], temps en heures : ".($row[1]- $row[0])/(60*60).", midnight : $midnight \n";
+			echo "<br />DEBUG: result $i, id $row[2], starts $row[0], ends $row[1], temps en heures : ".($row[1]- $row[0]) / (60 * 60).", midnight : $midnight \n";
 		while ($t <= $end_t)
 		{
 			if ($debug_flag)
 				echo "<br />DEBUG: Entry $row[2] day $day_num\n";
 			$d[$day_num]["id"][] = $row[2];
 			if (getSettingValue("display_info_bulle") == 1)
-				$d[$day_num]["who"][] = get_vocab("reservee au nom de").affiche_nom_prenom_email($row[4],$row[12],"nomail");
+				$d[$day_num]["who"][] = get_vocab("reservee au nom de").affiche_nom_prenom_email($row[4], $row[12], "nomail");
 			else if (getSettingValue("display_info_bulle") == 2)
 				$d[$day_num]["who"][] = $row[8];
 			else
 				$d[$day_num]["who"][] = "";
-			$d[$day_num]["who1"][] = affichage_lien_resa_planning($row[3],$row[2]);
+			$d[$day_num]["who1"][] = affichage_lien_resa_planning($row[3], $row[2]);
 			$d[$day_num]["id_room"][]=$row[5] ;
 			$d[$day_num]["color"][]=$row[6];
 			$d[$day_num]["res"][] = $row[7];
-			$d[$day_num]["description"][] = affichage_resa_planning($row[8],$row[2]);;
+			$d[$day_num]["description"][] = affichage_resa_planning($row[8], $row[2]);;
 			if ($row[10] > 0)
 				$d[$day_num]["option_reser"][] = $row[9];
 			else
@@ -236,10 +234,10 @@ else
 			$midnight_tonight = $midnight + 86400;
 			if (!isset($correct_heure_ete_hiver) || ($correct_heure_ete_hiver == 1))
 			{
-				if (heure_ete_hiver("hiver",$year_num,0) == mktime(0,0,0,$month_num,$day_num,$year_num))
-					$midnight_tonight +=3600;
+				if (heure_ete_hiver("hiver",$year_num,0) == mktime(0, 0, 0, $month_num, $day_num, $year_num))
+					$midnight_tonight += 3600;
 				if (date("H",$midnight_tonight) == "01")
-					$midnight_tonight -=3600;
+					$midnight_tonight -= 3600;
 			}
 			if ($enable_periods == 'y')
 			{
@@ -336,7 +334,7 @@ $res = grr_sql_query($sql);
 if (isset($_GET['precedent']))
 {
 	if ($_GET['pview'] == 1 && $_GET['precedent'] == 1)
-		echo "<span id=\"lienPrecedent\">\n<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript:history.back();\">Précedent</button>\n</span>";
+		echo "<span id=\"lienPrecedent\">\n<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript:history.back();\">PrÃ©cedent</button>\n</span>";
 }
 if (!$res)
 	fatal_error(0, grr_sql_error());
@@ -422,9 +420,9 @@ else
 					echo "<span class=\"texte_ress_tempo_indispo\">".get_vocab("ressource_temporairement_indisponible")."</span><br />";
 				if (verif_display_fiche_ressource(getUserName(), $row[2]) && $_GET['pview'] != 1)
 					echo "<a href='javascript:centrerpopup(\"view_room.php?id_room=$row[2]\",600,480,\"scrollbars=yes,statusbar=no,resizable=yes\")' title=\"".get_vocab("fiche_ressource")."\">
-				<img src=\"img_grr/details.png\" alt=\"Détails\" class=\"".$class_image."\"  /></a>";
+				<img src=\"img_grr/details.png\" alt=\"DÃ©tails\" class=\"".$class_image."\" /></a>";
 				if (authGetUserLevel(getUserName(),$row[2]) > 2 && $_GET['pview'] != 1)
-					echo "<a href='admin_edit_room.php?room=$row[2]'><img src=\"img_grr/editor.png\" alt=\"configuration\" title=\"".get_vocab("Configurer la ressource")."\" width=\"30\" height=\"30\" class=\"".$class_image."\"  /></a>";
+					echo "<a href='admin_edit_room.php?room=$row[2]'><img src=\"img_grr/editor.png\" alt=\"configuration\" title=\"".get_vocab("Configurer la ressource")."\" width=\"30\" height=\"30\" class=\"".$class_image."\" /></a>";
 				affiche_ressource_empruntee($row[2]);
 				echo "</td>";
 				$li++;
@@ -442,9 +440,9 @@ else
 						$temp_day = strftime("%d", $t2);
 						$temp_month = strftime("%m", $t2);
 						$temp_year = strftime("%Y", $t2);
-						if (heure_ete_hiver("hiver",$temp_year,0) == mktime(0, 0, 0, $temp_month, $temp_day, $temp_year))
+						if (heure_ete_hiver("hiver", $temp_year,0) == mktime(0, 0, 0, $temp_month, $temp_day, $temp_year))
 							$t2 +=3600;
-						if (date("H",$t2) == "01")
+						if (date("H", $t2) == "01")
 							$t2 -=3600;
 					}
 					if ($display_day[$num_week_day] == 1)
@@ -467,7 +465,7 @@ else
 										if (getSettingValue("display_level_view_entry") == 0)
 										{
 											$currentPage = 'week_all';
-											$id =   $d[$cday]["id"][$i];
+											$id = $d[$cday]["id"][$i];
 											echo "<a title=\"".htmlspecialchars($d[$cday]["who"][$i])."\" href=\"#?w=500\" onclick=\"request($id,$cday,$cmonth,$cyear,'$currentPage',readData);\" rel=\"popup_name\" class=\"poplight\">";
 										}
 										else
@@ -523,8 +521,9 @@ else
 								}
 							}
 						}
-						if ($no_td) {
-							if ($row[4]==1)
+						if ($no_td)
+						{
+							if ($row[4] == 1)
 								echo "<td class=\"empty_cell\">";
 							else
 								echo "<td class=\"avertissement\">";
@@ -534,7 +533,7 @@ else
 						$hour = date("H", $date_now);
 						$date_booking = mktime(24, 0, 0, $cmonth, $cday, $cyear);
 						if (est_hors_reservation(mktime(0, 0, 0, $cmonth, $cday, $cyear), $area))
-							echo "<img src=\"img_grr/stop.png\" alt=\"".get_vocab("reservation_impossible")."\"  title=\"".get_vocab("reservation_impossible")."\" width=\"16\" height=\"16\" class=\"".$class_image."\"  />";
+							echo "<img src=\"img_grr/stop.png\" alt=\"".get_vocab("reservation_impossible")."\" title=\"".get_vocab("reservation_impossible")."\" width=\"16\" height=\"16\" class=\"".$class_image."\" />";
 						else
 						{
 							if ((($authGetUserLevel > 1) || ($auth_visiteur == 1)) && ($UserRoomMaxBooking != 0) && verif_booking_date(getUserName(), -1, $row[2], $date_booking, $date_now, $enable_periods) && verif_delais_max_resa_room(getUserName(), $row[2], $date_booking) && verif_delais_min_resa_room(getUserName(), $row[2], $date_booking) && plages_libre_semaine_ressource($row[2], $cmonth, $cday, $cyear) && (($row[4] == "1") || (($row[4] == "0") && (authGetUserLevel(getUserName(),$row[2]) > 2) )) && $_GET['pview'] != 1)
@@ -562,9 +561,9 @@ else
 	if ($_GET['pview'] != 1)
 		echo "<div id=\"toTop\"><b>".get_vocab("top_of_page")."</b>";
 	bouton_retour_haut ();
-	echo " </div>";
-	echo " </div>";
-	echo " </div>";
-	echo  "<div id=\"popup_name\" class=\"popup_block\" ></div>";
-	echo  "<div id=\"popup_name2\" class=\"popup_block2\" ></div>";
+	echo "</div>";
+	echo "</div>";
+	echo "</div>";
+	echo "<div id=\"popup_name\" class=\"popup_block\" ></div>";
+	echo "<div id=\"popup_name2\" class=\"popup_block2\" ></div>";
 	?>
