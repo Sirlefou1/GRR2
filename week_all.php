@@ -357,7 +357,7 @@ else
 		echo "
 		<tr>
 			<td align=\"left\">
-				<input type=\"button\" onclick=\"charger();javascript: location.href='week_all.php?year=$yy&amp;month=$ym&amp;day=$yd&amp;area=$area';\" value=\"&lt;&lt; ".get_vocab("weekbefore")." \"/>
+				<input type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='week_all.php?year=$yy&amp;month=$ym&amp;day=$yd&amp;area=$area';\" value=\"&lt;&lt; ".get_vocab("weekbefore")." \"/>
 			</td>
 			<td>";
 				include "include/trailer.inc.php";
