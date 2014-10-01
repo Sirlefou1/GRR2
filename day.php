@@ -261,7 +261,7 @@ else
 					echo "<span id=\"lienPrecedent\"><button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript:history.back();\">Précedent</button></span>";
 			}
 			echo "<div class=\"contenu_planning\">" ;
-			echo "<table  cellspacing=\"0\" border=\"1\" width=\"100%\">";
+			echo "<table  cellspacing=\"0\"  class=\"table-bordered\" width=\"100%\">";
 			echo "<tr>\n<th style=\"width:5%;\">";
 			if ($enable_periods == 'y')
 				echo get_vocab("period");

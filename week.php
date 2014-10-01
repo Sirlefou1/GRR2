@@ -323,7 +323,7 @@ else
 					else echo "d is not an array!\n";
 					echo "</pre><p>\n";
 				}
-				echo "<table cellspacing=\"0\" border=\"1\" width=\"100%\">";
+				echo "<table cellspacing=\"0\" class=\"table-bordered\" width=\"100%\">";
 				echo "<tr>\n<th style=\"width:5%;\">";
 				if ($enable_periods=='y')
 					echo get_vocab("period");

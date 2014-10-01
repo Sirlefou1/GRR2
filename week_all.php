@@ -371,7 +371,7 @@ else
 	echo "<h4 class=\"titre\">".utf8_strftime($dformat, $date_start)." au ". utf8_strftime($dformat, $date_end). " $this_area_name - ".get_vocab("all_rooms")."</h4>";
 	echo "</div>";
 	echo "\n<div class=\"contenu_planning\">\n" ;
-	echo "<table cellspacing=\"0\" border=\"1\" width=\"100%\">\n<thead><tr>";
+	echo "<table cellspacing=\"0\" class=\"table-bordered\" width=\"100%\">\n<thead><tr>";
 	echo "<th width=\"10%\">&nbsp;</th>\n";
 	$t = $time;
 	$num_week_day = $weekstarts;

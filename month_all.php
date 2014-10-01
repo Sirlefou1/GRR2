@@ -372,7 +372,7 @@ for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 		echo "</pre>\n";
 	}
 // Début du tableau affichant le planning
-	echo "<table  border=\"1\" width=\"100%\">\n";
+	echo "<table  class=\"table-bordered\" width=\"100%\">\n";
 // Début affichage première ligne (intitulé des jours)
 	echo "<tr>";
 	for ($weekcol = 0; $weekcol < 7; $weekcol++)
