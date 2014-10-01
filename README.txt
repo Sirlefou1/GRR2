@@ -3,49 +3,49 @@ GRR
 http://grr.mutualibre.org
 
 
-GRR est un outil de gestion et de réservation de ressources. GRR est une adaptation d'une
+GRR est un outil de gestion et de rÃ©servation de ressources. GRR est une adaptation d'une
 application MRBS.
 
 
 1. Installation
 2. License
-3. Remarques concernant la sécurité
+3. Remarques concernant la sÃ©curitÃ©
 
 
 1. Installation
 =======================================
 
-Pour obtenir une description complète de la procédure d'installation,
+Pour obtenir une description complÃ¨te de la procÃ©dure d'installation,
 veuillez vous reporter au fichier "INSTALL.txt".
 
-Pour une installation simplifiée, décompressez simplement cette archive sur un
-serveur, et indiquez l'adresse où se trouvent les fichiers extraits dans un navigateur (ex: http://www.monsite.fr/grr).
+Pour une installation simplifiÃ©e, dÃ©compressez simplement cette archive sur un
+serveur, et indiquez l'adresse oÃ¹ se trouvent les fichiers extraits dans un navigateur (ex: http://www.monsite.fr/grr).
 
-* Préalables pour l'installation automatisée :
-- disposer d'un espace FTP sur un serveur, pour y transférer les fichiers
-- disposer d'une base de données MySQL (adresse du serveur MySQL, login, mot de passe)
+* PrÃ©alables pour l'installation automatisÃ©e :
+- disposer d'un espace FTP sur un serveur, pour y transfÃ©rer les fichiers
+- disposer d'une base de donnÃ©es MySQL (adresse du serveur MySQL, login, mot de passe)
 
 2. Licence
 =======================================
 
-GRR est publié sous les termes de la GNU General Public Licence, dont le
-contenu est disponible dans le fichier "license.txt", en anglais et dans le fichiers "licence_fr.html" en français.
-GRR est gratuit, vous pouvez le copier, le distribuer, et le modifier, à
-condition que chaque partie de GRR réutilisée ou modifiée reste sous licence
+GRR est publiÃ© sous les termes de la GNU General Public Licence, dont le
+contenu est disponible dans le fichier "license.txt", en anglais et dans le fichiers "licence_fr.html" en franÃ§ais.
+GRR est gratuit, vous pouvez le copier, le distribuer, et le modifier, Ã 
+condition que chaque partie de GRR rÃ©utilisÃ©e ou modifiÃ©e reste sous licence
 GNU GPL.
-Par ailleurs et dans un soucis d'efficacité, merci de rester en contact avec
-le développeur de GRR pour éventuellement intégrer vos contributions à une distribution ultérieure.
+Par ailleurs et dans un soucis d'efficacitÃ©, merci de rester en contact avec
+le dÃ©veloppeur de GRR pour Ã©ventuellement intÃ©grer vos contributions Ã  une distribution ultÃ©rieure.
 
-Enfin, GRR est livré en l'état sans aucune garantie. Les auteurs de cet outil
-ne pourront en aucun cas être tenus pour responsables d'éventuels bugs.
+Enfin, GRR est livrÃ© en l'Ã©tat sans aucune garantie. Les auteurs de cet outil
+ne pourront en aucun cas Ãªtre tenus pour responsables d'Ã©ventuels bugs.
 
 
-3. Remarques concernant la sécurité
+3. Remarques concernant la sÃ©curitÃ©
 =======================================
 
-La sécurisation de GRR est dépendante de celle du serveur. Nous vous recommandons d'utiliser
-un serveur Apache sous Linux, en utilisant le protocole https (transferts de données cryptées), et en
-veillant à toujours utiliser les dernières versions des logiciels impliqués
+La sÃ©curisation de GRR est dÃ©pendante de celle du serveur. Nous vous recommandons d'utiliser
+un serveur Apache sous Linux, en utilisant le protocole https (transferts de donnÃ©es cryptÃ©es), et en
+veillant Ã  toujours utiliser les derniÃ¨res versions des logiciels impliquÃ©s
 (notamment Apache et PHP).
 
 L'EQUIPE DE DEVELOPPEMENT DE GRR NE SAURAIT EN AUCUN CAS ETRE TENUE

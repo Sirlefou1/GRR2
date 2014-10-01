@@ -27,26 +27,6 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-/**
- * $Log: report.php,v $
- * Revision 1.17  2010-01-06 10:21:19  grr
- * *** empty log message ***
- *
- * Revision 1.16  2009-12-02 20:11:07  grr
- * *** empty log message ***
- *
- * Revision 1.15  2009-09-29 18:02:57  grr
- * *** empty log message ***
- *
- * Revision 1.14  2009-04-14 12:59:17  grr
- * *** empty log message ***
- *
- * Revision 1.13  2009-04-09 14:52:31  grr
- * *** empty log message ***
- *
- *
- *
- */
 include "include/connect.inc.php";
 include "include/config.inc.php";
 include "include/misc.inc.php";

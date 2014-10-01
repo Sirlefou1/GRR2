@@ -10,7 +10,7 @@ function generationpdf() {
          var specialElementHandlers = {
              '#bypassme': function(element, renderer) {
                  return true;
-                 alert("c'est instancié ! "); 
+                 alert("c'est instanciÃ© ! "); 
              }
          };
 

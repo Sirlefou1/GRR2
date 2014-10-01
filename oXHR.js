@@ -4,7 +4,7 @@
  */
 
 
-//Création de l'Objet XHR
+//CrÃ©ation de l'Objet XHR
 function getXMLHttpRequest() {
 	var xhr = null;
 	

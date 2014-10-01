@@ -1,8 +1,8 @@
 <?php
 /**
  * my_account_modif_listes.php
- * Page "Ajax" utilisée pour générer les listes de domaines et de ressources, en liaison avec my_account.php
- * Dernière modification : $Date: 2009-04-14 12:59:17 $
+ * Page "Ajax" utilisÃ©e pour gÃ©nÃ©rer les listes de domaines et de ressources, en liaison avec my_account.php
+ * DerniÃ¨re modification : $Date: 2009-04-14 12:59:17 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -43,11 +43,11 @@
  *
  */
 
-/* Arguments passés par la méthode GET :
-$use_site : 'y' (fonctionnalité multisite activée) ou 'n' (fonctionnalité multisite désactivée)
+/* Arguments passÃ©s par la mÃ©thode GET :
+$use_site : 'y' (fonctionnalitÃ© multisite activÃ©e) ou 'n' (fonctionnalitÃ© multisite dÃ©sactivÃ©e)
 $id_site : l'identifiant du site
-$default_area : domaine par défaut
-$default_room : ressource par défaut
+$default_area : domaine par dÃ©faut
+$default_room : ressource par dÃ©faut
 $session_login : identifiant
 $type : 'ressource'-> on actualise la liste des ressources
         'domaine'-> on actualise la liste des domaines
@@ -83,7 +83,7 @@ if ($_GET['type']=="domaine") {
   $use_site = $_GET["use_site"];
  } else die();
 
- if ($use_site=='y') { // on a activé les sites
+ if ($use_site=='y') { // on a activÃ© les sites
    if ($id_site!=-1)
      $sql = "SELECT a.id, a.area_name,a.access
            FROM ".TABLE_PREFIX."_area a, ".TABLE_PREFIX."_j_site_area j
