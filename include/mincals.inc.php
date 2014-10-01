@@ -111,9 +111,9 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 				$lastmonth = date("m",$tmp);
 				$lastyear = date("Y",$tmp);
 				if (($this->dmy != 'day') && ($this->dmy != 'week_all') && ($this->dmy != 'month_all') && ($this->dmy != 'month_all2'))
-					$s .= "<button title=\"".htmlspecialchars(get_vocab("previous_year"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='month.php?year=$lastyear&amp;month=$lastmonth&amp;day=1&amp;area=$this->area&amp;room=$this->room';\"><span class=\"glyphicon glyphicon-backward\"></span></button>\n";
+					$s .= "<div class=\"btn-group\"><button title=\"".htmlspecialchars(get_vocab("previous_year"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='month.php?year=$lastyear&amp;month=$lastmonth&amp;day=1&amp;area=$this->area&amp;room=$this->room';\"><span class=\"glyphicon glyphicon-backward\"></span></button>\n";
 				else
-					$s .= "<button title=\"".htmlspecialchars(get_vocab("previous_year"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='".$type_month_all.".php?year=$lastyear&amp;month=$lastmonth&amp;day=1&amp;area=$this->area';\"><span class=\"glyphicon glyphicon-backward\"></span></button>\n";
+					$s .= "<div class=\"btn-group\"><button title=\"".htmlspecialchars(get_vocab("previous_year"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='".$type_month_all.".php?year=$lastyear&amp;month=$lastmonth&amp;day=1&amp;area=$this->area';\"><span class=\"glyphicon glyphicon-backward\"></span></button>\n";
 			}
 			// on ajoute un lien vers le mois précédent
 			if ($this->mois_precedent == 1)
@@ -149,9 +149,9 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 				$nextmonth = date("m",$tmp);
 				$nextyear= date("Y",$tmp);
 				if (($this->dmy != 'day') && ($this->dmy != 'week_all') && ($this->dmy != 'month_all') && ($this->dmy != 'month_all2'))
-					$s .= "<button title=\"".htmlspecialchars(get_vocab("following_year"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='month.php?year=$nextyear&amp;month=$nextmonth&amp;day=1&amp;area=$this->area&amp;room=$this->room';\"><span class=\"glyphicon glyphicon-forward\"></span></button>\n";
+					$s .= "<button title=\"".htmlspecialchars(get_vocab("following_year"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='month.php?year=$nextyear&amp;month=$nextmonth&amp;day=1&amp;area=$this->area&amp;room=$this->room';\"><span class=\"glyphicon glyphicon-forward\"></span></button></div>\n";
 				else
-					$s .= "<button title=\"".htmlspecialchars(get_vocab("following_year"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='".$type_month_all.".php?year=$nextyear&amp;month=$nextmonth&amp;day=1&amp;area=$this->area';\"><span class=\"glyphicon glyphicon-forward\"></span></button>\n";
+					$s .= "<button title=\"".htmlspecialchars(get_vocab("following_year"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='".$type_month_all.".php?year=$nextyear&amp;month=$nextmonth&amp;day=1&amp;area=$this->area';\"><span class=\"glyphicon glyphicon-forward\"></span></button></div>\n";
 			}
  			//Hugo - Variable qui permet de rester dans la meme room au changement de salle
 			$action = $_SERVER['PHP_SELF']."?year=".date('Y',time())."&amp;month=".date('m',time())."&amp;day=".date('d',time());
