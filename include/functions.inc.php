@@ -415,7 +415,7 @@ function grr_help($mot_clef,$ancre = "")
 		{
 			$tag_help = "&nbsp;<a href='javascript:centrerpopup(\"".getSettingValue("lien_aide")."\",800,480,\"scrollbars=yes,statusbar=no,resizable=yes\")'>".get_vocab("help")."</a>";
 			//$tag_help = "&nbsp;<a href='".getSettingValue("lien_aide")."' target='_blank'>".get_vocab("help")."</a>";
-		} 
+		}
 		else
 		{
 			$tag_help = "&nbsp;<a href='javascript:centrerpopup(\"http://grr.mutualibre.org/documentation/index.php\",800,480,\"scrollbars=yes,statusbar=no,resizable=yes\")'>".get_vocab("help")."</a>";
@@ -441,43 +441,45 @@ return $tag_help;
  {
  	include "config_ldap.inc.php";
  	$est_membre="non";
-		// LDAP attributs
+	// LDAP attributs
  	$members_attr = array (
-		"memberUid"   // Recherche des Membres du groupe
-		);
+ 		"memberUid"
+		// Recherche des Membres du groupe
+ 		);
 		// Avec des GroupOfNames, ce ne serait pas ça.
  	$ds = @ldap_connect($ldap_adresse, $ldap_port);
  	if ($ds)
  	{
-		$r = @ldap_bind ($ds); // Bind anonyme
-		if ($r)
-		{
-					// La requête est adaptée à un serveur SE3...
-			$result = @ldap_read($ds,"cn=$grp,ou=Groups,$ldap_base","cn=*",$members_attr);
-					// Peut-être faudrait-il dans le $tab_grp_autorise mettre des chaines 'cn=$grp,ou=Groups'
-			if ($result)
-			{
-				$info = @ldap_get_entries($ds, $result);
-				if ($info["count"] == 1)
-				{
-					$init = 0;
-					for ($loop = 0; $loop < $info[0]["memberuid"]["count"]; $loop++)
-					{
-						if ($info[0]["memberuid"][$loop] == $uid)
-							$est_membre="oui";
-					}
-				}
-				@ldap_free_result($result);
-			}
-		}
-		else
-			return FALSE;
-		@ldap_close($ds);
-	}
-	else
-		return FALSE;
-	return $est_membre;
-}
+ 		$r = @ldap_bind ($ds);
+		// Bind anonyme
+ 		if ($r)
+ 		{
+			// La requête est adaptée à un serveur SE3...
+ 			$result = @ldap_read($ds,"cn=$grp,ou=Groups,$ldap_base","cn=*",$members_attr);
+			// Peut-être faudrait-il dans le $tab_grp_autorise mettre des chaines 'cn=$grp,ou=Groups'
+ 			if ($result)
+ 			{
+ 				$info = @ldap_get_entries($ds, $result);
+ 				if ($info["count"] == 1)
+ 				{
+ 					$init = 0;
+ 					for ($loop = 0; $loop < $info[0]["memberuid"]["count"]; $loop++)
+ 					{
+ 						if ($info[0]["memberuid"][$loop] == $uid)
+ 							$est_membre="oui";
+ 					}
+ 				}
+ 				@ldap_free_result($result);
+ 			}
+ 		}
+ 		else
+ 			return FALSE;
+ 		@ldap_close($ds);
+ 	}
+ 	else
+ 		return FALSE;
+ 	return $est_membre;
+ }
 /*
 Arguments :
 $id_entry : identifiant de la réservation
@@ -547,7 +549,7 @@ function verif_version()
 	$_version_grr = $version_grr;
 	$_version_grr_RC = $version_grr_RC;
 	$version_old = getSettingValue("version");
-	$versionRC_old = getSettingValue("versionRC");	
+	$versionRC_old = getSettingValue("versionRC");
 	if ($versionRC_old == "")
 		$versionRC_old = 9;
 	if ($_version_grr_RC == "")
@@ -582,11 +584,14 @@ function affiche_date($x)
 function heure_ete_hiver($type, $annee, $heure)
 {
 	if ($type == "ete")
-		$debut = mktime($heure, 0, 0, 03, 31, $annee); // 31-03-$annee
+		$debut = mktime($heure, 0, 0, 03, 31, $annee);
+	// 31-03-$annee
 	else
-		$debut = mktime($heure,0, 0, 10, 31, $annee); // 31-10-$annee
+		$debut = mktime($heure,0, 0, 10, 31, $annee);
+	// 31-10-$annee
 	while (date("D", $debut ) !='Sun')
-		$debut = mktime($heure, 0, 0, date("m", $debut), date("d", $debut) - 1, date("Y", $debut)); //On retire 1 jour par rapport à la date examinée
+		$debut = mktime($heure, 0, 0, date("m", $debut), date("d", $debut) - 1, date("Y", $debut));
+	//On retire 1 jour par rapport à la date examinée
 	return $debut;
 }
 # Remove backslash-escape quoting if PHP is configured to do it with
@@ -632,7 +637,7 @@ function verif_page()
 			return $_GET["page"];
 		else
 			return "day";
-	}	
+	}
 	else
 		return "day";
 }
@@ -644,7 +649,7 @@ function page_accueil($param = 'no')
 	else
 		$defaultroom = getSettingValue("default_room");
 	// Definition de $defaultsite
-	if (isset($_SESSION['default_site']) && ($_SESSION['default_site'] > 0)) 
+	if (isset($_SESSION['default_site']) && ($_SESSION['default_site'] > 0))
 		$defaultsite = $_SESSION['default_site'];
 	else if (getSettingValue("default_site") > 0)
 		$defaultsite = getSettingValue("default_site");
@@ -659,7 +664,8 @@ function page_accueil($param = 'no')
 		$defaultarea = get_default_area($defaultsite);
 	// Calcul de $page_accueil
 	if ($defaultarea == - 1)
-		$page_accueil = "day.php?noarea="; // le paramètre noarea ne sert à rien, il est juste là pour éviter un cas particulier à traiter avec &amp;id_site= et $param
+		$page_accueil = "day.php?noarea=";
+	// le paramètre noarea ne sert à rien, il est juste là pour éviter un cas particulier à traiter avec &amp;id_site= et $param
 	else if ($defaultroom == - 1)
 		$page_accueil = "day.php?area=$defaultarea";
 	else if ($defaultroom == - 2)
@@ -751,27 +757,30 @@ function begin_page($title,$page="with_session")
 		$a .='<script src="selection.js" type="text/javascript" ></script>'.PHP_EOL;
 	if (@file_exists($clock_file))
 		$a .='<script type="text/javascript" src="'.$clock_file.'"></script>'.PHP_EOL;
-			# show a warning if this is using a low version of php
+	//show a warning if this is using a low version of php
 	if (substr(phpversion(), 0, 1) == 3)
 		$a .=get_vocab('not_php3');
 	return $a;
 }
+/*
+** Fonction qui affiche le header
+*/
 function print_header($day = '', $month = '', $year = '', $area = '', $type_session = 'with_session', $page = 'no_admin', $room = '')
 {
 	global $vocab, $search_str, $grrSettings, $clock_file, $desactive_VerifNomPrenomUser, $grr_script_name;
 	global $use_prototype, $use_tooltip_js, $desactive_bandeau_sup, $id_site;
 	if (!($desactive_VerifNomPrenomUser))
 		$desactive_VerifNomPrenomUser = 'n';
-			// On vérifie que les noms et prénoms ne sont pas vides
+	// On vérifie que les noms et prénoms ne sont pas vides
 	VerifNomPrenomUser($type_session);
 	if ($type_session == "with_session")
 		echo begin_page(get_vocab("mrbs").get_vocab("deux_points").getSettingValue("company"),"with_session");
 	else
 		echo begin_page(get_vocab("mrbs").get_vocab("deux_points").getSettingValue("company"),"no_session");
-			// Si nous ne sommes pas dans un format imprimable
+	// Si nous ne sommes pas dans un format imprimable
 	if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
 	{
-				# If we dont know the right date then make it up
+		// If we dont know the right date then make it up
 		if (!isset($day) || !isset($month) || !isset($year) || ($day == '') || ($month == '') || ($year == ''))
 		{
 			$date_now = time();
@@ -791,7 +800,7 @@ function print_header($day = '', $month = '', $year = '', $area = '', $type_sess
 			$search_str = "";
 		if (!(isset($desactive_bandeau_sup) && ($desactive_bandeau_sup == 1) && ($type_session != 'with_session')))
 		{
-					// On fabrique une date valide pour la réservation si ce n'est pas le cas
+			// On fabrique une date valide pour la réservation si ce n'est pas le cas
 			$date_ = mktime(0, 0, 0, $month, $day, $year);
 			if ($date_ < getSettingValue("begin_bookings"))
 				$date_ = getSettingValue("begin_bookings");
@@ -802,15 +811,15 @@ function print_header($day = '', $month = '', $year = '', $area = '', $type_sess
 			$year  = date("Y",$date_);
 			echo "<table width=\"100%\" id=\"header\">";
 			echo "<tr>";
-					//Logo
+			//Logo
 			$nom_picture = "./images/".getSettingValue("logo");
 			if ((getSettingValue("logo")!='') and (@file_exists($nom_picture)))
 				echo "<td class=\"logo\"><a href=\"".page_accueil('yes')."day=$day&amp;year=$year&amp;month=$month\"><img src=\"".$nom_picture."\" alt=\"logo\"/></a></td>\n";
-					//Accueil
+			//Accueil
 			echo "<td class=\"accueil\">\n";
 			echo "&nbsp;<h2><a href=\"".page_accueil('yes')."day=$day&amp;year=$year&amp;month=$month\">".get_vocab("welcome")."";
 			echo " - <b>".getSettingValue("company")."</b></a></h2>";
-					//Mail réservartion
+			//Mail réservartion
 			if (isset($use_tooltip_js))
 				echo "<script type=\"text/javascript\" src=\"./include/tooltip.js\"></script>";
 			echo getSettingValue('message_accueil');
@@ -818,7 +827,7 @@ function print_header($day = '', $month = '', $year = '', $area = '', $type_sess
 			<?php
 			$sql = "SELECT VALUE FROM ".TABLE_PREFIX."_setting WHERE NAME='mail_etat_destinataire'";
 			$res = grr_sql_query1($sql);
-					//Libère le résultat de la mémoire
+			//Libère le résultat de la mémoire
 			grr_sql_free($res);
 			if ($res == 1)
 			{
@@ -831,7 +840,7 @@ function print_header($day = '', $month = '', $year = '', $area = '', $type_sess
 			}
 			?>
 			<?php
-					// Administration div Sauvegarde
+			// Administration div Sauvegarde
 			if ($type_session == "with_session")
 			{
 				if ((authGetUserLevel(getUserName(), -1,'area') >= 4) || (authGetUserLevel(getUserName(), -1,'user') == 1))
@@ -1953,7 +1962,8 @@ function make_area_item_html( $link, $current_site, $current_area, $year, $month
 	{
 		$link2 = "$link?year=$year&amp;month=$month&amp;day=$day&amp;area=$row[0]";
 		$area = $row[0];
-		if (authUserAccesArea($user,$row[0])==1) {
+		if (authUserAccesArea($user,$row[0])==1)
+		{
 			/* Couleur du domaine selectionné*/
 			if ($current_area != null)
 			{
@@ -1972,7 +1982,8 @@ function make_area_item_html( $link, $current_site, $current_area, $year, $month
 	}
 	$out_html .= " </div></form></div>";
 	return $out_html;
-} # end make_area_select_html
+}
+//end make_area_select_html
 /*-----MAJ Loïs THOMAS  --> Création des ressources du menu gauche sous forme d'item -----*/
 function make_room_item_html( $link, $current_area, $current_room, $year, $month, $day, $user )
 {

@@ -432,15 +432,15 @@ else
 								{
 									$decale_slot = 0;
 									$insere_case = 'n';
-									if (($semaine_changement_heure_ete == 'yes') && (heure_ete_hiver("ete",$wyear,0) < $temp))
+									if (($semaine_changement_heure_ete == 'yes') && (heure_ete_hiver("ete", $wyear,0) < $temp))
 									{
 										$decale_slot = 1;
-										$hour = date("H",$wt-3600);
+										$hour = date("H", $wt - 3600);
 									}
-									if (($semaine_changement_heure_hiver == 'yes') && (heure_ete_hiver("hiver",$wyear,0) < $temp))
+									if (($semaine_changement_heure_hiver == 'yes') && (heure_ete_hiver("hiver", $wyear,0) < $temp))
 									{
 										$decale_slot = -1;
-										$hour = date("H",$wt+3600);
+										$hour = date("H", $wt + 3600);
 									}
 								}
 							}
@@ -449,9 +449,9 @@ else
 								$decale_slot = 0;
 								$insere_case = 'n';
 							}
-							if (($insere_case=='n') && ($display_day[$num_week_day] == 1))
+							if (($insere_case == 'n') && ($display_day[$num_week_day] == 1))
 							{
-								if (!isset($d[$weekday][$slot-$decale_slot*$nb_case]["color"]))
+								if (!isset($d[$weekday][$slot - $decale_slot * $nb_case]["color"]))
 								{
 									$date_booking = mktime($hour, $minute, 0, $wmonth, $wday, $wyear);
 									if ($this_statut_room == "0")
@@ -460,9 +460,9 @@ else
 									if (est_hors_reservation(mktime(0,0,0,$wmonth,$wday,$wyear),$area))
 										echo "<img src=\"img_grr/stop.png\" alt=\"".get_vocab("reservation_impossible")."\"  title=\"".get_vocab("reservation_impossible")."\" width=\"16\" height=\"16\" class=\"".$class_image."\"  />";
 									else
-										if ((($authGetUserLevel > 1) || ($auth_visiteur == 1)) && ($UserRoomMaxBooking != 0) && verif_booking_date(getUserName(), -1,$room, $date_booking, $date_now, $enable_periods) && verif_delais_max_resa_room(getUserName(), $room, $date_booking) && verif_delais_min_resa_room(getUserName(), $room, $date_booking) && (($this_statut_room == "1") || (($this_statut_room == "0") && (authGetUserLevel(getUserName(),$room) > 2) )) && $_GET['pview'] != 1)
+										if ((($authGetUserLevel > 1) || ($auth_visiteur == 1)) && ($UserRoomMaxBooking != 0) && verif_booking_date(getUserName(), -1, $room, $date_booking, $date_now, $enable_periods) && verif_delais_max_resa_room(getUserName(), $room, $date_booking) && verif_delais_min_resa_room(getUserName(), $room, $date_booking) && (($this_statut_room == "1") || (($this_statut_room == "0") && (authGetUserLevel(getUserName(),$room) > 2) )) && $_GET['pview'] != 1)
 										{
-											if ($enable_periods=='y')
+											if ($enable_periods == 'y')
 											{
 												echo "<a href=\"edit_entry.php?room=$room"
 												. "&amp;period=$time_t_stripped&amp;year=$wyear&amp;month=$wmonth"
@@ -482,21 +482,21 @@ else
 									}
 									else
 									{
-										if (est_hors_reservation(mktime(0,0,0,$wmonth,$wday,$wyear),$area))
+										if (est_hors_reservation(mktime(0, 0, 0, $wmonth, $wday, $wyear), $area))
 											echo tdcell($empty_color)."<img src=\"img_grr/stop.png\" alt=\"".get_vocab("reservation_impossible")."\"  title=\"".get_vocab("reservation_impossible")."\" width=\"16\" height=\"16\" class=\"".$class_image."\"  />";
 										else
 										{
-											if (isset($d[$weekday][$slot-$decale_slot*$nb_case]["id"]))
+											if (isset($d[$weekday][$slot - $decale_slot * $nb_case]["id"]))
 											{
-												$nbrow =  $d[$weekday][$slot-$decale_slot*$nb_case]["duree"];
-												tdcell_rowspan($d[$weekday][$slot-$decale_slot*$nb_case]["color"],$nbrow);
+												$nbrow =  $d[$weekday][$slot - $decale_slot * $nb_case]["duree"];
+												tdcell_rowspan($d[$weekday][$slot - $decale_slot * $nb_case]["color"],$nbrow);
 												if ($acces_fiche_reservation)
 												{
-													if (getSettingValue("display_level_view_entry")==0)
+													if (getSettingValue("display_level_view_entry") == 0)
 													{
-														$currentPage ='week';
-														$id =  $d[$weekday][$slot-$decale_slot*$nb_case]["id"];
-														echo "<a title=\"".htmlspecialchars($d[$weekday][$slot-$decale_slot*$nb_case]["who"])."\"  href=\"#?w=500\" onclick=\"request($id,$wday,$wmonth,$wyear,'$currentPage',readData);\" rel=\"popup_name\" class=\"poplight\">" ;
+														$currentPage = 'week';
+														$id =  $d[$weekday][$slot - $decale_slot * $nb_case]["id"];
+														echo "<a title=\"".htmlspecialchars($d[$weekday][$slot - $decale_slot * $nb_case]["who"])."\"  href=\"#?w=500\" onclick=\"request($id,$wday,$wmonth,$wyear,'$currentPage',readData);\" rel=\"popup_name\" class=\"poplight\">" ;
 													}
 													else
 														echo "<a class=\"lienCellule\" title=\"".htmlspecialchars($d[$weekday][$slot-$decale_slot*$nb_case]["who"])."\"  href=\"view_entry.php?id=" . $d[$weekday][$slot-$decale_slot*$nb_case]["id"]."&amp;day=$wday&amp;month=$wmonth&amp;year=$wyear&amp;page=week\">";
@@ -508,15 +508,15 @@ else
 													echo "<br />" .date('H:i',$d[$weekday][$slot-$decale_slot*$nb_case]["horaireDebut"])."~". date('H:i',$d[$weekday][$slot-$decale_slot*$nb_case]["horaireFin"])."";
 													echo " <br/>". $Son_GenreRepeat ." <br/><br/>" ;
 												}
-												if ($d[$weekday][$slot-$decale_slot*$nb_case]["description"]!= "")
-													echo "<i>".$d[$weekday][$slot-$decale_slot*$nb_case]["description"]."</i>";
+												if ($d[$weekday][$slot - $decale_slot * $nb_case]["description"]!= "")
+													echo "<i>".$d[$weekday][$slot - $decale_slot * $nb_case]["description"]."</i>";
 												if ($acces_fiche_reservation)echo"</a>";
 											}
-											if ((isset($d[$weekday][$slot-$decale_slot*$nb_case]["statut"])) && ($d[$weekday][$slot-$decale_slot*$nb_case]["statut"]!='-'))
+											if ((isset($d[$weekday][$slot - $decale_slot * $nb_case]["statut"])) && ($d[$weekday][$slot - $decale_slot * $nb_case]["statut"] != '-'))
 												echo "&nbsp;<img src=\"img_grr/buzy.png\" alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("ressource actuellement empruntee")."\" width=\"20\" height=\"20\" class=\"image\" />&nbsp;\n";
-											if (($this_delais_option_reservation > 0) && (isset($d[$weekday][$slot-$decale_slot*$nb_case]["option_reser"])) && ($d[$weekday][$slot-$decale_slot*$nb_case]["option_reser"]!=-1))
-												echo "&nbsp;<img src=\"img_grr/small_flag.png\" alt=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."\" title=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."&nbsp;".time_date_string_jma($d[$weekday][$slot-$decale_slot*$nb_case]["option_reser"],$dformat)."\" width=\"20\" height=\"20\" class=\"image\" />&nbsp;\n";
-											if ((isset($d[$weekday][$slot-$decale_slot*$nb_case]["moderation"])) && ($d[$weekday][$slot-$decale_slot*$nb_case]["moderation"]=='1'))
+											if (($this_delais_option_reservation > 0) && (isset($d[$weekday][$slot-$decale_slot * $nb_case]["option_reser"])) && ($d[$weekday][$slot - $decale_slot * $nb_case]["option_reser"] != -1))
+												echo "&nbsp;<img src=\"img_grr/small_flag.png\" alt=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."\" title=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."&nbsp;".time_date_string_jma($d[$weekday][$slot - $decale_slot * $nb_case]["option_reser"], $dformat)."\" width=\"20\" height=\"20\" class=\"image\" />&nbsp;\n";
+											if ((isset($d[$weekday][$slot - $decale_slot * $nb_case]["moderation"])) && ($d[$weekday][$slot - $decale_slot * $nb_case]["moderation"] == '1'))
 												echo "&nbsp;<img src=\"img_grr/flag_moderation.png\" alt=\"".get_vocab("en_attente_moderation")."\" title=\"".get_vocab("en_attente_moderation")."\" class=\"image\" />&nbsp;\n";
 										}
 									}
