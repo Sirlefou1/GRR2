@@ -398,6 +398,7 @@
  	width : 100%;
  	vertical-align: middle;
  	text-align: center;
+ 	border-bottom: 2px solid #fff;
  }
  a:hover.poplight{
  	color : black;
