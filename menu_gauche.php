@@ -61,18 +61,6 @@ if ($_GET['pview'] != 1)
 	if (getSettingValue("legend") == '0')
 		show_colour_key($area);
 	//Afficher Aide +Administreur
-	echo "<br/><div class=\"pied_menuGauche\">";
-	// Affiche le numéro de version de GRR
-	//echo "<span class=\"small\">".affiche_version()."</span> - ";
-	if ($type_session == "with_session")
-	{
-		echo grr_help("","")."<br />";
-		if ($_SESSION['statut'] == 'administrateur')
-			echo affiche_lien_contact("contact_support","identifiant:non","seulement_si_email");
-		else
-			echo affiche_lien_contact("contact_administrateur","identifiant:non","seulement_si_email");
-	}
-	echo"</div>\n";
 	//Fermeture id menuGauche
 	echo "</div>\n";
 }

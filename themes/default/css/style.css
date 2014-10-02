@@ -249,7 +249,12 @@
  	color : #CCCCFF;
  }
  table.legende {
+ 	margin-left: 25px;
  	width: 250px;
+ }
+ table.legende td{
+ 	width: 125px;
+ 	text-align: center;
  }
  .pied_menuGauche {
  	border-top:  3px solid #5c2862;
@@ -353,7 +358,7 @@
  	width : auto;
  }
 
-  #print_planning{
+ #print_planning{
  	position: relative;
  	background-color: #5c2862;
  	height: 100%;
@@ -498,14 +503,14 @@
  	color: purple;
  	cursor:pointer;
  }
-.glyphcolor {
-	color: #FFF;
-}
+ .glyphcolor {
+ 	color: #FFF;
+ }
 
-.glyphalign {
-	margin-left: 50px;
-}
+ .glyphalign {
+ 	margin-left: 50px;
+ }
 
-form.ressource div.panel-body {
-	padding: 0px !important;
-}
+ form.ressource div.panel-body {
+ 	padding: 0px !important;
+ }

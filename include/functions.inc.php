@@ -1478,15 +1478,15 @@ function tdcell_rowspan($colclass , $step)
 	global $tab_couleur;
 	static $ecolors;
 	if (($colclass >= "A") and ($colclass <= "Z")) {
-		$num_couleur = grr_sql_query1("select couleur from ".TABLE_PREFIX."_type_area where type_letter='".$colclass."'");
+		$num_couleur = grr_sql_query1("SELECT couleur FROM ".TABLE_PREFIX."_type_area WHERE type_letter='".$colclass."'");
 		echo "<td rowspan=\"$step\" style=\"background-color:".$tab_couleur[$num_couleur].";\">";
 	} else
 	echo "<td  rowspan=\"$step\" td class=\"".$colclass."\">";
 }
-# Display the entry-type color key. This has up to 2 rows, up to 10 columns.
+//Display the entry-type color key. This has up to 2 rows, up to 10 columns.
 function show_colour_key($area_id)
 {
-	echo "<table class=\"legende\"><caption><b>Légendes des réservations</b></caption>\n";
+	echo "<table class=\"legende\"><caption class=\"titre\">Légendes des réservations</caption>\n";
 	$nct = 1;
 	$sql = "SELECT DISTINCT t.id, t.type_name, t.type_letter FROM ".TABLE_PREFIX."_type_area t
 	LEFT JOIN ".TABLE_PREFIX."_j_type_area j on j.id_type=t.id
@@ -1496,9 +1496,10 @@ function show_colour_key($area_id)
 	if ($res) {
 		for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 		{
-				// La requête sql précédente laisse passer les cas où un type est non valide dans le domaine concerné ET au moins dans un autre domaine, d'où le test suivant
-			$test = grr_sql_query1("select id_type from ".TABLE_PREFIX."_j_type_area where id_type = '".$row[0]."' and id_area='".$area_id."'");
-			if ($test == -1) {
+			// La requête sql précédente laisse passer les cas où un type est non valide dans le domaine concerné ET au moins dans un autre domaine, d'où le test suivant
+			$test = grr_sql_query1("SELECT id_type FROM ".TABLE_PREFIX."_j_type_area WHERE id_type = '".$row[0]."' and id_area='".$area_id."'");
+			if ($test == -1)
+			{
 				$id_type     = $row[0];
 				$type_name   = $row[1];
 				$type_letter = $row[2];
