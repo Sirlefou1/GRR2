@@ -37,7 +37,6 @@
  *
  *
  */
-
 /**
  * Load settings from the database
  *
@@ -51,27 +50,25 @@
  */
 function loadSettings()
 {
-    global $grrSettings;
-    // Pour tenir compte du changement de nom de la table setting à partir de la version 1.8
-    $test = grr_sql_query1("select NAME  from ".TABLE_PREFIX."_setting where NAME='version'");
-    if ($test != -1)
-       $sql = "select `NAME`, `VALUE` from ".TABLE_PREFIX."_setting";
-    else
-        $sql = "select `NAME`, `VALUE` from setting";
-    $res = grr_sql_query($sql);
-    if (! $res) return (false);
-    if (grr_sql_count($res) == 0) {
-        return (false);
-    } else {
-        for ($i = 0; ($row = grr_sql_row($res, $i)); $i++) {
-            $grrSettings[$row[0]] = $row[1];
-        }
-        return (true);
-    }
+	global $grrSettings;
+	// Pour tenir compte du changement de nom de la table setting à partir de la version 1.8
+	$test = grr_sql_query1("SELECT NAME FROM ".TABLE_PREFIX."_setting WHERE NAME='version'");
+	if ($test != -1)
+		$sql = "SELECT `NAME`, `VALUE` FROM ".TABLE_PREFIX."_setting";
+	else
+		$sql = "SELECT `NAME`, `VALUE` FROM setting";
+	$res = grr_sql_query($sql);
+	if (!$res)
+		return (false);
+	if (grr_sql_count($res) == 0)
+		return (false);
+	else
+	{
+		for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
+			$grrSettings[$row[0]] = $row[1];
+		return (true);
+	}
 }
-
-
-
 /**
  * Get the value of a ".TABLE_PREFIX."_setting by its name
  *
@@ -84,13 +81,12 @@ function loadSettings()
  *
  * @return              mixed                   The value matching _name
  */
-
 function getSettingValue($_name)
 {
-    global $grrSettings;
-    if (isset($grrSettings[$_name])) return ($grrSettings[$_name]);
+	global $grrSettings;
+	if (isset($grrSettings[$_name]))
+		return ($grrSettings[$_name]);
 }
-
 /**
  * Save a name, value pair to the database
  *
@@ -106,16 +102,21 @@ function getSettingValue($_name)
  */
 function saveSetting($_name, $_value)
 {
-    global $grrSettings;
-    if (isset($grrSettings[$_name])) {
-    $sql = "update ".TABLE_PREFIX."_setting set VALUE = '" . protect_data_sql($_value) . "' where NAME = '" . protect_data_sql($_name) . "'";
-    $res = grr_sql_query($sql);
-         if ( ! $res) return (false);
-    } else {
-        $sql = "insert into ".TABLE_PREFIX."_setting set NAME = '" . protect_data_sql($_name) . "', VALUE = '" . protect_data_sql($_value) . "'";
-    $res = grr_sql_query($sql);
-        if ( ! $res) return (false);
-    }
-    $grrSettings[$_name] = $_value;
-    return (true);
+	global $grrSettings;
+	if (isset($grrSettings[$_name]))
+	{
+		$sql = "UPDATE ".TABLE_PREFIX."_setting set VALUE = '" . protect_data_sql($_value) . "' where NAME = '" . protect_data_sql($_name) . "'";
+		$res = grr_sql_query($sql);
+		if (!$res)
+			return (false);
+	}
+	else
+	{
+		$sql = "INSERT INTO ".TABLE_PREFIX."_setting set NAME = '" . protect_data_sql($_name) . "', VALUE = '" . protect_data_sql($_value) . "'";
+		$res = grr_sql_query($sql);
+		if (!$res)
+			return (false);
+	}
+	$grrSettings[$_name] = $_value;
+	return (true);
 }
