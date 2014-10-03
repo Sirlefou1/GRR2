@@ -213,13 +213,13 @@ if (grr_sql_count($res) == 0) {
 		echo "\n
 		<tr>
 			<td align=\"left\">
-				<input type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='month_all.php?year=$yy&amp;month=$ym&amp;area=$area';\" value=\"&lt;&lt; ".get_vocab("monthbefore")." \"/>
+				<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='month_all.php?year=$yy&amp;month=$ym&amp;area=$area';\"><span class=\"glyphicon glyphicon-backward\"></span>".get_vocab("monthbefore")."</button>
 			</td>";
 			echo " <td>";
 			include "include/trailer.inc.php";
 			echo "</td>
 			<td align=\"right\">
-				<input type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='month_all.php?year=$ty&amp;month=$tm&amp;area=$area';\" value=\" ".get_vocab('monthafter')."  &gt;&gt;\"/>
+				<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='month_all.php?year=$ty&amp;month=$tm&amp;area=$area';\">".get_vocab('monthafter')."  <span class=\"glyphicon glyphicon-forward\"></span></button>
 			</td>
 		</tr>
 	</table>";

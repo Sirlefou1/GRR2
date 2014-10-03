@@ -217,13 +217,13 @@ if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
 	echo "<table width=\"100%\">
 	<tr>
 		<td align=\"left\">
-			<input type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='week.php?year=$yy&amp;month=$ym&amp;day=$yd&amp;room=$room';\" value=\"".get_vocab("weekbefore")."\" />
+			<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='week.php?year=$yy&amp;month=$ym&amp;day=$yd&amp;room=$room';\"><span class=\"glyphicon glyphicon-backward\"></span>".get_vocab("weekbefore")."</button>
 		</td>
 		<td>";
 			include "include/trailer.inc.php";
 			echo "</td>
 			<td align=\"right\">
-				<input type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='week.php?year=$ty&amp;month=$tm&amp;day=$td&amp;room=$room';\" value=\"".get_vocab('weekafter')."\" />
+				<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='week.php?year=$ty&amp;month=$tm&amp;day=$td&amp;room=$room';\">".get_vocab('weekafter')."<span class=\"glyphicon glyphicon-forward\"></span></button>
 			</td>
 		</tr>
 	</table>";

@@ -357,13 +357,13 @@ else
 		echo "
 		<tr>
 			<td align=\"left\">
-				<input type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='week_all.php?year=$yy&amp;month=$ym&amp;day=$yd&amp;area=$area';\" value=\"&lt;&lt; ".get_vocab("weekbefore")." \"/>
+				<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='week_all.php?year=$yy&amp;month=$ym&amp;day=$yd&amp;area=$area';\"><span class=\"glyphicon glyphicon-backward\"></span> ".get_vocab("weekbefore")." </button>
 			</td>
 			<td>";
 				include "include/trailer.inc.php";
 				echo "</td>
 				<td align=\"right\">
-					<input type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='week_all.php?year=$ty&amp;month=$tm&amp;day=$td&amp;area=$area';\" value=\" ".get_vocab('weekafter')."  &gt;&gt;\"/>
+					<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='week_all.php?year=$ty&amp;month=$tm&amp;day=$td&amp;area=$area';\"> ".get_vocab('weekafter')."  <span class=\"glyphicon glyphicon-forward\"></span></button>
 				</td>
 			</tr>
 		</table>";

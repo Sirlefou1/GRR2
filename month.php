@@ -182,13 +182,13 @@ if ((!isset($_GET['pview'])) or ($_GET['pview'] != 1))
 	echo "\n
 	<tr>
 		<td align=\"left\">
-			<input type=\"button\"   class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='month.php?year=$yy&amp;month=$ym&amp;room=$room';\"value=\"&lt;&lt; ".get_vocab("monthbefore")." \"/>
+			<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='month.php?year=$yy&amp;month=$ym&amp;room=$room';\"><span class=\"glyphicon glyphicon-backward\"></span> ".get_vocab("monthbefore")." </button>
 		</td>
 		<td>";
 			include "include/trailer.inc.php";
 			echo "</td>
 			<td align=\"right\">
-				<input type=\"button\"  class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='month.php?year=$ty&amp;month=$tm&amp;room=$room';\" value=\" ".get_vocab('monthafter')."  &gt;&gt;\"/>
+				<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='month.php?year=$ty&amp;month=$tm&amp;room=$room';\"> ".get_vocab('monthafter')."  <span class=\"glyphicon glyphicon-forward\"></span></button>
 			</td>
 		</tr>
 	</table>
