@@ -283,7 +283,7 @@ else
 					$statut_room[$id_room[$i]] =  $row[4];
 					$statut_moderate[$id_room[$i]] =  $row[7];
 					$acces_fiche_reservation = verif_acces_fiche_reservation(getUserName(), $id_room[$i]);
-					if ($row[1])
+					if ($row[1]  && $_GET['pview'] != 1)
 						$temp = "<br /><span class=\"small\">($row[1] ".($row[1] > 1 ? get_vocab("number_max2") : get_vocab("number_max")).")</span>";
 					else
 						$temp = "";
