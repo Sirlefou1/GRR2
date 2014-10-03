@@ -2482,7 +2482,6 @@ function getUserName()
 	else
 		return '';
 }
-
 function getWritable($beneficiaire, $user, $id)
 {
 	$id_room = grr_sql_query1("SELECT room_id FROM ".TABLE_PREFIX."_entry WHERE id='".protect_data_sql($id)."'");
@@ -2493,46 +2492,50 @@ function getWritable($beneficiaire, $user, $id)
 		$temp = 2;
 	if (authGetUserLevel($user,$id_room) > $temp)
 		return 1;
-		//if ($beneficiaire == "") $beneficiaire = $user;  // Dans le cas d'un bénéficiaire extérieure, $beneficiaire est vide. On fait comme si $user était le bénéficiaire
+	//if ($beneficiaire == "") $beneficiaire = $user;  // Dans le cas d'un bénéficiaire extérieure, $beneficiaire est vide. On fait comme si $user était le bénéficiaire
 	$dont_allow_modify = grr_sql_query1("select dont_allow_modify from ".TABLE_PREFIX."_room where id = '".$id_room."'");
 	$owner = strtolower(grr_sql_query1("SELECT create_by FROM ".TABLE_PREFIX."_entry WHERE id='".protect_data_sql($id)."'"));
 	$beneficiaire = strtolower($beneficiaire);
 	$user = strtolower($user);
-		/* Il reste à étudier le cas d'un utilisateur sans droits particuliers. quatre cas possibles :
-		Cas 1 : l'utilisateur (U) n'est ni le créateur (C) ni le bénéficiaire (B)
-			R1 -> on retourne 0
-		Cas 2 : U=B et et U<>C  ou ...
-		Cas 3 : U=B et et U=C
-			R2 -> on retourne 0 si personne hormis les gestionnaires et les administrateurs ne peut modifier ou supprimer ses propres réservations.
-			R3 -> on retourne 1 sinon
-		Cas 4 : U=C et U<>B
-			R4 -> on retourne 0 si personne hormis les gestionnaires et les administrateurs ne peut modifier ou supprimer ses propres réservations.
-			-> sinon
-				R5 -> on retourne 1 si l'utilisateur U peut réserver la ressource pour B
-				R6 -> on retourne 0 sinon (si on permettait à U d'éditer la résa, il ne pourrait de toute façon pas la modifier)
-		*/
-		if (($user!=$beneficiaire) and ($user!=$owner)) // Cas 1
+	/* Il reste à étudier le cas d'un utilisateur sans droits particuliers. quatre cas possibles :
+	Cas 1 : l'utilisateur (U) n'est ni le créateur (C) ni le bénéficiaire (B)
+		R1 -> on retourne 0
+	Cas 2 : U=B et et U<>C  ou ...
+	Cas 3 : U=B et et U=C
+		R2 -> on retourne 0 si personne hormis les gestionnaires et les administrateurs ne peut modifier ou supprimer ses propres réservations.
+		R3 -> on retourne 1 sinon
+	Cas 4 : U=C et U<>B
+		R4 -> on retourne 0 si personne hormis les gestionnaires et les administrateurs ne peut modifier ou supprimer ses propres réservations.
+		-> sinon
+			R5 -> on retourne 1 si l'utilisateur U peut réserver la ressource pour B
+			R6 -> on retourne 0 sinon (si on permettait à U d'éditer la résa, il ne pourrait de toute façon pas la modifier)
+	*/
+	if (($user != $beneficiaire) && ($user != $owner))
 		return 0;
-		else if ($user==$beneficiaire) // Cas 2 et Cas 3
+	else if ($user == $beneficiaire)
+	{
 		if ($dont_allow_modify == 'y')
-						return 0; //  on applique R2
-					else
-						return 1; //  on applique R3
-		else if ($user==$owner) // Cas 4 (pas la peine de préciser que U est différent de B)
-		if ($dont_allow_modify == 'y')
-						return 0; //  on applique R4
-					else {
-						$qui_peut_reserver_pour  = grr_sql_query1("select qui_peut_reserver_pour from ".TABLE_PREFIX."_room where id='".$id_room."'");
-						if (authGetUserLevel($user, $id_room) >= $qui_peut_reserver_pour)
-						return 1; //  on applique R5
-					else
-						return 0; //  on applique R6
-				}
-		else // A priori inutile car tous les cas ont été épuisés.
-		return 0;
-		// Unathorised access
-		return 0;
+			return 0;
+		else
+			return 1;
 	}
+	else if ($user == $owner)
+	{
+		if ($dont_allow_modify == 'y')
+			return 0;
+		else
+		{
+			$qui_peut_reserver_pour  = grr_sql_query1("SELECT qui_peut_reserver_pour FROM ".TABLE_PREFIX."_room WHERE id='".$id_room."'");
+			if (authGetUserLevel($user, $id_room) >= $qui_peut_reserver_pour)
+				return 1;
+			else
+				return 0;
+		}
+	}
+	else
+		return 0;
+return 0;
+}
 /* auth_visiteur($user,$id_room)
  *
  * Determine si un visiteur peut réserver une ressource
@@ -2547,16 +2550,21 @@ function auth_visiteur($user,$id_room)
 	global $id_room_autorise;
 	$level = "";
 		// User not logged in, user level '0'
-	if ((!isset($user)) or (!isset($id_room))) return 0;
+	if ((!isset($user)) || (!isset($id_room)))
+		return 0;
 	$res = grr_sql_query("SELECT statut FROM ".TABLE_PREFIX."_utilisateurs WHERE login ='".protect_data_sql($user)."'");
-	if (!$res || grr_sql_count($res) == 0) return 0;
+	if (!$res || grr_sql_count($res) == 0)
+		return 0;
 	$status = mysqli_fetch_row($res);
-	if (strtolower($status[0]) == 'visiteur') {
-		if ((in_array($id_room,$id_room_autorise)) and ($id_room_autorise != ""))
+	if (strtolower($status[0]) == 'visiteur')
+	{
+		if ((in_array($id_room,$id_room_autorise)) && ($id_room_autorise != ""))
 			return 1;
 		else
 			return 0;
-	} else return 0;
+	}
+	else
+		return 0;
 }
 /* authGetUserLevel($user,$id,$type)
  *
@@ -2568,16 +2576,15 @@ function auth_visiteur($user,$id_room)
  *
  * Retourne le niveau d'accès de l'utilisateur
  */
-function authGetUserLevel($user,$id,$type='room')
+function authGetUserLevel($user, $id, $type = 'room')
 {
 	// Initialise les variables
 	$level = '';
 	/**
 	* user level '0': User not logged in, or User value is NULL (getUserName()='')
 	*/
-	if (!isset($user) or ($user=='')) {
+	if (!isset($user) or ($user==''))
 		return 0;
-	}
 	// On vient lire le statut de l'utilisateur courant dans la database
 	$sql = "SELECT statut
 	FROM ".TABLE_PREFIX."_utilisateurs
@@ -2616,7 +2623,8 @@ function authGetUserLevel($user,$id,$type='room')
 		default:
 		break;
 	}
-	if ((strtolower($status[0]) == 'utilisateur') or (strtolower($status[0]) == 'gestionnaire_utilisateur')) {
+	if ((strtolower($status[0]) == 'utilisateur') || (strtolower($status[0]) == 'gestionnaire_utilisateur'))
+	{
 		if ($type == 'room')
 		{
 			// On regarde si l'utilisateur est administrateur du site auquel la ressource $id appartient
@@ -2624,9 +2632,11 @@ function authGetUserLevel($user,$id,$type='room')
 			$id_area = grr_sql_query1("SELECT area_id FROM ".TABLE_PREFIX."_room WHERE id='".protect_data_sql($id)."'");
 			// calcul de l'id du site
 			$id_site = grr_sql_query1("SELECT id_site FROM ".TABLE_PREFIX."_j_site_area  WHERE id_area='".protect_data_sql($id_area)."'");
-			if (getSettingValue("module_multisite") == "Oui") {
+			if (getSettingValue("module_multisite") == "Oui")
+			{
 				$res3 = grr_sql_query("SELECT login FROM ".TABLE_PREFIX."_j_useradmin_site j WHERE j.id_site='".protect_data_sql($id_site)."' AND j.login='".protect_data_sql($user)."'");
-				if (grr_sql_count($res3) > 0) {
+				if (grr_sql_count($res3) > 0)
+				{
 					grr_sql_free($res3);
 					return 5;
 				}
@@ -2654,7 +2664,8 @@ function authGetUserLevel($user,$id,$type='room')
 		{
 			if ($id == '-1')
 			{
-				if (getSettingValue("module_multisite") == "Oui") {
+				if (getSettingValue("module_multisite") == "Oui")
+				{
 				//On regarde si l'utilisateur est administrateur d'un site quelconque
 					$res2 = grr_sql_query("SELECT u.login
 						FROM ".TABLE_PREFIX."_utilisateurs u, ".TABLE_PREFIX."_j_useradmin_site j
@@ -2671,7 +2682,8 @@ function authGetUserLevel($user,$id,$type='room')
 			}
 			else
 			{
-				if (getSettingValue("module_multisite") == "Oui") {
+				if (getSettingValue("module_multisite") == "Oui")
+				{
 				// On regarde si l'utilisateur est administrateur du site auquel le domaine $id appartient
 					$id_site = grr_sql_query1("SELECT id_site FROM ".TABLE_PREFIX."_j_site_area  WHERE id_area='".protect_data_sql($id)."'");
 					$res3 = grr_sql_query("SELECT login FROM ".TABLE_PREFIX."_j_useradmin_site j WHERE j.id_site='".protect_data_sql($id_site)."' AND j.login='".protect_data_sql($user)."'");
