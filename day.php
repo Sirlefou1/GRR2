@@ -287,9 +287,9 @@ else
 						$temp = "<br /><span class=\"small\">($row[1] ".($row[1] > 1 ? get_vocab("number_max2") : get_vocab("number_max")).")</span>";
 					else
 						$temp = "";
-					if ($statut_room[$id_room[$i]] == "0")
+					if ($statut_room[$id_room[$i]] == "0"  && $_GET['pview'] != 1)
 						$temp .= "<br /><span class=\"texte_ress_tempo_indispo\">".get_vocab("ressource_temporairement_indisponible")."</span>";
-					if ($statut_moderate[$id_room[$i]] == "1")
+					if ($statut_moderate[$id_room[$i]] == "1"  && $_GET['pview'] != 1)
 						$temp .= "<br /><span class=\"texte_ress_moderee\">".get_vocab("reservations_moderees")."</span>";
 					echo "<th style=\"width:$room_column_width%;\" ";
 					if ($statut_room[$id_room[$i]] == "0")
