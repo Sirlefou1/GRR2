@@ -206,9 +206,9 @@ if (verif_display_fiche_ressource(getUserName(), $room) && $_GET['pview'] != 1)
 if (authGetUserLevel(getUserName(),$room) > 2 && $_GET['pview'] != 1)
 	echo "<a href='admin_edit_room.php?room=$room'><span class=\"glyphcolor glyphalign glyphicon glyphicon-cog\"></span></a>";
 affiche_ressource_empruntee($room);
-if ($this_statut_room == "0")
+if ($this_statut_room == "0" && $_GET['pview'] != 1)
 	echo "<br /><span class=\"texte_ress_tempo_indispo\">".get_vocab("ressource_temporairement_indisponible")."</span>";
-if ($this_moderate_room == "1")
+if ($this_moderate_room == "1" && $_GET['pview'] != 1)
 	echo "<br /><span class=\"texte_ress_moderee\">".get_vocab("reservations_moderees")."</span>";
 if ($this_area_show_comment == "y" && $_GET['pview'] != 1 && ($this_area_comment != "") && ($this_area_comment != -1))
 	echo "<span style=\"text-align:center;\">".$this_area_comment."</span>";

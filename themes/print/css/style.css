@@ -1,4 +1,7 @@
-BODY {background-color:#FFFFFF}
+body {
+	background-color:#FFFFFF;
+	font-size: 12px;
+}
 
 .print_image {
     /* visibility: hidden; */
