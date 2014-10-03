@@ -48,23 +48,23 @@ if ((!isset($_GET['pview']) || ($_GET['pview'] != 1)) && (isset($affiche_pview))
 {
 	if (getSettingValue("pview_new_windows") == 1)
 	{
-		$s = "<input type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"";
+		$s = "<button class=\"btn btn-default btn-xs\" onclick=\"";
 		$s .= "javascript:window.open(";
 		$s .= "'".traite_grr_url($grr_script_name)."?";
 		if (isset($_SERVER['QUERY_STRING']) && ($_SERVER['QUERY_STRING'] != ''))
 			$s .= htmlspecialchars($_SERVER['QUERY_STRING']) . "&amp;";
 		$s .= "pview=1')\"";
-	} 
-	else 
+	}
+	else
 	{
-		$s = "<input type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"charger();";
+		$s = "<button class=\"btn btn-default btn-xs\" onclick=\"charger();";
 		$s .= "   javascript:location.href=";
 		$s .= "'".traite_grr_url($grr_script_name)."?";
 		if (isset($_SERVER['QUERY_STRING']) && ($_SERVER['QUERY_STRING'] != ''))
 			$s .= htmlspecialchars($_SERVER['QUERY_STRING']) . "&amp;";
 		$s .= "pview=1&amp;precedent=1'\"";
 	}
-	$s.= " value=\"" . get_vocab("ppreview") . "\" />";
+	$s.= "><span class=\"glyphicon glyphicon-print\"></span> </button>";
 	echo $s;
 }
 // Affichage du message d'erreur en cas d'échec de l'envoi de mails automatiques
