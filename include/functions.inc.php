@@ -2724,52 +2724,62 @@ function authGetUserLevel($user,$id,$type='room')
  */
 function authUserAccesArea($user,$id)
 {
-	if ($id=='') {
+	if ($id == '')
+	{
 		return 0;
 		die();
 	}
 	$sql = "SELECT login FROM ".TABLE_PREFIX."_utilisateurs WHERE (login = '".protect_data_sql($user)."' and statut='administrateur')";
 	$res = grr_sql_query($sql);
-	if (grr_sql_count($res) != "0") return 1;
-	if (getSettingValue("module_multisite") == "Oui") {
+	if (grr_sql_count($res) != "0")
+		return 1;
+	if (getSettingValue("module_multisite") == "Oui")
+	{
 		$id_site = mrbsGetAreaSite($id);
 		$sql = "SELECT login FROM ".TABLE_PREFIX."_j_useradmin_site j WHERE j.id_site='".$id_site."' AND j.login='".protect_data_sql($user)."'";
 		$res = grr_sql_query($sql);
-		if (grr_sql_count($res) != "0") return 1;
+		if (grr_sql_count($res) != "0")
+			return 1;
 	}
 	$sql = "SELECT id FROM ".TABLE_PREFIX."_area WHERE (id = '".protect_data_sql($id)."' and access='r')";
 	$res = grr_sql_query($sql);
 	$test = grr_sql_count($res);
-	if ($test == "0") {
+	if ($test == "0")
 		return 1;
-	} else {
+	else
+	{
 		$sql2 = "SELECT login FROM ".TABLE_PREFIX."_j_user_area WHERE (login = '".protect_data_sql($user)."' and id_area = '".protect_data_sql($id)."')";
 		$res2 = grr_sql_query($sql2);
 		$test2 = grr_sql_count($res2);
-		if ($test2 != "0") {
+		if ($test2 != "0")
 			return 1;
-		} else {
+		else
 			return 0;
-		}
 	}
 }
 // function UserRoomMaxBooking
 // Cette fonction teste si l'utilisateur a la possibilité d'effectuer une réservation, compte tenu
 // des limitations éventuelles de la ressources et du nombre de réservations déjà effectuées.
 //
-function UserRoomMaxBooking($user, $id_room, $number) {
+function UserRoomMaxBooking($user, $id_room, $number)
+{
 	global $enable_periods,$id_room_autorise;
 	$level = authGetUserLevel($user,$id_room);
 	if ($id_room == '') return 0;
-	if ($level >= 3) {
+	if ($level >= 3)
+	{
 		// l'utilisateur est soit admin, soit gestionnaire de la ressource.
 		return 1;
 		exit();
-	} else if (($level == 1 ) and  !((in_array($id_room,$id_room_autorise)) and ($id_room_autorise != ""))) {
+	}
+	else if (($level == 1 ) &&  !((in_array($id_room,$id_room_autorise)) && ($id_room_autorise != "")))
+	{
 		// l'utilisateur est simple visiteur.
 		return 0;
 		exit();
-	} else if ($level  < 1 ) {
+	}
+	else if ($level  < 1 )
+	{
 		return 0;
 		exit();
 	}
@@ -2783,7 +2793,8 @@ function UserRoomMaxBooking($user, $id_room, $number) {
 	// On regarde si le nombre de réservation pour l'ensemble des ressources est limité
 	$max_booking = getSettingValue("UserAllRoomsMaxBooking");
 	// Si aucune limitation
-	if (($max_booking_per_room<0) and ($max_booking_per_area<0) and ($max_booking<0)) {
+	if (($max_booking_per_room < 0) && ($max_booking_per_area < 0) && ($max_booking < 0))
+	{
 		return 1;
 		exit();
 	}
@@ -2798,38 +2809,49 @@ function UserRoomMaxBooking($user, $id_room, $number) {
 	else
 		$now = mktime($hour, $minute, 0, $month, $day, $year);
 	// y-a-t-il dépassement pour l'ensemble des ressources ?
-	if ($max_booking > 0) {
+	if ($max_booking > 0)
+	{
 		$nb_bookings = grr_sql_query1("SELECT count(id) FROM ".TABLE_PREFIX."_entry r WHERE (beneficiaire = '".protect_data_sql($user)."' and end_time > '$now')");
 		$nb_bookings += $number;
-		if ($nb_bookings > $max_booking) {
+		if ($nb_bookings > $max_booking)
+		{
 			return 0;
 			exit();
 		}
-	} else if ($max_booking == 0) {
+	} else if ($max_booking == 0)
+	{
 		return 0;
 		exit();
 	}
 	// y-a-t-il dépassement pour l'ensemble des ressources du domaine ?
-	if ($max_booking_per_area > 0) {
+	if ($max_booking_per_area > 0)
+	{
 		$nb_bookings = grr_sql_query1("SELECT count(e.id) FROM ".TABLE_PREFIX."_entry e, ".TABLE_PREFIX."_room r WHERE (e.room_id=r.id and r.area_id='".$id_area."' and e.beneficiaire = '".protect_data_sql($user)."' and e.end_time > '$now')");
 		$nb_bookings += $number;
-		if ($nb_bookings > $max_booking_per_area) {
+		if ($nb_bookings > $max_booking_per_area)
+		{
 			return 0;
 			exit();
 		}
-	} else if ($max_booking_per_area == 0) {
+	}
+	else if ($max_booking_per_area == 0)
+	{
 		return 0;
 		exit();
 	}
 	// y-a-t-il dépassement pour la ressource
-	if ($max_booking_per_room > 0) {
+	if ($max_booking_per_room > 0)
+	{
 		$nb_bookings = grr_sql_query1("SELECT count(id) FROM ".TABLE_PREFIX."_entry WHERE (room_id = '".protect_data_sql($id_room)."' and beneficiaire = '".protect_data_sql($user)."' and end_time > '$now')");
 		$nb_bookings += $number;
-		if ($nb_bookings > $max_booking_per_room) {
+		if ($nb_bookings > $max_booking_per_room)
+		{
 			return 0;
 			exit();
 		}
-	} else if ($max_booking_per_room == 0) {
+	}
+	else if ($max_booking_per_room == 0)
+	{
 		return 0;
 		exit();
 	}
@@ -2843,74 +2865,90 @@ function UserRoomMaxBooking($user, $id_room, $number) {
  $date_booking : la date de la réservation (n'est utile que si $id=-1)
  $date_now : la date actuelle
 */
- function verif_booking_date($user, $id, $id_room, $date_booking, $date_now, $enable_periods, $endtime='') {
+ function verif_booking_date($user, $id, $id_room, $date_booking, $date_now, $enable_periods, $endtime = '')
+ {
  	global $correct_diff_time_local_serveur, $can_delete_or_create;
- 	$can_delete_or_create="y";
+ 	$can_delete_or_create = "y";
 	// On teste si l'utilisateur est administrateur
- 	$sql = "select statut from ".TABLE_PREFIX."_utilisateurs WHERE login = '".protect_data_sql($user)."'";
+ 	$sql = "SELECT statut FROM ".TABLE_PREFIX."_utilisateurs WHERE login = '".protect_data_sql($user)."'";
  	$statut_user = grr_sql_query1($sql);
- 	if ($statut_user == 'administrateur') {
+ 	if ($statut_user == 'administrateur')
+ 	{
  		return true;
  		die();
  	}
 	// A-t-on le droit d'agir dans le passé ?
- 	$allow_action_in_past = grr_sql_query1("select allow_action_in_past from ".TABLE_PREFIX."_room where id = '".protect_data_sql($id_room)."'");
- 	if ($allow_action_in_past == 'y') {
+ 	$allow_action_in_past = grr_sql_query1("SELECT allow_action_in_past FROM ".TABLE_PREFIX."_room WHERE id = '".protect_data_sql($id_room)."'");
+ 	if ($allow_action_in_past == 'y')
+ 	{
  		return true;
  		die();
  	}
 	// Correction de l'avance en nombre d'heure du serveur sur les postes clients
- 	if ((isset($correct_diff_time_local_serveur)) and ($correct_diff_time_local_serveur!=0))
- 		$date_now -= 3600*$correct_diff_time_local_serveur;
+ 	if ((isset($correct_diff_time_local_serveur)) && ($correct_diff_time_local_serveur!=0))
+ 		$date_now -= 3600 * $correct_diff_time_local_serveur;
 	// Créneaux basés sur les intitulés
 	// Dans ce cas, on prend comme temps présent le jour même à minuit.
 	// Cela signifie qu'il est possible de modifier/réserver/supprimer tout au long d'une journée
 	// même si l'heure est passée.
 	// Cela demande donc à être améliorer en introduisant pour chaque créneau une heure limite de réservation.
- 	if ($enable_periods == "y") {
- 		$month =  date("m",$date_now);
- 		$day =  date("d",$date_now);
+ 	if ($enable_periods == "y")
+ 	{
+ 		$month = date("m",$date_now);
+ 		$day = date("d",$date_now);
  		$year = date("Y",$date_now);
  		$date_now = mktime(0, 0, 0, $month, $day, $year);
  	}
- 	if ($id != -1) {
+ 	if ($id != -1)
+ 	{
 		// il s'agit de l'edition d'une réservation existante
- 		if (($endtime != '') and ($endtime < $date_now)) {
+ 		if (($endtime != '') && ($endtime < $date_now))
+ 		{
  			return false;
  			die();
  		}
- 		if ((getSettingValue("allow_user_delete_after_begin") == 1) or (getSettingValue("allow_user_delete_after_begin") == 2))
+ 		if ((getSettingValue("allow_user_delete_after_begin") == 1) || (getSettingValue("allow_user_delete_after_begin") == 2))
  			$sql = "SELECT end_time FROM ".TABLE_PREFIX."_entry WHERE id = '".protect_data_sql($id)."'";
  		else
  			$sql = "SELECT start_time FROM ".TABLE_PREFIX."_entry WHERE id = '".protect_data_sql($id)."'";
  		$date_booking = grr_sql_query1($sql);
- 		if ($date_booking < $date_now) {
+ 		if ($date_booking < $date_now)
+ 		{
  			return false;
  			die();
- 		} else {
+ 		}
+ 		else
+ 		{
 			// dans le cas où le créneau est entamé, on teste si l'utilisateur a le droit de supprimer la réservation
 			// Si oui, on transmet la variable $only_modify = TRUE avant que la fonction de retourne true.
- 			if (getSettingValue("allow_user_delete_after_begin") == 2) {
+ 			if (getSettingValue("allow_user_delete_after_begin") == 2)
+ 			{
  				$date_debut = grr_sql_query1("SELECT start_time FROM ".TABLE_PREFIX."_entry WHERE id = '".protect_data_sql($id)."'");
- 				if ($date_debut < $date_now) $can_delete_or_create = "n"; else $can_delete_or_create = "y";
+ 				if ($date_debut < $date_now)
+ 					$can_delete_or_create = "n";
+ 				else
+ 					$can_delete_or_create = "y";
  			}
  			return true;
  		}
- 	} else {
- 		if (getSettingValue("allow_user_delete_after_begin")==1) {
+ 	}
+ 	else
+ 	{
+ 		if (getSettingValue("allow_user_delete_after_begin") == 1)
+ 		{
  			$id_area = grr_sql_query1("select area_id from ".TABLE_PREFIX."_room where id = '".protect_data_sql($id_room)."'");
  			$resolution_area = grr_sql_query1("select resolution_area from ".TABLE_PREFIX."_area where id = '".$id_area."'");
- 			if ($date_booking>$date_now-$resolution_area) {
+ 			if ($date_booking > $date_now - $resolution_area)
  				return true;
- 			} else {
+ 			else
  				return false;
- 			}
- 		} else {
- 			if ($date_booking>$date_now) {
+ 		}
+ 		else
+ 		{
+ 			if ($date_booking > $date_now)
  				return true;
- 			} else {
+ 			else
  				return false;
- 			}
  		}
  	}
  }
@@ -2919,24 +2957,31 @@ function UserRoomMaxBooking($user, $id_room, $number) {
 // $id_room : l'id de la ressource. Si -1, il s'agit d'une nouvelle ressource.
 // $starttime : début de la réservation
 // $endtime : fin de la réservation
-//
- function verif_duree_max_resa_area($user, $id_room, $starttime, $endtime) {
- 	if (authGetUserLevel($user,$id_room) >= 3) {
-	// On teste si l'utilisateur est gestionnaire de la ressource
+ function verif_duree_max_resa_area($user, $id_room, $starttime, $endtime)
+ {
+ 	if (authGetUserLevel($user,$id_room) >= 3)
+ 	{
+		// On teste si l'utilisateur est gestionnaire de la ressource
  		return true;
  		die();
  	}
  	$id_area = grr_sql_query1("select area_id from ".TABLE_PREFIX."_room where id='".protect_data_sql($id_room)."'");
  	$duree_max_resa_area = grr_sql_query1("select duree_max_resa_area from ".TABLE_PREFIX."_area where id='".$id_area."'");
  	$enable_periods =  grr_sql_query1("select enable_periods from ".TABLE_PREFIX."_area where id='".$id_area."'");
- 	if ($enable_periods == 'y') $duree_max_resa_area = $duree_max_resa_area*24*60;
- 	if ($duree_max_resa_area < 0) {
+ 	if ($enable_periods == 'y')
+ 		$duree_max_resa_area = $duree_max_resa_area * 24 * 60;
+ 	if ($duree_max_resa_area < 0)
+ 	{
  		return true;
  		die();
- 	} else if ($endtime - $starttime > $duree_max_resa_area*60) {
+ 	}
+ 	else if ($endtime - $starttime > $duree_max_resa_area * 60)
+ 	{
  		return false;
  		die();
- 	} else {
+ 	}
+ 	else
+ 	{
  		return true;
  		die();
  	}
@@ -2946,25 +2991,31 @@ function UserRoomMaxBooking($user, $id_room, $number) {
 // $id_room : l'id de la ressource. Si -1, il s'agit d'une nouvelle ressoure
 // $date_booking : la date de la réservation (n'est utile que si $id=-1)
 // $date_now : la date actuelle
-//
- function verif_delais_max_resa_room($user, $id_room, $date_booking) {
+ function verif_delais_max_resa_room($user, $id_room, $date_booking)
+ {
  	$day   = date("d");
  	$month = date("m");
  	$year  = date("Y");
- 	$datenow = mktime(0,0,0,$month,$day,$year);
- 	if (authGetUserLevel($user,$id_room) >= 3) {
-	// On teste si l'utilisateur est administrateur
+ 	$datenow = mktime(0, 0, 0, $month, $day, $year);
+ 	if (authGetUserLevel($user,$id_room) >= 3)
+ 	{
+		// On teste si l'utilisateur est administrateur
  		return true;
  		die();
  	}
  	$delais_max_resa_room = grr_sql_query1("select delais_max_resa_room from ".TABLE_PREFIX."_room where id='".protect_data_sql($id_room)."'");
- 	if ($delais_max_resa_room == -1) {
+ 	if ($delais_max_resa_room == -1)
+ 	{
  		return true;
  		die();
- 	} else if ($datenow + $delais_max_resa_room*24*3600 +1 < $date_booking) {
+ 	}
+ 	else if ($datenow + $delais_max_resa_room * 24 * 3600 + 1 < $date_booking)
+ 	{
  		return false;
  		die();
- 	} else {
+ 	}
+ 	else
+ 	{
  		return true;
  		die();
  	}
@@ -2972,8 +3023,8 @@ function UserRoomMaxBooking($user, $id_room, $number) {
 // function verif_access_search : vérifier l'accès à l'outil de recherche
 // $user : le login de l'utilisateur
 // $id_room : l'id de la ressource.
-//
- function verif_access_search($user) {
+ function verif_access_search($user)
+ {
  	if (authGetUserLevel($user,-1) >= getSettingValue("allow_search_level"))
  		return TRUE;
  	else
@@ -2982,23 +3033,24 @@ function UserRoomMaxBooking($user, $id_room, $number) {
 // function verif_display_fiche_ressource : vérifier l'accès à la visualisation de la fiche d'une ressource
 // $user : le login de l'utilisateur
 // $id_room : l'id de la ressource.
-//
- function verif_display_fiche_ressource($user, $id_room) {
- 	$show_fic_room = grr_sql_query1("select show_fic_room from ".TABLE_PREFIX."_room where id='".$id_room."'");
- 	if ($show_fic_room == "y") {
+ function verif_display_fiche_ressource($user, $id_room)
+ {
+ 	$show_fic_room = grr_sql_query1("SELECT show_fic_room FROM ".TABLE_PREFIX."_room WHERE id='".$id_room."'");
+ 	if ($show_fic_room == "y")
+ 	{
  		if (authGetUserLevel($user,$id_room) >= getSettingValue("visu_fiche_description"))
  			return TRUE;
  		else
  			return FALSE;
- 	} else {
- 		return FALSE;
  	}
+ 	else
+ 		return FALSE;
  }
 // function verif_acces_fiche_reservation : vérifier l'accès à la fiche de réservation d'une ressource
 // $user : le login de l'utilisateur
 // $id_room : l'id de la ressource.
-//
- function verif_acces_fiche_reservation($user, $id_room) {
+ function verif_acces_fiche_reservation($user, $id_room)
+ {
  	if (authGetUserLevel($user,$id_room) >= getSettingValue("acces_fiche_reservation"))
  		return TRUE;
  	else
@@ -3008,7 +3060,8 @@ function UserRoomMaxBooking($user, $id_room, $number) {
  *$user : le login de l'utilisateur
  * $id_room : l'id de la ressource.
  */
-function verif_display_email($user, $id_room) {
+function verif_display_email($user, $id_room)
+{
 	if (authGetUserLevel($user,$id_room) >= getSettingValue("display_level_email"))
 		return TRUE;
 	else
@@ -3018,19 +3071,25 @@ function verif_display_email($user, $id_room) {
  *$user : le login de l'utilisateur
  * $id_room : l'id de la ressource.
  */
-function verif_acces_ressource($user, $id_room) {
-	if ($id_room != 'all') {
-		$who_can_see = grr_sql_query1("select who_can_see from ".TABLE_PREFIX."_room where id='".$id_room."'");
+function verif_acces_ressource($user, $id_room)
+{
+	if ($id_room != 'all')
+	{
+		$who_can_see = grr_sql_query1("SELECT who_can_see FROM ".TABLE_PREFIX."_room WHERE id='".$id_room."'");
 		if (authGetUserLevel($user,$id_room) >= $who_can_see)
 			return TRUE;
 		else
 			return FALSE;
-	} else {
+	}
+	else
+	{
 		$tab_rooms_noaccess = array();
-		$sql = "select id, who_can_see from ".TABLE_PREFIX."_room";
+		$sql = "SELECT id, who_can_see FROM ".TABLE_PREFIX."_room";
 		$res = grr_sql_query($sql);
-		if (! $res) fatal_error(0, grr_sql_error());
-		for ($i = 0; ($row = grr_sql_row($res, $i)); $i++) {
+		if (!$res)
+			fatal_error(0, grr_sql_error());
+		for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
+		{
 			if (authGetUserLevel($user,$row[0]) < $row[1])
 				$tab_rooms_noaccess[] = $row[0];
 		}
@@ -3043,41 +3102,51 @@ function verif_acces_ressource($user, $id_room) {
 // $date_booking : la date de la réservation (n'est utile que si $id=-1)
 // $date_now : la date actuelle
 //
-function verif_delais_min_resa_room($user, $id_room, $date_booking) {
-	if (authGetUserLevel($user,$id_room) >= 3) {
-	// On teste si l'utilisateur est administrateur
+function verif_delais_min_resa_room($user, $id_room, $date_booking)
+{
+	if (authGetUserLevel($user,$id_room) >= 3)
+	{
+		// On teste si l'utilisateur est administrateur
 		return true;
 		die();
 	}
-	$delais_min_resa_room = grr_sql_query1("select delais_min_resa_room from ".TABLE_PREFIX."_room where id='".protect_data_sql($id_room)."'");
-	if ($delais_min_resa_room == 0) {
+	$delais_min_resa_room = grr_sql_query1("SELECT delais_min_resa_room FROM ".TABLE_PREFIX."_room WHERE id='".protect_data_sql($id_room)."'");
+	if ($delais_min_resa_room == 0)
+	{
 		return true;
 		die();
-	} else {
+	}
+	else
+	{
 		$hour = date("H");
-		$minute  = date("i")+$delais_min_resa_room;
+		$minute  = date("i") + $delais_min_resa_room;
 		$day   = date("d");
 		$month = date("m");
 		$year  = date("Y");
-		$date_limite = mktime($hour,$minute,0,$month,$day,$year);
-		if ($date_limite > $date_booking) {
+		$date_limite = mktime($hour, $minute, 0, $month, $day, $year);
+		if ($date_limite > $date_booking)
+		{
 			return false;
 			die();
-		} else {
+		}
+		else
+		{
 			return true;
 			die();
 		}
 	}
 }
 // Vérifie que la date de confirmation est inférieur à la date de début de réservation
-function verif_date_option_reservation($option_reservation, $starttime) {
+function verif_date_option_reservation($option_reservation, $starttime)
+{
 	if ($option_reservation == -1)
 		return true;
-	else {
-		$day   = date("d",$starttime);
-		$month = date("m",$starttime);
-		$year  = date("Y",$starttime);
-		$date_starttime = mktime(0,0,0,$month,$day,$year);
+	else
+	{
+		$day   = date("d", $starttime);
+		$month = date("m", $starttime);
+		$year  = date("Y", $starttime);
+		$date_starttime = mktime(0, 0, 0, $month, $day, $year);
 		if ($option_reservation < $date_starttime)
 			return true;
 		else
@@ -3085,21 +3154,27 @@ function verif_date_option_reservation($option_reservation, $starttime) {
 	}
 }
 // Vérifie que $_create_by peut réserver la ressource $_room_id pour $_beneficiaire
-function verif_qui_peut_reserver_pour($_room_id, $user, $_beneficiaire) {
-	if ($_beneficiaire == "") {
+function verif_qui_peut_reserver_pour($_room_id, $user, $_beneficiaire)
+{
+	if ($_beneficiaire == "")
+	{
 		// cas où il s'agit d'un bénéficiaire extérieure : c'est normal que $_beneficiaire soir vide
 		return TRUE;
 		die();
 	}
-	if (strtolower($user) == strtolower($_beneficiaire)) {
+	if (strtolower($user) == strtolower($_beneficiaire))
+	{
 		return TRUE;
 		die();
 	}
-	$qui_peut_reserver_pour  = grr_sql_query1("select qui_peut_reserver_pour from ".TABLE_PREFIX."_room where id='".$_room_id."'");
-	if (authGetUserLevel($user, $_room_id) >= $qui_peut_reserver_pour) {
+	$qui_peut_reserver_pour  = grr_sql_query1("SELECT qui_peut_reserver_pour FROM ".TABLE_PREFIX."_room WHERE id='".$_room_id."'");
+	if (authGetUserLevel($user, $_room_id) >= $qui_peut_reserver_pour)
+	{
 		return TRUE;
 		die();
-	} else {
+	}
+	else
+	{
 		return FALSE;
 		die();
 	}
@@ -3108,12 +3183,14 @@ function verif_qui_peut_reserver_pour($_room_id, $user, $_beneficiaire) {
 function verif_heure_debut_fin($start_time,$end_time,$area)
 Vérifie si l'heure de début ou l'heure de fin de réservation est en dehors des créneaux autorisés.
 */
-function verif_heure_debut_fin($start_time,$end_time,$area) {
+function verif_heure_debut_fin($start_time,$end_time,$area)
+{
 	global $enable_periods, $resolution, $morningstarts, $eveningends, $eveningends_minutes;
 		// Récupération des données concernant l'affichage du planning du domaine
 	get_planning_area_values($area);
 		// On ne traite pas le cas des plannings basés sur les intitulés prédéfinis
-	if ($enable_periods != "y") {
+	if ($enable_periods != "y")
+	{
 		$day = date("d",$start_time);
 		$month = date("m",$start_time);
 		$year = date("Y",$start_time);
@@ -3121,12 +3198,11 @@ function verif_heure_debut_fin($start_time,$end_time,$area) {
 		$day = date("d",$end_time);
 		$month = date("m",$end_time);
 		$year = date("Y",$end_time);
-		$endday   = mktime($eveningends, $eveningends_minutes , $resolution, $month, $day, $year);
-		if ($start_time < $startday ) {
+		$endday = mktime($eveningends, $eveningends_minutes , $resolution, $month, $day, $year);
+		if ($start_time < $startday)
 			return FALSE;
-		} else if ($end_time > $endday ) {
+		else if ($end_time > $endday)
 			return FALSE;
-		}
 	}
 	return TRUE;
 }
@@ -3137,8 +3213,9 @@ function verif_heure_debut_fin($start_time,$end_time,$area) {
  * Returns: Nothing
  */
 function VerifyModeDemo() {
-	if (getSettingValue("ActiveModeDemo")=='y') {
-		print_header("","","","","");
+	if (getSettingValue("ActiveModeDemo") == 'y')
+	{
+		print_header("", "", "", "", "");
 		?>
 		<h1>Op&eacute;ration non autoris&eacute;e</h1>
 		<p>Vous êtes dans une <b>version de démonstration de GRR</b>.
@@ -3156,20 +3233,23 @@ function VerifyModeDemo() {
 function MajMysqlModeDemo() {
 		// Nom du fichier sql à exécuter
 	$fic_sql = "grr_maj_quotidienne.sql";
-	if ((getSettingValue("ActiveModeDemo")=='y') and (file_exists($fic_sql))) {
+	if ((getSettingValue("ActiveModeDemo") == 'y') && (file_exists($fic_sql)))
+	{
 		$date_now = mktime(0,0,0,date("m"),date("d"),date("Y"));
-		if ((getSettingValue("date_verify_demo") == "") or (getSettingValue("date_verify_demo") < $date_now )) {
+		if ((getSettingValue("date_verify_demo") == "") || (getSettingValue("date_verify_demo") < $date_now))
+		{
 			$fd = fopen($fic_sql, "r");
 			$result_ok = 'yes';
-			while (!feof($fd)) {
+			while (!feof($fd))
+			{
 				$query = fgets($fd, 5000);
 				$query = trim($query);
-				if ($query != '') {
+				if ($query != '')
 					$reg = mysqli_query($GLOBALS['db_c'], $query);
-				}
 			}
 			fclose($fd);
-			if (!saveSetting("date_verify_demo", $date_now)) {
+			if (!saveSetting("date_verify_demo", $date_now))
+			{
 				echo "Erreur lors de l'enregistrement de date_verify_demo !<br />";
 				die();
 			}
@@ -3185,9 +3265,12 @@ function MajMysqlModeDemo() {
 function showAccessDenied($day, $month, $year, $area, $back)
 {
 	global $vocab;
-	if ((getSettingValue("authentification_obli")==0) and (getUserName()=='')) {
+	if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))
+	{
 		$type_session = "no_session";
-	} else {
+	}
+	else
+	{
 		$type_session = "with_session";
 	}
 	?>
@@ -3211,11 +3294,10 @@ function showAccessDenied($day, $month, $year, $area, $back)
 function showNoReservation($day, $month, $year, $area, $back)
 {
 	global $vocab;
-	if ((getSettingValue("authentification_obli")==0) and (getUserName()=='')) {
+	if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))
 		$type_session = "no_session";
-	} else {
+	else
 		$type_session = "with_session";
-	}
 	print_header($day, $month, $year, $area,$type_session);
 	?>
 	<h1><?php echo get_vocab("accessdenied")?></h1>
@@ -3267,30 +3349,35 @@ function showAccessDeniedMaxBookings($day, $month, $year, $area, $id_room,$back)
 </html>
 <?php
 }
-function check_begin_end_bookings($day, $month, $year) {
+function check_begin_end_bookings($day, $month, $year)
+{
 	$date = mktime(0,0,0,$month,$day,$year);
-	if (($date < getSettingValue("begin_bookings")) or ($date > getSettingValue("end_bookings")))
+	if (($date < getSettingValue("begin_bookings")) || ($date > getSettingValue("end_bookings")))
 		return -1;
 }
 function showNoBookings($day, $month, $year, $area, $back, $type_session)
 {
 	global $vocab;
-	$date = mktime(0,0,0,$month,$day,$year);
+	$date = mktime(0, 0, 0, $month, $day,$year);
 	echo '<h2>'.get_vocab("nobookings").' '.affiche_date($date).'</h2>';
 	echo '<p>'.get_vocab("begin_bookings").'<b>'.affiche_date(getSettingValue("begin_bookings")).'</b></p>';
 	echo '<p>'.get_vocab("end_bookings").'<b>'.affiche_date(getSettingValue("end_bookings")).'</b></p>';
 	?>
 	<p>
-		<?php if ($back != "") { ?>
-		<a href="<?php echo $back; ?>"><?php echo get_vocab("returnprev"); ?></a>
-		<?php }
+		<?php
+		if ($back != "")
+		{
+			?>
+			<a href="<?php echo $back; ?>"><?php echo get_vocab("returnprev"); ?></a>
+			<?php
+		}
 		?>
 	</p>
 </body>
 </html>
 <?php
 }
-function date_time_string($t,$dformat)
+function date_time_string($t, $dformat)
 {
 	global $twentyfourhour_format;
 	if ($twentyfourhour_format)
