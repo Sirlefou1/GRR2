@@ -5,6 +5,7 @@
  	width: 100%;
  	margin :0 auto ;
  }
+ a:after {content: "" !important;}
  p
  {
  	font-size: 10pt;

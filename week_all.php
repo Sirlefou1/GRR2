@@ -392,7 +392,7 @@ else
 		}
 		if ($display_day[$num_week_day] == 1)
 		{
-			echo "<th width=\"10%\"><a onclick=\"charger()\" class=\"lienPlanning\" href='day.php?year=".$temp_year."&amp;month=".$temp_month."&amp;day=".$num_day."&amp;area=".$area."'>"  . day_name(($weekcol + $weekstarts)%7) . " ".$num_day. " ".$temp_month2."</a>";
+			echo "<th width=\"10%\"><a class=\"lienPlanning\" href='day.php?year=".$temp_year."&amp;month=".$temp_month."&amp;day=".$num_day."&amp;area=".$area."'>"  . day_name(($weekcol + $weekstarts) % 7) . " ".$num_day. " ".$temp_month2."</a>";
 			if (getSettingValue("jours_cycles_actif") == "Oui" && intval($jour_cycle) >- 1)
 				if (intval($jour_cycle) > 0)
 					echo "<br />".get_vocab("rep_type_6")." ".$jour_cycle;
