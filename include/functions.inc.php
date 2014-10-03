@@ -3307,15 +3307,18 @@ function date_time_string($t,$dformat)
 function describe_period_span($starts, $ends)
 {
 	global $enable_periods, $periods_name, $vocab, $duration;
-	list( $start_period, $start_date) =  period_date_string($starts);
+	list($start_period, $start_date) =  period_date_string($starts);
 	list( , $end_date) =  period_date_string($ends, -1);
 	$duration = $ends - $starts;
 	toPeriodString($start_period, $duration, $dur_units);
-	if ($duration > 1) {
+	if ($duration > 1)
+	{
 		list( , $start_date) =  period_date_string($starts);
 		list( , $end_date) =  period_date_string($ends, -1);
 		$temp = $start_date . " ==> " . $end_date;
-	} else {
+	}
+	else
+	{
 		$temp = $start_date . " - " . $duration . " " . $dur_units;
 	}
 	return $temp;
@@ -3326,9 +3329,7 @@ function describe_span($starts, $ends, $dformat)
 	global $vocab, $twentyfourhour_format;
 	$start_date = utf8_strftime($dformat, $starts);
 	if ($twentyfourhour_format)
-	{
 		$timeformat = "%T";
-	}
 	else
 	{
 		$ampm = date("a",$starts);
@@ -3336,19 +3337,21 @@ function describe_span($starts, $ends, $dformat)
 	}
 	$start_time = strftime($timeformat, $starts);
 	$duration = $ends - $starts;
-	if ($start_time == "00:00:00" && $duration == 60*60*24)
+	if ($start_time == "00:00:00" && $duration == 60 * 60 * 24)
 		return $start_date . " - " . get_vocab("all_day");
 	toTimeString($duration, $dur_units);
 	return $start_date . " " . $start_time . " - " . $duration . " " . $dur_units;
 }
-function get_planning_area_values($id_area) {
+function get_planning_area_values($id_area)
+{
 	global $resolution, $morningstarts, $eveningends, $eveningends_minutes, $weekstarts, $twentyfourhour_format, $enable_periods, $periods_name, $display_day, $nb_display_day;
 	$sql = "SELECT calendar_default_values, resolution_area, morningstarts_area, eveningends_area, eveningends_minutes_area, weekstarts_area, twentyfourhour_format_area, enable_periods, display_days
 	FROM ".TABLE_PREFIX."_area
 	WHERE id = '".protect_data_sql($id_area)."'";
 	$res = grr_sql_query($sql);
-	if (! $res) {
-		//    fatal_error(0, grr_sql_error());
+	if (!$res)
+	{
+		//fatal_error(0, grr_sql_error());
 		include "trailer.inc.php";
 		exit;
 	}
@@ -3356,30 +3359,37 @@ function get_planning_area_values($id_area) {
 	$nb_display_day = 0;
 	for ($i = 0; $i < 7; $i++)
 	{
-		if (substr($row_[8],$i,1) == 'y') {
+		if (substr($row_[8],$i,1) == 'y')
+		{
 			$display_day[$i] = 1;
 			$nb_display_day++;
-		} else
-		$display_day[$i] = 0;
+		}
+		else
+			$display_day[$i] = 0;
 	}
-		// Créneaux basés sur les intitulés
-	if ($row_[7] == 'y') {
+	// Créneaux basés sur les intitulés
+	if ($row_[7] == 'y')
+	{
 		$resolution = 60;
 		$morningstarts = 12;
 		$eveningends = 12;
 		$sql_periode = grr_sql_query("SELECT nom_periode FROM ".TABLE_PREFIX."_area_periodes where id_area='".$id_area."'");
-		$eveningends_minutes = grr_sql_count($sql_periode)-1;
+		$eveningends_minutes = grr_sql_count($sql_periode) - 1;
 		$i = 0;
-		while ($i < grr_sql_count($sql_periode)) {
-			$periods_name[$i] = grr_sql_query1("select nom_periode FROM ".TABLE_PREFIX."_area_periodes where id_area='".$id_area."' and num_periode= '".$i."'");
+		while ($i < grr_sql_count($sql_periode))
+		{
+			$periods_name[$i] = grr_sql_query1("SELECT nom_periode FROM ".TABLE_PREFIX."_area_periodes where id_area='".$id_area."' and num_periode= '".$i."'");
 			$i++;
 		}
 		$enable_periods = "y";
 		$weekstarts = $row_[5];
 		$twentyfourhour_format = $row_[6];
 		// Créneaux basés sur le temps
-	} else {
-		if ($row_[0] != 'y') {
+	}
+	else
+	{
+		if ($row_[0] != 'y')
+		{
 			$resolution = $row_[1];
 			$morningstarts = $row_[2];
 			$eveningends = $row_[3];
@@ -3396,60 +3406,63 @@ function encode_message_utf8($tag)
 {
 	global $charset_html, $unicode_encoding;
 	if ($unicode_encoding)
-	{
 		return iconv($charset_html,"utf-8",$tag);
-	}
 	else
-	{
 		return $tag;
-	}
 }
 function removeMailUnicode($string)
 {
 	global $unicode_encoding, $charset_html;
-		//
 	if ($unicode_encoding)
-	{
 		return @iconv("utf-8", $charset_html, $string);
-	}
 	else
-	{
 		return $string;
-	}
 }
 // Cette fonction vérifie une fois par jour si le délai de confirmation des réservations est dépassé
 // Si oui, les réservations concernées sont supprimées et un mail automatique est envoyé.
-function verify_confirm_reservation() {
+function verify_confirm_reservation()
+{
 	global $dformat;
 	$day   = date("d");
 	$month = date("m");
 	$year  = date("Y");
 	$date_now = mktime(0,0,0,$month,$day,$year);
-	if ((getSettingValue("date_verify_reservation") == "") or (getSettingValue("date_verify_reservation") < $date_now )) {
+	if ((getSettingValue("date_verify_reservation") == "") || (getSettingValue("date_verify_reservation") < $date_now ))
+	{
 		$res = grr_sql_query("select id from ".TABLE_PREFIX."_room where delais_option_reservation > 0");
-		if (! $res) {
-						//    fatal_error(0, grr_sql_error());
+		if (!$res)
+		{
+			//fatal_error(0, grr_sql_error());
 			include "trailer.inc.php";
 			exit;
-		} else {
-			for ($i = 0; ($row = grr_sql_row($res, $i)); $i++) {
+		}
+		else
+		{
+			for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
+			{
 				$res2 = grr_sql_query("select id from ".TABLE_PREFIX."_entry where option_reservation < '".$date_now."' and option_reservation != '-1' and room_id='".$row[0]."'");
-				if (! $res2) {
-										//    fatal_error(0, grr_sql_error());
+				if (!$res2)
+				{
+					//fatal_error(0, grr_sql_error());
 					include "trailer.inc.php";
 					exit;
-				} else {
-					for ($j = 0; ($row2 = grr_sql_row($res2, $j)); $j++) {
-						if (getSettingValue("automatic_mail") == 'yes') $_SESSION['session_message_error'] = send_mail($row2[0],4,$dformat);
-												// On efface la réservation
+				}
+				else
+				{
+					for ($j = 0; ($row2 = grr_sql_row($res2, $j)); $j++)
+					{
+						if (getSettingValue("automatic_mail") == 'yes')
+							$_SESSION['session_message_error'] = send_mail($row2[0],4,$dformat);
+						// On efface la réservation
 						grr_sql_command("DELETE FROM ".TABLE_PREFIX."_entry WHERE id=" . $row2[0]);
-												// On efface le cas écheant également  dans ".TABLE_PREFIX."_entry_moderate
+						// On efface le cas écheant également  dans ".TABLE_PREFIX."_entry_moderate
 						grr_sql_command("DELETE FROM ".TABLE_PREFIX."_entry_moderate WHERE id=" . $row2[0]);
 					}
 				}
 			}
 		}
-		if (!saveSetting("date_verify_reservation", $date_now)) {
+		if (!saveSetting("date_verify_reservation", $date_now))
+		{
 			echo "Erreur lors de l'enregistrement de date_verify_reservation !<br />";
 			die();
 		}
@@ -3458,46 +3471,57 @@ function verify_confirm_reservation() {
 // Cette fonction vérifie une fois par jour si les réservations devant être rendus ne sont pas
 // en retard
 // Si oui, les utilisateurs concernées recoivent un mail automatique pour leur notifier.
-function verify_retard_reservation() {
+function verify_retard_reservation()
+{
 	global $dformat;
 	$day   = date("d");
 	$month = date("m");
 	$year  = date("Y");
-	$date_now = mktime(0,0,0,$month,$day,$year);
-	if (((getSettingValue("date_verify_reservation2") == "") or (getSettingValue("date_verify_reservation2") < $date_now )) and (getSettingValue("automatic_mail") == 'yes')) {
-				//$res = grr_sql_query("SELECT r.id FROM ".TABLE_PREFIX."_room r, ".TABLE_PREFIX."_area a WHERE a.retour_resa_obli = 1 AND r.area_id = a.id");
+	$date_now = mktime(0, 0, 0, $month, $day, $year);
+	if (((getSettingValue("date_verify_reservation2") == "") || (getSettingValue("date_verify_reservation2") < $date_now )) && (getSettingValue("automatic_mail") == 'yes'))
+	{
+		//$res = grr_sql_query("SELECT r.id FROM ".TABLE_PREFIX."_room r, ".TABLE_PREFIX."_area a WHERE a.retour_resa_obli = 1 AND r.area_id = a.id");
 		$res = grr_sql_query("SELECT id FROM ".TABLE_PREFIX."_room");
-		if (! $res) {
-								// fatal_error(0, grr_sql_error());
+		if (! $res)
+		{
+			// fatal_error(0, grr_sql_error());
 			include "trailer.inc.php";
 			exit;
-		} else {
-			for ($i = 0; ($row = grr_sql_row($res, $i)); $i++) {
-				$res2 = grr_sql_query("select id from ".TABLE_PREFIX."_entry where statut_entry='e' and end_time < '".$date_now."' and room_id='".$row[0]."'");
-				if (! $res2) {
-											// fatal_error(0, grr_sql_error());
+		}
+		else
+		{
+			for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
+			{
+				$res2 = grr_sql_query("SELECT id from ".TABLE_PREFIX."_entry WHERE statut_entry='e' AND end_time < '".$date_now."' AND room_id='".$row[0]."'");
+				if (!$res2)
+				{
+					// fatal_error(0, grr_sql_error());
 					include "trailer.inc.php";
 					exit;
-				} else {
-					for ($j = 0; ($row2 = grr_sql_row($res2, $j)); $j++) {
+				}
+				else
+				{
+					for ($j = 0; ($row2 = grr_sql_row($res2, $j)); $j++)
 						$_SESSION['session_message_error'] = send_mail($row2[0],7,$dformat);
-					}
 				}
 			}
 		}
-		if (!saveSetting("date_verify_reservation2", $date_now)) {
+		if (!saveSetting("date_verify_reservation2", $date_now))
+		{
 			echo "Erreur lors de l'enregistrement de date_verify_reservation2 !<br />";
 			die();
 		}
 	}
 }
-function est_hors_reservation($time,$area="-1") {
-		// Premier test : s'agit-il d'un jour du calendrier "hors réservation" ?
-	$test = grr_sql_query1("select DAY from ".TABLE_PREFIX."_calendar where DAY = '".$time."'");
+function est_hors_reservation($time,$area="-1")
+{
+	// Premier test : s'agit-il d'un jour du calendrier "hors réservation" ?
+	$test = grr_sql_query1("SELECT DAY FROM ".TABLE_PREFIX."_calendar where DAY = '".$time."'");
 	if ($test != -1)
 		return TRUE;
-		// 2ème test : s'agit-il d'une journée qui n'est pas affichée pour le domaine considéré ?
-	if ($area!=-1) {
+	// 2ème test : s'agit-il d'une journée qui n'est pas affichée pour le domaine considéré ?
+	if ($area!=-1)
+	{
 		$sql = "SELECT display_days FROM ".TABLE_PREFIX."_area WHERE id = '".protect_data_sql($area)."'";
 		$result = grr_sql_query1($sql);
 		$jour_semaine = date("w",$time);
@@ -3506,23 +3530,25 @@ function est_hors_reservation($time,$area="-1") {
 	}
 	return FALSE;
 }
-function resa_est_hors_reservation($start_time,$end_time) {
-		// On teste si la réservation est dans le calendrier "hors réservations"
+function resa_est_hors_reservation($start_time,$end_time)
+{
+	// On teste si la réservation est dans le calendrier "hors réservations"
 	$test = grr_sql_query1("select DAY from ".TABLE_PREFIX."_calendar where DAY = '".$start_time."' or DAY = '".$end_time."'");
 	if ($test != -1)
 		return TRUE;
 	else
 		return FALSE;
 }
-function resa_est_hors_reservation2($start_time,$end_time,$area) {
-		// S'agit-il d'une journée qui n'est pas affichée pour le domaine considéré ?
+function resa_est_hors_reservation2($start_time,$end_time,$area)
+{
+	// S'agit-il d'une journée qui n'est pas affichée pour le domaine considéré ?
 	$sql = "SELECT display_days FROM ".TABLE_PREFIX."_area WHERE id = '".protect_data_sql($area)."'";
 	$result = grr_sql_query1($sql);
 	$jour_semaine = date("w",$start_time);
-	if (substr($result,$jour_semaine,1) == 'n')
+	if (substr($result, $jour_semaine, 1) == 'n')
 		return TRUE;
 	$jour_semaine = date("w",$end_time);
-	if (substr($result,$jour_semaine,1) == 'n')
+	if (substr($result, $jour_semaine, 1) == 'n')
 		return TRUE;
 	return FALSE;
 }
@@ -3533,42 +3559,58 @@ function find_user_room ($id_room)
 	$sql = "select email from ".TABLE_PREFIX."_utilisateurs, ".TABLE_PREFIX."_j_user_room
 	where ".TABLE_PREFIX."_utilisateurs.login = ".TABLE_PREFIX."_j_user_room.login and id_room='".$id_room."'";
 	$res = grr_sql_query($sql);
-	if ($res) {
-		for ($i = 0; ($row = grr_sql_row($res, $i)); $i++) {
-			if (validate_email($row[0])) $emails[] = $row[0];
+	if ($res)
+	{
+		for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
+		{
+			if (validate_email($row[0]))
+				$emails[] = $row[0];
 		}
 	}
-		// Si la table des emails des gestionnaires de la ressource est vide, on avertit les administrateurs du domaine
-	if (count($emails) == 0) {
+	// Si la table des emails des gestionnaires de la ressource est vide, on avertit les administrateurs du domaine
+	if (count($emails) == 0)
+	{
 		$id_area = mrbsGetAreaIdFromRoomId($id_room);
 		$sql_admin = grr_sql_query("select email from ".TABLE_PREFIX."_utilisateurs, ".TABLE_PREFIX."_j_useradmin_area
 			where ".TABLE_PREFIX."_utilisateurs.login = ".TABLE_PREFIX."_j_useradmin_area.login and ".TABLE_PREFIX."_j_useradmin_area.id_area='".$id_area."'");
-		if ($sql_admin) {
-			for ($i = 0; ($row = grr_sql_row($sql_admin, $i)); $i++) {
-				if (validate_email($row[0])) $emails[] = $row[0];
+		if ($sql_admin)
+		{
+			for ($i = 0; ($row = grr_sql_row($sql_admin, $i)); $i++)
+			{
+				if (validate_email($row[0]))
+					$emails[] = $row[0];
 			}
 		}
 	}
-		// Si la table des emails des administrateurs du domaines est vide, on avertit les administrateurs des sites
-	if (getSettingValue("module_multisite") == "Oui") {
-		if (count($emails) == 0) {
+	// Si la table des emails des administrateurs du domaines est vide, on avertit les administrateurs des sites
+	if (getSettingValue("module_multisite") == "Oui")
+	{
+		if (count($emails) == 0)
+		{
 			$id_area = mrbsGetAreaIdFromRoomId($id_room);
 			$id_site = mrbsGetAreaSite($id_area);
 			$sql_admin = grr_sql_query("select email from ".TABLE_PREFIX."_utilisateurs, ".TABLE_PREFIX."_j_useradmin_site
 				where ".TABLE_PREFIX."_utilisateurs.login = ".TABLE_PREFIX."_j_useradmin_site.login and ".TABLE_PREFIX."_j_useradmin_site.id_site='".$id_site."'");
-			if ($sql_admin) {
-				for ($i = 0; ($row = grr_sql_row($sql_admin, $i)); $i++) {
-					if (validate_email($row[0])) $emails[] = $row[0];
+			if ($sql_admin)
+			{
+				for ($i = 0; ($row = grr_sql_row($sql_admin, $i)); $i++)
+				{
+					if (validate_email($row[0]))
+						$emails[] = $row[0];
 				}
 			}
 		}
 	}
-		// Si la table des emails des administrateurs des sites est vide, on avertit les administrateurs générauxd
-	if (count($emails) == 0) {
+	// Si la table des emails des administrateurs des sites est vide, on avertit les administrateurs générauxd
+	if (count($emails) == 0)
+	{
 		$sql_admin = grr_sql_query("select email from ".TABLE_PREFIX."_utilisateurs where statut = 'administrateur'");
-		if ($sql_admin) {
-			for ($i = 0; ($row = grr_sql_row($sql_admin, $i)); $i++) {
-				if (validate_email($row[0])) $emails[] = $row[0];
+		if ($sql_admin)
+		{
+			for ($i = 0; ($row = grr_sql_row($sql_admin, $i)); $i++)
+			{
+				if (validate_email($row[0]))
+					$emails[] = $row[0];
 			}
 		}
 	}
@@ -3576,20 +3618,15 @@ function find_user_room ($id_room)
 }
 function validate_email ($email)
 {
-		$atom   = '[-a-z0-9!#$%&\'*+\\/=?^_`{|}~]';   // caractères autorisés avant l'arobase
-		$domain = '([a-z0-9]([-a-z0-9]*[a-z0-9]+)?)'; // caractères autorisés après l'arobase (nom de domaine)
-		$regex = '/^' . $atom . '+' .   // Une ou plusieurs fois les caractères autorisés avant l'arobase
-		'(\.' . $atom . '+)*' .         // Suivis par zéro point ou plus
-																		// séparés par des caractères autorisés avant l'arobase
-		'@' .                           // Suivis d'un arobase
-		'(' . $domain . '{1,63}\.)+' .  // Suivis par 1 à 63 caractères autorisés pour le nom de domaine
-																		// séparés par des points
-		$domain . '{2,63}$/i';          // Suivi de 2 à 63 caractères autorisés pour le nom de domaine
-		if (preg_match($regex, $email)) {
+		$atom   = '[-a-z0-9!#$%&\'*+\\/=?^_`{|}~]';
+		// caractères autorisés avant l'arobase
+		$domain = '([a-z0-9]([-a-z0-9]*[a-z0-9]+)?)';
+		// caractères autorisés après l'arobase (nom de domaine)
+		$regex = '/^' . $atom . '+' . '(\.' . $atom . '+)*' . '@' . '(' . $domain . '{1,63}\.)+' . $domain . '{2,63}$/i';
+		if (preg_match($regex, $email))
 			return true;
-		} else {
+		else
 			return false;
-		}
 	}
 /** grrDelOverloadFromEntries()
  * Supprime les données du champ $id_field de toutes les réservations
@@ -3599,70 +3636,85 @@ function grrDelOverloadFromEntries($id_field)
 	$begin_string = "<".$id_field.">";
 	$end_string = "</".$id_field.">";
 	// On cherche à quel domaine est rattaché le champ additionnel
-	$id_area = grr_sql_query1("select id_area from ".TABLE_PREFIX."_overload where id='".$id_field."'");
-	if ($id_area == -1) fatal_error(0, get_vocab('error_area') . $id_area . get_vocab('not_found'));
+	$id_area = grr_sql_query1("SELECT id_area FROM ".TABLE_PREFIX."_overload WHERE id='".$id_field."'");
+	if ($id_area == -1)
+		fatal_error(0, get_vocab('error_area') . $id_area . get_vocab('not_found'));
 	// On cherche toutes les ressources du domaine
-	$call_rooms = grr_sql_query("select id from ".TABLE_PREFIX."_room where area_id = '".$id_area."'");
-	if (! $call_rooms) fatal_error(0, get_vocab('error_room') . $id_room . get_vocab('not_found'));
-	for ($i = 0; ($row = grr_sql_row($call_rooms, $i)); $i++) {
-			// On cherche toutes les resas de cette resources
-		$call_resa = grr_sql_query("select id, overload_desc from ".TABLE_PREFIX."_entry where room_id ='".$row[0]."'");
-		if (! $call_resa) fatal_error(0, get_vocab('invalid_entry_id'));
-		for ($j = 0; ($row2 = grr_sql_row($call_resa, $j)); $j++) {
+	$call_rooms = grr_sql_query("SELECT id FROM ".TABLE_PREFIX."_room WHERE area_id = '".$id_area."'");
+	if (!$call_rooms)
+		fatal_error(0, get_vocab('error_room') . $id_room . get_vocab('not_found'));
+	for ($i = 0; ($row = grr_sql_row($call_rooms, $i)); $i++)
+	{
+		// On cherche toutes les resas de cette resources
+		$call_resa = grr_sql_query("SELECT id, overload_desc FROM ".TABLE_PREFIX."_entry WHERE room_id ='".$row[0]."'");
+		if (! $call_resa)
+			fatal_error(0, get_vocab('invalid_entry_id'));
+		for ($j = 0; ($row2 = grr_sql_row($call_resa, $j)); $j++)
+		{
 			$overload_desc = $row2[1];
 			$begin_pos = strpos($overload_desc,$begin_string);
 			$end_pos = strpos($overload_desc,$end_string);
-			if ( $begin_pos !== false && $end_pos !== false ) {
+			if ( $begin_pos !== false && $end_pos !== false )
+			{
 				$endpos = $end_pos + 1 + strlen($begin_string);
 				$debut_new_chaine = substr($overload_desc,0,$begin_pos);
 				$fin_new_chaine = substr($overload_desc,$endpos);
 				$new_chaine = $debut_new_chaine.$fin_new_chaine;
-				grr_sql_command("update ".TABLE_PREFIX."_entry set overload_desc = '".$new_chaine."' where id = '".$row2[0]."'");
+				grr_sql_command("UPDATE ".TABLE_PREFIX."_entry SET overload_desc = '".$new_chaine."' WHERE id = '".$row2[0]."'");
 			}
 		}
-			// On cherche toutes les resas de cette resources
-		$call_resa = grr_sql_query("select id, overload_desc from ".TABLE_PREFIX."_repeat where room_id ='".$row[0]."'");
-		if (! $call_resa) fatal_error(0, get_vocab('invalid_entry_id'));
-		for ($j = 0; ($row2 = grr_sql_row($call_resa, $j)); $j++) {
+		// On cherche toutes les resas de cette resources
+		$call_resa = grr_sql_query("SELECT id, overload_desc FROM ".TABLE_PREFIX."_repeat WHERE room_id ='".$row[0]."'");
+		if (!$call_resa)
+			fatal_error(0, get_vocab('invalid_entry_id'));
+		for ($j = 0; ($row2 = grr_sql_row($call_resa, $j)); $j++)
+		{
 			$overload_desc = $row2[1];
 			$begin_pos = strpos($overload_desc,$begin_string);
 			$end_pos = strpos($overload_desc,$end_string);
-			if ( $begin_pos !== false && $end_pos !== false ) {
+			if ($begin_pos !== false && $end_pos !== false)
+			{
 				$endpos = $end_pos + 1 + strlen($begin_string);
 				$debut_new_chaine = substr($overload_desc,0,$begin_pos);
 				$fin_new_chaine = substr($overload_desc,$endpos);
 				$new_chaine = $debut_new_chaine.$fin_new_chaine;
-				grr_sql_command("update ".TABLE_PREFIX."_repeat set overload_desc = '".$new_chaine."' where id = '".$row2[0]."'");
+				grr_sql_command("UPDATE ".TABLE_PREFIX."_repeat SET overload_desc = '".$new_chaine."' WHERE id = '".$row2[0]."'");
 			}
 		}
 	}
 }
-function traite_grr_url($grr_script_name="",$force_use_grr_url="n") {
-		// Dans certaines configuration (reverse proxy, ...) les variables $_SERVER["SCRIPT_NAME"] ou $_SERVER['PHP_SELF']
-		// sont mal interprétées entraînant des liens erronés sur certaines pages.
-	if (((getSettingValue("use_grr_url")=="y") and (getSettingValue("grr_url")!="")) or ($force_use_grr_url=="y")) {
-		if (substr(getSettingValue("grr_url"), -1) != "/") $ad_signe = "/"; else $ad_signe = "";
+function traite_grr_url($grr_script_name = "", $force_use_grr_url = "n")
+{
+	// Dans certaines configuration (reverse proxy, ...) les variables $_SERVER["SCRIPT_NAME"] ou $_SERVER['PHP_SELF']
+	// sont mal interprétées entraînant des liens erronés sur certaines pages.
+	if (((getSettingValue("use_grr_url") == "y") && (getSettingValue("grr_url") != "")) || ($force_use_grr_url == "y"))
+	{
+		if (substr(getSettingValue("grr_url"), -1) != "/")
+			$ad_signe = "/";
+		else
+			$ad_signe = "";
 		return getSettingValue("grr_url").$ad_signe.$grr_script_name;
-	} else {
-		return $_SERVER['PHP_SELF'];
 	}
+	else
+		return $_SERVER['PHP_SELF'];
 }
 // Pour les Jours/Cycles
 //Crée le calendrier Jours/Cycles
-function cree_calendrier_date_valide($n,$i) {
-	if ($i <= getSettingValue("nombre_jours_Jours/Cycles")) {
-		$sql = "INSERT INTO ".TABLE_PREFIX."_calendrier_jours_cycle set DAY='".$n."', Jours = $i";
-		if (grr_sql_command($sql) < 0) {
+function cree_calendrier_date_valide($n, $i)
+{
+	if ($i <= getSettingValue("nombre_jours_Jours/Cycles"))
+	{
+		$sql = "INSERT INTO ".TABLE_PREFIX."_calendrier_jours_cycle SET DAY='".$n."', Jours = $i";
+		if (grr_sql_command($sql) < 0)
 			fatal_error(1, "<p>" . grr_sql_error());
-		}
 		$i++;
 	}
-	else {
+	else
+	{
 		$i = 1;
 		$sql = "INSERT INTO ".TABLE_PREFIX."_calendrier_jours_cycle set DAY='".$n."', Jours = $i";
-		if (grr_sql_command($sql) < 0) {
+		if (grr_sql_command($sql) < 0)
 			fatal_error(1, "<p>" . grr_sql_error());
-		}
 		$i++;
 	}
 	return $i;
@@ -3676,44 +3728,30 @@ function numero_semaine($date)
 		* - Le 1er jour de la semaine est le Lundi
 		*/
 		// Définition du Jeudi de la semaine
-		if (date("w",$date)==0) // Dimanche
-		$jeudiSemaine = $date-3*24*60*60;
-		else if (date("w",$date)<4) // du Lundi au Mercredi
-		$jeudiSemaine = $date+(4-date("w",$date))*24*60*60;
-		else if (date("w",$date)>4) // du Vendredi au Samedi
-		$jeudiSemaine = $date-(date("w",$date)-4)*24*60*60;
-		else // Jeudi
-		$jeudiSemaine = $date;
+		if (date("w", $date) == 0)
+			$jeudiSemaine = $date - 3 * 24 * 60 * 60;
+		else if (date("w", $date) < 4)
+			$jeudiSemaine = $date + (4 - date("w", $date)) * 24 * 60 * 60;
+		else if (date("w", $date) > 4)
+			$jeudiSemaine = $date - (date("w", $date) - 4) * 24 * 60 * 60;
+		else
+			$jeudiSemaine = $date;
 		// Définition du premier Jeudi de l'année
-		if (date("w",mktime(12,0,0,1,1,date("Y",$jeudiSemaine)))==0) // Dimanche
-		{
-			$premierJeudiAnnee = mktime(12,0,0,1,1,date("Y",$jeudiSemaine))+4*24*60*60;
-		}
-		else if (date("w",mktime(12,0,0,1,1,date("Y",$jeudiSemaine)))<4) // du Lundi au Mercredi
-		{
-			$premierJeudiAnnee = mktime(12,0,0,1,1,date("Y",$jeudiSemaine))+(4-date("w",mktime(12,0,0,1,1,date("Y",$jeudiSemaine))))*24*60*60;
-		}
-		else if (date("w",mktime(12,0,0,1,1,date("Y",$jeudiSemaine)))>4) // du Vendredi au Samedi
-		{
-			$premierJeudiAnnee = mktime(12,0,0,1,1,date("Y",$jeudiSemaine))+(7-(date("w",mktime(12,0,0,1,1,date("Y",$jeudiSemaine)))-4))*24*60*60;
-		}
-		else // Jeudi
-		{
-			$premierJeudiAnnee = mktime(12,0,0,1,1,date("Y",$jeudiSemaine));
-		}
+		if (date("w",mktime(12, 0, 0, 1, 1, date("Y", $jeudiSemaine))) == 0)
+			$premierJeudiAnnee = mktime(12, 0, 0, 1, 1, date("Y", $jeudiSemaine)) + 4 * 24 * 60 * 60;
+		else if (date("w", mktime(12, 0, 0, 1, 1, date("Y", $jeudiSemaine))) < 4)
+			$premierJeudiAnnee = mktime(12, 0, 0, 1, 1, date("Y", $jeudiSemaine)) + (4 - date("w", mktime(12, 0, 0, 1, 1, date("Y", $jeudiSemaine)))) * 24 * 60 * 60;
+		else if (date("w", mktime(12, 0, 0, 1, 1, date("Y", $jeudiSemaine))) > 4)
+			$premierJeudiAnnee = mktime(12, 0, 0, 1, 1, date("Y", $jeudiSemaine)) + (7 - (date("w", mktime(12, 0, 0, 1, 1, date("Y", $jeudiSemaine))) - 4)) * 24 * 60 * 60;
+		else
+			$premierJeudiAnnee = mktime(12, 0, 0, 1, 1, date("Y", $jeudiSemaine));
 		// Définition du numéro de semaine: nb de jours entre "premier Jeudi de l'année" et "Jeudi de la semaine";
-		$numeroSemaine =     (
-			(
-				date("z",mktime(12,0,0,date("m",$jeudiSemaine),date("d",$jeudiSemaine),date("Y",$jeudiSemaine)))
-				-
-				date("z",mktime(12,0,0,date("m",$premierJeudiAnnee),date("d",$premierJeudiAnnee),date("Y",$premierJeudiAnnee)))
-				) / 7
-			) + 1;
+		$numeroSemaine = ((date("z", mktime(12, 0, 0, date("m", $jeudiSemaine), date("d", $jeudiSemaine), date("Y", $jeudiSemaine))) - date("z", mktime(12, 0, 0, date("m", $premierJeudiAnnee), date("d", $premierJeudiAnnee), date("Y", $premierJeudiAnnee)))) / 7) + 1;
 		// Cas particulier de la semaine 53
-		if ($numeroSemaine==53)
+		if ($numeroSemaine == 53)
 		{
-				// Les années qui commence un Jeudi et les années bissextiles commençant un Mercredi en possède 53
-			if (date("w",mktime(12,0,0,1,1,date("Y",$jeudiSemaine)))==4 || (date("w",mktime(12,0,0,1,1,date("Y",$jeudiSemaine)))==3 && date("z",mktime(12,0,0,12,31,date("Y",$jeudiSemaine)))==365))
+			// Les années qui commence un Jeudi et les années bissextiles commençant un Mercredi en possède 53
+			if (date("w", mktime(12,0,0,1,1,date("Y",$jeudiSemaine))) == 4 || (date("w", mktime(12, 0, 0, 1, 1, date("Y", $jeudiSemaine))) == 3 && date("z", mktime(12, 0, 0, 12, 31, date("Y", $jeudiSemaine))) == 365))
 			{
 				$numeroSemaine = 53;
 			}
@@ -3750,7 +3788,7 @@ function numero_semaine($date)
 	function getFirstDays()
 	{
 		global $weekstarts, $display_day;
-		$basetime = mktime(12,0,0,6,11+$weekstarts,2000);
+		$basetime = mktime(12, 0, 0, 6, 11 + $weekstarts, 2000);
 		for ($i = 0, $s = ""; $i < 7; $i++)
 		{
 			$j = ($i + 7 + $weekstarts) % 7;
@@ -3766,27 +3804,31 @@ function numero_semaine($date)
 /*
 Construit les informations à afficher sur les plannings
 */
-function affichage_lien_resa_planning($breve_description, $id_resa) {
+function affichage_lien_resa_planning($breve_description, $id_resa)
+{
 	$affichage = "";
-	if ((getSettingValue("display_short_description")==1) and ($breve_description!=""))
+	if ((getSettingValue("display_short_description") == 1) && ($breve_description != ""))
 		$affichage = $breve_description;
-	else {
+	else
 		$affichage = get_vocab("entryid").$id_resa;
-	}
 	return bbCode(htmlspecialchars($affichage,ENT_NOQUOTES),'titre');
 }
 /*
 Construit les informations à afficher sur les plannings
 */
-function affichage_resa_planning($_description, $id_resa) {
+function affichage_resa_planning($_description, $id_resa)
+{
 	$affichage = "";
-	if (getSettingValue("display_full_description")==1)
+	if (getSettingValue("display_full_description") == 1)
 		$affichage = bbCode(htmlspecialchars($_description,ENT_NOQUOTES),'');
-		// Les champs add :
+	// Les champs add :
 	$overload_data = mrbsEntryGetOverloadDesc($id_resa);
-	foreach ($overload_data as $fieldname=>$field) {
-		if (($field["affichage"] == 'y') and ($field["valeur"]!="")) {
-			if ($affichage != "") $affichage .= "<br />";
+	foreach ($overload_data as $fieldname=>$field)
+	{
+		if (($field["affichage"] == 'y') and ($field["valeur"]!=""))
+		{
+			if ($affichage != "")
+				$affichage .= "<br />";
 			$affichage .= bbCode(htmlspecialchars($fieldname,ENT_NOQUOTES).get_vocab("deux_points").htmlspecialchars($field["valeur"],ENT_NOQUOTES),'');
 		}
 	}
@@ -3795,14 +3837,15 @@ function affichage_resa_planning($_description, $id_resa) {
 /*
 Construit les informations à afficher sur les plannings
 */
-function affichage_champ_add_mails($id_resa) {
+function affichage_champ_add_mails($id_resa)
+{
 	$affichage = "";
-		// Les champs add :
+	// Les champs add :
 	$overload_data = mrbsEntryGetOverloadDesc($id_resa);
-	foreach ($overload_data as $fieldname=>$field) {
-		if (($field["overload_mail"] == 'y') and ($field["valeur"]!="")) {
+	foreach ($overload_data as $fieldname=>$field)
+	{
+		if (($field["overload_mail"] == 'y') && ($field["valeur"] != ""))
 			$affichage .= bbcode(htmlspecialchars($fieldname).get_vocab("deux_points").htmlspecialchars($field["valeur"]),'nobbcode')."\n";;
-		}
 	}
 	return $affichage;
 }
@@ -3813,27 +3856,36 @@ Dans ce cas, l'affichage n'a lieu que si $_SESSION['displ_msg']='yes'
 $type_affichage = "admin" -> Affichage des "pop-up" de confirmation dans les menus d'administration
 $type_affichage = "force" -> On force l'affichage du pop-up même si javascript_info_admin_disabled est TRUE
 */
-function affiche_pop_up($msg="",$type_affichage="user"){
-		// Si $_SESSION["msg_a_afficher"] est défini, on l'affiche, sinon, on affiche $msg passé en variable
-	if ((isset($_SESSION["msg_a_afficher"])) and ($_SESSION["msg_a_afficher"] != "")) {
+function affiche_pop_up($msg = "",$type_affichage = "user")
+{
+	// Si $_SESSION["msg_a_afficher"] est défini, on l'affiche, sinon, on affiche $msg passé en variable
+	if ((isset($_SESSION["msg_a_afficher"])) and ($_SESSION["msg_a_afficher"] != ""))
 		$msg = $_SESSION["msg_a_afficher"];
-	}
-	if ($msg != "") {
-		if ($type_affichage == "user") {
-			if (!(getSettingValue("javascript_info_disabled"))) {
+	if ($msg != "")
+	{
+		if ($type_affichage == "user")
+		{
+			if (!(getSettingValue("javascript_info_disabled")))
+			{
 				echo "<script type=\"text/javascript\">";
-				if ((isset($_SESSION['displ_msg'])) and ($_SESSION['displ_msg']=='yes'))  echo " alert(\"".$msg."\")";
+				if ((isset($_SESSION['displ_msg'])) && ($_SESSION['displ_msg'] == 'yes'))
+					echo " alert(\"".$msg."\")";
 				echo "</script>";
 			}
-		} else if ($type_affichage == "admin") {
-			if (!(getSettingValue("javascript_info_admin_disabled")))  {
+		}
+		else if ($type_affichage == "admin")
+		{
+			if (!(getSettingValue("javascript_info_admin_disabled")))
+			{
 				echo "<script type=\"text/javascript\">";
 				echo "<!--\n";
 				echo " alert(\"".$msg."\")";
 				echo "//-->";
 				echo "</script>";
 			}
-		} else {
+		}
+		else
+		{
 			echo "<script type=\"text/javascript\">";
 			echo "<!--\n";
 			echo " alert(\"".$msg."\")";
@@ -3841,39 +3893,47 @@ function affiche_pop_up($msg="",$type_affichage="user"){
 			echo "</script>";
 		}
 	}
-	$_SESSION['displ_msg']="";
+	$_SESSION['displ_msg'] = "";
 	$_SESSION["msg_a_afficher"] = "";
 }
 /*
 Retourne un tableau contenant les nom et prénom et l'email de $_beneficiaire
 */
-function donne_nom_email($_beneficiaire){
+function donne_nom_email($_beneficiaire)
+{
 	$tab_benef = array();
 	$tab_benef["nom"] = "";
 	$tab_benef["email"] = "";
-	if ($_beneficiaire == "") {
+	if ($_beneficiaire == "")
+	{
 		return $tab_benef;
 		die();
 	}
 	$temp = explode("|",$_beneficiaire);
-	if (isset($temp[0])) $tab_benef["nom"] = $temp[0];
-	if (isset($temp[1])) $tab_benef["email"] = $temp[1];
+	if (isset($temp[0]))
+		$tab_benef["nom"] = $temp[0];
+	if (isset($temp[1]))
+		$tab_benef["email"] = $temp[1];
 	return $tab_benef;
 }
 /*
 Retourne une chaine concaténée des nom et prénom et l'email
 */
-function concat_nom_email($_nom, $_email){
-		// On supprime les caractères | de $_nom
+function concat_nom_email($_nom, $_email)
+{
+	// On supprime les caractères | de $_nom
 	$_nom = trim(str_replace("|","",$_nom));
-	if ($_nom == "") {
+	if ($_nom == "")
+	{
 		return "-1";
 		die();
 	}
 	$_email = trim($_email);
-	if ($_email != "") {
-		if (strstr($_email,"|")) {
-						// l'adresse email contient le catactère | ce qui n'est pas normal et peut compromettre la suite du traitement.
+	if ($_email != "")
+	{
+		if (strstr($_email,"|"))
+		{
+			// l'adresse email contient le catactère | ce qui n'est pas normal et peut compromettre la suite du traitement.
 			return "-2";
 			die();
 		}
@@ -3888,62 +3948,82 @@ $type = withmail -> on affiche un lien avec le mail sur les prénom et nom.
 $type = formail -> on formate en utf8 pour l'envoi par mail (utilisé dans l'envoi de mails automatiques)
 $type = onlymail -> on affiche uniquement le mail (utilisé dans l'envoi de mails automatiques)
 */
-function affiche_nom_prenom_email($_beneficiaire,$_beneficiaire_ext,$type="nomail"){
-	if ($_beneficiaire !="") {
+function affiche_nom_prenom_email($_beneficiaire, $_beneficiaire_ext, $type = "nomail")
+{
+	if ($_beneficiaire != "")
+	{
 		$sql_beneficiaire = "SELECT prenom, nom, email FROM ".TABLE_PREFIX."_utilisateurs WHERE login = '".$_beneficiaire."'";
 		$res_beneficiaire = grr_sql_query($sql_beneficiaire);
-		if ($res_beneficiaire) {
+		if ($res_beneficiaire)
+		{
 			$nb_result = grr_sql_count($res_beneficiaire);
-			if ($nb_result == 0) {
+			if ($nb_result == 0)
 				$chaine = get_vocab("utilisateur_inconnu").$_beneficiaire.")";
-} else {
-	$row_user = grr_sql_row($res_beneficiaire, 0);
-	if ($type == "formail")  {
-		$chaine = removeMailUnicode($row_user[0])." ".removeMailUnicode($row_user[1]);
-		if ($row_user[2] != "") {
-			$chaine .= " (".$row_user[2].")";
+			else
+			{
+				$row_user = grr_sql_row($res_beneficiaire, 0);
+				if ($type == "formail")
+				{
+					$chaine = removeMailUnicode($row_user[0])." ".removeMailUnicode($row_user[1]);
+					if ($row_user[2] != "")
+						$chaine .= " (".$row_user[2].")";
+				}
+				else if ($type == "onlymail")
+				{
+					// Cas où en envoie uniquement le mail
+					$chaine = grr_sql_query1("select email from ".TABLE_PREFIX."_utilisateurs where login='$_beneficiaire'");
+				}
+				else if (($type == "withmail") and ($row_user[2] != ""))
+				{
+					// Cas où en envoie les noms, prénoms et mail
+					$chaine = affiche_lien_contact($_beneficiaire,"identifiant:oui","afficher_toujours");
+				}
+				else
+				{
+					// Cas où en envoie les noms, prénoms sans le mail
+					$chaine = $row_user[0]." ".$row_user[1];
+				}
+			}
+			return $chaine;
+			die();
 		}
-	} else if ($type == "onlymail") {
-						// Cas où en envoie uniquement le mail
-		$chaine = grr_sql_query1("select email from ".TABLE_PREFIX."_utilisateurs where login='$_beneficiaire'");
-	} else if (($type == "withmail") and ($row_user[2] != "")) {
-						// Cas où en envoie les noms, prénoms et mail
-		$chaine = affiche_lien_contact($_beneficiaire,"identifiant:oui","afficher_toujours");
-	} else {
-								// Cas où en envoie les noms, prénoms sans le mail
-		$chaine = $row_user[0]." ".$row_user[1];
+		else
+		{
+			return "";
+			die();
+		}
 	}
-}
-return $chaine;
-die();
-} else {
-	return "";
-	die();
-}
-} else {
-				// cas d'un bénéficiaire extérieur
-				// On récupère le tableau des nom et emails
-	$tab_benef = donne_nom_email($_beneficiaire_ext);
-				// Cas où en envoie uniquement le mail
-	if ($type == "onlymail") {
-		$chaine = $tab_benef["email"];
-				// Cas où en envoie les noms, prénoms et mail
-	} else if (($type == "withmail") and ($tab_benef["email"] != "")) {
-		$email = explode('@',$tab_benef["email"]);
-		$person = $email[0];
-		if (isset($email[1])) {
-			$domain = $email[1];
-			$chaine = "<script type=\"text/javascript\">encode_adresse('".$person."','".$domain."','".AddSlashes($tab_benef["nom"])."',1);</script>";
-		} else {
+	else
+	{
+		// cas d'un bénéficiaire extérieur
+		// On récupère le tableau des nom et emails
+		$tab_benef = donne_nom_email($_beneficiaire_ext);
+		// Cas où en envoie uniquement le mail
+		if ($type == "onlymail")
+		{
+			$chaine = $tab_benef["email"];
+			// Cas où en envoie les noms, prénoms et mail
+		}
+		else if (($type == "withmail") && ($tab_benef["email"] != ""))
+		{
+			$email = explode('@',$tab_benef["email"]);
+			$person = $email[0];
+			if (isset($email[1]))
+			{
+				$domain = $email[1];
+				$chaine = "<script type=\"text/javascript\">encode_adresse('".$person."','".$domain."','".AddSlashes($tab_benef["nom"])."',1);</script>";
+			}
+			else
+				$chaine = $tab_benef["nom"];
+		}
+		else
+		{
+		// Cas où en envoie les noms, prénoms sans le mail
 			$chaine = $tab_benef["nom"];
 		}
-	} else {
-						// Cas où en envoie les noms, prénoms sans le mail
-		$chaine = $tab_benef["nom"];
+		return $chaine;
+		die();
 	}
-	return $chaine;
-	die();
-}
 }
 /*
  Fonction permettant d'effectuer une correspondance entre
@@ -3952,41 +4032,48 @@ die();
  function effectuer_correspondance_profil_statut($codefonction, $libellefonction) {
 		# On récupère le statut par défaut des utilisateurs CAS
  	$sso = getSettingValue("sso_statut");
- 	if ($sso == "cas_visiteur") $_statut = "visiteur";
- 	else if ($sso == "cas_utilisateur") $_statut = "utilisateur";
+ 	if ($sso == "cas_visiteur")
+ 		$_statut = "visiteur";
+ 	else if ($sso == "cas_utilisateur")
+ 		$_statut = "utilisateur";
 		# Le code fonction est défini
- 	if ($codefonction != "") {
+ 	if ($codefonction != "")
+ 	{
  		$sql = grr_sql_query1("select statut_grr from ".TABLE_PREFIX."_correspondance_statut where code_fonction='".$codefonction."'");
-				if ($sql != -1) { // Si la fonction existe dans la table de correspondance, on retourne le statut_grr associé
-					return $sql;
-				}	else {
-						// Le code n'existe pas dans la base, alors on l'insère en lui attribuant le statut par défaut.
-					$libellefonction = protect_data_sql($libellefonction);
-					$sql = grr_sql_command("insert into grr_correspondance_statut(code_fonction,libelle_fonction,statut_grr) values('$codefonction', '$libellefonction', '$_statut')");
-					return $_statut;
-				}
+ 		if ($sql != -1)
+ 		{
+				// Si la fonction existe dans la table de correspondance, on retourne le statut_grr associé
+ 			return $sql;
+ 		}
+ 		else
+ 		{
+					// Le code n'existe pas dans la base, alors on l'insère en lui attribuant le statut par défaut.
+ 			$libellefonction = protect_data_sql($libellefonction);
+ 			$sql = grr_sql_command("insert into grr_correspondance_statut(code_fonction,libelle_fonction,statut_grr) values('$codefonction', '$libellefonction', '$_statut')");
+ 			return $_statut;
+ 		}
 		# Le code fonction n'est pas défini, alors on retourne le statut par défaut.
-			}	else {
-				return $_statut;
-			}
-		}
+ 	}
+ 	else
+ 		return $_statut;
+ }
 //MAJ Hugo FORESTIER - Mise en place de la fonction DataPicker
 //15/05/2013
-		function jQuery_DatePicker ($typeDate)
-		{
+ function jQuery_DatePicker ($typeDate)
+ {
 //on récupère les infos passé dans l'url (sinon les infos actuels) pour les afficher dans le input
-			if (isset ($_GET['day'])){
-				$day = $_GET['day'];}
-				else{
-					$day= date("d");}
-					if (isset ($_GET['month'])){
-						$month = $_GET['month'];}
-						else{
-							$month= date("m");}
-							if (isset ($_GET['year'])){
-								$year = $_GET['year'];}
-								else{
-									$year= date("Y");}
+ 	if (isset ($_GET['day']))
+ 		$day = $_GET['day'];
+ 	else
+ 		$day= date("d");
+ 	if (isset ($_GET['month']))
+ 		$month = $_GET['month'];
+ 	else
+ 		$month= date("m");
+ 	if (isset ($_GET['year']))
+ 		$year = $_GET['year'];
+ 	else
+ 		$year= date("Y");
 //Les fichier relatif (stylsheet, bibliothèque) sont ajouté a niveau de $use_prototype (plus bas dans ce document)
 //DatePicker de base (dans un input) qui s'ouvre lors du clique sur le input
 /*echo '<input type="text" id="mydate_' .$typeDate. '" value="' .$day. '/' .$month. '/' .$year. '" name="mydate_' .$typeDate. '" />
@@ -4020,56 +4107,52 @@ function updateSelected(date) {
 function jQuery_TimePicker ($typeDate, $typeTime, $start_hour, $start_min, $end_hour, $end_min)
 {
 //Si l'id est présent dans l'url c'est une modification, on récupère l'heure de debut et de fin.
-	if (isset ($_GET['id'])){
-		if ($start_hour != '' && $start_min != ''){
-			$hour=$start_hour;
-			$minute=$start_min;}
-			else if ($end_hour != '' && $end_min != ''){
-				$hour=$end_hour;
-				$minute=$end_min;}
-				else{
-					$hour = date("h");
-					$minute = date("m");}
-				}
-				else {
-/*Hugo - On pourrait utiliser cette fonction plus courte, cependant l'autre est préféré (pour la présision) dans le cas ou un élément est manquant
- * if isset($_GET['hour'] && $_GET['minute']
- * {
-	* $hour = $_GET['hour'];
-	* $minute = $_GET['minute'];
- * }
- * else
- * {
-	* $hour = date("h");
-	* $minute = date("m");
- * }*/
-//Sinon on récupère l'heure dans l'url (l'heure sur laquelle ont a cliqué sur le +)
-	if (isset ($_GET['hour'])){
-$hour = $_GET['hour'];} //On récupère l'heure et la date pointé.
-else {
-	$hour = date("h"); }
-	if (isset ($_GET['minute'])){
-		$minute = $_GET['minute']; }
-		else {
-			$minute = date("m");}
+	if (isset ($_GET['id']))
+	{
+		if ($start_hour != '' && $start_min != '')
+		{
+			$hour = $start_hour;
+			$minute = $start_min;
 		}
+		else if ($end_hour != '' && $end_min != '')
+		{
+			$hour = $end_hour;
+			$minute = $end_min;
+		}
+		else
+		{
+			$hour = date("h");
+			$minute = date("m");
+		}
+	}
+	else
+	{
+		if (isset ($_GET['hour']))
+			$hour = $_GET['hour'];
+		else
+			$hour = date("h");
+		if (isset ($_GET['minute']))
+			$minute = $_GET['minute'];
+		else
+			$minute = date("m");
+	}
 //L"url pointe vers des &hour=0, pour éviter un bug avec le format de date : 11h0, on utilise ce if
-		if ($minute==0){
-			$minute= '00';}
+	if ($minute == 0)
+		$minute = '00';
 //David VOUE --29 Janvier 2014--Modification du stepMinute (15--->30) et de minuteGrid (15-->30) pour éviter des bugs des 1/4 d'heure
-			global $resolution;
-			$minuteJQ=$resolution/60;
-			echo '<input type="text" id="hour_' .$typeDate. '" value="' .$hour. '" name="' .$typeTime. 'hour" size="2" /> :
-			<input type="text" id="minute_' .$typeDate. '" value="' .$minute. '" name="' .$typeTime. 'minute" size="2" />
-			<script>
-				$("#hour_' .$typeDate. '").timepicker({
-					timeFormat: "H",
-					stepMinute:'.$minuteJQ.',	
-					altField: "#minute_' .$typeDate. '",
-					altTimeFormat: "mm",
-					hourGrid: 4,
-					minuteGrid:'.$minuteJQ.',
-				});
+	global $resolution;
+	$minuteJQ = $resolution / 60;
+	echo '<input type="text" id="hour_' .$typeDate. '" value="' .$hour. '" name="' .$typeTime. 'hour" size="2" /> :
+	<input type="text" id="minute_' .$typeDate. '" value="' .$minute. '" name="' .$typeTime. 'minute" size="2" />
+	<script>
+		$("#hour_' .$typeDate. '").timepicker({
+			timeFormat: "H",
+			stepMinute:'.$minuteJQ.',
+			altField: "#minute_' .$typeDate. '",
+			altTimeFormat: "mm",
+			hourGrid: 4,
+			minuteGrid:'.$minuteJQ.',
+		});
 </script>';
 }
 //MAJ Hugo FORESTIER - Creation d'une fonction jQuery pour un input de type number
@@ -4100,49 +4183,57 @@ function supprimerReservationsUtilisateursEXT($avec_resa,$avec_privileges)
 	$res = grr_sql_query($requete_users_ext);
 	$logins = array();
 	$logins_liaison  = array();
-	if ($res) for ($i = 0; ($row = grr_sql_row($res, $i)); $i++) {
-		$logins[]=$row[0];
+	if ($res)
+	{
+		for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
+		{
+			$logins[]=$row[0];
+		}
 	}
 	// Construction des requêtes de suppression à partir des différents utilisateurs à supprimer
-	if ($avec_resa=='y') {
+	if ($avec_resa == 'y')
+	{
 		// Pour chaque utilisateur, on supprime les réservations qu'il a créées et celles dont il est bénéficiaire
 		// Table grr_entry
 		$req_suppr_table_entry = "DELETE FROM ".TABLE_PREFIX."_entry WHERE create_by = ";
-		$first=1; // 1er tour
-		foreach ($logins as $log) {
-			if ($first == 1) { // pas de OR devant le login
+		$first = 1;
+		foreach ($logins as $log)
+		{
+			if ($first == 1)
+			{
 				$req_suppr_table_entry .= "'$log' OR beneficiaire='$log'";
-				$first=0;
+				$first = 0;
 			}
-			else {
+			else
 				$req_suppr_table_entry .= " OR create_by = '$log' OR beneficiaire = '$log' ";
-			}
 		}
 		// Pour chaque utilisateur, on supprime les réservations périodiques qu'il a créées et celles dont il est bénéficiaire
 		// Table grr_repeat
 		$req_suppr_table_repeat = "DELETE FROM ".TABLE_PREFIX."_repeat WHERE create_by = ";
-		$first=1; // 1er tour
-		foreach ($logins as $log) {
-			if ($first == 1) { // pas de OR devant le login
+		$first = 1;
+		foreach ($logins as $log)
+		{
+			if ($first == 1)
+			{
 				$req_suppr_table_repeat .= "'$log' OR beneficiaire='$log'";
-				$first=0;
+				$first = 0;
 			}
-			else {
+			else
 				$req_suppr_table_repeat .= " OR create_by = '$log' OR beneficiaire = '$log' ";
-			}
 		}
 		// Pour chaque utilisateur, on supprime les réservations périodiques qu'il a créées et celles dont il est bénéficiaire
 		// Table grr_entry_moderate
 		$req_suppr_table_entry_moderate = "DELETE FROM ".TABLE_PREFIX."_entry_moderate WHERE create_by = ";
-		$first=1; // 1er tour
-		foreach ($logins as $log) {
-			if ($first == 1) { // pas de OR devant le login
+		$first = 1;
+		foreach ($logins as $log)
+		{
+			if ($first == 1)
+			{
 				$req_suppr_table_entry_moderate .= "'$log' OR beneficiaire='$log'";
-				$first=0;
+				$first = 0;
 			}
-			else {
+			else
 				$req_suppr_table_entry_moderate .= " OR create_by = '$log' OR beneficiaire = '$log' ";
-			}
 		}
 	}
 	$req_j_mailuser_room = "";
@@ -4150,126 +4241,153 @@ function supprimerReservationsUtilisateursEXT($avec_resa,$avec_privileges)
 	$req_j_user_room = "";
 	$req_j_useradmin_area = "";
 	$req_j_useradmin_site = "";
-	foreach ($logins as $log) {
-			// Table grr_j_mailuser_room
+	foreach ($logins as $log)
+	{
+		// Table grr_j_mailuser_room
 		$test = grr_sql_query1("select count(login) from ".TABLE_PREFIX."_j_mailuser_room WHERE login='".$log."'");
-		if ($test >=1 ) {
-			if ($avec_privileges=="y") {
-					if ($req_j_mailuser_room == "") { // pas de OR devant le login
-						$req_j_mailuser_room = "DELETE FROM ".TABLE_PREFIX."_j_mailuser_room WHERE login='".$log."'";
-					} else {
-						$req_j_mailuser_room .= " OR login = '".$log."'";
-					}
-				} else {
-					$logins_liaison[]=strtolower($log);
-				}
+		if ($test >=1)
+		{
+			if ($avec_privileges == "y")
+			{
+				if ($req_j_mailuser_room == "")
+					$req_j_mailuser_room = "DELETE FROM ".TABLE_PREFIX."_j_mailuser_room WHERE login='".$log."'";
+				else
+					$req_j_mailuser_room .= " OR login = '".$log."'";
 			}
-			// Table grr_j_user_area
-			$test = grr_sql_query1("select count(login) from ".TABLE_PREFIX."_j_user_area WHERE login='".$log."'");
-			if ($test >=1 ) {
-				if ($avec_privileges=="y") {
-					if ($req_j_user_area == "") { // pas de OR devant le login
-						$req_j_user_area = "DELETE FROM ".TABLE_PREFIX."_j_user_area WHERE login='".$log."'";
-					} else {
-						$req_j_user_area .= " OR login = '".$log."'";
-					}
-				} else {
-					$logins_liaison[]=strtolower($log);
-				}
-			}
-			// Table grr_j_user_room
-			$test = grr_sql_query1("select count(login) from ".TABLE_PREFIX."_j_user_room WHERE login='".$log."'");
-			if ($test >=1 ) {
-				if ($avec_privileges=="y") {
-					if ($req_j_user_room == "") { // pas de OR devant le login
-						$req_j_user_room = "DELETE FROM ".TABLE_PREFIX."_j_user_room WHERE login='".$log."'";
-					} else {
-						$req_j_user_room .= " OR login = '".$log."'";
-					}
-				} else {
-					$logins_liaison[]=strtolower($log);
-				}
-			}
-			// Table grr_j_useradmin_area
-			$test = grr_sql_query1("select count(login) from ".TABLE_PREFIX."_j_useradmin_area WHERE login='".$log."'");
-			if ($test >=1 ) {
-				if ($avec_privileges=="y") {
-					if ($req_j_useradmin_area == "") { // pas de OR devant le login
-						$req_j_useradmin_area = "DELETE FROM ".TABLE_PREFIX."_j_useradmin_area WHERE login='".$log."'";
-					} else {
-						$req_j_useradmin_area .= " OR login = '".$log."'";
-					}
-				} else {
-					$logins_liaison[]=strtolower($log);
-				}
-			}
-			// Table grr_j_useradmin_site
-			$test = grr_sql_query1("select count(login) from ".TABLE_PREFIX."_j_useradmin_site WHERE login='".$log."'");
-			if ($test >=1 ) {
-				if ($avec_privileges=="y") {
-					if ($req_j_useradmin_site == "") { // pas de OR devant le login
-						$req_j_useradmin_site = "DELETE FROM ".TABLE_PREFIX."_j_useradmin_site WHERE login='".$log."'";
-					} else {
-						$req_j_useradmin_site .= " OR login = '".$log."'";
-					}
-				} else {
-					$logins_liaison[]=strtolower($log);
-				}
-			}
+			else
+				$logins_liaison[] = strtolower($log);
 		}
-	// Suppression effective
-		echo "<hr />\n";
-		if ($avec_resa=='y') {
-			$nb=0;
-			$s = grr_sql_command ($req_suppr_table_entry);
-			if ($s != -1) $nb +=$s;
-			$s = grr_sql_command (	$req_suppr_table_repeat);
-			if ($s != -1) $nb +=$s;
-			$s = grr_sql_command (	$req_suppr_table_entry_moderate);
-			if ($s != -1) $nb +=$s;
-			echo "<p class='avertissement'>".get_vocab("tables_reservations").get_vocab("deux_points").$nb.get_vocab("entres_supprimees")."</p>\n";
+		// Table grr_j_user_area
+		$test = grr_sql_query1("select count(login) from ".TABLE_PREFIX."_j_user_area WHERE login='".$log."'");
+		if ($test >=1)
+		{
+			if ($avec_privileges == "y")
+			{
+				if ($req_j_user_area == "")
+					$req_j_user_area = "DELETE FROM ".TABLE_PREFIX."_j_user_area WHERE login='".$log."'";
+				else
+					$req_j_user_area .= " OR login = '".$log."'";
+			}
+			else
+				$logins_liaison[] = strtolower($log);
 		}
-		$nb=0;
-		if ($avec_privileges=="y") {
-			if ($req_j_mailuser_room != "") {
-				$s = grr_sql_command ($req_j_mailuser_room);
-				if ($s != -1) $nb +=$s;
+		// Table grr_j_user_room
+		$test = grr_sql_query1("select count(login) from ".TABLE_PREFIX."_j_user_room WHERE login='".$log."'");
+		if ($test >= 1)
+		{
+			if ($avec_privileges == "y")
+			{
+				if ($req_j_user_room == "")
+					$req_j_user_room = "DELETE FROM ".TABLE_PREFIX."_j_user_room WHERE login='".$log."'";
+				else
+					$req_j_user_room .= " OR login = '".$log."'";
 			}
-			if ($req_j_user_area != "") {
-				$s = grr_sql_command ($req_j_user_area);
-				if ($s != -1) $nb +=$s;
-			}
-			if ($req_j_user_room != "") {
-				$s = grr_sql_command ($req_j_user_room);
-				if ($s != -1) $nb +=$s;
-			}
-			if ($req_j_useradmin_area != "") {
-				$s = grr_sql_command ($req_j_useradmin_area);
-				if ($s != -1) $nb +=$s;
-			}
-			if ($req_j_useradmin_site != "") {
-				$s = grr_sql_command ($req_j_useradmin_site);
-				if ($s != -1) $nb +=$s;
-			}
+			else
+				$logins_liaison[] = strtolower($log);
 		}
-		echo "<p class='avertissement'>".get_vocab("tables_liaison").get_vocab("deux_points").$nb.get_vocab("entres_supprimees")."</p>\n";
-		if ($avec_privileges=="y") {
-		// Enfin, suppression des utilisateurs de la source EXT qui ne sont pas administrateur
-			$requete_suppr_users_ext = "DELETE FROM ".TABLE_PREFIX."_utilisateurs WHERE source='ext' and statut<>'administrateur'";
-			$s = grr_sql_command($requete_suppr_users_ext);
-			if ($s == -1) $s = 0;
-			echo "<p class='avertissement'>".get_vocab("table_utilisateurs").get_vocab("deux_points").$s.get_vocab("entres_supprimees")."</p>\n";
-		} else {
-			$n=0;
-			foreach ($logins as $log) {
-				if (!in_array(strtolower($log),$logins_liaison)) {
-					grr_sql_command("DELETE FROM ".TABLE_PREFIX."_utilisateurs WHERE login='".$log."'");
-					$n++;
-				}
+		// Table grr_j_useradmin_area
+		$test = grr_sql_query1("select count(login) from ".TABLE_PREFIX."_j_useradmin_area WHERE login='".$log."'");
+		if ($test >= 1)
+		{
+			if ($avec_privileges == "y")
+			{
+				if ($req_j_useradmin_area == "")
+					$req_j_useradmin_area = "DELETE FROM ".TABLE_PREFIX."_j_useradmin_area WHERE login='".$log."'";
+				else
+					$req_j_useradmin_area .= " OR login = '".$log."'";
 			}
-			echo "<p class='avertissement'>".get_vocab("table_utilisateurs").get_vocab("deux_points").$n.get_vocab("entres_supprimees")."</p>\n";
+			else
+				$logins_liaison[] = strtolower($log);
+		}
+		// Table grr_j_useradmin_site
+		$test = grr_sql_query1("select count(login) from ".TABLE_PREFIX."_j_useradmin_site WHERE login='".$log."'");
+		if ($test >= 1)
+		{
+			if ($avec_privileges == "y")
+			{
+				if ($req_j_useradmin_site == "")
+					$req_j_useradmin_site = "DELETE FROM ".TABLE_PREFIX."_j_useradmin_site WHERE login='".$log."'";
+				else
+					$req_j_useradmin_site .= " OR login = '".$log."'";
+			}
+			else
+				$logins_liaison[] = strtolower($log);
 		}
 	}
+		// Suppression effective
+	echo "<hr />\n";
+	if ($avec_resa == 'y')
+	{
+		$nb = 0;
+		$s = grr_sql_command($req_suppr_table_entry);
+		if ($s != -1)
+			$nb += $s;
+		$s = grr_sql_command($req_suppr_table_repeat);
+		if ($s != -1)
+			$nb += $s;
+		$s = grr_sql_command($req_suppr_table_entry_moderate);
+		if ($s != -1)
+			$nb += $s;
+		echo "<p class='avertissement'>".get_vocab("tables_reservations").get_vocab("deux_points").$nb.get_vocab("entres_supprimees")."</p>\n";
+	}
+	$nb=0;
+	if ($avec_privileges == "y")
+	{
+		if ($req_j_mailuser_room != "")
+		{
+			$s = grr_sql_command($req_j_mailuser_room);
+			if ($s != -1)
+				$nb += $s;
+		}
+		if ($req_j_user_area != "")
+		{
+			$s = grr_sql_command($req_j_user_area);
+			if ($s != -1)
+				$nb += $s;
+		}
+		if ($req_j_user_room != "")
+		{
+			$s = grr_sql_command($req_j_user_room);
+			if ($s != -1)
+				$nb += $s;
+		}
+		if ($req_j_useradmin_area != "")
+		{
+			$s = grr_sql_command($req_j_useradmin_area);
+			if ($s != -1)
+				$nb += $s;
+		}
+		if ($req_j_useradmin_site != "")
+		{
+			$s = grr_sql_command($req_j_useradmin_site);
+			if ($s != -1)
+				$nb += $s;
+		}
+	}
+	echo "<p class='avertissement'>".get_vocab("tables_liaison").get_vocab("deux_points").$nb.get_vocab("entres_supprimees")."</p>\n";
+	if ($avec_privileges == "y")
+	{
+			// Enfin, suppression des utilisateurs de la source EXT qui ne sont pas administrateur
+		$requete_suppr_users_ext = "DELETE FROM ".TABLE_PREFIX."_utilisateurs WHERE source='ext' and statut<>'administrateur'";
+		$s = grr_sql_command($requete_suppr_users_ext);
+		if ($s == -1)
+			$s = 0;
+		echo "<p class='avertissement'>".get_vocab("table_utilisateurs").get_vocab("deux_points").$s.get_vocab("entres_supprimees")."</p>\n";
+	}
+	else
+	{
+		$n = 0;
+		foreach ($logins as $log)
+		{
+			if (!in_array(strtolower($log), $logins_liaison))
+			{
+				grr_sql_command("DELETE FROM ".TABLE_PREFIX."_utilisateurs WHERE login='".$log."'");
+				$n++;
+			}
+		}
+		echo "<p class='avertissement'>".get_vocab("table_utilisateurs").get_vocab("deux_points").$n.get_vocab("entres_supprimees")."</p>\n";
+	}
+}
 /** NettoyerTablesJointure()
  *
  * Supprime les lignes inutiles dans les tables de liaison
@@ -4283,8 +4401,10 @@ function NettoyerTablesJointure()
 	LEFT JOIN ".TABLE_PREFIX."_utilisateurs u on u.login=j.login
 	WHERE (u.login  IS NULL)";
 	$res = grr_sql_query($req);
-	if ($res) {
-		for ($i = 0; ($row = grr_sql_row($res, $i)); $i++) {
+	if ($res)
+	{
+		for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
+		{
 			$nb++;
 			grr_sql_command("delete from ".TABLE_PREFIX."_j_mailuser_room where login='".$row[0]."'");
 		}
@@ -4294,8 +4414,10 @@ function NettoyerTablesJointure()
 	LEFT JOIN ".TABLE_PREFIX."_utilisateurs u on u.login=j.login
 	WHERE (u.login  IS NULL)";
 	$res = grr_sql_query($req);
-	if ($res) {
-		for ($i = 0; ($row = grr_sql_row($res, $i)); $i++) {
+	if ($res)
+	{
+		for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
+		{
 			$nb++;
 			grr_sql_command("delete from ".TABLE_PREFIX."_j_user_area where login='".$row[0]."'");
 		}
@@ -4305,8 +4427,10 @@ function NettoyerTablesJointure()
 	LEFT JOIN ".TABLE_PREFIX."_utilisateurs u on u.login=j.login
 	WHERE (u.login  IS NULL)";
 	$res = grr_sql_query($req);
-	if ($res) {
-		for ($i = 0; ($row = grr_sql_row($res, $i)); $i++) {
+	if ($res)
+	{
+		for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
+		{
 			$nb++;
 			grr_sql_command("delete from ".TABLE_PREFIX."_j_user_room where login='".$row[0]."'");
 		}
@@ -4316,8 +4440,10 @@ function NettoyerTablesJointure()
 	LEFT JOIN ".TABLE_PREFIX."_utilisateurs u on u.login=j.login
 	WHERE (u.login  IS NULL)";
 	$res = grr_sql_query($req);
-	if ($res) {
-		for ($i = 0; ($row = grr_sql_row($res, $i)); $i++) {
+	if ($res)
+	{
+		for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
+		{
 			$nb++;
 			grr_sql_command("delete from ".TABLE_PREFIX."_j_useradmin_area where login='".$row[0]."'");
 		}
@@ -4327,8 +4453,10 @@ function NettoyerTablesJointure()
 	LEFT JOIN ".TABLE_PREFIX."_utilisateurs u on u.login=j.login
 	WHERE (u.login  IS NULL)";
 	$res = grr_sql_query($req);
-	if ($res) {
-		for ($i = 0; ($row = grr_sql_row($res, $i)); $i++) {
+	if ($res)
+	{
+		for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
+		{
 			$nb++;
 			grr_sql_command("delete from ".TABLE_PREFIX."_j_useradmin_site where login='".$row[0]."'");
 		}
@@ -4337,7 +4465,7 @@ function NettoyerTablesJointure()
 	echo "<hr />\n";
 	echo "<p class='avertissement'>".get_vocab("tables_liaison").get_vocab("deux_points").$nb.get_vocab("entres_supprimees")."</p>\n";
 }
-if ( !function_exists('htmlspecialchars_decode') )
+if (!function_exists('htmlspecialchars_decode'))
 {
 	function htmlspecialchars_decode($text)
 	{
@@ -4346,24 +4474,33 @@ if ( !function_exists('htmlspecialchars_decode') )
 }
 // Les lignes suivantes permettent la compatibilité de GRR avec la variables register_global à off
 unset($day);
-if (isset($_GET["day"])) {
+if (isset($_GET["day"]))
+{
 	$day = $_GET["day"];
 	settype($day,"integer");
-	if ($day < 1) $day = 1;
-	if ($day > 31) $day = 31;
+	if ($day < 1)
+		$day = 1;
+	if ($day > 31)
+		$day = 31;
 }
 unset($month);
-if (isset($_GET["month"])) {
+if (isset($_GET["month"]))
+{
 	$month = $_GET["month"];
 	settype($month,"integer");
-	if ($month < 1) $month = 1;
-	if ($month > 12) $month = 12;
+	if ($month < 1)
+		$month = 1;
+	if ($month > 12)
+		$month = 12;
 }
 unset($year);
-if (isset($_GET["year"])) {
+if (isset($_GET["year"]))
+{
 	$year = $_GET["year"];
 	settype($year,"integer");
-	if ($year < 1900) $year = 1900;
-	if ($year > 2100) $year = 2100;
+	if ($year < 1900)
+		$year = 1900;
+	if ($year > 2100)
+		$year = 2100;
 }
 ?>
