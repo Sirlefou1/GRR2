@@ -515,3 +515,7 @@
  form.ressource div.panel-body {
  	padding: 0px !important;
  }
+
+.btn-lg, .btn-group-lg>.btn {
+padding: 0px !important;
++
