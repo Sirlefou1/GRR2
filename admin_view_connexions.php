@@ -3,7 +3,7 @@
  * admin_view_connexions.php
  * Interface de gestion des connexions
  * Ce script fait partie de l'application GRR
- * Derni�re modification : $Date: 2009-06-04 15:30:17 $
+ * Dernière modification : $Date: 2009-06-04 15:30:17 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -27,25 +27,6 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-/**
- * $Log: admin_view_connexions.php,v $
- * Revision 1.7  2009-06-04 15:30:17  grr
- * *** empty log message ***
- *
- * Revision 1.6  2009-04-14 12:59:17  grr
- * *** empty log message ***
- *
- * Revision 1.5  2009-04-09 14:52:31  grr
- * *** empty log message ***
- *
- * Revision 1.4  2009-02-27 13:28:19  grr
- * *** empty log message ***
- *
- * Revision 1.3  2008-11-16 22:00:58  grr
- * *** empty log message ***
- *
- *
- */
 include "include/admin.inc.php";
 $grr_script_name = "admin_view_connexions.php";
 $back = '';
@@ -61,7 +42,7 @@ if (authGetUserLevel(getUserName(), -1) < 6)
 }
 if (isset($_POST['cleanDay']) && isset($_POST['cleanMonth']) && isset($_POST['cleanYear']))
 {
-	$sql = "delete from ".TABLE_PREFIX."_log where START < '" . $_POST['cleanYear'] . "-" . $_POST['cleanMonth'] . "-" . $_POST['cleanDay'] . "' and END < now()";
+	$sql = "DELETE FROM ".TABLE_PREFIX."_log WHERE START < '" . $_POST['cleanYear'] . "-" . $_POST['cleanMonth'] . "-" . $_POST['cleanDay'] . "' and END < now()";
 	$res = grr_sql_query($sql);
 }
 print_header("", "", "", "", $type = "with_session", $page = "admin");
@@ -69,10 +50,10 @@ include "admin_col_gauche.php";
 echo "<h2>".get_vocab('admin_view_connexions.php').grr_help("aide_grr_suivi_connexions")."</h2>";
 echo "<h3>".get_vocab("users_connected")."</h3>";
 ?>
-<div title="User connected">
+<div title="Utilisateur connecté">
 	<ul>
 		<?php
-		$sql = "select u.login, concat(u.prenom, ' ', u.nom) utilisa, u.email from ".TABLE_PREFIX."_log l, ".TABLE_PREFIX."_utilisateurs u where (l.LOGIN = u.login and l.END > now())";
+		$sql = "SELECT u.login, concat(u.prenom, ' ', u.nom) utilisa, u.email FROM ".TABLE_PREFIX."_log l, ".TABLE_PREFIX."_utilisateurs u WHERE (l.LOGIN = u.login and l.END > now())";
 		$res = grr_sql_query($sql);
 		if ($res)
 		{

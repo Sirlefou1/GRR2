@@ -494,7 +494,7 @@ print_header($day, $month, $year, $area);
 				return false;
 			}
 		}
-		<?php if (getSettingValue("remplissage_description_breve")=='1')
+		<?php if (getSettingValue("remplissage_description_breve") == '1')
 		{
 			?>
 			if (document.forms["main"].name.value == "")

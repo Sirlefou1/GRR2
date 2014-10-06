@@ -514,7 +514,7 @@ else
 										echo $d[$cday]["who1"][$i]. " <br/>" ;
 										if ($d[$cday]["description"][$i] != "")
 											echo "<i>".$d[$cday]["description"][$i]."</i>";
-										echo "</a>";
+										//echo "</a>";
 										echo "</span>";
 									}
 									echo "</td></tr></table>";
