@@ -227,12 +227,13 @@ echo begin_page(get_vocab("mrbs").get_vocab("deux_points").getSettingValue("comp
 	<br />
 	<br />
 	<?php
-	$grr_devel_url = "http://sourceforge.net/projects/grrv2/";
+	$grr_devel_url = "https://github.com/Sirlefou1/GRR2";
 	echo "<br /><p class=\"small\"><a href=\"".$grr_devel_url."\">".get_vocab("mrbs")."</a> - ".get_vocab("grr_version").affiche_version();
 	$email = explode('@',$grr_devel_email);
 	$person = $email[0];
 	$domain = $email[1];
-	echo "<br />".get_vocab("msg_login1")."<a href=\"".$grr_devel_url."\">".$grr_devel_url."</a></p>";
+	echo "<br />".get_vocab("msg_login1")."<a href=\"".$grr_devel_url."\">".$grr_devel_url."</a>";
+	echo "<br />Version Modifié par Florian OTHON pour la Mairie d'Avranches - V1.0</p>";
 	?>
 </div>
 </body>

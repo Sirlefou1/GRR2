@@ -164,10 +164,10 @@ if (($this_room_name_des) and ($this_room_name_des!="-1"))
 	$this_room_name_des = " (".$this_room_name_des.")";
 else
 	$this_room_name_des = "";
-$i= mktime(0,0,0,$month-1,1,$year);
+$i = mktime(0,0,0,$month-1,1,$year);
 $yy = date("Y",$i);
 $ym = date("n",$i);
-$i= mktime(0,0,0,$month+1,1,$year);
+$i = mktime(0,0,0,$month+1,1,$year);
 $ty = date("Y",$i);
 $tm = date("n",$i);
 include("menu_gauche.php");

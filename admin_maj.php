@@ -846,7 +846,7 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 					echo "<br />Version PHP : " . phpversion() . "\n";
 					//Hugo - Mise a jour temporaire du lien à afficher
 					//11/06/2013
-					$grr_devel_url = "http://sourceforge.net/projects/grrv2/";
+					$grr_devel_url = "https://github.com/Sirlefou1/GRR2";
 					echo "<p>".get_vocab("maj_go_www")."<a href=\"".$grr_devel_url."\">".get_vocab("mrbs")."</a></p>\n";
 					echo "<hr />\n";
 					// Mise à jour de la base de donnée
