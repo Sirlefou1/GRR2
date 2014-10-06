@@ -576,11 +576,11 @@ function affiche_date($x)
 	$result = $j."/".$m."/".$a;
 	return $result;
 }
-# L'heure d'été commence le dernier dimanche de mars * et se termine le dernier dimanche d'octobre
-# Passage à l'heure d'hiver : -1h, le changement s'effectue à 3h
-# Passage à l'heure d'été : +1h, le changement s'effectue à 2h
-# Si type = hiver => La fonction retourne la date du jour de passage à l'heure d'hiver
-# Si type = ete =>  La fonction retourne la date du jour de passage à l'heure d'été
+//L'heure d'été commence le dernier dimanche de mars * et se termine le dernier dimanche d'octobre
+//Passage à l'heure d'hiver : -1h, le changement s'effectue à 3h
+//Passage à l'heure d'été : +1h, le changement s'effectue à 2h
+//Si type = hiver => La fonction retourne la date du jour de passage à l'heure d'hiver
+//Si type = ete =>  La fonction retourne la date du jour de passage à l'heure d'été
 function heure_ete_hiver($type, $annee, $heure)
 {
 	if ($type == "ete")
@@ -589,7 +589,7 @@ function heure_ete_hiver($type, $annee, $heure)
 	else
 		$debut = mktime($heure,0, 0, 10, 31, $annee);
 	// 31-10-$annee
-	while (date("D", $debut ) !='Sun')
+	while (date("D", $debut ) != 'Sun')
 		$debut = mktime($heure, 0, 0, date("m", $debut), date("d", $debut) - 1, date("Y", $debut));
 	//On retire 1 jour par rapport à la date examinée
 	return $debut;
@@ -3919,7 +3919,7 @@ function affichage_resa_planning($_description, $id_resa)
 {
 	$affichage = "";
 	if (getSettingValue("display_full_description") == 1)
-		$affichage = bbCode(htmlspecialchars($_description,ENT_NOQUOTES),'');
+		$affichage = htmlspecialchars($_description,ENT_NOQUOTES);
 	// Les champs add :
 	$overload_data = mrbsEntryGetOverloadDesc($id_resa);
 	foreach ($overload_data as $fieldname=>$field)
@@ -3928,7 +3928,7 @@ function affichage_resa_planning($_description, $id_resa)
 		{
 			if ($affichage != "")
 				$affichage .= "<br />";
-			$affichage .= bbCode(htmlspecialchars($fieldname,ENT_NOQUOTES).get_vocab("deux_points").htmlspecialchars($field["valeur"],ENT_NOQUOTES),'');
+			$affichage .= htmlspecialchars($fieldname,ENT_NOQUOTES).get_vocab("deux_points").htmlspecialchars($field["valeur"],ENT_NOQUOTES);
 		}
 	}
 	return $affichage;
