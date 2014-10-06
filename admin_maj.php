@@ -1,9 +1,9 @@
 <?php
 /**
  * admin_maj.php
- * interface permettant la mise à jour de la base de données
+ * interface permettant la mise Ã  jour de la base de donnÃ©es
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2010-04-07 17:49:56 $
+ * DerniÃ¨re modification : $Date: 2010-04-07 17:49:56 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -87,7 +87,7 @@ if (!loadSettings())
 	die("Erreur chargement settings");
 // Session related functions
 require_once("./include/session.inc.php");
-// Paramètres langage
+// ParamÃ¨tres langage
 include "include/language.inc.php";
 function traite_requete($requete = "")
 {
@@ -101,27 +101,27 @@ function traite_requete($requete = "")
 		switch ($erreur_no)
 		{
 			case "1060":
-			// le champ existe déjà : pas de problème
+			// le champ existe dÃ©jÃ  : pas de problÃ¨me
 			$retour = "";
 			break;
 			case "1061":
-			// La cléf existe déjà : pas de problème
+			// La clÃ©f existe dÃ©jÃ  : pas de problÃ¨me
 			$retour = "";
 			break;
 			case "1062":
-			// Présence d'un doublon : création de la cléf impossible
-			$retour = "<span style=\"color:#FF0000;\">Erreur (<b>non critique</b>) sur la requête : <i>".$requete."</i> (".mysqli_errno($GLOBALS['db_c'])." : ".mysqli_error($GLOBALS['db_c']).")</span><br />\n";
+			// PrÃ©sence d'un doublon : crÃ©ation de la clÃ©f impossible
+			$retour = "<span style=\"color:#FF0000;\">Erreur (<b>non critique</b>) sur la requÃªte : <i>".$requete."</i> (".mysqli_errno($GLOBALS['db_c'])." : ".mysqli_error($GLOBALS['db_c']).")</span><br />\n";
 			break;
 			case "1068":
-			// Des cléfs existent déjà : pas de problème
+			// Des clÃ©fs existent dÃ©jÃ  : pas de problÃ¨me
 			$retour = "";
 			break;
 			case "1091":
-			// Déjà supprimé : pas de problème
+			// DÃ©jÃ  supprimÃ© : pas de problÃ¨me
 			$retour = "";
 			break;
 			default:
-			$retour = "<span style=\"color:#FF0000;\">Erreur sur la requête : <i>".$requete."</i> (".mysqli_errno($GLOBALS['db_c'])." : ".mysqli_error($GLOBALS['db_c']).")</span><br />\n";
+			$retour = "<span style=\"color:#FF0000;\">Erreur sur la requÃªte : <i>".$requete."</i> (".mysqli_errno($GLOBALS['db_c'])." : ".mysqli_error($GLOBALS['db_c']).")</span><br />\n";
 			break;
 		}
 	}
@@ -135,7 +135,7 @@ if (isset($_POST['submit']))
 {
 	if (isset($_POST['login']) && isset($_POST['password']))
 	{
-		// Test pour tenir compte du changement de nom de la table ".TABLE_PREFIX."_utilisateurs lors du passage à la version 1.8
+		// Test pour tenir compte du changement de nom de la table ".TABLE_PREFIX."_utilisateurs lors du passage Ã  la version 1.8
 		$num_version = grr_sql_query1("select NAME from ".TABLE_PREFIX."_setting WHERE NAME='version'");
 		if ($num_version != -1)
 			$sql = "select upper(login) login, password, prenom, nom, statut from ".TABLE_PREFIX."_utilisateurs where login = '" . $_POST['login'] . "' and password = md5('" . $_POST['password'] . "') and etat != 'inactif' and statut='administrateur' ";
@@ -163,8 +163,8 @@ if (getSettingValue('sso_statut') == 'lcs')
 		$lcs_tab_login["fullname"] = substr($user["fullname"], 0, $long) ;
 		foreach ($groups as $value)
 			$lcs_groups[] = $value["cn"];
-		// A ce stade, l'utilisateur est authentifié par LCS
-		// Etablir à nouveau la connexion à la base
+		// A ce stade, l'utilisateur est authentifiÃ© par LCS
+		// Etablir Ã  nouveau la connexion Ã  la base
 		if (empty($db_nopersist))
 			$db_c = mysql_pconnect($dbHost, $dbUser, $dbPass);
 		else
@@ -276,10 +276,10 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 					$result_inter = '';
 					if (isset($_POST['maj']) || isset($_GET['force_maj']))
 					{
-						// On commence la mise à jour
+						// On commence la mise Ã  jour
 						if ($version_old < "1.4.9")
 						{
-							$result .= "<b>Mise à jour jusqu'à la version 1.4 :</b><br />";
+							$result .= "<b>Mise Ã  jour jusqu'Ã  la version 1.4 :</b><br />";
 							$result_inter .= traite_requete("ALTER TABLE mrbs_area ADD order_display TINYINT NOT NULL;");
 							$result_inter .= traite_requete("ALTER TABLE mrbs_room ADD max_booking SMALLINT DEFAULT '-1' NOT NULL ;");
 							$req = grr_sql_query1("SELECT VALUE FROM setting WHERE NAME='sessionMaxLength'");
@@ -296,7 +296,7 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 								$result_inter .= traite_requete("INSERT INTO setting VALUES ('end_bookings', '1088546400');");
 							$req = grr_sql_query1("SELECT VALUE FROM setting WHERE NAME='company'");
 							if ($req == -1)
-								$result_inter .= traite_requete("INSERT INTO setting VALUES ('company', 'Nom de l\'établissement');");
+								$result_inter .= traite_requete("INSERT INTO setting VALUES ('company', 'Nom de l\'Ã©tablissement');");
 							$req = grr_sql_query1("SELECT VALUE FROM setting WHERE NAME='webmaster_name'");
 							if ($req == -1)
 								$result_inter .= traite_requete("INSERT INTO setting VALUES ('webmaster_name', 'Webmestre de GRR');");
@@ -320,7 +320,7 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 						}
 						if ($version_old < "1.5.9")
 						{
-							$result .= "<b>Mise à jour jusqu'à la version 1.5 :</b><br />";
+							$result .= "<b>Mise Ã  jour jusqu'Ã  la version 1.5 :</b><br />";
 							// GRR1.5
 							$result_inter .= traite_requete("ALTER TABLE utilisateurs ADD default_area SMALLINT NOT NULL ;");
 							$result_inter .= traite_requete("ALTER TABLE utilisateurs ADD default_room SMALLINT NOT NULL ;");
@@ -329,9 +329,9 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 							$result_inter .= traite_requete("ALTER TABLE utilisateurs ADD default_language VARCHAR( 3 ) NOT NULL ;");
 							$req = grr_sql_query1("SELECT VALUE FROM setting WHERE NAME='title_home_page'");
 							if ($req == -1)
-								$result_inter .= traite_requete("INSERT INTO setting VALUES ('title_home_page', 'Gestion et Réservation de Ressources');");
+								$result_inter .= traite_requete("INSERT INTO setting VALUES ('title_home_page', 'Gestion et RÃ©servation de Ressources');");
 							if ($req == -1)
-								$result_inter .= traite_requete("INSERT INTO setting VALUES ('message_home_page', 'En raison du caractère personnel du contenu, ce site est soumis à des restrictions utilisateurs. Pour accéder aux outils de réservation, identifiez-vous :');");
+								$result_inter .= traite_requete("INSERT INTO setting VALUES ('message_home_page', 'En raison du caractÃ¨re personnel du contenu, ce site est soumis Ã  des restrictions utilisateurs. Pour accÃ©der aux outils de rÃ©servation, identifiez-vous :');");
 							if ($result_inter == '')
 								$result .= "<span style=\"color:green;\">Ok !</span><br />";
 							else
@@ -340,7 +340,7 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 						}
 						if ($version_old < "1.6.9")
 						{
-							$result .= "<b>Mise à jour jusqu'à la version 1.6 :</b><br />";
+							$result .= "<b>Mise Ã  jour jusqu'Ã  la version 1.6 :</b><br />";
 							// GRR1.6
 							$req = grr_sql_query1("SELECT VALUE FROM setting WHERE NAME='default_language'");
 							if ($req == -1)
@@ -358,7 +358,7 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 						}
 						if ($version_old < "1.7.9")
 						{
-							$result .= "<b>Mise à jour jusqu'à la version 1.7 :</b><br />";
+							$result .= "<b>Mise Ã  jour jusqu'Ã  la version 1.7 :</b><br />";
 							// GRR1.7
 							$result_inter .= traite_requete("ALTER TABLE utilisateurs ADD source VARCHAR( 10 ) NOT NULL ;");
 							$result_inter .= traite_requete("ALTER TABLE j_mailuser_room CHANGE login login VARCHAR( 20 ) NOT NULL;");
@@ -380,7 +380,7 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 						}
 						if ($version_old < "1.8.0.9")
 						{
-							$result .= "<b>Mise à jour jusqu'à la version 1.8 :</b><br />";
+							$result .= "<b>Mise Ã  jour jusqu'Ã  la version 1.8 :</b><br />";
 							// GRR1.8
 							$result_inter .= traite_requete("ALTER TABLE utilisateurs CHANGE login login VARCHAR( 20 ) NOT NULL;");
 							$result_inter .= traite_requete("ALTER TABLE utilisateurs CHANGE nom nom VARCHAR( 30 ) NOT NULL;");
@@ -411,7 +411,7 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 						}
 						if ($version_old < "1.9.0.9")
 						{
-							$result .= "<b>Mise à jour jusqu'à la version 1.9 :</b><br />";
+							$result .= "<b>Mise Ã  jour jusqu'Ã  la version 1.9 :</b><br />";
 							// GRR1.9
 							$result_inter .= traite_requete("ALTER TABLE ".TABLE_PREFIX."_area ADD morningstarts_area SMALLINT NOT NULL ,ADD eveningends_area SMALLINT NOT NULL , ADD resolution_area SMALLINT NOT NULL ,ADD eveningends_minutes_area SMALLINT NOT NULL ,ADD weekstarts_area SMALLINT NOT NULL ,ADD twentyfourhour_format_area SMALLINT NOT NULL ;");
 							$result_inter .= traite_requete("ALTER TABLE ".TABLE_PREFIX."_area ADD calendar_default_values VARCHAR( 1 ) DEFAULT 'y' NOT NULL ;");
@@ -433,7 +433,7 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 						}
 						if ($version_old < "1.9.1.9")
 						{
-							$result .= "<b>Mise à jour jusqu'à la version 1.9.1 :</b><br />";
+							$result .= "<b>Mise Ã  jour jusqu'Ã  la version 1.9.1 :</b><br />";
 							// GRR1.9.1
 							$result_inter .= traite_requete("ALTER TABLE ".TABLE_PREFIX."_log CHANGE USER_AGENT USER_AGENT VARCHAR( 100 ) NOT NULL;");
 							if ($result_inter == '')
@@ -444,7 +444,7 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 						}
 						if ($version_old < "1.9.2.9")
 						{
-							$result .= "<b>Mise à jour jusqu'à la version 1.9.2 :</b><br />";
+							$result .= "<b>Mise Ã  jour jusqu'Ã  la version 1.9.2 :</b><br />";
 							// GRR1.9.2
 							$result_inter .= traite_requete("ALTER TABLE ".TABLE_PREFIX."_area ADD enable_periods VARCHAR( 1 ) DEFAULT 'n' NOT NULL ;");
 							$result_inter .= traite_requete("CREATE TABLE IF NOT EXISTS ".TABLE_PREFIX."_area_periodes (id_area INT NOT NULL , num_periode SMALLINT NOT NULL , nom_periode VARCHAR( 100 ) NOT NULL );");
@@ -463,21 +463,21 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 						}
 						if ($version_old < "1.9.3.9")
 						{
-							$result .= "<b>Mise à jour jusqu'à la version 1.9.3 :</b><br />";
+							$result .= "<b>Mise Ã  jour jusqu'Ã  la version 1.9.3 :</b><br />";
 	  						// GRR1.9.3
 							$result_inter .= traite_requete("ALTER TABLE ".TABLE_PREFIX."_entry ADD overload_desc text;");
 							$result_inter .= traite_requete("ALTER TABLE ".TABLE_PREFIX."_repeat ADD overload_desc text;");
 							$result_inter .= traite_requete("CREATE TABLE IF NOT EXISTS ".TABLE_PREFIX."_overload (id int(11) NOT NULL auto_increment, id_area INT NOT NULL, fieldname VARCHAR(25) NOT NULL default '', fieldtype VARCHAR(25) NOT NULL default '', obligatoire CHAR( 1 ) DEFAULT 'n' NOT NULL, PRIMARY KEY  (id));");
 							$result_inter .= traite_requete("ALTER TABLE ".TABLE_PREFIX."_area ADD display_days VARCHAR( 7 ) DEFAULT 'yyyyyyy' NOT NULL;");
 							$result_inter .= traite_requete("UPDATE ".TABLE_PREFIX."_utilisateurs SET default_style='';");
-	  						// Suppression du paramètre url_disconnect_lemon
+	  						// Suppression du paramÃ¨tre url_disconnect_lemon
 							$req = grr_sql_query1("SELECT VALUE FROM ".TABLE_PREFIX."_setting WHERE NAME='url_disconnect_lemon'");
 							if (($req != -1) && (($req != "")))
 							{
 								$result_inter .= traite_requete("INSERT INTO ".TABLE_PREFIX."_setting VALUES ('url_disconnect', '".$req."');");
 								$del = traite_requete("DELETE from ".TABLE_PREFIX."_setting where NAME='url_disconnect_lemon'");
 							}
-	  						// Mise à jour de cas_statut
+	  						// Mise Ã  jour de cas_statut
 							$req = grr_sql_query1("SELECT VALUE FROM ".TABLE_PREFIX."_setting WHERE NAME='cas_statut'");
 							if ($req == "visiteur")
 							{
@@ -489,7 +489,7 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 								$result_inter .= traite_requete("INSERT INTO ".TABLE_PREFIX."_setting VALUES ('sso_statut', 'cas_utilisateur');");
 								$del = traite_requete("DELETE from ".TABLE_PREFIX."_setting where NAME='cas_statut'");
 							}
-	  						// Mise à jour de lemon_statut
+	  						// Mise Ã  jour de lemon_statut
 							$req = grr_sql_query1("SELECT VALUE FROM ".TABLE_PREFIX."_setting WHERE NAME='lemon_statut'");
 							if ($req == "visiteur")
 							{
@@ -509,7 +509,7 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 						}
 						if ($version_old < "1.9.4.9")
 						{
-							$result .= "<b>Mise à jour jusqu'à la version 1.9.4 :</b><br />";
+							$result .= "<b>Mise Ã  jour jusqu'Ã  la version 1.9.4 :</b><br />";
 	  						// GRR1.9.4
 							$result_inter .= traite_requete("ALTER TABLE ".TABLE_PREFIX."_overload ADD fieldlist TEXT NOT NULL AFTER fieldtype;");
 							$result_inter .= traite_requete("ALTER TABLE ".TABLE_PREFIX."_entry CHANGE type type CHAR(2);");
@@ -577,7 +577,7 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 						}
 
 						if ($version_old < "1.9.5.1") {
-							$result .= "<b>Mise à jour jusqu'à la version 1.9.5 RC1 :</b><br />";
+							$result .= "<b>Mise Ã  jour jusqu'Ã  la version 1.9.5 RC1 :</b><br />";
 	  // GRR1.9.5
 							$result_inter .= traite_requete("ALTER TABLE ".TABLE_PREFIX."_area ADD duree_max_resa_area INT DEFAULT '-1' NOT NULL ;");
 							$result_inter .= traite_requete("ALTER TABLE ".TABLE_PREFIX."_area ADD duree_par_defaut_reservation_area SMALLINT DEFAULT '0' NOT NULL ;");
@@ -653,7 +653,7 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 							$req1 = grr_sql_query1("SELECT VALUE FROM ".TABLE_PREFIX."_setting WHERE NAME='ldap_statut'");
 							$req2 = grr_sql_query1("SELECT count(VALUE) FROM ".TABLE_PREFIX."_setting WHERE NAME='ldap_champ_recherche'");
 							if ((($req1=="utilisateur") || ($req1=="visiteur")) and ($req2 == 0))
-								$result_inter .= "<br /><span style=\"color:red;\"><b>AVERTISSEMENT</b> : suite à cette mise à jour, vous devez configurer l'<b>attribut utilisé pour la recherche dans l'annuaire ldap</b>. Pour cela, rendez-vous dans la page de configuration LDAP.</span><br />";
+								$result_inter .= "<br /><span style=\"color:red;\"><b>AVERTISSEMENT</b> : suite Ã  cette mise Ã  jour, vous devez configurer l'<b>attribut utilisÃ© pour la recherche dans l'annuaire ldap</b>. Pour cela, rendez-vous dans la page de configuration LDAP.</span><br />";
 							if ($req2 == 0)
 								$result_inter .= traite_requete("INSERT INTO ".TABLE_PREFIX."_setting VALUES ('ldap_champ_recherche', 'uid');");
 							$req = grr_sql_count(grr_sql_query("SHOW COLUMNS FROM ".TABLE_PREFIX."_entry LIKE 'beneficiaire'"));
@@ -678,13 +678,13 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 						}
 						if ($version_old < "1.9.5.9")
 						{
-							$result .= "<b>Mise à jour jusqu'à la version 1.9.5 :</b><br />";
+							$result .= "<b>Mise Ã  jour jusqu'Ã  la version 1.9.5 :</b><br />";
 	  						// GRR1.9.5
 							$result_inter .= traite_requete("ALTER TABLE ".TABLE_PREFIX."_calendrier_jours_cycle CHANGE Jours Jours VARCHAR(20);");
 							if (getSettingValue("maj195_champ_rep_type_grr_repeat") != 1)
 							{
-		  						// Avant la version 195, la valeur 6 était utilisée pour le type "une semaine sur n"
-		 						 // et la valeur 7 pour la périodicité jour cycle
+		  						// Avant la version 195, la valeur 6 Ã©tait utilisÃ©e pour le type "une semaine sur n"
+		 						 // et la valeur 7 pour la pÃ©riodicitÃ© jour cycle
 								$result_inter .= traite_requete("update ".TABLE_PREFIX."_repeat set rep_type = 2 where rep_type = 6");
 								$result_inter .= traite_requete("update ".TABLE_PREFIX."_repeat set rep_type = 6 where rep_type = 7");
 								$result_inter .= traite_requete("INSERT INTO ".TABLE_PREFIX."_setting VALUES ('maj195_champ_rep_type_grr_repeat', '1')");
@@ -699,7 +699,7 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 						}
 						if ($version_old < "1.9.6.9")
 						{
-							$result .= "<b>Mise à jour jusqu'à la version 1.9.6 :</b><br />";
+							$result .= "<b>Mise Ã  jour jusqu'Ã  la version 1.9.6 :</b><br />";
 	  						// GRR1.9.6
 							$req = grr_sql_query1("SELECT VALUE FROM ".TABLE_PREFIX."_setting WHERE NAME='longueur_liste_ressources_max'");
 							if ($req == -1)
@@ -734,7 +734,7 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 						}
 						if ($version_old < "1.9.7.9")
 						{
-							$result .= "<b>Mise à jour jusqu'à la version 1.9.7 :</b><br />";
+							$result .= "<b>Mise Ã  jour jusqu'Ã  la version 1.9.7 :</b><br />";
 	  						// GRR1.9.7
 							$result_inter .= traite_requete("ALTER TABLE ".TABLE_PREFIX."_entry CHANGE create_by create_by VARCHAR( 100 ) NOT NULL  default '';");
 							$result_inter .= traite_requete("ALTER TABLE ".TABLE_PREFIX."_entry CHANGE beneficiaire beneficiaire VARCHAR( 100 ) NOT NULL  default '';");
@@ -751,16 +751,16 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 								$result .= $result_inter;
 							$result_inter = '';
 						}
-						// Vérification du format des champs additionnels
-						// Avant version 1.9.4, les champs add étaient stockés sous la forme <id_champ>champ_encode_en_base_64</id_champ>
-						// A partir de la version 1.9.4, les champs add. sont stockés sous la forme @id_champ@url_encode(champ)@/id_champ@
+						// VÃ©rification du format des champs additionnels
+						// Avant version 1.9.4, les champs add Ã©taient stockÃ©s sous la forme <id_champ>champ_encode_en_base_64</id_champ>
+						// A partir de la version 1.9.4, les champs add. sont stockÃ©s sous la forme @id_champ@url_encode(champ)@/id_champ@
 						if (($version_old < "1.9.4") && (getSettingValue("maj194_champs_additionnels") != 1) && isset($_POST['maj']))
 						{
 	  					// On constuite un tableau des id des ".TABLE_PREFIX."_overload:
 							$sql_overload = grr_sql_query("select id from ".TABLE_PREFIX."_overload");
 							for ($i = 0; ($row = grr_sql_row($sql_overload, $i)); $i++)
 								$tab_id_overload[] = $row[0];
-	  						// On selectionne les entrées
+	  						// On selectionne les entrÃ©es
 							$sql_entry = grr_sql_query("select overload_desc, id from ".TABLE_PREFIX."_entry where overload_desc != ''");
 							for ($i = 0; ($row = grr_sql_row($sql_entry, $i)); $i++)
 							{
@@ -779,32 +779,32 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 										$nouvelle_chaine .= "@".$value."@".$data."@/".$value."@";
 									}
 								}
-		  						// On met à jour le champ
+		  						// On met Ã  jour le champ
 								if ($nouvelle_chaine != '')
 									$up = grr_sql_query("update ".TABLE_PREFIX."_entry set overload_desc = '".$nouvelle_chaine."' where id='".$row[1]."'");
 							}
-	  						// on inscrit le résultat dans la table ".TABLE_PREFIX."_settings
+	  						// on inscrit le rÃ©sultat dans la table ".TABLE_PREFIX."_settings
 							grr_sql_query("DELETE from ".TABLE_PREFIX."_setting where NAME = 'maj194_champs_additionnels'");
 							grr_sql_query("INSERT INTO ".TABLE_PREFIX."_setting VALUES ('maj194_champs_additionnels', '1');");
-							$result .= "<b>Mise à jour des champs additionnels : </b><span style=\"color:green;\">Ok !</span><br /><br />";
+							$result .= "<b>Mise Ã  jour des champs additionnels : </b><span style=\"color:green;\">Ok !</span><br /><br />";
 						}
-						// Mise à jour du champ "qui_peut_reserver_pour
-						// La version 1.9.6 a introduit un niveau supplémentaire pour le champ qui_peut_reserver_pour, ce qui oblige à un décalage : les niveaux 5 deviennent des niveaux 6
+						// Mise Ã  jour du champ "qui_peut_reserver_pour
+						// La version 1.9.6 a introduit un niveau supplÃ©mentaire pour le champ qui_peut_reserver_pour, ce qui oblige Ã  un dÃ©calage : les niveaux 5 deviennent des niveaux 6
 						if (($version_old < "1.9.6") && (getSettingValue("maj196_qui_peut_reserver_pour") != 1) && (isset($_POST['maj']) ))
 						{
-	   						// On met à jour le champ
+	   						// On met Ã  jour le champ
 							$up = grr_sql_query("update ".TABLE_PREFIX."_room set qui_peut_reserver_pour='6' where qui_peut_reserver_pour='5'");
 							grr_sql_query("DELETE from ".TABLE_PREFIX."_setting where NAME = 'maj196_qui_peut_reserver_pour'");
 							grr_sql_query("INSERT INTO ".TABLE_PREFIX."_setting VALUES ('maj196_qui_peut_reserver_pour', '1');");
-							$result .= "<b>Mise à jour du champs qui_peut_reserver_pour : </b><span style=\"color:green;\">Ok !</span><br /><br />";
+							$result .= "<b>Mise Ã  jour du champs qui_peut_reserver_pour : </b><span style=\"color:green;\">Ok !</span><br /><br />";
 						}
-						// Mise à jour du numéro de version
+						// Mise Ã  jour du numÃ©ro de version
 						$req = grr_sql_query1("SELECT VALUE FROM ".TABLE_PREFIX."_setting WHERE NAME='version'");
 						if ($req == -1)
 							$result_inter .= traite_requete("INSERT INTO ".TABLE_PREFIX."_setting VALUES ('version', '".$version_grr."');");
 						else
 							$result_inter .= traite_requete("UPDATE ".TABLE_PREFIX."_setting SET VALUE='".$version_grr."' WHERE NAME='version';");
-						// Mise à jour du numéro de RC
+						// Mise Ã  jour du numÃ©ro de RC
 						$req = grr_sql_command("DELETE FROM ".TABLE_PREFIX."_setting WHERE NAME='versionRC'");
 						$result_inter .= traite_requete("INSERT INTO ".TABLE_PREFIX."_setting VALUES ('versionRC', '".$version_grr_RC."');");
 						//Re-Chargement des valeurs de la table settingS
@@ -812,13 +812,13 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 							die("Erreur chargement settings");
 						affiche_pop_up(get_vocab("maj_good"),"force");
 					}
-					// Numéro de version effective
+					// NumÃ©ro de version effective
 					$version_old = getSettingValue("version");
 					if ($version_old == "")
 						$version_old = "1.3";
-					// Numéro de RC
+					// NumÃ©ro de RC
 					$version_old_RC = getSettingValue("versionRC");
-					// Calcul du numéro de version actuel de la base qui sert aux test de comparaison et de la chaine à afficher
+					// Calcul du numÃ©ro de version actuel de la base qui sert aux test de comparaison et de la chaine Ã  afficher
 					if ($version_old_RC == "")
 					{
 						$version_old_RC = 9;
@@ -827,31 +827,31 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 					else
 						$display_version_old = $version_old."_RC".$version_old_RC;
 					$version_old .= ".".$version_old_RC;
-					// Calcul de la chaine à afficher
+					// Calcul de la chaine Ã  afficher
 					if ($version_grr_RC == "")
 						$display_version_grr = $version_grr.$sous_version_grr;
 					else
 						$display_version_grr = $version_grr."_RC".$version_grr_RC;
 					echo "<h2>".get_vocab('admin_maj.php').grr_help("aide_grr_maj")."</h2>";
 					echo "<hr />";
-					// Numéro de version
-					//Hugo - Mise a jour temporaire du numéro de version à afficher
+					// NumÃ©ro de version
+					//Hugo - Mise a jour temporaire du numÃ©ro de version Ã  afficher
 					//11/06/2013
-					$display_version_grr = "2.2.2 Modifié v1.0";
+					$display_version_grr = "2.2.2 ModifiÃ© v1.0";
 					echo "<h3>".get_vocab("num_version_title")."</h3>\n";
 					echo "<p>".get_vocab("num_version").$display_version_grr;
 					echo "</p>\n";
 					echo get_vocab('database') . grr_sql_version() . "\n";
 					echo "<br />" . get_vocab('system') . php_uname() . "\n";
 					echo "<br />Version PHP : " . phpversion() . "\n";
-					//Hugo - Mise a jour temporaire du lien à afficher
+					//Hugo - Mise a jour temporaire du lien Ã  afficher
 					//11/06/2013
 					$grr_devel_url = "https://github.com/Sirlefou1/GRR2";
 					echo "<p>".get_vocab("maj_go_www")."<a href=\"".$grr_devel_url."\">".get_vocab("mrbs")."</a></p>\n";
 					echo "<hr />\n";
-					// Mise à jour de la base de donnée
+					// Mise Ã  jour de la base de donnÃ©e
 					echo "<h3>".get_vocab("maj_bdd")."</h3>";
-					// Vérification du numéro de version
+					// VÃ©rification du numÃ©ro de version
 					if (verif_version())
 					{
 						echo "<form action=\"admin_maj.php\" method=\"post\">";
@@ -874,12 +874,12 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 					if (isset($result) && ($result != ''))
 					{
 						echo "<div class=\"page_sans_col_gauche\">";
-						echo "<h2>".encode_message_utf8("Résultat de la mise à jour")."</h2>";
+						echo "<h2>".encode_message_utf8("RÃ©sultat de la mise Ã  jour")."</h2>";
 						echo encode_message_utf8($result);
 						echo $result_inter;
 						echo "</div>";
 					}
-					// Test de cohérence des types de réservation
+					// Test de cohÃ©rence des types de rÃ©servation
 					if ($version_grr > "1.9.1") {
 						$res = grr_sql_query("select distinct type from ".TABLE_PREFIX."_entry order by type");
 						if ($res)
@@ -892,11 +892,11 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 							}
 							if ($liste != "")
 							{
-								echo encode_message_utf8("<table border=\"1\" cellpadding=\"5\"><tr><td><p><span style=\"color:red;\"><b>ATTENTION : votre table des types de réservation n'est pas à jour :</b></span></p>");
-								echo encode_message_utf8("<p>Depuis la version 1.9.2, les types de réservation ne sont plus définis dans le fichier config.inc.php
-									mais directement en ligne. Un ou plusieurs types sont actuellement utilisés dans les réservations
+								echo encode_message_utf8("<table border=\"1\" cellpadding=\"5\"><tr><td><p><span style=\"color:red;\"><b>ATTENTION : votre table des types de rÃ©servation n'est pas Ã  jour :</b></span></p>");
+								echo encode_message_utf8("<p>Depuis la version 1.9.2, les types de rÃ©servation ne sont plus dÃ©finis dans le fichier config.inc.php
+									mais directement en ligne. Un ou plusieurs types sont actuellement utilisÃ©s dans les rÃ©servations
 									mais ne figurent pas dans la tables des types. Cela risque d'engendrer des messages d'erreur. <b>Il s'agit du ou des types suivants : ".$liste."</b>");
-								echo encode_message_utf8("<br /><br />Vous devez donc définir dans <a href= './admin_type.php'>l'interface de gestion des types</a>, le ou les types manquants, en vous aidant éventuellement des informations figurant dans votre ancien fichier config.inc.php.</p></td></tr></table>");
+								echo encode_message_utf8("<br /><br />Vous devez donc dÃ©finir dans <a href= './admin_type.php'>l'interface de gestion des types</a>, le ou les types manquants, en vous aidant Ã©ventuellement des informations figurant dans votre ancien fichier config.inc.php.</p></td></tr></table>");
 							}
 						}
 					}
