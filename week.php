@@ -254,6 +254,7 @@ $res = grr_sql_query($sql);
 if (!$res)
 	echo grr_sql_error();
 else
+{
 	for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 	{
 		if ($debug_flag)
@@ -312,234 +313,235 @@ else
 			}
 		} while ($t < $end_t);
 	}
-	if ($debug_flag)
-	{
-		echo "<p>DEBUG:<p><pre>\n";
-		if (gettype($d) == "array")
-			while (list($w_k, $w_v) = each($d))
-				while (list($t_k, $t_v) = each($w_v))
-					while (list($k_k, $k_v) = each($t_v))
-						echo "d[$w_k][$t_k][$k_k] = '$k_v'\n";
-					else echo "d is not an array!\n";
-					echo "</pre><p>\n";
-				}
-				echo "<table cellspacing=\"0\" class=\"table-bordered\" width=\"100%\">";
-				echo "<tr>\n<th style=\"width:5%;\">";
-				if ($enable_periods=='y')
-					echo get_vocab("period");
-				else
-					echo get_vocab("time");
-				echo "</th>\n";
-				$num_week_day = $weekstarts;
-				$k=$day_week;
-				$i = $time;
-				$num_week_day = $weekstarts;
-				for ($t = $week_start; $t <= $week_end; $t += 86400)
+}
+if ($debug_flag)
+{
+	echo "<p>DEBUG:<p><pre>\n";
+	if (gettype($d) == "array")
+		while (list($w_k, $w_v) = each($d))
+			while (list($t_k, $t_v) = each($w_v))
+				while (list($k_k, $k_v) = each($t_v))
+					echo "d[$w_k][$t_k][$k_k] = '$k_v'\n";
+				else echo "d is not an array!\n";
+				echo "</pre><p>\n";
+			}
+			echo "<table cellspacing=\"0\" class=\"table-bordered\" width=\"100%\">";
+			echo "<tr>\n<th style=\"width:5%;\">";
+			if ($enable_periods=='y')
+				echo get_vocab("period");
+			else
+				echo get_vocab("time");
+			echo "</th>\n";
+			$num_week_day = $weekstarts;
+			$k=$day_week;
+			$i = $time;
+			$num_week_day = $weekstarts;
+			for ($t = $week_start; $t <= $week_end; $t += 86400)
+			{
+				$num_day = strftime("%d", $t);
+				$month_actuel = strftime("%m", $t);
+				$year_actuel  = date("Y",$t);
+				$jour_cycle = grr_sql_query1("SELECT Jours FROM ".TABLE_PREFIX."_calendrier_jours_cycle WHERE DAY='$i'");
+				if ($display_day[$num_week_day] == 1)
 				{
-					$num_day = strftime("%d", $t);
-					$month_actuel = strftime("%m", $t);
-					$year_actuel  = date("Y",$t);
-					$jour_cycle = grr_sql_query1("SELECT Jours FROM ".TABLE_PREFIX."_calendrier_jours_cycle WHERE DAY='$i'");
-					if ($display_day[$num_week_day] == 1)
+					echo "<th style=\"width:14%;\"><a onclick=\"charger()\" class=\"lienPlanning\" title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day"))."\" href=\"day.php?year=$year_actuel&amp;month=$month_actuel&amp;day=$num_day&amp;area=$area\">". utf8_strftime($dformat, $t)."</a>";
+					if (getSettingValue("jours_cycles_actif") == "Oui" && intval($jour_cycle)>-1)
+						if (intval($jour_cycle)>0)
+							echo "<br />".get_vocab("rep_type_6")." ".$jour_cycle;
+						else
+							echo "<br />".$jour_cycle;
+						echo "</th>\n";
+					}
+					if (!isset($correct_heure_ete_hiver) or ($correct_heure_ete_hiver == 1))
 					{
-						echo "<th style=\"width:14%;\"><a onclick=\"charger()\" class=\"lienPlanning\" title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day"))."\" href=\"day.php?year=$year_actuel&amp;month=$month_actuel&amp;day=$num_day&amp;area=$area\">". utf8_strftime($dformat, $t)."</a>";
-						if (getSettingValue("jours_cycles_actif") == "Oui" && intval($jour_cycle)>-1)
-							if (intval($jour_cycle)>0)
-								echo "<br />".get_vocab("rep_type_6")." ".$jour_cycle;
-							else
-								echo "<br />".$jour_cycle;
-							echo "</th>\n";
-						}
+						$num_day = strftime("%d", $t);
+						if (heure_ete_hiver("hiver",$year,0) == mktime(0,0,0,$month,$num_day,$year))
+							$t +=3600;
+						if ((date("H",$t) == "13") or (date("H",$t) == "02"))
+							$t -=3600;
+					}
+					$i += 86400;
+					$k++;
+					$num_week_day++;
+					$num_week_day = $num_week_day % 7;
+				}
+
+				echo "</tr>\n";
+				$t = $am7;
+				$nb_case=0;
+				$semaine_changement_heure_ete = 'no';
+				$semaine_changement_heure_hiver = 'no';
+				for ($slot = $first_slot; $slot <= $last_slot; $slot++)
+				{
+					echo "<tr>";
+					tdcell("cell_hours");
+					if ($enable_periods=='y')
+					{
+						$time_t = date("i", $t);
+						$time_t_stripped = preg_replace( "/^0/", "", $time_t );
+						echo $periods_name[$time_t_stripped] . "</td>\n";
+					}
+					else
+						echo affiche_heure_creneau($t,$resolution)."</td>\n";
+					$wt = $t;
+					$empty_color = "empty_cell";
+					$num_week_day = $weekstarts;
+					for ($weekday = 0; $weekday < 7; $weekday++)
+					{
+						$wday = date("d", $wt);
+						$wmonth = date("m", $wt);
+						$wyear = date("Y", $wt);
+						$hour = date("H",$wt);
+						$minute  = date("i",$wt);
 						if (!isset($correct_heure_ete_hiver) or ($correct_heure_ete_hiver == 1))
 						{
-							$num_day = strftime("%d", $t);
-							if (heure_ete_hiver("hiver",$year,0) == mktime(0,0,0,$month,$num_day,$year))
-								$t +=3600;
-							if ((date("H",$t) == "13") or (date("H",$t) == "02"))
-								$t -=3600;
-						}
-						$i += 86400;
-						$k++;
-						$num_week_day++;
-						$num_week_day = $num_week_day % 7;
-					}
-
-					echo "</tr>\n";
-					$t = $am7;
-					$nb_case=0;
-					$semaine_changement_heure_ete = 'no';
-					$semaine_changement_heure_hiver = 'no';
-					for ($slot = $first_slot; $slot <= $last_slot; $slot++)
-					{
-						echo "<tr>";
-						tdcell("cell_hours");
-						if ($enable_periods=='y')
-						{
-							$time_t = date("i", $t);
-							$time_t_stripped = preg_replace( "/^0/", "", $time_t );
-							echo $periods_name[$time_t_stripped] . "</td>\n";
-						}
-						else
-							echo affiche_heure_creneau($t,$resolution)."</td>\n";
-						$wt = $t;
-						$empty_color = "empty_cell";
-						$num_week_day = $weekstarts;
-						for ($weekday = 0; $weekday < 7; $weekday++)
-						{
-							$wday = date("d", $wt);
-							$wmonth = date("m", $wt);
-							$wyear = date("Y", $wt);
-							$hour = date("H",$wt);
-							$minute  = date("i",$wt);
-							if (!isset($correct_heure_ete_hiver) or ($correct_heure_ete_hiver == 1))
+							$temp =   mktime(0,0,0,$wmonth,$wday,$wyear);
+							if (heure_ete_hiver("ete",$wyear,0) == $temp)
 							{
-								$temp =   mktime(0,0,0,$wmonth,$wday,$wyear);
-								if (heure_ete_hiver("ete",$wyear,0) == $temp)
+								$semaine_changement_heure_ete = 'yes';
+								$temp2 =   mktime($hour,0,0,$wmonth,$wday,$wyear);
+								if (heure_ete_hiver("ete", $wyear,2) == $temp2)
 								{
-									$semaine_changement_heure_ete = 'yes';
-									$temp2 =   mktime($hour,0,0,$wmonth,$wday,$wyear);
-									if (heure_ete_hiver("ete", $wyear,2) == $temp2)
-									{
-										if ($display_day[$num_week_day] == 1)
-											echo tdcell($empty_color)."-</td>\n";
-										$nb_case++;
-										$insere_case = 'y';
-									}
-									else if (heure_ete_hiver("ete", $wyear,2) < $temp2)
-									{
-										$hour = date("H",$wt-3600);
-										$decale_slot = 1;
-										$insere_case = 'n';
-									}
+									if ($display_day[$num_week_day] == 1)
+										echo tdcell($empty_color)."-</td>\n";
+									$nb_case++;
+									$insere_case = 'y';
 								}
-								else if (heure_ete_hiver("hiver",$wyear,0) == $temp)
+								else if (heure_ete_hiver("ete", $wyear,2) < $temp2)
 								{
-									$semaine_changement_heure_hiver = 'yes';
-									$temp2 =   mktime($hour,0,0,$wmonth,$wday,$wyear);
-									if (heure_ete_hiver("hiver", $wyear,2) == $temp2)
-									{
-										$nb_case = $nb_case + 0.5;
-										$insere_case = 'n';
-									}
-									else if (heure_ete_hiver("hiver", $wyear,2) < $temp2)
-									{
-										$hour = date("H",$wt+3600);
-										$decale_slot = -1;
-										$insere_case = 'n';
-									}
-								}
-								else
-								{
-									$decale_slot = 0;
+									$hour = date("H",$wt-3600);
+									$decale_slot = 1;
 									$insere_case = 'n';
-									if (($semaine_changement_heure_ete == 'yes') && (heure_ete_hiver("ete", $wyear,0) < $temp))
-									{
-										$decale_slot = 1;
-										$hour = date("H", $wt - 3600);
-									}
-									if (($semaine_changement_heure_hiver == 'yes') && (heure_ete_hiver("hiver", $wyear,0) < $temp))
-									{
-										$decale_slot = -1;
-										$hour = date("H", $wt + 3600);
-									}
+								}
+							}
+							else if (heure_ete_hiver("hiver",$wyear,0) == $temp)
+							{
+								$semaine_changement_heure_hiver = 'yes';
+								$temp2 =   mktime($hour,0,0,$wmonth,$wday,$wyear);
+								if (heure_ete_hiver("hiver", $wyear,2) == $temp2)
+								{
+									$nb_case = $nb_case + 0.5;
+									$insere_case = 'n';
+								}
+								else if (heure_ete_hiver("hiver", $wyear,2) < $temp2)
+								{
+									$hour = date("H",$wt+3600);
+									$decale_slot = -1;
+									$insere_case = 'n';
 								}
 							}
 							else
 							{
 								$decale_slot = 0;
 								$insere_case = 'n';
-							}
-							if (($insere_case == 'n') && ($display_day[$num_week_day] == 1))
-							{
-								if (!isset($d[$weekday][$slot - $decale_slot * $nb_case]["color"]))
+								if (($semaine_changement_heure_ete == 'yes') && (heure_ete_hiver("ete", $wyear,0) < $temp))
 								{
-									$date_booking = mktime($hour, $minute, 0, $wmonth, $wday, $wyear);
-									if ($this_statut_room == "0")
-										tdcell("avertissement");
-									else tdcell($empty_color);
-									if (est_hors_reservation(mktime(0,0,0,$wmonth,$wday,$wyear),$area))
-										echo "<img src=\"img_grr/stop.png\" alt=\"".get_vocab("reservation_impossible")."\"  title=\"".get_vocab("reservation_impossible")."\" width=\"16\" height=\"16\" class=\"".$class_image."\"  />";
-									else
-										if ((($authGetUserLevel > 1) || ($auth_visiteur == 1)) && ($UserRoomMaxBooking != 0) && verif_booking_date(getUserName(), -1, $room, $date_booking, $date_now, $enable_periods) && verif_delais_max_resa_room(getUserName(), $room, $date_booking) && verif_delais_min_resa_room(getUserName(), $room, $date_booking) && (($this_statut_room == "1") || (($this_statut_room == "0") && (authGetUserLevel(getUserName(),$room) > 2) )) && $_GET['pview'] != 1)
+									$decale_slot = 1;
+									$hour = date("H", $wt - 3600);
+								}
+								if (($semaine_changement_heure_hiver == 'yes') && (heure_ete_hiver("hiver", $wyear,0) < $temp))
+								{
+									$decale_slot = -1;
+									$hour = date("H", $wt + 3600);
+								}
+							}
+						}
+						else
+						{
+							$decale_slot = 0;
+							$insere_case = 'n';
+						}
+						if (($insere_case == 'n') && ($display_day[$num_week_day] == 1))
+						{
+							if (!isset($d[$weekday][$slot - $decale_slot * $nb_case]["color"]))
+							{
+								$date_booking = mktime($hour, $minute, 0, $wmonth, $wday, $wyear);
+								if ($this_statut_room == "0")
+									tdcell("avertissement");
+								else tdcell($empty_color);
+								if (est_hors_reservation(mktime(0,0,0,$wmonth,$wday,$wyear),$area))
+									echo "<img src=\"img_grr/stop.png\" alt=\"".get_vocab("reservation_impossible")."\"  title=\"".get_vocab("reservation_impossible")."\" width=\"16\" height=\"16\" class=\"".$class_image."\"  />";
+								else
+									if ((($authGetUserLevel > 1) || ($auth_visiteur == 1)) && ($UserRoomMaxBooking != 0) && verif_booking_date(getUserName(), -1, $room, $date_booking, $date_now, $enable_periods) && verif_delais_max_resa_room(getUserName(), $room, $date_booking) && verif_delais_min_resa_room(getUserName(), $room, $date_booking) && (($this_statut_room == "1") || (($this_statut_room == "0") && (authGetUserLevel(getUserName(),$room) > 2) )) && $_GET['pview'] != 1)
+									{
+										if ($enable_periods == 'y')
 										{
-											if ($enable_periods == 'y')
-											{
-												echo "<a href=\"edit_entry.php?room=$room"
-												. "&amp;period=$time_t_stripped&amp;year=$wyear&amp;month=$wmonth"
-												. "&amp;day=$wday&amp;page=week\" title=\"".get_vocab("cliquez_pour_effectuer_une_reservation")."\"><span class=\"glyphicon glyphicon-plus\"></span>";
-												echo "</a>";
-											}
-											else
-											{
-												echo "<a href=\"edit_entry.php?room=$room"
-												. "&amp;hour=$hour&amp;minute=$minute&amp;year=$wyear&amp;month=$wmonth"
-												. "&amp;day=$wday&amp;page=week\" title=\"".get_vocab("cliquez_pour_effectuer_une_reservation")."\"><span class=\"glyphicon glyphicon-plus\"></span>";
-												echo "</a>";
-											}
+											echo "<a href=\"edit_entry.php?room=$room"
+											. "&amp;period=$time_t_stripped&amp;year=$wyear&amp;month=$wmonth"
+											. "&amp;day=$wday&amp;page=week\" title=\"".get_vocab("cliquez_pour_effectuer_une_reservation")."\"><span class=\"glyphicon glyphicon-plus\"></span>";
+											echo "</a>";
 										}
 										else
-											echo "&nbsp;";
+										{
+											echo "<a href=\"edit_entry.php?room=$room"
+											. "&amp;hour=$hour&amp;minute=$minute&amp;year=$wyear&amp;month=$wmonth"
+											. "&amp;day=$wday&amp;page=week\" title=\"".get_vocab("cliquez_pour_effectuer_une_reservation")."\"><span class=\"glyphicon glyphicon-plus\"></span>";
+											echo "</a>";
+										}
 									}
+									else
+										echo "&nbsp;";
+								}
+								else
+								{
+									if (est_hors_reservation(mktime(0, 0, 0, $wmonth, $wday, $wyear), $area))
+										echo tdcell($empty_color)."<img src=\"img_grr/stop.png\" alt=\"".get_vocab("reservation_impossible")."\"  title=\"".get_vocab("reservation_impossible")."\" width=\"16\" height=\"16\" class=\"".$class_image."\"  />";
 									else
 									{
-										if (est_hors_reservation(mktime(0, 0, 0, $wmonth, $wday, $wyear), $area))
-											echo tdcell($empty_color)."<img src=\"img_grr/stop.png\" alt=\"".get_vocab("reservation_impossible")."\"  title=\"".get_vocab("reservation_impossible")."\" width=\"16\" height=\"16\" class=\"".$class_image."\"  />";
-										else
+										if (isset($d[$weekday][$slot - $decale_slot * $nb_case]["id"]))
 										{
-											if (isset($d[$weekday][$slot - $decale_slot * $nb_case]["id"]))
+											$nbrow =  $d[$weekday][$slot - $decale_slot * $nb_case]["duree"];
+											tdcell_rowspan($d[$weekday][$slot - $decale_slot * $nb_case]["color"],$nbrow);
+											if ($acces_fiche_reservation)
 											{
-												$nbrow =  $d[$weekday][$slot - $decale_slot * $nb_case]["duree"];
-												tdcell_rowspan($d[$weekday][$slot - $decale_slot * $nb_case]["color"],$nbrow);
-												if ($acces_fiche_reservation)
+												if (getSettingValue("display_level_view_entry") == 0)
 												{
-													if (getSettingValue("display_level_view_entry") == 0)
-													{
-														$currentPage = 'week';
-														$id =  $d[$weekday][$slot - $decale_slot * $nb_case]["id"];
-														echo "<a title=\"".htmlspecialchars($d[$weekday][$slot - $decale_slot * $nb_case]["who"])."\"  href=\"#?w=500\" onclick=\"request($id,$wday,$wmonth,$wyear,'$currentPage',readData);\" rel=\"popup_name\" class=\"poplight\">" ;
-													}
-													else
-														echo "<a class=\"lienCellule\" title=\"".htmlspecialchars($d[$weekday][$slot-$decale_slot*$nb_case]["who"])."\"  href=\"view_entry.php?id=" . $d[$weekday][$slot-$decale_slot*$nb_case]["id"]."&amp;day=$wday&amp;month=$wmonth&amp;year=$wyear&amp;page=week\">";
+													$currentPage = 'week';
+													$id =  $d[$weekday][$slot - $decale_slot * $nb_case]["id"];
+													echo "<a title=\"".htmlspecialchars($d[$weekday][$slot - $decale_slot * $nb_case]["who"])."\"  href=\"#?w=500\" onclick=\"request($id,$wday,$wmonth,$wyear,'$currentPage',readData);\" rel=\"popup_name\" class=\"poplight\">" ;
 												}
-												echo $d[$weekday][$slot-$decale_slot*$nb_case]["data"]."";
-												$Son_GenreRepeat = grr_sql_query1("SELECT type_name FROM ".TABLE_PREFIX."_type_area ,".TABLE_PREFIX."_entry  WHERE  ".TABLE_PREFIX."_entry.id= ". $d[$weekday][$slot-$decale_slot*$nb_case]['id']." AND ".TABLE_PREFIX."_entry.type= ".TABLE_PREFIX."_type_area.type_letter");
-												if ($Son_GenreRepeat != -1)
-												{
-													echo "<br />" .date('H:i',$d[$weekday][$slot-$decale_slot*$nb_case]["horaireDebut"])."~". date('H:i',$d[$weekday][$slot-$decale_slot*$nb_case]["horaireFin"])."";
-													echo " <br/>". $Son_GenreRepeat ." <br/><br/>" ;
-												}
-												if ($d[$weekday][$slot - $decale_slot * $nb_case]["description"]!= "")
-													echo "<i>".$d[$weekday][$slot - $decale_slot * $nb_case]["description"]."</i>";
-												if ($acces_fiche_reservation)echo"</a>";
+												else
+													echo "<a class=\"lienCellule\" title=\"".htmlspecialchars($d[$weekday][$slot-$decale_slot*$nb_case]["who"])."\"  href=\"view_entry.php?id=" . $d[$weekday][$slot-$decale_slot*$nb_case]["id"]."&amp;day=$wday&amp;month=$wmonth&amp;year=$wyear&amp;page=week\">";
 											}
-											if ((isset($d[$weekday][$slot - $decale_slot * $nb_case]["statut"])) && ($d[$weekday][$slot - $decale_slot * $nb_case]["statut"] != '-'))
-												echo "&nbsp;<img src=\"img_grr/buzy.png\" alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("ressource actuellement empruntee")."\" width=\"20\" height=\"20\" class=\"image\" />&nbsp;\n";
-											if (($this_delais_option_reservation > 0) && (isset($d[$weekday][$slot-$decale_slot * $nb_case]["option_reser"])) && ($d[$weekday][$slot - $decale_slot * $nb_case]["option_reser"] != -1))
-												echo "&nbsp;<img src=\"img_grr/small_flag.png\" alt=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."\" title=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."&nbsp;".time_date_string_jma($d[$weekday][$slot - $decale_slot * $nb_case]["option_reser"], $dformat)."\" width=\"20\" height=\"20\" class=\"image\" />&nbsp;\n";
-											if ((isset($d[$weekday][$slot - $decale_slot * $nb_case]["moderation"])) && ($d[$weekday][$slot - $decale_slot * $nb_case]["moderation"] == '1'))
-												echo "&nbsp;<img src=\"img_grr/flag_moderation.png\" alt=\"".get_vocab("en_attente_moderation")."\" title=\"".get_vocab("en_attente_moderation")."\" class=\"image\" />&nbsp;\n";
+											echo $d[$weekday][$slot-$decale_slot*$nb_case]["data"]."";
+											$Son_GenreRepeat = grr_sql_query1("SELECT type_name FROM ".TABLE_PREFIX."_type_area ,".TABLE_PREFIX."_entry  WHERE  ".TABLE_PREFIX."_entry.id= ". $d[$weekday][$slot-$decale_slot*$nb_case]['id']." AND ".TABLE_PREFIX."_entry.type= ".TABLE_PREFIX."_type_area.type_letter");
+											if ($Son_GenreRepeat != -1)
+											{
+												echo "<br />" .date('H:i',$d[$weekday][$slot-$decale_slot*$nb_case]["horaireDebut"])."~". date('H:i',$d[$weekday][$slot-$decale_slot*$nb_case]["horaireFin"])."";
+												echo " <br/>". $Son_GenreRepeat ." <br/><br/>" ;
+											}
+											if ($d[$weekday][$slot - $decale_slot * $nb_case]["description"]!= "")
+												echo "<i>".$d[$weekday][$slot - $decale_slot * $nb_case]["description"]."</i>";
+											if ($acces_fiche_reservation)echo"</a>";
 										}
+										if ((isset($d[$weekday][$slot - $decale_slot * $nb_case]["statut"])) && ($d[$weekday][$slot - $decale_slot * $nb_case]["statut"] != '-'))
+											echo "&nbsp;<img src=\"img_grr/buzy.png\" alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("ressource actuellement empruntee")."\" width=\"20\" height=\"20\" class=\"image\" />&nbsp;\n";
+										if (($this_delais_option_reservation > 0) && (isset($d[$weekday][$slot-$decale_slot * $nb_case]["option_reser"])) && ($d[$weekday][$slot - $decale_slot * $nb_case]["option_reser"] != -1))
+											echo "&nbsp;<img src=\"img_grr/small_flag.png\" alt=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."\" title=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."&nbsp;".time_date_string_jma($d[$weekday][$slot - $decale_slot * $nb_case]["option_reser"], $dformat)."\" width=\"20\" height=\"20\" class=\"image\" />&nbsp;\n";
+										if ((isset($d[$weekday][$slot - $decale_slot * $nb_case]["moderation"])) && ($d[$weekday][$slot - $decale_slot * $nb_case]["moderation"] == '1'))
+											echo "&nbsp;<img src=\"img_grr/flag_moderation.png\" alt=\"".get_vocab("en_attente_moderation")."\" title=\"".get_vocab("en_attente_moderation")."\" class=\"image\" />&nbsp;\n";
 									}
-									echo "</td>\n";
 								}
-								$wt += 86400;
-								$num_week_day++;
-								$num_week_day = $num_week_day % 7;
+								echo "</td>\n";
 							}
-							if ($enable_periods=='y')
-							{
-								$time_t = date("i", $t);
-								$time_t_stripped = preg_replace( "/^0/", "", $time_t );
-							}
-							$t += $resolution;
+							$wt += 86400;
+							$num_week_day++;
+							$num_week_day = $num_week_day % 7;
 						}
-						echo "</table>";
-						if ($_GET['pview'] != 1)
-							echo "<div id=\"toTop\"><b>".get_vocab("top_of_page")."</b>";
-						bouton_retour_haut ();
-						echo " </div>";
-						echo " </div>";
-						echo " </div>";
-						echo  "<div id=\"popup_name\" class=\"popup_block\" ></div>";
-						affiche_pop_up(get_vocab("message_records"),"user");
-						?>
+						if ($enable_periods=='y')
+						{
+							$time_t = date("i", $t);
+							$time_t_stripped = preg_replace( "/^0/", "", $time_t );
+						}
+						$t += $resolution;
+					}
+					echo "</table>";
+					if ($_GET['pview'] != 1)
+						echo "<div id=\"toTop\"><b>".get_vocab("top_of_page")."</b>";
+					bouton_retour_haut ();
+					echo " </div>";
+					echo " </div>";
+					echo " </div>";
+					echo  "<div id=\"popup_name\" class=\"popup_block\" ></div>";
+					affiche_pop_up(get_vocab("message_records"),"user");
+					?>
