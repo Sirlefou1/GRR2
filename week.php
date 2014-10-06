@@ -406,34 +406,34 @@ for ($t = $week_start; $t <= $week_end; $t += 86400)
 			if (!isset($correct_heure_ete_hiver) || ($correct_heure_ete_hiver == 1))
 			{
 				$temp =   mktime(0, 0, 0, $wmonth, $wday,$wyear);
-				if ($heureete1) == $temp)
+				if ($heureete1 == $temp)
 				{
 					$semaine_changement_heure_ete = 'yes';
 					$temp2 =   mktime($hour, 0, 0, $wmonth, $wday, $wyear);
-					if ($heureete2) == $temp2)
+					if ($heureete2 == $temp2)
 					{
 						if ($display_day[$num_week_day] == 1)
 							echo tdcell($empty_color)."-</td>\n";
 						$nb_case++;
 						$insere_case = 'y';
 					}
-					else if ($heureete2) < $temp2)
+					else if ($heureete2 < $temp2)
 					{
 						$hour = date("H", $wt - 3600);
 						$decale_slot = 1;
 						$insere_case = 'n';
 					}
 				}
-				else if ($heurehiver1) == $temp)
+				else if ($heurehiver1 == $temp)
 				{
 					$semaine_changement_heure_hiver = 'yes';
 					$temp2 =   mktime($hour, 0, 0, $wmonth, $wday, $wyear);
-					if ($heurehiver2) == $temp2)
+					if ($heurehiver2 == $temp2)
 					{
 						$nb_case = $nb_case + 0.5;
 						$insere_case = 'n';
 					}
-					else if ($heurehiver2) < $temp2)
+					else if ($heurehiver2 < $temp2)
 					{
 						$hour = date("H", $wt + 3600);
 						$decale_slot = -1;
@@ -444,12 +444,12 @@ for ($t = $week_start; $t <= $week_end; $t += 86400)
 				{
 					$decale_slot = 0;
 					$insere_case = 'n';
-					if (($semaine_changement_heure_ete == 'yes') && ($heureete1) < $temp))
+					if (($semaine_changement_heure_ete == 'yes') && ($heureete1 < $temp))
 					{
 						$decale_slot = 1;
 						$hour = date("H", $wt - 3600);
 					}
-					if (($semaine_changement_heure_hiver == 'yes') && ($heurehiver1) < $temp))
+					if (($semaine_changement_heure_hiver == 'yes') && ($heurehiver1 < $temp))
 					{
 						$decale_slot = -1;
 						$hour = date("H", $wt + 3600);
