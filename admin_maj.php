@@ -837,7 +837,7 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 					// Numéro de version
 					//Hugo - Mise a jour temporaire du numéro de version à afficher
 					//11/06/2013
-					$display_version_grr ="2.2.2";
+					$display_version_grr = "2.2.2 Modifié v1.0";
 					echo "<h3>".get_vocab("num_version_title")."</h3>\n";
 					echo "<p>".get_vocab("num_version").$display_version_grr;
 					echo "</p>\n";
