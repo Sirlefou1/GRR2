@@ -432,6 +432,7 @@
  .texte_ress_moderee {
  	color: #BA2828;
  	font-weight: bold;
+	margin-left: 70px;
  }
  th.tableau_month2
  {
@@ -509,7 +510,7 @@
  }
 
  .glyphalign {
- 	margin-left: 80px;
+ 	margin-left: 70px;
  }
 
  form.ressource div.panel-body {
