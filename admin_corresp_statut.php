@@ -27,12 +27,10 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-
 include "include/admin.inc.php";
 $grr_script_name = "admin_config_sso.php";
-
 $back = '';
-if (isset($_SERVER['HTTP_REFERER'])) 
+if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
 if (getSettingValue("sso_ac_corr_profil_statut") != 'y')
 {
@@ -92,7 +90,7 @@ if (isset($_GET['action_mod']) && ($_GET['action_mod'] = 'yes'))
 //
 // Suppression d'une correspondance fonction/statut
 //
-if ((isset($_GET['action_del'])) && ($_GET['js_confirmed'] == 1) && ($_GET['action_del']='yes'))
+if ((isset($_GET['action_del'])) && ($_GET['js_confirmed'] == 1) && ($_GET['action_del'] = 'yes'))
 {
 	$sql = "DELETE FROM ".TABLE_PREFIX."_correspondance_statut WHERE id='".$_GET['id']."'";
 	if (grr_sql_command($sql) < 0)
@@ -103,7 +101,7 @@ if ((isset($_GET['action_del'])) && ($_GET['js_confirmed'] == 1) && ($_GET['acti
 $back = "";
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
-# print the page header
+//print the page header
 print_header("", "", "", "",$type = "with_session", $page = "admin");
 // Affichage de la colonne de gauche
 include "admin_col_gauche.php";
@@ -118,7 +116,7 @@ $sql = "SELECT code_fonction, libelle_fonction, statut_grr, id FROM  ".TABLE_PRE
 $res = grr_sql_query($sql);
 $nb_lignes = grr_sql_count($res);
 if ($nb_lignes == 0)
-{ 
+{
 	// Si aucune ligne à afficher
     // fin de l'affichage de la colonne de droite
 	echo get_vocab('aucune_correspondance');
