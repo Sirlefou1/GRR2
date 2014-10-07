@@ -2382,7 +2382,7 @@ function send_mail($id_entry, $action, $dformat, $tab_id_moderes = array())
 			$message5 .= traite_grr_url("","y")."\n\n";
 			$message5 .= $vocab["subject_a_moderer"];
 			$message5 .= "\n".traite_grr_url("","y")."view_entry.php?id=".$id_entry;
-			$message5 .= "\nAttention si le site est en mode pop-up ce lien ne fonctionnera pas."
+			$message5 .= "\nAttention si le site est en mode pop-up ce lien ne fonctionnera pas.";
 			$message5 .= "\n\n".$vocab['created_by'].affiche_nom_prenom_email($user_login,"","formail");
 			$message5 .= "\n".$vocab['room'].$vocab['deux_points'].$room_name." (".$area_name.") \n";
 			$message5 = html_entity_decode_all_version($message5);
