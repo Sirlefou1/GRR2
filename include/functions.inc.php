@@ -1902,10 +1902,10 @@ function make_site_item_html($link, $current_site, $year, $month, $day,$user)
 						if ($current_site == $row[0])
 							$out_html .= "<input id=\"item_select\" type=\"button\" class=\"btn btn-primary btn-xs\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])."\" onclick=\"location.href='$link2';charger();\" /><br />";
 						else
-							$out_html .= "<input id=\"item\" type=\"button\" class=\"btn btn-default btn-xs\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])." \" onclick=\"location.href='$link2';charger();\" /><br />";
+							$out_html .= "<input type=\"button\" class=\"btn btn-default btn-xs item\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])." \" onclick=\"location.href='$link2';charger();\" /><br />";
 					}
 					else
-						$out_html .= "<input id=\"item\" type=\"button\" class=\"btn btn-default btn-xs\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])." \" onclick=\"location.href='$link2';charger();\" /><br />";
+						$out_html .= "<input type=\"button\" class=\"btn btn-default btn-xs item\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])." \" onclick=\"location.href='$link2';charger();\" /><br />";
 				}
 			}
 			if ($nb_sites_a_afficher > 1)
@@ -1968,15 +1968,15 @@ function make_area_item_html( $link, $current_site, $current_area, $year, $month
 			if ($current_area != null)
 			{
 				if ($current_area == $row[0]){
-					$out_html .= "<input id=\"item_select\" type=\"button\" class=\"btn btn-primary btn-lg btn-block\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])."\" onclick=\"location.href='$link2' ;charger();\"/>\n";
+					$out_html .= "<input type=\"button\" class=\"btn btn-primary btn-lg btn-block item_select\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])."\" onclick=\"location.href='$link2' ;charger();\"/>\n";
 				}
 				else
 				{
-					$out_html .= "<input id=\"item\" type=\"button\" class=\"btn btn-default btn-lg btn-block\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])."\" onclick=\"location.href='$link2' ;charger();\"/>\n";
+					$out_html .= "<input type=\"button\" class=\"btn btn-default btn-lg btn-block item\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])."\" onclick=\"location.href='$link2' ;charger();\"/>\n";
 				}
 			}
 			else {
-				$out_html .= "<input id=\"item\" type=\"button\" class=\"btn btn-default btn-lg btn-block\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])." \" onclick=\"location.href='$link2' ;charger();\"/>\n";
+				$out_html .= "<input type=\"button\" class=\"btn btn-default btn-lg btn-block item\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])." \" onclick=\"location.href='$link2' ;charger();\"/>\n";
 			}
 		}
 	}
@@ -2006,18 +2006,18 @@ function make_room_item_html( $link, $current_area, $current_room, $year, $month
 			{
 				if (isset($all_ressource) && $all_ressource == 0)
 					$out_html .= "<div class=\"panel-body\"><input id=\"item_select\" type=\"button\" class=\"btn btn-primary btn-lg btn-block\" name=\"all_room\" value=\"Toutes les ressources \" onclick=\"location.href='$link_all_room' ;charger();\"/>\n";
-				$out_html .= "<input id=\"item\" type=\"button\" class=\"btn btn-default btn-lg btn-block\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])." \" onclick=\"location.href='$link2' ;charger();\"/>\n";
+				$out_html .= "<input type=\"button\" class=\"btn btn-default btn-lg btn-block item\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])." \" onclick=\"location.href='$link2' ;charger();\"/>\n";
 				$all_ressource = 1;
 			}
 			else
 			{
 				if (isset($all_ressource) && $all_ressource == 0)
-					$out_html .= "<input id=\"item\" type=\"button\" class=\"btn btn-primary btn-lg btn-block\" name=\"all_room\" value=\"Toutes les ressources \" onclick=\"location.href='$link_all_room' ;charger();\"/>\n";
+					$out_html .= "<input type=\"button\" class=\"btn btn-primary btn-lg btn-block item\" name=\"all_room\" value=\"Toutes les ressources \" onclick=\"location.href='$link_all_room' ;charger();\"/>\n";
 				$all_ressource = 1;
 				if ($current_room == $row[0])
-					$out_html .= "<input id=\"item_select\" type=\"button\" class=\"btn btn-primary btn-lg btn-block\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])."\" onclick=\"location.href=' $link2';charger();\"/>\n";
+					$out_html .= "<input type=\"button\" class=\"btn btn-primary btn-lg btn-block item_select\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])."\" onclick=\"location.href=' $link2';charger();\"/>\n";
 				else
-					$out_html .= "<input id=\"item\" type=\"button\" class=\"btn btn-default btn-lg btn-block\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])." \" onclick=\"location.href=' $link2' ;charger();\" />\n";
+					$out_html .= "<input type=\"button\" class=\"btn btn-default btn-lg btn-block item\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])." \" onclick=\"location.href=' $link2' ;charger();\" />\n";
 			}
 		}
 	}

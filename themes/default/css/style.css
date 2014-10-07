@@ -234,7 +234,7 @@
  .ressource {
  	text-align: center;
  }
- #item:hover
+ .item:hover
  {
  	cursor: pointer;
  }
