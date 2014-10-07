@@ -1515,7 +1515,7 @@ function show_colour_key($area_id)
 				$type_name   = $row[1];
 				$type_letter = $row[2];
 				if ($nct == -1)
-					echo "><tr>";
+					echo "<tr>";
 				if (++$nct == 2)
 				{
 					$nct = 0;
