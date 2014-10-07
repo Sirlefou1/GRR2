@@ -47,8 +47,6 @@ if (!grr_resumeSession())
 }
 // Paramètres langage
 include "include/language.inc.php";
-if (getSettingValue("display_level_view_entry") == '0' && $_GET["w"] == 500)
-	header('Content-Type: text/xml;	charset=utf-8');
 $fin_session = 'n';
 if (!grr_resumeSession())
 	$fin_session = 'y';
