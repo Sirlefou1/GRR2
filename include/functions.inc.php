@@ -1502,7 +1502,9 @@ function show_colour_key($area_id)
 	WHERE (j.id_area  IS NULL or j.id_area != '".$area_id."')
 	ORDER BY t.order_display";
 	$res = grr_sql_query($sql);
-	if ($res) {
+	if ($res)
+	{
+		$nct = 0;
 		for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 		{
 			// La requête sql précédente laisse passer les cas où un type est non valide dans le domaine concerné ET au moins dans un autre domaine, d'où le test suivant
