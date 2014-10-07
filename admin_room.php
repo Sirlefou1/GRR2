@@ -172,8 +172,8 @@ $id_site = $row[0];
 ?>
 <table border="1" width="100%" cellpadding="8" cellspacing="1">
 	<tr>
-		<th  style="text-align:center; width:50%;"><b><?php echo get_vocab('areas') ?></b></th>
-		<th  style="text-align:center; width:50%;"><b><?php echo get_vocab('rooms') ?> <?php if (isset($id_area)) { echo get_vocab('in') . " " .
+		<th  style="text-align:center; width:50%;"><b class="titre"><?php echo get_vocab('areas') ?></b></th>
+		<th  style="text-align:center; width:50%;"><b class="titre"><?php echo get_vocab('rooms') ?> <?php if (isset($id_area)) { echo get_vocab('in') . " " .
 			htmlspecialchars($area_name); }?></b></th>
 		</tr>
 		<?php
