@@ -261,8 +261,8 @@ else
 			$midnight_tonight = $midnight + 86400;
 			if ($enable_periods == 'y')
 			{
-				$start_str = preg_replace("/ /", "&nbsp;", period_time_string($row[0]));
-				$end_str   = preg_replace("/ /", "&nbsp;", period_time_string($row[1], -1));
+				$start_str = preg_replace("/ /", " ", period_time_string($row[0]));
+				$end_str   = preg_replace("/ /", " ", period_time_string($row[1], -1));
 				switch (cmp3($row[0], $midnight) . cmp3($row[1], $midnight_tonight))
 				{
 					case "> < ":
@@ -365,7 +365,7 @@ else
 		{
 			$num_week_day = ($weekcol + $weekstarts) % 7;
 			if ($display_day[$num_week_day] == 1)
-				echo "<td class=\"cell_month_o\">&nbsp;</td>\n";
+				echo "<td class=\"cell_month_o\"> </td>\n";
 		}
 	}
 	for ($cday = 1; $cday <= $days_in_month; $cday++)
@@ -422,7 +422,7 @@ else
 							}
 							echo $d[$cday]["data"][$i]. "<br/>";
 							if ((isset($d[$cday]["moderation"][$i])) && ($d[$cday]["moderation"][$i] == 1))
-								echo "&nbsp;<img src=\"img_grr/flag_moderation.png\" alt=\"".get_vocab("en_attente_moderation")."\" title=\"".get_vocab("en_attente_moderation")."\" class=\"image\" />&nbsp;\n";
+								echo " <img src=\"img_grr/flag_moderation.png\" alt=\"".get_vocab("en_attente_moderation")."\" title=\"".get_vocab("en_attente_moderation")."\" class=\"image\" /> \n";
 							echo $d[$cday]["who1"][$i]."<br/>";
 							$Son_GenreRepeat = grr_sql_query1("SELECT type_name FROM ".TABLE_PREFIX."_type_area ,".TABLE_PREFIX."_entry  WHERE  ".TABLE_PREFIX."_entry.id= ".$d[$cday]["id"][$i]." AND ".TABLE_PREFIX."_entry.type= ".TABLE_PREFIX."_type_area.type_letter");
 							echo $Son_GenreRepeat."<br/>";
@@ -454,7 +454,7 @@ else
 						echo "</div>";
 					}
 					else
-						echo "&nbsp;";
+						echo " ";
 				}
 				echo "</td>\n";
 			}
@@ -470,7 +470,7 @@ else
 			{
 				$num_week_day = ($weekcol + $weekstarts)%7;
 				if ($display_day[$num_week_day] == 1)
-					echo "<td class=\"cell_month_o\" >&nbsp;</td>\n";
+					echo "<td class=\"cell_month_o\" > </td>\n";
 			}
 		}
 		echo "</tr></table>";

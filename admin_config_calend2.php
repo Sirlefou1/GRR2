@@ -64,7 +64,7 @@ function cal($month, $year)
 	$monthName = utf8_strftime("%B",$date);
 	$s .= "<table class=\"calendar2\" border=\"1\" cellspacing=\"3\">\n";
 	$s .= "<tr>\n";
-	$s .= "<td class=\"calendarHeader2\" colspan=\"7\">$monthName&nbsp;$year</td>\n";
+	$s .= "<td class=\"calendarHeader2\" colspan=\"7\">$monthName $year</td>\n";
 	$s .= "</tr>\n";
 	$d = 1 - $first;
 	$is_ligne1 = 'y';
@@ -92,7 +92,7 @@ function cal($month, $year)
 				$s .= " />";
 			}
 			else
-				$s .= "&nbsp;";
+				$s .= " ";
 			$s .= "</td>\n";
 			$d++;
 		}
@@ -216,7 +216,7 @@ if ($inc < 3)
 	$k=$inc;
 	while ($k < 3)
 	{
-		echo "<td>&nbsp;</td>\n";
+		echo "<td> </td>\n";
 		$k++;
 	} // while
 	echo "</tr>";

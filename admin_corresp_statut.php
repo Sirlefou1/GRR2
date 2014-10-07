@@ -130,7 +130,7 @@ else
 	echo "<td><b>".get_vocab("libelle_fonction")."</b></td>\n";
 	echo "<td><b>".get_vocab("statut_grr")."</b></td>\n";
 	echo "<td><b>".get_vocab("statut_grr_modif")."</b></td>\n";
-	echo "<td>&nbsp;</td>\n";
+	echo "<td> </td>\n";
 	echo "</tr>";
 	if ($res)
 	{

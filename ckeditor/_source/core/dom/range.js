@@ -408,7 +408,7 @@ CKEDITOR.dom.range = function( document )
 
 			// For IE, it must have something inside, otherwise it may be
 			// removed during DOM operations.
-			startNode.setHtml( '&nbsp;' );
+			startNode.setHtml( ' ' );
 
 			if ( serializable )
 			{
@@ -420,7 +420,7 @@ CKEDITOR.dom.range = function( document )
 			if ( !collapsed )
 			{
 				endNode = startNode.clone();
-				endNode.setHtml( '&nbsp;' );
+				endNode.setHtml( ' ' );
 
 				if ( serializable )
 					endNode.setAttribute( 'id', baseId + 'E' );

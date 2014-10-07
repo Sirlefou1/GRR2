@@ -360,9 +360,9 @@ if ($display=='tous') {echo " checked=\"checked\"";}
 echo " /></td>";
 ?>
 <td>
- &nbsp;&nbsp;<?php echo get_vocab("display_user_on.php"); ?><input type="radio" name="display" value='actifs' <?php if ($display=='actifs') {echo " checked=\"checked\"";} ?> /></td>
+   <?php echo get_vocab("display_user_on.php"); ?><input type="radio" name="display" value='actifs' <?php if ($display=='actifs') {echo " checked=\"checked\"";} ?> /></td>
  <td>
- &nbsp;&nbsp;<?php echo get_vocab("display_user_off.php"); ?><input type="radio" name="display" value='inactifs' <?php if ($display=='inactifs') {echo " checked=\"checked\"";} ?> /></td>
+   <?php echo get_vocab("display_user_off.php"); ?><input type="radio" name="display" value='inactifs' <?php if ($display=='inactifs') {echo " checked=\"checked\"";} ?> /></td>
  <td><input type="submit" value="<?php echo get_vocab("OK");?>" /></td>
  </tr>
  </table>
@@ -435,7 +435,7 @@ if ($res) {
     $test_mail = grr_sql_query1("select count(r.room_name) from ".TABLE_PREFIX."_room r
     left join ".TABLE_PREFIX."_j_mailuser_room j on r.id=j.id_room
     where j.login = '".$user_login."'");
-    if ($test_mail > 0) $col[$i][3] .= "<span class=\"style_privilege\"> E</span>"; else $col[$i][3] .= "&nbsp;";
+    if ($test_mail > 0) $col[$i][3] .= "<span class=\"style_privilege\"> E</span>"; else $col[$i][3] .= " ";
 
 
     // Affichage du statut
@@ -482,7 +482,7 @@ if ($res) {
     // un gestionnaire d'utilisateurs ne peut pas supprimer un administrateur général ou un gestionnaire d'utilisateurs
     // Un administrateur ne peut pas se supprimer lui-même
     if (((authGetUserLevel(getUserName(),-1,'user') ==  1) and (($user_statut == "gestionnaire_utilisateur") or ($user_statut == "administrateur"))  ) or (strtolower(getUserName()) == strtolower($user_login))) {
-        echo "<td class=\"".$fond."\">&nbsp;</td>";
+        echo "<td class=\"".$fond."\"> </td>";
     } else {
         $themessage = get_vocab("confirm_del");
         echo "<td class=\"".$fond."\"><a href='admin_user.php?user_del=".urlencode($col[$i][1])."&amp;action_del=yes&amp;display=$display' onclick='return confirmlink(this, \"$user_login\", \"$themessage\")'>".get_vocab("delete")."</a></td>";

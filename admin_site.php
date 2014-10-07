@@ -98,8 +98,8 @@ function create_site($id)
 		echo '
 		<form action="admin_site.php?action=create" method="post">
 			<table>
-				<tr><td>'.get_vocab('site_code').'&nbsp;*</td><td><input type="text" name="sitecode" value="'.$sitecode.'" size="10" title="'.get_vocab('site_code').'" /></td></tr>
-				<tr><td>'.get_vocab('site_name').'&nbsp;*</td><td><input type="text" name="sitename" value="'.$sitename.'" size="50" title="'.get_vocab('site_name').'" /></td></tr>
+				<tr><td>'.get_vocab('site_code').' *</td><td><input type="text" name="sitecode" value="'.$sitecode.'" size="10" title="'.get_vocab('site_code').'" /></td></tr>
+				<tr><td>'.get_vocab('site_name').' *</td><td><input type="text" name="sitename" value="'.$sitename.'" size="50" title="'.get_vocab('site_name').'" /></td></tr>
 				<tr><td>'.get_vocab('site_adresse_ligne1').'</td><td><input type="text" name="adresse_ligne1" value="'.$adresse_ligne1.'" size="38" title="'.get_vocab('site_adresse_ligne1').'" /></td></tr>
 				<tr><td>'.get_vocab('site_adresse_ligne2').'</td><td><input type="text" name="adresse_ligne2" value="'.$adresse_ligne2.'" size="38" title="'.get_vocab('site_adresse_ligne2').'" /></td></tr>
 				<tr><td>'.get_vocab('site_adresse_ligne3').'</td><td><input type="text" name="adresse_ligne3" value="'.$adresse_ligne3.'" size="38" title="'.get_vocab('site_adresse_ligne3').'" /></td></tr>
@@ -233,8 +233,8 @@ function update_site($id)
 		echo '
 		<form action="admin_site.php?action=update" method="post">
 			<table>
-				<tr><td>'.get_vocab('site_code').'&nbsp;*</td><td><input type="text" name="sitecode" value="'.$sitecode.'" size="10" title="'.get_vocab('site_code').'" /></td></tr>
-				<tr><td>'.get_vocab('site_name').'&nbsp;*</td><td><input type="text" name="sitename" value="'.$sitename.'" size="50" title="'.get_vocab('site_name').'" /></td></tr>
+				<tr><td>'.get_vocab('site_code').' *</td><td><input type="text" name="sitecode" value="'.$sitecode.'" size="10" title="'.get_vocab('site_code').'" /></td></tr>
+				<tr><td>'.get_vocab('site_name').' *</td><td><input type="text" name="sitename" value="'.$sitename.'" size="50" title="'.get_vocab('site_name').'" /></td></tr>
 				<tr><td>'.get_vocab('site_adresse_ligne1').'</td><td><input type="text" name="adresse_ligne1" value="'.$adresse_ligne1.'" size="38" title="'.get_vocab('site_adresse_ligne1').'" /></td></tr>
 				<tr><td>'.get_vocab('site_adresse_ligne2').'</td><td><input type="text" name="adresse_ligne2" value="'.$adresse_ligne2.'" size="38" title="'.get_vocab('site_adresse_ligne2').'" /></td></tr>
 				<tr><td>'.get_vocab('site_adresse_ligne3').'</td><td><input type="text" name="adresse_ligne3" value="'.$adresse_ligne3.'" size="38" title="'.get_vocab('site_adresse_ligne3').'" /></td></tr>
@@ -314,7 +314,7 @@ function update_site($id)
 		{
 			echo '<h2>'.get_vocab('supprimer site').'</h2>';
 			echo '<h2 style="text-align:center;">' .  get_vocab('sure') . '</h2>';
-			echo '<h2 style="text-align:center;"><a href="admin_site.php?action=delete&amp;id='.$id.'&amp;confirm=yes">' . get_vocab('YES') . '!</a> &nbsp;&nbsp;&nbsp; <a href="admin_site.php?action=delete&amp;id='.$id.'&amp;confirm=no">' . get_vocab('NO') . '!</a></h2>';
+			echo '<h2 style="text-align:center;"><a href="admin_site.php?action=delete&amp;id='.$id.'&amp;confirm=yes">' . get_vocab('YES') . '!</a>     <a href="admin_site.php?action=delete&amp;id='.$id.'&amp;confirm=no">' . get_vocab('NO') . '!</a></h2>';
 		}
 		else
 		{

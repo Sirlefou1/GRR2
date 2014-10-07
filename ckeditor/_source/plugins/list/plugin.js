@@ -607,7 +607,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	};
 
 	var dtd = CKEDITOR.dtd;
-	var tailNbspRegex = /[\t\r\n ]*(?:&nbsp;|\xa0)$/;
+	var tailNbspRegex = /[\t\r\n ]*(?: |\xa0)$/;
 
 	function indexOfFirstChildElement( element, tagNameList )
 	{

@@ -222,8 +222,8 @@ else
 			$midnight_tonight = $midnight + 86400;
 			if ($enable_periods == 'y')
 			{
-				$start_str = preg_replace("/ /", "&nbsp;", period_time_string($row[0]));
-				$end_str   = preg_replace("/ /", "&nbsp;", period_time_string($row[1], -1));
+				$start_str = preg_replace("/ /", " ", period_time_string($row[0]));
+				$end_str   = preg_replace("/ /", " ", period_time_string($row[1], -1));
 				switch (cmp3($row[0], $midnight) . cmp3($row[1], $midnight_tonight))
 				{
 					case "> < ":
@@ -357,7 +357,7 @@ for ($k = 0; $k < $days_in_month; $k++)
 				$t2 += 86400;
 				if ($display_day[$cweek] == 1)
 				{
-					echo "<td valign=\"top\" class=\"cell_month\">&nbsp;";
+					echo "<td valign=\"top\" class=\"cell_month\"> ";
 					if (est_hors_reservation(mktime(0, 0, 0, $month, $cday, $year), $area))
 					{
 						echo "<div class=\"empty_cell\">";
@@ -382,11 +382,11 @@ for ($k = 0; $k < $days_in_month; $k++)
 										echo "\n<br /><table width='100%'><tr>";
 										tdcell($d[$cday]["color"][$i]);
 										if ($d[$cday]["res"][$i] != '-')
-											echo "&nbsp;<img src=\"img_grr/buzy.png\" alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("ressource actuellement empruntee")."\" width=\"20\" height=\"20\" class=\"image\" />&nbsp;\n";
+											echo " <img src=\"img_grr/buzy.png\" alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("ressource actuellement empruntee")."\" width=\"20\" height=\"20\" class=\"image\" /> \n";
 										if ((isset($d[$cday]["option_reser"][$i])) && ($d[$cday]["option_reser"][$i] != -1))
-											echo "&nbsp;<img src=\"img_grr/small_flag.png\" alt=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."\" title=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."&nbsp;".time_date_string_jma($d[$cday]["option_reser"][$i],$dformat)."\" width=\"20\" height=\"20\" class=\"image\" />&nbsp;\n";
+											echo " <img src=\"img_grr/small_flag.png\" alt=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."\" title=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")." ".time_date_string_jma($d[$cday]["option_reser"][$i],$dformat)."\" width=\"20\" height=\"20\" class=\"image\" /> \n";
 										if ((isset($d[$cday]["moderation"][$i])) && ($d[$cday]["moderation"][$i] == 1))
-											echo "&nbsp;<img src=\"img_grr/flag_moderation.png\" alt=\"".get_vocab("en_attente_moderation")."\" title=\"".get_vocab("en_attente_moderation")."\" class=\"image\" />&nbsp;\n";
+											echo " <img src=\"img_grr/flag_moderation.png\" alt=\"".get_vocab("en_attente_moderation")."\" title=\"".get_vocab("en_attente_moderation")."\" class=\"image\" /> \n";
 										echo "<span class=\"small_planning\">";
 										if ($acces_fiche_reservation)
 										{

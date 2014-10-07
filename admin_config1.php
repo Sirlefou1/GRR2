@@ -658,7 +658,7 @@ echo "<hr /><h3>".get_vocab("title_begin_end_bookings")."</h3>\n";
 			$byear = strftime("%Y", getSettingValue("begin_bookings"));
 			genDateSelector("begin_", $bday, $bmonth, $byear,"more_years") ?>
 		</td>
-		<td>&nbsp;</td>
+		<td> </td>
 	</tr>
 </table>
 <?php echo "<p><i>".get_vocab("begin_bookings_explain")."</i>"; ?>

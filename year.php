@@ -204,7 +204,7 @@ if ($_GET['pview'] != 1) {
 	echo "</td></tr>\n";
 	echo "<tr><td>\n";
 	echo "<input type=\"hidden\" name=\"area\" value=\"$area\" />\n";
-	echo "<input type=\"submit\" name=\"valider\" value=\"".$vocab["goto"]."\" /></td><td>&nbsp;</td></tr>\n";
+	echo "<input type=\"submit\" name=\"valider\" value=\"".$vocab["goto"]."\" /></td><td> </td></tr>\n";
 	echo "</table>\n";
 	echo "</form></td>\n";
 	echo '<td><a title="'.htmlspecialchars(get_vocab('back')).'" href="'.page_accueil('no').'">'.$vocab['back'].'</a></td>';
@@ -213,7 +213,7 @@ if ($_GET['pview'] != 1) {
 $this_area_name = grr_sql_query1("select area_name from ".TABLE_PREFIX."_area where id=$area");
 echo "<div class=\"titre_planning\">".ucfirst($this_area_name)." - ".get_vocab("all_areas")." </div>\n";
 //Used below: localized "all day" text but with non-breaking spaces:
-$all_day = preg_replace("/ /", "&nbsp;", get_vocab("all_day"));
+$all_day = preg_replace("/ /", " ", get_vocab("all_day"));
 //Get all meetings for this month in the room that we care about
 //row[0] = Start time
 //row[1] = End time
@@ -276,11 +276,11 @@ else
 			//and end time < = or > midnight tonight.
 			//Use ~ (not -) to separate the start and stop times, because MSIE
 			//will incorrectly line break after a -.
-			$all_day2 = preg_replace("/&nbsp;/", " ", $all_day);
+			$all_day2 = preg_replace("/ /", " ", $all_day);
 			if ($enable_periods == 'y')
 			{
-				$start_str = preg_replace("/&nbsp;/", " ", period_time_string($row[0]));
-				$end_str   = preg_replace("/&nbsp;/", " ", period_time_string($row[1], -1));
+				$start_str = preg_replace("/ /", " ", period_time_string($row[0]));
+				$end_str   = preg_replace("/ /", " ", period_time_string($row[1], -1));
 				switch (cmp3($row[0], $midnight) . cmp3($row[1], $midnight_tonight))
 				{
 					case "> < ":
@@ -370,7 +370,7 @@ while ($month_indice < $month_end)
 	// Début affichage de la première ligne
 	echo "<tr>";
 	tdcell("cell_hours");
-	echo "&nbsp;</td>\n";
+	echo " </td>\n";
 	//Corrige un bug avec certains fuseaux horaires (par exemple GMT-05:00 celui du Québec) :
 	//plusieurs mois débutent par le dernier jours du mois précédent.
 	//En changeant "gmmktime" par "mktime" le bug est corrigé
@@ -432,7 +432,7 @@ while ($month_indice < $month_end)
 					if ($display_day[$cweek]==1)
 					{
 	   					// Début condition "on n'affiche pas tous les jours de la semaine"
-						echo "<td valign=\"top\" class=\"cell_month\">&nbsp;\n";
+						echo "<td valign=\"top\" class=\"cell_month\"> \n";
 						if (est_hors_reservation(mktime(0,0,0,$month_num,$cday,$year_num),$area))
 						{
 							echo "<div class=\"empty_cell\">";
@@ -459,13 +459,13 @@ while ($month_indice < $month_end)
 										echo "\n<br />\n<table width=\"100%\" border=\"0\" ><tr>\n";
 										tdcell($d[$cday][$cmonth][$cyear]["color"][$i]);
 										if ($d[$cday][$cmonth][$cyear]["res"][$i] != '-')
-											echo "&nbsp;<img src=\"img_grr/buzy.png\" alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("ressource actuellement empruntee")."\" width=\"20\" height=\"20\" class=\"image\" />&nbsp;\n";
+											echo " <img src=\"img_grr/buzy.png\" alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("ressource actuellement empruntee")."\" width=\"20\" height=\"20\" class=\"image\" /> \n";
 		   								// si la réservation est à confirmer, on le signale
 										if ((isset($d[$cday][$cmonth][$cyear]["option_reser"][$i])) && ($d[$cday][$cmonth][$cyear]["option_reser"][$i] != -1))
-											echo "&nbsp;<img src=\"img_grr/small_flag.png\" alt=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."\" title=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."&nbsp;".time_date_string_jma($d[$cday][$cmonth][$cyear]["option_reser"][$i],$dformat)."\" width=\"20\" height=\"20\" class=\"image\" />&nbsp;\n";
+											echo " <img src=\"img_grr/small_flag.png\" alt=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."\" title=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")." ".time_date_string_jma($d[$cday][$cmonth][$cyear]["option_reser"][$i],$dformat)."\" width=\"20\" height=\"20\" class=\"image\" /> \n";
 		   								// si la réservation est à modérer, on le signale
 										if ((isset($d[$cday][$cmonth][$cyear]["moderation"][$i])) && ($d[$cday][$cmonth][$cyear]["moderation"][$i] == 1))
-											echo "&nbsp;<img src=\"img_grr/flag_moderation.png\" alt=\"".get_vocab("en_attente_moderation")."\" title=\"".get_vocab("en_attente_moderation")."\" class=\"image\" />&nbsp;\n";
+											echo " <img src=\"img_grr/flag_moderation.png\" alt=\"".get_vocab("en_attente_moderation")."\" title=\"".get_vocab("en_attente_moderation")."\" class=\"image\" /> \n";
 										if ($acces_fiche_reservation)
 											echo "<a title=\"".htmlspecialchars($d[$cday][$cmonth][$cyear]["data"][$i])."\" href=\"view_entry.php?id=" . $d[$cday][$cmonth][$cyear]["id"][$i]."&amp;page=month\">"
 										.$d[$cday][$cmonth][$cyear]["who1"][$i]{0}

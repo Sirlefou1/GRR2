@@ -212,7 +212,7 @@ CKEDITOR.config.entities_greek = true;
  * @default false
  * @example
  * config.entities_processNumerical = true;
- * config.entities_processNumerical = 'force';		//Convert from "&nbsp;" into "&#160;";
+ * config.entities_processNumerical = 'force';		//Convert from " " into "&#160;";
  */
 
 /**

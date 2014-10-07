@@ -90,7 +90,7 @@ if ($type == "room")
 			echo "</ul>";
 		}
 		echo "<h1 style=\"text-align:center;\">" . get_vocab("sure") . "</h1>";
-		echo "<h1 style=\"text-align:center;\"><a href=\"admin_room_del.php?type=room&amp;room=$room&amp;confirm=Y&amp;id_area=$id_area\">" . get_vocab("YES") . "!</a> &nbsp;&nbsp;&nbsp; <a href=\"admin_room.php?id_area=$id_area\">" . get_vocab("NO") . "!</a></h1>";
+		echo "<h1 style=\"text-align:center;\"><a href=\"admin_room_del.php?type=room&amp;room=$room&amp;confirm=Y&amp;id_area=$id_area\">" . get_vocab("YES") . "!</a>     <a href=\"admin_room.php?id_area=$id_area\">" . get_vocab("NO") . "!</a></h1>";
 		echo "</div>";
 	}
 }

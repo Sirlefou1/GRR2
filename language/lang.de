@@ -144,7 +144,7 @@ $vocab['all_day'] = "Den ganzen Tag";
 $vocab['all_day2'] = "==========";
 $vocab['all_rooms'] = "Alle Ressourcen";
 $vocab['all_rooms_of_area'] = "Pour toutes les ressources du domaine"; // A traduire
-$vocab['areas'] = "Bereiche:&nbsp;";
+$vocab['areas'] = "Bereiche: ";
 $vocab['attention_mail_automatique_désactive'] = "Achtung: das Versenden von automatischen E-Mails ist zur Zeit nicht aktiviert. Zwecks Aktivierung bitte zur allgemeinen Konfiguraionsanzeige gehen.";
 $vocab['aucun autilisateur'] = "Keine Benutzer";
 $vocab['aucune_correspondance'] = "Aucune correspondance profil / statut GRR actuellement enregistrée"; // A traduire
@@ -502,7 +502,7 @@ $vocab['maj_submit_update'] = "Updaten";
 $vocab['maj_version_bdd'] = "Seriennummer der Datenbasisversion: GRR";
 $vocab['manage_my_account'] = "Mein Konto verwalten";
 $vocab['match_area'] = "Bereich";
-$vocab['match_descr'] = "komplette Beschreibung&nbsp;";
+$vocab['match_descr'] = "komplette Beschreibung ";
 $vocab['match_entry'] = ""; // A traduire
 $vocab['match_login'] = "Autor (Benutzername)";
 $vocab['match_room'] = ""; // A traduire

@@ -172,7 +172,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					var tmpNode = doc.createElement( 'span' );
 
 					// We need some content for Safari.
-					tmpNode.setHtml( '&nbsp;' );
+					tmpNode.setHtml( ' ' );
 
 					range.insertNode( tmpNode );
 					tmpNode.scrollIntoView();
@@ -278,7 +278,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						dummy = doc.createElement( 'span' );
 						// We need have some contents for Webkit to position it
 						// under parent node. ( #3681)
-						dummy.setHtml('&nbsp;');
+						dummy.setHtml(' ');
 					}
 					else
 						dummy = doc.createElement( 'br' );

@@ -148,7 +148,7 @@ function reporton(&$row, $dformat)
 	if ($row[4] != "")
 		$description = nl2br(htmlspecialchars($row[4]));
 	else
-		$description = "&nbsp;";
+		$description = " ";
 	echo "<td>". $description . "</td>\n";
 		//Type de réservation
 	$et = grr_sql_query1("select type_name from ".TABLE_PREFIX."_type_area where type_letter='".$row[5]."'");
@@ -334,7 +334,7 @@ function do_summary(&$count, &$hours, &$room_hash, &$breve_description_hash, $en
 			else
 			{
 				if ($csv == "n")
-					echo "<td>&nbsp;</td>\n";
+					echo "<td> </td>\n";
 				else
 					echo ";";
 			}
@@ -840,7 +840,7 @@ else
 			else
 			{
 				// Ligne d'en-tête
-				echo html_entity_decode_all_version($vocab["reservee au nom de"]).";".html_entity_decode_all_version($vocab["areas"]).";".html_entity_decode_all_version($vocab["room"]).html_entity_decode_all_version(preg_replace("/&nbsp;/", " ",$vocab["deux_points"])).";".html_entity_decode_all_version($vocab["description"]).";".html_entity_decode_all_version($vocab["time"])." - ".html_entity_decode_all_version($vocab["duration"]).";".html_entity_decode_all_version($vocab["namebooker"]).html_entity_decode_all_version(preg_replace("/&nbsp;/", " ",$vocab["deux_points"])).";".html_entity_decode_all_version($vocab["match_descr"]).";".html_entity_decode_all_version($vocab["lastupdate"]).";\n";
+				echo html_entity_decode_all_version($vocab["reservee au nom de"]).";".html_entity_decode_all_version($vocab["areas"]).";".html_entity_decode_all_version($vocab["room"]).html_entity_decode_all_version(preg_replace("/ /", " ",$vocab["deux_points"])).";".html_entity_decode_all_version($vocab["description"]).";".html_entity_decode_all_version($vocab["time"])." - ".html_entity_decode_all_version($vocab["duration"]).";".html_entity_decode_all_version($vocab["namebooker"]).html_entity_decode_all_version(preg_replace("/ /", " ",$vocab["deux_points"])).";".html_entity_decode_all_version($vocab["match_descr"]).";".html_entity_decode_all_version($vocab["lastupdate"]).";\n";
 			}
 			for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 			{

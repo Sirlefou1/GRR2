@@ -221,7 +221,7 @@ if ($action == "delete")
 		$html .= "<td><span class='small'>".get_vocab("affiche_dans_les vues")."</span></td>\n";
 		$html .= "<td><span class='small'>".get_vocab("affiche_dans_les mails")."</span></td>\n";
 		$html .= "<td><span class='small'>".get_vocab("champ_confidentiel")."</span></td>\n";
-		$html .= "<td>&nbsp;</td></tr>\n";
+		$html .= "<td> </td></tr>\n";
 		$html .= "\n<tr><td>";
 		$html .= "<select name=\"id_area\" size=\"1\">";
 		foreach ($userdomain as $key=>$value)
@@ -234,16 +234,16 @@ if ($action == "delete")
 		<option value=\"textarea\">".get_vocab("type_area")."</option>\n
 		<option value=\"list\">".get_vocab("type_list")."</option>\n
 	</select></div></td>\n";
-	$html .= "<td><div>&nbsp;";
+	$html .= "<td><div> ";
 	$html .= "<input type=\"checkbox\" id=\"obligatoire\" name=\"obligatoire\" title=\"".get_vocab("champ_obligatoire")."\" value=\"y\" />\n";
 	$html .= "<input type=\"hidden\" name=\"action\" value=\"add\" /></div></td>\n";
-	$html .= "<td><div>&nbsp;";
+	$html .= "<td><div> ";
 	$html .= "<input type=\"checkbox\" id=\"affichage\" name=\"affichage\" title=\"\" value=\"n\" />\n";
 	$html .= "</div></td>\n";
-	$html .= "<td><div>&nbsp;";
+	$html .= "<td><div> ";
 	$html .= "<input type=\"checkbox\" id=\"overload_mail\" name=\"overload_mail\" title=\"\" value=\"n\" />\n";
 	$html .= "<input type=\"hidden\" name=\"action\" value=\"add\" /></div></td>\n";
-	$html .= "<td><div>&nbsp;";
+	$html .= "<td><div> ";
 	$html .= "<input type=\"checkbox\" id=\"confidentiel\" name=\"confidentiel\" title=\"".get_vocab("champ_confidentiel")."\" value=\"y\" />\n";
 	$html .= "<input type=\"hidden\" name=\"action\" value=\"add\" /></div></td>\n";
 	$html .= "<td><div><input type=\"submit\" name=\"submit\" value=\"".get_vocab('add')."\" /></div></td>\n";

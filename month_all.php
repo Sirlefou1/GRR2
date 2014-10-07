@@ -244,8 +244,8 @@ for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 		//will incorrectly line break after a -.
 		if ($enable_periods == 'y')
 		{
-			$start_str = preg_replace("/ /", "&nbsp;", period_time_string($row[0]));
-			$end_str   = preg_replace("/ /", "&nbsp;", period_time_string($row[1], -1));
+			$start_str = preg_replace("/ /", " ", period_time_string($row[0]));
+			$end_str   = preg_replace("/ /", " ", period_time_string($row[1], -1));
 			// Debug
 			//echo affiche_date($row[0])." ".affiche_date($midnight)." ".affiche_date($row[1])." ".affiche_date($midnight_tonight)."<br />";
 			switch (cmp3($row[0], $midnight) . cmp3($row[1], $midnight_tonight))
@@ -358,7 +358,7 @@ for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 		{
 			$num_week_day = ($weekcol + $weekstarts)%7;
 			if ($display_day[$num_week_day] == 1)
-				echo "<td class=\"cell_month_o\" >&nbsp;</td>\n";
+				echo "<td class=\"cell_month_o\" > </td>\n";
 		}
 	}
 	// Début Première boucle sur les jours du mois
@@ -430,7 +430,7 @@ for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 							if ($d[$cday]["description"][$i] != "")
 								echo $d[$cday]["description"][$i]."<br/>";
 							if ((isset($d[$cday]["moderation"][$i])) && ($d[$cday]["moderation"][$i] == 1))
-								echo "&nbsp;<img src=\"img_grr/flag_moderation.png\" alt=\"".get_vocab("en_attente_moderation")."\" title=\"".get_vocab("en_attente_moderation")."\" class=\"image\" />&nbsp;\n";
+								echo " <img src=\"img_grr/flag_moderation.png\" alt=\"".get_vocab("en_attente_moderation")."\" title=\"".get_vocab("en_attente_moderation")."\" class=\"image\" /> \n";
 							if ($acces_fiche_reservation[$d[$cday]["id_room"][$i]])
 								echo "</a>";
 							echo "</span></td></tr></table>\n";
@@ -456,7 +456,7 @@ for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 			$num_week_day = ($weekcol + $weekstarts)%7;
 				// on n'affiche pas tous les jours de la semaine
 			if ($display_day[$num_week_day] == 1)
-				echo "<td class=\"cell_month_o\" >&nbsp;</td>\n";
+				echo "<td class=\"cell_month_o\" > </td>\n";
 		}
 	}
 	echo "</tr></table>";

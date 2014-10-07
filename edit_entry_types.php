@@ -120,7 +120,7 @@ for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 }
 $display_type .=  "</select>";
 if ($aff_default)
-	$display_type .= "&nbsp;<input type=\"button\" value=\"".get_vocab("definir par defaut")."\" onclick=\"setdefault('type_default',document.getElementById('main').type.options[document.getElementById('main').type.options.selectedIndex].text)\" />";
+	$display_type .= " <input type=\"button\" value=\"".get_vocab("definir par defaut")."\" onclick=\"setdefault('type_default',document.getElementById('main').type.options[document.getElementById('main').type.options.selectedIndex].text)\" />";
 $display_type .= "</td></tr></table>\n";
 if ($unicode_encoding)
 	header("Content-Type: text/html;charset=utf-8");

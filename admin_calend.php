@@ -77,7 +77,7 @@ function cal($month, $year)
 	$monthName = utf8_strftime("%B", $date);
 	$s .= "<table class=\"calendar2\" border=\"1\" cellspacing=\"3\">\n";
 	$s .= "<tr>\n";
-	$s .= "<td class=\"calendarHeader2\" colspan=\"7\">$monthName&nbsp;$year</td>\n";
+	$s .= "<td class=\"calendarHeader2\" colspan=\"7\">$monthName $year</td>\n";
 	$s .= "</tr>\n";
 	$s .= "<tr>\n";
 	$s .= getFirstDays();
@@ -104,7 +104,7 @@ function cal($month, $year)
 					$s .= "<br /><input type=\"checkbox\" name=\"$temp\" value=\"$nameday\"  disabled />";
 			} 
 			else
-				$s .= "&nbsp;";
+				$s .= " ";
 			$s .= "</td>\n";
 			$d++;
 		}
@@ -356,11 +356,11 @@ if ($etape == 3)
 		echo "<td><span class='small'><a href='admin_calend.php' onclick=\"setCheckboxesGrr(document.getElementById('formulaire'), true, '$lday' ); return false;\">".get_vocab("check_all_the").$lday."s</a></span></td>\n";
 		echo "<td><span class='small'><a href='admin_calend.php' onclick=\"setCheckboxesGrr(document.getElementById('formulaire'), false, '$lday' ); return false;\">".get_vocab("uncheck_all_the").$lday."s</a></span></td>\n";
 		if ($i == 0)
-			echo "<td rowspan=\"8\">&nbsp;&nbsp;</td><td rowspan=\"8\">$texte_debut_fin_reservation</td>\n";
+			echo "<td rowspan=\"8\">  </td><td rowspan=\"8\">$texte_debut_fin_reservation</td>\n";
 		echo "</tr>\n";
 	}
 	echo "<tr>\n<td><span class='small'><a href='admin_calend.php' onclick=\"setCheckboxesGrr(document.getElementById('formulaire'), false, 'all'); return false;\">".get_vocab("uncheck_all_")."</a></span></td>\n";
-	echo "<td>&nbsp;</td></tr>\n";
+	echo "<td> </td></tr>\n";
 	echo "</table>\n";
 	echo "<table cellspacing=\"20\">\n";
 	$n = getSettingValue("begin_bookings");
@@ -398,7 +398,7 @@ if ($etape == 3)
 		$k = $inc;
 		while ($k < 3)
 		{
-			echo "<td>&nbsp;</td>\n";
+			echo "<td> </td>\n";
 			$k++;
 		}
 		echo "</tr>";

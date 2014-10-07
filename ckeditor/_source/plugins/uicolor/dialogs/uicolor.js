@@ -177,7 +177,7 @@ CKEDITOR.dialog.add( 'uicolor', function( editor )
 											id : 'predefinedPreview',
 											type : 'html',
 											html : '<div id="cke_uicolor_preview" style="border: 1px solid black; padding: 3px; width: 30px;">' +
-													'<div id="predefinedPreview" style="width: 30px; height: 30px;">&nbsp;</div>' +
+													'<div id="predefinedPreview" style="width: 30px; height: 30px;"> </div>' +
 												'</div>'
 										}
 									]

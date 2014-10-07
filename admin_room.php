@@ -190,12 +190,12 @@ $id_site = $row[0];
 			if ((getSettingValue("module_multisite") == "Oui") && ($id_site <= 0))
 				echo "<tr><td>".get_vocab('choose_a_site')."</td>"."\n";
 			else
-				echo "<tr><td>&nbsp;</td>";
+				echo "<tr><td> </td>";
 		}
 		if (isset($id_area))
 			echo "<td><a href=\"admin_edit_room.php?id_site=".$id_site."&amp;area_id=$id_area\">".get_vocab('addroom')."</a></td></tr>";
 		else
-			echo "<td>&nbsp;</td></tr>";
+			echo "<td> </td></tr>";
 		// Pas de site selectionn? donc pas de domaine, et encore moins de ressources.
 		if ((getSettingValue("module_multisite") == "Oui") && ($id_site <= 0))
 		{
@@ -229,7 +229,7 @@ $id_site = $row[0];
 					if ($row[2] == 'r')
 						echo "<td><a href='admin_access_area.php?id_area=$row[0]' title='".get_vocab('admin_access_area.php')."'><img src=\"img_grr/restricted_s.png\" alt=\"".get_vocab('admin_access_area.php')."\" title=\"".get_vocab('admin_access_area.php')."\" class=\"image\" /></a></td>\n";
 					else
-						echo "<td>&nbsp;</td>\n";
+						echo "<td> </td>\n";
 					if (isset($id_area) && ($id_area == $row[0]))
 					{
 						echo "<td><span class=\"bground\"><b>&gt;&gt;&gt; ".htmlspecialchars($row[1])." &lt;&lt;&lt; </b></span>";

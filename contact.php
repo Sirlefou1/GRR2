@@ -110,10 +110,10 @@ switch ($action)
 		$user_email = grr_sql_query1("select email from ".TABLE_PREFIX."_utilisateurs where login='".getUserName()."'");
 		if (($user_email != "") && ($user_email != -1))
 			$message .= "Email du demandeur : ".$user_email."\n";
-		$message .= $vocab["statut"].preg_replace("/&nbsp;/", " ",$vocab["deux_points"]).$_SESSION['statut']."\n";
+		$message .= $vocab["statut"].preg_replace("/ /", " ",$vocab["deux_points"]).$_SESSION['statut']."\n";
 	}
-	$message .= $vocab["company"].preg_replace("/&nbsp;/", " ",$vocab["deux_points"]).removeMailUnicode(getSettingValue("company"))."\n";
-	$message .= $vocab["email"].preg_replace("/&nbsp;/", " ",$vocab["deux_points"]).$email_reponse."\n";
+	$message .= $vocab["company"].preg_replace("/ /", " ",$vocab["deux_points"]).removeMailUnicode(getSettingValue("company"))."\n";
+	$message .= $vocab["email"].preg_replace("/ /", " ",$vocab["deux_points"]).$email_reponse."\n";
 	$message.="\n".$corps_message."\n";
 	$sujet = $vocab["subject_mail1"]." - ".$objet_message;
 	error_reporting (E_ALL ^ E_NOTICE ^ E_WARNING);

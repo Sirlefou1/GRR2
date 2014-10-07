@@ -71,7 +71,7 @@ function cal($month, $year)
 	$monthName = strftime("%B", $date);
 	$s .= "<table class=\"calendar2\" border=\"1\" cellspacing=\"3\">\n";
 	$s .= "<tr>\n";
-	$s .= "<td class=\"calendarHeader2\" colspan=\"8\">$monthName&nbsp;$year</td>\n";
+	$s .= "<td class=\"calendarHeader2\" colspan=\"8\">$monthName $year</td>\n";
 	$s .= "</tr>\n";
 	$d = 1 - $first;
 	$is_ligne1 = 'y';
@@ -99,7 +99,7 @@ function cal($month, $year)
 				$s .= " />";
 			}
 			else
-				$s .= "&nbsp;";
+				$s .= " ";
 			$s .= "</td>\n";
 			$d++;
 		}
@@ -193,7 +193,7 @@ for ($i = 0; $i < 7; $i++)
 	echo "</tr>\n";
 }
 echo "<tr>\n<td><span class='small'><a href='admin_calend_ignore.php' onclick=\"setCheckboxesGrr(document.getElementById('formulaire'), false, 'all'); return false;\">".get_vocab("uncheck_all_")."</a></span></td>\n";
-echo "<td>&nbsp;</td></tr>\n";
+echo "<td> </td></tr>\n";
 echo "</table>\n";
 echo "<form action=\"admin_calend_ignore.php\" method=\"post\" id=\"formulaire\">\n";
 echo "<table cellspacing=\"20\">\n";
@@ -233,7 +233,7 @@ if ($inc < 3)
 	$k=$inc;
 	while ($k < 3)
 	{
-		echo "<td>&nbsp;</td>\n";
+		echo "<td> </td>\n";
 		$k++;
 	} // while
 	echo "</tr>";

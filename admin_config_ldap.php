@@ -635,17 +635,17 @@ if ((!grr_resumeSession()) && $valid != 'yes')
 							echo encode_message_utf8("<li>Adresse de l'annuaire LDAP <b>: ".$ldap_adresse."</b></li>");
 							echo encode_message_utf8("<li>Port utilisé : <b>".$ldap_port."</b></li>");
 							if ($test_chemin == 'failed')
-								echo encode_message_utf8("<li><span style=\"color:red;\">Chemin d'accès dans l'annuaire : <b>&nbsp;".$ldap_base."</b></span></li>");
+								echo encode_message_utf8("<li><span style=\"color:red;\">Chemin d'accès dans l'annuaire : <b> ".$ldap_base."</b></span></li>");
 							else
-								echo encode_message_utf8("<li>Chemin d'accès dans l'annuaire : <b>&nbsp;".$ldap_base."</b></li>");
+								echo encode_message_utf8("<li>Chemin d'accès dans l'annuaire : <b> ".$ldap_base."</b></li>");
 							if ($ldap_filter!="")
 								$ldap_filter_text = $ldap_filter;
 							else
 								$ldap_filter_text = "non";
 							if (($test_chemin == 'failed') && ($ldap_filter!=""))
-								echo encode_message_utf8("<li><span style=\"color:red;\">Filtre LDAP supplémentaire : <b>&nbsp;".$ldap_filter_text."</b></span></li>");
+								echo encode_message_utf8("<li><span style=\"color:red;\">Filtre LDAP supplémentaire : <b> ".$ldap_filter_text."</b></span></li>");
 							else
-								echo encode_message_utf8("<li>Filtre LDAP supplémentaire : <b>&nbsp;".$ldap_filter_text."</b></li>");
+								echo encode_message_utf8("<li>Filtre LDAP supplémentaire : <b> ".$ldap_filter_text."</b></li>");
 							if ($ldap_login) {
 								echo encode_message_utf8("<li>Compte pour l'accès : <br />");
 								echo "Identifiant : <b>".$ldap_login."</b><br />";

@@ -192,7 +192,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			{
 				var text;
 				return ( ( text = element.onlyChild() )
-					    && ( /^(:?\s|&nbsp;)+$/ ).test( text.value ) );
+					    && ( /^(:?\s| )+$/ ).test( text.value ) );
 			},
 
 			resolveList : function( element )

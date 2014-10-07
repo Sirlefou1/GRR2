@@ -84,7 +84,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					else if ( ranges.length > 0 )
 					{
 						// Webkit could report the following range on cell selection (#4948):
-						// <table><tr><td>[&nbsp;</td></tr></table>]
+						// <table><tr><td>[ </td></tr></table>]
 						if ( CKEDITOR.env.webkit )
 							ranges[ 0 ].shrink( CKEDITOR.NODE_ELEMENT );
 
@@ -325,7 +325,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 										},
 										{
 											type : 'html',
-											html : '&nbsp;'
+											html : ' '
 										},
 										{
 											type : 'select',
@@ -540,7 +540,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 										},
 										{
 											type : 'html',
-											html : '&nbsp;'
+											html : ' '
 										},
 										{
 											type : 'text',

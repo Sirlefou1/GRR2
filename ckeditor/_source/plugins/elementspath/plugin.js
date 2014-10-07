@@ -25,7 +25,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		}
 	};
 
-	var emptyHtml = '<span class="cke_empty">&nbsp;</span>';
+	var emptyHtml = '<span class="cke_empty"> </span>';
 
 	CKEDITOR.plugins.add( 'elementspath',
 	{

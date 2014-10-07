@@ -209,7 +209,7 @@ if (isset($_GET['change_type'])) {
    if ($row["couleur"]  != '') {
         echo "<tr>\n";
         echo "<td>".get_vocab("type_color").get_vocab("deux_points")."</td>\n";
-        echo "<td bgcolor=\"".$tab_couleur[$row["couleur"]]."\">&nbsp;</td>";
+        echo "<td bgcolor=\"".$tab_couleur[$row["couleur"]]."\"> </td>";
         echo "</tr>";
     }
     echo "</table>\n";

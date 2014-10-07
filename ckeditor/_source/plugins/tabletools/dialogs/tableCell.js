@@ -12,7 +12,7 @@ CKEDITOR.dialog.add( 'cellProperties', function( editor )
 			widthPattern = /^(\d+(?:\.\d+)?)(px|%)$/,
 			heightPattern = /^(\d+(?:\.\d+)?)px$/,
 			bind = CKEDITOR.tools.bind,
-			spacer = { type : 'html', html : '&nbsp;' };
+			spacer = { type : 'html', html : ' ' };
 
 		/**
 		 *

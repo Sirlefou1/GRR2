@@ -24,7 +24,7 @@ CKEDITOR.xml = function( xmlObjectOrData )
 		baseXml = xmlObjectOrData;
 	else
 	{
-		var data = ( xmlObjectOrData || '' ).replace( /&nbsp;/g, '\xA0' );
+		var data = ( xmlObjectOrData || '' ).replace( / /g, '\xA0' );
 		if ( window.DOMParser )
 			baseXml = (new DOMParser()).parseFromString( data, 'text/xml' );
 		else if ( window.ActiveXObject )

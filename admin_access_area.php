@@ -250,7 +250,7 @@ if ($id_area != -1)
 						<input type="button" value="&lt;&lt;" onclick="Deplacer(this.form.elements['reg_multi_user_login[]'],this.form.agent)"/>
 						<input type="button" value="&gt;&gt;" onclick="Deplacer(this.form.agent,this.form.elements['reg_multi_user_login[]'])"/>
 						<select name="reg_multi_user_login[]" id="reg_multi_user_login" size="8" style="width:200px;" multiple="multiple" ondblclick="Deplacer(this.form.elements['reg_multi_user_login[]'],this.form.agent)">
-							<option>&nbsp;</option>
+							<option> </option>
 						</select>
 						<input type="hidden" name="id_area" value="<?php echo $id_area; ?>" />
 						<input type="submit" value="Enregistrer"  onclick="selectionner_liste(this.form.reg_multi_user_login);"/></div>

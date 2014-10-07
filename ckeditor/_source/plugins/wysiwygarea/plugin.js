@@ -14,7 +14,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	var nonExitableElementNames = { table:1,pre:1 };
 
 	// Matching an empty paragraph at the end of document.
-	var emptyParagraphRegexp = /(^|<body\b[^>]*>)\s*<(p|div|address|h\d|center)[^>]*>\s*(?:<br[^>]*>|&nbsp;|\u00A0|&#160;)?\s*(:?<\/\2>)?\s*(?=$|<\/body>)/gi;
+	var emptyParagraphRegexp = /(^|<body\b[^>]*>)\s*<(p|div|address|h\d|center)[^>]*>\s*(?:<br[^>]*>| |\u00A0|&#160;)?\s*(:?<\/\2>)?\s*(?=$|<\/body>)/gi;
 
 	var notWhitespaceEval = CKEDITOR.dom.walker.whitespaces( true );
 
@@ -217,7 +217,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	function isNbsp( node )
 	{
 		return node.type == CKEDITOR.NODE_TEXT
-			   && CKEDITOR.tools.trim( node.getText() ).match( /^(?:&nbsp;|\xa0)$/ );
+			   && CKEDITOR.tools.trim( node.getText() ).match( /^(?: |\xa0)$/ );
 	}
 
 	function restoreSelection( selection )

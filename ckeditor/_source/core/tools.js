@@ -319,11 +319,11 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				} :
 				fix1;
 
-			var fix3 = ( standard( '  ' ) == '&nbsp; ' ) ?
+			var fix3 = ( standard( '  ' ) == '  ' ) ?
 				function( text )
 				{
-					// #3785 IE8 changes spaces (>= 2) to &nbsp;
-					return fix2( text ).replace( /&nbsp;/g, ' ' );
+					// #3785 IE8 changes spaces (>= 2) to  
+					return fix2( text ).replace( / /g, ' ' );
 				} :
 				fix2;
 

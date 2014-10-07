@@ -525,7 +525,7 @@ print_header($day, $month, $year, $area);
 				if ($overload_fields[$fieldname]["type"] == "numeric")
 				{
 					echo "if (isNaN((document.getElementById('id_".$idtmp."_".$overload_fields[$fieldname]["id"]."')) && (document.forms[\"main\"].addon_".$overload_fields[$fieldname]["id"].".value))) {\n";
-					echo "alert (\"".preg_replace('/"/', '\"',$overload_fields[$fieldname]["name"]).preg_replace("/&nbsp;/", " ",$vocab["deux_points"]).$vocab["is_not_numeric"]."\");\n";
+					echo "alert (\"".preg_replace('/"/', '\"',$overload_fields[$fieldname]["name"]).preg_replace("/ /", " ",$vocab["deux_points"]).$vocab["is_not_numeric"]."\");\n";
 					echo "return false\n}\n";
 				}
 			}
@@ -702,7 +702,7 @@ echo "<form id=\"main\" action=\"edit_entry_handler.php\" method=\"get\">\n";
 		{
 			echo "<option value=\"-1\" selected=\"selected\" >".get_vocab("utilisateur_inconnu").$beneficiaire.")</option>\n";
 }
-echo "</select>&nbsp;<input type=\"button\" value=\"".get_vocab("definir par defaut")."\" onclick=\"setdefault('beneficiaire_default',document.getElementById('main').beneficiaire.options[document.getElementById('main').beneficiaire.options.selectedIndex].value)\" />";
+echo "</select> <input type=\"button\" value=\"".get_vocab("definir par defaut")."\" onclick=\"setdefault('beneficiaire_default',document.getElementById('main').beneficiaire.options[document.getElementById('main').beneficiaire.options.selectedIndex].value)\" />";
 echo "<div id=\"div_profilBeneficiaire\">";
 echo "</div>";
 if (isset($statut_beneficiaire))
@@ -897,7 +897,7 @@ if (($delais_option_reservation > 0) && (($modif_option_reservation == 'y') || (
 	}
 	else
 	{
-		echo "<input type=\"hidden\" name=\"option_reservation\" value=\"".$option_reservation."\" />&nbsp;<b>".
+		echo "<input type=\"hidden\" name=\"option_reservation\" value=\"".$option_reservation."\" /> <b>".
 		time_date_string_jma($option_reservation,$dformat)."</b>\n";
 		echo "<br /><input type=\"checkbox\" name=\"confirm_reservation\" value=\"y\" />".get_vocab("confirmer reservation")."\n";
 	}
@@ -963,7 +963,7 @@ echo "<tr><td class=\"E\">";
 <?php
 if ($affiche_mess_asterisque)
 	get_vocab("required");
-echo "&nbsp;</td></tr>\n";
+echo " </td></tr>\n";
 echo "</table>\n";
 echo "</td>\n";
 echo "<td style=\"vertical-align:top;\">\n";

@@ -176,7 +176,7 @@ CKEDITOR.plugins.add( 'domiterator' );
 				}
 				else if ( currentNode.type == CKEDITOR.NODE_TEXT )
 				{
-					// Ignore normal whitespaces (i.e. not including &nbsp; or
+					// Ignore normal whitespaces (i.e. not including   or
 					// other unicode whitespaces) before/after a block node.
 					if ( beginWhitespaceRegex.test( currentNode.getText() ) )
 						includeNode = 0;

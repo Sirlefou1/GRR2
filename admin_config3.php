@@ -227,7 +227,7 @@ if (getSettingValue('grr_mail_method') == "mail")
 	echo " checked=\"checked\" ";
 echo "/>\n";
 echo get_vocab('methode mail');
-echo "&nbsp;&nbsp;<input type=\"radio\" name=\"grr_mail_method\" value=\"smtp\" ";
+echo "  <input type=\"radio\" name=\"grr_mail_method\" value=\"smtp\" ";
 if (getSettingValue('grr_mail_method') == "smtp")
 	echo " checked=\"checked\" ";
 echo "/>\n";

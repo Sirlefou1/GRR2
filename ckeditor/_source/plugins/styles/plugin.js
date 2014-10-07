@@ -928,24 +928,24 @@ CKEDITOR.STYLE_OBJECT = 3;
 			 blockHtml =  blockHtml.replace( /(\r\n|\r)/g, '\n' ) ;
 			 blockHtml = replace(  blockHtml, /^[ \t]*\n/, '' ) ;
 			 blockHtml = replace(  blockHtml, /\n$/, '' ) ;
-			// 2. Convert spaces or tabs at the beginning or at the end to &nbsp;
+			// 2. Convert spaces or tabs at the beginning or at the end to  
 			 blockHtml = replace(  blockHtml, /^[ \t]+|[ \t]+$/g, function( match, offset, s )
 					{
 						if ( match.length == 1 )	// one space, preserve it
-							return '&nbsp;' ;
+							return ' ' ;
 						else if ( !offset )		// beginning of block
-							return CKEDITOR.tools.repeat( '&nbsp;', match.length - 1 ) + ' ';
+							return CKEDITOR.tools.repeat( ' ', match.length - 1 ) + ' ';
 						else				// end of block
-							return ' ' + CKEDITOR.tools.repeat( '&nbsp;', match.length - 1 );
+							return ' ' + CKEDITOR.tools.repeat( ' ', match.length - 1 );
 					} ) ;
 
 			// 3. Convert \n to <BR>.
-			// 4. Convert contiguous (i.e. non-singular) spaces or tabs to &nbsp;
+			// 4. Convert contiguous (i.e. non-singular) spaces or tabs to  
 			 blockHtml =  blockHtml.replace( /\n/g, '<br>' ) ;
 			 blockHtml =  blockHtml.replace( /[ \t]{2,}/g,
 					function ( match )
 					{
-						return CKEDITOR.tools.repeat( '&nbsp;', match.length - 1 ) + ' ' ;
+						return CKEDITOR.tools.repeat( ' ', match.length - 1 ) + ' ' ;
 					} ) ;
 
 			var newBlockClone = newBlock.clone();
@@ -970,8 +970,8 @@ CKEDITOR.STYLE_OBJECT = 3;
 		preHtml = preHtml.replace( /[ \t\r\n]*(<br[^>]*>)[ \t\r\n]*/gi, '$1' );
 		// 3. Compress other ANSI whitespaces since they're only visible as one
 		//    single space previously.
-		// 4. Convert &nbsp; to spaces since &nbsp; is no longer needed in <PRE>.
-		preHtml = preHtml.replace( /([ \t\n\r]+|&nbsp;)/g, ' ' );
+		// 4. Convert   to spaces since   is no longer needed in <PRE>.
+		preHtml = preHtml.replace( /([ \t\n\r]+| )/g, ' ' );
 		// 5. Convert any <BR /> to \n. This must not be done earlier because
 		//    the \n would then get compressed.
 		preHtml = preHtml.replace( /<br\b[^>]*>/gi, '\n' );

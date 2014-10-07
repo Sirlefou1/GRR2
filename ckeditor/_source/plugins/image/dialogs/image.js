@@ -1066,7 +1066,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 											type : 'html',
 											style : 'width:95%;',
 											html : '<div>' + CKEDITOR.tools.htmlEncode( editor.lang.common.preview ) +'<br>'+
-											'<div id="' + imagePreviewLoaderId + '" class="ImagePreviewLoader" style="display:none"><div class="loading">&nbsp;</div></div>'+
+											'<div id="' + imagePreviewLoaderId + '" class="ImagePreviewLoader" style="display:none"><div class="loading"> </div></div>'+
 											'<div id="' + imagePreviewBoxId + '" class="ImagePreviewBox"><table><tr><td>'+
 											'<a href="javascript:void(0)" target="_blank" onclick="return false;" id="' + previewLinkId + '">'+
 											'<img id="' + previewImageId + '" alt="" /></a>' +

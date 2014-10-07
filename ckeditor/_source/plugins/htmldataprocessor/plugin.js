@@ -5,9 +5,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 (function()
 {
-	// Regex to scan for &nbsp; at the end of blocks, which are actually placeholders.
-	// Safari transforms the &nbsp; to \xa0. (#4172)
-	var tailNbspRegex = /^[\t\r\n ]*(?:&nbsp;|\xa0)$/;
+	// Regex to scan for   at the end of blocks, which are actually placeholders.
+	// Safari transforms the   to \xa0. (#4172)
+	var tailNbspRegex = /^[\t\r\n ]*(?: |\xa0)$/;
 
 	var protectedSourceMarker = '{cke_protected}';
 
@@ -26,7 +26,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		// If the current node is a block, and if we're converting from source or
 		// we're not in IE then search for and remove any tailing BR node.
 		//
-		// Also, any &nbsp; at the end of blocks are fillers, remove them as well.
+		// Also, any   at the end of blocks are fillers, remove them as well.
 		// (#2886)
 		var children = block.children, lastChild = lastNoneSpaceChild( block );
 		if ( lastChild )

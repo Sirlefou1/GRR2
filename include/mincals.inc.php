@@ -128,9 +128,9 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 			}
 			//Lien du mois acutel
 			if (($this->dmy != 'day') && ($this->dmy != 'week_all') && ($this->dmy != 'month_all') && ($this->dmy != 'month_all2'))
-				$s .= "<button title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_month"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='month.php?year=$this->year&amp;month=$this->month&amp;day=1&amp;area=$this->area&amp;room=$this->room';\">$monthName&nbsp;$this->year</button>\n";
+				$s .= "<button title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_month"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='month.php?year=$this->year&amp;month=$this->month&amp;day=1&amp;area=$this->area&amp;room=$this->room';\">$monthName $this->year</button>\n";
 			else
-				$s .= "<button title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_month"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='".$type_month_all.".php?year=$this->year&amp;month=$this->month&amp;day=1&amp;area=$this->area';\">$monthName&nbsp;$this->year</button>\n";
+				$s .= "<button title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_month"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='".$type_month_all.".php?year=$this->year&amp;month=$this->month&amp;day=1&amp;area=$this->area';\">$monthName $this->year</button>\n";
 			// on ajoute un lien vers le mois suivant
 			if ($this->mois_suivant == 1)
 			{
@@ -213,7 +213,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 								$s .= $link.">$d</a>";
 						}
 						else
-							$s .= "&nbsp;";
+							$s .= " ";
 						$s .= "</td>\n";
 					}
 					// fin condition "on n'affiche pas tous les jours de la semaine"

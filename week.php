@@ -186,10 +186,10 @@ else
 	$this_room_name_des = "";
 switch ($dateformat) {
 	case "en":
-	$dformat = "%A, %b&nbsp;%d";
+	$dformat = "%A, %b %d";
 	break;
 	case "fr":
-	$dformat = "%A %d&nbsp;%b";
+	$dformat = "%A %d %b";
 	break;
 }
 $i = mktime(0,0,0,$month_week,$day_week-7,$year_week);
@@ -492,7 +492,7 @@ for ($t = $week_start; $t <= $week_end; $t += 86400)
 							}
 						}
 						else
-							echo "&nbsp;";
+							echo " ";
 					}
 				}
 				else
@@ -528,11 +528,11 @@ for ($t = $week_start; $t <= $week_end; $t += 86400)
 							if ($acces_fiche_reservation)echo"</a>";
 						}
 						if ((isset($d[$weekday][$slot - $decale_slot * $nb_case]["statut"])) && ($d[$weekday][$slot - $decale_slot * $nb_case]["statut"] != '-'))
-							echo "&nbsp;<img src=\"img_grr/buzy.png\" alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("ressource actuellement empruntee")."\" width=\"20\" height=\"20\" class=\"image\" />&nbsp;\n";
+							echo " <img src=\"img_grr/buzy.png\" alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("ressource actuellement empruntee")."\" width=\"20\" height=\"20\" class=\"image\" /> \n";
 						if (($this_delais_option_reservation > 0) && (isset($d[$weekday][$slot-$decale_slot * $nb_case]["option_reser"])) && ($d[$weekday][$slot - $decale_slot * $nb_case]["option_reser"] != -1))
-							echo "&nbsp;<img src=\"img_grr/small_flag.png\" alt=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."\" title=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."&nbsp;".time_date_string_jma($d[$weekday][$slot - $decale_slot * $nb_case]["option_reser"], $dformat)."\" width=\"20\" height=\"20\" class=\"image\" />&nbsp;\n";
+							echo " <img src=\"img_grr/small_flag.png\" alt=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."\" title=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")." ".time_date_string_jma($d[$weekday][$slot - $decale_slot * $nb_case]["option_reser"], $dformat)."\" width=\"20\" height=\"20\" class=\"image\" /> \n";
 						if ((isset($d[$weekday][$slot - $decale_slot * $nb_case]["moderation"])) && ($d[$weekday][$slot - $decale_slot * $nb_case]["moderation"] == '1'))
-							echo "&nbsp;<img src=\"img_grr/flag_moderation.png\" alt=\"".get_vocab("en_attente_moderation")."\" title=\"".get_vocab("en_attente_moderation")."\" class=\"image\" />&nbsp;\n";
+							echo " <img src=\"img_grr/flag_moderation.png\" alt=\"".get_vocab("en_attente_moderation")."\" title=\"".get_vocab("en_attente_moderation")."\" class=\"image\" /> \n";
 					}
 				}
 				echo "</td>\n";

@@ -1020,7 +1020,7 @@ function grr_ldap_search_user($ds, $basedn, $login_attr, $login, $filtre_sup="",
 						$num=0;
 						foreach ( $errors as $key ){
 							$num++;
-							echo "<br /><span style=\"color:red;\">Erreur $num : ".$key. "&nbsp;</span>";
+							echo "<br /><span style=\"color:red;\">Erreur $num : ".$key. " </span>";
 						}
 					}
 					$alert = imap_alerts();
@@ -1028,7 +1028,7 @@ function grr_ldap_search_user($ds, $basedn, $login_attr, $login, $filtre_sup="",
 						$num=0;
 						foreach ( $alert as $key ){
 							$num++;
-							echo "<br /><span style=\"color:red;\">Alerte $num : ".$key. "&nbsp;</span>";
+							echo "<br /><span style=\"color:red;\">Alerte $num : ".$key. " </span>";
 						}
 					}
 				}

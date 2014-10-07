@@ -124,7 +124,7 @@ if ($user_login != getUserName())
 {
     echo "<form action=\"admin_change_pwd.php\" method='post'>\n<div>";
     echo get_vocab("login")." : $user_login";
-    echo "\n<br />".get_vocab("last_name").get_vocab("deux_points").$user_nom."&nbsp;&nbsp;&nbsp;".get_vocab("first_name").get_vocab("deux_points").$user_prenom;
+    echo "\n<br />".get_vocab("last_name").get_vocab("deux_points").$user_nom."   ".get_vocab("first_name").get_vocab("deux_points").$user_prenom;
     echo "\n<br />".get_vocab("pwd_msg_warning");
     echo "\n<br /><br />".get_vocab("new_pwd1").get_vocab("deux_points")."<input type=\"password\" name=\"reg_password1\" value=\"\" size=\"20\" />";
     echo "\n<br />".get_vocab("new_pwd2").get_vocab("deux_points")."<input type=\"password\" name=\"reg_password2\" value=\"\" size=\"20\" />";

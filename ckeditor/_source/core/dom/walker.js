@@ -422,7 +422,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		};
 	};
 
-	var tailNbspRegex = /^[\t\r\n ]*(?:&nbsp;|\xa0)$/,
+	var tailNbspRegex = /^[\t\r\n ]*(?: |\xa0)$/,
 		isNotWhitespaces = CKEDITOR.dom.walker.whitespaces( 1 ),
 		isNotBookmark = CKEDITOR.dom.walker.bookmark( 0, 1 ),
 		fillerEvaluator = function( element )

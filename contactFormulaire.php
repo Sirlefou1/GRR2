@@ -152,7 +152,7 @@ for ($m =00 ; $m <60 ; $m = $m+30 )
 echo "</select>";
 echo "&nbsp &nbsp";
 echo "<br><br>";
-echo " <label for=\"duree\">Durée :  &nbsp;</label><input type=\"text\" id=\"duree\" name=\"duree\" size=\"2\" maxlength=\"2\" tabindex=\"5\" />";    
+echo " <label for=\"duree\">Durée :   </label><input type=\"text\" id=\"duree\" name=\"duree\" size=\"2\" maxlength=\"2\" tabindex=\"5\" />";    
 echo "&nbsp";
 echo "<select name=\"typeDuree\">";
 //David VOUE 03/02/2014 -- Les citoyens peuvent réserver seulement des heures  

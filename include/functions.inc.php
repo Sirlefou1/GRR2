@@ -254,7 +254,7 @@ function affiche_ressource_empruntee($id_room, $type = "logo")
 				$beneficiaire = grr_sql_query1("select beneficiaire from ".TABLE_PREFIX."_entry where room_id = '".$id_room."' and statut_entry='y'");
 				$beneficiaire_ext = grr_sql_query1("select beneficiaire_ext from ".TABLE_PREFIX."_entry where room_id = '".$id_room."' and statut_entry='y'");
 				echo "<br /><b><span class='avertissement'><img src=\"img_grr/buzy_big.png\" alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("ressource actuellement empruntee")."\" width=\"30\" height=\"30\" class=\"image\" />
-				&nbsp;".get_vocab("ressource actuellement empruntee")." ".get_vocab("nom emprunteur").get_vocab("deux_points").affiche_nom_prenom_email($beneficiaire,$beneficiaire_ext,"withmail").
+				 ".get_vocab("ressource actuellement empruntee")." ".get_vocab("nom emprunteur").get_vocab("deux_points").affiche_nom_prenom_email($beneficiaire,$beneficiaire_ext,"withmail").
 				". <a href='view_entry?id=$id_resa'>".get_vocab("entryid").$id_resa.
 				"</a></span></b>";
 			}
@@ -413,18 +413,18 @@ function grr_help($mot_clef,$ancre = "")
 	{
 		if (getSettingValue("gestion_lien_aide") == 'perso')
 		{
-			$tag_help = "&nbsp;<a href='javascript:centrerpopup(\"".getSettingValue("lien_aide")."\",800,480,\"scrollbars=yes,statusbar=no,resizable=yes\")'>".get_vocab("help")."</a>";
-			//$tag_help = "&nbsp;<a href='".getSettingValue("lien_aide")."' target='_blank'>".get_vocab("help")."</a>";
+			$tag_help = " <a href='javascript:centrerpopup(\"".getSettingValue("lien_aide")."\",800,480,\"scrollbars=yes,statusbar=no,resizable=yes\")'>".get_vocab("help")."</a>";
+			//$tag_help = " <a href='".getSettingValue("lien_aide")."' target='_blank'>".get_vocab("help")."</a>";
 		}
 		else
 		{
-			$tag_help = "&nbsp;<a href='javascript:centrerpopup(\"http://grr.mutualibre.org/documentation/index.php\",800,480,\"scrollbars=yes,statusbar=no,resizable=yes\")'>".get_vocab("help")."</a>";
-			//$tag_help = "&nbsp;<a href='http://grr.mutualibre.org/documentation/index.php' target='_blank'>".get_vocab("help")."</a>";
+			$tag_help = " <a href='javascript:centrerpopup(\"http://grr.mutualibre.org/documentation/index.php\",800,480,\"scrollbars=yes,statusbar=no,resizable=yes\")'>".get_vocab("help")."</a>";
+			//$tag_help = " <a href='http://grr.mutualibre.org/documentation/index.php' target='_blank'>".get_vocab("help")."</a>";
 		}
 	}
 	else
 	{
-		$tag_help = "&nbsp;<a href='javascript:centrerpopup(\"http://grr.mutualibre.org/documentation/index.php?mot_clef=".$mot_clef;
+		$tag_help = " <a href='javascript:centrerpopup(\"http://grr.mutualibre.org/documentation/index.php?mot_clef=".$mot_clef;
 			if ($ancre !="")
 				$tag_help .="&amp;ancre=".$ancre;
 			$tag_help .= "\",800,480,\"scrollbars=yes,statusbar=no,resizable=yes\")'><img src=\"img_grr/help.png\" alt=\"Help\" title=\"Help\" width=\"16\" height=\"16\" class=\"image\" /></a>";
@@ -817,7 +817,7 @@ function print_header($day = '', $month = '', $year = '', $area = '', $type_sess
 				echo "<td class=\"logo\"><a href=\"".page_accueil('yes')."day=$day&amp;year=$year&amp;month=$month\"><img src=\"".$nom_picture."\" alt=\"logo\"/></a></td>\n";
 			//Accueil
 			echo "<td class=\"accueil\">\n";
-			echo "&nbsp;<h2><a href=\"".page_accueil('yes')."day=$day&amp;year=$year&amp;month=$month\">".get_vocab("welcome")."";
+			echo " <h2><a href=\"".page_accueil('yes')."day=$day&amp;year=$year&amp;month=$month\">".get_vocab("welcome")."";
 			echo " - <b>".getSettingValue("company")."</b></a></h2>";
 			//Mail réservartion
 			if (isset($use_tooltip_js))
@@ -883,16 +883,16 @@ function print_header($day = '', $month = '', $year = '', $area = '', $type_sess
 				{
 					if ((getSettingValue('sso_statut') == 'cas_visiteur') || (getSettingValue('sso_statut') == 'cas_utilisateur'))
 					{
-						echo "<br />&nbsp;<a href='index.php?force_authentification=y'>".get_vocab("authentification")."</a>";
-						echo "<br />&nbsp;<small><i><a href='login.php'>".get_vocab("connect_local")."</a></i></small>";
+						echo "<br /> <a href='index.php?force_authentification=y'>".get_vocab("authentification")."</a>";
+						echo "<br /> <small><i><a href='login.php'>".get_vocab("connect_local")."</a></i></small>";
 					}
 					else
-						echo "<br />&nbsp;<a href='login.php'>".get_vocab("connect")."</a>";
+						echo "<br /> <a href='login.php'>".get_vocab("connect")."</a>";
 				}
 				else
 				{
-					echo "<br />&nbsp;<b>".get_vocab("welcome_to").htmlspecialchars($_SESSION['prenom'])." ".htmlspecialchars($_SESSION['nom'])."</b>";
-					echo "<br />&nbsp;<a href=\"my_account.php?day=".$day."&amp;year=".$year."&amp;month=".$month."\">".get_vocab("manage_my_account")."</a><br/>";
+					echo "<br /> <b>".get_vocab("welcome_to").htmlspecialchars($_SESSION['prenom'])." ".htmlspecialchars($_SESSION['nom'])."</b>";
+					echo "<br /> <a href=\"my_account.php?day=".$day."&amp;year=".$year."&amp;month=".$month."\">".get_vocab("manage_my_account")."</a><br/>";
 					if (verif_access_search(getUserName()))
 						echo "<a href=\"report.php\">".get_vocab("report")."</a>";
 					$disconnect_link = false;
@@ -900,21 +900,21 @@ function print_header($day = '', $month = '', $year = '', $area = '', $type_sess
 					{
 						$disconnect_link = true;
 						if (getSettingValue("authentification_obli") == 1)
-							echo "<br />&nbsp;<a href=\"./logout.php?auto=0\" >".get_vocab('disconnect')."</a>";
+							echo "<br /> <a href=\"./logout.php?auto=0\" >".get_vocab('disconnect')."</a>";
 						else
-							echo "<br />&nbsp;<a href=\"./logout.php?auto=0&amp;redirect_page_accueil=yes\" >".get_vocab('disconnect')."</a>";
+							echo "<br /> <a href=\"./logout.php?auto=0&amp;redirect_page_accueil=yes\" >".get_vocab('disconnect')."</a>";
 					}
 					if ((getSettingValue("Url_portail_sso")!='') && (isset($_SESSION['est_authentifie_sso'])))
 					{
 						if ($disconnect_link)
-							echo "&nbsp;-&nbsp;";
+							echo " - ";
 						else
-							echo "<br />&nbsp;";
+							echo "<br /> ";
 						echo('<a href="'.getSettingValue("Url_portail_sso").'">'.get_vocab("Portail_accueil").'</a>');
 					}
 					if ((getSettingValue('sso_statut') == 'lasso_visiteur') || (getSettingValue('sso_statut') == 'lasso_utilisateur'))
 					{
-						echo "<br />&nbsp;";
+						echo "<br /> ";
 						if ($_SESSION['lasso_nameid'] == NULL)
 							echo "<a href=\"lasso/federate.php\">".get_vocab('lasso_federate_this_account')."</a>";
 						else
@@ -1383,7 +1383,7 @@ function genDateSelectorForm($prefix, $day, $month, $year,$option)
 								$hour_min_format = "H:i";
 							else
 								$hour_min_format = "h:ia";
-							return date($hour_min_format,$t) ."&nbsp;-&nbsp;".date($hour_min_format,$t+$resolution);
+							return date($hour_min_format,$t) ." - ".date($hour_min_format,$t+$resolution);
 						}
 						function hour_min_format()
 						{
@@ -1770,7 +1770,7 @@ function make_site_list_html($link,$current_site,$year,$month,$day,$user)
 			if ($row[0] == $current_site)
 			{
 				$out_html .= '
-				<b><a id="liste_select"   href="'.$link.'?year='.$year.'&amp;month='.$month.'&amp;day='.$day.'&amp;id_site='.$row[0].'" title="'.$row[1].'">&gt;&nbsp;'.htmlspecialchars($row[1]).'</a></b>
+				<b><a id="liste_select"   href="'.$link.'?year='.$year.'&amp;month='.$month.'&amp;day='.$day.'&amp;id_site='.$row[0].'" title="'.$row[1].'">&gt; '.htmlspecialchars($row[1]).'</a></b>
 				<br />'."\n";
 			} else {
 				$out_html .= '
@@ -1815,9 +1815,9 @@ function make_area_list_html($link, $current_site, $current_area, $year, $month,
 		if (authUserAccesArea($user,$row[0])==1) {
 			if ($row[0] == $current_area)
 			{
-				echo "<a id=\"liste_select\" onclick=\"charger();\" href=\"".$link."?year=$year&amp;month=$month&amp;day=$day&amp;area=$row[0]\">&gt;&nbsp;".htmlspecialchars($row[1])."</a></b><br />\n";
+				echo "<a id=\"liste_select\" onclick=\"charger();\" href=\"".$link."?year=$year&amp;month=$month&amp;day=$day&amp;area=$row[0]\">&gt; ".htmlspecialchars($row[1])."</a></b><br />\n";
 			} else {
-				echo "<a id=\"liste\" onclick=\"charger();\" href=\"".$link."?year=$year&amp;month=$month&amp;day=$day&amp;area=$row[0]\">&gt;&nbsp;".htmlspecialchars($row[1])."</a><br />\n";
+				echo "<a id=\"liste\" onclick=\"charger();\" href=\"".$link."?year=$year&amp;month=$month&amp;day=$day&amp;area=$row[0]\">&gt; ".htmlspecialchars($row[1])."</a><br />\n";
 			}
 		}
 	}
@@ -1836,7 +1836,7 @@ function make_room_list_html($link,$current_area, $current_room, $year, $month, 
 			if (verif_acces_ressource(getUserName(), $row[0]))
 			{
 				if ($row[0] == $current_room)
-					echo "<span id=\"liste_select\">&gt;&nbsp;".htmlspecialchars($row[1])."</span><br />\n";
+					echo "<span id=\"liste_select\">&gt; ".htmlspecialchars($row[1])."</span><br />\n";
 				else
 					echo "<a id=\"liste\" onclick=\"charger();\" href=\"".$link."?year=$year&amp;month=$month&amp;day=$day&amp;&amp;room=$row[0]\">".htmlspecialchars($row[1]). "</a><br />\n";
 			}
@@ -2240,7 +2240,7 @@ function send_mail($id_entry, $action, $dformat, $tab_id_moderes = array())
 	$reservation = $reservation.$vocab["start_of_the_booking"]." ".$start_date."\n";
 	$reservation = $reservation.$vocab["duration"]." ".$duration." ".$dur_units."\n";
 	if (trim($breve_description) != "")
-		$reservation = $reservation.$vocab["namebooker"].preg_replace("/&nbsp;/", " ",$vocab["deux_points"])." ".$breve_description."\n";
+		$reservation = $reservation.$vocab["namebooker"].preg_replace("/ /", " ",$vocab["deux_points"])." ".$breve_description."\n";
 	else
 		$reservation = $reservation.$vocab["entryid"].$room_id."\n";
 	if ($description !='')
@@ -2251,7 +2251,7 @@ function send_mail($id_entry, $action, $dformat, $tab_id_moderes = array())
 		$temp = "?".$row[5]."?";
 	else
 		$temp = removeMailUnicode($temp);
-	$reservation = $reservation.$vocab["type"].preg_replace("/&nbsp;/", " ",$vocab["deux_points"])." ".$temp."\n";
+	$reservation = $reservation.$vocab["type"].preg_replace("/ /", " ",$vocab["deux_points"])." ".$temp."\n";
 	if ($rep_type != 0)
 		$reservation = $reservation.$vocab["rep_type"]." ".$affiche_period."\n";
 	if ($rep_type != 0)
@@ -2271,7 +2271,7 @@ function send_mail($id_entry, $action, $dformat, $tab_id_moderes = array())
 		if ($rep_type == 6)
 		{
 			if (getSettingValue("jours_cycles_actif") == "Oui")
-				$reservation = $reservation.$vocab["rep_type_6"].preg_replace("/&nbsp;/", " ",$vocab["deux_points"]).ucfirst(substr($vocab["rep_type_6"],0,1)).$jours_cycle."\n";
+				$reservation = $reservation.$vocab["rep_type_6"].preg_replace("/ /", " ",$vocab["deux_points"]).ucfirst(substr($vocab["rep_type_6"],0,1)).$jours_cycle."\n";
 		}
 		$reservation = $reservation.$vocab["rep_end_date"]." ".$rep_end_date."\n";
 	}

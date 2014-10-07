@@ -142,7 +142,7 @@ $vocab['all_day'] = "Full day";
 $vocab['all_day2'] = "==========";
 $vocab['all_rooms'] = "All resources";
 $vocab['all_rooms_of_area'] = "For all the resources of the area";
-$vocab['areas'] = "Areas:&nbsp;";
+$vocab['areas'] = "Areas: ";
 $vocab['attention_mail_automatique_désactive'] = "CAUTION: the sending of automatic mails is currently disabled. To activate it, go in the general control panel.";
 $vocab['aucun autilisateur'] = "No user has some privileges";
 $vocab['aucune_correspondance'] = "Aucune correspondance profil / statut GRR actuellement enregistrée"; // A traduire

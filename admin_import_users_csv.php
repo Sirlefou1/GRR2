@@ -87,7 +87,7 @@ if ($reg_data != 'yes')
 			<div>
 				<input type="hidden" name="is_posted" value="1" />
 				<p>
-					<?php echo get_vocab("admin_import_users_csv1"); ?>&nbsp;
+					<?php echo get_vocab("admin_import_users_csv1"); ?> 
 					<input type="checkbox" name="en_tete" value="yes" checked="checked" />
 				</p>
 				<input type="submit" value="<?php echo get_vocab("submit");?>" />
@@ -214,7 +214,7 @@ if ($reg_data != 'yes')
 										if ((preg_match ("`^.{".$pass_leng.",30}$`", $data[$c])) || ($data[$c] == ''))
 										{
 											$data_mdp = htmlentities($data[$c]);
-											echo "<td><p>$data[$c]&nbsp;</p>";
+											echo "<td><p>$data[$c] </p>";
 											echo "<input type=\"hidden\" name=\"reg_mdp[$row]\" value=\"$data_mdp\" /></td>";
 										}
 										else
@@ -228,7 +228,7 @@ if ($reg_data != 'yes')
 										if ((preg_match ("`^.{1,100}$`", $data[$c])) || ($data[$c] ==''))
 										{
 											$data_email = htmlentities($data[$c]);
-											echo "<td><p>$data[$c]&nbsp;</p>";
+											echo "<td><p>$data[$c] </p>";
 											echo "<input type=\"hidden\" name=\"reg_email[$row]\" value=\"$data_email\" /></td>";
 										}
 										else if ($data[$c]=='-')
@@ -253,7 +253,7 @@ if ($reg_data != 'yes')
 										if (preg_match ($filtre, $data[$c]))
 										{
 											$data_type_user = htmlentities($data[$c]);
-											echo "<td><p>$data[$c]&nbsp;</p>";
+											echo "<td><p>$data[$c] </p>";
 											echo "<input type=\"hidden\" name=\"reg_type_user[$row]\" value=\"$data_type_user\" /></td>";
 										}
 										else
@@ -267,7 +267,7 @@ if ($reg_data != 'yes')
 										if (preg_match ("`(actif|inactif)`", $data[$c]))
 										{
 											$data_statut = htmlentities($data[$c]);
-											echo "<td><p>$data[$c]&nbsp;</p>";
+											echo "<td><p>$data[$c] </p>";
 											echo "<input type=\"hidden\" name=\"reg_statut[$row]\" value=\"$data_statut\" /></td>";
 										} else {
 											echo "<td><font color=\"red\">???</font></td>";
@@ -290,7 +290,7 @@ if ($reg_data != 'yes')
 											}
 											else
 											{
-												echo "<td><p>$data[$c]&nbsp;</p>";
+												echo "<td><p>$data[$c] </p>";
 												echo "<input type=\"hidden\" name=\"reg_type_auth[$row]\" value=\"$data_type_auth\" /></td>";
 											}
 										}

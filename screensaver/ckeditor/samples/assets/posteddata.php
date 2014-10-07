@@ -19,7 +19,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		<colgroup><col width="120"></colgroup>
 		<thead>
 			<tr>
-				<th>Field&nbsp;Name</th>
+				<th>Field Name</th>
 				<th>Value</th>
 			</tr>
 		</thead>

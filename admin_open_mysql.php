@@ -94,7 +94,7 @@ if (!$file_name)
 		echo "</td></tr></table>";
 	}
 	echo "<h1>" .  get_vocab("sure") . "</h1>";
-	echo "<h1><a href=\"admin_open_mysql.php?file_name=$file_name\">" . get_vocab("YES") . "!</a> &nbsp;&nbsp;&nbsp; <a href=\"admin_config.php?page_config=4\">" . get_vocab("NO") . "!</a></h1>";
+	echo "<h1><a href=\"admin_open_mysql.php?file_name=$file_name\">" . get_vocab("YES") . "!</a>     <a href=\"admin_config.php?page_config=4\">" . get_vocab("NO") . "!</a></h1>";
 	echo "</div>";
 }
 else

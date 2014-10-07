@@ -73,7 +73,7 @@ if (!$res)
 $row = grr_sql_row_keyed($res, 0);
 grr_sql_free($res);
 echo '<h3 style="text-align:center;">';
-echo get_vocab("match_area").get_vocab("deux_points")."&nbsp;".htmlspecialchars($row["area_name"]);
+echo get_vocab("match_area").get_vocab("deux_points")." ".htmlspecialchars($row["area_name"]);
 $area_access = $row["access"];
 if ($area_access == 'r')
 	echo " (<span class=\"avertissement\">".get_vocab("access")."</span>)";

@@ -192,11 +192,11 @@ if ($res) {
     echo "</tr>";
     }
 
-   echo "<tr><td>&nbsp;</td>\n";
-   echo "<td>&nbsp;</td>\n";
-   echo "<td>&nbsp;</td>\n";
-   echo "<td>&nbsp;</td>\n";
-   echo "<td>&nbsp;</td>\n";
+   echo "<tr><td> </td>\n";
+   echo "<td> </td>\n";
+   echo "<td> </td>\n";
+   echo "<td> </td>\n";
+   echo "<td> </td>\n";
    echo "<td><input type=\"radio\" name=\"id_type_par_defaut\" value=\"-1\" ";
        $test = grr_sql_query1("select id_type_par_defaut from ".TABLE_PREFIX."_area where id = '".$id_area."'");
        if ($test <= 0) echo " checked=\"checked\"";
@@ -207,7 +207,7 @@ echo "</table>";
 echo "</td></tr></table>";
 echo "<div style=\"text-align:center;\"><input type=\"hidden\" name=\"id_area\" value=\"".$id_area."\" />";
 echo "<input type=\"submit\" name=\"valider\" value=\"".get_vocab("save")."\" />\n";
-echo "&nbsp;&nbsp;&nbsp;<input type=\"submit\" name=\"change_done\" value=\"".get_vocab("back")."\" />";
+echo "   <input type=\"submit\" name=\"change_done\" value=\"".get_vocab("back")."\" />";
 echo "</div>";
 echo "</form>\n";
 echo "</div>";

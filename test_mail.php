@@ -54,7 +54,7 @@ input { text-indent : 2px; }
               						<table border="0" cellpadding="3" cellspacing="1" width="100%">
                 						<tbody>
                 							<tr>
-                  								<td colspan="2" align="center">&nbsp;</td>
+                  								<td colspan="2" align="center"> </td>
                 							</tr>
                 							<tr>
                   								<td align="right" width="45%"><span class="gen">Votre adresse email:</span></td>

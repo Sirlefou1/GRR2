@@ -17,7 +17,7 @@ CKEDITOR.dialog.add( 'colordialog', function( editor )
 		var spacer =
 		{
 			type : 'html',
-			html : '&nbsp;'
+			html : ' '
 		};
 
 		function clearSelected()
@@ -56,7 +56,7 @@ CKEDITOR.dialog.add( 'colordialog', function( editor )
 		function clearHighlight()
 		{
 			$doc.getById( hicolorId ).removeStyle( 'background-color' );
-			$doc.getById( hicolorTextId ).setHtml( '&nbsp;' );
+			$doc.getById( hicolorTextId ).setHtml( ' ' );
 		}
 
 		var onMouseout = $tools.addFunction( clearHighlight ),
@@ -210,7 +210,7 @@ CKEDITOR.dialog.add( 'colordialog', function( editor )
 						' style="cursor: pointer;display:block;width:100%;height:100% " title="'+ CKEDITOR.tools.htmlEncode( color )+ '"' +
 						' onkeydown="CKEDITOR.tools.callFunction( ' + onKeydownHandler + ', event, this )"' +
 						' onclick="CKEDITOR.tools.callFunction(' + onClickHandler + ', event, this ); return false;"' +
-						' tabindex="-1"><span class="cke_voice_label">' + color + '</span>&nbsp;</a>', CKEDITOR.document ) );
+						' tabindex="-1"><span class="cke_voice_label">' + color + '</span> </a>', CKEDITOR.document ) );
 			}
 
 			appendColorRow( 0, 0 );
@@ -294,7 +294,7 @@ CKEDITOR.dialog.add( 'colordialog', function( editor )
 											type : 'html',
 											html : '<span>' + lang.highlight +'</span>\
 												<div id="' + hicolorId + '" style="border: 1px solid; height: 74px; width: 74px;"></div>\
-												<div id="' + hicolorTextId + '">&nbsp;</div><span>' + lang.selected + '</span>\
+												<div id="' + hicolorTextId + '"> </div><span>' + lang.selected + '</span>\
 												<div id="' + selHiColorId + '" style="border: 1px solid; height: 20px; width: 74px;"></div>'
 										},
 										{
