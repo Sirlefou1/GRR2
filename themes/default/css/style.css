@@ -519,4 +519,8 @@
 
 .btn-lg, .btn-group-lg>.btn {
 padding: 0px !important;
-+
+}
+
+.jour_sem {
+	width : 10% !important;
+}

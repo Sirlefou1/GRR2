@@ -372,7 +372,7 @@ else
 	echo "</div>";
 	echo "\n<div class=\"contenu_planning\">\n" ;
 	echo "<table cellspacing=\"0\" class=\"table-bordered\" width=\"100%\">\n<thead><tr>";
-	echo "<th width=\"10%\"> </th>\n";
+	echo "<th class=\"jour_sem\"> </th>\n";
 	$t = $time;
 	$num_week_day = $weekstarts;
 	for ($weekcol = 0; $weekcol < 7; $weekcol++)
@@ -392,7 +392,7 @@ else
 		}
 		if ($display_day[$num_week_day] == 1)
 		{
-			echo "<th width=\"10%\"><a class=\"lienPlanning\" href='day.php?year=".$temp_year."&amp;month=".$temp_month."&amp;day=".$num_day."&amp;area=".$area."'>"  . day_name(($weekcol + $weekstarts) % 7) . " ".$num_day. " ".$temp_month2."</a>";
+			echo "<th class=\"jour_sem\"><a class=\"lienPlanning\" href='day.php?year=".$temp_year."&amp;month=".$temp_month."&amp;day=".$num_day."&amp;area=".$area."'>"  . day_name(($weekcol + $weekstarts) % 7) . " ".$num_day. " ".$temp_month2."</a>";
 			if (getSettingValue("jours_cycles_actif") == "Oui" && intval($jour_cycle) >- 1)
 				if (intval($jour_cycle) > 0)
 					echo "<br />".get_vocab("rep_type_6")." ".$jour_cycle;
