@@ -1504,7 +1504,7 @@ function show_colour_key($area_id)
 	$res = grr_sql_query($sql);
 	if ($res)
 	{
-		$nct = 0;
+		$nct = -1;
 		for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 		{
 			// La requête sql précédente laisse passer les cas où un type est non valide dans le domaine concerné ET au moins dans un autre domaine, d'où le test suivant
@@ -1514,6 +1514,8 @@ function show_colour_key($area_id)
 				$id_type     = $row[0];
 				$type_name   = $row[1];
 				$type_letter = $row[2];
+				if ($nct == -1)
+					echo "><tr>";
 				if (++$nct == 2)
 				{
 					$nct = 0;
