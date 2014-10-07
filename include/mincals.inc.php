@@ -178,7 +178,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 					$bg_lign = " class=\"week\"";
 				else
 					$bg_lign = '';
-				$s .= "<tr ".$bg_lign."><td class=\"calendarcol1\" id=\"lienSemaine\">";
+				$s .= "<tr ".$bg_lign."><td class=\"calendarcol1 lienSemaine\">";
 				#Affichage du numéro de la semaine en cours à droite du calendrier et génère un lien sur la semaine voulue.
 				if (($this->dmy != 'day') && ($this->dmy != 'week_all') && ($this->dmy != 'month_all') && ($this->dmy != 'month_all2'))
 					$s .="<a onclick=\"charger();\" title=\"".htmlspecialchars(get_vocab("see_week_for_this_room"))."\" href=\"week.php?year=$this->year&amp;month=$this->month&amp;day=$temp&amp;area=$this->area&amp;room=$this->room\">".sprintf("%02d",$week)."</a>";
