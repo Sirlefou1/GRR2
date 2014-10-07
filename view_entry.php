@@ -47,6 +47,7 @@ if (!grr_resumeSession())
 }
 // Paramètres langage
 include "include/language.inc.php";
+
 $fin_session = 'n';
 if (!grr_resumeSession())
 	$fin_session = 'y';
