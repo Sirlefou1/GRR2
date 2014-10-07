@@ -454,7 +454,7 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 			$nom_modo = $row3[1]. ' '. $row3[0];
 			if (authGetUserLevel(getUserName(), -1) > 1)
 			{
-				echo '<tr><td><b>'.get_vocab("moderation").get_vocab("deux_points").'</b></td><td><strong>'.get_vocab("moderation_acceptee_par").'&nbsp;'.$nom_modo.'</strong>';
+				echo '<tr><td><b>'.get_vocab("moderation").get_vocab("deux_points").'</b></td><td><strong>'.get_vocab("moderation_acceptee_par").' '.$nom_modo.'</strong>';
 				if ($description != "")
 					echo ' : <br />('.$description.')';
 				echo "</td></tr>";
