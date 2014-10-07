@@ -254,7 +254,7 @@ function affiche_ressource_empruntee($id_room, $type = "logo")
 				$beneficiaire = grr_sql_query1("select beneficiaire from ".TABLE_PREFIX."_entry where room_id = '".$id_room."' and statut_entry='y'");
 				$beneficiaire_ext = grr_sql_query1("select beneficiaire_ext from ".TABLE_PREFIX."_entry where room_id = '".$id_room."' and statut_entry='y'");
 				echo "<br /><b><span class='avertissement'><img src=\"img_grr/buzy_big.png\" alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("ressource actuellement empruntee")."\" width=\"30\" height=\"30\" class=\"image\" />
-				 ".get_vocab("ressource actuellement empruntee")." ".get_vocab("nom emprunteur").get_vocab("deux_points").affiche_nom_prenom_email($beneficiaire,$beneficiaire_ext,"withmail").
+				".get_vocab("ressource actuellement empruntee")." ".get_vocab("nom emprunteur").get_vocab("deux_points").affiche_nom_prenom_email($beneficiaire,$beneficiaire_ext,"withmail").
 				". <a href='view_entry?id=$id_resa'>".get_vocab("entryid").$id_resa.
 				"</a></span></b>";
 			}
@@ -737,7 +737,12 @@ function begin_page($title,$page="with_session")
 		$a .= $charset_html;
 	$a .= "\" />";
 	$a .="\n<meta name=\"Robots\" content=\"noindex\" />";
-	$a .="</head><body>";
+	if (isset($use_prototype))
+		$a .="<link rel=\"stylesheet\" href=\"http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css\" />";
+	$a .="<script src=\"jquery-ui.js\"></script>";
+	$a .="<script src=\"jquery.validate.js\"></script>";
+	$a .="<script src=\"jquery-ui-timepicker-addon.js\"></script>";
+	$a .="<link href=\"themes/default/css/jquery-ui-timepicker-addon.css\" rel=\"stylesheet\" type=\"text/css\">";
 	// Anthony Archambeau - Inclusion des différents éléments de jspdf.
 	$a .='<script src="jspdf/jspdf.js"></script>'.PHP_EOL;
 	$a .='<script src="jspdf/libs/FileSaver.js/FileSaver.js"></script>'.PHP_EOL;
@@ -760,6 +765,7 @@ function begin_page($title,$page="with_session")
 	//show a warning if this is using a low version of php
 	if (substr(phpversion(), 0, 1) == 3)
 		$a .=get_vocab('not_php3');
+	$a .="</head><body>";
 	return $a;
 }
 /*
@@ -927,12 +933,7 @@ function print_header($day = '', $month = '', $year = '', $area = '', $type_sess
 	</table>
 	<?php
 }
-if (isset($use_prototype))
-	echo "<link rel=\"stylesheet\" href=\"http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css\" />";
-echo "<script src=\"jquery-ui.js\"></script>";
-echo "<script src=\"jquery.validate.js\"></script>";
-echo "<script src=\"jquery-ui-timepicker-addon.js\"></script>";
-echo "<link href=\"themes/default/css/jquery-ui-timepicker-addon.css\" rel=\"stylesheet\" type=\"text/css\">";
+
 }
 }
 
@@ -2514,32 +2515,32 @@ function getWritable($beneficiaire, $user, $id)
 			R5 -> on retourne 1 si l'utilisateur U peut réserver la ressource pour B
 			R6 -> on retourne 0 sinon (si on permettait à U d'éditer la résa, il ne pourrait de toute façon pas la modifier)
 	*/
-	if (($user != $beneficiaire) && ($user != $owner))
-		return 0;
-	else if ($user == $beneficiaire)
-	{
-		if ($dont_allow_modify == 'y')
-			return 0;
-		else
-			return 1;
-	}
-	else if ($user == $owner)
-	{
-		if ($dont_allow_modify == 'y')
-			return 0;
-		else
-		{
-			$qui_peut_reserver_pour  = grr_sql_query1("SELECT qui_peut_reserver_pour FROM ".TABLE_PREFIX."_room WHERE id='".$id_room."'");
-			if (authGetUserLevel($user, $id_room) >= $qui_peut_reserver_pour)
-				return 1;
+			if (($user != $beneficiaire) && ($user != $owner))
+				return 0;
+			else if ($user == $beneficiaire)
+			{
+				if ($dont_allow_modify == 'y')
+					return 0;
+				else
+					return 1;
+			}
+			else if ($user == $owner)
+			{
+				if ($dont_allow_modify == 'y')
+					return 0;
+				else
+				{
+					$qui_peut_reserver_pour  = grr_sql_query1("SELECT qui_peut_reserver_pour FROM ".TABLE_PREFIX."_room WHERE id='".$id_room."'");
+					if (authGetUserLevel($user, $id_room) >= $qui_peut_reserver_pour)
+						return 1;
+					else
+						return 0;
+				}
+			}
 			else
 				return 0;
+			return 0;
 		}
-	}
-	else
-		return 0;
-return 0;
-}
 /* auth_visiteur($user,$id_room)
  *
  * Determine si un visiteur peut réserver une ressource
@@ -3721,16 +3722,16 @@ function find_user_room ($id_room)
 }
 function validate_email ($email)
 {
-		$atom   = '[-a-z0-9!#$%&\'*+\\/=?^_`{|}~]';
+	$atom   = '[-a-z0-9!#$%&\'*+\\/=?^_`{|}~]';
 		// caractères autorisés avant l'arobase
-		$domain = '([a-z0-9]([-a-z0-9]*[a-z0-9]+)?)';
+	$domain = '([a-z0-9]([-a-z0-9]*[a-z0-9]+)?)';
 		// caractères autorisés après l'arobase (nom de domaine)
-		$regex = '/^' . $atom . '+' . '(\.' . $atom . '+)*' . '@' . '(' . $domain . '{1,63}\.)+' . $domain . '{2,63}$/i';
-		if (preg_match($regex, $email))
-			return true;
-		else
-			return false;
-	}
+	$regex = '/^' . $atom . '+' . '(\.' . $atom . '+)*' . '@' . '(' . $domain . '{1,63}\.)+' . $domain . '{2,63}$/i';
+	if (preg_match($regex, $email))
+		return true;
+	else
+		return false;
+}
 /** grrDelOverloadFromEntries()
  * Supprime les données du champ $id_field de toutes les réservations
  */
@@ -4062,71 +4063,71 @@ function affiche_nom_prenom_email($_beneficiaire, $_beneficiaire_ext, $type = "n
 			$nb_result = grr_sql_count($res_beneficiaire);
 			if ($nb_result == 0)
 				$chaine = get_vocab("utilisateur_inconnu").$_beneficiaire.")";
-			else
-			{
-				$row_user = grr_sql_row($res_beneficiaire, 0);
-				if ($type == "formail")
-				{
-					$chaine = removeMailUnicode($row_user[0])." ".removeMailUnicode($row_user[1]);
-					if ($row_user[2] != "")
-						$chaine .= " (".$row_user[2].")";
-				}
-				else if ($type == "onlymail")
-				{
+else
+{
+	$row_user = grr_sql_row($res_beneficiaire, 0);
+	if ($type == "formail")
+	{
+		$chaine = removeMailUnicode($row_user[0])." ".removeMailUnicode($row_user[1]);
+		if ($row_user[2] != "")
+			$chaine .= " (".$row_user[2].")";
+	}
+	else if ($type == "onlymail")
+	{
 					// Cas où en envoie uniquement le mail
-					$chaine = grr_sql_query1("select email from ".TABLE_PREFIX."_utilisateurs where login='$_beneficiaire'");
-				}
-				else if (($type == "withmail") and ($row_user[2] != ""))
-				{
+		$chaine = grr_sql_query1("select email from ".TABLE_PREFIX."_utilisateurs where login='$_beneficiaire'");
+	}
+	else if (($type == "withmail") and ($row_user[2] != ""))
+	{
 					// Cas où en envoie les noms, prénoms et mail
-					$chaine = affiche_lien_contact($_beneficiaire,"identifiant:oui","afficher_toujours");
-				}
-				else
-				{
-					// Cas où en envoie les noms, prénoms sans le mail
-					$chaine = $row_user[0]." ".$row_user[1];
-				}
-			}
-			return $chaine;
-			die();
-		}
-		else
-		{
-			return "";
-			die();
-		}
+		$chaine = affiche_lien_contact($_beneficiaire,"identifiant:oui","afficher_toujours");
 	}
 	else
 	{
+					// Cas où en envoie les noms, prénoms sans le mail
+		$chaine = $row_user[0]." ".$row_user[1];
+	}
+}
+return $chaine;
+die();
+}
+else
+{
+	return "";
+	die();
+}
+}
+else
+{
 		// cas d'un bénéficiaire extérieur
 		// On récupère le tableau des nom et emails
-		$tab_benef = donne_nom_email($_beneficiaire_ext);
+	$tab_benef = donne_nom_email($_beneficiaire_ext);
 		// Cas où en envoie uniquement le mail
-		if ($type == "onlymail")
-		{
-			$chaine = $tab_benef["email"];
+	if ($type == "onlymail")
+	{
+		$chaine = $tab_benef["email"];
 			// Cas où en envoie les noms, prénoms et mail
-		}
-		else if (($type == "withmail") && ($tab_benef["email"] != ""))
+	}
+	else if (($type == "withmail") && ($tab_benef["email"] != ""))
+	{
+		$email = explode('@',$tab_benef["email"]);
+		$person = $email[0];
+		if (isset($email[1]))
 		{
-			$email = explode('@',$tab_benef["email"]);
-			$person = $email[0];
-			if (isset($email[1]))
-			{
-				$domain = $email[1];
-				$chaine = "<script type=\"text/javascript\">encode_adresse('".$person."','".$domain."','".AddSlashes($tab_benef["nom"])."',1);</script>";
-			}
-			else
-				$chaine = $tab_benef["nom"];
+			$domain = $email[1];
+			$chaine = "<script type=\"text/javascript\">encode_adresse('".$person."','".$domain."','".AddSlashes($tab_benef["nom"])."',1);</script>";
 		}
 		else
-		{
-		// Cas où en envoie les noms, prénoms sans le mail
 			$chaine = $tab_benef["nom"];
-		}
-		return $chaine;
-		die();
 	}
+	else
+	{
+		// Cas où en envoie les noms, prénoms sans le mail
+		$chaine = $tab_benef["nom"];
+	}
+	return $chaine;
+	die();
+}
 }
 /*
  Fonction permettant d'effectuer une correspondance entre
