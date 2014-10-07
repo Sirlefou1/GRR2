@@ -145,7 +145,7 @@ if ($type == "area")
 		//There are rooms left in the area
 		//print the page header
 		print_header("", "", "", "", $type = "with_session", $page = "admin");
-		print_banner("", "", "", "", $type = "with_session", $page = "admin");
+		//print_banner("", "", "", "", $type = "with_session", $page = "admin");
 		echo "<div class=\"page_sans_col_gauche\">";
 		echo "<p>".get_vocab('delarea');
 		echo "<br /><a href=\"admin_room.php?id_area=$id_area&amp;id_site=$id_site\">" . get_vocab('back') . "</a></p></div>";
