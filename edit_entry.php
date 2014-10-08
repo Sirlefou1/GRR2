@@ -766,11 +766,11 @@ echo '<tr><td class="CL">'.PHP_EOL;
 echo '<table border="0">'.PHP_EOL;
 echo '<tr><td>'.PHP_EOL;
 jQuery_DatePicker('start');
-echo '</td><td class="E"><b>'.PHP_EOL;
+echo '</td></tr><tr><td class="E">'.PHP_EOL;
 if ($enable_periods == 'y')
 {
-	echo get_vocab("period")."</b>\n";
-	echo '<select name="period">'.PHP_EOL;
+	echo '<b>'.get_vocab("period").'</b>'.PHP_EOL;
+	echo '<select class="form-control" name="period">'.PHP_EOL;
 	foreach ($periods_name as $p_num => $p_val)
 	{
 		echo '<option value="'.$p_num.'"';
@@ -778,11 +778,11 @@ if ($enable_periods == 'y')
 			echo ' selected="selected"';
 		echo '>'.$p_val.'</option>'.PHP_EOL;
 	}
-	echo "</select>\n";
+	echo '</select>'.PHP_EOL;
 }
 else
 {
-	echo get_vocab("time")."</b>";
+	echo '<b>'.get_vocab("time")."</b>";
 	if (isset ($_GET['id']))
 	{
 		jQuery_TimePicker('start','','','',$start_hour,$start_min,$resolution);
@@ -807,8 +807,12 @@ if ($type_affichage_reser == 0)
 	echo '<b>'.get_vocab("duration").'</b>'.PHP_EOL;
 	echo '</td></tr>'.PHP_EOL;
 	echo '<tr><td class="CL">'.PHP_EOL;
+	echo '<div class="row">'.PHP_EOL;
+  	echo '<div class="col-xs-2">'.PHP_EOL;
 	spinner($duration);
-	echo '<select name="dur_units" size="1">'.PHP_EOL;
+	echo '</div>'.PHP_EOL;
+	echo '<div class="col-xs-2">'.PHP_EOL;
+	echo '<select class="form-control" name="dur_units" size="1">'.PHP_EOL;
 	if ($enable_periods == 'y')
 		$units = array("periods", "days");
 	else
@@ -827,13 +831,15 @@ if ($type_affichage_reser == 0)
 	}
 	while (list(,$unit) = each($units))
 	{
-		echo "<option value=\"".$unit."\"";
-		if ($dur_units ==  get_vocab($unit)) echo " selected=\"selected\"";
-		echo ">".get_vocab($unit)."</option>\n";
+		echo '<option value="'.$unit.'"';
+		if ($dur_units ==  get_vocab($unit))
+			echo ' selected="selected"';
+		echo '>'.get_vocab($unit).'</option>'.PHP_EOL;
 	}
-	echo "</select>\n";
+	echo '</select>'.PHP_EOL;
+	echo '</div>'.PHP_EOL;
 	$fin_jour = $eveningends;
-	$minute = $resolution/60;
+	$minute = $resolution / 60;
 	$minute_restante = $minute % 60;
 	$heure_ajout = ($minute - $minute_restante)/60;
 	if ($minute_restante < 10)
@@ -842,13 +848,14 @@ if ($type_affichage_reser == 0)
 	if ($heure_finale > 24)
 	{
 		$heure_finale_restante = $heure_finale % 24;
-		$nb_jour = ($heure_finale - $heure_finale_restante)/24;
+		$nb_jour = ($heure_finale - $heure_finale_restante) / 24;
 		$heure_finale = $nb_jour. " ". $vocab["days"]. " + ". $heure_finale_restante;
 	}
 	$af_fin_jour = $heure_finale." H ".$minute_restante;
 	echo '<input name="all_day" type="checkbox" value="yes" />'.get_vocab("all_day");
 	if ($enable_periods!='y')
 		echo ' ('.$morningstarts.' H - '.$af_fin_jour.')';
+	echo '</div>'.PHP_EOL;
 	echo '</td></tr>'.PHP_EOL;
 }
 else

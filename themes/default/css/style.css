@@ -524,3 +524,7 @@ padding: 0px !important;
 .jour_sem {
 	width : 10% !important;
 }
+
+.ui-spinner-input {
+	margin: 0 !important;
+}

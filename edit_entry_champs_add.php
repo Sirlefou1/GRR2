@@ -40,82 +40,87 @@
  *
  *
  */
-
 include "include/admin.inc.php";
-
 /* Ce script a besoin de trois arguments passés par la méthode GET :
 $id : l'identifiant de la réservation (0 si nouvelle réservation)
 $areas : l'identifiant du domaine
 $room : l'identifiant de la ressource
 */
-
 // Initialisation
-if (isset($_GET["id"])) {
-  $id = $_GET["id"];
-  settype($id,"integer");
-} else die();
-
-if (isset($_GET['areas'])) {
-  $areas = $_GET['areas'];
-  settype($areas,"integer");
-}
-else die();
-if (isset($_GET['room'])) {
-  $room = $_GET['room'];
-  if ($room != "") settype($room,"integer");
-}
-else die();
-
-
-if ((authGetUserLevel(getUserName(),-1) < 2) and (auth_visiteur(getUserName(),$room) == 0))
+if (isset($_GET["id"]))
 {
-    showAccessDenied("","","","","");
-    exit();
+	$id = $_GET["id"];
+	settype($id,"integer");
 }
-
-if (authUserAccesArea(getUserName(), $areas)==0)
-{
-    showAccessDenied("","","","","");
-    exit();
-}
-
-// Champs additionneles : on récupère les données de la réservation si il y en a
-if ($id !=0)
-    $overload_data = mrbsEntryGetOverloadDesc($id);
-
-if ($unicode_encoding)
- header("Content-Type: text/html;charset=utf-8");
 else
- header("Content-Type: text/html;charset=".$charset_html);
-
+	die();
+if (isset($_GET['areas']))
+{
+	$areas = $_GET['areas'];
+	settype($areas,"integer");
+}
+else
+	die();
+if (isset($_GET['room']))
+{
+	$room = $_GET['room'];
+	if ($room != "")
+		settype($room,"integer");
+}
+else
+	die();
+if ((authGetUserLevel(getUserName(), -1) < 2) && (auth_visiteur(getUserName(), $room) == 0))
+{
+	showAccessDenied("", "", "", "", "");
+	exit();
+}
+if (authUserAccesArea(getUserName(), $areas) == 0)
+{
+	showAccessDenied("", "", "", "", "");
+	exit();
+}
+// Champs additionneles : on récupère les données de la réservation si il y en a
+if ($id != 0)
+	$overload_data = mrbsEntryGetOverloadDesc($id);
+if ($unicode_encoding)
+	header("Content-Type: text/html;charset=utf-8");
+else
+	header("Content-Type: text/html;charset=".$charset_html);
 header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-
 // Boucle sur les areas
 $overload_fields = mrbsOverloadGetFieldslist($areas);
-foreach ($overload_fields as $fieldname=>$fieldtype) {
-        if ($overload_fields[$fieldname]["obligatoire"] == "y") $flag_obli = " *" ; else $flag_obli = "";
-        echo "<table width=\"100%\" id=\"id_".$areas."_".$overload_fields[$fieldname]["id"]."\">";
-        echo "<tr><td class=E><b>".removeMailUnicode($fieldname).$flag_obli."</b></td></tr>\n";
-        if (isset($overload_data[$fieldname]["valeur"]))
-            $data = $overload_data[$fieldname]["valeur"];
-        else
-            $data = "";
-        if ($overload_fields[$fieldname]["type"] == "textarea" )
-            echo "<tr><td><textarea cols=\"80\" rows=\"2\" name=\"addon_".$overload_fields[$fieldname]["id"]."\">".htmlentities(removeMailUnicode($data))."</textarea></td></tr>\n";
-        else if ($overload_fields[$fieldname]["type"] == "text" )
-            echo "<tr><td><input size=\"80\" type=\"text\" name=\"addon_".$overload_fields[$fieldname]["id"]."\" value=\"".htmlentities(removeMailUnicode($data))."\" /></td></tr>\n";
-        else if ($overload_fields[$fieldname]["type"] == "numeric" )
-            echo "<tr><td><input size=\"20\" type=\"text\" name=\"addon_".$overload_fields[$fieldname]["id"]."\" value=\"".htmlentities(removeMailUnicode($data))."\" /></td></tr>\n";
-        else {
-            echo "<tr><td><select name=\"addon_".$overload_fields[$fieldname]["id"]."\" size=\"1\">\n";
-            if ($overload_fields[$fieldname]["obligatoire"] == 'y') echo '<option value="">'.get_vocab('choose').'</option>';
-            foreach ($overload_fields[$fieldname]["list"] as $value) {
-                echo "<option ";
-                if ($data == trim($value,"&") or ($data=="" and $value[0]=="&")) echo " selected=\"selected\"";
-                echo ">".trim($value,"&")."</option>\n";
-            }
-            echo "</select>\n</td></tr>\n";
-        }
-        echo "</table>\n";
+foreach ($overload_fields as $fieldname=>$fieldtype)
+{
+	if ($overload_fields[$fieldname]["obligatoire"] == "y")
+		$flag_obli = " *" ;
+	else
+		$flag_obli = "";
+	echo "<table width=\"100%\" id=\"id_".$areas."_".$overload_fields[$fieldname]["id"]."\">";
+	echo "<tr><td class=E><b>".removeMailUnicode($fieldname).$flag_obli."</b></td></tr>\n";
+	if (isset($overload_data[$fieldname]["valeur"]))
+		$data = $overload_data[$fieldname]["valeur"];
+	else
+		$data = "";
+	if ($overload_fields[$fieldname]["type"] == "textarea" )
+		echo "<tr><td><textarea cols=\"80\" rows=\"2\" name=\"addon_".$overload_fields[$fieldname]["id"]."\">".htmlentities(removeMailUnicode($data))."</textarea></td></tr>\n";
+	else if ($overload_fields[$fieldname]["type"] == "text" )
+		echo "<tr><td><input size=\"80\" type=\"text\" name=\"addon_".$overload_fields[$fieldname]["id"]."\" value=\"".htmlentities(removeMailUnicode($data))."\" /></td></tr>\n";
+	else if ($overload_fields[$fieldname]["type"] == "numeric" )
+		echo "<tr><td><input size=\"20\" type=\"text\" name=\"addon_".$overload_fields[$fieldname]["id"]."\" value=\"".htmlentities(removeMailUnicode($data))."\" /></td></tr>\n";
+	else
+	{
+		echo "<tr><td><select name=\"addon_".$overload_fields[$fieldname]["id"]."\" size=\"1\">\n";
+		if ($overload_fields[$fieldname]["obligatoire"] == 'y')
+			echo '<option value="">'.get_vocab('choose').'</option>';
+		foreach ($overload_fields[$fieldname]["list"] as $value)
+		{
+			echo "<option ";
+			if ($data == trim($value,"&") || ($data == "" && $value[0]=="&"))
+				echo " selected=\"selected\"";
+			echo ">".trim($value,"&")."</option>\n";
+		}
+		echo "</select>\n</td></tr>\n";
+	}
+	echo "</table>\n";
 }
 ?>

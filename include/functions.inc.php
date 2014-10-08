@@ -737,8 +737,8 @@ function begin_page($title,$page="with_session")
 	$a .=  '" />';
 	$a .= PHP_EOL.'<meta name="Robots" content="noindex" />';
 	$a .= '<script src="jquery-1.8.3.min.js"></script>'.PHP_EOL;
-	$a .= '<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />';
-	$a .= '<script src="jquery-ui.js"></script>';
+	$a .= '<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />';
+	$a .= '<script src="http://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>';
 	$a .= '<script src="jquery.validate.js"></script>';
 	$a .= '<script src="jquery-ui-timepicker-addon.js"></script>';
 	$a .= '<link href="themes/default/css/jquery-ui-timepicker-addon.css" rel="stylesheet" type="text/css">';
@@ -4167,7 +4167,7 @@ else
  }
 //MAJ Hugo FORESTIER - Mise en place de la fonction DataPicker
 //15/05/2013
- function jQuery_DatePicker ($typeDate)
+ function jQuery_DatePicker($typeDate)
  {
 //on récupère les infos passé dans l'url (sinon les infos actuels) pour les afficher dans le input
  	if (isset ($_GET['day']))
@@ -4244,28 +4244,33 @@ function jQuery_TimePicker($typeDate, $typeTime, $start_hour, $start_min, $end_h
 //David VOUE --29 Janvier 2014--Modification du stepMinute (15--->30) et de minuteGrid (15-->30) pour éviter des bugs des 1/4 d'heure
 	global $resolution;
 	$minuteJQ = $resolution / 60;
-	echo '<input type="text" id="hour_' .$typeDate. '" value="' .$hour. '" name="' .$typeTime. 'hour" size="2" /> :
-	<input type="text" id="minute_' .$typeDate. '" value="' .$minute. '" name="' .$typeTime. 'minute" size="2" />
+	echo '<div class="form-inline">
+	<div class="form-group">
+	<input class="form-control" type="text" id="hour_' .$typeDate. '" value="' .$hour. '" name="' .$typeTime. 'hour" size="2" /> :
+	</div>
+	<div class="form-group">
+	<input class="form-control" type="text" id="minute_' .$typeDate. '" value="' .$minute. '" name="' .$typeTime. 'minute" size="2" />
+	</div>
+	</div>
 	<script>
 		$("#hour_' .$typeDate. '").timepicker({
+			controlType: "select",
 			timeFormat: "H",
 			stepMinute:'.$minuteJQ.',
 			altField: "#minute_' .$typeDate. '",
 			altTimeFormat: "mm",
-			hourGrid: 4,
-			minuteGrid:'.$minuteJQ.',
 		});
 </script>';
 }
 //MAJ Hugo FORESTIER - Creation d'une fonction jQuery pour un input de type number
 function spinner ($duration)
 {
-	echo "<input name=\"duration\" size=\"5\" value=\"" .$duration. "\" id=\"spinner\" />";
+	echo "<input class=\"form-control\" name=\"duration\" value=\"" .$duration. "\" id=\"spinner\" />";
 	echo "<script type=\"text/javascript\" src=\"jquery.mousewheel.js\"></script>";
 	echo "<script>$(function() {
 		$('#spinner').spinner({
-			min: 1, //la valeur minimum est 1
-			page: 10,  //on saute de 10 avec l'utilisation de page up et page down
+			min: 1,
+			page: 10,
 		});});
 </script>";
 }
