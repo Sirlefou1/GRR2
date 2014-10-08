@@ -121,7 +121,7 @@ for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 }
 $display_type .=  '</select>'.PHP_EOL.'</div>'.PHP_EOL;
 if ($aff_default)
-	$display_type .= ' <input type="button" class="btn btn-default" value="'.get_vocab("definir par defaut").'" onclick="setdefault(\'type_default\',document.getElementById(\'main\').type.options[document.getElementById(\'main\').type.options.selectedIndex].text)" />'.PHP_EOL;
+	$display_type .= ' <input type="button" class="btn btn-primary" value="'.get_vocab("definir par defaut").'" onclick="setdefault(\'type_default\',document.getElementById(\'main\').type.options[document.getElementById(\'main\').type.options.selectedIndex].text)" />'.PHP_EOL;
 $display_type .= '</td></tr></table>'.PHP_EOL;
 if ($unicode_encoding)
 	header("Content-Type: text/html;charset=utf-8");

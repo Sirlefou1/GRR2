@@ -711,7 +711,7 @@ echo '<form id="main" action="edit_entry_handler.php" method="get">'.PHP_EOL;
 }
 echo '</select>'.PHP_EOL;
 echo '</div>'.PHP_EOL;
-echo '<input type="button" class="btn btn-default" value="'.get_vocab("definir par defaut").'" onclick="setdefault(\'beneficiaire_default\',document.getElementById(\'main\').beneficiaire.options[document.getElementById(\'main\').beneficiaire.options.selectedIndex].value)" />'.PHP_EOL;
+echo '<input type="button" class="btn btn-primary" value="'.get_vocab("definir par defaut").'" onclick="setdefault(\'beneficiaire_default\',document.getElementById(\'main\').beneficiaire.options[document.getElementById(\'main\').beneficiaire.options.selectedIndex].value)" />'.PHP_EOL;
 echo '<div id="div_profilBeneficiaire">'.PHP_EOL;
 echo '</div>'.PHP_EOL;
 if (isset($statut_beneficiaire))
@@ -1185,8 +1185,8 @@ else
 			}
 		}
 		?>
-		<input type="button" value="<?php echo get_vocab("cancel")?>" onclick="window.location.href='<?php echo $page.".php?year=".$year."&amp;month=".$month."&amp;day=".$day."&amp;area=".$area."&amp;room=".$room; ?>'" />
-		<input type="button" value="<?php echo get_vocab("save")?>" onclick="Save_entry();validate_and_submit();" />
+		<input type="button" class="btn btn-primary" value="<?php echo get_vocab("cancel")?>" onclick="window.location.href='<?php echo $page.".php?year=".$year."&amp;month=".$month."&amp;day=".$day."&amp;area=".$area."&amp;room=".$room; ?>'" />
+		<input type="button" class="btn btn-primary" value="<?php echo get_vocab("save")?>" onclick="Save_entry();validate_and_submit();" />
 		<input type="hidden" name="rep_id"    value="<?php echo $rep_id?>" />
 		<input type="hidden" name="edit_type" value="<?php echo $edit_type?>" />
 		<input type="hidden" name="page" value="<?php echo $page?>" />
