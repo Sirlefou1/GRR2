@@ -72,11 +72,12 @@ $aff_type = max(authGetUserLevel(getUserName(),-1,"room"),authGetUserLevel(getUs
 $nb_type = 0;
 $type_nom_unique = "??";
 $type_id_unique = "??";
-$display_type = "<table width=100%><tr><td class=\"E\"><B>".get_vocab("type")." *".get_vocab("deux_points")."</B></td></tr>\n";
+$display_type = '<table width="100%"><tr><td class="E"><b>'.get_vocab("type").get_vocab("deux_points").'</b></td></tr>'.PHP_EOL;
 $affiche_mess_asterisque = true;
-$display_type .= "<tr><td class=\"CL\">";
-$display_type .= "<select id=\"type\" name=\"type\" size=\"1\" onclick=\"setdefault('type_default','')\">\n";
-$display_type .= "<option value='0'>".get_vocab("choose")."\n";
+$display_type .= '<tr><td class="CL">'.PHP_EOL;
+$display_type .= '<div class="col-xs-3">'.PHP_EOL;
+$display_type .= '<select id="type" class="form-control" name="type" size="1" onclick="setdefault(\'type_default\',\'\')">'.PHP_EOL;
+$display_type .= '<option value="0">'.get_vocab("choose").PHP_EOL;
 $sql = "SELECT DISTINCT t.type_name, t.type_letter, t.id FROM ".TABLE_PREFIX."_type_area t
 LEFT JOIN ".TABLE_PREFIX."_j_type_area j on j.id_type=t.id
 WHERE (j.id_area  IS NULL or j.id_area != '".$areas."') AND (t.disponible<='".$aff_type."')
@@ -96,12 +97,12 @@ for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 		$nb_type ++;
 		$type_nom_unique = $row[0];
 		$type_id_unique = $row[1];
-		$display_type .= "<option value=\"".$row[1]."\" ";
+		$display_type .= '<option value="'.$row[1].'" ';
 			// Modification d'une réservation
 		if ($type != "")
 		{
 			if ($type == $row[1])
-				$display_type .=  " selected=\"selected\"";
+				$display_type .=  ' selected="selected"';
 		}
 		else
 		{
@@ -113,15 +114,15 @@ for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 			else
 				$cookie = "";
 			if ((!$cookie && ($id_type_par_defaut == $row[2])) || ($cookie && $cookie == $row[0]))
-				$display_type .=  " selected=\"selected\"";
+				$display_type .=  ' selected="selected"';
 		}
-		$display_type .=  " >".htmlentities(removeMailUnicode($row[0]))."</option>\n";
+		$display_type .=  ' >'.htmlentities(removeMailUnicode($row[0])).'</option>'.PHP_EOL;
 	}
 }
-$display_type .=  "</select>";
+$display_type .=  '</select>'.PHP_EOL.'</div>'.PHP_EOL;
 if ($aff_default)
-	$display_type .= " <input type=\"button\" value=\"".get_vocab("definir par defaut")."\" onclick=\"setdefault('type_default',document.getElementById('main').type.options[document.getElementById('main').type.options.selectedIndex].text)\" />";
-$display_type .= "</td></tr></table>\n";
+	$display_type .= ' <input type="button" class="btn btn-default" value="'.get_vocab("definir par defaut").'" onclick="setdefault(\'type_default\',document.getElementById(\'main\').type.options[document.getElementById(\'main\').type.options.selectedIndex].text)" />'.PHP_EOL;
+$display_type .= '</td></tr></table>'.PHP_EOL;
 if ($unicode_encoding)
 	header("Content-Type: text/html;charset=utf-8");
 else
@@ -131,5 +132,5 @@ header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 if ($nb_type > 1)
 	echo $display_type;
 else
-	echo "<table width=100%><tr><td class=\"E\"><b>".get_vocab("type").get_vocab("deux_points").htmlentities(removeMailUnicode($type_nom_unique))."</b>"."<input name=\"type\" type=\"hidden\" value=\"".$type_id_unique."\" /></td></tr></table>\n";
+	echo '<table width="100%"><tr><td class="E"><b>'.get_vocab("type").get_vocab("deux_points").htmlentities(removeMailUnicode($type_nom_unique)).'</b>'.PHP_EOL.'<input name="type" type="hidden" value="'.$type_id_unique.'" /></td></tr></table>'.PHP_EOL;
 ?>
