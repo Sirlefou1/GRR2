@@ -826,7 +826,6 @@ function print_header($day = '', $month = '', $year = '', $area = '', $type_sess
 			echo ' - <b>'.getSettingValue("company").'</b></a></h2>'.PHP_EOL;
 			//Mail réservartion
 			echo getSettingValue('message_accueil');
-			/*
 			$sql = "SELECT value FROM ".TABLE_PREFIX."_setting WHERE name='mail_etat_destinataire'";
 			$res = grr_sql_query1($sql);
 			//Libère le résultat de la mémoire
@@ -835,12 +834,11 @@ function print_header($day = '', $month = '', $year = '', $area = '', $type_sess
 			{
 				if ($type_session == "no_session")
 				{
-					echo "<td class=\"contactformulaire\">";
-					echo "<a href=\"contactFormulaire.php\"><input type=\"submit\" id=\"Réserver\" rel=\"popup_name\" class=\"poplight\" value=\"Réserver\" </a>";
-					echo "</td>";
+					echo '<td class="contactformulaire">'.PHP_EOL;
+					echo '<a href="contactFormulaire.php"><input class="btn btn-default" type="submit" id="Réserver" rel="popup_name" class="poplight" value="Réserver" </a>'.PHP_EOL;
+					echo '</td>'.PHP_EOL;
 				}
 			}
-			*/
 			// Administration div Sauvegarde
 			if ($type_session == "with_session")
 			{
