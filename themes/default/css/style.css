@@ -395,23 +395,7 @@
  .contenu_planning a{
  	display : block;
  }
- a.poplight{
- 	display: block;
- 	color : black;
- 	font-weight:normal;
- 	font-size: 14px;
- 	height: 100%;
- 	width : 100%;
- 	vertical-align: middle;
- 	text-align: center;
- 	border-top: 2px solid #fff;
- }
- a:hover.poplight{
- 	color : black;
- 	font-weight:bold;
- 	display : block;
- 	text-align : center;
- }
+
  a.lienCellule  {
  	color : black;
  	font-weight:normal;

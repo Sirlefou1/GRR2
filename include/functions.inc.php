@@ -814,7 +814,7 @@ function print_header($day = '', $month = '', $year = '', $area = '', $type_sess
 			$day   = date("d",$date_);
 			$month = date("m",$date_);
 			$year  = date("Y",$date_);
-			echo '<table width="100%" id="header">'.PHP_EOL;
+			echo '<table id="header">'.PHP_EOL;
 			echo '<tr>'.PHP_EOL;
 			//Logo
 			$nom_picture = "./images/".getSettingValue("logo");
@@ -835,7 +835,7 @@ function print_header($day = '', $month = '', $year = '', $area = '', $type_sess
 				if ($type_session == "no_session")
 				{
 					echo '<td class="contactformulaire">'.PHP_EOL;
-					echo '<a href="contactFormulaire.php?day='.$day.'&amp;month='.$month.'&amp;year='.$year.'"><input class="btn btn-default" type="submit" id="Réserver" rel="popup_name" class="poplight" value="Réserver"></a>'.PHP_EOL;
+					echo '<input class="btn btn-default" type="submit" id="Réserver" rel="popup_name" value="Réserver" onClick="javascript:location.href=\'contactFormulaire.php?day='.$day.'&amp;month='.$month.'&amp;year='.$year.'\'" >'.PHP_EOL;
 					echo '</td>'.PHP_EOL;
 				}
 			}
