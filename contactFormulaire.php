@@ -32,26 +32,26 @@ include "include/language.inc.php";
 		<fieldset><legend><b>Vos coordonnées</b></legend>
 			<div class="form-group">
 				<div class="input-group">
-				<div class="input-group-addon"> &nbsp <?php echo get_vocab("nomR"); ?> &nbsp :  </div>
-					<input class="form-control" type="text" id="nom"  size="8" name="nom">
+					<div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+					<input class="form-control" type="text" id="nom"  size="8" name="nom" placeholder="Votre nom" />
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="input-group">
-					<div class="input-group-addon"> &nbsp Prénom &nbsp : &nbsp &nbsp</div>
-					<input class="form-control" type="text" size="8" id="prenom"  name="prenom">
+					<div class="input-group-addon"><span class="glyphicon glyphicon-user"></div>
+					<input class="form-control" type="text" size="8" id="prenom"  name="prenom" placeholder="Votre prénom" />
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="input-group">
-					<div class="input-group-addon">&nbsp Courriel &nbsp : &nbsp</div>
-			<input class="form-control" type="text" id="email" size="8" name="email" />
+					<div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></div>
+					<input class="form-control" type="text" id="email" size="8" name="email" placeholder="Votre adresse de courriel" />
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="input-group">
-					<div class="input-group-addon"> Téléphone :  &nbsp</div>
-			<input class="form-control" type="text" size="8" maxlength="14" id="telephone" name="telephone"  />
+					<div class="input-group-addon"><span class="glyphicon glyphicon-earphone"></div>
+					<input class="form-control" type="text" size="8" maxlength="14" id="telephone" name="telephone" placeholder="Votre numéro de téléphone" />
 				</div>
 			</div>
 			<br/><br/>

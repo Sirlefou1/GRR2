@@ -6,6 +6,27 @@
  * You may use this project under MIT license.
  * http://trentrichardson.com/Impromptu/MIT-LICENSE.txt
  */
+ jQuery(function($){
+	$.datepicker.regional['fr'] = {
+		closeText: 'Fermer',
+		prevText: '&#x3c;Précédent',
+		nextText: 'Suivant&#x3e;',
+		currentText: 'Courant',
+		monthNames: ['Janvier','Février','Mars','Avril','Mai','Juin',
+		'Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
+		monthNamesShort: ['Jan','FÃ©v','Mar','Avr','Mai','Jun',
+		'Jul','Aoû»','Sep','Oct','Nov','Déc'],
+		dayNames: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
+		dayNamesShort: ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],
+		dayNamesMin: ['Di','Lu','Ma','Me','Je','Ve','Sa'],
+		weekHeader: 'Sm',
+		dateFormat: 'dd/mm/yy',
+		firstDay: 1,
+		isRTL: false,
+		showMonthAfterYear: false,
+		yearSuffix: ''};
+	$.datepicker.setDefaults($.datepicker.regional['fr']);
+});
  (function ($) {
 	/*
 	* Lets not redefine timepicker, Prevent "Uncaught RangeError: Maximum call stack size exceeded"

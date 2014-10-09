@@ -4183,9 +4183,10 @@ else
  	genDateSelector("".$typeDate."_", "$day", "$month", "$year","");
  	echo '<input type="hidden" disabled="disabled" id="mydate_' .$typeDate. '" size="10">'.PHP_EOL;
  	echo '<script>'.PHP_EOL;
- 	echo '	$(function() {'.PHP_EOL;
+	echo '	$(function() {'.PHP_EOL;
+		echo '$.datepicker.setDefaults( $.datepicker.regional[\'fr\'] );'.PHP_EOL;
  	echo '	$(\'#mydate_' .$typeDate. '\').datepicker({'.PHP_EOL;
- 	echo '		beforeShow: readSelected, onSelect: updateSelected,'.PHP_EOL;
+  	echo '		beforeShow: readSelected, onSelect: updateSelected,'.PHP_EOL;
  	echo '		showOn: \'both\', buttonImageOnly: true, buttonImage: \'images/calendar.png\'});'.PHP_EOL;
 	echo '		function readSelected()'.PHP_EOL;
 	echo '		{'.PHP_EOL;
