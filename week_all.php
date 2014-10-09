@@ -351,18 +351,18 @@ else
 	else
 		echo "<div id=\"print_planning\">";
 	include "chargement.php";
-	echo "<div class=\"titre_planning\"><table width=\"100%\">";
+	echo "<div class=\"titre_planning\"><table class=\"table-header\">";
 	if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
 	{
 		echo "
 		<tr>
-			<td align=\"left\">
+			<td class=\"left\">
 				<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='week_all.php?year=$yy&amp;month=$ym&amp;day=$yd&amp;area=$area';\"><span class=\"glyphicon glyphicon-backward\"></span> ".get_vocab("weekbefore")." </button>
 			</td>
 			<td>";
 				include "include/trailer.inc.php";
 				echo "</td>
-				<td align=\"right\">
+				<td class=\"right\">
 					<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='week_all.php?year=$ty&amp;month=$tm&amp;day=$td&amp;area=$area';\"> ".get_vocab('weekafter')."  <span class=\"glyphicon glyphicon-forward\"></span></button>
 				</td>
 			</tr>
@@ -371,7 +371,7 @@ else
 	echo "<h4 class=\"titre\">".utf8_strftime($dformat, $date_start)." au ". utf8_strftime($dformat, $date_end). " $this_area_name - ".get_vocab("all_rooms")."</h4>";
 	echo "</div>";
 	echo "\n<div class=\"contenu_planning\">\n" ;
-	echo "<table cellspacing=\"0\" class=\"table-bordered\" width=\"100%\">\n<thead><tr>";
+	echo "<table class=\"table-bordered\">\n<thead><tr>";
 	echo "<th class=\"jour_sem\"> </th>\n";
 	$t = $time;
 	$num_week_day = $weekstarts;
@@ -470,7 +470,7 @@ else
 										}
 										else
 											echo "<a class=\"lienCellule\" title=\"".htmlspecialchars($d[$cday]["who"][$i])."\" href=\"view_entry.php?id=" . $d[$cday]["id"][$i]."&amp;page=week_all&amp;day=$cday&amp;month=$cmonth&amp;year=$cyear&amp;\">";
-										echo "\n<table width='100%' border='0'><tr>";
+										echo "\n<table class='table-header'><tr>";
 										tdcell($d[$cday]["color"][$i]);
 										if ($d[$cday]["res"][$i] !='-')
 											echo " <img src=\"img_grr/buzy.png\" alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("ressource actuellement empruntee")."\" width=\"20\" height=\"20\" class=\"image\" /> \n";
@@ -491,7 +491,7 @@ else
 									}
 									else
 									{
-										echo "\n<table width='100%' border='0'><tr>";
+										echo "\n<table class='table-header'><tr>";
 										tdcell($d[$cday]["color"][$i]);
 										if ($d[$cday]["res"][$i] != '-')
 											echo " <img src=\"img_grr/buzy.png\" alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("ressource actuellement empruntee")."\" width=\"20\" height=\"20\" class=\"image\" /> \n";
