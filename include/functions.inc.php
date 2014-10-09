@@ -4181,7 +4181,7 @@ else
  	else
  		$year= date("Y");
  	genDateSelector("".$typeDate."_", "$day", "$month", "$year","");
- 	echo '<input type="hidden" disabled="disabled" id="mydate_' .$typeDate. '" size="10">'.PHP_EOL;
+ 	echo '<input type="hidden" disabled="disabled" id="mydate_' .$typeDate. '">'.PHP_EOL;
  	echo '<script>'.PHP_EOL;
 	echo '	$(function() {'.PHP_EOL;
 		echo '$.datepicker.setDefaults( $.datepicker.regional[\'fr\'] );'.PHP_EOL;

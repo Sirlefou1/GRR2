@@ -136,7 +136,7 @@ print_header("", "", "", "", $type_session);
 		<div id="buttonsReservation" style="margin-left:0px;">
 			<input class="btn btn-primary" type="submit" name="submit" value="Envoyer la demande de réservation">
 			<input class="btn btn-primary" type="reset" name="cancel" value="Annuler">
-			<input class="btn btn-primary" type="button" name="retouraccueil" value="Retour à l'accueil" onClick="javascript:location.href=\'javascript:history.go(-1)'\'">
+			<input class="btn btn-primary" type="button" name="retouraccueil" value="Retour à l'accueil" onClick="javascript:location.href='javascript:history.go(-1)'">
 		</div>
 	</div>
 </form>
