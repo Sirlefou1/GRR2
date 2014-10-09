@@ -1,17 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<title>Formulaire de reservation de salle</title>
-	<script src="jquery-1.8.3.min.js"></script>
-	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
-	<script src="http://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
-	<script src="jquery.validate.js"></script>
-	<script src="jquery-ui-timepicker-addon.js"></script>
-	<link href="themes/default/css/jquery-ui-timepicker-addon.css" rel="stylesheet" type="text/css">
-	<link href="themes/default/css/styles.css" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css" />
-</head>
 <?php
 include "include/connect.inc.php";
 include "include/config.inc.php";
