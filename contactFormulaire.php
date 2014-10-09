@@ -18,7 +18,7 @@ include "include/language.inc.php";
 		$type_session = "no_session";
 	print_header("", "", "", "", $type_session);
 	?>
-	<form class='contactreservation' id="contactreservation" name="contactreservation" action=''>
+	<form class='contactreservation' id="contactreservation" name="contactreservation" action='form'>
 		<fieldset><legend><b>Vos coordonnées</b></legend>
 			<div class="form-group">
 				<div class="input-group">
@@ -28,19 +28,19 @@ include "include/language.inc.php";
 			</div>
 			<div class="form-group">
 				<div class="input-group">
-					<div class="input-group-addon"><span class="glyphicon glyphicon-user"></div>
+					<div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
 					<input class="form-control" type="text" size="8" id="prenom"  name="prenom" placeholder="Votre prénom" />
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="input-group">
-					<div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></div>
+					<div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
 					<input class="form-control" type="text" id="email" size="8" name="email" placeholder="Votre adresse de courriel" />
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="input-group">
-					<div class="input-group-addon"><span class="glyphicon glyphicon-earphone"></div>
+					<div class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span></div>
 					<input class="form-control" type="text" size="8" maxlength="14" id="telephone" name="telephone" placeholder="Votre numéro de téléphone" />
 				</div>
 			</div>

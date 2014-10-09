@@ -857,7 +857,7 @@ function print_header($day = '', $month = '', $year = '', $area = '', $type_sess
 			if ($type_session != "with_session")
 				echo '<script>selection()</script>'.PHP_EOL;
 			?>
-			<td class="configuration" align="center">
+			<td class="configuration" >
 				<?php
 				if (@file_exists($clock_file))
 				{
