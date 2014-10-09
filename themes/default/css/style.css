@@ -225,6 +225,12 @@
  a.lienPlanning:hover{
  	display:block;
  }
+ .left {
+ 	float: left;
+ }
+  .right {
+ 	float: right;
+ }
  #chargement {
  	left:35%;
  	top:322px;

@@ -234,9 +234,9 @@ else
 	echo "<div class=\"titre_planning\">";
 	if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
 	{
-		echo "<table class=\"table-header\"><tr><td align=\"left\"><button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='day.php?year=$yy&amp;month=$ym&amp;day=$yd&amp;area=$area';\"> <span class=\"glyphicon glyphicon-backward\"></span> ".get_vocab('daybefore')."</button></td><td>";
+		echo "<table class=\"table-header\"><tr><td class=\"left\"><button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='day.php?year=$yy&amp;month=$ym&amp;day=$yd&amp;area=$area';\"> <span class=\"glyphicon glyphicon-backward\"></span> ".get_vocab('daybefore')."</button></td><td>";
 		include "include/trailer.inc.php";
-		echo "</td><td align=\"right\"><button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='day.php?year=$ty&amp;month=$tm&amp;day=$td&amp;area=$area';\"> ".get_vocab('dayafter')."  <span class=\"glyphicon glyphicon-forward\"></span></button></td></tr></table>";
+		echo "</td><td class=\"right\"><button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='day.php?year=$ty&amp;month=$tm&amp;day=$td&amp;area=$area';\"> ".get_vocab('dayafter')."  <span class=\"glyphicon glyphicon-forward\"></span></button></td></tr></table>";
 	}
 	echo "<h4 class=\"titre\">" . ucfirst(utf8_strftime($dformat, $am7));
 	if (getSettingValue("jours_cycles_actif") == "Oui" && intval($jour_cycle) >- 1)
