@@ -234,7 +234,7 @@ else
 	echo "<div class=\"titre_planning\">";
 	if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
 	{
-		echo "<table width=\"100%\"><tr><td align=\"left\"><button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='day.php?year=$yy&amp;month=$ym&amp;day=$yd&amp;area=$area';\"> <span class=\"glyphicon glyphicon-backward\"></span> ".get_vocab('daybefore')."</button></td><td>";
+		echo "<table class=\"table-header\"><tr><td align=\"left\"><button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='day.php?year=$yy&amp;month=$ym&amp;day=$yd&amp;area=$area';\"> <span class=\"glyphicon glyphicon-backward\"></span> ".get_vocab('daybefore')."</button></td><td>";
 		include "include/trailer.inc.php";
 		echo "</td><td align=\"right\"><button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='day.php?year=$ty&amp;month=$tm&amp;day=$td&amp;area=$area';\"> ".get_vocab('dayafter')."  <span class=\"glyphicon glyphicon-forward\"></span></button></td></tr></table>";
 	}
@@ -254,7 +254,7 @@ else
 			echo "<span id=\"lienPrecedent\"><button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript:history.back();\">Précedent</button></span>";
 	}
 	echo "<div class=\"contenu_planning\">" ;
-	echo "<table  cellspacing=\"0\"  class=\"table-bordered\" width=\"100%\">";
+	echo "<table class=\"table-bordered\">";
 	echo "<tr>\n<th style=\"width:5%;\">";
 	if ($enable_periods == 'y')
 		echo get_vocab("period");
