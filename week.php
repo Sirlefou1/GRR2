@@ -214,15 +214,15 @@ if ($this_area_show_comment == "y" && $_GET['pview'] != 1 && ($this_area_comment
 	echo "<span style=\"text-align:center;\">".$this_area_comment."</span>";
 if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
 {
-	echo "<table width=\"100%\">
+	echo "<table class=\"table-header\">
 	<tr>
-		<td align=\"left\">
+		<td class=\"left\">
 			<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='week.php?year=$yy&amp;month=$ym&amp;day=$yd&amp;room=$room';\"><span class=\"glyphicon glyphicon-backward\"></span>".get_vocab("weekbefore")."</button>
 		</td>
 		<td>";
 			include "include/trailer.inc.php";
 			echo "</td>
-			<td align=\"right\">
+			<td class=\"right\">
 				<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='week.php?year=$ty&amp;month=$tm&amp;day=$td&amp;room=$room';\">".get_vocab('weekafter')."<span class=\"glyphicon glyphicon-forward\"></span></button>
 			</td>
 		</tr>
@@ -331,7 +331,7 @@ if ($debug_flag)
 	else echo "d is not an array!\n";
 	echo "</pre><p>\n";
 }
-echo "<table cellspacing=\"0\" class=\"table-bordered\" width=\"100%\">";
+echo "<table class=\"table-bordered\">";
 echo "<tr>\n<th style=\"width:5%;\">";
 if ($enable_periods == 'y')
 	echo get_vocab("period");
