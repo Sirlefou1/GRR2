@@ -534,7 +534,7 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 					$affiche_period = get_vocab($weeklist[$rep_num_weeks]);
 				else
 					$affiche_period = get_vocab('rep_type_'.$rep_type);
-				echo '<fieldset><legend style="font-weight:bold">'.get_vocab('periodicite_associe').grr_help("aide_grr_periodicite","fonctionnement")."</legend>\n";
+				echo '<fieldset><legend style="font-weight:bold">'.get_vocab('periodicite_associe')."</legend>\n";
 				echo '<table cellpadding="1">';
 				echo '<tr><td><b>'.get_vocab("rep_type").'</b></td><td>'.$affiche_period.'</td></tr>';
 				if ($rep_type != 0)
@@ -611,7 +611,7 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 					echo "<input type=\"hidden\" name=\"id\" value=\"".$id."\" />\n";
 					if (isset($_GET['page']))
 						echo "<input type=\"hidden\" name=\"page\" value=\"".$_GET['page']."\" />\n";
-					echo "<fieldset><legend style=\"font-weight:bold\">".get_vocab("moderate_entry").grr_help("aide_grr_moderation")."</legend>\n";
+					echo "<fieldset><legend style=\"font-weight:bold\">".get_vocab("moderate_entry")."</legend>\n";
 					echo "<p>";
 					echo "<input type=\"radio\" name=\"moderate\" value=\"1\" checked=\"checked\" />".get_vocab("accepter_resa");
 					echo "<br /><input type=\"radio\" name=\"moderate\" value=\"0\" />".get_vocab("refuser_resa");
@@ -632,7 +632,7 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 					if ((!$was_del) && ($moderate != 1) && (getUserName() != '') && (authGetUserLevel(getUserName(),$room_id) >= 3))
 					{
 						echo "<form action=\"view_entry.php\" method=\"get\">";
-						echo "<fieldset><legend style=\"font-weight:bold\">".get_vocab("reservation_en_cours").grr_help("aide_grr_ressource_empruntee")."</legend>\n";
+						echo "<fieldset><legend style=\"font-weight:bold\">".get_vocab("reservation_en_cours")."</legend>\n";
 						echo "<span class=\"larger\">".get_vocab("signaler_reservation_en_cours")."</span>".get_vocab("deux_points");
 						echo "<br />".get_vocab("explications_signaler_reservation_en_cours");
 						affiche_ressource_empruntee($room_id, "texte");

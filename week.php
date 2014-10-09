@@ -528,11 +528,11 @@ for ($t = $week_start; $t <= $week_end; $t += 86400)
 							if ($acces_fiche_reservation)echo"</a>";
 						}
 						if ((isset($d[$weekday][$slot - $decale_slot * $nb_case]["statut"])) && ($d[$weekday][$slot - $decale_slot * $nb_case]["statut"] != '-'))
-							echo " <img src=\"img_grr/buzy.png\" alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("ressource actuellement empruntee")."\" width=\"20\" height=\"20\" class=\"image\" /> \n";
+							echo '<img src="img_grr/buzy.png" alt="'.get_vocab("ressource actuellement empruntee").'" title="'.get_vocab("ressource actuellement empruntee").'" width="20" height="20" class="image" />'.PHP_EOL;
 						if (($this_delais_option_reservation > 0) && (isset($d[$weekday][$slot-$decale_slot * $nb_case]["option_reser"])) && ($d[$weekday][$slot - $decale_slot * $nb_case]["option_reser"] != -1))
-							echo " <img src=\"img_grr/small_flag.png\" alt=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."\" title=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")." ".time_date_string_jma($d[$weekday][$slot - $decale_slot * $nb_case]["option_reser"], $dformat)."\" width=\"20\" height=\"20\" class=\"image\" /> \n";
+							echo '<img src="img_grr/small_flag.png" alt="'.get_vocab("reservation_a_confirmer_au_plus_tard_le").'" title="'.get_vocab("reservation_a_confirmer_au_plus_tard_le").' '.time_date_string_jma($d[$weekday][$slot - $decale_slot * $nb_case]["option_reser"], $dformat).'" width="20" height="20" class="image" />'.PHP_EOL;
 						if ((isset($d[$weekday][$slot - $decale_slot * $nb_case]["moderation"])) && ($d[$weekday][$slot - $decale_slot * $nb_case]["moderation"] == '1'))
-							echo " <img src=\"img_grr/flag_moderation.png\" alt=\"".get_vocab("en_attente_moderation")."\" title=\"".get_vocab("en_attente_moderation")."\" class=\"image\" /> \n";
+							echo '<img src="img_grr/flag_moderation.png" alt="'.get_vocab("en_attente_moderation").'" title="'.get_vocab("en_attente_moderation").'" class="image" />'.PHP_EOL;
 					}
 				}
 				//echo "</td>\n";
@@ -544,7 +544,7 @@ for ($t = $week_start; $t <= $week_end; $t += 86400)
 		if ($enable_periods == 'y')
 		{
 			$time_t = date("i", $t);
-			$time_t_stripped = preg_replace( "/^0/", "", $time_t );
+			$time_t_stripped = preg_replace( "/^0/", "", $time_t);
 		}
 		$t += $resolution;
 	}
