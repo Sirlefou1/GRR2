@@ -49,7 +49,7 @@ print_header("", "", "", "", $type_session);
 	<legend><b>Réservation</b></legend>
 		<label for="subject">Sujet :</label>
 		<textarea class="form-control" id="subject" name="sujet" cols="30" rows="4"></textarea><br/>
-		<label for="domaine">Domaines : </label>
+		<label>Domaines : </label>
 		<select id="area" name="area" class="form-control">
 			<?php
 			$sql_areaName = "SELECT id, area_name FROM ".TABLE_PREFIX."_area ORDER BY area_name";
@@ -95,7 +95,7 @@ print_header("", "", "", "", $type_session);
 				});
 			});
 		</script>
-		<label for="ressource">Ressources : </label>
+		<label>Ressources : </label>
 		<select id="room" name="room" class="form-control">
 			<optgroup label="Salles">
 				<option> SELECTIONNER UN DOMAINE </option>
@@ -104,7 +104,6 @@ print_header("", "", "", "", $type_session);
 			<fieldset><legend><b> Début de la réservaton</b></legend>
 				<?php
 				jQuery_DatePicker('start');
-					//echo "&nbsp";
 				echo " <select name=\"heure\"> ";
 				for ($h = 1 ; $h < 24 ; $h++)
 				{
@@ -117,7 +116,6 @@ print_header("", "", "", "", $type_session);
 					echo "<option value =\"$m\"> ".sprintf("%02d",$m)."min </option>".PHP_EOL;
 				}
 				echo "</select>".PHP_EOL;
-					//echo "&nbsp &nbsp".PHP_EOL;
 				echo "<br><br>".PHP_EOL;
 				echo " <label for=\"duree\">Durée :   </label><br /><div class=\"col-xs-2\"><input class=\"form-control\" type=\"text\" id=\"duree\" name=\"duree\" size=\"2\" maxlength=\"2\" tabindex=\"5\" /></div>".PHP_EOL;
 				echo "&nbsp;<div class=\"col-xs-1\">".PHP_EOL;
