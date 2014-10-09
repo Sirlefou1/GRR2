@@ -13,8 +13,7 @@ if (!loadSettings())
 require_once("./include/session.inc.php");
 include "include/language.inc.php";
 ?>
-<body>
-	<?php
+<?php
 	if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))
 		$type_session = "no_session";
 	print_header("", "", "", "", $type_session);
