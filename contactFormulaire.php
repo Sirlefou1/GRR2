@@ -28,7 +28,12 @@ require_once("./include/session.inc.php");
 include "include/language.inc.php";
 ?>
 <body>
-	<form class='contactreservation' id=\"contactreservation\" name=\"contactreservation\" action=''>
+	<?php
+	if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))
+		$type_session = "no_session";
+	print_header("", "", "", "", $type_session);
+	?>
+	<form class='contactreservation' id="contactreservation" name="contactreservation" action=''>
 		<fieldset><legend><b>Vos coordonnées</b></legend>
 			<div class="form-group">
 				<div class="input-group">
@@ -54,13 +59,10 @@ include "include/language.inc.php";
 					<input class="form-control" type="text" size="8" maxlength="14" id="telephone" name="telephone" placeholder="Votre numéro de téléphone" />
 				</div>
 			</div>
-			<br/><br/>
 		</fieldset>
 		<fieldset><legend><b>Réservation</b></legend>
-			<label for="subject">Sujet :</label><br/>
-			<br />
+			<label for="subject">Sujet :</label>
 			<textarea class="form-control" id="subject" name="sujet" cols="30" rows="4"></textarea><br/>
-			<br />
 			<label for="domaine">Domaines : </label>
 			<select id="area" name="area" class="form-control">
 				<?php
@@ -72,7 +74,7 @@ include "include/language.inc.php";
 					{
 						$id = $row_areaName[0];
 						$area_name = $row_areaName[1];
-						echo '<option onclick="" value="'.$id.'"> '.$area_name.'</option>';
+						echo '<option onclick="" value="'.$id.'"> '.$area_name.'</option>'.PHP_EOL;
 					}
 				}
 				?>
@@ -112,76 +114,76 @@ include "include/language.inc.php";
 				<optgroup label="Salles">
 					<option> SELECTIONNER UN DOMAINE </option>
 				</select>
-				<br /><br />
 				<fieldset><legend><b> Début de la réservaton</b></legend>
-					<br />
 					<?php
 					jQuery_DatePicker('start');
-					echo "&nbsp";
+					//echo "&nbsp";
 					echo " <select name=\"heure\"> ";
 					for ($h = 1 ; $h < 24 ; $h++)
 					{
-						echo "<option value =\"$h\"> ".sprintf("%02d",$h)."h </option>";
+						echo "<option value =\"$h\"> ".sprintf("%02d",$h)."h </option>".PHP_EOL;
 					}
 					echo "</select>";
 					echo " <select name=\"minutes\"> ";
 					for ($m = 00 ; $m < 60 ; $m = $m + 30)
 					{
-						echo "<option value =\"$m\"> ".sprintf("%02d",$m)."min </option>";
+						echo "<option value =\"$m\"> ".sprintf("%02d",$m)."min </option>".PHP_EOL;
 					}
-					echo "</select>";
-					echo "&nbsp &nbsp";
-					echo "<br><br>";
-					echo " <label for=\"duree\">Durée :   </label><br /><div class=\"col-xs-2\"><input class=\"form-control\" type=\"text\" id=\"duree\" name=\"duree\" size=\"2\" maxlength=\"2\" tabindex=\"5\" /></div>";
-					echo "&nbsp<div class=\"col-xs-1\">";
-					echo '<select name="typeDuree" class="form-control">';
+					echo "</select>".PHP_EOL;
+					//echo "&nbsp &nbsp".PHP_EOL;
+					echo "<br><br>".PHP_EOL;
+					echo " <label for=\"duree\">Durée :   </label><br /><div class=\"col-xs-2\"><input class=\"form-control\" type=\"text\" id=\"duree\" name=\"duree\" size=\"2\" maxlength=\"2\" tabindex=\"5\" /></div>".PHP_EOL;
+					echo "&nbsp<div class=\"col-xs-1\">".PHP_EOL;
+					echo '<select name="typeDuree" class="form-control">'.PHP_EOL;
 					$units = array("heures");
 					for ($s = 0; $s < sizeof($units); $s++)
 					{
-						echo "<option value=\"$units[$s]\">$units[$s] </option>";
+						echo "<option value=\"$units[$s]\">$units[$s] </option>".PHP_EOL;
 					}
-					echo "</select></div>\n";
-					echo "</fieldset><br/>";
-					echo "<div id=\"planning\" style=\"margin-left:0px;\"\>";
-					echo "<div id=\"buttonsReservation\" style=\"margin-left:0px;\"\>";
-					echo " <input class=\"btn btn-primary\" type=\"submit\" name=\"submit\" value=\"Envoyer la demande de réservation\" />";
-					echo "&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp";
-					echo " <input class=\"btn btn-primary\" type=\"reset\" name=\"cancel\" value=\"Annuler\" />";
-					echo "&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp ";
-					echo "<a href='javascript:history.go(-1)'><input class=\"btn btn-primary\" type=\"button\" name=\"retouraccueil\" value=\"Retour à l'accueil\" /></a>";
-					echo "</div>";
-					echo " </div>";
-					echo " </form>";
 					?>
-					<script src="jquery.validate.js"></script>
-					<script >
-						jQuery.validator.setDefaults({
-							debug: true,
-							success: "valid",
-							onsubmit: true
-						});
-						$(" #contactreservation").validate({
-							rules: {
-								nom: {
-									required: true
-								},
-								prenom: {
-									required: true
-								},
-								email: {
-									required: true,
-									email: true
-								},
-								telephone: {
-									required: true,
-									digits: true
-								},
-								duree: {
-									required: true,
-									digits: true
-								}
-							}
-						});
-					</script>
-				</body>
-				</html>
+				</select>
+			</div>
+		</fieldset>
+		<br/>
+		<div id="planning" style="margin-left:0px;">
+			<div id="buttonsReservation" style="margin-left:0px;">
+			<input class="btn btn-primary" type="submit" name="submit" value="Envoyer la demande de réservation">
+				<input class="btn btn-primary" type="reset" name="cancel" value="Annuler">
+				<a href='javascript:history.go(-1)'>
+					<input class="btn btn-primary" type="button" name="retouraccueil" value="Retour à l'accueil">
+				</a>
+			</div>
+		</div>
+	</form>
+	<script src="jquery.validate.js"></script>
+	<script >
+		jQuery.validator.setDefaults({
+			debug: true,
+			success: "valid",
+			onsubmit: true
+		});
+		$(" #contactreservation").validate({
+			rules: {
+				nom: {
+					required: true
+				},
+				prenom: {
+					required: true
+				},
+				email: {
+					required: true,
+					email: true
+				},
+				telephone: {
+					required: true,
+					digits: true
+				},
+				duree: {
+					required: true,
+					digits: true
+				}
+			}
+		});
+	</script>
+</body>
+</html>

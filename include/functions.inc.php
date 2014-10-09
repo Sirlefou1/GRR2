@@ -835,7 +835,7 @@ function print_header($day = '', $month = '', $year = '', $area = '', $type_sess
 				if ($type_session == "no_session")
 				{
 					echo '<td class="contactformulaire">'.PHP_EOL;
-					echo '<a href="contactFormulaire.php"><input class="btn btn-default" type="submit" id="Réserver" rel="popup_name" class="poplight" value="Réserver" </a>'.PHP_EOL;
+					echo '<a href="contactFormulaire.php?day='.$day.'&amp;month='.$month.'&amp;year='.$year.'"><input class="btn btn-default" type="submit" id="Réserver" rel="popup_name" class="poplight" value="Réserver"></a>'.PHP_EOL;
 					echo '</td>'.PHP_EOL;
 				}
 			}
@@ -908,12 +908,12 @@ function print_header($day = '', $month = '', $year = '', $area = '', $type_sess
 						if ($disconnect_link)
 							echo ' - ';
 						else
-							echo '<br /> ';
+							echo '<br />';
 						echo '<a href="'.getSettingValue("Url_portail_sso").'">'.get_vocab("Portail_accueil").'</a>';
 					}
 					if ((getSettingValue('sso_statut') == 'lasso_visiteur') || (getSettingValue('sso_statut') == 'lasso_utilisateur'))
 					{
-						echo '<br /> ';
+						echo '<br />';
 						if ($_SESSION['lasso_nameid'] == NULL)
 							echo '<a href="lasso/federate.php">'.get_vocab('lasso_federate_this_account').'</a>';
 						else

@@ -141,7 +141,7 @@ $ind = 1;
 $test = 0;
 while (($test == 0) && ($ind <= 7))
 {
-	$i= mktime(0, 0, 0, $month, $day - $ind, $year);
+	$i = mktime(0, 0, 0, $month, $day - $ind, $year);
 	$test = $display_day[date("w",$i)];
 	$ind++;
 }
