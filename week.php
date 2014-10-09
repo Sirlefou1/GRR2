@@ -261,8 +261,8 @@ else
 			echo "<br />DEBUG: result $i, id $row[4], starts $row[0] (".affiche_date($row[0])."), ends $row[1] (".affiche_date($row[1]).")\n";
 		$month_current = date("m",$row[0]);
 		$day_current = date("d",$row[0]);
-		$year_current  = date("Y",$row[0]);
-		$debut_jour=mktime($morningstarts,0,0,$month_current,$day_current,$year_current);
+		$year_current = date("Y",$row[0]);
+		$debut_jour = mktime($morningstarts,0,0,$month_current,$day_current,$year_current);
 		$t = max(round_t_down($row[0], $resolution, $debut_jour), $week_start);
 		$end_t = min((int)round_t_up((int)$row[1],
 			(int)$resolution, $debut_jour),
@@ -535,7 +535,7 @@ for ($t = $week_start; $t <= $week_end; $t += 86400)
 							echo " <img src=\"img_grr/flag_moderation.png\" alt=\"".get_vocab("en_attente_moderation")."\" title=\"".get_vocab("en_attente_moderation")."\" class=\"image\" /> \n";
 					}
 				}
-				echo "</td>\n";
+				//echo "</td>\n";
 			}
 			$wt += 86400;
 			$num_week_day++;
