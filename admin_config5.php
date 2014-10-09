@@ -1,9 +1,9 @@
 <?php
 /**
  * admin_config5.php
- * Interface permettant à l'administrateur la configuration des paramètres pour le module Jours Cycles
+ * Interface permettant Ã  l'administrateur la configuration des paramÃ¨tres pour le module Jours Cycles
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2009-04-14 12:59:17 $
+ * DerniÃ¨re modification : $Date: 2009-04-14 12:59:17 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -46,13 +46,13 @@
 
 if (!loadSettings())
 	die("Erreur chargement settings");
-// Met à jour dans la BD le champ qui détermine si les fonctionnalités Jours/Cycles sont activées ou désactivées
+// Met Ã  jour dans la BD le champ qui dÃ©termine si les fonctionnalitÃ©s Jours/Cycles sont activÃ©es ou dÃ©sactivÃ©es
 if (isset($_GET['jours_cycles']))
 {
 	if (!saveSetting("jours_cycles_actif", $_GET['jours_cycles']))
 		echo "Erreur lors de l'enregistrement de jours_cycles_actif ! <br />";
 }
-// Met à jour dans la BD du champ qui détermine si la fonctionnalité "multisite" est activée ou non
+// Met Ã  jour dans la BD du champ qui dÃ©termine si la fonctionnalitÃ© "multisite" est activÃ©e ou non
 if (isset($_GET['module_multisite']))
 {
 	if (!saveSetting("module_multisite", $_GET['module_multisite']))
@@ -61,25 +61,25 @@ if (isset($_GET['module_multisite']))
 	{
 		if ($_GET['module_multisite'] == 'Oui')
 		{
-			// On crée un site par défaut s'il n'en existe pas
-			$id_site = grr_sql_query1("select min(id) from ".TABLE_PREFIX."_site");
+			// On crÃ©e un site par dÃ©faut s'il n'en existe pas
+			$id_site = grr_sql_query1("SELECT min(id) FROM ".TABLE_PREFIX."_site");
 			if ($id_site == -1)
 			{
 				$sql="INSERT INTO ".TABLE_PREFIX."_site
-				SET sitecode='1', sitename='site par défaut'";
+				SET sitecode='1', sitename='site par defaut'";
 				if (grr_sql_command($sql) < 0)
 					fatal_error(0,'<p>'.grr_sql_error().'</p>');
 				$id_site = mysqli_insert_id($GLOBALS['db_c']);
 			}
-						// On affecte tous les domaines à un site.
-			$sql = "select id from ".TABLE_PREFIX."_area";
+						// On affecte tous les domaines Ã  un site.
+			$sql = "SELECT id FROM ".TABLE_PREFIX."_area";
 			$res = grr_sql_query($sql);
 			if ($res)
 			{
 				for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 				{
-					// l'area est-elle déjà affectée à un site ?
-					$test_site = grr_sql_query1("select count(id_area) from ".TABLE_PREFIX."_j_site_area where id_area='".$row[0]."'");
+					// l'area est-elle dÃ©jÃ  affectÃ©e Ã  un site ?
+					$test_site = grr_sql_query1("SELECT count(id_area) FROM ".TABLE_PREFIX."_j_site_area WHERE id_area='".$row[0]."'");
 					if ($test_site == 0)
 					{
 						$sql="INSERT INTO ".TABLE_PREFIX."_j_site_area SET id_site='".$id_site."', id_area='".$row[0]."'";
@@ -91,7 +91,6 @@ if (isset($_GET['module_multisite']))
 		}
 	}
 }
-// use_fckeditor
 if (isset($_GET['use_fckeditor']))
 {
 	if (!saveSetting("use_fckeditor", $_GET['use_fckeditor']))
@@ -100,21 +99,14 @@ if (isset($_GET['use_fckeditor']))
 		die();
 	}
 }
-# print the page header
 print_header("", "", "", "", $type = "with_session", $page = "admin");
 if (isset($_GET['ok']))
 {
 	$msg = get_vocab("message_records");
-	affiche_pop_up($msg,"admin");
+	affiche_pop_up($msg, "admin");
 }
-// Affichage de la colonne de gauche
 include "admin_col_gauche.php";
-// Affichage du tableau de choix des sous-configuration
 include "include/admin_config_tableau.inc.php";
-//
-// Configurations du nombre de jours par Cycle et du premier jour du premier Jours/Cycles
-//******************************
-//
 echo "<form action=\"./admin_config.php\"  method=\"get\" style=\"width: 100%;\" onsubmit=\"return verifierJoursCycles(false);\">\n";
 echo "<h3>".get_vocab("Activer_module_jours_cycles").grr_help("aide_grr_jours_cycle")."</h3>\n";
 echo "<table border='0'>\n<tr>\n<td>\n";
@@ -146,9 +138,6 @@ else
 	echo "<option value=\"Non\" selected=\"selected\">".get_vocab('NO')."</option>\n";
 }
 echo "</select>\n</td>\n</tr>\n</table>\n";
-# La page de modification de la configuration d'une ressource utilise pour le champ "description complète"
-# l'application FckEditor permettant une mise en forme "wysiwyg" de la page.
-# "0" pour ne pas utiliser cette application (le répertoire "fckeditor" et tout ce qu'il contient n'est alors pas nécessaire au bon fonctionnement de GRR).
 echo "\n<hr /><h3>".get_vocab("use_fckeditor_msg")."</h3>";
 echo "\n<p>".get_vocab("use_fckeditor_explain")."</p>";
 echo "\n<table>";
