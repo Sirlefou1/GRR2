@@ -4174,25 +4174,43 @@ else
 
  function jQuery_DatePicker($typeDate)
  {
- 		$dformat = "%B %d %Y";
+ 	$dformat = "%B %d %Y";
  	if ($typeDate == 'rep_end' && isset($_GET['id']))
  	{
  		$res = grr_sql_query("SELECT repeat_id FROM ".TABLE_PREFIX."_entry WHERE id=".$_GET['id'].";");
  		if (!$res)
  			fatal_error(0, grr_sql_error());
  		$repeat_id = implode('', grr_sql_row($res, 0));
- 		$res = grr_sql_query("SELECT rep_type, end_date, rep_opt, rep_num_weeks, start_time, end_time FROM ".TABLE_PREFIX."_repeat WHERE id=$repeat_id");
- 		if (!$res)
- 			fatal_error(0, grr_sql_error());
- 		if (grr_sql_count($res) == 1)
+ 		if ($repeat_id != 0)
  		{
- 			$row6 			= grr_sql_row($res, 0);
- 			$rep_end_date 	= $row6[1];
+ 			$res = grr_sql_query("SELECT rep_type, end_date, rep_opt, rep_num_weeks, start_time, end_time FROM ".TABLE_PREFIX."_repeat WHERE id=$repeat_id");
+ 			if (!$res)
+ 				fatal_error(0, grr_sql_error());
+ 			if (grr_sql_count($res) == 1)
+ 			{
+ 				$row6 			= grr_sql_row($res, 0);
+ 				$rep_end_date 	= $row6[1];
+ 			}
+ 			$date = date_parse(date("Y-m-d H:i:s",$row6[1]));
+ 			$day = $date['day'];
+ 			$month = $date['month'];
+ 			$year = $date['year'];
  		}
- 		$date = date_parse(date("Y-m-d H:i:s",$row6[1]));
- 		$day = $date['day'];
- 		$month = $date['month'];
- 		$year = $date['year'];
+ 		else
+ 		{
+ 			if (isset ($_GET['day']))
+ 				$day = $_GET['day'];
+ 			else
+ 				$day = date("d");
+ 			if (isset ($_GET['month']))
+ 				$month = $_GET['month'];
+ 			else
+ 				$month = date("m");
+ 			if (isset ($_GET['year']))
+ 				$year = $_GET['year'];
+ 			else
+ 				$year = date("Y");
+ 		}
  	}
  	else
  	{
