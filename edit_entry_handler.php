@@ -283,9 +283,6 @@ else
 		else
 			$erreur = 'y';
 	}
-	echo '<pre>';
-	var_dump($_GET);
-	echo '</pre>';
 	if (!isset($_GET["end_day"]) || !isset($_GET["end_month"]) || !isset($_GET["end_year"]) || !isset($_GET["end_hour"]) || !isset($_GET["end_minute"]))
 		$erreur = 'y';
 	else
