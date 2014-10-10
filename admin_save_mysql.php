@@ -27,22 +27,6 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-/**
- * $Log: admin_save_mysql.php,v $
- * Revision 1.8  2009-12-16 14:52:31  grr
- * *** empty log message ***
- *
- * Revision 1.7  2009-10-09 07:55:48  grr
- * *** empty log message ***
- *
- * Revision 1.5  2009-04-14 12:59:17  grr
- * *** empty log message ***
- *
- * Revision 1.4  2008-11-16 22:00:58  grr
- * *** empty log message ***
- *
- *
- */
 $grr_script_name = "admin_save_mysql.php";
 if ((!isset($_GET['mdp'])) && (!isset($argv[1])) && (!isset($_GET['flag_connect'])))
 {
@@ -129,6 +113,7 @@ function mysql_version()
 		$match[2] = 0;
 	return $match[0] . "." . $match[1] . "." . $match[2];
 }
+
 $nomsql = $dbDb."_le_".date("Y_m_d_\a_H\hi").".sql";
 $now = date('D, d M Y H:i:s') . ' GMT';
 
@@ -149,7 +134,7 @@ if (isset($_SERVER['HTTP_USER_AGENT']))
 	}
 }
 $fd = '';
-$fd .= "#**************** BASE DE DONNEES ".$dbDb." ****************"."\n".date("\#\ \L\e\ \:\ d\ m\ Y\ \a\ H\h\ i")."\n";
+$fd .= "#**************** BASE DE DONNEES ".$dbDb." ****************"."\n".date("\#\ \L\\e\ \:\ d\ m\ Y\ \a\ H\h\ i")."\n";
 if (isset($_SERVER['SERVER_NAME']))
 	$fd .= "# Serveur : ".$_SERVER['SERVER_NAME']."\n";
 $fd .= "# Version PHP : " . php_version()."\n";
