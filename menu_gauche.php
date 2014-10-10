@@ -11,9 +11,6 @@ if ($_GET['pview'] != 1)
 		echo "\n<div id=\"menuGaucheMonthAll2\">";
 	else
 		echo "\n<div id=\"menuGauche\">";
-	//MAJ Hugo - Reparation du problème des liens vers les semaines du calendrier pour
-	//21/05/2013
-	//str_replace enleve le .php
 	$pageActuel = str_replace(".php","",basename($_SERVER['PHP_SELF']));
 	//Draw the three month calendar
 	minicals($year, $month, $day, $area, $room, $pageActuel);

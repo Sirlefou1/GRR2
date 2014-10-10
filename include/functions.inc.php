@@ -835,7 +835,7 @@ function print_header($day = '', $month = '', $year = '', $area = '', $type_sess
 				if ($type_session == "no_session")
 				{
 					echo '<td class="contactformulaire">'.PHP_EOL;
-					echo '<input class="btn btn-default" type="submit" id="Réserver" rel="popup_name" value="Réserver" onClick="javascript:location.href=\'contactFormulaire.php?day='.$day.'&amp;month='.$month.'&amp;year='.$year.'\'" >'.PHP_EOL;
+					echo '<input class="btn btn-default" type="submit" rel="popup_name" value="Réserver" onClick="javascript:location.href=\'contactFormulaire.php?day='.$day.'&amp;month='.$month.'&amp;year='.$year.'\'" >'.PHP_EOL;
 					echo '</td>'.PHP_EOL;
 				}
 			}

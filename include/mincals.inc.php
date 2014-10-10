@@ -27,16 +27,6 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-/**
- * $Log: mincals.inc.php,v $
- * Revision 1.7  2010-01-06 10:21:20  grr
- * *** empty log message ***
- *
- * Revision 1.6  2008-11-16 22:00:59  grr
- * *** empty log message ***
- *
- *
- */
 function minicals($year, $month, $day, $area, $room, $dmy)
 {
 	global $display_day, $vocab;
@@ -72,10 +62,18 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 		function getDateLink($day, $month, $year)
 		{
 			global $vocab;
-			if ($this->dmy == 'day')
-				return "<a onclick=\"charger();\" class=\"calendar\" title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day"))."\" href=\"".$this->dmy.".php?year=$year&amp;month=$month&amp;day=$day&amp;area=".$this->area."\"";
 			if ($this->dmy != 'day')
+			{
+				if (isset($this->room))
+					return "<a onclick=\"charger();\" class=\"calendar\" title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day"))."\" href=\"".$this->dmy.".php?year=$year&amp;month=$month&amp;day=$day&amp;room=".$this->room."\"";
+				return "<a onclick=\"charger();\" class=\"calendar\" title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day"))."\" href=\"".$this->dmy.".php?year=$year&amp;month=$month&amp;day=$day&amp;area=".$this->area."\"";
+			}
+			if ($this->dmy == 'day')
+			{
+				if (isset($this->room))
+					return "<a onclick=\"charger();\" class=\"calendar\" title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day"))."\" href=\"day.php?year=$year&amp;month=$month&amp;day=$day&amp;room=".$this->room."\"";
 				return "<a onclick=\"charger();\" class=\"calendar\" title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day"))."\" href=\"day.php?year=$year&amp;month=$month&amp;day=$day&amp;area=".$this->area."\"";
+			}
 		}
 		function getHTML()
 		{
@@ -100,7 +98,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 				$bg_lign = "week";
 			else
 				$bg_lign = 'calendarcol1';
-			#Permet de récupérer le numéro de la 1ere semaine affichée par le mini calendrier.
+			//Permet de récupérer le numéro de la 1ere semaine affichée par le mini calendrier.
 			//$week = number_format(strftime("%W",$date),0);
 			$week = numero_semaine($date);
 			$weekd = $week;
