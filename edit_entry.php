@@ -490,7 +490,7 @@ print_header($day, $month, $year, $area);
 		{
 			if ((document.forms["main"].beneficiaire.options[0].selected) &&(document.forms["main"].benef_ext_nom.value == ""))
 			{
-				alert ( "<?php echo get_vocab('you_have_not_entered').":" . '\n' . strtolower(get_vocab('nom beneficiaire')) ?>");
+				alert("<?php echo get_vocab('you_have_not_entered').":" . '\n' . strtolower(get_vocab('nom beneficiaire')) ?>");
 				return false;
 			}
 		}
@@ -499,7 +499,7 @@ print_header($day, $month, $year, $area);
 			?>
 			if (document.forms["main"].name.value == "")
 			{
-				alert ( "<?php echo get_vocab('you_have_not_entered') . '\n' . get_vocab('brief_description') . '\n' ?>");
+				alert("<?php echo get_vocab('you_have_not_entered') . '\n' . get_vocab('brief_description') . '\n' ?>");
 				return false;
 			}
 			<?php
@@ -536,7 +536,7 @@ print_header($day, $month, $year, $area);
 			m = parseInt(document.forms["main"].minute.value);
 			if (h > 23 || m > 59)
 			{
-				alert ("<?php echo get_vocab('you_have_not_entered') . '\n' . get_vocab('valid_time_of_day') ?>");
+				alert("<?php echo get_vocab('you_have_not_entered') . '\n' . get_vocab('valid_time_of_day') ?>");
 				return false;
 			}
 			<?php
