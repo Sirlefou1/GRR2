@@ -782,14 +782,15 @@ if ($enable_periods == 'y')
 }
 else
 {
+	//jQuery_TimePicker($typeDate, $typeTime, $start_hour, $start_min, $end_hour, $end_min)
 	echo '<b>'.get_vocab("time")."</b>";
 	if (isset ($_GET['id']))
 	{
-		jQuery_TimePicker('start','','','',$start_hour,$start_min,$resolution);
+		jQuery_TimePicker('start', 'start_', $start_hour, $start_min);
 	}
 	else
 	{
-		jQuery_TimePicker('start','','','','','',$resolution);
+		jQuery_TimePicker('start', 'start_', '', '');
 	}
 	if (!$twentyfourhour_format)
 	{
@@ -881,14 +882,15 @@ else
 	}
 	else
 	{
+		//jQuery_TimePicker($typeDate, $typeTime, $start_hour, $start_min, $end_hour, $end_min)
 		echo "<td class=\"E\"><b>".get_vocab("time")."</b><td class=\"CL\">";
 		if (isset ($_GET['id']))
 		{
-			jQuery_TimePicker ('end','end_','','',$end_hour,$end_min,$resolution);
+			jQuery_TimePicker ('end','end_', $end_hour, $end_min);
 		}
 		else
 		{
-			jQuery_TimePicker ('end','end_','','','','',$resolution);
+			jQuery_TimePicker ('end','end_', '', '');
 		}
 		if (!$twentyfourhour_format)
 		{

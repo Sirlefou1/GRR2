@@ -1194,212 +1194,220 @@ function VerifNomPrenomUser($type)
 	} else
 	$units = get_vocab("periods");
 }
-// Hugo - Fonction de l'ancien menu déroulant de choix de la date
-//A VOIR
+
 function genDateSelectorForm($prefix, $day, $month, $year,$option)
 {
 	global $nb_year_calendar;
 	$selector_data = "";
-		// Compatibilité avec version GRR < 1.9
-	if (!isset($nb_year_calendar)) $nb_year_calendar = 5;
-//Hugo - Si aucune date n'arrive dans l'url, on met la date actuelle
-	if (($day   == 0) and ($day != "")) $day = date("d");
-	if ($month == 0) $month = date("m");
-	if ($year  == 0) $year = date("y");
-	if ($day != "") {
+	if (!isset($nb_year_calendar))
+		$nb_year_calendar = 5;
+	if (($day == 0) && ( $day != ""))
+		$day = date("d");
+	if ($month == 0)
+		$month = date("m");
+	if ($year == 0)
+		$year = date("y");
+	if ($day != "")
+	{
 		$selector_data .= "<select name=\"${prefix}day\" id=\"${prefix}day\">\n";
-		for($i = 1; $i <= 31; $i++)
-//MAJ Hugo FORESTIER - Mise en place du if ($i < 10) : les numeros générés ne seront plus de la forme 1,2,3.. mais de la forme 01,02,03.. pour éviter des bugs avec le datePicker
-//04/06/2013
-			if ($i < 10){
-				$selector_data .= "<option" . ($i == $day ? " selected=\"selected\"" : "") . ">0$i</option>\n";}
-				else{
-					$selector_data .= "<option" . ($i == $day ? " selected=\"selected\"" : "") . ">$i</option>\n";}
-					$selector_data .= "</select>";}
-					$selector_data .= "<select name=\"${prefix}month\" id=\"${prefix}month\">\n";
-					for($i = 1; $i <= 12; $i++){
-						$m = utf8_strftime("%b", mktime(0, 0, 0, $i, 1, $year));
-//MAJ Hugo FORESTIER - Mise en place du if ($i < 10) : les numeros généré ne seront plus de la forme 1,2,3.. mais de la forme 01,02,03.. pour éviter des bugs avec le datePicker
-//04/06/2013
-						if ($i < 10){
-							$selector_data .=  "<option value=\"0$i\"" . ($i == $month ? " selected=\"selected\"" : "") . ">$m</option>\n";}
-							else{
-								$selector_data .=  "<option value=\"$i\"" . ($i == $month ? " selected=\"selected\"" : "") . ">$m</option>\n";}}
-								$selector_data .=  "</select>";
-								$selector_data .=  "<select name=\"${prefix}year\" id=\"${prefix}year\">\n";
-								$min = strftime("%Y", getSettingValue("begin_bookings"));
-								if ($option == "more_years") $min = date("Y") - $nb_year_calendar;
-								$max = strftime("%Y", getSettingValue("end_bookings"));
-								if ($option == "more_years") $max = date("Y") + $nb_year_calendar;
-								for($i = $min; $i <= $max; $i++)
-									$selector_data .= "<option value=\"$i\" " . ($i == $year ? " selected=\"selected\"" : "") . ">$i</option>\n";
-								$selector_data .= "</select> \n\n";
-								return $selector_data;
-//-----------------------------------------------------------------------
-							}
-							function genDateSelector($prefix, $day, $month, $year,$option)
-							{
-								echo genDateSelectorForm($prefix, $day, $month, $year,$option);
-							}
-# Error handler - this is used to display serious errors such as database
-# errors without sending incomplete HTML pages. This is only used for
-# errors which "should never happen", not those caused by bad inputs.
-# If $need_header!=0 output the top of the page too, else assume the
-# caller did that. Alway outputs the bottom of the page and exits.
-							function fatal_error($need_header, $message)
-							{
-								global $vocab;
-								if ($need_header) print_header(0, 0, 0, 0);
-								echo $message;
-								include "trailer.inc.php";
-								exit;
-							}
-							function compare_ip_adr($ip1, $ip2){
-								if ($ip2 == "")
-									return true;
-								$tab_ip1 = explode(".",$ip1);
-								$tab_ip2 = explode(".",$ip2);
-								$i = 0;
-								$ip1 = "";
-								$ip2 = "";
-								while ($i < 4)
-								{
-									// On traite ip1
-									if (strlen($tab_ip1[$i]) == 0)
-										$ip1 .= "000";
-									else if (strlen($tab_ip1[$i]) == 1)
-										$ip1 .= "00".$tab_ip1[$i];
-									else if (strlen($tab_ip1[$i]) == 2)
-										$ip1 .= "0".$tab_ip1[$i];
-									else
-										$ip1 .= $tab_ip1[$i];
-									// On traite ip2
-									if (!isset($tab_ip2[$i]))
-										$ip2 .= "***";
-									else if (strlen($tab_ip2[$i]) == 0)
-										$ip2 .= "***";
-									else if (strlen($tab_ip2[$i]) == 1)
-									{
-										if ($tab_ip2[$i] == "*")
-											$ip2.="**".$tab_ip2[$i];
-										else
-											$ip2.="00".$tab_ip2[$i];
-									}										
-									else if (strlen($tab_ip2[$i])==2)
-										$ip2.="0".$tab_ip2[$i];
-									else
-										$ip2.=$tab_ip2[$i];
-									$i++;
-								}
-								// On compare ip1 et ip2
-								$i = 0;
-								while ($i < 12)
-								{
-									if (($ip1[$i] != $ip2[$i]) && ($ip2[$i] != "*"))
-										return false;
-									$i++;
-								}
-								return true;
-							}
-							# Retourne le domaine par défaut; Utilisé si aucun domaine n'a été défini.
-							function get_default_area($id_site=-1)
-							{
-								if (getSettingValue("module_multisite") == "Oui")
-									$use_multisite = TRUE;
-								else
-									$use_multisite = FALSE;
-								if (OPTION_IP_ADR==1) {
-				// Affichage d'un domaine par defaut en fonction de l'adresse IP de la machine cliente
-				/*if (($id_site != -1) and ($use_multisite))
-					$sql= "SELECT a.ip_adr, a.id
-					FROM ".TABLE_PREFIX."_area a, ".TABLE_PREFIX."_j_site_area j
-					WHERE a.id=j.id_area and j.id_site=$id_site and a.ip_adr!=''
-					ORDER BY a.access, a.order_display, a.area_name";
-					else */
-						$sql = "SELECT ip_adr, id FROM ".TABLE_PREFIX."_area WHERE ip_adr!='' ORDER BY access, order_display, area_name";
-					$res = grr_sql_query($sql);
-					if ($res) {
-						for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
-						{
-							if (compare_ip_adr($_SERVER['REMOTE_ADDR'],$row[0])) {
-								return $row[1];}
-							}
-						}
-					}
-					if (authGetUserLevel(getUserName(),-1) >= 6)
-				// si l'admin est connecté, on cherche le premier domaine venu
-						if (($id_site != -1) and ($use_multisite))
-							$res = grr_sql_query("SELECT a.id
-								FROM ".TABLE_PREFIX."_area a, ".TABLE_PREFIX."_j_site_area j
-								WHERE a.id=j.id_area and j.id_site=$id_site
-								ORDER BY a.order_display, a.area_name");
-						else
-							$res = grr_sql_query("SELECT id FROM ".TABLE_PREFIX."_area ORDER BY access, order_display, area_name");
-						else
-				// s'il ne s'agit pas de l'admin, on cherche le premier domaine à accès non restreint
-							if (($id_site != -1) and ($use_multisite))
-								$res = grr_sql_query("SELECT a.id
-									FROM ".TABLE_PREFIX."_area a, ".TABLE_PREFIX."_j_site_area j
-									WHERE a.id=j.id_area and j.id_site=$id_site and a.access!='r'
-									ORDER BY a.order_display, a.area_name");
-							else
-								$res = grr_sql_query("SELECT id FROM ".TABLE_PREFIX."_area WHERE access!='r' ORDER BY access, order_display, area_name");
-							if ($res && grr_sql_count($res)>0 ) {
-								$row = grr_sql_row($res, 0);
-								grr_sql_free($res);
-								return $row[0];
-							} else {
-				// On cherche le premier domaine à accès restreint
-								if (($id_site != -1) and ($use_multisite))
-									$res = grr_sql_query("SELECT a.id
-										FROM ".TABLE_PREFIX."_area a, ".TABLE_PREFIX."_j_site_area j, ".TABLE_PREFIX."_j_user_area u
-										WHERE a.id=j.id_area and j.id_site=$id_site and a.id=u.id_area and u.login='" . getUserName() . "'
-										ORDER BY a.order_display, a.area_name");
-								else
-									$res = grr_sql_query("select id from ".TABLE_PREFIX."_area, ".TABLE_PREFIX."_j_user_area WHERE
-										".TABLE_PREFIX."_area.id=".TABLE_PREFIX."_j_user_area.id_area and
-										login='" . getUserName() . "'
-										ORDER BY order_display, area_name");
-								if ($res && grr_sql_count($res)>0 ) {
-									$row = grr_sql_row($res, 0);
-									grr_sql_free($res);
-									return $row[0];
-								}
-								else
-									return -1;
-							}
-						}
+		for ($i = 1; $i <= 31; $i++)
+		{
+			if ($i < 10)
+				$selector_data .= "<option" . ($i == $day ? " selected=\"selected\"" : "") . ">0$i</option>\n";
+			else
+				$selector_data .= "<option" . ($i == $day ? " selected=\"selected\"" : "") . ">$i</option>\n";
+		}
+		$selector_data .= "</select>";
+	}
+	$selector_data .= "<select name=\"${prefix}month\" id=\"${prefix}month\">\n";
+	for ($i = 1; $i <= 12; $i++)
+	{
+		$m = utf8_strftime("%b", mktime(0, 0, 0, $i, 1, $year));
+		if ($i < 10)
+		{
+			$selector_data .=  "<option value=\"0$i\"" . ($i == $month ? " selected=\"selected\"" : "") . ">$m</option>\n";
+		}
+		else
+		{
+			$selector_data .=  "<option value=\"$i\"" . ($i == $month ? " selected=\"selected\"" : "") . ">$m</option>\n";
+		}
+	}
+	$selector_data .=  "</select>";
+	$selector_data .=  "<select name=\"${prefix}year\" id=\"${prefix}year\">\n";
+	$min = strftime("%Y", getSettingValue("begin_bookings"));
+	if ($option == "more_years")
+		$min = date("Y") - $nb_year_calendar;
+	$max = strftime("%Y", getSettingValue("end_bookings"));
+	if ($option == "more_years")
+		$max = date("Y") + $nb_year_calendar;
+	for($i = $min; $i <= $max; $i++)
+		$selector_data .= "<option value=\"$i\" " . ($i == $year ? " selected=\"selected\"" : "") . ">$i</option>\n";
+	$selector_data .= "</select> \n\n";
+	return $selector_data;
+}
+
+function genDateSelector($prefix, $day, $month, $year, $option)
+{
+	echo genDateSelectorForm($prefix, $day, $month, $year, $option);
+}
+
+function fatal_error($need_header, $message)
+{
+	global $vocab;
+	if ($need_header)
+		print_header(0, 0, 0, 0);
+	echo $message;
+	include "trailer.inc.php";
+	exit;
+}
+
+function compare_ip_adr($ip1, $ip2)
+{
+	if ($ip2 == "")
+		return true;
+	$tab_ip1 = explode(".",$ip1);
+	$tab_ip2 = explode(".",$ip2);
+	$i = 0;
+	$ip1 = "";
+	$ip2 = "";
+	while ($i < 4)
+	{
+		if (strlen($tab_ip1[$i]) == 0)
+			$ip1 .= "000";
+		else if (strlen($tab_ip1[$i]) == 1)
+			$ip1 .= "00".$tab_ip1[$i];
+		else if (strlen($tab_ip1[$i]) == 2)
+			$ip1 .= "0".$tab_ip1[$i];
+		else
+			$ip1 .= $tab_ip1[$i];
+		if (!isset($tab_ip2[$i]))
+			$ip2 .= "***";
+		else if (strlen($tab_ip2[$i]) == 0)
+			$ip2 .= "***";
+		else if (strlen($tab_ip2[$i]) == 1)
+		{
+			if ($tab_ip2[$i] == "*")
+				$ip2.="**".$tab_ip2[$i];
+			else
+				$ip2.="00".$tab_ip2[$i];
+		}
+		else if (strlen($tab_ip2[$i])==2)
+			$ip2.="0".$tab_ip2[$i];
+		else
+			$ip2.=$tab_ip2[$i];
+		$i++;
+	}
+	$i = 0;
+	while ($i < 12)
+	{
+		if (($ip1[$i] != $ip2[$i]) && ($ip2[$i] != "*"))
+			return false;
+		$i++;
+	}
+	return true;
+}
+//Retourne le domaine par défaut; Utilisé si aucun domaine n'a été défini.
+function get_default_area($id_site=-1)
+{
+	if (getSettingValue("module_multisite") == "Oui")
+		$use_multisite = TRUE;
+	else
+		$use_multisite = FALSE;
+	if (OPTION_IP_ADR==1)
+	{
+		$sql = "SELECT ip_adr, id FROM ".TABLE_PREFIX."_area WHERE ip_adr!='' ORDER BY access, order_display, area_name";
+		$res = grr_sql_query($sql);
+		if ($res)
+		{
+			for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
+			{
+				if (compare_ip_adr($_SERVER['REMOTE_ADDR'],$row[0]))
+				{
+					return $row[1];
+				}
+			}
+		}
+	}
+	if (authGetUserLevel(getUserName(),-1) >= 6)
+	{
+		if (($id_site != -1) and ($use_multisite))
+			$res = grr_sql_query("SELECT a.id
+				FROM ".TABLE_PREFIX."_area a, ".TABLE_PREFIX."_j_site_area j
+				WHERE a.id=j.id_area and j.id_site=$id_site
+				ORDER BY a.order_display, a.area_name");
+		else
+			$res = grr_sql_query("SELECT id FROM ".TABLE_PREFIX."_area ORDER BY access, order_display, area_name");
+	}
+	else
+	{
+		if (($id_site != -1) and ($use_multisite))
+			$res = grr_sql_query("SELECT a.id
+				FROM ".TABLE_PREFIX."_area a, ".TABLE_PREFIX."_j_site_area j
+				WHERE a.id=j.id_area and j.id_site=$id_site and a.access!='r'
+				ORDER BY a.order_display, a.area_name");
+		else
+			$res = grr_sql_query("SELECT id FROM ".TABLE_PREFIX."_area WHERE access!='r' ORDER BY access, order_display, area_name");
+	}
+	if ($res && grr_sql_count($res)>0 )
+	{
+		$row = grr_sql_row($res, 0);
+		grr_sql_free($res);
+		return $row[0];
+	}
+	else
+	{
+		if (($id_site != -1) and ($use_multisite))
+			$res = grr_sql_query("SELECT a.id
+				FROM ".TABLE_PREFIX."_area a, ".TABLE_PREFIX."_j_site_area j, ".TABLE_PREFIX."_j_user_area u
+				WHERE a.id=j.id_area and j.id_site=$id_site and a.id=u.id_area and u.login='" . getUserName() . "'
+				ORDER BY a.order_display, a.area_name");
+		else
+			$res = grr_sql_query("select id from ".TABLE_PREFIX."_area, ".TABLE_PREFIX."_j_user_area WHERE
+				".TABLE_PREFIX."_area.id=".TABLE_PREFIX."_j_user_area.id_area and
+				login='" . getUserName() . "'
+				ORDER BY order_display, area_name");
+		if ($res && grr_sql_count($res)>0 )
+		{
+			$row = grr_sql_row($res, 0);
+			grr_sql_free($res);
+			return $row[0];
+		}
+		else
+			return -1;
+	}
+}
 # Retourne le site par défaut;
-						function get_default_site()
-						{
-							$res = grr_sql_query1("SELECT min(id) FROM ".TABLE_PREFIX."_site");
-							return $res;
-						}
+function get_default_site()
+{
+	$res = grr_sql_query1("SELECT min(id) FROM ".TABLE_PREFIX."_site");
+	return $res;
+}
 # Get the local day name based on language. Note 2000-01-02 is a Sunday.
-						function day_name($daynumber)
-						{
-							return utf8_strftime("%A", mktime(0,0,0,1,2+$daynumber,2000));
-						}
-						function affiche_heure_creneau($t,$resolution) {
-							global $twentyfourhour_format;
-							if ($twentyfourhour_format)
-								$hour_min_format = "H:i";
-							else
-								$hour_min_format = "h:ia";
-							return date($hour_min_format,$t) ." - ".date($hour_min_format,$t+$resolution);
-						}
-						function hour_min_format()
-						{
-							global $twentyfourhour_format;
-							if ($twentyfourhour_format)
-							{
-								return "H:i";
-							}
-							else
-							{
-								return "h:ia";
-							}
-						}
+function day_name($daynumber)
+{
+	return utf8_strftime("%A", mktime(0,0,0,1,2+$daynumber,2000));
+}
+function affiche_heure_creneau($t,$resolution)
+{
+	global $twentyfourhour_format;
+	if ($twentyfourhour_format)
+		$hour_min_format = "H:i";
+	else
+		$hour_min_format = "h:ia";
+	return date($hour_min_format,$t) ." - ".date($hour_min_format,$t+$resolution);
+}
+function hour_min_format()
+{
+	global $twentyfourhour_format;
+	if ($twentyfourhour_format)
+	{
+		return "H:i";
+	}
+	else
+	{
+		return "h:ia";
+	}
+}
 /*
 Fonction utilisée dans le cas où les créneaux de réservation sont basés sur des intitulés pré-définis :
 Formatage de la date de début ou de fin de réservation.
@@ -4145,77 +4153,94 @@ else
 		# Le code fonction est défini
  	if ($codefonction != "")
  	{
- 		$sql = grr_sql_query1("select statut_grr from ".TABLE_PREFIX."_correspondance_statut where code_fonction='".$codefonction."'");
+ 		$sql = grr_sql_query1("SELECT statut_grr from ".TABLE_PREFIX."_correspondance_statut where code_fonction='".$codefonction."'");
  		if ($sql != -1)
  		{
-				// Si la fonction existe dans la table de correspondance, on retourne le statut_grr associé
+			// Si la fonction existe dans la table de correspondance, on retourne le statut_grr associé
  			return $sql;
  		}
  		else
  		{
-					// Le code n'existe pas dans la base, alors on l'insère en lui attribuant le statut par défaut.
+			// Le code n'existe pas dans la base, alors on l'insère en lui attribuant le statut par défaut.
  			$libellefonction = protect_data_sql($libellefonction);
- 			$sql = grr_sql_command("insert into grr_correspondance_statut(code_fonction,libelle_fonction,statut_grr) values('$codefonction', '$libellefonction', '$_statut')");
+ 			$sql = grr_sql_command("INSERT INTO grr_correspondance_statut(code_fonction,libelle_fonction,statut_grr) VALUES ('$codefonction', '$libellefonction', '$_statut')");
  			return $_statut;
  		}
-		# Le code fonction n'est pas défini, alors on retourne le statut par défaut.
+		//Le code fonction n'est pas défini, alors on retourne le statut par défaut.
  	}
  	else
  		return $_statut;
  }
-//MAJ Hugo FORESTIER - Mise en place de la fonction DataPicker
-//15/05/2013
+
  function jQuery_DatePicker($typeDate)
  {
-//on récupère les infos passé dans l'url (sinon les infos actuels) pour les afficher dans le input
- 	if (isset ($_GET['day']))
- 		$day = $_GET['day'];
+ 		$dformat = "%B %d %Y";
+ 	if ($typeDate == 'rep_end')
+ 	{
+ 		$res = grr_sql_query("SELECT repeat_id FROM ".TABLE_PREFIX."_entry WHERE id=".$_GET['id'].";");
+ 		if (!$res)
+ 			fatal_error(0, grr_sql_error());
+ 		$repeat_id = implode('', grr_sql_row($res, 0));
+ 		$res = grr_sql_query("SELECT rep_type, end_date, rep_opt, rep_num_weeks, start_time, end_time FROM ".TABLE_PREFIX."_repeat WHERE id=$repeat_id");
+ 		if (!$res)
+ 			fatal_error(0, grr_sql_error());
+ 		if (grr_sql_count($res) == 1)
+ 		{
+ 			$row6 			= grr_sql_row($res, 0);
+ 			$rep_end_date 	= $row6[1];
+ 		}
+ 		$date = date_parse(date("Y-m-d H:i:s",$row6[1]));
+ 		$day = $date['day'];
+ 		$month = $date['month'];
+ 		$year = $date['year'];
+ 	}
  	else
- 		$day= date("d");
- 	if (isset ($_GET['month']))
- 		$month = $_GET['month'];
- 	else
- 		$month= date("m");
- 	if (isset ($_GET['year']))
- 		$year = $_GET['year'];
- 	else
- 		$year= date("Y");
+ 	{
+ 		if (isset ($_GET['day']))
+ 			$day = $_GET['day'];
+ 		else
+ 			$day = date("d");
+ 		if (isset ($_GET['month']))
+ 			$month = $_GET['month'];
+ 		else
+ 			$month = date("m");
+ 		if (isset ($_GET['year']))
+ 			$year = $_GET['year'];
+ 		else
+ 			$year = date("Y");
+ 	}
  	genDateSelector("".$typeDate."_", "$day", "$month", "$year","");
  	echo '<input type="hidden" disabled="disabled" id="mydate_' .$typeDate. '">'.PHP_EOL;
  	echo '<script>'.PHP_EOL;
-	echo '	$(function() {'.PHP_EOL;
-		echo '$.datepicker.setDefaults( $.datepicker.regional[\'fr\'] );'.PHP_EOL;
- 	echo '	$(\'#mydate_' .$typeDate. '\').datepicker({'.PHP_EOL;
-  	echo '		beforeShow: readSelected, onSelect: updateSelected,'.PHP_EOL;
- 	echo '		showOn: \'both\', buttonImageOnly: true, buttonImage: \'images/calendar.png\'});'.PHP_EOL;
-	echo '		function readSelected()'.PHP_EOL;
-	echo '		{'.PHP_EOL;
-	echo '			$(\'#mydate_' .$typeDate. '\').val($(\'#' .$typeDate. '_day\').val() + \'/\' +'.PHP_EOL;
+ 	echo '	$(function() {'.PHP_EOL;
+ 		echo '$.datepicker.setDefaults( $.datepicker.regional[\'fr\'] );'.PHP_EOL;
+ 		echo '	$(\'#mydate_' .$typeDate. '\').datepicker({'.PHP_EOL;
+ 			echo '		beforeShow: readSelected, onSelect: updateSelected,'.PHP_EOL;
+ 			echo '		showOn: \'both\', buttonImageOnly: true, buttonImage: \'images/calendar.png\'});'.PHP_EOL;
+echo '		function readSelected()'.PHP_EOL;
+echo '		{'.PHP_EOL;
+echo '			$(\'#mydate_' .$typeDate. '\').val($(\'#' .$typeDate. '_day\').val() + \'/\' +'.PHP_EOL;
 	echo '			$(\'#' .$typeDate. '_month\').val() + \'/\' + $(\'#' .$typeDate. '_year\').val());'.PHP_EOL;
-	echo '			return {};'.PHP_EOL;
-	echo '		}'.PHP_EOL;
-	echo '		function updateSelected(date)'.PHP_EOL;
-	echo '		{'.PHP_EOL;
-	echo '			$(\'#' .$typeDate. '_day\').val(date.substring(0, 2));'.PHP_EOL;
-	echo '			$(\'#' .$typeDate. '_month\').val(date.substring(3, 5));'.PHP_EOL;
-	echo '			$(\'#' .$typeDate. '_year\').val(date.substring(6, 10));'.PHP_EOL;
-	echo '		}'.PHP_EOL;
-	echo '	});'.PHP_EOL;
-	echo '</script>'.PHP_EOL;
+echo '			return {};'.PHP_EOL;
+echo '		}'.PHP_EOL;
+echo '		function updateSelected(date)'.PHP_EOL;
+echo '		{'.PHP_EOL;
+echo '			$(\'#' .$typeDate. '_day\').val(date.substring(0, 2));'.PHP_EOL;
+echo '			$(\'#' .$typeDate. '_month\').val(date.substring(3, 5));'.PHP_EOL;
+echo '			$(\'#' .$typeDate. '_year\').val(date.substring(6, 10));'.PHP_EOL;
+echo '		}'.PHP_EOL;
+echo '	});'.PHP_EOL;
+echo '</script>'.PHP_EOL;
 }
-function jQuery_TimePicker($typeDate, $typeTime, $start_hour, $start_min, $end_hour, $end_min)
+
+function jQuery_TimePicker($typeDate, $typeTime, $start_hour, $start_min)
 {
 	if (isset ($_GET['id']))
 	{
-		if ($start_hour != '' && $start_min != '')
+		if (isset($start_hour) && isset($start_min))
 		{
 			$hour = $start_hour;
 			$minute = $start_min;
-		}
-		else if ($end_hour != '' && $end_min != '')
-		{
-			$hour = $end_hour;
-			$minute = $end_min;
 		}
 		else
 		{
@@ -4246,6 +4271,8 @@ function jQuery_TimePicker($typeDate, $typeTime, $start_hour, $start_min, $end_h
 			stepMinute:'.$minuteJQ.',
 			altField: "#minute_' .$typeDate. '",
 			altTimeFormat: "mm",
+			hour : ' .$hour. ',
+			minute : ' .$minute. '
 		});
 </script>';
 }
