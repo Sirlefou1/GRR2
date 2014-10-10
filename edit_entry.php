@@ -627,8 +627,8 @@ echo '<form id="main" action="edit_entry_handler.php" method="get">'.PHP_EOL;
 		areasObj = eval( "formObj.areas" );
 		area = areasObj[areasObj.selectedIndex].value
 		roomsObj = eval( "formObj.elements['rooms[]']" )
-		l=roomsObj.length;
-		for (i=l;i>0;i-- )
+		l = roomsObj.length;
+		for (i = l; i > 0; i-- )
 		{
 			roomsObj.options[i] = null
 		}
@@ -641,6 +641,7 @@ echo '<form id="main" action="edit_entry_handler.php" method="get">'.PHP_EOL;
 				$sql = "SELECT id, area_name FROM ".TABLE_PREFIX."_area WHERE enable_periods != 'y' ORDER BY area_name";
 			$res = grr_sql_query($sql);
 			if ($res)
+			{
 				for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 				{
 					if (authUserAccesArea(getUserName(), $row[0]) == 1)
@@ -650,9 +651,9 @@ echo '<form id="main" action="edit_entry_handler.php" method="get">'.PHP_EOL;
 						$tab_rooms_noaccess = verif_acces_ressource(getUserName(), 'all');
 						foreach($tab_rooms_noaccess as $key)
 						{
-							$sql2 .= " and id != $key ";
+							$sql2 .= " AND id != $key ";
 						}
-						$sql2 .= " order by room_name";
+						$sql2 .= " ORDER BY room_name";
 						$res2 = grr_sql_query($sql2);
 						if ($res2)
 						{
@@ -665,49 +666,50 @@ echo '<form id="main" action="edit_entry_handler.php" method="get">'.PHP_EOL;
 						print "break\n";
 					}
 				}
-				?>
 			}
+			?>
 		}
-	</script>
-	<?php
-	echo '<table width="100%" border="1"><tr>'.PHP_EOL;
-	echo '<td style="width:50%; vertical-align:top;">'.PHP_EOL;
-	echo '<table width="100%" border="0" class="EditEntryTable">'.PHP_EOL;
-	if (((authGetUserLevel(getUserName(), -1,"room") >= $qui_peut_reserver_pour) || (authGetUserLevel(getUserName(),$area,"area") >= $qui_peut_reserver_pour)) && (($id == 0) || (($id != 0) && (authGetUserLevel(getUserName(),$room) > 2) )))
+	}
+</script>
+<?php
+echo '<table width="100%" border="1"><tr>'.PHP_EOL;
+echo '<td style="width:50%; vertical-align:top;">'.PHP_EOL;
+echo '<table width="100%" border="0" class="EditEntryTable">'.PHP_EOL;
+if (((authGetUserLevel(getUserName(), -1, "room") >= $qui_peut_reserver_pour) || (authGetUserLevel(getUserName(), $area, "area") >= $qui_peut_reserver_pour)) && (($id == 0) || (($id != 0) && (authGetUserLevel(getUserName(), $room) > 2) )))
+{
+	$flag_qui_peut_reserver_pour = "yes";
+	echo '<tr>'.PHP_EOL;
+	echo '<td class="E">'.PHP_EOL;
+	echo '<b>'.ucfirst(trim(get_vocab("reservation au nom de"))).get_vocab("deux_points").'</b>'.PHP_EOL;
+	echo '</td>'.PHP_EOL;
+	echo '</tr>'.PHP_EOL;
+	echo '<tr>'.PHP_EOL;
+	echo '<td class="CL">'.PHP_EOL;
+	echo '<div class="col-xs-3">'.PHP_EOL;
+	echo '<select size="1" class="form-control" name="beneficiaire" id="beneficiaire" onchange="setdefault(\'beneficiaire_default\',\'\');check_4();insertProfilBeneficiaire();">'.PHP_EOL;
+	echo '<option value="" >'.get_vocab("personne exterieure").'</option>'.PHP_EOL;
+	$sql = "SELECT DISTINCT login, nom, prenom FROM ".TABLE_PREFIX."_utilisateurs WHERE (etat!='inactif' and statut!='visiteur' ) OR (login='".$beneficiaire."') ORDER BY nom, prenom";
+	$res = grr_sql_query($sql);
+	if ($res)
 	{
-		$flag_qui_peut_reserver_pour = "yes";
-		echo '<tr>'.PHP_EOL;
-		echo '<td class="E">'.PHP_EOL;
-		echo '<b>'.ucfirst(trim(get_vocab("reservation au nom de"))).get_vocab("deux_points").'</b>'.PHP_EOL;
-		echo '</td>'.PHP_EOL;
-		echo '</tr>'.PHP_EOL;
-		echo '<tr>'.PHP_EOL;
-		echo '<td class="CL">'.PHP_EOL;
-		echo '<div class="col-xs-3">'.PHP_EOL;
-		echo '<select size="1" class="form-control" name="beneficiaire" id="beneficiaire" onchange="setdefault(\'beneficiaire_default\',\'\');check_4();insertProfilBeneficiaire();">'.PHP_EOL;
-		echo '<option value="" >'.get_vocab("personne exterieure").'</option>'.PHP_EOL;
-		$sql = "SELECT DISTINCT login, nom, prenom FROM ".TABLE_PREFIX."_utilisateurs WHERE  (etat!='inactif' and statut!='visiteur' ) or (login='".$beneficiaire."') order by nom, prenom";
-		$res = grr_sql_query($sql);
-		if ($res)
+		for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 		{
-			for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
+			echo '<option value="'.$row[0].'" ';
+			if ($id == 0 && isset($_COOKIE['beneficiaire_default']))
+				$cookie = $_COOKIE['beneficiaire_default'];
+			else
+				$cookie = "";
+			if ((!$cookie && strtolower($beneficiaire) == strtolower($row[0])) || ($cookie && $cookie == $row[0]))
 			{
-				echo '<option value="'.$row[0].'" ';
-				if ($id == 0 && isset($_COOKIE['beneficiaire_default']))
-					$cookie = $_COOKIE['beneficiaire_default'];
-				else
-					$cookie = "";
-				if ((!$cookie && strtolower($beneficiaire) == strtolower($row[0])) or ($cookie && $cookie == $row[0]))
-				{
-					echo ' selected="selected" ';
-				}
-				echo '>'.$row[1].' '.$row[2].'</option>'.PHP_EOL;
+				echo ' selected="selected" ';
 			}
+			echo '>'.$row[1].' '.$row[2].'</option>'.PHP_EOL;
 		}
-		$test = grr_sql_query1("SELECT login FROM ".TABLE_PREFIX."_utilisateurs WHERE login='".$beneficiaire."'");
-		if (($test==-1) && ($beneficiaire!=''))
-		{
-			echo '<option value="-1" selected="selected" >'.get_vocab("utilisateur_inconnu").$beneficiaire.')</option>'.PHP_EOL;
+	}
+	$test = grr_sql_query1("SELECT login FROM ".TABLE_PREFIX."_utilisateurs WHERE login='".$beneficiaire."'");
+	if (($test == -1) && ($beneficiaire != ''))
+	{
+		echo '<option value="-1" selected="selected" >'.get_vocab("utilisateur_inconnu").$beneficiaire.')</option>'.PHP_EOL;
 }
 echo '</select>'.PHP_EOL;
 echo '</div>'.PHP_EOL;
@@ -809,7 +811,7 @@ if ($type_affichage_reser == 0)
 	echo '</td></tr>'.PHP_EOL;
 	echo '<tr><td class="CL">'.PHP_EOL;
 	echo '<div class="row">'.PHP_EOL;
-  	echo '<div class="col-xs-2">'.PHP_EOL;
+	echo '<div class="col-xs-2">'.PHP_EOL;
 	spinner($duration);
 	echo '</div>'.PHP_EOL;
 	echo '<div class="col-xs-2">'.PHP_EOL;
