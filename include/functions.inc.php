@@ -4175,7 +4175,7 @@ else
  function jQuery_DatePicker($typeDate)
  {
  		$dformat = "%B %d %Y";
- 	if ($typeDate == 'rep_end')
+ 	if ($typeDate == 'rep_end' && isset($_GET['id']))
  	{
  		$res = grr_sql_query("SELECT repeat_id FROM ".TABLE_PREFIX."_entry WHERE id=".$_GET['id'].";");
  		if (!$res)
