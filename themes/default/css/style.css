@@ -55,6 +55,11 @@
  	position: relative;
  	width : 100%;
  }
+ #menu1 {
+ 	border : none;
+ 	width : 100%;
+ }
+ 
  .image {
  	border: none;
  	vertical-align: middle;
@@ -88,33 +93,6 @@
  	vertical-align: middle;
  	text-align: center;
  	border : 0px solid red;
- }
- #Réserver {
- 	color:#00009b;
- 	-moz-box-shadow: 0px 0px 10px #343434;
- 	-webkit-box-shadow: 0px 0px 10px #343434;
- 	-o-box-shadow: 0px 0px 10px #343434;
- 	box-shadow: 0px 0px 10px #343434;
- 	-moz-border-radius: 12px;
- 	-webkit-border-radius: 12px;
- 	border-radius: 6px;
- 	border: 8px outset #9b9b9b;
- 	background:#cfcfcf;
- 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#cfcfcf", endColorstr="#656565");
- 	background: -webkit-gradient(linear, left top, left bottom, from(#cfcfcf), to(#656565));
- 	background: -webkit-linear-gradient(#cfcfcf, #656565);
- 	background: -moz-linear-gradient(#cfcfcf, #656565);
- 	background: -o-linear-gradient(#cfcfcf, #656565);
- 	background: -ms-linear-gradient(#cfcfcf, #656565);
- 	background: linear-gradient(#cfcfcf, #656565);
- 	font-size : 50px;
- 	font-family: Arial;
- }
- #Réserver:hover {
- 	color : #A9EAFE;
- 	font-size : 50px;
- 	font-family: Arial;
- 	cursor: pointer;
  }
  #menuGauche {
  	background-color:#5c2862;

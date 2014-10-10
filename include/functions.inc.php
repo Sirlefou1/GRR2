@@ -4203,11 +4203,8 @@ else
 	echo '	});'.PHP_EOL;
 	echo '</script>'.PHP_EOL;
 }
-//Hugo - Mise en place du TimePicker (sur la base du DatePicker)
-//28/05/2013
 function jQuery_TimePicker($typeDate, $typeTime, $start_hour, $start_min, $end_hour, $end_min)
 {
-//Si l'id est présent dans l'url c'est une modification, on récupère l'heure de debut et de fin.
 	if (isset ($_GET['id']))
 	{
 		if ($start_hour != '' && $start_min != '')
@@ -4237,31 +4234,21 @@ function jQuery_TimePicker($typeDate, $typeTime, $start_hour, $start_min, $end_h
 		else
 			$minute = date("m");
 	}
-//L"url pointe vers des &hour=0, pour éviter un bug avec le format de date : 11h0, on utilise ce if
 	if ($minute == 0)
 		$minute = '00';
-//David VOUE --29 Janvier 2014--Modification du stepMinute (15--->30) et de minuteGrid (15-->30) pour éviter des bugs des 1/4 d'heure
 	global $resolution;
 	$minuteJQ = $resolution / 60;
-	echo '<div class="form-inline">
-	<div class="form-group">
-	<input class="form-control" type="text" id="hour_' .$typeDate. '" value="' .$hour. '" name="' .$typeTime. 'hour" size="2" /> :
-	</div>
-	<div class="form-group">
-	<input class="form-control" type="text" id="minute_' .$typeDate. '" value="' .$minute. '" name="' .$typeTime. 'minute" size="2" />
-	</div>
-	</div>
+	echo '<input type="text" id="hour_' .$typeDate. '" value="' .$hour. '" name="' .$typeTime. 'hour" size="2" /> : <input type="text" id="minute_' .$typeDate. '" value="' .$minute. '" name="' .$typeTime. 'minute" size="2" />
 	<script>
 		$("#hour_' .$typeDate. '").timepicker({
-			controlType: "select",
-			timeFormat: "H",
+			controlType: \'select\',
+			timeFormat: \'H\',
 			stepMinute:'.$minuteJQ.',
 			altField: "#minute_' .$typeDate. '",
 			altTimeFormat: "mm",
 		});
 </script>';
 }
-//MAJ Hugo FORESTIER - Creation d'une fonction jQuery pour un input de type number
 function spinner ($duration)
 {
 	echo "<input class=\"form-control\" name=\"duration\" value=\"" .$duration. "\" id=\"spinner\" />";

@@ -766,7 +766,7 @@ echo '<tr><td class="CL">'.PHP_EOL;
 echo '<table border="0">'.PHP_EOL;
 echo '<tr><td>'.PHP_EOL;
 jQuery_DatePicker('start');
-echo '</td></tr><tr><td class="E">'.PHP_EOL;
+echo '</td><td class="E">'.PHP_EOL;
 if ($enable_periods == 'y')
 {
 	echo '<b>'.get_vocab("period").'</b>'.PHP_EOL;
@@ -1019,19 +1019,7 @@ echo "\n<!-- ************* Periodic edition ***************** -->\n";
 $weeklist = array("unused","every week","week 1/2","week 1/3","week 1/4","week 1/5");
 if (($edit_type == "series") || (isset($flag_periodicite)))
 {
-	echo "
-	<tr>
-		<td id=\"ouvrir\" style=\"cursor: inherit\" align=\"center\" class=\"fontcolor4\">
-			<span class=\"bground\"><b><a href='javascript:clicMenu(1);check_5()'>".get_vocab("click_here_for_series_open")."</a></b></span>
-		</td>
-	</tr>
-	<tr>
-		<td style=\"display:none; cursor: inherit\" id=\"fermer\" align=\"center\" class=\"fontcolor4\">
-			<span class=\"bground\"><b><a href='javascript:clicMenu(1);check_5()'>".get_vocab("click_here_for_series_close")."</a></b></span>
-		</td>
-	</tr>
-	";
-	echo "<tr><td><table border=\"0\" style=\"display:none\" id=\"menu1\" width=\"100%\">\n ";
+	echo "<tr><td><table id=\"menu1\">\n ";
 	echo "<tr><td class=\"F\"><b>".get_vocab("rep_type")."</b></td></tr><tr><td class=\"CL\">\n";
 	echo "<table border=\"0\"  width=\"100%\" >\n";
 	if (getSettingValue("jours_cycles_actif") == "Oui")
