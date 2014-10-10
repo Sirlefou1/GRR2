@@ -886,11 +886,11 @@ else
 		echo "<td class=\"E\"><b>".get_vocab("time")."</b><td class=\"CL\">";
 		if (isset ($_GET['id']))
 		{
-			jQuery_TimePicker ('end','', $end_hour, $end_min);
+			jQuery_TimePicker ('end','end_', $end_hour, $end_min);
 		}
 		else
 		{
-			jQuery_TimePicker ('end','', '', '');
+			jQuery_TimePicker ('end','end_', '', '');
 		}
 		if (!$twentyfourhour_format)
 		{
@@ -1033,7 +1033,7 @@ if (($edit_type == "series") || (isset($flag_periodicite)))
 		</td>
 	</tr>
 	";
-	echo "<tr><td><table id=\"menu1\">\n ";
+	echo "<tr><td><table id=\"menu1\" style=\"display:none;\">\n ";
 	echo "<tr><td class=\"F\"><b>".get_vocab("rep_type")."</b></td></tr><tr><td class=\"CL\">\n";
 	echo "<table border=\"0\"  width=\"100%\" >\n";
 	if (getSettingValue("jours_cycles_actif") == "Oui")

@@ -283,6 +283,9 @@ else
 		else
 			$erreur = 'y';
 	}
+	echo '<pre>';
+	var_dump($_GET);
+	echo '</pre>';
 	if (!isset($_GET["end_day"]) || !isset($_GET["end_month"]) || !isset($_GET["end_year"]) || !isset($_GET["end_hour"]) || !isset($_GET["end_minute"]))
 		$erreur = 'y';
 	else
@@ -292,11 +295,11 @@ else
 		$end_month = $_GET["end_month"];
 		$end_hour = $_GET["end_hour"];
 		$end_minute = $_GET["end_minute"];
-		settype($end_month,"integer");
-		settype($end_day,"integer");
-		settype($end_year,"integer");
-		settype($end_minute,"integer");
-		settype($end_hour,"integer");
+		settype($end_month, "integer");
+		settype($end_day, "integer");
+		settype($end_year, "integer");
+		settype($end_minute, "integer");
+		settype($end_hour, "integer");
 		$minyear = strftime("%Y", getSettingValue("begin_bookings"));
 		$maxyear = strftime("%Y", getSettingValue("end_bookings"));
 		if ($end_day < 1)
@@ -446,14 +449,14 @@ if ($rep_type == 2)
 			if (resa_est_hors_reservation2($starttime, $endtime, $area))
 				$error_heure_debut_fin = 'yes';
 		}
-		$statut_room = grr_sql_query1("select statut_room from ".TABLE_PREFIX."_room where id = '$room_id'");
+		$statut_room = grr_sql_query1("SELECT statut_room from ".TABLE_PREFIX."_room where id = '$room_id'");
 		if (($statut_room == "0") && authGetUserLevel(getUserName(),$room_id) < 3)
 			$error_booking_room_out = 'yes';
 		if (!verif_acces_ressource(getUserName(), $room_id))
 			$error_booking_room_out = 'yes';
 	}
 	$err = "";
-	if (($error_booking_in_past == 'no') && ($error_chevaussement=='no') && ($error_duree_max_resa_area == 'no') && ($error_delais_max_resa_room == 'no') && ($error_delais_min_resa_room == 'no')  && ($error_date_option_reservation == 'no') && ($error_qui_peut_reserver_pour == 'no') && ($error_heure_debut_fin == 'no'))
+	if (($error_booking_in_past == 'no') && ($error_chevaussement == 'no') && ($error_duree_max_resa_area == 'no') && ($error_delais_max_resa_room == 'no') && ($error_delais_min_resa_room == 'no')  && ($error_date_option_reservation == 'no') && ($error_qui_peut_reserver_pour == 'no') && ($error_heure_debut_fin == 'no'))
 	{
 		foreach ($_GET['rooms'] as $room_id)
 		{
@@ -466,7 +469,7 @@ if ($rep_type == 2)
 					{
 						if (isset($_GET['del_entry_in_conflict']) && ($_GET['del_entry_in_conflict'] == 'yes'))
 							grrDelEntryInConflict($room_id, $reps[$i], $reps[$i] + $diff, $ignore_id, $repeat_id, 0);
-						if ($i == (count($reps)-1))
+						if ($i == (count($reps) - 1))
 							$tmp = mrbsCheckFree($room_id, $reps[$i], $reps[$i] + $diff, $ignore_id, $repeat_id);
 						else
 							$tmp = mrbsCheckFree($room_id, $reps[$i], $reps[$i] + $diff, $ignore_id, $repeat_id);
