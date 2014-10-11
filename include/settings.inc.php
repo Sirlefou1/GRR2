@@ -1,9 +1,9 @@
 <?php
 /**
  * setting.inc.php
- * Bibliothèque de fonction pour la gestion de la table grr_setting
+ * BibliothÃ¨que de fonction pour la gestion de la table grr_setting
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2009-04-14 12:59:18 $
+ * DerniÃ¨re modification : $Date: 2009-04-14 12:59:18 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -51,7 +51,7 @@
 function loadSettings()
 {
 	global $grrSettings;
-	// Pour tenir compte du changement de nom de la table setting à partir de la version 1.8
+	// Pour tenir compte du changement de nom de la table setting Ã  partir de la version 1.8
 	$test = grr_sql_query1("SELECT NAME FROM ".TABLE_PREFIX."_setting WHERE NAME='version'");
 	if ($test != -1)
 		$sql = "SELECT `NAME`, `VALUE` FROM ".TABLE_PREFIX."_setting";
@@ -120,3 +120,4 @@ function saveSetting($_name, $_value)
 	$grrSettings[$_name] = $_value;
 	return (true);
 }
+?>

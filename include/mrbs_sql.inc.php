@@ -97,7 +97,7 @@ function grrCheckOverlap($reps, $diff)
 		if ($reps[$i] < ($reps[0] + $diff))
 			$err = "yes";
 	}
-	if ($err=="")
+	if ($err == "")
 		return TRUE;
 	else
 		return FALSE;
@@ -746,8 +746,10 @@ function moderate_entry_do($_id,$_moderate,$_description,$send_mail="yes")
 		else
 			$sql = "UPDATE ".TABLE_PREFIX."_entry SET moderate = 3 WHERE id = ".$_id;
 		$res = grr_sql_query($sql);
-		if (! $res) fatal_error(0, grr_sql_error());
-		if (!(grr_backup($_id,$_SESSION['login'],$_description))) fatal_error(0, grr_sql_error());
+		if (!$res)
+			fatal_error(0, grr_sql_error());
+		if (!(grr_backup($_id,$_SESSION['login'],$_description)))
+			fatal_error(0, grr_sql_error());
 		$tab_id_moderes = array();
 	}
 	else
@@ -804,7 +806,8 @@ function moderate_entry_do($_id,$_moderate,$_description,$send_mail="yes")
 		{
 			// On sélectionne toutes les réservation de la périodicité
 			$res = grr_sql_query("SELECT id FROM ".TABLE_PREFIX."_entry WHERE repeat_id='".$repeat_id."'");
-			if (! $res) fatal_error(0, grr_sql_error());
+			if (! $res)
+				fatal_error(0, grr_sql_error());
 			for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 			{
 				$entry_tom = $row['0'];

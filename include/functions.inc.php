@@ -117,7 +117,7 @@ function affiche_lien_contact($_cible, $_type_cible, $option_affichage)
 				$affichage = "";
 		}
 		else
-			$affichage = '<a href="javascript:centrerpopup(\'contact.php?cible='.$_cible.'&amp;type_cible='.$_type_cible.'\',600,480,\'scrollbars=yes,statusbar=no,resizable=yes\')" title="'.$_identite.'">'.$_identite.'</a>'.PHP_EOL;
+			$affichage = '<a href="javascript:centrerpopup("contact.php?cible='.$_cible.'&amp;type_cible='.$_type_cible.'",600,480,"scrollbars=yes,statusbar=no,resizable=yes")" title="'.$_identite.'">'.$_identite.'</a>'.PHP_EOL;
 	}
 	else
 	{
@@ -737,8 +737,8 @@ function begin_page($title,$page="with_session")
 	$a .=  '" />';
 	$a .= PHP_EOL.'<meta name="Robots" content="noindex" />';
 	$a .= '<script src="jquery-1.8.3.min.js"></script>'.PHP_EOL;
-	$a .= '<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />';
-	$a .= '<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>';
+	$a .= '<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />';
+	$a .= '<script src="http://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>';
 	$a .= '<script src="jquery.validate.js"></script>';
 	$a .= '<script src="jquery-ui-timepicker-addon.js"></script>';
 	$a .= '<link href="themes/default/css/jquery-ui-timepicker-addon.css" rel="stylesheet" type="text/css">';
@@ -3685,7 +3685,7 @@ function find_user_room ($id_room)
 	if (count($emails) == 0)
 	{
 		$id_area = mrbsGetAreaIdFromRoomId($id_room);
-		$sql_admin = grr_sql_query("SELECT email from ".TABLE_PREFIX."_utilisateurs, ".TABLE_PREFIX."_j_useradmin_area
+		$sql_admin = grr_sql_query("select email from ".TABLE_PREFIX."_utilisateurs, ".TABLE_PREFIX."_j_useradmin_area
 			where ".TABLE_PREFIX."_utilisateurs.login = ".TABLE_PREFIX."_j_useradmin_area.login and ".TABLE_PREFIX."_j_useradmin_area.id_area='".$id_area."'");
 		if ($sql_admin)
 		{
@@ -3703,7 +3703,7 @@ function find_user_room ($id_room)
 		{
 			$id_area = mrbsGetAreaIdFromRoomId($id_room);
 			$id_site = mrbsGetAreaSite($id_area);
-			$sql_admin = grr_sql_query("SELECT email from ".TABLE_PREFIX."_utilisateurs, ".TABLE_PREFIX."_j_useradmin_site
+			$sql_admin = grr_sql_query("select email from ".TABLE_PREFIX."_utilisateurs, ".TABLE_PREFIX."_j_useradmin_site
 				where ".TABLE_PREFIX."_utilisateurs.login = ".TABLE_PREFIX."_j_useradmin_site.login and ".TABLE_PREFIX."_j_useradmin_site.id_site='".$id_site."'");
 			if ($sql_admin)
 			{
@@ -3718,7 +3718,7 @@ function find_user_room ($id_room)
 	// Si la table des emails des administrateurs des sites est vide, on avertit les administrateurs générauxd
 	if (count($emails) == 0)
 	{
-		$sql_admin = grr_sql_query("SELECT email from ".TABLE_PREFIX."_utilisateurs where statut = 'administrateur'");
+		$sql_admin = grr_sql_query("select email from ".TABLE_PREFIX."_utilisateurs where statut = 'administrateur'");
 		if ($sql_admin)
 		{
 			for ($i = 0; ($row = grr_sql_row($sql_admin, $i)); $i++)
@@ -4174,43 +4174,25 @@ else
 
  function jQuery_DatePicker($typeDate)
  {
- 	$dformat = "%B %d %Y";
+ 		$dformat = "%B %d %Y";
  	if ($typeDate == 'rep_end' && isset($_GET['id']))
  	{
  		$res = grr_sql_query("SELECT repeat_id FROM ".TABLE_PREFIX."_entry WHERE id=".$_GET['id'].";");
  		if (!$res)
  			fatal_error(0, grr_sql_error());
  		$repeat_id = implode('', grr_sql_row($res, 0));
- 		if ($repeat_id != 0)
+ 		$res = grr_sql_query("SELECT rep_type, end_date, rep_opt, rep_num_weeks, start_time, end_time FROM ".TABLE_PREFIX."_repeat WHERE id=$repeat_id");
+ 		if (!$res)
+ 			fatal_error(0, grr_sql_error());
+ 		if (grr_sql_count($res) == 1)
  		{
- 			$res = grr_sql_query("SELECT rep_type, end_date, rep_opt, rep_num_weeks, start_time, end_time FROM ".TABLE_PREFIX."_repeat WHERE id=$repeat_id");
- 			if (!$res)
- 				fatal_error(0, grr_sql_error());
- 			if (grr_sql_count($res) == 1)
- 			{
- 				$row6 			= grr_sql_row($res, 0);
- 				$rep_end_date 	= $row6[1];
- 			}
- 			$date = date_parse(date("Y-m-d H:i:s",$row6[1]));
- 			$day = $date['day'];
- 			$month = $date['month'];
- 			$year = $date['year'];
+ 			$row6 			= grr_sql_row($res, 0);
+ 			$rep_end_date 	= $row6[1];
  		}
- 		else
- 		{
- 			if (isset ($_GET['day']))
- 				$day = $_GET['day'];
- 			else
- 				$day = date("d");
- 			if (isset ($_GET['month']))
- 				$month = $_GET['month'];
- 			else
- 				$month = date("m");
- 			if (isset ($_GET['year']))
- 				$year = $_GET['year'];
- 			else
- 				$year = date("Y");
- 		}
+ 		$date = date_parse(date("Y-m-d H:i:s",$row6[1]));
+ 		$day = $date['day'];
+ 		$month = $date['month'];
+ 		$year = $date['year'];
  	}
  	else
  	{

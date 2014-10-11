@@ -27,99 +27,77 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-/**
- * $Log: misc.inc.php,v $
- * Revision 1.16  2010-04-07 17:49:56  grr
- * *** empty log message ***
- *
- * Revision 1.15  2009-12-02 20:11:08  grr
- * *** empty log message ***
- *
- * Revision 1.14  2009-10-09 07:55:48  grr
- * *** empty log message ***
- *
- * Revision 1.12  2009-06-04 15:30:17  grr
- * *** empty log message ***
- *
- * Revision 1.10  2009-04-14 12:59:18  grr
- * *** empty log message ***
- *
- * Revision 1.9  2008-11-16 22:00:59  grr
- * *** empty log message ***
- *
- *
- */
 
 ################################
 # Development information
 #################################
-$grr_devel_email = "laurent.delineau@ac-poitiers.fr";
-$grr_devel_url = "http://grr.mutualibre.org";
+$grr_devel_email = "florian@othon.fr";
+$grr_devel_url = "https://github.com/Sirlefou1/GRR2";
 // Numéro de version actuel
-$version_grr = "1.9.7";
+$version_grr = "2.2.2 mod v1";
 // Numéro de sous-version actuel (a, b, ...)
 // Utilisez cette variable pour des versions qui corrigent la la version finale sans toucher à la base.
-$sous_version_grr = "e";
+$sous_version_grr = "";
 // Numéro de la release candidate (doit être strictement inférieure à 9). Laisser vide s'il s'agit de la version stable.
 $version_grr_RC = "";
 
 # Liste des tables
 $liste_tables = array(
-"_area",
-"_area_periodes",
-"_calendar",
-"_calendrier_jours_cycle",
-"_entry",
-"_entry_moderate",
-"_type_area",
-"_j_type_area",
-"_j_mailuser_room",
-"_j_user_area",
-"_j_user_room",
-"_log",
-"_repeat",
-"_room",
-"_setting",
-"_utilisateurs",
-"_j_useradmin_area",
-"_overload",
-"_site",
-"_j_useradmin_site",
-"_j_site_area",
-"_correspondance_statut",
-);
+	"_area",
+	"_area_periodes",
+	"_calendar",
+	"_calendrier_jours_cycle",
+	"_entry",
+	"_entry_moderate",
+	"_type_area",
+	"_j_type_area",
+	"_j_mailuser_room",
+	"_j_user_area",
+	"_j_user_room",
+	"_log",
+	"_repeat",
+	"_room",
+	"_setting",
+	"_utilisateurs",
+	"_j_useradmin_area",
+	"_overload",
+	"_site",
+	"_j_useradmin_site",
+	"_j_site_area",
+	"_correspondance_statut",
+	);
 
 # Liste des feuilles de style
 $liste_themes = array(
-"default",
-);
+	"default",
+	);
 
 # Liste des noms des styles
 $liste_name_themes = array(
-"Grand bleu",
-);
+	"Grand bleu",
+	);
 
 # Liste des langues
 $liste_language = array(
-"fr",
-"de",
-"en",
-"it",
-"es"
-);
+	"fr",
+	"de",
+	"en",
+	"it",
+	"es"
+	);
 
 # Liste des noms des langues
 $liste_name_language = array(
-"Français",
-"Deutch",
-"English",
-"Italiano",
-"Spanish"
-);
+	"Français",
+	"Deutch",
+	"English",
+	"Italiano",
+	"Spanish"
+	);
 
 # Compatibilité avec les version inférieures à 1.9.6
 if ((!isset($table_prefix)) or ($table_prefix==''))
-    $table_prefix="grr";
+	$table_prefix="grr";
 # Définition de TABLE_PREFIX
 define("TABLE_PREFIX",$table_prefix);
 
@@ -168,5 +146,4 @@ $id_room_autorise = array();
 # Mettre ci-dessous $desactive_bandeau_sup = 1;  pour désactiver le bandeau supérieur pour les simples visiteurs.
 # Mettre ci-dessous $desactive_bandeau_sup = 0;  pour ne pas désactiver le bandeau supérieur pour les simples visiteurs.
 $desactive_bandeau_sup = 0;
-
 ?>

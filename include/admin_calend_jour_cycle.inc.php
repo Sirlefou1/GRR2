@@ -1,9 +1,9 @@
 <?php
 /**
  * admin_calend_jour_cycle.inc.php
- * Menu da la page de création du calendrier jours/cycles
+ * Menu da la page de crÃ©ation du calendrier jours/cycles
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2009-02-27 13:28:20 $
+ * DerniÃ¨re modification : $Date: 2009-02-27 13:28:20 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -27,35 +27,32 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-/**
- * $Log: admin_calend_jour_cycle.inc.php,v $
- * Revision 1.3  2009-02-27 13:28:20  grr
- * *** empty log message ***
- *
- * Revision 1.2  2008-11-16 22:00:59  grr
- * *** empty log message ***
- *
- *
- */
 ?>
-<script type="text/javascript" >
-function changeclass(objet, myClass) { objet.className = myClass; }
+<script type="text/javascript">
+	function changeclass(objet, myClass)
+	{
+		objet.className = myClass;
+	}
 </script>
 <?php
 echo "<div style=\"text-align:center;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n";
 echo "<tbody>\n";
 echo "<tr>";
-for ($k=1;$k<4;$k++) {
-echo "<td>";
-if ($page_calend == $k) {
-    echo "<div style=\"position: relative;\"><div class=\"onglet_off\" style=\"position: relative; top: 0px; padding-left: 30px; padding-right: 30px;\">".
-    get_vocab('admin_config_calend'.$k.'.php')."</div></div>";
-} else {
-    echo "<div style=\"position: relative;\">
-    <div onmouseover=\"changeclass(this, 'onglet_on');\" onmouseout=\"changeclass(this, 'onglet');\" class=\"onglet\" style=\"position: relative; top: 0px; padding-left: 30px; padding-right: 30px;\">
-    <a href=\"admin_calend_jour_cycle.php?page_calend=".$k."\">".get_vocab('admin_config_calend'.$k.'.php')."</a></div></div>";
+for ($k = 1; $k < 4; $k++)
+{
+	echo "<td>";
+	if ($page_calend == $k)
+	{
+		echo "<div style=\"position: relative;\"><div class=\"onglet_off\" style=\"position: relative; top: 0px; padding-left: 30px; padding-right: 30px;\">".
+		get_vocab('admin_config_calend'.$k.'.php')."</div></div>";
+	}
+	else
+	{
+		echo "<div style=\"position: relative;\">".PHP_EOL;
+		echo "<div onmouseover=\"changeclass(this, 'onglet_on');\" onmouseout=\"changeclass(this, 'onglet');\" class=\"onglet\" style=\"position: relative; top: 0px; padding-left: 30px; padding-right: 30px;\">".PHP_EOL;
+		echo "<a href=\"admin_calend_jour_cycle.php?page_calend=".$k."\">".get_vocab('admin_config_calend'.$k.'.php')."</a></div></div>".PHP_EOL;
+	}
+	echo "</td>\n";
 }
-echo "</td>\n";
-}
-echo "</tr></tbody></table></div>\n";
+echo "</tr></tbody></table></div>".PHP_EOL;
 ?>

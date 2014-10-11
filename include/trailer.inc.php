@@ -40,9 +40,7 @@
  *
  *
  */
-
 // Affichage d'un lien pour format imprimable
-
 //Appel d'une methode en fonction du paramétrage pour le lien imprimable
 if ((!isset($_GET['pview']) || ($_GET['pview'] != 1)) && (isset($affiche_pview)))
 {
