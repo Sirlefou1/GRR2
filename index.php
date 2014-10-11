@@ -47,15 +47,16 @@ if ($dbsys == "mysql")
 	if (file_exists("include/connect.inc.php"))
 	{
 		require_once("include/connect.inc.php");
-		if (mysql_connect("$dbHost", "$dbUser", "$dbPass"))
+		$db = mysqli_connect("$dbHost", "$dbUser", "$dbPass");
+		if ($db)
 		{
-			if (mysql_select_db("$dbDb"))
+			if (mysqli_select_db($db, "$dbDb"))
 			{
 					// Premier test
 				$j = '0';
 				while ($j < count($liste_tables))
 				{
-					$test = mysql_query("SELECT count(*) FROM ".$table_prefix.$liste_tables[$j]);
+					$test = mysqli_query($db, "SELECT count(*) FROM ".$table_prefix.$liste_tables[$j]);
 					if (!$test)
 						$flag = 'yes';
 					$j++;

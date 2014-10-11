@@ -627,7 +627,7 @@ if ($auth_imap == 'yes')
 			$l_email = $_login."@".$imap_domaine;
 			imap_close($conn_imap);
 		}
-		/ On teste si un utilisateur porte déjà le même login
+		// On teste si un utilisateur porte déjà le même login
 		$test = grr_sql_query1("select login from ".TABLE_PREFIX."_utilisateurs where login = '".protect_data_sql($_login)."'");
 		if ($test != '-1')
 		{
