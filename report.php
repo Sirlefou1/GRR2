@@ -96,7 +96,7 @@ if (isset($_GET['champ'][0]))
 		{
 			$champ[] = $_GET['champ'][$k];
 			$texte[] = $_GET['texte'][$k];
-			$type_recherche[] =$_GET['type_recherche'][$k];
+			$type_recherche[] = $_GET['type_recherche'][$k];
 		}
 		$k++;
 	}
@@ -108,7 +108,7 @@ else
 	settype($_GET["sumby"],"integer");
 $sortby = isset($_GET["sortby"]) ? $_GET["sortby"] : "a";
 	// Si la table j_user_area est vide, il faut modifier la requête
-$test_grr_j_user_area = grr_sql_count(grr_sql_query("SELECT * from ".TABLE_PREFIX."_j_user_area"));
+$test_grr_j_user_area = grr_sql_count(grr_sql_query("SELECT * FROM ".TABLE_PREFIX."_j_user_area"));
 	// Report on one entry. See below for columns in $row[].
 function reporton(&$row, $dformat)
 {
@@ -151,7 +151,7 @@ function reporton(&$row, $dformat)
 		$description = " ";
 	echo "<td>". $description . "</td>\n";
 		//Type de réservation
-	$et = grr_sql_query1("select type_name from ".TABLE_PREFIX."_type_area where type_letter='".$row[5]."'");
+	$et = grr_sql_query1("SELECT type_name FROM ".TABLE_PREFIX."_type_area WHERE type_letter='".$row[5]."'");
 	if ($et == -1)
 		$et = "?".$row[5]."?";
 	echo "<td>".$et."</td>\n";
@@ -172,12 +172,11 @@ function reporton(&$row, $dformat)
 // $room_hash[$room]  : tableau des $room concernés par le décompte
 // $breve_description_hash[$breve_description]  : tableau des $breve_description concernés par le décompte
 // Cela va devenir la colonne et la ligne d'entête de la table de statistique.'
-function accumulate(&$row, &$count, &$hours, $report_start, $report_end,
-	&$room_hash, &$breve_description_hash, $csv="n")
+function accumulate(&$row, &$count, &$hours, $report_start, $report_end, &$room_hash, &$breve_description_hash, $csv = "n")
 {
 	global $vocab;
 	if ($_GET["sumby"] == "5")
-		$temp = grr_sql_query1("select type_name from ".TABLE_PREFIX."_type_area where type_letter = '".$row[$_GET["sumby"]]."'");
+		$temp = grr_sql_query1("SELECT type_name FROM ".TABLE_PREFIX."_type_area WHERE type_letter = '".$row[$_GET["sumby"]]."'");
 	else if (($_GET["sumby"] == "3") || ($_GET["sumby"] == "6"))
 		$temp = $row[$_GET["sumby"]];
 	else
@@ -195,7 +194,9 @@ function accumulate(&$row, &$count, &$hours, $report_start, $report_end,
 		$breve_description = htmlspecialchars($temp);
 		//$row[8] : Area , $row[9]:Room
 		$room = htmlspecialchars($row[8]) .$vocab["deux_points"]. "<br />" . htmlspecialchars($row[9]);
-	} else {
+	}
+	else
+	{
 		$breve_description = ($temp);
 	  //   $row[8] : Area , $row[9]:Room
 		$room = removeMailUnicode($row[9]) ." (". removeMailUnicode($row[8]).")";
@@ -209,13 +210,12 @@ function accumulate(&$row, &$count, &$hours, $report_start, $report_end,
 	$breve_description_hash[$breve_description] = 1;
 }
 // Identique à la fonction accumulate mais adapté aux cas ou $enable_periode = 'y'
-function accumulate_periods(&$row, &$count, &$hours, $report_start, $report_end,
-	&$room_hash, &$breve_description_hash, $csv="n")
+function accumulate_periods(&$row, &$count, &$hours, $report_start, $report_end, &$room_hash, &$breve_description_hash, $csv = "n")
 {
 	global $vocab, $periods_name;
 	$max_periods = count($periods_name);
 	if ($_GET["sumby"] == "5")
-		$temp = grr_sql_query1("select type_name from ".TABLE_PREFIX."_type_area where type_letter = '".$row[$_GET["sumby"]]."'");
+		$temp = grr_sql_query1("SELECT type_name FROM ".TABLE_PREFIX."_type_area WHERE type_letter = '".$row[$_GET["sumby"]]."'");
 	else if (($_GET["sumby"] == "3") or ($_GET["sumby"] == "6"))
 		$temp = $row[$_GET["sumby"]];
 	else
@@ -287,7 +287,7 @@ function do_summary(&$count, &$hours, &$room_hash, &$breve_description_hash, $en
 		else if ($_GET["sumby"] == "5")
 			$premiere_cellule = get_vocab("type");
 		else
-			$premiere_cellule = grr_sql_query1("select fieldname from ".TABLE_PREFIX."_overload where id='".$_GET["sumby"]."'");
+			$premiere_cellule = grr_sql_query1("SELECT fieldname FROM ".TABLE_PREFIX."_overload WHERE id='".$_GET["sumby"]."'");
 		if ($enable_periods == 'y')
 			echo "<hr /><h1>".get_vocab("summary_header_per")."</h1><table border=\"2\" cellspacing=\"4\">\n";
 		else
@@ -409,7 +409,7 @@ if (empty($summarize))
 if (($summarize != 4) && ($summarize != 5))
 {
 	?>
-	<div class="page_sans_col_gauche"><h1><?php echo get_vocab("search report stats").grr_help("aide_grr_recherche");?></h1>
+	<div class="page_sans_col_gauche"><h1><?php echo get_vocab("search report stats");?></h1>
 		<form method="get" action="report.php">
 			<?php
 			// Si format imprimable ($_GET['pview'] = 1), on n'affiche pas cette partie
@@ -520,7 +520,7 @@ if (($summarize != 4) && ($summarize != 5))
 											// [4]   Descrition,(HTML) -> e.description
 											// [5]   Type -> e.type
 											// [6]   réservé par (nom ou IP), (HTML) -> e.beneficiaire
-	 										// [12]  les champs additionnele -> e.overload_desc
+											// [12]  les champs additionnele -> e.overload_desc
 											echo "<select name=\"sumby\" size=\"1\">\n";
 											echo "<option value=\"6\" ";
 											if ($_GET["sumby"] == "6")
@@ -537,7 +537,8 @@ if (($summarize != 4) && ($summarize != 5))
 											// On récupère les infos sur le champ add
 											$overload_fields = mrbsOverloadGetFieldslist("");
 											// Boucle sur tous les champs additionnels de l'area
-											foreach ($overload_fields as $fieldname=>$fieldtype) {
+											foreach ($overload_fields as $fieldname=>$fieldtype)
+											{
 												if ($overload_fields[$fieldname]["confidentiel"] != 'y')
 												{
 													echo "<option value='".$overload_fields[$fieldname]["id"]."' ";
@@ -657,7 +658,7 @@ if (($summarize != 4) && ($summarize != 5))
 													$sql .=  grr_sql_syntax_caseless_contains_overload("e.overload_desc", $texte[$k], $overload_fields[$fieldname]["id"], $type_recherche[$k]);
 											}
 										}
-										if ($k < (count($texte)-1))
+										if ($k < (count($texte) - 1))
 											$sql .= " ".$_GET["condition_et_ou"]." ";
 										$k++;
 									}
@@ -708,7 +709,7 @@ else
 			// Colonne domaine
 		echo "<td>\n";
 		$m = 0;
-		$param="";
+		$param = "";
 		while ($m < count($champ))
 		{
 			$param .= "&amp;champ[".$m."]=".$champ[$m]."&amp;texte[".$m."]=".$texte[$m]."&amp;type_recherche[".$m."]=".$type_recherche[$m];
@@ -823,7 +824,8 @@ else
 			if (isset($do_sum2))
 				do_summary($count2, $hours2, $room_hash2, $breve_description_hash2,'n','',"n");
 		}
-		if ($summarize == 4) {
+		if ($summarize == 4)
+		{
 		//Télécharger le fichier CSV
 			header("Content-Type: application/csv-tab-delimited-table");
 			header("Content-disposition: filename=rapport.csv");
@@ -885,15 +887,15 @@ else
 			}
 			else
 			{
-				if ($_GET["sumby"]=="6")
+				if ($_GET["sumby"] == "6")
 					echo html_entity_decode_all_version($vocab["summarize_by"])." " .html_entity_decode_all_version($vocab["sum_by_creator"])." - $day $month $year;";
-				else if ($_GET["sumby"]=="3")
+				else if ($_GET["sumby"] == "3")
 					echo html_entity_decode_all_version($vocab["summarize_by"])." " .html_entity_decode_all_version($vocab["sum_by_descrip"])." - $day $month $year;";
-				else if ($_GET["sumby"]=="5")
+				else if ($_GET["sumby"] == "5")
 					echo html_entity_decode_all_version($vocab["summarize_by"])." " .html_entity_decode_all_version($vocab["type"])." - $day $month $year;";
 				else
 				{
-					$fieldname = grr_sql_query1("select fieldname from ".TABLE_PREFIX."_overload where id='".$_GET["sumby"]."'");
+					$fieldname = grr_sql_query1("SELECT fieldname FROM ".TABLE_PREFIX."_overload WHERE id='".$_GET["sumby"]."'");
 					echo html_entity_decode_all_version($vocab["summarize_by"])." " .html_entity_decode_all_version($fieldname)." - $day $month $year;";
 				}
 				echo "\r\n";
