@@ -162,15 +162,16 @@ $month_start = mktime(0, 0, 0, $from_month, 1, $from_year);
 $weekday_start = (date("w", $month_start) - $weekstarts + 7) % 7;
 $days_in_to_month = date("t", $to_month);
 $month_end = mktime(23, 59, 59, $to_month, $days_in_to_month, $to_year);
-if ($enable_periods=='y')
+if ($enable_periods == 'y')
 {
 	$resolution = 60;
 	$morningstarts = 12;
 	$eveningends = 12;
-	$eveningends_minutes = count($periods_name)-1;
+	$eveningends_minutes = count($periods_name) - 1;
 }
 // Si format imprimable ($_GET['pview'] = 1), on n'affiche pas cette partie
-if ($_GET['pview'] != 1) {
+if ($_GET['pview'] != 1)
+{
 	echo "<table width=\"100%\" cellspacing=\"15\" border=\"0\"><tr>";
 	if (isset($_SESSION['default_list_type']) || (getSettingValue("authentification_obli") == 1))
 		$area_list_format = $_SESSION['default_list_type'];
@@ -210,7 +211,7 @@ if ($_GET['pview'] != 1) {
 	echo '<td><a title="'.htmlspecialchars(get_vocab('back')).'" href="'.page_accueil('no').'">'.$vocab['back'].'</a></td>';
 	echo "</tr></table>\n";
 }
-$this_area_name = grr_sql_query1("select area_name from ".TABLE_PREFIX."_area where id=$area");
+$this_area_name = grr_sql_query1("SELECT area_name FROM ".TABLE_PREFIX."_area WHERE id=$area");
 echo "<div class=\"titre_planning\">".ucfirst($this_area_name)." - ".get_vocab("all_areas")." </div>\n";
 //Used below: localized "all day" text but with non-breaking spaces:
 $all_day = preg_replace("/ /", " ", get_vocab("all_day"));
@@ -376,7 +377,7 @@ while ($month_indice < $month_end)
 	//En changeant "gmmktime" par "mktime" le bug est corrigé
 	//$t2=gmmktime(0,0,0,$month_num,1,$year_num);
 	$t2 = mktime(0, 0, 0, $month_num, 1, $year_num);
-	for ($k = 0; $k<$days_in_month; $k++)
+	for ($k = 0; $k < $days_in_month; $k++)
 	{
 		$cday = date("j", $t2);
 		$cmonth =date("m", $t2);
@@ -392,6 +393,7 @@ while ($month_indice < $month_end)
 			echo tdcell("cell_hours");
 			echo "<div><a title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day"))."\"   href=\"day.php?year=$year_num&amp;month=$month_num&amp;day=$cday&amp;area=$area\">$name_day</a>";
 			if (getSettingValue("jours_cycles_actif") == "Oui" && intval($jour_cycle)>-1)
+			{
 				if (intval($jour_cycle) > 0)
 					echo "<br /><b><i>".ucfirst(substr(get_vocab("rep_type_6"),0,1)).$jour_cycle."</i></b>";
 				else
@@ -400,97 +402,98 @@ while ($month_indice < $month_end)
 						$jour_cycle = substr($jour_cycle,0,3)."..";
 					echo "<br /><b><i>".$jour_cycle."</i></b>";
 				}
-				echo "</div></td>\n";
 			}
+			echo "</div></td>\n";
 		}
-		echo "</tr>";
+	}
+	echo "</tr>";
 		// Fin affichage de la première ligne
-		$li = 0;
-		for ($ir = 0; ($row = grr_sql_row($res, $ir)); $ir++)
-		{
+	$li = 0;
+	for ($ir = 0; ($row = grr_sql_row($res, $ir)); $ir++)
+	{
    			// calcul de l'accès à la ressource en fonction du niveau de l'utilisateur
-			$verif_acces_ressource = verif_acces_ressource(getUserName(), $row[2]);
-			if ($verif_acces_ressource)
-			{
+		$verif_acces_ressource = verif_acces_ressource(getUserName(), $row[2]);
+		if ($verif_acces_ressource)
+		{
    				// on n'affiche pas toutes les ressources
 				// Calcul du niveau d'accès aux fiche de réservation détaillées des ressources
-				$acces_fiche_reservation = verif_acces_fiche_reservation(getUserName(), $row[2]);
-				echo "<tr>";
-				tdcell("cell_hours");
-				echo htmlspecialchars($row[0]) ."</td>\n";
-				$li++;
+			$acces_fiche_reservation = verif_acces_fiche_reservation(getUserName(), $row[2]);
+			echo "<tr>";
+			tdcell("cell_hours");
+			echo htmlspecialchars($row[0]) ."</td>\n";
+			$li++;
 				//Corrige un bug avec certains fuseaux horaires (par exemple GMT-05:00 celui du Québec) :
 				//plusieurs mois débutent par le dernier jours du mois précédent.
 				//En changeant "gmmktime" par "mktime" le bug est corrigé
 				//$t2=gmmktime(0,0,0,$month_num,1,$year_num);
-				$t2 = mktime(0, 0, 0, $month_num, 1, $year_num);
-				for ($k = 0; $k<$days_in_month; $k++)
+			$t2 = mktime(0, 0, 0, $month_num, 1, $year_num);
+			for ($k = 0; $k < $days_in_month; $k++)
+			{
+				$cday = date("j", $t2);
+				$cweek = date("w", $t2);
+				$t2 += 86400;
+				if ($display_day[$cweek] == 1)
 				{
-					$cday = date("j", $t2);
-					$cweek = date("w", $t2);
-					$t2 += 86400;
-					if ($display_day[$cweek]==1)
-					{
 	   					// Début condition "on n'affiche pas tous les jours de la semaine"
-						echo "<td valign=\"top\" class=\"cell_month\"> \n";
-						if (est_hors_reservation(mktime(0,0,0,$month_num,$cday,$year_num),$area))
-						{
-							echo "<div class=\"empty_cell\">";
-							echo "<img src=\"img_grr/stop.png\" alt=\"".get_vocab("reservation_impossible")."\"  title=\"".get_vocab("reservation_impossible")."\" width=\"16\" height=\"16\" class=\"".$class_image."\"  /></div>";
-						}
+					echo "<td valign=\"top\" class=\"cell_month\"> \n";
+					if (est_hors_reservation(mktime(0,0,0,$month_num,$cday,$year_num),$area))
+					{
+						echo "<div class=\"empty_cell\">";
+						echo "<img src=\"img_grr/stop.png\" alt=\"".get_vocab("reservation_impossible")."\"  title=\"".get_vocab("reservation_impossible")."\" width=\"16\" height=\"16\" class=\"".$class_image."\"  /></div>";
+					}
 						//Anything to display for this day?
-						if (isset($d[$cday][$cmonth][$cyear]["id"][0]))
-						{
-							$n = count($d[$cday][$cmonth][$cyear]["id"]);
+					if (isset($d[$cday][$cmonth][$cyear]["id"][0]))
+					{
+						$n = count($d[$cday][$cmonth][$cyear]["id"]);
 							//Show the start/stop times, 2 per line, linked to view_entry.
 							//If there are 12 or fewer, show them, else show 11 and "...".
+						for ($i = 0; $i < $n; $i++)
+						{
+							if ($i == 11 && $n > 12)
+							{
+								echo " ...\n";
+								break;
+							}
 							for ($i = 0; $i < $n; $i++)
 							{
-								if ($i == 11 && $n > 12)
+								if ($d[$cday][$cmonth][$cyear]["room"][$i] == $row[0])
 								{
-									echo " ...\n";
-									break;
-								}
-								for ($i = 0; $i < $n; $i++)
-								{
-									if ($d[$cday][$cmonth][$cyear]["room"][$i]==$row[0])
-									{
 										//if ($i > 0 && $i % 2 == 0) echo "<br />"; else echo " ";
-										echo "\n<br />\n<table width=\"100%\" border=\"0\" ><tr>\n";
-										tdcell($d[$cday][$cmonth][$cyear]["color"][$i]);
-										if ($d[$cday][$cmonth][$cyear]["res"][$i] != '-')
-											echo " <img src=\"img_grr/buzy.png\" alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("ressource actuellement empruntee")."\" width=\"20\" height=\"20\" class=\"image\" /> \n";
+									echo "\n<br />\n<table width=\"100%\" border=\"0\" ><tr>\n";
+									tdcell($d[$cday][$cmonth][$cyear]["color"][$i]);
+									if ($d[$cday][$cmonth][$cyear]["res"][$i] != '-')
+										echo " <img src=\"img_grr/buzy.png\" alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("ressource actuellement empruntee")."\" width=\"20\" height=\"20\" class=\"image\" /> \n";
 		   								// si la réservation est à confirmer, on le signale
-										if ((isset($d[$cday][$cmonth][$cyear]["option_reser"][$i])) && ($d[$cday][$cmonth][$cyear]["option_reser"][$i] != -1))
-											echo " <img src=\"img_grr/small_flag.png\" alt=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."\" title=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")." ".time_date_string_jma($d[$cday][$cmonth][$cyear]["option_reser"][$i],$dformat)."\" width=\"20\" height=\"20\" class=\"image\" /> \n";
+									if ((isset($d[$cday][$cmonth][$cyear]["option_reser"][$i])) && ($d[$cday][$cmonth][$cyear]["option_reser"][$i] != -1))
+										echo " <img src=\"img_grr/small_flag.png\" alt=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."\" title=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")." ".time_date_string_jma($d[$cday][$cmonth][$cyear]["option_reser"][$i],$dformat)."\" width=\"20\" height=\"20\" class=\"image\" /> \n";
 		   								// si la réservation est à modérer, on le signale
-										if ((isset($d[$cday][$cmonth][$cyear]["moderation"][$i])) && ($d[$cday][$cmonth][$cyear]["moderation"][$i] == 1))
-											echo " <img src=\"img_grr/flag_moderation.png\" alt=\"".get_vocab("en_attente_moderation")."\" title=\"".get_vocab("en_attente_moderation")."\" class=\"image\" /> \n";
-										if ($acces_fiche_reservation)
-											echo "<a title=\"".htmlspecialchars($d[$cday][$cmonth][$cyear]["data"][$i])."\" href=\"view_entry.php?id=" . $d[$cday][$cmonth][$cyear]["id"][$i]."&amp;page=month\">"
-										.$d[$cday][$cmonth][$cyear]["who1"][$i]{0}
-										. "</a>";
-										else
-											echo $d[$cday][$cmonth][$cyear]["who1"][$i]{0};
-										echo "\n</td></tr></table>\n";
-									}
+									if ((isset($d[$cday][$cmonth][$cyear]["moderation"][$i])) && ($d[$cday][$cmonth][$cyear]["moderation"][$i] == 1))
+										echo " <img src=\"img_grr/flag_moderation.png\" alt=\"".get_vocab("en_attente_moderation")."\" title=\"".get_vocab("en_attente_moderation")."\" class=\"image\" /> \n";
+									if ($acces_fiche_reservation)
+										echo "<a title=\"".htmlspecialchars($d[$cday][$cmonth][$cyear]["data"][$i])."\" href=\"view_entry.php?id=" . $d[$cday][$cmonth][$cyear]["id"][$i]."&amp;page=month\">"
+									.$d[$cday][$cmonth][$cyear]["who1"][$i]{0}
+									. "</a>";
+									else
+										echo $d[$cday][$cmonth][$cyear]["who1"][$i]{0};
+									echo "\n</td></tr></table>\n";
 								}
 							}
 						}
-						echo "</td>\n";
 					}
+					echo "</td>\n";
+				}
 					// fin condition "on n'affiche pas tous les jours de la semaine"
 					//    if (++$weekcol == 7) $weekcol = 0;
-				}
-				echo "</tr>\n";
 			}
+			echo "</tr>\n";
 		}
-		echo "</table>\n";
-		$month_indice = mktime(0, 0, 0, $month_num+1, 2, $year_num);
-		// Fin de la boucle sur les mois
 	}
-	show_colour_key($area);
+	echo "</table>\n";
+	$month_indice = mktime(0, 0, 0, $month_num + 1, 2, $year_num);
+		// Fin de la boucle sur les mois
+}
+show_colour_key($area);
 	// Affichage d'un message pop-up
-	affiche_pop_up(get_vocab("message_records"),"user");
-	include "include/trailer.inc.php";
-	?>
+affiche_pop_up(get_vocab("message_records"),"user");
+include "include/trailer.inc.php";
+?>

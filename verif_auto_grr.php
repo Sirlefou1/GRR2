@@ -51,7 +51,7 @@ if (isset($argv[1]))
 }
 include "include/language.inc.php";
 if (!isset($_GET['mdp']))
-	$_GET['mdp']=$argv[1];
+	$_GET['mdp'] = $argv[1];
 if ((!isset($_GET['mdp'])) || ($_GET['mdp'] != getSettingValue("motdepasse_verif_auto_grr")) || (getSettingValue("motdepasse_verif_auto_grr") == ''))
 {
 	if (!isset($argv[1]))

@@ -1152,7 +1152,7 @@ function grr_connect_imap($i_adresse,$i_port,$i_login,$i_pwd,$use_type,$use_ssl,
 			return true;
 		}
 		else
-		return $connect_imap;
+			return $connect_imap;
 	}
 	if ($mode == "diag")
 	{

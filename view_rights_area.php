@@ -57,7 +57,8 @@ if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))
 else
 	$type_session = "with_session";
 $area_id = isset($_GET["area_id"]) ? $_GET["area_id"] : NULL;
-if (isset($area_id)) settype($area_id,"integer");
+if (isset($area_id))
+	settype($area_id,"integer");
 if (authGetUserLevel(getUserName(),$area_id,"area") < 4)
 {
 	$day   = date("d");
@@ -127,3 +128,4 @@ if ($area_access == 'r')
 if ($a_privileges == 'n')
 	echo "<p>".get_vocab("aucun autilisateur").".</p>";
 include "include/trailer.inc.php";
+?>

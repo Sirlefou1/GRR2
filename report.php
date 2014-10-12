@@ -942,3 +942,4 @@ if (($summarize != 4) and ($summarize != 5))
 	echo "</div>";
 	include "include/trailer.inc.php";
 }
+?>
