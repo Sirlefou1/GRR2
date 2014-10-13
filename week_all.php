@@ -468,7 +468,7 @@ else
 									{
 										$currentPage = 'week_all';
 										$id = $d[$cday]["id"][$i];
-										echo "<a title=\"".htmlspecialchars($d[$cday]["who"][$i])."\" href=\"#?w=500\" onclick=\"request($id,$cday,$cmonth,$cyear,'$currentPage',readData);\" rel=\"popup_name\" class=\"poplight\">";
+										echo "<a title=\"".htmlspecialchars($d[$cday]["who"][$i])."\" href=\"#?w=600\" onclick=\"request($id,$cday,$cmonth,$cyear,'$currentPage',readData);\" rel=\"popup_name\" class=\"poplight\">";
 									}
 									else
 										echo "<a class=\"lienCellule\" title=\"".htmlspecialchars($d[$cday]["who"][$i])."\" href=\"view_entry.php?id=" . $d[$cday]["id"][$i]."&amp;page=week_all&amp;day=$cday&amp;month=$cmonth&amp;year=$cyear&amp;\">";

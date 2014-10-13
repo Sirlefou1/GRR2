@@ -264,181 +264,160 @@ echo ('
 	if (!(IsAllowedToModifyProfil()))
 	{
 		echo '
-			<tr>
-				<td><b>'.get_vocab('login').get_vocab('deux_points').'</b></td>
-				<td>'.getUserName().'</td>
-			</tr>';
-		echo '
-			<tr>
-				<td><b>'.get_vocab('last_name').get_vocab('deux_points').'</b></td>
-				<td>'.$user_nom.'</td>
-			</tr>';
-		echo '
-			<tr>
-				<td><b>'.get_vocab('first_name').get_vocab('deux_points').'</b></td>
-				<td>'.$user_prenom.'</td>
-			</tr>';
-	}
-	else
-	{
-		echo '
-			<tr>
-				<td><b>'.get_vocab('login').get_vocab('deux_points').'</b></td>';
-		echo '
+		<tr>
+			<td><b>'.get_vocab('login').get_vocab('deux_points').'</b></td>
 			<td>'.getUserName().'</td>
 		</tr>';
 		echo '
-			<tr>
-				<td><b>'.get_vocab('last_name').get_vocab('deux_points').'</b>*</td>';
-		echo '
-			<td><input type="text" name="reg_nom" value="';
-			if ($user_nom)
-				echo htmlspecialchars($user_nom);
-			echo '" size="30" /></td>
+		<tr>
+			<td><b>'.get_vocab('last_name').get_vocab('deux_points').'</b></td>
+			<td>'.$user_nom.'</td>
 		</tr>';
-			echo '
+		echo '
+		<tr>
+			<td><b>'.get_vocab('first_name').get_vocab('deux_points').'</b></td>
+			<td>'.$user_prenom.'</td>
+		</tr>';
+	}
+	else
+	{
+		echo '<tr><td><b>'.get_vocab('login').get_vocab('deux_points').'</b></td>';
+		echo '<td>'.getUserName().'</td></tr>';
+		echo '<tr><td><b>'.get_vocab('last_name').get_vocab('deux_points').'</b>*</td>';
+		echo '<td><input type="text" name="reg_nom" value="';
+		if ($user_nom)
+			echo htmlspecialchars($user_nom);
+		echo '" size="30" /></td></tr>';
+		echo '<tr><td><b>'.get_vocab('first_name').get_vocab('deux_points').'</b>*</td><td><input type="text" name="reg_prenom" value="';
+		if ($user_prenom)
+			echo htmlspecialchars($user_prenom);
+		echo '" size="30" /></td></tr>';
+	}
+	if (!(IsAllowedToModifyEmail()))
+	{
+		echo '
+		<tr>
+			<td><b>'.get_vocab('mail_user').get_vocab('deux_points').'</b></td>
+			<td>'.$user_email.'</td>
+		</tr>';
+	}
+	else
+	{
+		echo '<tr><td><b>'.get_vocab('mail_user').get_vocab('deux_points').'</b></td><td><input type="text" name="reg_email" value="';
+		if ($user_email)
+			echo htmlspecialchars($user_email);
+		echo '" size="30" /></td></tr>';
+	}
+	if ($user_statut == "utilisateur")
+		$text_user_statut = get_vocab("statut_user");
+	else if ($user_statut == "visiteur")
+		$text_user_statut = get_vocab("statut_visitor");
+	else if ($user_statut == "gestionnaire_utilisateur")
+		$text_user_statut = get_vocab("statut_user_administrator");
+	else if ($user_statut == "administrateur")
+		$text_user_statut = get_vocab("statut_administrator");
+	else
+		$text_user_statut = $user_statut;
+	echo '<tr><td><b>'.get_vocab('statut').get_vocab('deux_points').'</b></td><td>'.$text_user_statut.'</td></tr></table>';
+	if (IsAllowedToModifyProfil())
+	{
+		echo '<p>('.get_vocab('required').')</p>';
+		if ((trim($user_nom) == "") || (trim($user_prenom) == ''))
+			echo "\n".'      <h2 class="avertissement">'.get_vocab('nom_prenom_valides').'</h2>';
+	}
+	if (IsAllowedToModifyMdp())
+	{
+		echo '
+		<div><br />
+			<br />
+			<table  border="0" width="100%">
 				<tr>
-					<td><b>'.get_vocab('first_name').get_vocab('deux_points').'</b>*</td>
-					<td><input type="text" name="reg_prenom" value="';
-				if ($user_prenom)
-					echo htmlspecialchars($user_prenom);
-				echo '" size="30" /></td>
-			</tr>';
-			}
-			if (!(IsAllowedToModifyEmail()))
-			{
-				echo '
-					<tr>
-						<td><b>'.get_vocab('mail_user').get_vocab('deux_points').'</b></td>
-						<td>'.$user_email.'</td>
-					</tr>';
-			}
-			else
-			{
-				echo '
-					<tr>
-						<td><b>'.get_vocab('mail_user').get_vocab('deux_points').'</b></td>
-						<td><input type="text" name="reg_email" value="';
-					if ($user_email)
-						echo htmlspecialchars($user_email);
-					echo '" size="30" /></td>
-				</tr>';
-				}
-				if ($user_statut == "utilisateur")
-					$text_user_statut = get_vocab("statut_user");
-				else if ($user_statut == "visiteur")
-					$text_user_statut = get_vocab("statut_visitor");
-				else if ($user_statut == "gestionnaire_utilisateur")
-					$text_user_statut = get_vocab("statut_user_administrator");
-				else if ($user_statut == "administrateur")
-					$text_user_statut = get_vocab("statut_administrator");
-				else
-					$text_user_statut = $user_statut;
-				echo '
-					<tr>
-						<td><b>'.get_vocab('statut').get_vocab('deux_points').'</b></td>
-						<td>'.$text_user_statut.'</td>
-					</tr>
-				</table>';
-				if (IsAllowedToModifyProfil())
-				{
-					echo '<p>('.get_vocab('required').')</p>';
-					if ((trim($user_nom) == "") || (trim($user_prenom) == ''))
-						echo "\n".'      <h2 class="avertissement">'.get_vocab('nom_prenom_valides').'</h2>';
-				}
-				if (IsAllowedToModifyMdp())
-				{
+					<td onclick="clicMenu(\'1\')" class="fontcolor4" style="cursor: inherit" align="center">
+						<span class="bground">
+							<b><a href="#">'.get_vocab('click_here_to_modify_pwd').'</a></b>
+						</span>
+					</td>
+				</tr>
+				<tr style="display:none" id="menu1">
+					<td>
+						<br />
+						<p>'.get_vocab('pwd_msg_warning').'</p>'.get_vocab('old_pwd').get_vocab('deux_points').'
+						<input type="password" name="reg_password_a" size="20" />
+						<br />'.get_vocab('new_pwd1').get_vocab('deux_points').'
+						<input type="password" name="reg_password1" size="20" />
+						<br />'.get_vocab('new_pwd1').get_vocab('deux_points').'
+						<input type="password" name="reg_password2" size="20" />
+					</td>
+				</tr>
+			</table>
+			<br /></div>
+			<hr />';
+		}
+		echo "\n".'      <h3>'.get_vocab('default_parameter_values_title').'</h3>';
+		echo "\n".'      <h4>'.get_vocab('explain_area_list_format').'</h4>';
+		echo '
+		<table>
+			<tr>
+				<td>'.get_vocab('liste_area_list_format').'</td>
+				<td>
+					<input type="radio" name="area_item_format" value="list" ';
+					if ($default_list_type == 'list')
+						echo 'checked="checked"';
+					echo ' />';
 					echo '
-						<div><br />
-							<br />
-							<table  border="0" width="100%">
-								<tr>
-									<td onclick="clicMenu(\'1\')" class="fontcolor4" style="cursor: inherit" align="center">
-										<span class="bground">
-											<b><a href="#">'.get_vocab('click_here_to_modify_pwd').'</a></b>
-										</span>
-									</td>
-								</tr>
-								<tr style="display:none" id="menu1">
-									<td>
-										<br />
-										<p>'.get_vocab('pwd_msg_warning').'</p>'.get_vocab('old_pwd').get_vocab('deux_points').'
-										<input type="password" name="reg_password_a" size="20" />
-										<br />'.get_vocab('new_pwd1').get_vocab('deux_points').'
-										<input type="password" name="reg_password1" size="20" />
-										<br />'.get_vocab('new_pwd1').get_vocab('deux_points').'
-										<input type="password" name="reg_password2" size="20" />
-									</td>
-								</tr>
-							</table>
-							<br /></div>
-							<hr />';
-				}
-				echo "\n".'      <h3>'.get_vocab('default_parameter_values_title').'</h3>';
-				echo "\n".'      <h4>'.get_vocab('explain_area_list_format').'</h4>';
-				echo '
-					<table>
-						<tr>
-							<td>'.get_vocab('liste_area_list_format').'</td>
-							<td>
-								<input type="radio" name="area_item_format" value="list" ';
-				if ($default_list_type == 'list')
-					echo 'checked="checked"';
-				echo ' />';
-				echo '
-			</td>
-		</tr>
-		<tr>
-			<td>'.get_vocab('select_area_list_format').'</td>
-			<td>
-				<input type="radio" name="area_item_format" value="select" ';
-				if ($default_list_type == 'select')
-					echo 'checked="checked" ';
-				echo ' />';
-				echo '
-			</td>
-		</tr>
-		<tr>
-			<td>'.get_vocab('item_area_list_format').'</td>
-			<td>
-				<input type="radio" name="area_item_format" value="item" ';
-				if ($default_list_type == 'item')
-					echo 'checked="checked" ';
-				echo ' />';
-				echo '
-			</td>
-		</tr>
-	</table>';
-				if (getSettingValue("module_multisite") == "Oui")
-					echo '
-						<h4>'.get_vocab('explain_default_area_and_room_and_site').'</h4>';
-				else
-					echo '
-						<h4>'.get_vocab('explain_default_area_and_room').'</h4>';
-				if (getSettingValue("module_multisite") == "Oui")
-				{
-					$sql = "SELECT id,sitecode,sitename
-					FROM ".TABLE_PREFIX."_site
-					ORDER BY id ASC";
-					$resultat = grr_sql_query($sql);
-					echo '
-						<table>
-							<tr>
-								<td>'.get_vocab('default_site').get_vocab('deux_points').'</td>
-								<td>
-									<select id="id_site" name="id_site" onchange="modifier_liste_domaines();modifier_liste_ressources(2)">
-										<option value="-1">'.get_vocab('choose_a_site').'</option>'."\n";
-					for ($enr = 0; ($row = grr_sql_row($resultat, $enr)); $enr++)
-					{
-						echo '              <option value="'.$row[0].'"';
-						if ($default_site == $row[0])
-							echo ' selected="selected" ';
-						echo '>'.htmlspecialchars($row[2]);
-						echo '</option>'."\n";
-					}
-					echo '            </select>
 				</td>
-			</tr>';
+			</tr>
+			<tr>
+				<td>'.get_vocab('select_area_list_format').'</td>
+				<td>
+					<input type="radio" name="area_item_format" value="select" ';
+					if ($default_list_type == 'select')
+						echo 'checked="checked" ';
+					echo ' />';
+					echo '
+				</td>
+			</tr>
+			<tr>
+				<td>'.get_vocab('item_area_list_format').'</td>
+				<td>
+					<input type="radio" name="area_item_format" value="item" ';
+					if ($default_list_type == 'item')
+						echo 'checked="checked" ';
+					echo ' />';
+					echo '
+				</td>
+			</tr>
+		</table>';
+		if (getSettingValue("module_multisite") == "Oui")
+			echo '
+		<h4>'.get_vocab('explain_default_area_and_room_and_site').'</h4>';
+		else
+			echo '
+		<h4>'.get_vocab('explain_default_area_and_room').'</h4>';
+		if (getSettingValue("module_multisite") == "Oui")
+		{
+			$sql = "SELECT id,sitecode,sitename
+			FROM ".TABLE_PREFIX."_site
+			ORDER BY id ASC";
+			$resultat = grr_sql_query($sql);
+			echo '
+			<table>
+				<tr>
+					<td>'.get_vocab('default_site').get_vocab('deux_points').'</td>
+					<td>
+						<select id="id_site" name="id_site" onchange="modifier_liste_domaines();modifier_liste_ressources(2)">
+							<option value="-1">'.get_vocab('choose_a_site').'</option>'."\n";
+							for ($enr = 0; ($row = grr_sql_row($resultat, $enr)); $enr++)
+							{
+								echo '              <option value="'.$row[0].'"';
+								if ($default_site == $row[0])
+									echo ' selected="selected" ';
+								echo '>'.htmlspecialchars($row[2]);
+								echo '</option>'."\n";
+							}
+							echo '            </select>
+						</td>
+					</tr>';
 				}
 				else
 				{

@@ -406,12 +406,13 @@ else
 						$tab[$tab_ligne][] = "<img src=\"img_grr/stop.png\" alt=\"".get_vocab("reservation_impossible")."\"  title=\"".get_vocab("reservation_impossible")."\" width=\"16\" height=\"16\" class=\"".$class_image."\"  />";
 					}
 					else
+					{
 						if (((authGetUserLevel(getUserName(), -1) > 1) || (auth_visiteur(getUserName(), $room) == 1)) && (UserRoomMaxBooking(getUserName(), $room, 1) != 0) && verif_booking_date(getUserName(), -1, $room, $date_booking, $date_now, $enable_periods) && verif_delais_max_resa_room(getUserName(), $room, $date_booking) && verif_delais_min_resa_room(getUserName(), $room, $date_booking) && (($statut_room[$room] == "1") || (($statut_room[$room] == "0") && (authGetUserLevel(getUserName(),$room) > 2) )) && $_GET['pview'] != 1)
 						{
 							if ($enable_periods == 'y')
 							{
 								echo "<a href=\"edit_entry.php?room=$room&amp;period=$time_t_stripped&amp;year=$year&amp;month=$month&amp;day=$day&amp;page=day\" title=\"".get_vocab("cliquez_pour_effectuer_une_reservation")."\" ><span class=\"glyphicon glyphicon-plus\"></span></a>";
-								$tab[$tab_ligne][] = "<a href=\"edit_entry.php?room=$room&amp;period=$time_t_stripped&amp;year=$year&amp;month=$month&amp;day=$day&amp;page=day\" title=\"".get_vocab("cliquez_pour_effectuer_une_reservation")."\" ><img src=\"img_grr/new.gif\" class=\"".$class_image."\" alt=\"".get_vocab("add")."\" width=\"16\" height=\"16\" /></a>";
+								$tab[$tab_ligne][] = "<a href=\"edit_entry.php?room=$room&amp;period=$time_t_stripped&amp;year=$year&amp;month=$month&amp;day=$day&amp;page=day\" title=\"".get_vocab("cliquez_pour_effectuer_une_reservation")."\" ><span class=\"glyphicon glyphicon-plus\"></span></a>";
 							}
 							else
 							{
@@ -424,9 +425,10 @@ else
 							echo " ";
 							$tab[$tab_ligne][] = " ";
 						}
+					}
 						echo "</td>\n";
 					}
-					elseif ($descr != "")
+					else if ($descr != "")
 					{
 						if ((isset($today[$room][$t]["statut"])) && ($today[$room][$t]["statut"] != '-'))
 						{
@@ -450,7 +452,7 @@ else
 								if (getSettingValue("display_level_view_entry") == 0)
 								{
 									$currentPage = 'day';
-									echo "<a title=\"".htmlspecialchars($today[$room][$t]["who"])."\" href=\"#?w=500\" onclick=\"request($id,$day,$month,$year,'$currentPage',readData);\" rel=\"popup_name\" class=\"poplight\">$descr";
+									echo "<a title=\"".htmlspecialchars($today[$room][$t]["who"])."\" href=\"#?w=600\" onclick=\"request($id,$day,$month,$year,'$currentPage',readData);\" rel=\"popup_name\" class=\"poplight\">$descr";
 								}
 								else
 								{

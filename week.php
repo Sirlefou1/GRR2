@@ -511,7 +511,7 @@ for ($t = $week_start; $t <= $week_end; $t += 86400)
 								{
 									$currentPage = 'week';
 									$id =  $d[$weekday][$slot - $decale_slot * $nb_case]["id"];
-									echo "<a title=\"".htmlspecialchars($d[$weekday][$slot - $decale_slot * $nb_case]["who"])."\"  href=\"#?w=500\" onclick=\"request($id,$wday,$wmonth,$wyear,'$currentPage',readData);\" rel=\"popup_name\" class=\"poplight\">" ;
+									echo "<a title=\"".htmlspecialchars($d[$weekday][$slot - $decale_slot * $nb_case]["who"])."\"  href=\"#?w=600\" onclick=\"request($id,$wday,$wmonth,$wyear,'$currentPage',readData);\" rel=\"popup_name\" class=\"poplight\">" ;
 								}
 								else
 									echo "<a class=\"lienCellule\" title=\"".htmlspecialchars($d[$weekday][$slot-$decale_slot*$nb_case]["who"])."\"  href=\"view_entry.php?id=" . $d[$weekday][$slot-$decale_slot*$nb_case]["id"]."&amp;day=$wday&amp;month=$wmonth&amp;year=$wyear&amp;page=week\">";
