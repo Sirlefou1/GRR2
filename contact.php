@@ -169,7 +169,7 @@ switch ($action)
 		echo "value='".$email_reponse."' ";
 	else if (($fin_session == 'n') && (getUserName()!=''))
 	{
-		$user_email = grr_sql_query1("select email from ".TABLE_PREFIX."_utilisateurs where login='".getUserName()."'");
+		$user_email = grr_sql_query1("SELECT email FROM ".TABLE_PREFIX."_utilisateurs WHERE login='".getUserName()."'");
 		if (($user_email != "") && ($user_email != -1))
 			echo "value='".$user_email."' ";
 	}

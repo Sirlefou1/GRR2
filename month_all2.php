@@ -130,7 +130,7 @@ $tm = date("n",$i);
 include("menu_gauche.php");
 include "chargement.php";
 echo "<div id=\"planningMonthAll2\">";
-echo "<div class=\"titre_planning\"><table width=\"100%\">";
+echo "<div class=\"titre_planning\"><table class=\"table-header\">";
 if ((!isset($_GET['pview'])) or ($_GET['pview'] != 1))
 {
 	echo "\n
@@ -166,7 +166,7 @@ echo " </td>";
 echo " </tr>";
 echo "</table>";
 echo "</div>\n";
-if ($_GET['pview'] == 1 AND $_GET['precedent'] == 1)
+if ($_GET['pview'] == 1 && $_GET['precedent'] == 1)
 {
 	echo "<span id=\"lienPrecedent\">
 	<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript:history.back();\">Précedent</button>
@@ -296,22 +296,22 @@ else
 }
 if ($debug_flag)
 {
-	echo "<p>DEBUG: Array of month day data:<p><pre>\n";
+	echo '<p>DEBUG: Array of month day data:<p><pre>'.PHP_EOL;
 	for ($i = 1; $i <= $days_in_month; $i++)
 	{
 		if (isset($d[$i]["id"]))
 		{
 			$n = count($d[$i]["id"]);
-			echo "Day $i has $n entries:\n";
+			echo 'Day '.$i.' has '.$n.' entries:'.PHP_EOL;
 			for ($j = 0; $j < $n; $j++)
 				echo "  ID: " . $d[$i]["id"][$j] .
 			" Data: " . $d[$i]["data"][$j] . "\n";
 		}
 	}
-	echo "</pre>\n";
+	echo '</pre>'.PHP_EOL;
 }
-$weekcol=0;
-echo "<table> \n";
+$weekcol = 0;
+echo '<table class="table-bordered">'.PHP_EOL;
 $sql = "SELECT room_name, capacity, id, description FROM ".TABLE_PREFIX."_room WHERE area_id=$area ORDER BY order_display,room_name";
 $res = grr_sql_query($sql);
 echo "<tr><th></th>\n";
@@ -327,7 +327,8 @@ for ($k = 0; $k < $days_in_month; $k++)
 	if ($display_day[$cweek] == 1)
 	{
 		echo "<th class=\"tableau_month_all2\">$name_day";
-		if (getSettingValue("jours_cycles_actif") == "Oui" and intval($jour_cycle) > -1)
+		if (getSettingValue("jours_cycles_actif") == "Oui" && intval($jour_cycle) > -1)
+		{
 			if (intval($jour_cycle) > 0)
 				echo "<br /></><i> ".ucfirst(substr(get_vocab("rep_type_6"), 0, 1)).$jour_cycle."</i>";
 			else
@@ -336,94 +337,95 @@ for ($k = 0; $k < $days_in_month; $k++)
 					$jour_cycle = substr($jour_cycle, 0, 3)."..";
 				echo "<br /></><i>".$jour_cycle."</i>";
 			}
-			echo "</th>\n";
 		}
+		echo "</th>\n";
 	}
-	echo "</tr>";
-	$li = 0;
-	for ($ir = 0; ($row = grr_sql_row($res, $ir)); $ir++)
+}
+echo "</tr>";
+$li = 0;
+for ($ir = 0; ($row = grr_sql_row($res, $ir)); $ir++)
+{
+	$verif_acces_ressource = verif_acces_ressource(getUserName(), $row[2]);
+	if ($verif_acces_ressource)
 	{
-		$verif_acces_ressource = verif_acces_ressource(getUserName(), $row[2]);
-		if ($verif_acces_ressource)
+		$acces_fiche_reservation = verif_acces_fiche_reservation(getUserName(), $row[2]);
+		echo "<tr><th class=\"tableau_month_all2\">" . htmlspecialchars($row[0]) ."</th>\n";
+		$li++;
+		$t2 = mktime(0, 0, 0,$month, 1, $year);
+		for ($k = 0; $k < $days_in_month; $k++)
 		{
-			$acces_fiche_reservation = verif_acces_fiche_reservation(getUserName(), $row[2]);
-			echo "<tr><th class=\"tableau_month_all2\">" . htmlspecialchars($row[0]) ."</th>\n";
-			$li++;
-			$t2 = mktime(0, 0, 0,$month, 1, $year);
-			for ($k = 0; $k < $days_in_month; $k++)
+			$cday = date("j", $t2);
+			$cweek = date("w", $t2);
+			$t2 += 86400;
+			if ($display_day[$cweek] == 1)
 			{
-				$cday = date("j", $t2);
-				$cweek = date("w", $t2);
-				$t2 += 86400;
-				if ($display_day[$cweek] == 1)
+				echo "<td valign=\"top\" class=\"cell_month\"> ";
+				if (est_hors_reservation(mktime(0, 0, 0, $month, $cday, $year), $area))
 				{
-					echo "<td valign=\"top\" class=\"cell_month\"> ";
-					if (est_hors_reservation(mktime(0, 0, 0, $month, $cday, $year), $area))
+					echo "<div class=\"empty_cell\">";
+					echo "<img src=\"img_grr/stop.png\" alt=\"".get_vocab("reservation_impossible")."\"  title=\"".get_vocab("reservation_impossible")."\" width=\"16\" height=\"16\" class=\"".$class_image."\"  /></div>\n";
+				}
+				else
+				{
+					if (isset($d[$cday]["id"][0]))
 					{
-						echo "<div class=\"empty_cell\">";
-						echo "<img src=\"img_grr/stop.png\" alt=\"".get_vocab("reservation_impossible")."\"  title=\"".get_vocab("reservation_impossible")."\" width=\"16\" height=\"16\" class=\"".$class_image."\"  /></div>\n";
-					}
-					else
-					{
-						if (isset($d[$cday]["id"][0]))
+						$n = count($d[$cday]["id"]);
+						for ($i = 0; $i < $n; $i++)
 						{
-							$n = count($d[$cday]["id"]);
+							if ($i == 11 && $n > 12)
+							{
+								echo " ...\n";
+								break;
+							}
 							for ($i = 0; $i < $n; $i++)
 							{
-								if ($i == 11 && $n > 12)
+								if ($d[$cday]["room"][$i] == $row[0])
 								{
-									echo " ...\n";
-									break;
-								}
-								for ($i = 0; $i < $n; $i++)
-								{
-									if ($d[$cday]["room"][$i] == $row[0])
+									echo "\n<br /><table width='100%'><tr>";
+									tdcell($d[$cday]["color"][$i]);
+									if ($d[$cday]["res"][$i] != '-')
+										echo " <img src=\"img_grr/buzy.png\" alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("ressource actuellement empruntee")."\" width=\"20\" height=\"20\" class=\"image\" /> \n";
+									if ((isset($d[$cday]["option_reser"][$i])) && ($d[$cday]["option_reser"][$i] != -1))
+										echo " <img src=\"img_grr/small_flag.png\" alt=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."\" title=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")." ".time_date_string_jma($d[$cday]["option_reser"][$i],$dformat)."\" width=\"20\" height=\"20\" class=\"image\" /> \n";
+									if ((isset($d[$cday]["moderation"][$i])) && ($d[$cday]["moderation"][$i] == 1))
+										echo " <img src=\"img_grr/flag_moderation.png\" alt=\"".get_vocab("en_attente_moderation")."\" title=\"".get_vocab("en_attente_moderation")."\" class=\"image\" /> \n";
+									echo "<span class=\"small_planning\">";
+									if ($acces_fiche_reservation)
 									{
-										echo "\n<br /><table width='100%'><tr>";
-										tdcell($d[$cday]["color"][$i]);
-										if ($d[$cday]["res"][$i] != '-')
-											echo " <img src=\"img_grr/buzy.png\" alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("ressource actuellement empruntee")."\" width=\"20\" height=\"20\" class=\"image\" /> \n";
-										if ((isset($d[$cday]["option_reser"][$i])) && ($d[$cday]["option_reser"][$i] != -1))
-											echo " <img src=\"img_grr/small_flag.png\" alt=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."\" title=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")." ".time_date_string_jma($d[$cday]["option_reser"][$i],$dformat)."\" width=\"20\" height=\"20\" class=\"image\" /> \n";
-										if ((isset($d[$cday]["moderation"][$i])) && ($d[$cday]["moderation"][$i] == 1))
-											echo " <img src=\"img_grr/flag_moderation.png\" alt=\"".get_vocab("en_attente_moderation")."\" title=\"".get_vocab("en_attente_moderation")."\" class=\"image\" /> \n";
-										echo "<span class=\"small_planning\">";
-										if ($acces_fiche_reservation)
+										if (getSettingValue("display_level_view_entry") == 0)
 										{
-											if (getSettingValue("display_level_view_entry") == 0)
-											{
-												$currentPage = 'month_all2';
-												$id =   $d[$cday]["id"][$i];
-												echo "<a title=\"".htmlspecialchars($d[$cday]["who1"][$i])."\" href=\"#?w=500\" onclick=\"request($id,$cday,$month,$year,'$currentPage',readData);\" rel=\"popup_name\" class=\"poplight\">" .$d[$cday]["who1"][$i]."</a>";
-												echo  "<div id=\"popup_name\" class=\"popup_block\" ></div>";
-											}
-											else
-											{
-												echo "<a title=\"".htmlspecialchars($d[$cday]["data"][$i])."\" href=\"view_entry.php?id=" . $d[$cday]["id"][$i]."&amp;page=month\">"
-												.$d[$cday]["who1"][$i]{0}
-												. "</a>";
-											}
+											$currentPage = 'month_all2';
+											$id =   $d[$cday]["id"][$i];
+											echo "<a title=\"".htmlspecialchars($d[$cday]["who1"][$i])."\" href=\"#?w=500\" onclick=\"request($id,$cday,$month,$year,'$currentPage',readData);\" rel=\"popup_name\" class=\"poplight\">" .$d[$cday]["who1"][$i]."</a>";
+											echo  "<div id=\"popup_name\" class=\"popup_block\" ></div>";
 										}
 										else
-											echo $d[$cday]["who1"][$i]{0};
-										echo "</span></td></tr></table>";
+										{
+											echo "<a title=\"".htmlspecialchars($d[$cday]["data"][$i])."\" href=\"view_entry.php?id=" . $d[$cday]["id"][$i]."&amp;page=month\">"
+											.$d[$cday]["who1"][$i]{0}
+											. "</a>";
+										}
 									}
+									else
+										echo $d[$cday]["who1"][$i]{0};
+									echo "</span></td></tr></table>";
 								}
 							}
 						}
 					}
-					echo "</td>\n";
 				}
+				echo "</td>\n";
 			}
-			echo "</tr>";
 		}
+		echo "</tr>";
 	}
-	echo "</table>";
-	if ($_GET['pview'] != 1)
-		echo "<div id=\"toTop\"> ^ Haut de la page";
-	bouton_retour_haut ();
-	echo " </div>";
-	echo " </div>";
-	echo " </div>";
-	affiche_pop_up(get_vocab("message_records"),"user");
-	?>
+}
+echo "</table>";
+if ($_GET['pview'] != 1)
+	echo "<div id=\"toTop\"> ^ Haut de la page";
+bouton_retour_haut ();
+echo " </div>";
+echo " </div>";
+echo " </div>";
+affiche_pop_up(get_vocab("message_records"),"user");
+?>
