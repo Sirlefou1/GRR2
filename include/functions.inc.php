@@ -859,13 +859,13 @@ function print_header($day = '', $month = '', $year = '', $area = '', $type_sess
 			?>
 			<td class="configuration" >
 				<?php
-				if (@file_exists($clock_file))
+				/*if (@file_exists($clock_file))
 				{
 					echo '<script type="text/javascript">'.PHP_EOL;
 					echo 'new LiveClock();'.PHP_EOL;
 					echo '</script>'.PHP_EOL;
 					echo '<br/>'.PHP_EOL;
-				}
+				}*/
 				$parametres_url = '';
 				$_SESSION['chemin_retour'] = '';
 				if (isset($_SERVER['QUERY_STRING']) && ($_SERVER['QUERY_STRING'] != ''))
