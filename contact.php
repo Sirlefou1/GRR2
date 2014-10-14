@@ -57,7 +57,7 @@ if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))
 else
 	$type_session = "with_session";
 header('Content-Type: text/html; charset=utf-8');
-echo begin_page(get_vocab("mrbs").get_vocab("deux_points").getSettingValue("company"));
+echo begin_page(getSettingValue("company"));
 echo "<div class=\"page_sans_col_gauche\">";
 $cible = isset($_POST["cible"]) ? $_POST["cible"] : (isset($_GET["cible"]) ? $_GET["cible"] : '');
 $cible = htmlentities($cible);

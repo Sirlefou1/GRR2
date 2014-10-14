@@ -779,9 +779,9 @@ function print_header($day = '', $month = '', $year = '', $area = '', $type_sess
 	// On vérifie que les noms et prénoms ne sont pas vides
 	VerifNomPrenomUser($type_session);
 	if ($type_session == "with_session")
-		echo begin_page(get_vocab("mrbs").get_vocab("deux_points").getSettingValue("company"),"with_session");
+		echo begin_page(getSettingValue("company"),"with_session");
 	else
-		echo begin_page(get_vocab("mrbs").get_vocab("deux_points").getSettingValue("company"),"no_session");
+		echo begin_page(getSettingValue("company"),"no_session");
 	// Si nous ne sommes pas dans un format imprimable
 	if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
 	{
