@@ -28,6 +28,9 @@
  .styleBoutton {
 	color : black;
  }
+ .EditEntryTable {
+ 	background-color: #dddddd;
+ }
  .small {font-size:0.8em}
  .larger {font-size:1.4em}
  a:link {color:#000; font-weight: bold; text-decoration: none;}
