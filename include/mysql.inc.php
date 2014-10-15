@@ -105,6 +105,14 @@ function grr_sql_query($sql)
 	$r = mysqli_query($GLOBALS['db_c'], $sql);
 	return $r;
 }
+//retourne la version de mysql
+
+function grr_sql_version()
+{
+	$r = mysqli_get_server_info($GLOBALS['db_c']);
+	return $r;
+}
+
 // Return a row from a result. The first row is 0.
 // The row is returned as an array with index 0=first column, etc.
 // When called with i >= number of rows in the result, cleans up from
@@ -202,14 +210,6 @@ function grr_sql_mutex_cleanup()
 		grr_sql_mutex_unlock($grr_sql_mutex_unlock_name);
 		$grr_sql_mutex_unlock_name = "";
 	}
-}
-// Return a string identifying the database version:
-function grr_sql_version()
-{
-	$r = grr_sql_query("select version()");
-	$v = grr_sql_row($r, 0);
-	grr_sql_free($r);
-	return "MySQL $v[0]";
 }
 // Generate non-standard SQL for LIMIT clauses:
 function grr_sql_syntax_limit($count, $offset)
