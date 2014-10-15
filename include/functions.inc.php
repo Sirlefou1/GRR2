@@ -736,7 +736,7 @@ function begin_page($title,$page="with_session")
 		$a .= $charset_html;
 	$a .=  '" />';
 	$a .= PHP_EOL.'<meta name="Robots" content="noindex" />';
-	$a .= '<script src="jquery-1.8.3.min.js"></script>'.PHP_EOL;
+	$a .= '<script src="//code.jquery.com/jquery-1.11.1.js"></script>'.PHP_EOL;
 	$a .= '<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />';
 	$a .= '<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>';
 	$a .= '<script src="jquery.validate.js"></script>';

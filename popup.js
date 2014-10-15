@@ -1,6 +1,6 @@
 $(document).ready(function()
 {
-	$('a.poplight[href^=#]').click(function()
+	$('a.poplight[href^=#]').on('click', function()
 	{
 		var popID = $(this).attr('rel');
 		var popURL = $(this).attr('href');
@@ -23,11 +23,11 @@ $(document).ready(function()
 		}).fadeIn();
 		return false;
 	});
-	$('a.close, #fade').live('click', function()
+	$('body').on('click', 'a.close, #fade', function()
 	{
 		$('#fade , .popup_block').fadeOut(function()
 		{
-			$('#fade, a.close');
+			$('#fade, a.close').remove();
 		});
 		return false;
 	});

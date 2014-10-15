@@ -1,9 +1,6 @@
-
-// SCRIPTE JS/AJAX PERMETTANT D'APPELER LES SCRIPTS PHP SUPRIMANT ET REAFFICHANT LES FICHIERS LIES A
-// UNE RESERVATION
-
-$(document).ready(function() {
-	$(".deletefile").live('click',function()
+$(document).ready(function()
+{
+	$(".deletefile").on('click',function()
 	{
 		var link = $(this).attr("href");
 		var id = $(this).attr("value");
@@ -24,21 +21,21 @@ $(document).ready(function() {
 					{
 						jQuery.ajax(
 						{
-						 type: 'GET',
-						 url: 'uploadify/affichagefile.php',
-						 data:
-						 {
-						  id: id
-					  },
-					  success: function(returnData)
-					  {
-						 $("#file").html(returnData);
-					 },
-					 error: function(data)
-					 {
-						 alert('Erreur lors de l execution de la commande AJAX pour le edit_entry_champs_add.php ');
-					 }
-				 });
+							type: 'GET',
+							url: 'uploadify/affichagefile.php',
+							data:
+							{
+								id: id
+							},
+							success: function(returnData)
+							{
+								$("#file").html(returnData);
+							},
+							error: function(data)
+							{
+								alert('Erreur lors de l execution de la commande AJAX pour le edit_entry_champs_add.php ');
+							}
+						});
 						return false;
 					}
 					else
@@ -48,9 +45,9 @@ $(document).ready(function() {
 					}
 				}
 			});
-}
+		}
 
-return false;
-});
+		return false;
+	});
 });
 
