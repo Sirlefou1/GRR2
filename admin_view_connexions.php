@@ -160,7 +160,7 @@ if (!isset($_POST['histDay']))
 				echo "<td class=\"col\">".$temp1.$row[4].$temp2. "</td>\n";
 				echo "<td class=\"col\">".$temp1. $row[5] .$temp2. "</td>\n";
 				echo "<td class=\"col\">".$temp1. $row[6] .$temp2. "</td>\n";
-				echo("</tr>\n");
+				echo "</tr>\n";
 			}
 		}
 		?>
