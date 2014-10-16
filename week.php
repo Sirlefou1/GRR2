@@ -514,50 +514,50 @@ for ($t = $week_start; $t <= $week_end; $t += 86400)
 									echo "<a title=\"".htmlspecialchars($d[$weekday][$slot - $decale_slot * $nb_case]["who"])."\"  href=\"#?w=600\" onclick=\"request($id,$wday,$wmonth,$wyear,'$currentPage',readData);\" rel=\"popup_name\" class=\"poplight\">" ;
 								}
 								else
-									echo "<a class=\"lienCellule\" title=\"".htmlspecialchars($d[$weekday][$slot-$decale_slot*$nb_case]["who"])."\"  href=\"view_entry.php?id=" . $d[$weekday][$slot-$decale_slot*$nb_case]["id"]."&amp;day=$wday&amp;month=$wmonth&amp;year=$wyear&amp;page=week\">";
+									echo "<a class=\"lienCellule\" title=\"".htmlspecialchars($d[$weekday][$slot-$decale_slot*$nb_case]["who"])."\"  href=\"view_entry.php?id=" . $d[$weekday][$slot - $decale_slot * $nb_case]["id"]."&amp;day=$wday&amp;month=$wmonth&amp;year=$wyear&amp;page=week\">";
 							}
 							echo $d[$weekday][$slot - $decale_slot * $nb_case]["data"]."";
-							$Son_GenreRepeat = grr_sql_query1("SELECT type_name FROM ".TABLE_PREFIX."_type_area ,".TABLE_PREFIX."_entry  WHERE  ".TABLE_PREFIX."_entry.id= ". $d[$weekday][$slot-$decale_slot*$nb_case]['id']." AND ".TABLE_PREFIX."_entry.type= ".TABLE_PREFIX."_type_area.type_letter");
+							$Son_GenreRepeat = grr_sql_query1("SELECT type_name FROM ".TABLE_PREFIX."_type_area ,".TABLE_PREFIX."_entry  WHERE  ".TABLE_PREFIX."_entry.id= ". $d[$weekday][$slot - $decale_slot * $nb_case]['id']." AND ".TABLE_PREFIX."_entry.type= ".TABLE_PREFIX."_type_area.type_letter");
 							if ($Son_GenreRepeat != -1)
 							{
-								echo "<br />" .date('H:i',$d[$weekday][$slot-$decale_slot*$nb_case]["horaireDebut"])."~". date('H:i',$d[$weekday][$slot-$decale_slot*$nb_case]["horaireFin"])."";
+								echo "<br />" .date('H:i',$d[$weekday][$slot - $decale_slot * $nb_case]["horaireDebut"])."~". date('H:i',$d[$weekday][$slot-$decale_slot*$nb_case]["horaireFin"])."";
 								echo " <br/>". $Son_GenreRepeat ." <br/><br/>" ;
 							}
 							if ($d[$weekday][$slot - $decale_slot * $nb_case]["description"]!= "")
 								echo "<i>".$d[$weekday][$slot - $decale_slot * $nb_case]["description"]."</i>";
 							if ($acces_fiche_reservation)echo"</a>";
+							$clef = grr_sql_query1("SELECT clef FROM ".TABLE_PREFIX."_entry WHERE  ".TABLE_PREFIX."_entry.id= ". $d[$weekday][$slot - $decale_slot * $nb_case]['id']."");
+							if ($clef == 1)
+								echo '<img src="img_grr/skey.png" alt="clef">';
 						}
-						$clef = grr_sql_query1("SELECT clef FROM ".TABLE_PREFIX."_entry WHERE  ".TABLE_PREFIX."_entry.id= ". $d[$weekday][$slot - $decale_slot * $nb_case]['id']."");
-						if ($clef == 1)
-							echo '<img src="img_grr/skey.png" alt="clef">';
-						if ((isset($d[$weekday][$slot - $decale_slot * $nb_case]["statut"])) && ($d[$weekday][$slot - $decale_slot * $nb_case]["statut"] != '-'))
-							echo '<img src="img_grr/buzy.png" alt="'.get_vocab("ressource actuellement empruntee").'" title="'.get_vocab("ressource actuellement empruntee").'" width="20" height="20" class="image" />'.PHP_EOL;
-						if (($this_delais_option_reservation > 0) && (isset($d[$weekday][$slot-$decale_slot * $nb_case]["option_reser"])) && ($d[$weekday][$slot - $decale_slot * $nb_case]["option_reser"] != -1))
-							echo '<img src="img_grr/small_flag.png" alt="'.get_vocab("reservation_a_confirmer_au_plus_tard_le").'" title="'.get_vocab("reservation_a_confirmer_au_plus_tard_le").' '.time_date_string_jma($d[$weekday][$slot - $decale_slot * $nb_case]["option_reser"], $dformat).'" width="20" height="20" class="image" />'.PHP_EOL;
-						if ((isset($d[$weekday][$slot - $decale_slot * $nb_case]["moderation"])) && ($d[$weekday][$slot - $decale_slot * $nb_case]["moderation"] == '1'))
-							echo '<img src="img_grr/flag_moderation.png" alt="'.get_vocab("en_attente_moderation").'" title="'.get_vocab("en_attente_moderation").'" class="image" />'.PHP_EOL;
-					}
+					if ((isset($d[$weekday][$slot - $decale_slot * $nb_case]["statut"])) && ($d[$weekday][$slot - $decale_slot * $nb_case]["statut"] != '-'))
+						echo '<img src="img_grr/buzy.png" alt="'.get_vocab("ressource actuellement empruntee").'" title="'.get_vocab("ressource actuellement empruntee").'" width="20" height="20" class="image" />'.PHP_EOL;
+					if (($this_delais_option_reservation > 0) && (isset($d[$weekday][$slot - $decale_slot * $nb_case]["option_reser"])) && ($d[$weekday][$slot - $decale_slot * $nb_case]["option_reser"] != -1))
+						echo '<img src="img_grr/small_flag.png" alt="'.get_vocab("reservation_a_confirmer_au_plus_tard_le").'" title="'.get_vocab("reservation_a_confirmer_au_plus_tard_le").' '.time_date_string_jma($d[$weekday][$slot - $decale_slot * $nb_case]["option_reser"], $dformat).'" width="20" height="20" class="image" />'.PHP_EOL;
+					if ((isset($d[$weekday][$slot - $decale_slot * $nb_case]["moderation"])) && ($d[$weekday][$slot - $decale_slot * $nb_case]["moderation"] == '1'))
+						echo '<img src="img_grr/flag_moderation.png" alt="'.get_vocab("en_attente_moderation").'" title="'.get_vocab("en_attente_moderation").'" class="image" />'.PHP_EOL;
 				}
-				//echo "</td>\n";
 			}
-			$wt += 86400;
-			$num_week_day++;
-			$num_week_day = $num_week_day % 7;
+				//echo "</td>\n";
 		}
-		if ($enable_periods == 'y')
-		{
-			$time_t = date("i", $t);
-			$time_t_stripped = preg_replace( "/^0/", "", $time_t);
-		}
-		$t += $resolution;
+		$wt += 86400;
+		$num_week_day++;
+		$num_week_day = $num_week_day % 7;
 	}
-	echo "</table>";
-	if ($_GET['pview'] != 1)
-		echo "<div id=\"toTop\"><b>".get_vocab("top_of_page")."</b>";
-	bouton_retour_haut ();
-	echo " </div>";
-	echo " </div>";
-	echo " </div>";
-	echo  "<div id=\"popup_name\" class=\"popup_block\" ></div>";
-	affiche_pop_up(get_vocab("message_records"),"user");
-	?>
+	if ($enable_periods == 'y')
+	{
+		$time_t = date("i", $t);
+		$time_t_stripped = preg_replace( "/^0/", "", $time_t);
+	}
+	$t += $resolution;
+}
+echo "</table>";
+if ($_GET['pview'] != 1)
+	echo "<div id=\"toTop\"><b>".get_vocab("top_of_page")."</b>";
+bouton_retour_haut ();
+echo " </div>";
+echo " </div>";
+echo " </div>";
+echo  "<div id=\"popup_name\" class=\"popup_block\" ></div>";
+affiche_pop_up(get_vocab("message_records"),"user");
+?>
