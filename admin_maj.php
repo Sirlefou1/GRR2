@@ -27,53 +27,6 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-/**
- * $Log: admin_maj.php,v $
- * Revision 1.22  2010-04-07 17:49:56  grr
- * *** empty log message ***
- *
- * Revision 1.21  2010-03-03 14:41:34  grr
- * *** empty log message ***
- *
- * Revision 1.20  2009-12-02 20:11:07  grr
- * *** empty log message ***
- *
- * Revision 1.19  2009-10-09 07:55:48  grr
- * *** empty log message ***
- *
- * Revision 1.18  2009-04-14 12:59:17  grr
- * *** empty log message ***
- *
- * Revision 1.17  2009-04-10 21:05:45  grr
- * *** empty log message ***
- *
- * Revision 1.16  2009-04-10 05:33:10  grr
- * *** empty log message ***
- *
- * Revision 1.14  2009-02-27 13:28:19  grr
- * *** empty log message ***
- *
- * Revision 1.13  2009-01-20 07:19:17  grr
- * *** empty log message ***
- *
- * Revision 1.12  2008-11-16 22:00:58  grr
- * *** empty log message ***
- *
- * Revision 1.11  2008-11-13 21:32:51  grr
- * *** empty log message ***
- *
- * Revision 1.10  2008-11-11 22:01:14  grr
- * *** empty log message ***
- *
- * Revision 1.9  2008-11-10 08:17:34  grr
- * *** empty log message ***
- *
- * Revision 1.7  2008-11-10 07:06:39  grr
- * *** empty log message ***
- *
- *
- */
-
 include "include/connect.inc.php";
 include "include/config.inc.php";
 include "include/misc.inc.php";
@@ -660,11 +613,11 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 							if ($req == 0)
 							{
 								$result_inter .= traite_requete("ALTER TABLE `".TABLE_PREFIX."_entry` ADD beneficiaire VARCHAR( 100 ) NOT NULL AFTER `create_by`");
-								$result_inter .= traite_requete("update `".TABLE_PREFIX."_entry` set `beneficiaire` = `create_by`");
+								$result_inter .= traite_requete("UPDATE `".TABLE_PREFIX."_entry` SET `beneficiaire` = `create_by`");
 								$result_inter .= traite_requete("ALTER TABLE `".TABLE_PREFIX."_entry_moderate` ADD beneficiaire VARCHAR( 100 ) NOT NULL AFTER `create_by`");
-								$result_inter .= traite_requete("update `".TABLE_PREFIX."_entry_moderate` set `beneficiaire` = `create_by`");
+								$result_inter .= traite_requete("UPDATE `".TABLE_PREFIX."_entry_moderate` SET `beneficiaire` = `create_by`");
 								$result_inter .= traite_requete("ALTER TABLE `".TABLE_PREFIX."_repeat` ADD beneficiaire VARCHAR( 100 ) NOT NULL AFTER `create_by`");
-								$result_inter .= traite_requete("update `".TABLE_PREFIX."_repeat` set `beneficiaire` = `create_by`");
+								$result_inter .= traite_requete("UPDATE `".TABLE_PREFIX."_repeat` SET `beneficiaire` = `create_by`");
 								$result_inter .= traite_requete("ALTER TABLE `".TABLE_PREFIX."_entry` ADD beneficiaire_ext VARCHAR( 200 ) NOT NULL AFTER `create_by`");
 								$result_inter .= traite_requete("ALTER TABLE `".TABLE_PREFIX."_entry_moderate` ADD beneficiaire_ext VARCHAR( 200 ) NOT NULL AFTER `create_by`");
 								$result_inter .= traite_requete("ALTER TABLE `".TABLE_PREFIX."_repeat` ADD beneficiaire_ext VARCHAR( 200 ) NOT NULL AFTER `create_by`");
@@ -685,8 +638,8 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 							{
 		  						// Avant la version 195, la valeur 6 était utilisée pour le type "une semaine sur n"
 		 						 // et la valeur 7 pour la périodicité jour cycle
-								$result_inter .= traite_requete("update ".TABLE_PREFIX."_repeat set rep_type = 2 where rep_type = 6");
-								$result_inter .= traite_requete("update ".TABLE_PREFIX."_repeat set rep_type = 6 where rep_type = 7");
+								$result_inter .= traite_requete("UPDATE ".TABLE_PREFIX."_repeat SET rep_type = 2 WHERE rep_type = 6");
+								$result_inter .= traite_requete("UPDATE ".TABLE_PREFIX."_repeat SET rep_type = 6 WHERE rep_type = 7");
 								$result_inter .= traite_requete("INSERT INTO ".TABLE_PREFIX."_setting VALUES ('maj195_champ_rep_type_grr_repeat', '1')");
 							}
 							$result_inter .= traite_requete("ALTER TABLE ".TABLE_PREFIX."_room ADD active_ressource_empruntee CHAR( 1 ) NOT NULL DEFAULT 'y'");
@@ -743,8 +696,19 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 							$result_inter .= traite_requete("ALTER TABLE ".TABLE_PREFIX."_entry_moderate CHANGE create_by create_by VARCHAR( 100 ) NOT NULL  default '';");
 							$result_inter .= traite_requete("ALTER TABLE ".TABLE_PREFIX."_entry_moderate CHANGE beneficiaire beneficiaire VARCHAR( 100 ) NOT NULL  default '';");
 							$result_inter .= traite_requete("CREATE TABLE IF NOT EXISTS ".TABLE_PREFIX."_correspondance_statut (id int(11) NOT NULL auto_increment, code_fonction varchar(30) NOT NULL, libelle_fonction varchar(200) NOT NULL, statut_grr varchar(30) NOT NULL,  PRIMARY KEY (id));");
-							$result_inter .= traite_requete("ALTER TABLE ".TABLE_PREFIX."_type_area ADD disponible VARCHAR( 1 ) NOT NULL DEFAULT '2'");
-							$result_inter .= traite_requete("ALTER TABLE ".TABLE_PREFIX."_room ADD show_comment  CHAR( 1 ) NOT NULL DEFAULT 'n' AFTER comment_room");
+							$result_inter .= traite_requete("ALTER TABLE ".TABLE_PREFIX."_type_area ADD disponible VARCHAR(1) NOT NULL DEFAULT '2'");
+							$result_inter .= traite_requete("ALTER TABLE ".TABLE_PREFIX."_room ADD show_comment CHAR(1) NOT NULL DEFAULT 'n' AFTER comment_room");
+							if ($result_inter == '')
+								$result .= "<span style=\"color:green;\">Ok !</span><br />";
+							else
+								$result .= $result_inter;
+							$result_inter = '';
+						}
+						if ($version_old < "2.2.3")
+						{
+							$result .= "<b>Mise à jour jusqu'à la version 2.2.3 :</b><br />";
+	  						// GRR1.9.7
+							$result_inter .= traite_requete("ALTER TABLE `grr_entry` ADD `clef` INT(2) NOT NULL DEFAULT '0' AFTER `jours`;");
 							if ($result_inter == '')
 								$result .= "<span style=\"color:green;\">Ok !</span><br />";
 							else
@@ -757,11 +721,11 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 						if (($version_old < "1.9.4") && (getSettingValue("maj194_champs_additionnels") != 1) && isset($_POST['maj']))
 						{
 	  					// On constuite un tableau des id des ".TABLE_PREFIX."_overload:
-							$sql_overload = grr_sql_query("select id from ".TABLE_PREFIX."_overload");
+							$sql_overload = grr_sql_query("SELECT id FROM ".TABLE_PREFIX."_overload");
 							for ($i = 0; ($row = grr_sql_row($sql_overload, $i)); $i++)
 								$tab_id_overload[] = $row[0];
 	  						// On selectionne les entrées
-							$sql_entry = grr_sql_query("select overload_desc, id from ".TABLE_PREFIX."_entry where overload_desc != ''");
+							$sql_entry = grr_sql_query("SELECT overload_desc, id FROM ".TABLE_PREFIX."_entry WHERE overload_desc != ''");
 							for ($i = 0; ($row = grr_sql_row($sql_entry, $i)); $i++)
 							{
 								$nouvelle_chaine = "";
@@ -837,7 +801,7 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 					// Numéro de version
 					//Hugo - Mise a jour temporaire du numéro de version à afficher
 					//11/06/2013
-					$display_version_grr = "2.2.2 Modifié v1.0";
+					$display_version_grr = "2.2.3";
 					echo "<h3>".get_vocab("num_version_title")."</h3>\n";
 					echo "<p>".get_vocab("num_version").$display_version_grr;
 					echo "</p>\n";

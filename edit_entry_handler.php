@@ -68,6 +68,11 @@ if ((!isset($name) or (trim($name) == "")) && (getSettingValue("remplissage_desc
 }
 $description = isset($_GET["description"]) ? $_GET["description"] : NULL;
 $ampm = isset($_GET["ampm"]) ? $_GET["ampm"] : NULL;
+$keys = isset($_GET["keys"]) ? $_GET["keys"] : NULL;
+if ($keys == 'y')
+	$keys = 1;
+else
+	$keys = 0;
 $day = isset($_GET["start_day"]) ? $_GET["start_day"] : NULL;
 $month = isset($_GET["start_month"]) ? $_GET["start_month"] : NULL;
 $year = isset($_GET["start_year"]) ? $_GET["start_year"] : NULL;
@@ -101,7 +106,7 @@ $rep_month = isset($_GET["rep_month"]) ? $_GET["rep_month"] : NULL;
 if (($rep_type == 3) && ($rep_month == 3))
 	$rep_type = 3;
 if (($rep_type == 3) && ($rep_month == 5))
-	$rep_type =5;
+	$rep_type = 5;
 $create_by = isset($_GET["create_by"]) ? $_GET["create_by"] : NULL;
 $beneficiaire = isset($_GET["beneficiaire"]) ? $_GET["beneficiaire"] : "";
 $benef_ext_nom = isset($_GET["benef_ext_nom"]) ? $_GET["benef_ext_nom"] : "";
@@ -591,7 +596,7 @@ if ($rep_type == 2)
 					$entry_type = 2;
 				else
 					$entry_type = 0;
-				mrbsCreateSingleEntry($starttime, $endtime, $entry_type, $repeat_id, $room_id, $create_by, $beneficiaire, $beneficiaire_ext, $name, $type, $description, $option_reservation, $overload_data, $entry_moderate, $rep_jour_c, $statut_entry);
+				mrbsCreateSingleEntry($starttime, $endtime, $entry_type, $repeat_id, $room_id, $create_by, $beneficiaire, $beneficiaire_ext, $name, $type, $description, $option_reservation, $overload_data, $entry_moderate, $rep_jour_c, $statut_entry, $keys);
 				$new_id = grr_sql_insert_id("".TABLE_PREFIX."_entry", "id");
 				if (getSettingValue("automatic_mail") == 'yes')
 				{

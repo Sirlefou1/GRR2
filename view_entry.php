@@ -94,7 +94,8 @@ $sql = "SELECT ".TABLE_PREFIX."_entry.name,
 ".TABLE_PREFIX."_entry.beneficiaire_ext,
 ".TABLE_PREFIX."_entry.create_by,
 ".TABLE_PREFIX."_entry.jours,
-".TABLE_PREFIX."_room.active_ressource_empruntee
+".TABLE_PREFIX."_room.active_ressource_empruntee,
+".TABLE_PREFIX."_entry.clef
 FROM ".TABLE_PREFIX."_entry, ".TABLE_PREFIX."_room, ".TABLE_PREFIX."_area
 WHERE ".TABLE_PREFIX."_entry.room_id = ".TABLE_PREFIX."_room.id
 AND ".TABLE_PREFIX."_room.area_id = ".TABLE_PREFIX."_area.id
@@ -160,6 +161,7 @@ $beneficiaire_ext   		= htmlspecialchars($row[17]);
 $create_by    				= htmlspecialchars($row[18]);
 $jour_cycle    				= htmlspecialchars($row[19]);
 $active_ressource_empruntee = htmlspecialchars($row[20]);
+$keys						= $row[21];
 $rep_type 					= 0;
 $verif_display_email 		= verif_display_email(getUserName(), $room_id);
 if ($verif_display_email)
@@ -405,7 +407,7 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 			echo affiche_nom_prenom_email($create_by, "", $option_affiche_nom_prenom_email);
 			if ($active_ressource_empruntee == 'y')
 			{
-				$id_resa = grr_sql_query1("select id from ".TABLE_PREFIX."_entry where room_id = '".$room_id."' and statut_entry='y'");
+				$id_resa = grr_sql_query1("SELECT id from ".TABLE_PREFIX."_entry where room_id = '".$room_id."' and statut_entry='y'");
 				if ($id_resa ==$id)
 					echo " <span class='avertissement'>(".get_vocab("reservation_en_cours").") <img src=\"img_grr/buzy_big.png\" align=middle alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("ressource actuellement empruntee")."\" border=\"0\" width=\"30\" height=\"30\" class=\"print_image\"  /></span>";
 			}
@@ -426,7 +428,23 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 			?>
 		</td>
 	</tr>
+	<?php if ($keys == 1) { ?>
+	<tr>
+		<td>
+			<b>
+				<?php
+				echo 'Clé preté';
+				?>
+			</b>
+		</td>
+		<td>
+			<?php
+			echo '<img src="img_grr/key.png" alt="clef">';
+			?>
+		</td>
+	</tr>
 	<?php
+	}
 	if (($delais_option_reservation > 0) && ($option_reservation != -1))
 	{
 		echo "<tr bgcolor=\"#FF6955\"><td><b>".get_vocab("reservation_a_confirmer_au_plus_tard_le")."<b></td>\n";
@@ -463,13 +481,13 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 	}
 	elseif ($moderate == 3)
 	{
-		$sql = "select motivation_moderation, login_moderateur from ".TABLE_PREFIX."_entry_moderate where id=".$id;
+		$sql = "SELECT motivation_moderation, login_moderateur from ".TABLE_PREFIX."_entry_moderate where id=".$id;
 		$res = grr_sql_query($sql);
 		if (!$res)
 			fatal_error(0, grr_sql_error());
 		$row4 = grr_sql_row($res, 0);
 		$description = $row4[0];
-		$sql ="select nom, prenom from ".TABLE_PREFIX."_utilisateurs where login = '".$row4[1]."'";
+		$sql ="SELECT nom, prenom from ".TABLE_PREFIX."_utilisateurs where login = '".$row4[1]."'";
 		$res = grr_sql_query($sql);
 		if (!$res)
 			fatal_error(0, grr_sql_error());

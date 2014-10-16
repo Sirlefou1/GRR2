@@ -516,7 +516,7 @@ for ($t = $week_start; $t <= $week_end; $t += 86400)
 								else
 									echo "<a class=\"lienCellule\" title=\"".htmlspecialchars($d[$weekday][$slot-$decale_slot*$nb_case]["who"])."\"  href=\"view_entry.php?id=" . $d[$weekday][$slot-$decale_slot*$nb_case]["id"]."&amp;day=$wday&amp;month=$wmonth&amp;year=$wyear&amp;page=week\">";
 							}
-							echo $d[$weekday][$slot-$decale_slot*$nb_case]["data"]."";
+							echo $d[$weekday][$slot - $decale_slot * $nb_case]["data"]."";
 							$Son_GenreRepeat = grr_sql_query1("SELECT type_name FROM ".TABLE_PREFIX."_type_area ,".TABLE_PREFIX."_entry  WHERE  ".TABLE_PREFIX."_entry.id= ". $d[$weekday][$slot-$decale_slot*$nb_case]['id']." AND ".TABLE_PREFIX."_entry.type= ".TABLE_PREFIX."_type_area.type_letter");
 							if ($Son_GenreRepeat != -1)
 							{
@@ -527,6 +527,9 @@ for ($t = $week_start; $t <= $week_end; $t += 86400)
 								echo "<i>".$d[$weekday][$slot - $decale_slot * $nb_case]["description"]."</i>";
 							if ($acces_fiche_reservation)echo"</a>";
 						}
+						$clef = grr_sql_query1("SELECT clef FROM ".TABLE_PREFIX."_entry WHERE  ".TABLE_PREFIX."_entry.id= ". $d[$weekday][$slot - $decale_slot * $nb_case]['id']."");
+						if ($clef == 1)
+							echo '<img src="img_grr/skey.png" alt="clef">';
 						if ((isset($d[$weekday][$slot - $decale_slot * $nb_case]["statut"])) && ($d[$weekday][$slot - $decale_slot * $nb_case]["statut"] != '-'))
 							echo '<img src="img_grr/buzy.png" alt="'.get_vocab("ressource actuellement empruntee").'" title="'.get_vocab("ressource actuellement empruntee").'" width="20" height="20" class="image" />'.PHP_EOL;
 						if (($this_delais_option_reservation > 0) && (isset($d[$weekday][$slot-$decale_slot * $nb_case]["option_reser"])) && ($d[$weekday][$slot - $decale_slot * $nb_case]["option_reser"] != -1))

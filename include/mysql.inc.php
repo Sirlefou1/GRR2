@@ -77,9 +77,8 @@ function grr_sql_free($r)
 // Returns -1 on error; use grr_sql_error to get the error message.
 function grr_sql_command ($sql)
 {
-	if (mysqli_query($GLOBALS['db_c'], $sql))
+	mysqli_query($GLOBALS['db_c'], $sql) or die(mysqli_error($GLOBALS['db_c'])." Q=".$sql);
 		return mysqli_affected_rows($GLOBALS['db_c']);
-	return -1;
 }
 // Execute an SQL query which should return a single non-negative number value.
 // This is a lightweight alternative to grr_sql_query, good for use with count(*)

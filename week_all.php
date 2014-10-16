@@ -443,9 +443,9 @@ else
 					$temp_month = strftime("%m", $t2);
 					$temp_year = strftime("%Y", $t2);
 					if (heure_ete_hiver("hiver", $temp_year,0) == mktime(0, 0, 0, $temp_month, $temp_day, $temp_year))
-						$t2 +=3600;
+						$t2 += 3600;
 					if (date("H", $t2) == "01")
-						$t2 -=3600;
+						$t2 -= 3600;
 				}
 				if ($display_day[$num_week_day] == 1)
 				{
@@ -489,6 +489,9 @@ else
 									if ($d[$cday]["description"][$i] != "")
 										echo "<i>".$d[$cday]["description"][$i]."</i>";
 									echo "</a>";
+									$clef = grr_sql_query1("SELECT clef FROM ".TABLE_PREFIX."_entry WHERE ".TABLE_PREFIX."_entry.id = '".$d[$cday]["id"][$i]."'");
+						if ($clef == 1)
+							echo '<img src="img_grr/skey.png" alt="clef">';
 									echo "</span>";
 								}
 								else

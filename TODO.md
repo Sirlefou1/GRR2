@@ -1,12 +1,12 @@
 # Ajout en cours
 ## Ajout fonction clé donné / rendu
-* Alteration de la table de reservation
+* Alteration de la table de reservation - OK
 * Ajout de la fonction dans functions.inc.php
 * Ajout du choix de view_entry.php
 * Ajout du choix dans Edit_entry.php
 * Ajout d'un indicateur visuel sur les calendriers (functions.inc.php ou day/week/week_all/month/month_all/month_all2.php)
-* Ajout de l'alteration des tables dans l'installeur/updateur
-* Modification du numéro de version
+* Ajout de l'alteration des tables dans l'installeur/updateur - OK
+* Modification du numéro de version - OK
 
 # Future Ajout
 * Mise en place de la generation de pdf avancé

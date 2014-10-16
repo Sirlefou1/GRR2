@@ -130,7 +130,7 @@ if (UserRoomMaxBooking(getUserName(), $room, $compt) == 0)
 }
 if (isset($id))
 {
-	$sql = "SELECT name, beneficiaire, description, start_time, end_time, type, room_id, entry_type, repeat_id, option_reservation, jours, create_by, beneficiaire_ext, statut_entry FROM ".TABLE_PREFIX."_entry WHERE id=$id";
+	$sql = "SELECT name, beneficiaire, description, start_time, end_time, type, room_id, entry_type, repeat_id, option_reservation, jours, create_by, beneficiaire_ext, statut_entry, clef FROM ".TABLE_PREFIX."_entry WHERE id=$id";
 	$res = grr_sql_query($sql);
 	if (!$res)
 		fatal_error(1, grr_sql_error());
@@ -162,6 +162,7 @@ if (isset($id))
 	$rep_id = $row[8];
 	$option_reservation = $row[9];
 	$jours_c = $row[10];
+	$clef = $row[14];
 	$modif_option_reservation = 'n';
 	if ($entry_type >= 1)
 	{
@@ -299,7 +300,7 @@ if (!getWritable($beneficiaire, getUserName(),$id))
 	exit;
 }
 $nb_areas = 0;
-$sql = "select id, area_name from ".TABLE_PREFIX."_area";
+$sql = "SELECT id, area_name FROM ".TABLE_PREFIX."_area";
 $res = grr_sql_query($sql);
 $allareas_id = array();
 if ($res)
@@ -761,6 +762,19 @@ echo '<tr><td>'.PHP_EOL;
 echo '<div id="div_champs_add">'.PHP_EOL;
 echo '</div>'.PHP_EOL;
 echo '</td></tr>'.PHP_EOL;
+
+
+echo '<tr><td class="E">'.PHP_EOL;
+echo '<b>Statut des clés :</b>'.PHP_EOL;
+echo '</td></tr>'.PHP_EOL;
+echo '<tr><td class="CL">'.PHP_EOL;
+echo '<input name="keys" type="checkbox" value="y" ';
+if ($clef == 1)
+	echo 'checked';
+echo ' > Cocher si les clés sont preté';
+echo '</td></tr>'.PHP_EOL;
+
+
 echo '<tr><td class="E">'.PHP_EOL;
 echo '<b>'.$F.'</b>'.PHP_EOL;
 echo '</td></tr>'.PHP_EOL;
@@ -856,7 +870,7 @@ if ($type_affichage_reser == 0)
 	}
 	$af_fin_jour = $heure_finale." H ".$minute_restante;
 	echo '<input name="all_day" type="checkbox" value="yes" />'.get_vocab("all_day");
-	if ($enable_periods!='y')
+	if ($enable_periods != 'y')
 		echo ' ('.$morningstarts.' H - '.$af_fin_jour.')';
 	echo '</div>'.PHP_EOL;
 	echo '</td></tr>'.PHP_EOL;

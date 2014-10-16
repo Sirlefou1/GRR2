@@ -34,7 +34,7 @@
 $grr_devel_email = "florian@othon.fr";
 $grr_devel_url = "https://github.com/Sirlefou1/GRR2";
 // Numéro de version actuel
-$version_grr = "2.2.2";
+$version_grr = "2.2.3";
 // Numéro de sous-version actuel (a, b, ...)
 // Utilisez cette variable pour des versions qui corrigent la la version finale sans toucher à la base.
 $sous_version_grr = "";
