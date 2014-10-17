@@ -1,4 +1,4 @@
-GRR
+# GRR
 =======================================
 http://grr.mutualibre.org
 
@@ -7,12 +7,12 @@ GRR est un outil de gestion et de réservation de ressources. GRR est une adapta
 application MRBS.
 
 
-1. Installation
-2. License
-3. Remarques concernant la sécurité
+* 1. Installation
+* 2. License
+* 3. Remarques concernant la sécurité
 
 
-1. Installation
+## 1. Installation
 =======================================
 
 Pour obtenir une description complète de la procédure d'installation,
@@ -25,7 +25,7 @@ serveur, et indiquez l'adresse où se trouvent les fichiers extraits dans un nav
 - disposer d'un espace FTP sur un serveur, pour y transférer les fichiers
 - disposer d'une base de données MySQL (adresse du serveur MySQL, login, mot de passe)
 
-2. Licence
+## 2. Licence
 =======================================
 
 GRR est publié sous les termes de la GNU General Public Licence, dont le
@@ -40,7 +40,7 @@ Enfin, GRR est livré en l'état sans aucune garantie. Les auteurs de cet outil
 ne pourront en aucun cas être tenus pour responsables d'éventuels bugs.
 
 
-3. Remarques concernant la sécurité
+## 3. Remarques concernant la sécurité
 =======================================
 
 La sécurisation de GRR est dépendante de celle du serveur. Nous vous recommandons d'utiliser

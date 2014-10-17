@@ -525,7 +525,8 @@ for ($t = $week_start; $t <= $week_end; $t += 86400)
 							}
 							if ($d[$weekday][$slot - $decale_slot * $nb_case]["description"]!= "")
 								echo "<i>".$d[$weekday][$slot - $decale_slot * $nb_case]["description"]."</i>";
-							if ($acces_fiche_reservation)echo"</a>";
+							if ($acces_fiche_reservation)
+								echo"</a>";
 							$clef = grr_sql_query1("SELECT clef FROM ".TABLE_PREFIX."_entry WHERE  ".TABLE_PREFIX."_entry.id= ". $d[$weekday][$slot - $decale_slot * $nb_case]['id']."");
 							if ($clef == 1)
 								echo '<img src="img_grr/skey.png" alt="clef">';
