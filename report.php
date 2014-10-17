@@ -827,8 +827,10 @@ else
 		if ($summarize == 4)
 		{
 		//Télécharger le fichier CSV
-			header("Content-Type: application/csv-tab-delimited-table");
+			header('Content-Encoding: UTF-8');
+			header("Content-Type: application/csv-tab-delimited-table; charset=UTF-8'");
 			header("Content-disposition: filename=rapport.csv");
+			echo "\xEF\xBB\xBF";
 			//Trié par: Area, room, debut, date/heure.
 			$res = grr_sql_query($sql);
 			if (!$res)
@@ -875,10 +877,13 @@ else
 		if ($summarize == 5)
 		{
 			//Télécharger le fichier CSV
+			header('Content-Encoding: UTF-8');
 			header("Content-Type: application/csv-tab-delimited-table");
 			header("Content-disposition: filename=resume.csv");
+			echo "\xEF\xBB\xBF";
 			$res = grr_sql_query($sql);
-			if (! $res) fatal_error(0, grr_sql_error());
+			if (! $res)
+				fatal_error(0, grr_sql_error());
 			$nmatch = grr_sql_count($res);
 			if ($nmatch == 0)
 			{
