@@ -47,7 +47,7 @@ if ($dbsys == "mysql")
 	if (file_exists("include/connect.inc.php"))
 	{
 		require_once("include/connect.inc.php");
-		$db = mysqli_connect("$dbHost", "$dbUser", "$dbPass");
+		$db = @mysqli_connect("$dbHost", "$dbUser", "$dbPass");
 		if ($db)
 		{
 			if (mysqli_select_db($db, "$dbDb"))
