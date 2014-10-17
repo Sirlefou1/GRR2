@@ -724,6 +724,16 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 								$result .= $result_inter;
 							$result_inter = '';
 						}
+						if ($version_old < "2.2.5")
+						{
+							$result .= "<b>Mise à jour jusqu'à la version 2.2.5 :</b><br />";
+							$result_inter .= traite_requete("ALTER TABLE `grr_repeat` ADD `courrier` INT(2) NOT NULL DEFAULT '0' AFTER `jours`;");
+							if ($result_inter == '')
+								$result .= "<span style=\"color:green;\">Ok !</span><br />";
+							else
+								$result .= $result_inter;
+							$result_inter = '';
+						}
 						// Vérification du format des champs additionnels
 						// Avant version 1.9.4, les champs add étaient stockés sous la forme <id_champ>champ_encode_en_base_64</id_champ>
 						// A partir de la version 1.9.4, les champs add. sont stockés sous la forme @id_champ@url_encode(champ)@/id_champ@
@@ -810,7 +820,7 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 					// Numéro de version
 					//Hugo - Mise a jour temporaire du numéro de version à afficher
 					//11/06/2013
-					$display_version_grr = "2.2.4";
+					$display_version_grr = "2.2.5";
 					echo "<h3>".get_vocab("num_version_title")."</h3>\n";
 					echo "<p>".get_vocab("num_version").$display_version_grr;
 					echo "</p>\n";
