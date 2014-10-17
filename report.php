@@ -701,7 +701,7 @@ else
 		. ($nmatch == 1 ? get_vocab("entry_found") : get_vocab("entries_found"))
 		.  "</b></p>\n";
 	}
-	if (($summarize == 1) or ($summarize == 3))
+	if (($summarize == 1) || ($summarize == 3))
 	{
 		echo "<table cellpadding=\"3\" cellspacing=\"0\" border=\"1\">\n";
 			//    echo "<tr><td colspan=\"6\" align=\"center\">".get_vocab("trier_par").get_vocab("deux_points")."</td></tr>";
@@ -801,15 +801,12 @@ else
 		if (($summarize == 2) || ($summarize == 3))
 			if ($enable_periods=='y')
 			{
-				accumulate_periods($row, $count, $hours, $report_start, $report_end,
-					$room_hash, $breve_description_hash, "n");
-					//
+				accumulate_periods($row, $count, $hours, $report_start, $report_end, $room_hash, $breve_description_hash, "n");
 				$do_sum1 = 'y';
 			}
 			else
 			{
-				accumulate($row, $count2, $hours2, $report_start, $report_end,
-					$room_hash2, $breve_description_hash2, "n");
+				accumulate($row, $count2, $hours2, $report_start, $report_end, $room_hash2, $breve_description_hash2, "n");
 				$do_sum2 = 'y';
 			}
 		}
@@ -819,10 +816,10 @@ else
 		{
 			// Décompte des créneaux réservées
 			if (isset($do_sum1))
-				do_summary($count, $hours, $room_hash, $breve_description_hash,'y','',"n");
+				do_summary($count, $hours, $room_hash, $breve_description_hash, 'y', '', "n");
 			// Décompte des heures réservées
 			if (isset($do_sum2))
-				do_summary($count2, $hours2, $room_hash2, $breve_description_hash2,'n','',"n");
+				do_summary($count2, $hours2, $room_hash2, $breve_description_hash2, 'n', '', "n");
 		}
 		if ($summarize == 4)
 		{
@@ -859,18 +856,18 @@ else
 				// Récupération des données concernant l'affichage du planning du domaine
 				get_planning_area_values($row[11]);
 				//Affichage de l'heure et de la durée de réservation
-				if ($enable_periods=='y')
+				if ($enable_periods == 'y')
 					echo describe_period_span($row[1], $row[2]) . ";";
 				else
-					echo describe_span($row[1], $row[2],$dformat) . ";";
+					echo describe_span($row[1], $row[2], $dformat) . ";";
 				//Destination
 				echo (removeMailUnicode(affichage_lien_resa_planning($row[3], $row[0]))) . ";";
 				//Description de la réservation
-				$texte = str_replace(CHR(10)," ",removeMailUnicode($row[4]));
-				$texte = str_replace(CHR(13)," ",$texte);
+				$texte = str_replace(CHR(10)," ", removeMailUnicode($row[4]));
+				$texte = str_replace(CHR(13)," ", $texte);
 				echo ltrim(rtrim(($texte))) . ";";
 				//Date derniere modif
-				echo date_time_string($row[7],$dformat) . ";";
+				echo date_time_string($row[7], $dformat) . ";";
 				echo "\r\n";
 			}
 		}
@@ -942,7 +939,7 @@ else
 		}
 	}
 }
-if (($summarize != 4) and ($summarize != 5))
+if (($summarize != 4) && ($summarize != 5))
 {
 	echo "</div>";
 	include "include/trailer.inc.php";

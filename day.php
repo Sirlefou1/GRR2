@@ -112,8 +112,8 @@ get_planning_area_values($area);
 if ($area <= 0)
 {
 	print_header($day, $month, $year, $area,$type_session);
-	echo "<h1>".get_vocab("noareas")."</h1>";
-	echo "<a href='admin_accueil.php'>".get_vocab("admin")."</a>\n</body></html>";
+	echo '<h1>'.get_vocab("noareas").'</h1>';
+	echo '<a href="admin_accueil.php">'.get_vocab("admin").'</a>'.PHP_EOL.'</body>'.PHP_EOL.'</html>';
 	exit();
 }
 print_header($day, $month, $year, $area, $type_session);
@@ -220,18 +220,18 @@ if (!$res)
 	fatal_error(0, grr_sql_error());
 if (grr_sql_count($res) == 0)
 {
-	echo "<h1>".get_vocab('no_rooms_for_area')."</h1>";
+	echo '<h1>'.get_vocab("no_rooms_for_area").'</h1>';
 	grr_sql_free($res);
 }
 else
 {
 	include("menu_gauche.php");
 	if ($_GET['pview'] != 1)
-		echo "<div id=\"planning\">";
+		echo '<div id="planning">'.PHP_EOL;
 	else
-		echo "<div id=\"print_planning\">";
+		echo '<div id="print_planning">'.PHP_EOL;
 	include "chargement.php";
-	echo "<div class=\"titre_planning\">";
+	echo '<div class="titre_planning">'.PHP_EOL;
 	if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
 	{
 		echo "<table class=\"table-header\"><tr><td class=\"left\"><button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='day.php?year=$yy&amp;month=$ym&amp;day=$yd&amp;area=$area';\"> <span class=\"glyphicon glyphicon-backward\"></span> ".get_vocab('daybefore')."</button></td><td>";

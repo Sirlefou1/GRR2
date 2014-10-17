@@ -728,6 +728,9 @@ function begin_page($title,$page="with_session")
 	$a.= '<style type="text/css">div#file_upload-queue  { position: fixed; bottom: 10%; right: 5%;}</style>'.PHP_EOL;
 	$a.= '<style type="text/css">div#file_upload   { position: fixed; bottom: 25%; right: 5%;}</style>'.PHP_EOL;
 	$a.= '<link rel="SHORTCUT ICON" href="./favicon.ico" />';
+	$a .= '<link rel="stylesheet" type="text/css" href="uploadify/uploadify.css"/>'.PHP_EOL;
+	$a .= '<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />';
+	$a .= '<link href="themes/default/css/jquery-ui-timepicker-addon.css" rel="stylesheet" type="text/css">';
 	$a .= PHP_EOL.'<title>'.$title.'</title>';
 	$a .= PHP_EOL.'<meta http-equiv="Content-Type" content="text/html; charset=';
 	if ($unicode_encoding)
@@ -737,11 +740,9 @@ function begin_page($title,$page="with_session")
 	$a .=  '" />';
 	$a .= PHP_EOL.'<meta name="Robots" content="noindex" />';
 	$a .= '<script src="jquery-1.11.1.min.js"></script>'.PHP_EOL;
-	$a .= '<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />';
 	$a .= '<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>';
 	$a .= '<script src="jquery.validate.js"></script>';
 	$a .= '<script src="jquery-ui-timepicker-addon.js"></script>';
-	$a .= '<link href="themes/default/css/jquery-ui-timepicker-addon.css" rel="stylesheet" type="text/css">';
 	$a .= '<script src="jspdf/jspdf.js"></script>'.PHP_EOL;
 	$a .= '<script src="jspdf/libs/FileSaver.js/FileSaver.js"></script>'.PHP_EOL;
 	$a .= '<script src="jspdf/jspdf.plugin.from_html.js"></script>'.PHP_EOL;
@@ -750,7 +751,6 @@ function begin_page($title,$page="with_session")
 	$a .= '<script src="jspdf/libs/Blob.js/BlobBuilder.js"></script>'.PHP_EOL;
 	$a .= '<script src="pdf.js" type="text/javascript" ></script>'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="uploadify/jquery.uploadify.js"></script>'.PHP_EOL;
-	$a .= '<link rel="stylesheet" type="text/css" href="uploadify/uploadify.css"/>'.PHP_EOL;
 	$a .= '<script src="appeldelete.js" type="text/javascript" ></script>'.PHP_EOL;
 	$a .= '<script src="popup.js" type="text/javascript" charset="utf-8"></script>'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="oXHR.js"></script>'.PHP_EOL;
