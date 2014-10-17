@@ -73,6 +73,11 @@ if ($keys == 'y')
 	$keys = 1;
 else
 	$keys = 0;
+$courrier = isset($_GET["courrier"]) ? $_GET["courrier"] : NULL;
+if ($courrier == 'y')
+	$courrier = 1;
+else
+	$courrier = 0;
 $day = isset($_GET["start_day"]) ? $_GET["start_day"] : NULL;
 $month = isset($_GET["start_month"]) ? $_GET["start_month"] : NULL;
 $year = isset($_GET["start_year"]) ? $_GET["start_year"] : NULL;
@@ -571,7 +576,7 @@ if ($rep_type == 2)
 			}
 			if ($rep_type != 0)
 			{
-				mrbsCreateRepeatingEntrys($starttime, $endtime, $rep_type, $rep_enddate, $rep_opt, $room_id, $create_by, $beneficiaire, $beneficiaire_ext, $name, $type, $description, $rep_num_weeks, $option_reservation, $overload_data, $entry_moderate, $rep_jour_c);
+				mrbsCreateRepeatingEntrys($starttime, $endtime, $rep_type, $rep_enddate, $rep_opt, $room_id, $create_by, $beneficiaire, $beneficiaire_ext, $name, $type, $description, $rep_num_weeks, $option_reservation, $overload_data, $entry_moderate, $rep_jour_c, $courrier);
 				if (getSettingValue("automatic_mail") == 'yes')
 				{
 					if (isset($id) && ($id != 0))
@@ -596,7 +601,7 @@ if ($rep_type == 2)
 					$entry_type = 2;
 				else
 					$entry_type = 0;
-				mrbsCreateSingleEntry($starttime, $endtime, $entry_type, $repeat_id, $room_id, $create_by, $beneficiaire, $beneficiaire_ext, $name, $type, $description, $option_reservation, $overload_data, $entry_moderate, $rep_jour_c, $statut_entry, $keys);
+				mrbsCreateSingleEntry($starttime, $endtime, $entry_type, $repeat_id, $room_id, $create_by, $beneficiaire, $beneficiaire_ext, $name, $type, $description, $option_reservation, $overload_data, $entry_moderate, $rep_jour_c, $statut_entry, $keys, $courrier);
 				$new_id = grr_sql_insert_id("".TABLE_PREFIX."_entry", "id");
 				if (getSettingValue("automatic_mail") == 'yes')
 				{
@@ -650,8 +655,8 @@ if ($rep_type == 2)
 	}
 	if ($error_duree_max_resa_area == 'yes')
 	{
-		$area_id = grr_sql_query1("select area_id from ".TABLE_PREFIX."_room where id='".protect_data_sql($room_id)."'");
-		$duree_max_resa_area = grr_sql_query1("select duree_max_resa_area from ".TABLE_PREFIX."_area where id='".$area_id."'");
+		$area_id = grr_sql_query1("SELECT area_id FROM ".TABLE_PREFIX."_room WHERE id='".protect_data_sql($room_id)."'");
+		$duree_max_resa_area = grr_sql_query1("SELECT duree_max_resa_area FROM ".TABLE_PREFIX."_area WHERE id='".$area_id."'");
 		print_header();
 		$temps_format = $duree_max_resa_area*60;
 		toTimeString($temps_format, $dur_units, true);

@@ -2053,7 +2053,8 @@ function send_mail($id_entry, $action, $dformat, $tab_id_moderes = array())
 	".TABLE_PREFIX."_entry.moderate,
 	".TABLE_PREFIX."_entry.beneficiaire_ext,
 	".TABLE_PREFIX."_entry.jours,
-	".TABLE_PREFIX."_entry.clef
+	".TABLE_PREFIX."_entry.clef,
+	".TABLE_PREFIX."_entry.courrier
 	FROM ".TABLE_PREFIX."_entry, ".TABLE_PREFIX."_room, ".TABLE_PREFIX."_area
 	WHERE ".TABLE_PREFIX."_entry.room_id = ".TABLE_PREFIX."_room.id
 	AND ".TABLE_PREFIX."_room.area_id = ".TABLE_PREFIX."_area.id

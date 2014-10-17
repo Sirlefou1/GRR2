@@ -430,7 +430,7 @@ function grrExtractValueFromOverloadDesc($chaine,$id)
  *   0        - An error occured while inserting the entry
  *   non-zero - The entry's ID
  */
-function mrbsCreateSingleEntry($starttime, $endtime, $entry_type, $repeat_id, $room_id, $creator, $beneficiaire, $beneficiaire_ext, $name, $type, $description, $option_reservation,$overload_data, $moderate, $rep_jour_c, $statut_entry, $keys)
+function mrbsCreateSingleEntry($starttime, $endtime, $entry_type, $repeat_id, $room_id, $creator, $beneficiaire, $beneficiaire_ext, $name, $type, $description, $option_reservation,$overload_data, $moderate, $rep_jour_c, $statut_entry, $keys, $courrier)
 {
 	$overload_data_string = "";
 	$overload_fields_list = mrbsOverloadGetFieldslist(0,$room_id);
@@ -448,7 +448,7 @@ function mrbsCreateSingleEntry($starttime, $endtime, $entry_type, $repeat_id, $r
 		}
 	}
 	//Hugo - Commande sql insérant la nouvelle réservation dans la base de données
-	$sql = "INSERT INTO ".TABLE_PREFIX."_entry (start_time, end_time, entry_type, repeat_id, room_id, create_by, beneficiaire, beneficiaire_ext, name, type, description, statut_entry, option_reservation,overload_desc, moderate, jours, clef) VALUES ($starttime, $endtime, '".protect_data_sql($entry_type)."', $repeat_id, $room_id, '".protect_data_sql($creator)."', '".protect_data_sql($beneficiaire)."', '".protect_data_sql($beneficiaire_ext)."', '".protect_data_sql($name)."', '".protect_data_sql($type)."', '".protect_data_sql($description)."', '".protect_data_sql($statut_entry)."', '".$option_reservation."','".protect_data_sql($overload_data_string)."', ".$moderate.",".$rep_jour_c.", $keys)";
+	$sql = "INSERT INTO ".TABLE_PREFIX."_entry (start_time, end_time, entry_type, repeat_id, room_id, create_by, beneficiaire, beneficiaire_ext, name, type, description, statut_entry, option_reservation,overload_desc, moderate, jours, clef, courrier) VALUES ($starttime, $endtime, '".protect_data_sql($entry_type)."', $repeat_id, $room_id, '".protect_data_sql($creator)."', '".protect_data_sql($beneficiaire)."', '".protect_data_sql($beneficiaire_ext)."', '".protect_data_sql($name)."', '".protect_data_sql($type)."', '".protect_data_sql($description)."', '".protect_data_sql($statut_entry)."', '".$option_reservation."','".protect_data_sql($overload_data_string)."', ".$moderate.",".$rep_jour_c.", $keys, $courrier)";
 	if (grr_sql_command($sql) < 0)
 		fatal_error(0, "Requete error  = ".$sql);
 	// s'il s'agit d'une modification d'une ressource déjà modérée et acceptée : on met à jour les infos dans la table ".TABLE_PREFIX."_entry_moderate
@@ -478,7 +478,7 @@ function mrbsCreateSingleEntry($starttime, $endtime, $entry_type, $repeat_id, $r
  *   0        - An error occured while inserting the entry
  *   non-zero - The entry's ID
  */
-function mrbsCreateRepeatEntry($starttime, $endtime, $rep_type, $rep_enddate, $rep_opt, $room_id, $creator, $beneficiaire, $beneficiaire_ext, $name, $type, $description, $rep_num_weeks,$overload_data, $rep_jour_c)
+function mrbsCreateRepeatEntry($starttime, $endtime, $rep_type, $rep_enddate, $rep_opt, $room_id, $creator, $beneficiaire, $beneficiaire_ext, $name, $type, $description, $rep_num_weeks,$overload_data, $rep_jour_c, $courrier)
 {
 	$overload_data_string = "";
 	$area_id = mrbsGetAreaIdFromRoomId($room_id);
@@ -496,7 +496,7 @@ function mrbsCreateRepeatEntry($starttime, $endtime, $rep_type, $rep_enddate, $r
 			$overload_data_string .= $begin_string.urlencode($overload_data[$id_field]).$end_string;
 		}
 	}
-	$sql = "INSERT INTO ".TABLE_PREFIX."_repeat (start_time, end_time, rep_type, end_date, rep_opt, room_id, create_by, beneficiaire, beneficiaire_ext, type, name, description, rep_num_weeks, overload_desc, jours) VALUES ($starttime, $endtime,  $rep_type, $rep_enddate, '$rep_opt', $room_id,   '".protect_data_sql($creator)."','".protect_data_sql($beneficiaire)."','".protect_data_sql($beneficiaire_ext)."', '".protect_data_sql($type)."', '".protect_data_sql($name)."', '".protect_data_sql($description)."', '$rep_num_weeks','".protect_data_sql($overload_data_string)."',".$rep_jour_c.")";
+	$sql = "INSERT INTO ".TABLE_PREFIX."_repeat (start_time, end_time, rep_type, end_date, rep_opt, room_id, create_by, beneficiaire, beneficiaire_ext, type, name, description, rep_num_weeks, overload_desc, jours, courrier) VALUES ($starttime, $endtime,  $rep_type, $rep_enddate, '$rep_opt', $room_id,   '".protect_data_sql($creator)."','".protect_data_sql($beneficiaire)."','".protect_data_sql($beneficiaire_ext)."', '".protect_data_sql($type)."', '".protect_data_sql($name)."', '".protect_data_sql($description)."', '$rep_num_weeks','".protect_data_sql($overload_data_string)."',".$rep_jour_c." , $courrier)";
 	if (grr_sql_command($sql) < 0)
 		return 0;
 	return grr_sql_insert_id("".TABLE_PREFIX."_repeat", "id");
@@ -532,7 +532,7 @@ function same_day_next_month($time)
  *   empty     - The entry does not repeat
  *   an array  - This is a list of start times of each of the repeat entrys
  */
-function mrbsGetRepeatEntryList($time, $enddate, $rep_type, $rep_opt, $max_ittr, $rep_num_weeks, $rep_jour_c,$area)
+function mrbsGetRepeatEntryList($time, $enddate, $rep_type, $rep_opt, $max_ittr, $rep_num_weeks, $rep_jour_c, $area)
 {
 	$sec   = date("s", $time);
 	$min   = date("i", $time);
@@ -625,7 +625,7 @@ function mrbsGetRepeatEntryList($time, $enddate, $rep_type, $rep_opt, $max_ittr,
  *   0        - An error occured while inserting the entry
  *   non-zero - The entry's ID
  */
-function mrbsCreateRepeatingEntrys($starttime, $endtime, $rep_type, $rep_enddate, $rep_opt, $room_id, $creator, $beneficiaire, $beneficiaire_ext, $name, $type, $description, $rep_num_weeks, $option_reservation,$overload_data, $moderate, $rep_jour_c)
+function mrbsCreateRepeatingEntrys($starttime, $endtime, $rep_type, $rep_enddate, $rep_opt, $room_id, $creator, $beneficiaire, $beneficiaire_ext, $name, $type, $description, $rep_num_weeks, $option_reservation,$overload_data, $moderate, $rep_jour_c, $courrier)
 {
 	global $max_rep_entrys, $id_first_resa;
 	$area = mrbsGetRoomArea($room_id);
@@ -634,17 +634,17 @@ function mrbsCreateRepeatingEntrys($starttime, $endtime, $rep_type, $rep_enddate
 		return 0;
 	if (empty($reps))
 	{
-		mrbsCreateSingleEntry($starttime, $endtime, 0, 0, $room_id, $creator, $beneficiaire, $beneficiaire_ext, $name, $type, $description, $option_reservation,$overload_data,$moderate, $rep_jour_c,"-", 0);
+		mrbsCreateSingleEntry($starttime, $endtime, 0, 0, $room_id, $creator, $beneficiaire, $beneficiaire_ext, $name, $type, $description, $option_reservation,$overload_data,$moderate, $rep_jour_c,"-", 0, $courrier);
 		$id_first_resa = grr_sql_insert_id("".TABLE_PREFIX."_entry", "id");
 		return;
 	}
-	$ent = mrbsCreateRepeatEntry($starttime, $endtime, $rep_type, $rep_enddate, $rep_opt, $room_id, $creator, $beneficiaire, $beneficiaire_ext, $name, $type, $description, $rep_num_weeks,$overload_data, $rep_jour_c);
+	$ent = mrbsCreateRepeatEntry($starttime, $endtime, $rep_type, $rep_enddate, $rep_opt, $room_id, $creator, $beneficiaire, $beneficiaire_ext, $name, $type, $description, $rep_num_weeks,$overload_data, $rep_jour_c, $courrier);
 	if ($ent)
 	{
 		$diff = $endtime - $starttime;
 		for($i = 0; $i < count($reps); $i++)
 		{
-			mrbsCreateSingleEntry($reps[$i], $reps[$i] + $diff, 1, $ent, $room_id, $creator, $beneficiaire, $beneficiaire_ext, $name, $type, $description, $option_reservation,$overload_data, $moderate, $rep_jour_c,"-", 0);
+			mrbsCreateSingleEntry($reps[$i], $reps[$i] + $diff, 1, $ent, $room_id, $creator, $beneficiaire, $beneficiaire_ext, $name, $type, $description, $option_reservation,$overload_data, $moderate, $rep_jour_c,"-", 0, $courrier);
 			$id_new_resa = grr_sql_insert_id("".TABLE_PREFIX."_entry", "id");
 				// s'il s'agit d'une modification d'une ressource déjà modérée et acceptée : on met à jour les infos dans la table ".TABLE_PREFIX."_entry_moderate
 			if ($moderate == 2)

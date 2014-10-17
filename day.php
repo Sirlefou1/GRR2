@@ -465,7 +465,7 @@ else
 								echo " $descr";
 								$tab[$tab_ligne][] = " $descr";
 							}
-							$sql = "SELECT type_name,start_time,end_time,clef FROM ".TABLE_PREFIX."_type_area ,".TABLE_PREFIX."_entry  WHERE  ".TABLE_PREFIX."_entry.id= ".$today[$room][$t]["id"]." AND ".TABLE_PREFIX."_entry.type= ".TABLE_PREFIX."_type_area.type_letter";
+							$sql = "SELECT type_name,start_time,end_time,clef,courrier FROM ".TABLE_PREFIX."_type_area ,".TABLE_PREFIX."_entry  WHERE  ".TABLE_PREFIX."_entry.id= ".$today[$room][$t]["id"]." AND ".TABLE_PREFIX."_entry.type= ".TABLE_PREFIX."_type_area.type_letter";
 							$res = grr_sql_query($sql);
 							for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 							{
@@ -473,11 +473,15 @@ else
 								$start_time = $row[1];
 								$end_time   = $row[2];
 								$clef 		= $row[3];
+								$courrier	= $row[4];
 								echo "<br/>".date('H:i', $start_time)."~".date('H:i', $end_time)."<br/>";
 								if ($type_name != -1)
 									echo  $type_name;
+								echo '<br>';
 								if ($clef == 1)
-									echo '<br><img src="img_grr/skey.png" alt="clef">';
+									echo '<img src="img_grr/skey.png" alt="clef">';
+								if ($courrier == 1)
+									echo '<img src="img_grr/scourrier.png" alt="courrier">';
 							}
 							if ($today[$room][$t]["description"]!= "")
 							{

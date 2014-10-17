@@ -365,7 +365,7 @@ function grr_opensession($_login, $_password, $_user_ext_authentifie = '', $tab_
 				die();
 			}
 		// on récupère les données de l'utilisateur
-			$sql = "select upper(login) login, password, prenom, nom, statut, now() start, default_area, default_room, default_style, default_list_type, default_language, source, etat, default_site
+			$sql = "SELECT upper(login) login, password, prenom, nom, statut, now() start, default_area, default_room, default_style, default_list_type, default_language, source, etat, default_site
 			from ".TABLE_PREFIX."_utilisateurs
 			where login = '" . protect_data_sql($_login) . "' and
 			source = 'ext' and
@@ -391,7 +391,7 @@ function grr_opensession($_login, $_password, $_user_ext_authentifie = '', $tab_
 else
 {
 	$passwd_md5 = md5($_password);
-	$sql = "select upper(login) login, password, prenom, nom, statut, now() start, default_area, default_room, default_style, default_list_type, default_language, source, etat, default_site
+	$sql = "SELECT upper(login) login, password, prenom, nom, statut, now() start, default_area, default_room, default_style, default_list_type, default_language, source, etat, default_site
 	from ".TABLE_PREFIX."_utilisateurs
 	where login = '" . protect_data_sql($_login) . "' and
 	password = '".$passwd_md5."'";
@@ -628,7 +628,7 @@ if ($auth_imap == 'yes')
 			imap_close($conn_imap);
 		}
 		// On teste si un utilisateur porte déjà le même login
-		$test = grr_sql_query1("select login from ".TABLE_PREFIX."_utilisateurs where login = '".protect_data_sql($_login)."'");
+		$test = grr_sql_query1("SELECT login from ".TABLE_PREFIX."_utilisateurs where login = '".protect_data_sql($_login)."'");
 		if ($test != '-1')
 		{
 			// authentification bonne mais le login existe déjà : impossible d'importer le profil.
@@ -688,7 +688,7 @@ $res = grr_sql_query($sql);
 $num_row = grr_sql_count($res);
 if (($num_row > 0) and isset($_SESSION['start']))
 {
-	$sql = "update ".TABLE_PREFIX."_log set END = now() + interval " . getSettingValue("sessionMaxLength") . " minute where SESSION_ID = '" . session_id() . "' and START = '" . $_SESSION['start'] . "'";
+	$sql = "UPDATE ".TABLE_PREFIX."_log set END = now() + interval " . getSettingValue("sessionMaxLength") . " minute where SESSION_ID = '" . session_id() . "' and START = '" . $_SESSION['start'] . "'";
 		//  $sql = "update ".TABLE_PREFIX."_log set END = now() + interval " . getSettingValue("sessionMaxLength") . " minute where SESSION_ID = '" . session_id() . "'";
 	$res = grr_sql_query($sql);
 	return "1";

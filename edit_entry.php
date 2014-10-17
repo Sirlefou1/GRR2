@@ -130,7 +130,7 @@ if (UserRoomMaxBooking(getUserName(), $room, $compt) == 0)
 }
 if (isset($id))
 {
-	$sql = "SELECT name, beneficiaire, description, start_time, end_time, type, room_id, entry_type, repeat_id, option_reservation, jours, create_by, beneficiaire_ext, statut_entry, clef FROM ".TABLE_PREFIX."_entry WHERE id=$id";
+	$sql = "SELECT name, beneficiaire, description, start_time, end_time, type, room_id, entry_type, repeat_id, option_reservation, jours, create_by, beneficiaire_ext, statut_entry, clef, courrier FROM ".TABLE_PREFIX."_entry WHERE id=$id";
 	$res = grr_sql_query($sql);
 	if (!$res)
 		fatal_error(1, grr_sql_error());
@@ -163,6 +163,7 @@ if (isset($id))
 	$option_reservation = $row[9];
 	$jours_c = $row[10];
 	$clef = $row[14];
+	$courrier = $row[15];
 	$modif_option_reservation = 'n';
 	if ($entry_type >= 1)
 	{
@@ -774,6 +775,16 @@ if (isset($clef) && $clef == 1)
 echo ' > Cocher si les clés sont preté';
 echo '</td></tr>'.PHP_EOL;
 
+
+echo '<tr><td class="E">'.PHP_EOL;
+echo '<b>Courrier de validation :</b>'.PHP_EOL;
+echo '</td></tr>'.PHP_EOL;
+echo '<tr><td class="CL">'.PHP_EOL;
+echo '<input name="courrier" type="checkbox" value="y" ';
+if (isset($courrier) && $courrier == 1)
+	echo 'checked';
+echo ' > Cocher si courrier de validation';
+echo '</td></tr>'.PHP_EOL;
 
 echo '<tr><td class="E">'.PHP_EOL;
 echo '<b>'.$F.'</b>'.PHP_EOL;

@@ -707,8 +707,17 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 						if ($version_old < "2.2.3")
 						{
 							$result .= "<b>Mise à jour jusqu'à la version 2.2.3 :</b><br />";
-	  						// GRR1.9.7
 							$result_inter .= traite_requete("ALTER TABLE `grr_entry` ADD `clef` INT(2) NOT NULL DEFAULT '0' AFTER `jours`;");
+							if ($result_inter == '')
+								$result .= "<span style=\"color:green;\">Ok !</span><br />";
+							else
+								$result .= $result_inter;
+							$result_inter = '';
+						}
+						if ($version_old < "2.2.4")
+						{
+							$result .= "<b>Mise à jour jusqu'à la version 2.2.4 :</b><br />";
+							$result_inter .= traite_requete("ALTER TABLE `grr_entry` ADD `courrier` INT(2) NOT NULL DEFAULT '0' AFTER `clef`;");
 							if ($result_inter == '')
 								$result .= "<span style=\"color:green;\">Ok !</span><br />";
 							else
@@ -745,7 +754,7 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 								}
 		  						// On met à jour le champ
 								if ($nouvelle_chaine != '')
-									$up = grr_sql_query("update ".TABLE_PREFIX."_entry set overload_desc = '".$nouvelle_chaine."' where id='".$row[1]."'");
+									$up = grr_sql_query("UPDATE ".TABLE_PREFIX."_entry set overload_desc = '".$nouvelle_chaine."' where id='".$row[1]."'");
 							}
 	  						// on inscrit le résultat dans la table ".TABLE_PREFIX."_settings
 							grr_sql_query("DELETE from ".TABLE_PREFIX."_setting where NAME = 'maj194_champs_additionnels'");
@@ -757,7 +766,7 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 						if (($version_old < "1.9.6") && (getSettingValue("maj196_qui_peut_reserver_pour") != 1) && (isset($_POST['maj']) ))
 						{
 	   						// On met à jour le champ
-							$up = grr_sql_query("update ".TABLE_PREFIX."_room set qui_peut_reserver_pour='6' where qui_peut_reserver_pour='5'");
+							$up = grr_sql_query("UPDATE ".TABLE_PREFIX."_room set qui_peut_reserver_pour='6' where qui_peut_reserver_pour='5'");
 							grr_sql_query("DELETE from ".TABLE_PREFIX."_setting where NAME = 'maj196_qui_peut_reserver_pour'");
 							grr_sql_query("INSERT INTO ".TABLE_PREFIX."_setting VALUES ('maj196_qui_peut_reserver_pour', '1');");
 							$result .= "<b>Mise à jour du champs qui_peut_reserver_pour : </b><span style=\"color:green;\">Ok !</span><br /><br />";
@@ -801,7 +810,7 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 					// Numéro de version
 					//Hugo - Mise a jour temporaire du numéro de version à afficher
 					//11/06/2013
-					$display_version_grr = "2.2.3";
+					$display_version_grr = "2.2.4";
 					echo "<h3>".get_vocab("num_version_title")."</h3>\n";
 					echo "<p>".get_vocab("num_version").$display_version_grr;
 					echo "</p>\n";
@@ -844,14 +853,15 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 						echo "</div>";
 					}
 					// Test de cohérence des types de réservation
-					if ($version_grr > "1.9.1") {
-						$res = grr_sql_query("select distinct type from ".TABLE_PREFIX."_entry order by type");
+					if ($version_grr > "1.9.1")
+					{
+						$res = grr_sql_query("SELECT DISTINCT type FROM ".TABLE_PREFIX."_entry ORDER BY type");
 						if ($res)
 						{
 							$liste = "";
 							for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 							{
-								$test = grr_sql_query1("select type_letter from ".TABLE_PREFIX."_type_area where type_letter='".$row[0]."'");
+								$test = grr_sql_query1("SELECT type_letter FROM ".TABLE_PREFIX."_type_area WHERE type_letter='".$row[0]."'");
 								if ($test == -1) $liste .= $row[0]." ";
 							}
 							if ($liste != "")

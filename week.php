@@ -529,6 +529,9 @@ for ($t = $week_start; $t <= $week_end; $t += 86400)
 							$clef = grr_sql_query1("SELECT clef FROM ".TABLE_PREFIX."_entry WHERE  ".TABLE_PREFIX."_entry.id= ". $d[$weekday][$slot - $decale_slot * $nb_case]['id']."");
 							if ($clef == 1)
 								echo '<img src="img_grr/skey.png" alt="clef">';
+							$courrier = grr_sql_query1("SELECT courrier FROM ".TABLE_PREFIX."_entry WHERE  ".TABLE_PREFIX."_entry.id= ". $d[$weekday][$slot - $decale_slot * $nb_case]['id']."");
+							if ($courrier == 1)
+								echo '<img src="img_grr/scourrier.png" alt="courrier">';
 						}
 					if ((isset($d[$weekday][$slot - $decale_slot * $nb_case]["statut"])) && ($d[$weekday][$slot - $decale_slot * $nb_case]["statut"] != '-'))
 						echo '<img src="img_grr/buzy.png" alt="'.get_vocab("ressource actuellement empruntee").'" title="'.get_vocab("ressource actuellement empruntee").'" width="20" height="20" class="image" />'.PHP_EOL;
