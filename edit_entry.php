@@ -769,7 +769,7 @@ echo '<b>Statut des clés :</b>'.PHP_EOL;
 echo '</td></tr>'.PHP_EOL;
 echo '<tr><td class="CL">'.PHP_EOL;
 echo '<input name="keys" type="checkbox" value="y" ';
-if ($clef == 1)
+if (isset($clef) && $clef == 1)
 	echo 'checked';
 echo ' > Cocher si les clés sont preté';
 echo '</td></tr>'.PHP_EOL;
