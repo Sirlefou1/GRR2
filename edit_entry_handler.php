@@ -68,7 +68,7 @@ if ((!isset($name) or (trim($name) == "")) && (getSettingValue("remplissage_desc
 }
 $description = isset($_GET["description"]) ? $_GET["description"] : NULL;
 $ampm = isset($_GET["ampm"]) ? $_GET["ampm"] : NULL;
-$keys = isset($_GET["keys"]) ? $_GET["keys"] : 0;
+$keys = isset($_GET["keys"]) ? $_GET["keys"] : NULL;
 if ($keys == 'y')
 	$keys = 1;
 else
