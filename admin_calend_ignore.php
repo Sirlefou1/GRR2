@@ -68,7 +68,7 @@ function cal($month, $year)
 	$daysInMonth = getDaysInMonth($month, $year);
 	$date = mktime(12, 0, 0, $month, 1, $year);
 	$first = (strftime("%w",$date) + 7 - $weekstarts) % 7;
-	$monthName = strftime("%B", $date);
+	$monthName = utf8_encode(strftime("%B", $date));
 	$s .= "<table class=\"calendar2\" border=\"1\" cellspacing=\"3\">\n";
 	$s .= "<tr>\n";
 	$s .= "<td class=\"calendarHeader2\" colspan=\"8\">$monthName $year</td>\n";
@@ -200,7 +200,7 @@ echo "<table cellspacing=\"20\">\n";
 $n = getSettingValue("begin_bookings");
 $end_bookings = getSettingValue("end_bookings");
 $debligne = 1;
-$month = strftime("%m", getSettingValue("begin_bookings"));
+$month = utf8_encode(strftime("%m", getSettingValue("begin_bookings")));
 $year = strftime("%Y", getSettingValue("begin_bookings"));
 
 while ($n <= $end_bookings)
@@ -235,7 +235,8 @@ if ($inc < 3)
 	{
 		echo "<td> </td>\n";
 		$k++;
-	} // while
+	}
+	// while
 	echo "</tr>";
 }
 echo "</table>";
