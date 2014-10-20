@@ -27,27 +27,6 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-/**
- * $Log: mysql.inc.php,v $
- * Revision 1.4  2009-09-29 18:02:57  grr
- * *** empty log message ***
- *
- * Revision 1.3  2009-06-04 15:30:18  grr
- * *** empty log message ***
- *
- * Revision 1.2  2008-11-16 22:00:59  grr
- * *** empty log message ***
- *
- *
- */
-// mysql.inc.php - Simple PHP database support for MySQL.
-// Include this file after defining the following variables:
-//   $dbHost = The hostname of the database server
-//   $dbUser = The username to use when connecting to the database
-//   $dbPass = The database account password
-//   $dbDb = The database name.
-// Including this file connects you to the database, or exits on error.
-// Etablir la connexion à la base
 if (empty($db_nopersist))
 	$GLOBALS['db_c'] = mysqli_connect('p:'.$dbHost, $dbUser, $dbPass);
 else
@@ -224,7 +203,7 @@ function grr_sql_syntax_timestamp_to_unix($fieldname)
 // in a case insensitive manner. $s is the un-escaped/un-slashed string.
 // In MySQL, REGEXP seems to be case sensitive, so use LIKE instead. But this
 // requires quoting of % and _ in addition to the usual.
-function grr_sql_syntax_caseless_contains($fieldname, $s, $type_recherche=1)
+function grr_sql_syntax_caseless_contains($fieldname, $s, $type_recherche = 1)
 {
 	$s = protect_data_sql($s);
 //    $s = str_replace("'", "''", $s);
@@ -236,7 +215,7 @@ function grr_sql_syntax_caseless_contains($fieldname, $s, $type_recherche=1)
 	else
 		return " $fieldname NOT LIKE '%$s%' ";
 }
-function grr_sql_syntax_caseless_contains_overload($fieldname, $s, $id_overload, $type_recherche=1)
+function grr_sql_syntax_caseless_contains_overload($fieldname, $s, $id_overload, $type_recherche = 1)
 {
 	$s = urlencode($s);
 	$s = str_replace("%", "\\%", $s);

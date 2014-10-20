@@ -844,7 +844,7 @@ function print_header($day = '', $month = '', $year = '', $area = '', $type_sess
 			{
 				if ((authGetUserLevel(getUserName(), -1, 'area') >= 4) || (authGetUserLevel(getUserName(), -1, 'user') == 1))
 				{
-					echo '<td class="administration" align="center">'.PHP_EOL;
+					echo '<td class="administration">'.PHP_EOL;
 					echo '<a href="admin_accueil.php?day='.$day.'&amp;month='.$month.'&amp;year='.$year.'">'.get_vocab("admin").'</a>'.PHP_EOL;
 					if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
 					{
@@ -856,77 +856,64 @@ function print_header($day = '', $month = '', $year = '', $area = '', $type_sess
 			}
 			if ($type_session != "with_session")
 				echo '<script>selection()</script>'.PHP_EOL;
-			?>
-			<td class="configuration" >
-				<?php
-				/*if (@file_exists($clock_file))
+			echo '<td class="configuration" >'.PHP_EOL;
+			$parametres_url = '';
+			$_SESSION['chemin_retour'] = '';
+			if (isset($_SERVER['QUERY_STRING']) && ($_SERVER['QUERY_STRING'] != ''))
+			{
+				$parametres_url = htmlspecialchars($_SERVER['QUERY_STRING'])."&amp;";
+				$_SESSION['chemin_retour'] = traite_grr_url($grr_script_name)."?". $_SERVER['QUERY_STRING'];
+				echo '<a onclick="charger();" href="'.traite_grr_url($grr_script_name).'?'.$parametres_url.'default_language=fr"><img src="img_grr/fr_dp.png" alt="France" title="france" width="20" height="13" class="image" /></a>'.PHP_EOL;
+				echo '<a onclick="charger();" href="'.traite_grr_url($grr_script_name).'?'.$parametres_url.'default_language=de"><img src="img_grr/de_dp.png" alt="Deutch" title="deutch" width="20" height="13" class="image" /></a>'.PHP_EOL;
+				echo '<a onclick="charger();" href="'.traite_grr_url($grr_script_name).'?'.$parametres_url.'default_language=en"><img src="img_grr/en_dp.png" alt="English" title="English" width="20" height="13" class="image" /></a>'.PHP_EOL;
+				echo '<a onclick="charger();" href="'.traite_grr_url($grr_script_name).'?'.$parametres_url.'default_language=it"><img src="img_grr/it_dp.png" alt="Italiano" title="Italiano" width="20" height="13" class="image" /></a>'.PHP_EOL;
+				echo '<a onclick="charger();" href="'.traite_grr_url($grr_script_name).'?'.$parametres_url.'default_language=es"><img src="img_grr/es_dp.png" alt="Spanish" title="Spanish" width="20" height="13" class="image" /></a>'.PHP_EOL;
+			}
+			if ($type_session == 'no_session')
+			{
+				if ((getSettingValue('sso_statut') == 'cas_visiteur') || (getSettingValue('sso_statut') == 'cas_utilisateur'))
 				{
-					echo '<script type="text/javascript">'.PHP_EOL;
-					echo 'new LiveClock();'.PHP_EOL;
-					echo '</script>'.PHP_EOL;
-					echo '<br/>'.PHP_EOL;
-				}*/
-				$parametres_url = '';
-				$_SESSION['chemin_retour'] = '';
-				if (isset($_SERVER['QUERY_STRING']) && ($_SERVER['QUERY_STRING'] != ''))
-				{
-					$parametres_url = htmlspecialchars($_SERVER['QUERY_STRING'])."&amp;";
-					$_SESSION['chemin_retour'] = traite_grr_url($grr_script_name)."?". $_SERVER['QUERY_STRING'];
-					echo '<a onclick="charger();" href="'.traite_grr_url($grr_script_name).'?'.$parametres_url.'default_language=fr"><img src="img_grr/fr_dp.png" alt="France" title="france" width="20" height="13" class="image" /></a>'.PHP_EOL;
-					echo '<a onclick="charger();" href="'.traite_grr_url($grr_script_name).'?'.$parametres_url.'default_language=de"><img src="img_grr/de_dp.png" alt="Deutch" title="deutch" width="20" height="13" class="image" /></a>'.PHP_EOL;
-					echo '<a onclick="charger();" href="'.traite_grr_url($grr_script_name).'?'.$parametres_url.'default_language=en"><img src="img_grr/en_dp.png" alt="English" title="English" width="20" height="13" class="image" /></a>'.PHP_EOL;
-					echo '<a onclick="charger();" href="'.traite_grr_url($grr_script_name).'?'.$parametres_url.'default_language=it"><img src="img_grr/it_dp.png" alt="Italiano" title="Italiano" width="20" height="13" class="image" /></a>'.PHP_EOL;
-					echo '<a onclick="charger();" href="'.traite_grr_url($grr_script_name).'?'.$parametres_url.'default_language=es"><img src="img_grr/es_dp.png" alt="Spanish" title="Spanish" width="20" height="13" class="image" /></a>'.PHP_EOL;
-				}
-				if ($type_session == 'no_session')
-				{
-					if ((getSettingValue('sso_statut') == 'cas_visiteur') || (getSettingValue('sso_statut') == 'cas_utilisateur'))
-					{
-						echo '<br /> <a href="index.php?force_authentification=y">'.get_vocab("authentification").'</a>';
-						echo '<br /> <small><i><a href="login.php">'.get_vocab("connect_local").'</a></i></small>';
-					}
-					else
-						echo '<br /> <a href="login.php">'.get_vocab("connect").'</a>';
+					echo '<br /> <a href="index.php?force_authentification=y">'.get_vocab("authentification").'</a>';
+					echo '<br /> <small><i><a href="login.php">'.get_vocab("connect_local").'</a></i></small>';
 				}
 				else
+					echo '<br /> <a href="login.php">'.get_vocab("connect").'</a>';
+			}
+			else
+			{
+				echo '<br /> <b>'.get_vocab("welcome_to").htmlspecialchars($_SESSION['prenom']).' '.htmlspecialchars($_SESSION['nom']).'</b>';
+				echo '<br /> <a href="my_account.php?day='.$day.'&amp;year='.$year.'&amp;month='.$month.'">'.get_vocab("manage_my_account").'</a><br/>';
+				if (verif_access_search(getUserName()))
+					echo '<a href="report.php">'.get_vocab("report").'</a>';
+				$disconnect_link = false;
+				if (!((getSettingValue("cacher_lien_deconnecter") == 'y') && (isset($_SESSION['est_authentifie_sso']))))
 				{
-					echo '<br /> <b>'.get_vocab("welcome_to").htmlspecialchars($_SESSION['prenom']).' '.htmlspecialchars($_SESSION['nom']).'</b>';
-					echo '<br /> <a href="my_account.php?day='.$day.'&amp;year='.$year.'&amp;month='.$month.'">'.get_vocab("manage_my_account").'</a><br/>';
-					if (verif_access_search(getUserName()))
-						echo '<a href="report.php">'.get_vocab("report").'</a>';
-					$disconnect_link = false;
-					if (!((getSettingValue("cacher_lien_deconnecter") == 'y') && (isset($_SESSION['est_authentifie_sso']))))
-					{
-						$disconnect_link = true;
-						if (getSettingValue("authentification_obli") == 1)
-							echo '<br /> <a href="./logout.php?auto=0" >'.get_vocab('disconnect').'</a>';
-						else
-							echo '<br /> <a href="./logout.php?auto=0&amp;redirect_page_accueil=yes" >'.get_vocab('disconnect').'</a>';
-					}
-					if ((getSettingValue("Url_portail_sso") != '') && (isset($_SESSION['est_authentifie_sso'])))
-					{
-						if ($disconnect_link)
-							echo ' - ';
-						else
-							echo '<br />';
-						echo '<a href="'.getSettingValue("Url_portail_sso").'">'.get_vocab("Portail_accueil").'</a>';
-					}
-					if ((getSettingValue('sso_statut') == 'lasso_visiteur') || (getSettingValue('sso_statut') == 'lasso_utilisateur'))
-					{
-						echo '<br />';
-						if ($_SESSION['lasso_nameid'] == NULL)
-							echo '<a href="lasso/federate.php">'.get_vocab('lasso_federate_this_account').'</a>';
-						else
-							echo '<a href="lasso/defederate.php">'.get_vocab('lasso_defederate_this_account').'</a>';
-					}
+					$disconnect_link = true;
+					if (getSettingValue("authentification_obli") == 1)
+						echo '<br /> <a href="./logout.php?auto=0" >'.get_vocab('disconnect').'</a>';
+					else
+						echo '<br /> <a href="./logout.php?auto=0&amp;redirect_page_accueil=yes" >'.get_vocab('disconnect').'</a>';
 				}
-				?>
-			</td>
-		</tr>
-	</table>
-	<?php
-}
-}
+				if ((getSettingValue("Url_portail_sso") != '') && (isset($_SESSION['est_authentifie_sso'])))
+				{
+					if ($disconnect_link)
+						echo ' - ';
+					else
+						echo '<br />';
+					echo '<a href="'.getSettingValue("Url_portail_sso").'">'.get_vocab("Portail_accueil").'</a>';
+				}
+				if ((getSettingValue('sso_statut') == 'lasso_visiteur') || (getSettingValue('sso_statut') == 'lasso_utilisateur'))
+				{
+					echo '<br />';
+					if ($_SESSION['lasso_nameid'] == NULL)
+						echo '<a href="lasso/federate.php">'.get_vocab('lasso_federate_this_account').'</a>';
+					else
+						echo '<a href="lasso/defederate.php">'.get_vocab('lasso_defederate_this_account').'</a>';
+				}
+			}
+			echo '</td>'.PHP_EOL.'</tr>'.PHP_EOL.'</table>'.PHP_EOL;
+		}
+	}
 }
 
 function VerifNomPrenomUser($type)
@@ -1177,14 +1164,17 @@ function toPeriodString($start_period, &$dur, &$units)
 			$dur /= 24;
 			$units = get_vocab("days");
 			return;
-		} else {
+		}
+		else
+		{
 			$dur *= 60;
 			$dur = ($dur % $max_periods) + floor( $dur/(24*60) ) * $max_periods;
 			$units = get_vocab("periods");
 			return;
 		}
-	} else
-	$units = get_vocab("periods");
+	}
+	else
+		$units = get_vocab("periods");
 }
 
 function genDateSelectorForm($prefix, $day, $month, $year,$option)

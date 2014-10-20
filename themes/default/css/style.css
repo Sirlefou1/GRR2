@@ -82,6 +82,8 @@
 	background-color : white;
 	width : 20%;
 	border : 0px solid red;
+	text-align: center;
+	margin: 0 auto;
  }
  .configuration {
 	background-color : white;

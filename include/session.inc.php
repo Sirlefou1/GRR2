@@ -43,7 +43,7 @@
  *
  * @return              bool                    The session is open
  */
-function grr_opensession($_login, $_password, $_user_ext_authentifie = '', $tab_login=array(), $tab_groups=array())
+function grr_opensession($_login, $_password, $_user_ext_authentifie = '', $tab_login = array(), $tab_groups = array())
 {
 	// Initialisation de $auth_ldap
 	$auth_ldap = 'no';
@@ -157,8 +157,8 @@ function grr_opensession($_login, $_password, $_user_ext_authentifie = '', $tab_
 						//Pour que les données mises en sessions soient les bonnes
 						//on récupère les données de l'utilisateur
 						$sql = "SELECT upper(login) login, password, prenom, nom, statut, now() start, default_area, default_room, default_style, default_list_type, default_language, source, etat, default_site
-						from ".TABLE_PREFIX."_utilisateurs
-						where login = '" . protect_data_sql($_login) . "' and
+						FROM ".TABLE_PREFIX."_utilisateurs
+						WHERE login = '" . protect_data_sql($_login) . "' and
 						source = 'ext' and
 						etat != 'inactif'";
 						$res_user = grr_sql_query($sql);
@@ -190,7 +190,7 @@ function grr_opensession($_login, $_password, $_user_ext_authentifie = '', $tab_
 		// L'utilisateur n'est pas présent dans la base locale ou est inactif
 		//  ou possède un mot de passe (utilisateur local GRR)
 		// On teste si un utilisateur porte déjà le même login
-			$test = grr_sql_query1("select login from ".TABLE_PREFIX."_utilisateurs where login = '".protect_data_sql($_login)."'");
+			$test = grr_sql_query1("SELECT login FROM ".TABLE_PREFIX."_utilisateurs WHERE login = '".protect_data_sql($_login)."'");
 			if ($test != '-1')
 			{
 			// le login existe déjà : impossible d'importer le profil.

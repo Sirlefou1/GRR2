@@ -92,7 +92,8 @@ return $err;
 function grrCheckOverlap($reps, $diff)
 {
 	$err = "";
-	for($i = 1; $i < count($reps); $i++)
+	$total = count($reps);
+	for($i = 1; $i < $total; $i++)
 	{
 		if ($reps[$i] < ($reps[0] + $diff))
 			$err = "yes";
@@ -191,22 +192,22 @@ function mrbsDelEntry($user, $id, $series, $all)
 		grr_sql_command("DELETE FROM ".TABLE_PREFIX."_repeat WHERE id='".$repeat_id."'");
 	return $removed > 0;
 }
-/*
-	mrbsGetAreaIdFromRoomId($room_id)
+/**
+*	mrbsGetAreaIdFromRoomId($room_id)
 */
-	function mrbsGetAreaIdFromRoomId($room_id)
-	{
+function mrbsGetAreaIdFromRoomId($room_id)
+{
 		// Avec la room_id on récupère l'area_id
-		$sqlstring = "SELECT area_id FROM ".TABLE_PREFIX."_room WHERE id=$room_id";
-		$result = grr_sql_query($sqlstring);
-		if (!$result)
-			fatal_error(1, grr_sql_error());
-		if (grr_sql_count($result) != 1)
-			fatal_error(1, get_vocab('roomid') . $id_entry . get_vocab('not_found'));
-		$area_id_row = grr_sql_row($result, 0);
-		grr_sql_free($result);
-		return $area_id_row[0];
-	}
+	$sqlstring = "SELECT area_id FROM ".TABLE_PREFIX."_room WHERE id=$room_id";
+	$result = grr_sql_query($sqlstring);
+	if (!$result)
+		fatal_error(1, grr_sql_error());
+	if (grr_sql_count($result) != 1)
+		fatal_error(1, get_vocab('roomid') . $id_entry . get_vocab('not_found'));
+	$area_id_row = grr_sql_row($result, 0);
+	grr_sql_free($result);
+	return $area_id_row[0];
+}
 /** mrbsOverloadGetFieldslist()
  *
  * Return an array with all fields name
@@ -386,10 +387,10 @@ function mrbsEntryGetOverloadDesc($id_entry)
 	return $overload_array;
 }
 /** grrExtractValueFromOverloadDesc()
- *
- * Extrait la chaine correspondante au champ id de la chaine $chaine
- *
- */
+*
+* Extrait la chaine correspondante au champ id de la chaine $chaine
+*
+*/
 function grrExtractValueFromOverloadDesc($chaine,$id)
 {
 	//$begin_string = "<".$id.">";
@@ -642,7 +643,8 @@ function mrbsCreateRepeatingEntrys($starttime, $endtime, $rep_type, $rep_enddate
 	if ($ent)
 	{
 		$diff = $endtime - $starttime;
-		for($i = 0; $i < count($reps); $i++)
+		$total_reps = count($reps);
+		for($i = 0; $i < $total_reps; $i++)
 		{
 			mrbsCreateSingleEntry($reps[$i], $reps[$i] + $diff, 1, $ent, $room_id, $creator, $beneficiaire, $beneficiaire_ext, $name, $type, $description, $option_reservation,$overload_data, $moderate, $rep_jour_c,"-", 0, $courrier);
 			$id_new_resa = grr_sql_insert_id("".TABLE_PREFIX."_entry", "id");
