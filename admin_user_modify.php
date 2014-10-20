@@ -332,13 +332,17 @@ if ((authGetUserLevel(getUserName(), -1) < 1) && (getSettingValue("authentificat
 $use_prototype = 'y';
 # print the page header
 print_header("", "", "", "", $type = "with_session", $page = "admin");
+include "admin_col_gauche.php";
 ?>
 <script type='text/javascript'>
 	function display_password_fields(id){
-		if ($(id).value=='locale') {
+		if ($(id).value=='locale')
+		{
 			$('password_fields').style.display='block';
 			$('password_fields').style.visibility='visible';
-		} else {
+		}
+		else
+		{
 			$('password_fields').style.visibility='hidden';
 			$('password_fields').style.display='none';
 		}

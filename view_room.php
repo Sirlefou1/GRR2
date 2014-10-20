@@ -60,7 +60,9 @@ else
 if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))
 {
 	$type_session = "no_session";
-} else {
+}
+else
+{
 	$type_session = "with_session";
 }
 if (((authGetUserLevel(getUserName(),-1) < 1) && (getSettingValue("authentification_obli") == 1)) || (!verif_acces_ressource(getUserName(), $id_room)))
@@ -120,3 +122,4 @@ else
 	echo get_vocab("Pas image disponible")."</b>";
 echo "</div>";
 include "include/trailer.inc.php";
+?>

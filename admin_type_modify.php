@@ -27,26 +27,6 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-/**
- * $Log: admin_type_modify.php,v $
- * Revision 1.8  2010-03-03 14:41:34  grr
- * *** empty log message ***
- *
- * Revision 1.7  2009-04-14 12:59:17  grr
- * *** empty log message ***
- *
- * Revision 1.6  2009-04-09 14:52:31  grr
- * *** empty log message ***
- *
- * Revision 1.5  2009-03-24 13:30:07  grr
- * *** empty log message ***
- *
- * Revision 1.4  2008-11-16 22:00:58  grr
- * *** empty log message ***
- *
- *
- */
-
 include "include/admin.inc.php";
 $grr_script_name = "admin_type_modify.php";
 $ok = NULL;
@@ -146,6 +126,7 @@ if (isset($_GET['change_type'])) {
 
 # print the page header
     print_header("","","","",$type="with_session", $page="admin");
+    include "admin_col_gauche.php";
     echo "<div class=\"page_sans_col_gauche\">";
     affiche_pop_up($msg,"admin");
     if ((isset($id_type)) and ($id_type>0)) {

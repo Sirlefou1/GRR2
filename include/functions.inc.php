@@ -728,7 +728,7 @@ function begin_page($title,$page="with_session")
 	$a.= '<style type="text/css">div#file_upload-queue  { position: fixed; bottom: 10%; right: 5%;}</style>'.PHP_EOL;
 	$a.= '<style type="text/css">div#file_upload   { position: fixed; bottom: 25%; right: 5%;}</style>'.PHP_EOL;
 	$a.= '<link rel="SHORTCUT ICON" href="./favicon.ico" />';
-	$a .= '<link rel="stylesheet" type="text/css" href="uploadify/uploadify.css"/>'.PHP_EOL;
+	$a .= '<link rel="stylesheet" type="text/css" href="js/uploadify/uploadify.css"/>'.PHP_EOL;
 	$a .= '<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />';
 	$a .= '<link href="themes/default/css/jquery-ui-timepicker-addon.css" rel="stylesheet" type="text/css">';
 	$a .= PHP_EOL.'<title>'.$title.'</title>';
@@ -739,28 +739,28 @@ function begin_page($title,$page="with_session")
 		$a .= $charset_html;
 	$a .=  '" />';
 	$a .= PHP_EOL.'<meta name="Robots" content="noindex" />';
-	$a .= '<script src="jquery-1.11.1.min.js"></script>'.PHP_EOL;
+	$a .= '<script src="js/jquery-1.11.1.min.js"></script>'.PHP_EOL;
 	$a .= '<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>';
-	$a .= '<script src="jquery.validate.js"></script>';
-	$a .= '<script src="jquery-ui-timepicker-addon.js"></script>';
-	$a .= '<script src="jspdf/jspdf.js"></script>'.PHP_EOL;
-	$a .= '<script src="jspdf/libs/FileSaver.js/FileSaver.js"></script>'.PHP_EOL;
-	$a .= '<script src="jspdf/jspdf.plugin.from_html.js"></script>'.PHP_EOL;
-	$a .= '<script src="jspdf/jspdf.plugin.standard_fonts_metrics.js"></script>'.PHP_EOL;
-	$a .= '<script src="jspdf/jspdf.plugin.split_text_to_size.js"></script>'.PHP_EOL;
-	$a .= '<script src="jspdf/libs/Blob.js/BlobBuilder.js"></script>'.PHP_EOL;
-	$a .= '<script src="pdf.js" type="text/javascript" ></script>'.PHP_EOL;
-	$a .= '<script type="text/javascript" src="uploadify/jquery.uploadify.js"></script>'.PHP_EOL;
-	$a .= '<script src="appeldelete.js" type="text/javascript" ></script>'.PHP_EOL;
-	$a .= '<script src="popup.js" type="text/javascript" charset="utf-8"></script>'.PHP_EOL;
-	$a .= '<script type="text/javascript" src="oXHR.js"></script>'.PHP_EOL;
-	$a .= '<script src="functions.js" type="text/javascript" ></script>'.PHP_EOL;
+	$a .= '<script src="js/jquery.validate.js"></script>';
+	$a .= '<script src="js/jquery-ui-timepicker-addon.js"></script>';
+	$a .= '<script src="js/jspdf/jspdf.js"></script>'.PHP_EOL;
+	$a .= '<script src="js/jspdf/libs/FileSaver.js/FileSaver.js"></script>'.PHP_EOL;
+	$a .= '<script src="js/jspdf/jspdf.plugin.from_html.js"></script>'.PHP_EOL;
+	$a .= '<script src="js/jspdf/jspdf.plugin.standard_fonts_metrics.js"></script>'.PHP_EOL;
+	$a .= '<script src="js/jspdf/jspdf.plugin.split_text_to_size.js"></script>'.PHP_EOL;
+	$a .= '<script src="js/jspdf/libs/Blob.js/BlobBuilder.js"></script>'.PHP_EOL;
+	$a .= '<script src="js/pdf.js" type="text/javascript" ></script>'.PHP_EOL;
+	$a .= '<script type="text/javascript" src="js/uploadify/jquery.uploadify.js"></script>'.PHP_EOL;
+	$a .= '<script src="js/appeldelete.js" type="text/javascript" ></script>'.PHP_EOL;
+	$a .= '<script src="js/popup.js" type="text/javascript" charset="utf-8"></script>'.PHP_EOL;
+	$a .= '<script type="text/javascript" src="js/oXHR.js"></script>'.PHP_EOL;
+	$a .= '<script src="js/functions.js" type="text/javascript" ></script>'.PHP_EOL;
 	if (isset($use_tooltip_js))
 		echo '<script type="text/javascript" src="./include/tooltip.js"></script>'.PHP_EOL;
 	if (!isset($_SESSION['selection']))
-		$a .= '<script src="selection.js" type="text/javascript" ></script>'.PHP_EOL;
+		$a .= '<script src="js/selection.js" type="text/javascript" ></script>'.PHP_EOL;
 	if (@file_exists($clock_file))
-		$a .= '<script type="text/javascript" src="'.$clock_file.'"></script>'.PHP_EOL;
+		$a .= '<script type="text/javascript" src="js/'.$clock_file.'"></script>'.PHP_EOL;
 	//show a warning if this is using a low version of php
 	if (substr(phpversion(), 0, 1) == 3)
 		$a .= get_vocab('not_php3');

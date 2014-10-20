@@ -27,123 +27,109 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-
 include "include/admin.inc.php";
-
 $grr_script_name = "admin_user.php";
-
 $back = '';
-if (isset($_SERVER['HTTP_REFERER'])) $back = htmlspecialchars($_SERVER['HTTP_REFERER']);
+if (isset($_SERVER['HTTP_REFERER']))
+	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
 $display = isset($_GET["display"]) ? $_GET["display"] : NULL;
 $order_by = isset($_GET["order_by"]) ? $_GET["order_by"] : NULL;
 $msg = '';
-if ((getSettingValue("ldap_statut")=="") and (getSettingValue("sso_statut")=="") and (getSettingValue("imap_statut")=="")) {
-    $day   = date("d");
-    $month = date("m");
-    $year  = date("Y");
-    showAccessDenied($day, $month, $year, $area,$back);
-    exit();
-}
-
-if ((authGetUserLevel(getUserName(),-1) < 6) and (authGetUserLevel(getUserName(),-1,'user') !=  1))
+if ((getSettingValue("ldap_statut") == "") && (getSettingValue("sso_statut") == "") && (getSettingValue("imap_statut") == ""))
 {
-    $day   = date("d");
-    $month = date("m");
-    $year  = date("Y");
-    showAccessDenied($day, $month, $year, $area,$back);
-    exit();
+	$day   = date("d");
+	$month = date("m");
+	$year  = date("Y");
+	showAccessDenied($day, $month, $year, $area,$back);
+	exit();
 }
-
-# print the page header
-print_header("","","","",$type="with_session", $page="admin");
+if ((authGetUserLevel(getUserName(), -1) < 6) && (authGetUserLevel(getUserName(), -1,'user') !=  1))
+{
+	$day   = date("d");
+	$month = date("m");
+	$year  = date("Y");
+	showAccessDenied($day, $month, $year, $area,$back);
+	exit();
+}
+print_header("", "", "", "", $type = "with_session", $page = "admin");
 // Affichage de la colonne de gauche
 include "admin_col_gauche.php";
-
 $themessage = str_replace ( "'"  , "\\'"  , get_vocab("admin_purge_accounts_confirm"));
 $themessage2 = str_replace ( "'"  , "\\'"  , get_vocab("admin_purge_accounts_confirm2"));
 $themessage3 = str_replace ( "'"  , "\\'"  , get_vocab("admin_purge_tables_confirm"));
 $themessage4 = str_replace ( "'"  , "\\'"  , get_vocab("admin_purge_accounts_confirm4"));
-
 echo "<h2>".get_vocab('admin_purge_accounts.php').grr_help("aide_grr_purge_accounts")."</h2>";
-
 echo get_vocab('admin_clean_accounts_desc');
-
 echo "<div style=\"text-align:center;\">\n
 <form id=\"purge_liaison\" action=\"admin_purge_accounts.php\" method=\"post\">\n
-<div>
-<input type=\"hidden\" name=\"do_purge_table_liaison\" value=\"1\" />\n
-<input
-	type=\"button\"
-	value=\"".get_vocab('admin_purge_tables_liaison')."\"
-	onclick=\"return confirmButton('purge_liaison', '$themessage3')\" />\n
-</div></form></div>";
-
-echo "<hr />";
-
-echo get_vocab('admin_purge_accounts_desc');
-
-echo "<div style=\"text-align:center;\">\n
-<form id=\"purge_sauf_privileges\" action=\"admin_purge_accounts.php\" method=\"post\">\n
-<div>
-<input type=\"hidden\" name=\"do_purge_sauf_privileges\" value=\"1\" />\n
-<input
-	type=\"button\"
-	value=\"".get_vocab('admin_purge_accounts_sauf_privileges')."\"
-	onclick=\"return confirmButton('purge_sauf_privileges', '$themessage4')\" />\n
-</div></form></div>";
-
-
-echo "<div style=\"text-align:center;\">\n
-<form id=\"purge\" action=\"admin_purge_accounts.php\" method=\"post\">\n
-<div>
-<input type=\"hidden\" name=\"do_purge\" value=\"1\" />\n
-<input
-	type=\"button\"
-	value=\"".get_vocab('admin_purge_accounts')."\"
-	onclick=\"return confirmButton('purge', '$themessage')\" />\n
-</div></form></div>";
-
-
-echo "<div style=\"text-align:center;\">\n
-<form id=\"purge_avec_resa\" action=\"admin_purge_accounts.php\" method=\"post\">\n
-<div>
-<input type=\"hidden\" name=\"do_purge_avec_resa\" value=\"1\" />\n
-<input
-	type=\"button\"
-	value=\"".get_vocab('admin_purge_accounts_with_bookings')."\"
-	onclick=\"return confirmButton('purge_avec_resa', '$themessage2')\" />\n
-</div></form></div>";
-
- if (isset($_POST['do_purge_table_liaison'])) {
-	if ($_POST['do_purge_table_liaison'] == 1) {
-			NettoyerTablesJointure();
-	}
- }
-
- if (isset($_POST['do_purge_sauf_privileges'])) {
-	if ($_POST['do_purge_sauf_privileges'] == 1) {
-			supprimerReservationsUtilisateursEXT("n","n");
-	}
- }
-
- if (isset($_POST['do_purge'])) {
-	if ($_POST['do_purge'] == 1) {
-			supprimerReservationsUtilisateursEXT("n","y");
-	}
- }
-
- if (isset($_POST['do_purge_avec_resa'])) {
-	if ($_POST['do_purge_avec_resa'] == 1) {
-			supprimerReservationsUtilisateursEXT("y","y");
-	}
- }
-
-
+	<div>
+		<input type=\"hidden\" name=\"do_purge_table_liaison\" value=\"1\" />\n
+		<input
+		type=\"button\"
+		value=\"".get_vocab('admin_purge_tables_liaison')."\"
+		onclick=\"return confirmButton('purge_liaison', '$themessage3')\" />\n
+	</div></form></div>";
+	echo "<hr />";
+	echo get_vocab('admin_purge_accounts_desc');
+	echo "<div style=\"text-align:center;\">\n
+	<form id=\"purge_sauf_privileges\" action=\"admin_purge_accounts.php\" method=\"post\">\n
+		<div>
+			<input type=\"hidden\" name=\"do_purge_sauf_privileges\" value=\"1\" />\n
+			<input
+			type=\"button\"
+			value=\"".get_vocab('admin_purge_accounts_sauf_privileges')."\"
+			onclick=\"return confirmButton('purge_sauf_privileges', '$themessage4')\" />\n
+		</div></form></div>";
+		echo "<div style=\"text-align:center;\">\n
+		<form id=\"purge\" action=\"admin_purge_accounts.php\" method=\"post\">\n
+			<div>
+				<input type=\"hidden\" name=\"do_purge\" value=\"1\" />\n
+				<input
+				type=\"button\"
+				value=\"".get_vocab('admin_purge_accounts')."\"
+				onclick=\"return confirmButton('purge', '$themessage')\" />\n
+			</div></form></div>";
+			echo "<div style=\"text-align:center;\">\n
+			<form id=\"purge_avec_resa\" action=\"admin_purge_accounts.php\" method=\"post\">\n
+				<div>
+					<input type=\"hidden\" name=\"do_purge_avec_resa\" value=\"1\" />\n
+					<input
+					type=\"button\"
+					value=\"".get_vocab('admin_purge_accounts_with_bookings')."\"
+					onclick=\"return confirmButton('purge_avec_resa', '$themessage2')\" />\n
+				</div></form></div>";
+				if (isset($_POST['do_purge_table_liaison']))
+				{
+					if ($_POST['do_purge_table_liaison'] == 1)
+					{
+						NettoyerTablesJointure();
+					}
+				}
+				if (isset($_POST['do_purge_sauf_privileges']))
+				{
+					if ($_POST['do_purge_sauf_privileges'] == 1)
+					{
+						supprimerReservationsUtilisateursEXT("n","n");
+					}
+				}
+				if (isset($_POST['do_purge']))
+				{
+					if ($_POST['do_purge'] == 1)
+					{
+						supprimerReservationsUtilisateursEXT("n","y");
+					}
+				}
+				if (isset($_POST['do_purge_avec_resa']))
+				{
+					if ($_POST['do_purge_avec_resa'] == 1)
+					{
+						supprimerReservationsUtilisateursEXT("y","y");
+					}
+				}
  // fin de l'affichage de la colonne de droite
-echo "</td></tr></table>\n";
-
+				echo "</td></tr></table>\n";
 // Affichage d'un pop-up
-affiche_pop_up($msg,"admin");
-?>
-</body>
-</html>
+				affiche_pop_up($msg,"admin");
+				?>
+			</body>
+			</html>
