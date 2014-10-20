@@ -214,7 +214,7 @@ if (isset($id))
 		}
 		else
 		{
-			$rep_end_date = strftime($dformat,$row[2]);
+			$rep_end_date = utf8_encode(strftime($dformat,$row[2]));
 			$rep_opt      = $row[3];
 			$start_time = $row[1];
 			$end_time = $row[5];
@@ -909,7 +909,6 @@ else
 	}
 	else
 	{
-		//jQuery_TimePicker($typeDate, $typeTime, $start_hour, $start_min, $end_hour, $end_min)
 		echo "<td class=\"E\"><b>".get_vocab("time")."</b><td class=\"CL\">";
 		if (isset ($_GET['id']))
 		{

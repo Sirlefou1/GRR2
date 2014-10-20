@@ -347,11 +347,11 @@ else
 {
 	include("menu_gauche.php");
 	if ($_GET['pview'] != 1)
-		echo "<div id=\"planning\">";
+		echo '<div id="planning">'.PHP_EOL;
 	else
-		echo "<div id=\"print_planning\">";
+		echo '<div id="print_planning">'.PHP_EOL;
 	include "chargement.php";
-	echo "<div class=\"titre_planning\"><table class=\"table-header\">";
+	echo '<div class="titre_planning">'.PHP_EOL.'<table class="table-header">'.PHP_EOL;
 	if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
 	{
 		echo "
