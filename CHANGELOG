@@ -22,9 +22,11 @@
 [correction] Traduction
 [correction] session/traduction sur certaines pages
 [correction] affichage du menu sur certaine page de l'admin
+[correction] Balise php courte dans contactFormulaire.php
+[ajout] gestion des droit dans contactFormulaire.php
 [ajout] bootstrap twitter pour l'apparence
-[add] fonction cle donne/rendu
-[add] fonction courrier recu
+[ajout] fonction cle donne/rendu
+[ajout] fonction courrier recu
 [maj] lib Jquery
 [maj] lib Jquery-ui
 [maj] lib datepicker
