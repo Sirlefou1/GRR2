@@ -331,7 +331,7 @@ if ($debug_flag)
 	else echo "d is not an array!\n";
 	echo "</pre><p>\n";
 }
-echo "<table class=\"table-bordered\">";
+echo "<table class=\"table-bordered table-striped\">";
 echo "<tr>\n<th style=\"width:5%;\">";
 if ($enable_periods == 'y')
 	echo get_vocab("period");

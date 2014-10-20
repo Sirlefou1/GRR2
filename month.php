@@ -349,7 +349,7 @@ else
 		}
 		echo "</pre>\n";
 	}
-	echo "<table class=\"table-bordered\" width=\"100%\">\n<tr>";
+	echo "<table class=\"table-bordered table-striped\">\n<tr>";
 	for ($weekcol = 0; $weekcol < 7; $weekcol++)
 	{
 		$num_week_day = ($weekcol + $weekstarts) % 7;

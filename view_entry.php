@@ -649,21 +649,6 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 					}
 					echo "</table></fieldset>";
 				}
-				?>
-				<script type="text/javascript">
-					<?php $timestamp = time();?>
-					$(function() {
-						$('#file_upload').uploadify({
-							'formData'     : {
-								'timestamp' : '<?php echo $timestamp;?>',
-								'token'     : '<?php echo md5('unique_salt' . $timestamp);?>'
-							},
-							'swf'      : '/uploadify/uploadify.swf',
-							'uploader' : '/uploadify/uploadify.php'
-						});
-					});
-				</script>
-				<?php
 				if (!isset($area_id))
 					$area_id = 1;
 				if (!isset($room))

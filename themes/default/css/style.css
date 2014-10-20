@@ -62,7 +62,7 @@
 	border : none;
 	width : 100%;
  }
- 
+
  .image {
 	border: none;
 	vertical-align: middle;
@@ -259,14 +259,14 @@
 	color:#eeeeee;
 	font-size:10pt;
 	font-family:verdana,sans-serif;
-	background-color:#5c2862;
+	background-color:#5c2862 !important;
 	vertical-align:top;
 	text-align:center !important;
-	border: none;
+	border: none !important;
  }
  td.cell_hours {
 	color: #fff;
-	background-color: #5c2862;
+	background-color: #5c2862 !important;
 	text-align: center;
 	font-size: 13px;
 	height: 20px;
