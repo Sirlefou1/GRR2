@@ -324,7 +324,6 @@ else
 		if (!checkdate($end_month, $end_day, $end_year))
 			$erreur = 'y';
 		$starttime = mktime($hour, $minute, 0, $month, $day, $year);
-		var_dump($starttime);
 		$endtime   = mktime($end_hour, $end_minute, 0, $end_month, $end_day, $end_year);
 		if ($endtime <= $starttime)
 			$erreur = 'y';
