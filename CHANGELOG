@@ -1,0 +1,38 @@
+[correction] mktine() vers time()
+[correction] Fonction mysql_ vers mysqli
+[correction] Remise ne place des jours et heures des reservation lors de l'edition
+[correction] Correction de minical sauvegarde du choix de la salle et du type d'affichage
+[correction] Balise php courte dans view_entry.php
+[correction] undefined index dans mincals.php
+[correction] undefined index dans edit_entry.php
+[correction] undefined index dans view_entry.php
+[correction] undefined index dans menu_gauche.php
+[correction] undefined index dans day.php
+[correction] undefined index dans week.php
+[correction] undefined index dans week_all.php
+[correction] undefined index dans month.php
+[correction] undefined index dans month_all.php
+[correction] undefined index dans month_all2.php
+[correction] undefined variable dans functions.inc.php
+[correction] Encodage des caracteres UTF-8 des pages
+[correction] Encodage des caracteres UTF-8 des pages en popup
+[correction] Encodage des caracteres UTF-8 des fichier genere
+[correction] affichage des pages de moderation avec l'option popup
+[correction] CSS print
+[correction] Traduction
+[correction] session/traduction sur certaines pages
+[correction] affichage du menu sur certaine page de l'admin
+[ajout] bootstrap twitter pour l'apparence
+[add] fonction cle donne/rendu
+[add] fonction courrier recu
+[maj] lib Jquery
+[maj] lib Jquery-ui
+[maj] lib datepicker
+[maj] lib phpmailer
+[change] Correction diverse du code HTML generer W3c validation
+[change] Ordre de chargemet des fichier css et js
+[change] Création et deplacemet des fichier js dans le dossier js
+[change] Netoyage du code / Mise en forme
+[change] Apparance utilisation de bootstrap et de glyphicon
+[suppression] Fichier inutile
+[suppression] Horloge
