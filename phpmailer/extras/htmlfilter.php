@@ -581,8 +581,8 @@ function tln_fixatts(
  *
  * @param string $body                    The HTML you wish to filter
  * @param array $tag_list                see description above
- * @param array $rm_tags_with_content see description above
- * @param array $self_closing_tags    see description above
+ * @param string[] $rm_tags_with_content see description above
+ * @param string[] $self_closing_tags    see description above
  * @param boolean $force_tag_closing    see description above
  * @param array $rm_attnames            see description above
  * @param array $bad_attvals            see description above

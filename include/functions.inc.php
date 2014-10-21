@@ -77,6 +77,10 @@ $_type_cible
 si "identifiant:non" -> $_cible n'est pas l'identifiant d'un utilisateur de la base
 si "identifiant:oui" -> $_cible est l'identifiant d'un utilisateur de la base
 */
+/**
+ * @param string $_type_cible
+ * @param string $option_affichage
+ */
 function affiche_lien_contact($_cible, $_type_cible, $option_affichage)
 {
 	if ($_type_cible == "identifiant:non")
@@ -270,6 +274,11 @@ function affiche_ressource_empruntee($id_room, $type = "logo")
 		}
 	}
 }
+/**
+ * @param string $type
+ *
+ * @return string
+ */
 function bbCode($t,$type)
 {
 	if ($type == "nobbcode")
@@ -413,6 +422,9 @@ $ancre : ancre à l'intérieur de l'article (facultatif)
 Renvoie une portion de code html correspondant à l'affichage d'une image indiquant la présence d'une aide
 Un lien sur l'image renvoie sur un article de la documentation sur le site http://grr.mutualibre.org/documentation
 */
+/**
+ * @param string $mot_clef
+ */
 function grr_help($mot_clef,$ancre = "")
 {
 	// lien aide sur la page d'accueil
@@ -937,6 +949,9 @@ function print_header($day = '', $month = '', $year = '', $area = '', $type_sess
 	}
 }
 
+/**
+ * @param string $type
+ */
 function VerifNomPrenomUser($type)
 {
 	// ne pas prendre en compte la page my_account.php
@@ -1164,6 +1179,9 @@ function toTimeString(&$dur, &$units, $edition = false)
 // Transforme $dur en un nombre entier
 // $dur : durée
 // $units : unité
+/**
+ * @param integer $start_period
+ */
 function toPeriodString($start_period, &$dur, &$units)
 {
 	// la durée est donnée en secondes
@@ -1249,11 +1267,18 @@ function genDateSelectorForm($prefix, $day, $month, $year,$option)
 	return $selector_data;
 }
 
+/**
+ * @param string $prefix
+ * @param string $option
+ */
 function genDateSelector($prefix, $day, $month, $year, $option)
 {
 	echo genDateSelectorForm($prefix, $day, $month, $year, $option);
 }
 
+/**
+ * @param integer $need_header
+ */
 function fatal_error($need_header, $message)
 {
 	global $vocab;
@@ -1380,12 +1405,18 @@ function get_default_area($id_site = -1)
 	}
 }
 # Retourne le site par défaut;
+/**
+ * @return integer
+ */
 function get_default_site()
 {
 	$res = grr_sql_query1("SELECT min(id) FROM ".TABLE_PREFIX."_site");
 	return $res;
 }
 # Get the local day name based on language. Note 2000-01-02 is a Sunday.
+/**
+ * @param integer $daynumber
+ */
 function day_name($daynumber)
 {
 	return utf8_strftime("%A", mktime(0, 0, 0, 1, 2 + $daynumber, 2000));
@@ -1575,13 +1606,12 @@ function round_t_up($t, $resolution, $am7)
  * TODO: Enter description here...
  *
  * @param unknown_type $link
- * @param unknown_type $site
- * @param unknown_type $current
+ * @param unknown_type $current_site
  * @param unknown_type $year
  * @param unknown_type $month
  * @param unknown_type $day
  * @param unknown_type $user
- * @return unknown
+ * @return string|null
  */
 function make_site_select_html($link, $current_site, $year, $month, $day, $user)
 {
@@ -1723,11 +1753,10 @@ function make_room_select_html($link, $current_area, $current_room, $year, $mont
  * Affichage des domaines sous la forme d'une liste
  *
  * @param unknown_type $link
- * @param unknown_type $current
+ * @param unknown_type $current_site
  * @param unknown_type $year
  * @param unknown_type $month
  * @param unknown_type $day
- * @param unknown_type $id_site
  * @param unknown_type $user
  */
 function make_site_list_html($link,$current_site,$year,$month,$day,$user)
@@ -1866,13 +1895,12 @@ function make_room_list_html($link,$current_area, $current_room, $year, $month, 
  * TODO: Enter description here...
  *
  * @param unknown_type $link
- * @param unknown_type $site
- * @param unknown_type $current
+ * @param unknown_type $current_site
  * @param unknown_type $year
  * @param unknown_type $month
  * @param unknown_type $day
  * @param unknown_type $user
- * @return unknown
+ * @return string|null
  */
 function make_site_item_html($link, $current_site, $year, $month, $day,$user)
 {
@@ -2028,6 +2056,9 @@ function make_room_item_html($link, $current_area, $current_room, $year, $month,
 	return $out_html;
 }
 # end make_room_item_html
+/**
+ * @param integer $action
+ */
 function send_mail($id_entry, $action, $dformat, $tab_id_moderes = array())
 {
 	$message_erreur = "";
@@ -2862,6 +2893,10 @@ function UserRoomMaxBooking($user, $id_room, $number)
  $date_booking : la date de la réservation (n'est utile que si $id=-1)
  $date_now : la date actuelle
 */
+ /**
+  * @param string $date_booking
+  * @param integer $date_now
+  */
  function verif_booking_date($user, $id, $id_room, $date_booking, $date_now, $enable_periods, $endtime = '')
  {
  	global $correct_diff_time_local_serveur, $can_delete_or_create;
@@ -3597,6 +3632,9 @@ function verify_retard_reservation()
 		}
 	}
 }
+/**
+ * @param integer $time
+ */
 function est_hors_reservation($time,$area="-1")
 {
 	// Premier test : s'agit-il d'un jour du calendrier "hors réservation" ?
@@ -3803,6 +3841,9 @@ function cree_calendrier_date_valide($n, $i)
 	}
 	return $i;
 }
+/**
+ * @param integer $date
+ */
 function numero_semaine($date)
 {
 		/*
@@ -4032,6 +4073,9 @@ $type = withmail -> on affiche un lien avec le mail sur les prénom et nom.
 $type = formail -> on formate en utf8 pour l'envoi par mail (utilisé dans l'envoi de mails automatiques)
 $type = onlymail -> on affiche uniquement le mail (utilisé dans l'envoi de mails automatiques)
 */
+/**
+ * @return string
+ */
 function affiche_nom_prenom_email($_beneficiaire, $_beneficiaire_ext, $type = "nomail")
 {
 	if ($_beneficiaire != "")

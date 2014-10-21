@@ -49,6 +49,9 @@ function end_html()
 {
 	echo '</td></tr></table></div></body></html>';
 }
+/**
+ * @param integer $row
+ */
 function mysqli_result($res, $row, $field = 0)
 {
 	$res->data_seek($row);

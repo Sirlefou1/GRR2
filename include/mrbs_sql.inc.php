@@ -159,6 +159,7 @@ function grrDelEntryInConflict($room_id, $starttime, $endtime, $ignore, $repigno
  * Returns:
  *   0        - An error occured
  *   non-zero - The entry was deleted
+ * @param integer $all
  */
 function mrbsDelEntry($user, $id, $series, $all)
 {
@@ -430,6 +431,10 @@ function grrExtractValueFromOverloadDesc($chaine,$id)
  * Returns:
  *   0        - An error occured while inserting the entry
  *   non-zero - The entry's ID
+ * @param integer $entry_type
+ * @param integer $repeat_id
+ * @param string $statut_entry
+ * @param integer $keys
  */
 function mrbsCreateSingleEntry($starttime, $endtime, $entry_type, $repeat_id, $room_id, $creator, $beneficiaire, $beneficiaire_ext, $name, $type, $description, $option_reservation,$overload_data, $moderate, $rep_jour_c, $statut_entry, $keys, $courrier)
 {
@@ -507,6 +512,7 @@ function mrbsCreateRepeatEntry($starttime, $endtime, $rep_type, $rep_enddate, $r
  *  corresponding day" series - same week number and day of week next month.
  *  This function always returns either 28 or 35.
  *  For dates after the 28th day of a month, the results are undefined.
+ * @param integer $time
  */
 function same_day_next_month($time)
 {
@@ -710,6 +716,11 @@ function mrbsGetAreaSite($id)
 	else
 		return -1;
 }
+/**
+ * @param integer $_id
+ * @param integer $_moderate
+ * @param string $_description
+ */
 function moderate_entry_do($_id,$_moderate,$_description,$send_mail="yes")
 {
 	global $dformat;
