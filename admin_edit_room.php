@@ -29,47 +29,6 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-
-/**
- * $Log: admin_edit_room.php,v $
- * Revision 1.16  2010-04-07 15:38:14  grr
- * *** empty log message ***
- *
- * Revision 1.15  2009-09-29 18:02:56  grr
- * *** empty log message ***
- *
- * Revision 1.14  2009-06-04 15:30:17  grr
- * *** empty log message ***
- *
- * Revision 1.13  2009-04-14 12:59:17  grr
- * *** empty log message ***
- *
- * Revision 1.12  2009-04-09 14:52:31  grr
- * *** empty log message ***
- *
- * Revision 1.11  2009-03-24 13:30:07  grr
- * *** empty log message ***
- *
- * Revision 1.10  2009-02-27 13:28:19  grr
- * *** empty log message ***
- *
- * Revision 1.9  2009-01-20 07:19:17  grr
- * *** empty log message ***
- *
- * Revision 1.8  2008-11-16 22:00:58  grr
- * *** empty log message ***
- *
- * Revision 1.7  2008-11-13 21:32:51  grr
- * *** empty log message ***
- *
- * Revision 1.6  2008-11-11 22:01:14  grr
- * *** empty log message ***
- *
- * Revision 1.5  2008-11-06 21:57:34  grr
- * *** empty log message ***
- *
- *
- */
 include "include/admin.inc.php";
 $grr_script_name = "admin_edit_room.php";
 $ok = NULL;
@@ -168,7 +127,7 @@ if (authGetUserLevel(getUserName(),-1) < 6)
 			showAccessDenied($day, $month, $year, '',$back);
 			exit();
 		}
-	} 
+	}
 	else
 	{
 		if (isset($area_id))
@@ -400,6 +359,7 @@ if ((!empty($room)) || (isset($area_id)))
 	# print the page header
 	print_header("", "", "", "", $type = "with_session", $page = "admin");
 	affiche_pop_up($msg,"admin");
+	include "admin_col_gauche.php";
 	echo "<div class=\"page_sans_col_gauche\">";
 	// affichage du formulaire
 	if (isset($room))
@@ -908,6 +868,7 @@ if ((!empty($id_area)) || (isset($add_area)))
 	print_header("", "", "", "", $type = "with_session", $page = "admin");
 	affiche_pop_up($msg,"admin");
 	$avertissement = get_vocab("avertissement_change_type");
+	include "admin_col_gauche.php";
 	?>
 	<script type="text/javascript">
 		function bascule()
