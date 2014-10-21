@@ -915,4 +915,12 @@ $vocab['display_level_view_entry_1']= "Aparece la página." ;
 
 $vocab['Generer_pdf'] = "Générer un PDF";
 $vocab['semaine'] = "sem";
+
+$vocab['status_clef'] = "Statut de la clé";
+$vocab['clef'] = "Clé preté";
+$vocab['msg_clef'] = "Cocher si la clé est empruntée";
+
+$vocab['status_courrier'] = "Courrier de validation";
+$vocab['courrier'] = "Courrier";
+$vocab['msg_courrier'] = "Cocher si courrier de validation";
 ?>

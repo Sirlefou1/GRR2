@@ -3,7 +3,7 @@
 # GRR : fichier de langue italienne
 # Last modification : 07/05/2010
 # Charset (jeu de caractères) utilisé dans l'en-tête des pages HTML
-$charset_html = "iso-8859-1";
+$charset_html = "utf-8";
 $vocab = array();
 # Codage de certains caractères particuliers : http://www.unicode.org/charts/PDF/U0080.pdf
 # &#x00DF; -> "double s" allemand
@@ -265,7 +265,7 @@ $vocab['default_room_month_all'] = "Tutte le risorse (affissione 'mese')";
 $vocab['default_room_month_all_bis'] = "Tutte le risorse (affissione 'mese' bigio)";
 $vocab['default_room_week_all'] = "Tutte le risorse (visualizzazione 'settimana')";
 $vocab['default_site'] = "Site par défaut"; // A traduire
-$vocab['definir par defaut'] = "Définir par défaut"; // A traduire
+$vocab['definir par defaut'] = "Imposta come predefinito"; // A traduire
 $vocab['del'] = "Cancellare";
 $vocab['delais_max_resa_room'] = "Numero massimo di giorni al di la di cui l'utente non può riservare o modificare una prenotazione (-1 se nessuna restrizione).<br /><b>Esempio</b> : un valore uguale a 30 significa che un utente può riservare una risorsa soltanto 30 giorni in anticipo al massimo.<br /><i>Questa limitazione non tocca gli amministratori delle risorse, come gli amministratori del settore.</i>";
 $vocab['delais_max_resa_room_2'] = "<b>Numero massimo di giorni</b> al di la di cui l'utente non può riservare o modificare una prenotazione :";
@@ -911,5 +911,14 @@ $vocab['display_level_view_entry_0']= "Popup displays." ;
 $vocab['display_level_view_entry_1']= "Page displays." ;
 
 $vocab['Generer_pdf'] = "Générer un PDF";
-$vocab['semaine'] = "sem";
+$vocab['semaine'] = "set";
+
+$vocab['status_clef'] = "Stato della chiave";
+$vocab['clef'] = "chiave delle camere";
+$vocab['msg_clef'] = "Controllare se è preso la chiave";
+
+$vocab['status_courrier'] = "Validazione di posta";
+$vocab['courrier'] = "Posta";
+$vocab['msg_courrier'] = "Se la convalida casella di posta elettronica";
+
 ?>

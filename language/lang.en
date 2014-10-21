@@ -3,7 +3,7 @@
 # GRR : fichier de langue anglaise
 # Last modification : 07/05/2010
 # Charset (jeu de caractères) utilisé dans l'en-tête des pages HTML
-$charset_html = "iso-8859-1";
+$charset_html = "utf-8";
 $vocab = array();
 $vocab['a acces au domaine'] = "This user has access to this restricted area.";
 $vocab['accepter_resa'] = "Accept the reservation ";
@@ -933,4 +933,12 @@ $vocab['nomR'] = "name";
 
 $vocab['Generer_pdf'] = "Generate PDF";
 $vocab['semaine'] = "Wk";
+
+$vocab['status_clef'] = "Statut de la clé";
+$vocab['clef'] = "Clé preté";
+$vocab['msg_clef'] = "Cocher si la clé est empruntée";
+
+$vocab['status_courrier'] = "Courrier de validation";
+$vocab['courrier'] = "Courrier";
+$vocab['msg_courrier'] = "Cocher si courrier de validation";
 ?>

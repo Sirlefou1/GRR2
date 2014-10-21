@@ -766,24 +766,24 @@ echo '</td></tr>'.PHP_EOL;
 
 
 echo '<tr><td class="E">'.PHP_EOL;
-echo '<b>Statut des clés :</b>'.PHP_EOL;
+echo '<b>'.get_vocab("status_clef").get_vocab("deux_points").'</b>'.PHP_EOL;
 echo '</td></tr>'.PHP_EOL;
 echo '<tr><td class="CL">'.PHP_EOL;
 echo '<input name="keys" type="checkbox" value="y" ';
 if (isset($clef) && $clef == 1)
 	echo 'checked';
-echo ' > Cocher si les clés sont preté';
+echo ' > '.get_vocab("msg_clef");
 echo '</td></tr>'.PHP_EOL;
 
 
 echo '<tr><td class="E">'.PHP_EOL;
-echo '<b>Courrier de validation :</b>'.PHP_EOL;
+echo '<b>'.get_vocab("status_courrier").get_vocab("deux_points").'</b>'.PHP_EOL;
 echo '</td></tr>'.PHP_EOL;
 echo '<tr><td class="CL">'.PHP_EOL;
 echo '<input name="courrier" type="checkbox" value="y" ';
 if (isset($courrier) && $courrier == 1)
 	echo 'checked';
-echo ' > Cocher si courrier de validation';
+echo ' > '.get_vocab("msg_courrier");
 echo '</td></tr>'.PHP_EOL;
 
 echo '<tr><td class="E">'.PHP_EOL;

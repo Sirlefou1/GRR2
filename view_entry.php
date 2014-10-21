@@ -466,7 +466,7 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 			<td>
 				<b>
 					<?php
-					echo 'Clé preté';
+					echo get_vocab("clef").get_vocab("deux_points");
 					?>
 				</b>
 			</td>
@@ -485,7 +485,7 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 			<td>
 				<b>
 					<?php
-					echo 'Courrier';
+					echo get_vocab("courrier").get_vocab("deux_points");
 					?>
 				</b>
 			</td>
@@ -734,16 +734,16 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 				{
 					echo "<form action=\"view_entry.php\" method=\"get\">";
 					echo "<fieldset><legend style=\"font-weight:bold\">".get_vocab("reservation_en_cours")."</legend>\n";
-					echo "<span class=\"larger\">Status de la clé :</span>";
+					echo "<span class=\"larger\">".get_vocab("status_clef").get_vocab("deux_points")."</span>";
 					echo "<br /><br /><input type=\"checkbox\" name=\"clef\" value=\"y\" ";
 					if ($keys == 1)
 						echo " checked ";
-					echo " /> Cocher si la clé est empruntée";
-					echo "<br /><br /><span class=\"larger\">Courrier de validation :</span>";
+					echo " /> ".get_vocab("msg_clef");
+					echo "<br /><br /><span class=\"larger\">".get_vocab("status_courrier").get_vocab("deux_points")."</span>";
 					echo "<br /><br /><input type=\"checkbox\" name=\"courrier\" value=\"y\" ";
 					if ($courrier == 1)
 						echo " checked ";
-					echo " /> Cocher si courrier de validation";
+					echo " /> ".get_vocab("msg_courrier");
 					echo "<br /><div style=\"text-align:center;\"><input type=\"submit\" name=\"ok\" value=\"".get_vocab("save")."\" /></div></fieldset>\n";
 					echo "<div><input type=\"hidden\" name=\"day\" value=\"".$day."\" />";
 					echo "<input type=\"hidden\" name=\"month\" value=\"".$month."\" />";

@@ -4,7 +4,7 @@
 # GRR : fichier de langue allemande
 # Last modification : 07/05/2010
 # Charset (jeu de caractères) utilisé dans l'en-tête des pages HTML
-$charset_html = "iso-8859-1";
+$charset_html = "utf-8";
 $vocab = array();
 # Codage de certains caractères particuliers : http://www.unicode.org/charts/PDF/U0080.pdf
 # &#x00DF; -> "double s" allemand
@@ -914,4 +914,12 @@ $vocab['display_level_view_entry_1']= "Page displays." ;
 
 $vocab['Generer_pdf'] = "Générer un PDF";
 $vocab['semaine'] = "sem";
+
+$vocab['status_clef'] = "Statut de la clé";
+$vocab['clef'] = "Clé preté";
+$vocab['msg_clef'] = "Cocher si la clé est empruntée";
+
+$vocab['status_courrier'] = "Courrier de validation";
+$vocab['courrier'] = "Courrier";
+$vocab['msg_courrier'] = "Cocher si courrier de validation";
 ?>
