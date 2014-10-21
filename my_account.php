@@ -49,14 +49,7 @@ $day = isset($_POST['day']) ? $_POST['day'] : (isset($_GET['day']) ? $_GET['day'
 $month = isset($_POST['month']) ? $_POST['month'] : (isset($_GET['month']) ? $_GET['month'] : date('m'));
 $year = isset($_POST['year']) ? $_POST['year'] : (isset($_GET['year']) ? $_GET['year'] : date('Y'));
 include_once('include/language.inc.php');
-if (!grr_resumeSession())
-{
-	if ((getSettingValue("authentification_obli") == 1) || ((getSettingValue("authentification_obli") == 0) && (isset($_SESSION['login']))))
-	{
-		header("Location: ./logout.php?auto=1&url=$url");
-		die();
-	}
-}
+include "include/resume_session.php";
 $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);

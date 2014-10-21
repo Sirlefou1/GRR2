@@ -43,14 +43,7 @@ if (!loadSettings())
 // Session related functions
 require_once ("./include/session.inc.php");
 // Resume session
-if (!grr_resumeSession())
-{
-	if ((getSettingValue("authentification_obli") == 1) || ((getSettingValue("authentification_obli") == 0) && (isset($_SESSION['login']))))
-	{
-		header("Location: ./logout.php?auto=1&url=$url");
-		die();
-	}
-}
+include "include/resume_session.php";
 include "include/language.inc.php";
 $affiche_pview = '1';
 if (!isset($_GET['pview']))
@@ -63,41 +56,7 @@ else
 	$class_image = "image";
 if (empty($debug_flag))
 	$debug_flag = 0;
-$date_now = time();
-if (!isset($day) || !isset($month) || !isset($year))
-{
-	if ($date_now < getSettingValue("begin_bookings"))
-		$date_ = getSettingValue("begin_bookings");
-	else if ($date_now > getSettingValue("end_bookings"))
-		$date_ = getSettingValue("end_bookings");
-	else
-		$date_ = $date_now;
-	$day   = date("d",$date_);
-	$month = date("m",$date_);
-	$year  = date("Y",$date_);
-}
-else
-{
-	settype($month,"integer");
-	settype($day,"integer");
-	settype($year,"integer");
-	$minyear = strftime("%Y", getSettingValue("begin_bookings"));
-	$maxyear = strftime("%Y", getSettingValue("end_bookings"));
-	if ($day < 1)
-		$day = 1;
-	if ($day > 31)
-		$day = 31;
-	if ($month < 1)
-		$month = 1;
-	if ($month > 12)
-		$month = 12;
-	if ($year < $minyear)
-		$year = $minyear;
-	if ($year > $maxyear)
-		$year = $maxyear;
-	while (!checkdate($month, $day, $year))
-		$day--;
-}
+include "include/setdate.php";
 if ((getSettingValue("authentification_obli") == 0) && (getUserName() == '' ))
 	$type_session = "no_session";
 else
@@ -122,14 +81,7 @@ if (authUserAccesArea(getUserName(), $area)==0)
 	showAccessDenied($day, $month, $year, $area,$back);
 	exit();
 }
-function cmp3($a, $b)
-{
-	if ($a < $b)
-		return "< ";
-	if ($a == $b)
-		return "= ";
-	return "> ";
-}
+
 if (getSettingValue("verif_reservation_auto") == 0)
 {
 	verify_confirm_reservation();

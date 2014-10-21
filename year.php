@@ -43,14 +43,7 @@ if (!loadSettings())
 // Session related functions
 require_once("./include/session.inc.php");
 // Resume session
-if (!grr_resumeSession())
-{
-	if ((getSettingValue("authentification_obli") == 1) || ((getSettingValue("authentification_obli") == 0) && (isset($_SESSION['login']))))
-	{
-		header("Location: ./logout.php?auto=1&url=$url");
-		die();
-	}
-};
+include "include/resume_session.php";
 // Construction des identifiants de la ressource $room, du domaine $area, du site $id_site
 Definition_ressource_domaine_site();
 // Récupération des données concernant l'affichage du planning du domaine
@@ -136,13 +129,7 @@ if (authUserAccesArea(getUserName(), $area) == 0)
 	showAccessDenied($day, $from_month, $from_year, $area,$back);
 	exit();
 }
-//3-value compare: Returns result of compare as "< " "= " or "> ".
-function cmp3($a, $b)
-{
-	if ($a < $b) return "< ";
-	if ($a == $b) return "= ";
-	return "> ";
-}
+
 // On vérifie une fois par jour si le délai de confirmation des réservations est dépassé
 // Si oui, les réservations concernées sont supprimées et un mail automatique est envoyé.
 // On vérifie une fois par jour que les ressources ont été rendue en fin de réservation

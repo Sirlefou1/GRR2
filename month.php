@@ -112,15 +112,6 @@ if (authUserAccesArea(getUserName(), $area)==0)
 	showAccessDenied($day, $month, $year, $area,$back);
 	exit();
 }
-//Fonction de comparaison, retourne "<" "=" ou ">"
-function cmp3($a, $b)
-{
-	if ($a < $b)
-		return "< ";
-	if ($a == $b)
-		return "= ";
-	return "> ";
-}
 // On vérifie une fois par jour si le délai de confirmation des réservations est dépassé
 // Si oui, les réservations concernées sont supprimées et un mail automatique est envoyé.
 // On vérifie une fois par jour que les ressources ont été rendue en fin de réservation

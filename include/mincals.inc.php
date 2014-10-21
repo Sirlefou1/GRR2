@@ -228,13 +228,14 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 	$nb_calendar = getSettingValue("nb_calendar");
 	if ($nb_calendar >= 1)
 	{
+		$month_ = array();
 		if ($nb_calendar % 2 == 1)
 			$milieu = ($nb_calendar + 1) / 2;
 		else
 			$milieu = $nb_calendar / 2;
 		// Les mois avant le mois courant
 		for ($k = 1; $k < $milieu; $k++)
-			$month_[]=mktime(0, 0, 0, $month + $k - $milieu, 1, $year);
+			$month_[] = mktime(0, 0, 0, $month + $k - $milieu, 1, $year);
 		// Le mois courant
 		$month_[] = mktime(0, 0, 0, $month, $day, $year);
 		// Les mois après le mois courant

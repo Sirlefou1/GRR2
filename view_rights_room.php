@@ -42,14 +42,7 @@ if (!loadSettings())
 // Session related functions
 require_once("./include/session.inc.php");
 // Resume session
-if (!grr_resumeSession())
-{
-	if ((getSettingValue("authentification_obli") == 1) || ((getSettingValue("authentification_obli") == 0) && (isset($_SESSION['login']))))
-	{
-		header("Location: ./logout.php?auto=1&url=$url");
-		die();
-	}
-};
+include "include/resume_session.php";
 // Paramètres langage
 include "include/language.inc.php";
 if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))

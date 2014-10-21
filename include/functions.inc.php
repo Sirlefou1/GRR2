@@ -29,6 +29,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 header("Cache-Control:no-cache");
+//3-value compare: Returns result of compare as "< " "= " or "> ".
+function cmp3($a, $b)
+{
+	if ($a < $b) return "< ";
+	if ($a == $b) return "= ";
+	return "> ";
+}
 function get_request_uri()
 {
 	global $grr_script_name;

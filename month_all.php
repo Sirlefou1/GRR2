@@ -39,14 +39,7 @@ require_once("./include/settings.inc.php");
 if (!loadSettings())
 	die("Erreur chargement settings");
 require_once("./include/session.inc.php");
-if (!grr_resumeSession())
-{
-	if ((getSettingValue("authentification_obli") == 1) || ((getSettingValue("authentification_obli") == 0) && (isset($_SESSION['login']))))
-	{
-		header("Location: ./logout.php?auto=1&url=$url");
-		die();
-	}
-};
+include "include/resume_session.php";
 Definition_ressource_domaine_site();
 get_planning_area_values($area);
 include "include/language.inc.php";
@@ -94,14 +87,6 @@ if (authUserAccesArea(getUserName(), $area) == 0)
 {
 	showAccessDenied($day, $month, $year, $area,$back);
 	exit();
-}
-function cmp3($a, $b)
-{
-	if ($a < $b)
-		return "< ";
-	if ($a == $b)
-		return "= ";
-	return "> ";
 }
 if (getSettingValue("verif_reservation_auto") == 0)
 {

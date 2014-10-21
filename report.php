@@ -43,14 +43,7 @@ if (!loadSettings())
 require_once("./include/session.inc.php");
 //Si il n'y a pas de session crée, on déconnecte l'utilisateur.
 // Resume session
-if (!grr_resumeSession())
-{
-	if ((getSettingValue("authentification_obli") == 1) || ((getSettingValue("authentification_obli") == 0) && (isset($_SESSION['login']))))
-	{
-		header("Location: ./logout.php?auto=1&url=$url");
-		die();
-	}
-};
+include "include/resume_session.php";
 // Paramètres langage
 include "include/language.inc.php";
 // On affiche le lien "format imprimable" en bas de la page
@@ -268,10 +261,12 @@ function do_summary(&$count, &$hours, &$room_hash, &$breve_description_hash, $en
 	// and row indexes. Use the rooms and names hashes built by accumulate().
 	// At PHP4 we could use array_keys().
 	reset($room_hash);
+	$rooms = array();
 	while (list($room_key) = each($room_hash))
 		$rooms[] = $room_key;
 	ksort($rooms);
 	reset($breve_description_hash);
+	$breve_descriptions = array();
 	while (list($breve_description_key) = each($breve_description_hash))
 		$breve_descriptions[] = $breve_description_key;
 	ksort($breve_descriptions);
@@ -294,6 +289,8 @@ function do_summary(&$count, &$hours, &$room_hash, &$breve_description_hash, $en
 			echo "<hr /><h1>".get_vocab("summary_header")."</h1><table border=\"2\" cellspacing=\"4\">\n";
 		echo "<tr><td class=\"BL\" align=\"left\"><b>".$premiere_cellule." \ ".get_vocab("room")."</b></td>\n";
 	}
+	$col_count_total = array();
+	$col_hours_total = array();
 	for ($c = 0; $c < $n_rooms; $c++)
 	{
 		if ($csv == "n")
