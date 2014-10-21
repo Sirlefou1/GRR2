@@ -214,29 +214,30 @@ function Definition_ressource_domaine_site()
 		}
 	}
 }
-function bouton_retour_haut ()
+
+function bouton_retour_haut()
 {
 	echo '<script type="text/javascript">'.PHP_EOL;
 	echo '$(function()'.PHP_EOL;
-		echo '	{'.PHP_EOL;
-		echo '		$(window).scroll(function()'.PHP_EOL;
-			echo '		{'.PHP_EOL;
-			echo '			if ($(this).scrollTop() != 0)'.PHP_EOL;
-			echo '				$("#toTop").fadeIn();'.PHP_EOL;
-			echo '			else'.PHP_EOL;
-			echo '				$("#toTop").fadeOut();'.PHP_EOL;
-			echo '		});'.PHP_EOL;
-echo '		$("#toTop").click(function()'.PHP_EOL;
+	echo '	{'.PHP_EOL;
+	echo '		$(window).scroll(function()'.PHP_EOL;
+	echo '		{'.PHP_EOL;
+	echo '			if ($(this).scrollTop() != 0)'.PHP_EOL;
+	echo '				$("#toTop").fadeIn();'.PHP_EOL;
+	echo '			else'.PHP_EOL;
+	echo '				$("#toTop").fadeOut();'.PHP_EOL;
+	echo '		});'.PHP_EOL;
+	echo '		$("#toTop").click(function()'.PHP_EOL;
 	echo '		{'.PHP_EOL;
 	echo '			$("body,html").animate({scrollTop:0},800);'.PHP_EOL;
 	echo '		});'.PHP_EOL;
-echo '	});'.PHP_EOL;
-echo '</script>'.PHP_EOL;
+	echo '	});'.PHP_EOL;
+	echo '</script>'.PHP_EOL;
 }
-/*
-function affiche_ressource_empruntee
-- $id_room : identifiant de la ressource
-- Si la ressource est empruntée, affiche une icône avec un lien vers la réservation pour laquelle la ressource est empruntée.
+/**
+*function affiche_ressource_empruntee
+*- $id_room : identifiant de la ressource
+*- Si la ressource est empruntée, affiche une icône avec un lien vers la réservation pour laquelle la ressource est empruntée.
 */
 function affiche_ressource_empruntee($id_room, $type = "logo")
 {
@@ -739,8 +740,8 @@ function begin_page($title,$page="with_session")
 		$a .= $charset_html;
 	$a .=  '" />';
 	$a .= PHP_EOL.'<meta name="Robots" content="noindex" />';
-	$a .= '<script src="js/jquery-1.11.1.min.js"></script>'.PHP_EOL;
-	$a .= '<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>';
+	$a .= '<script src="js/jquery-2.1.1.min.js"></script>'.PHP_EOL;
+	$a .= '<script src="js/jquery-ui.min.js"></script>';
 	$a .= '<script src="js/jquery.validate.js"></script>';
 	$a .= '<script src="js/jquery-ui-timepicker-addon.js"></script>';
 	$a .= '<script src="js/jspdf/jspdf.js"></script>'.PHP_EOL;
@@ -4243,7 +4244,7 @@ function jQuery_TimePicker($typeDate, $typeTime, $start_hour, $start_min)
 function spinner ($duration)
 {
 	echo "<input class=\"form-control\" name=\"duration\" value=\"" .$duration. "\" id=\"spinner\" />";
-	echo "<script type=\"text/javascript\" src=\"jquery.mousewheel.js\"></script>";
+	echo "<script type=\"text/javascript\" src=\"js/jquery.mousewheel.js\"></script>";
 	echo "<script>$(function() {
 		$('#spinner').spinner({
 			min: 1,

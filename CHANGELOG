@@ -28,6 +28,11 @@
 [ajout] fonction cle donne/rendu
 [ajout] fonction courrier recu
 [maj] lib Jquery
+[maj] script popup.js compatibilité jquery
+[maj] script appeldelete.js compatibilité jquery
+[maj] fontion bouton_retour_haut() compatibilité jquery
+[maj] lib jquery.validate.js
+[maj] lib ckeditor
 [maj] lib Jquery-ui
 [maj] lib datepicker
 [maj] lib phpmailer
@@ -36,5 +41,6 @@
 [change] Création et deplacemet des fichier js dans le dossier js
 [change] Netoyage du code / Mise en forme
 [change] Apparance utilisation de bootstrap et de glyphicon
+[chnage] Simplification de la fonction grr_sql_version par l'utilisation de mysqli_get_server_info
 [suppression] Fichier inutile
 [suppression] Horloge

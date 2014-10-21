@@ -27,40 +27,6 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-/**
- * $Log: admin_config1.php,v $
- * Revision 1.14  2010-04-07 17:49:56  grr
- * *** empty log message ***
- *
- * Revision 1.13  2010-04-07 15:38:14  grr
- * *** empty log message ***
- *
- * Revision 1.12  2009-09-29 18:02:56  grr
- * *** empty log message ***
- *
- * Revision 1.11  2009-04-14 12:59:17  grr
- * *** empty log message ***
- *
- * Revision 1.10  2009-04-09 14:52:31  grr
- * *** empty log message ***
- *
- * Revision 1.9  2009-02-27 13:28:19  grr
- * *** empty log message ***
- *
- * Revision 1.8  2009-01-20 07:19:16  grr
- * *** empty log message ***
- *
- * Revision 1.7  2008-11-16 22:00:58  grr
- * *** empty log message ***
- *
- * Revision 1.6  2008-11-13 21:32:51  grr
- * *** empty log message ***
- *
- * Revision 1.5  2008-11-10 08:17:34  grr
- * *** empty log message ***
- *
- *
- */
 if (isset($_POST['title_home_page']))
 {
 	if (!saveSetting("title_home_page", $_POST['title_home_page']))
@@ -449,8 +415,8 @@ if (isset($_POST['begin_day']) && isset($_POST['begin_month']) && isset($_POST['
 	while (!checkdate($_POST['begin_month'], $_POST['begin_day'], $_POST['begin_year']))
 		$_POST['begin_day']--;
 	$begin_bookings = mktime(0, 0, 0, $_POST['begin_month'], $_POST['begin_day'], $_POST['begin_year']);
-	$test_del1 = mysqli_num_rows(mysqli_query($GLOBALS['db_c'], "select * from ".TABLE_PREFIX."_entry WHERE (end_time < '$begin_bookings' )"));
-	$test_del2 = mysqli_num_rows(mysqli_query($GLOBALS['db_c'], "select * from ".TABLE_PREFIX."_repeat WHERE (end_date < '$begin_bookings')"));
+	$test_del1 = mysqli_num_rows(mysqli_query($GLOBALS['db_c'], "SELECT * FROM ".TABLE_PREFIX."_entry WHERE (end_time < '$begin_bookings' )"));
+	$test_del2 = mysqli_num_rows(mysqli_query($GLOBALS['db_c'], "SELECT * FROM ".TABLE_PREFIX."_repeat WHERE (end_date < '$begin_bookings')"));
 	if (($test_del1 != 0) || ($test_del2 != 0))
 		$demande_confirmation = 'yes';
 	else
@@ -466,8 +432,8 @@ if (isset($_POST['end_day']) && isset($_POST['end_month']) && isset($_POST['end_
 	$end_bookings = mktime(0, 0, 0, $_POST['end_month'], $_POST['end_day'] ,$_POST['end_year']);
 	if ($end_bookings < $begin_bookings)
 		$end_bookings = $begin_bookings;
-	$test_del1 = mysqli_num_rows(mysqli_query($GLOBALS['db_c'], "select * from ".TABLE_PREFIX."_entry WHERE (start_time > '$end_bookings' )"));
-	$test_del2 = mysqli_num_rows(mysqli_query($GLOBALS['db_c'], "select * from ".TABLE_PREFIX."_repeat WHERE (start_time > '$end_bookings')"));
+	$test_del1 = mysqli_num_rows(mysqli_query($GLOBALS['db_c'], "SELECT * FROM ".TABLE_PREFIX."_entry WHERE (start_time > '$end_bookings' )"));
+	$test_del2 = mysqli_num_rows(mysqli_query($GLOBALS['db_c'], "SELECT * FROM ".TABLE_PREFIX."_repeat WHERE (start_time > '$end_bookings')"));
 	if (($test_del1 != 0) || ($test_del2 != 0))
 		$demande_confirmation = 'yes';
 	else
@@ -509,7 +475,7 @@ include "include/admin_config_tableau.inc.php";
 //echo "<p>".get_vocab('mess_avertissement_config')."</p>";
 // Adapter les fichiers de langue
 echo "<h3>".get_vocab("adapter fichiers langue")."</h3>\n";
-echo get_vocab("adapter fichiers langue explain").grr_help("aid_grr_adapter_fichiers_langue");
+echo get_vocab("adapter fichiers langue explain");
 //
 // Config générale
 //****************
@@ -606,7 +572,7 @@ for ($k = 0; $k < 6; $k++)
 }
 echo "</select></p>";
 if (getSettingValue("use_fckeditor") == 1)
-	echo "<script type=\"text/javascript\" src=\"./ckeditor/ckeditor.js\"></script>\n";
+	echo "<script type=\"text/javascript\" src=\"js/ckeditor/ckeditor.js\"></script>\n";
 echo "<h3>".get_vocab("message perso")."</h3>\n";
 echo "<p>".get_vocab("message perso explain");
 if (getSettingValue("use_fckeditor") != 1)
