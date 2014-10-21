@@ -29,11 +29,19 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 header("Cache-Control:no-cache");
-//3-value compare: Returns result of compare as "< " "= " or "> ".
+
+/**
+ * Fonction qui compare 2 valeur
+ * @param string $a
+ * @param integer $b
+ * @return string
+ */
 function cmp3($a, $b)
 {
-	if ($a < $b) return "< ";
-	if ($a == $b) return "= ";
+	if ($a < $b)
+		return "< ";
+	if ($a == $b)
+		return "= ";
 	return "> ";
 }
 function get_request_uri()
@@ -78,8 +86,10 @@ si "identifiant:non" -> $_cible n'est pas l'identifiant d'un utilisateur de la b
 si "identifiant:oui" -> $_cible est l'identifiant d'un utilisateur de la base
 */
 /**
+ * @param string $_cible
  * @param string $_type_cible
  * @param string $option_affichage
+ * @return string
  */
 function affiche_lien_contact($_cible, $_type_cible, $option_affichage)
 {
@@ -186,9 +196,9 @@ function affiche_lien_contact($_cible, $_type_cible, $option_affichage)
 	}
 	return $affichage;
 }
-/*
-Fonction qui calcule $room, $area et $id_site à partir de $_GET['room'], $_GET['area'], $_GET['id_site']
-*/
+/**
+ *Fonction qui calcule $room, $area et $id_site à partir de $_GET['room'], $_GET['area'], $_GET['id_site']
+ */
 function Definition_ressource_domaine_site()
 {
 	global $room, $area, $id_site;
@@ -246,10 +256,12 @@ echo '	});'.PHP_EOL;
 echo '</script>'.PHP_EOL;
 }
 /**
-*function affiche_ressource_empruntee
-*- $id_room : identifiant de la ressource
-*- Si la ressource est empruntée, affiche une icône avec un lien vers la réservation pour laquelle la ressource est empruntée.
-*/
+ *function affiche_ressource_empruntee
+ *- $id_room : identifiant de la ressource
+ *- Si la ressource est empruntée, affiche une icône avec un lien vers la réservation pour laquelle la ressource est empruntée.
+ * @param string $id_room
+ * @return string
+ */
 function affiche_ressource_empruntee($id_room, $type = "logo")
 {
 	$active_ressource_empruntee = grr_sql_query1("SELECT active_ressource_empruntee FROM ".TABLE_PREFIX."_room WHERE id = '".$id_room."'");
@@ -276,7 +288,7 @@ function affiche_ressource_empruntee($id_room, $type = "logo")
 }
 /**
  * @param string $type
- *
+ * @param string $t
  * @return string
  */
 function bbCode($t,$type)
@@ -395,6 +407,13 @@ $year_week : année
 Renvoie vraie s'il reste des plages non réservées sur la journée
 Renvoie faux dans le cas contraire
 */
+/**
+ * @param integer $id_room
+ * @param integer $month_week
+ * @param integer $day_week
+ * @param integer $year_week
+ * @return boolean
+ */
 function plages_libre_semaine_ressource($id_room, $month_week, $day_week, $year_week)
 {
 	global $morningstarts, $eveningends, $eveningends_minutes, $resolution, $enable_periods;
@@ -424,6 +443,7 @@ Un lien sur l'image renvoie sur un article de la documentation sur le site http:
 */
 /**
  * @param string $mot_clef
+ * @return string
  */
 function grr_help($mot_clef,$ancre = "")
 {
