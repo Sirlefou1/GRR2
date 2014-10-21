@@ -33,7 +33,7 @@
 [maj] fontion bouton_retour_haut() compatibilité jquery
 [maj] lib jquery.validate.js
 [maj] lib ckeditor 4.4.5
-[maj] lib Jquery-ui
+[maj] lib Jquery-ui 1.11.1
 [maj] lib datepicker
 [maj] lib timepicker 1.5.0
 [maj] lib phpmailer 5.2.8
@@ -42,6 +42,7 @@
 [change] Création et deplacemet des fichier js dans le dossier js
 [change] Netoyage du code / Mise en forme
 [change] Apparance utilisation de bootstrap et de glyphicon
-[chnage] Simplification de la fonction grr_sql_version par l'utilisation de mysqli_get_server_info
+[change] Simplification de la fonction grr_sql_version par l'utilisation de mysqli_get_server_info
+[change] Horloge mise a jour pour fonctionner sur chrome
 [suppression] Fichier inutile
-[suppression] Horloge
+
