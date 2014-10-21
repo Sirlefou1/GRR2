@@ -27,15 +27,16 @@
 [ajout] bootstrap twitter pour l'apparence
 [ajout] fonction cle donne/rendu
 [ajout] fonction courrier recu
-[maj] lib Jquery
+[maj] lib Jquery 2.1.1
 [maj] script popup.js compatibilité jquery
 [maj] script appeldelete.js compatibilité jquery
 [maj] fontion bouton_retour_haut() compatibilité jquery
 [maj] lib jquery.validate.js
-[maj] lib ckeditor
+[maj] lib ckeditor 4.4.5
 [maj] lib Jquery-ui
 [maj] lib datepicker
-[maj] lib phpmailer
+[maj] lib timepicker 1.5.0
+[maj] lib phpmailer 5.2.8
 [change] Correction diverse du code HTML generer W3c validation
 [change] Ordre de chargemet des fichier css et js
 [change] Création et deplacemet des fichier js dans le dossier js
