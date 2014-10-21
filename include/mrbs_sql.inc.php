@@ -1,9 +1,9 @@
 <?php
 /**
  * mrbs_sql.inc.php
- * Bibliothèque de fonctions propres à l'application GRR
+ * BibliothÃ¨que de fonctions propres Ã  l'application GRR
  *
- * Dernière modification : $Date: 2010-01-06 10:21:20 $
+ * DerniÃ¨re modification : $Date: 2010-01-06 10:21:20 $
  *
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @author    Marc-Henri PAMISEUX <marcori@users.sourceforge.net>
@@ -15,7 +15,7 @@
  * @filesource
  *
  * This file is part of GRR.
- * D'après http://mrbs.sourceforge.net/
+ * D'aprÃ¨s http://mrbs.sourceforge.net/
  *
  * GRR is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -83,11 +83,11 @@ return $err;
 }
 /** grrCheckOverlap()
  *
- * Dans le cas d'une réservation avec périodicité,
- * Vérifie que les différents créneaux ne se chevaussent pas.
+ * Dans le cas d'une rÃ©servation avec pÃ©riodicitÃ©,
+ * VÃ©rifie que les diffÃ©rents crÃ©neaux ne se chevaussent pas.
  *
- * $reps : tableau des débuts de réservation
- * $diff : durée d'une réservation
+ * $reps : tableau des dÃ©buts de rÃ©servation
+ * $diff : durÃ©e d'une rÃ©servation
  */
 function grrCheckOverlap($reps, $diff)
 {
@@ -105,7 +105,7 @@ function grrCheckOverlap($reps, $diff)
 }
 /** grrDelEntryInConflict()
  *
- *  Efface les réservation qui sont en partie ou totalement dans le créneau $starttime<->$endtime
+ *  Efface les rÃ©servation qui sont en partie ou totalement dans le crÃ©neau $starttime<->$endtime
  *
  * $room_id   - Which room are we checking
  * $starttime - The start of period
@@ -136,7 +136,7 @@ function grrDelEntryInConflict($room_id, $starttime, $endtime, $ignore, $repigno
 		grr_sql_free($res);
 		return "";
 	}
-	//Efface les résas concernées
+	//Efface les rÃ©sas concernÃ©es
 	$err = "";
 	for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 	{
@@ -198,7 +198,7 @@ function mrbsDelEntry($user, $id, $series, $all)
 */
 function mrbsGetAreaIdFromRoomId($room_id)
 {
-		// Avec la room_id on récupère l'area_id
+		// Avec la room_id on rÃ©cupÃ¨re l'area_id
 	$sqlstring = "SELECT area_id FROM ".TABLE_PREFIX."_room WHERE id=$room_id";
 	$result = grr_sql_query($sqlstring);
 	if (!$result)
@@ -227,7 +227,7 @@ function mrbsOverloadGetFieldslist($id_area, $room_id = 0)
 			$id_area = "";
 		}
 	}
-	// si l'id de l'area n'est pas précisé, on cherche tous les champs additionnels
+	// si l'id de l'area n'est pas prÃ©cisÃ©, on cherche tous les champs additionnels
 	if ($id_area == "")
 		$sqlstring = "SELECT fieldname ,fieldtype, ".TABLE_PREFIX."_overload.id, fieldlist, ".TABLE_PREFIX."_area.area_name, affichage, overload_mail, ".TABLE_PREFIX."_overload.obligatoire, ".TABLE_PREFIX."_overload.confidentiel FROM ".TABLE_PREFIX."_overload, ".TABLE_PREFIX."_area WHERE(".TABLE_PREFIX."_overload.id_area = ".TABLE_PREFIX."_area.id) ORDER BY fieldname,fieldtype ";
 	else
@@ -291,7 +291,7 @@ function mrbsEntryGetOverloadDesc($id_entry)
 	$room_id = 0;
 	$overload_array = array();
 	$overload_desc = "";
-	//On récupère les données overload desc dans ".TABLE_PREFIX."_entry.
+	//On rÃ©cupÃ¨re les donnÃ©es overload desc dans ".TABLE_PREFIX."_entry.
 	if ($id_entry != NULL)
 	{
 		$overload_array = array();
@@ -309,7 +309,7 @@ function mrbsEntryGetOverloadDesc($id_entry)
 	if ( $room_id >0 )
 	{
 		$area_id = mrbsGetAreaIdFromRoomId($room_id);
-		// Avec l'id_area on récupère la liste des champs additionnels dans ".TABLE_PREFIX."_overload.
+		// Avec l'id_area on rÃ©cupÃ¨re la liste des champs additionnels dans ".TABLE_PREFIX."_overload.
 		$fieldslist = mrbsOverloadGetFieldslist($area_id);
 		foreach ($fieldslist as $field=>$fieldtype)
 		{
@@ -326,28 +326,28 @@ function mrbsEntryGetOverloadDesc($id_entry)
 			$traitement2 = true;
 			while (($traitement1 !== false) || ($traitement2 !== false))
 			{
-				// le premier traitement cherche la prochaine occurence de $begin_string et retourne la portion de chaine après cette occurence
+				// le premier traitement cherche la prochaine occurence de $begin_string et retourne la portion de chaine aprÃ¨s cette occurence
 				if ($traitement1 != false)
 				{
 					$chaine1 = strstr ($chaine, $begin_string);
-					// retourne la sous-chaîne de $chaine, allant de la première occurrence de $begin_string jusqu'à la fin de la chaîne.
+					// retourne la sous-chaÃ®ne de $chaine, allant de la premiÃ¨re occurrence de $begin_string jusqu'Ã  la fin de la chaÃ®ne.
 					if ($chaine1 !== false)
 					{
-						// on a trouvé une occurence de $begin_string
+						// on a trouvÃ© une occurence de $begin_string
 						$balise_ouvrante = 'y';
 						// on sait qu'il y a au moins une balise ouvrante
 						$chaine = substr($chaine1, $l1, strlen($chaine1)- $l1);
-						// on retourne la chaine en ayant éliminé le début de chaine correspondant à $begin_string
+						// on retourne la chaine en ayant Ã©liminÃ© le dÃ©but de chaine correspondant Ã  $begin_string
 						$result = $chaine;
-						// On mémorise la valeur précédente
+						// On mÃ©morise la valeur prÃ©cÃ©dente
 					}
 					else
 						$traitement1 = false;
 				}
-				//le 2ème traitement cherche la dernière occurence de $end_string en partant de la fin et retourne la portion de chaine avant cette occurence
+				//le 2Ã¨me traitement cherche la derniÃ¨re occurence de $end_string en partant de la fin et retourne la portion de chaine avant cette occurence
 				if ($traitement2 != false)
 				{
-					//La boucle suivante a pour effet de déterminer la dernière occurence de $end_string
+					//La boucle suivante a pour effet de dÃ©terminer la derniÃ¨re occurence de $end_string
 					$ind = 0;
 					$end_pos = true;
 					while ($end_pos !== false)
@@ -362,7 +362,7 @@ function mrbsEntryGetOverloadDesc($id_entry)
 						else
 							break;
 					}
-					//a ce niveau, $ind_old est la dernière occurence de $end_string trouvée dans $chaine
+					//a ce niveau, $ind_old est la derniÃ¨re occurence de $end_string trouvÃ©e dans $chaine
 					if ($ind != 0 )
 					{
 						$chaine = substr($chaine,0,$ind_old);
@@ -422,11 +422,11 @@ function grrExtractValueFromOverloadDesc($chaine,$id)
  * $repeat_id   - Repeat ID
  * $room_id     - Room ID
  * $beneficiaire       - beneficiaire
- * $beneficiaire_ext - bénéficiaire extérieur
+ * $beneficiaire_ext - bÃ©nÃ©ficiaire extÃ©rieur
  * $name        - Name
  * $type        - Type (Internal/External)
  * $description - Description
- *$rep_jour_c - Le jour cycle d'une réservation, si aucun 0
+ *$rep_jour_c - Le jour cycle d'une rÃ©servation, si aucun 0
  *
  * Returns:
  *   0        - An error occured while inserting the entry
@@ -453,11 +453,11 @@ function mrbsCreateSingleEntry($starttime, $endtime, $entry_type, $repeat_id, $r
 			$overload_data_string .= $begin_string.urlencode($overload_data[$id_field]).$end_string;
 		}
 	}
-	//Hugo - Commande sql insérant la nouvelle réservation dans la base de données
+	//Hugo - Commande sql insÃ©rant la nouvelle rÃ©servation dans la base de donnÃ©es
 	$sql = "INSERT INTO ".TABLE_PREFIX."_entry (start_time, end_time, entry_type, repeat_id, room_id, create_by, beneficiaire, beneficiaire_ext, name, type, description, statut_entry, option_reservation,overload_desc, moderate, jours, clef, courrier) VALUES ($starttime, $endtime, '".protect_data_sql($entry_type)."', $repeat_id, $room_id, '".protect_data_sql($creator)."', '".protect_data_sql($beneficiaire)."', '".protect_data_sql($beneficiaire_ext)."', '".protect_data_sql($name)."', '".protect_data_sql($type)."', '".protect_data_sql($description)."', '".protect_data_sql($statut_entry)."', '".$option_reservation."','".protect_data_sql($overload_data_string)."', ".$moderate.",".$rep_jour_c.", $keys, $courrier)";
 	if (grr_sql_command($sql) < 0)
 		fatal_error(0, "Requete error  = ".$sql);
-	// s'il s'agit d'une modification d'une ressource déjà modérée et acceptée : on met à jour les infos dans la table ".TABLE_PREFIX."_entry_moderate
+	// s'il s'agit d'une modification d'une ressource dÃ©jÃ  modÃ©rÃ©e et acceptÃ©e : on met Ã  jour les infos dans la table ".TABLE_PREFIX."_entry_moderate
 	$new_id = grr_sql_insert_id("".TABLE_PREFIX."_entry", "id");
 	if ($moderate == 2)
 		moderate_entry_do($new_id,1,"","no");
@@ -473,12 +473,12 @@ function mrbsCreateSingleEntry($starttime, $endtime, $entry_type, $repeat_id, $r
  * $rep_opt     - Any options associated with the entry
  * $room_id     - Room ID
  * $beneficiaire       - beneficiaire
- * $beneficiaire_ext   - beneficiaire extérieur
- * $creator     - celui aui a créé ou modifié la réservation.
+ * $beneficiaire_ext   - beneficiaire extÃ©rieur
+ * $creator     - celui aui a crÃ©Ã© ou modifiÃ© la rÃ©servation.
  * $name        - Name
  * $type        - Type (Internal/External)
  * $description - Description
- * $rep_jour_c - Le jour cycle d'une réservation, si aucun 0
+ * $rep_jour_c - Le jour cycle d'une rÃ©servation, si aucun 0
  *
  * Returns:
  *   0        - An error occured while inserting the entry
@@ -533,7 +533,7 @@ function same_day_next_month($time)
  * $rep_type - What type of repeat is it
  * $rep_opt  - The repeat entrys
  * $max_ittr - After going through this many entrys assume an error has occured
- * *$rep_jour_c - Le jour cycle d'une réservation, si aucun 0
+ * *$rep_jour_c - Le jour cycle d'une rÃ©servation, si aucun 0
  *
  * Returns:
  *   empty     - The entry does not repeat
@@ -588,7 +588,7 @@ function mrbsGetRepeatEntryList($time, $enddate, $rep_type, $rep_opt, $max_ittr,
 			case 5:
 			$day += same_day_next_month($time);
 			break;
-			//Si la périodicité est par Jours/Cycle
+			//Si la pÃ©riodicitÃ© est par Jours/Cycle
 			case 6:
 			$sql = "SELECT * FROM ".TABLE_PREFIX."_calendrier_jours_cycle WHERE DAY >= '".$time2."' AND DAY <= '".$enddate."' AND Jours = '".$rep_jour_c."'";
 			$result = mysqli_query($GLOBALS['db_c'], $sql);
@@ -622,11 +622,11 @@ function mrbsGetRepeatEntryList($time, $enddate, $rep_type, $rep_opt, $max_ittr,
  * $rep_opt     - Any options associated with the entry
  * $room_id     - Room ID
  * $beneficiaire       - beneficiaire
- * $beneficiaire_ext - bénéficiaire extérieur
+ * $beneficiaire_ext - bÃ©nÃ©ficiaire extÃ©rieur
  * $name        - Name
  * $type        - Type (Internal/External)
  * $description - Description
- * $rep_jour_c - Le jour cycle d'une réservation, si aucun 0
+ * $rep_jour_c - Le jour cycle d'une rÃ©servation, si aucun 0
  *
  * Returns:
  *   0        - An error occured while inserting the entry
@@ -654,10 +654,10 @@ function mrbsCreateRepeatingEntrys($starttime, $endtime, $rep_type, $rep_enddate
 		{
 			mrbsCreateSingleEntry($reps[$i], $reps[$i] + $diff, 1, $ent, $room_id, $creator, $beneficiaire, $beneficiaire_ext, $name, $type, $description, $option_reservation,$overload_data, $moderate, $rep_jour_c,"-", 0, $courrier);
 			$id_new_resa = grr_sql_insert_id("".TABLE_PREFIX."_entry", "id");
-				// s'il s'agit d'une modification d'une ressource déjà modérée et acceptée : on met à jour les infos dans la table ".TABLE_PREFIX."_entry_moderate
+				// s'il s'agit d'une modification d'une ressource dÃ©jÃ  modÃ©rÃ©e et acceptÃ©e : on met Ã  jour les infos dans la table ".TABLE_PREFIX."_entry_moderate
 			if ($moderate == 2)
 				moderate_entry_do($id_new_resa,1,"","no");
-				// On récupère l'id de la première réservation de la série et qui sera utilisé pour l'enoi d'un mail
+				// On rÃ©cupÃ¨re l'id de la premiÃ¨re rÃ©servation de la sÃ©rie et qui sera utilisÃ© pour l'enoi d'un mail
 			if ($i == 0)
 				$id_first_resa = $id_new_resa;
 		}
@@ -724,11 +724,11 @@ function mrbsGetAreaSite($id)
 function moderate_entry_do($_id,$_moderate,$_description,$send_mail="yes")
 {
 	global $dformat;
-	// On vérifie que l'utilisateur a bien le droit d'être ici
+	// On vÃ©rifie que l'utilisateur a bien le droit d'Ãªtre ici
 	$room_id = grr_sql_query1("SELECT room_id FROM ".TABLE_PREFIX."_entry WHERE id='".$_id."'");
 	if (authGetUserLevel(getUserName(),$room_id) < 3)
 	{
-		fatal_error(0,"Opération interdite");
+		fatal_error(0,"OpÃ©ration interdite");
 		exit();
 	}
 	// j'ai besoin de $repeat_id '
@@ -766,8 +766,8 @@ function moderate_entry_do($_id,$_moderate,$_description,$send_mail="yes")
 	}
 	else
 	{
-		// cas d'une série
-		// on constitue le tableau des id de la périodicité
+		// cas d'une sÃ©rie
+		// on constitue le tableau des id de la pÃ©riodicitÃ©
 		$sql = "SELECT id FROM ".TABLE_PREFIX."_entry WHERE repeat_id=".$repeat_id;
 		$res = grr_sql_query($sql);
 		if (!$res)
@@ -776,11 +776,11 @@ function moderate_entry_do($_id,$_moderate,$_description,$send_mail="yes")
 		for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 			$tab_entry[] = $row['0'];
 		$tab_id_moderes = array();
-		// Boucle sur les résas
+		// Boucle sur les rÃ©sas
 		foreach ($tab_entry as $entry_tom)
 		{
 			$test = grr_sql_query1("SELECT count(id) FROM ".TABLE_PREFIX."_entry_moderate WHERE id = '".$entry_tom."'");
-			// Si il existe déjà une entrée dans ".TABLE_PREFIX."_entry_moderate, cela signifie que la réservation a déjà été modérée.
+			// Si il existe dÃ©jÃ  une entrÃ©e dans ".TABLE_PREFIX."_entry_moderate, cela signifie que la rÃ©servation a dÃ©jÃ  Ã©tÃ© modÃ©rÃ©e.
 			// Sinon :
 			if ($test == 0)
 			{
@@ -795,18 +795,18 @@ function moderate_entry_do($_id,$_moderate,$_description,$send_mail="yes")
 				if (!(grr_backup($entry_tom,$_SESSION['login'],$_description)))
 					fatal_error(0, grr_sql_error());
 				// Backup : on enregistre les infos dans ".TABLE_PREFIX."_entry_moderate
-				// On constitue un tableau des réservations modérées
+				// On constitue un tableau des rÃ©servations modÃ©rÃ©es
 				$tab_id_moderes[] = $entry_tom;
 			}
 		}
 	}
-	// Avant d'effacer la réservation, on procède à la notification par mail, uniquement si la salle n'a pas déjà été modérée.
+	// Avant d'effacer la rÃ©servation, on procÃ¨de Ã  la notification par mail, uniquement si la salle n'a pas dÃ©jÃ  Ã©tÃ© modÃ©rÃ©e.
 	if ($send_mail=="yes")
 		send_mail($_id,6,$dformat,$tab_id_moderes);
 	//moderation de la ressource
 	if ($_moderate != 1)
 	{
-		// on efface l'entrée de la base
+		// on efface l'entrÃ©e de la base
 		if ($series == 0)
 		{
 			$sql = "DELETE FROM ".TABLE_PREFIX."_entry WHERE id = ".$_id;
@@ -816,20 +816,20 @@ function moderate_entry_do($_id,$_moderate,$_description,$send_mail="yes")
 		}
 		else
 		{
-			// On sélectionne toutes les réservation de la périodicité
+			// On sÃ©lectionne toutes les rÃ©servation de la pÃ©riodicitÃ©
 			$res = grr_sql_query("SELECT id FROM ".TABLE_PREFIX."_entry WHERE repeat_id='".$repeat_id."'");
 			if (! $res)
 				fatal_error(0, grr_sql_error());
 			for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 			{
 				$entry_tom = $row['0'];
-				// Pour chaque réservation, on teste si celle-ci a été refusée
+				// Pour chaque rÃ©servation, on teste si celle-ci a Ã©tÃ© refusÃ©e
 				$test = grr_sql_query1("SELECT count(id) FROM ".TABLE_PREFIX."_entry_moderate WHERE id = '".$entry_tom."' AND moderate='3'");
-				// Si oui, on supprime la réservation
+				// Si oui, on supprime la rÃ©servation
 				if ($test > 0)
 					$del = grr_sql_query("DELETE FROM ".TABLE_PREFIX."_entry WHERE id = '".$entry_tom."'");
 			}
-			// On supprime l'info de périodicité
+			// On supprime l'info de pÃ©riodicitÃ©
 			$del_repeat = grr_sql_query("DELETE FROM ".TABLE_PREFIX."_repeat WHERE id='".$repeat_id."'");
 			$dupdate_repeat = grr_sql_query("UPDATE ".TABLE_PREFIX."_entry SET repead_id = '0' WHERE repead_id='".$repeat_id."'");
 		}
