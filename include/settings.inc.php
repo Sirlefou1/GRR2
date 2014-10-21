@@ -98,6 +98,8 @@ function getSettingValue($_name)
  * @_name               string                  The name of the setting to save
  * @_value              string                  Its value
  *
+ * @param string $_name
+ * @param integer $_value
  * @return              bool                    The result of the operation
  */
 function saveSetting($_name, $_value)

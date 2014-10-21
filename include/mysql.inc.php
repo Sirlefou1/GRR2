@@ -37,6 +37,9 @@ if (!$GLOBALS['db_c'] || !mysqli_select_db ($GLOBALS['db_c'], $dbDb))
 	exit;
 }
 mysqli_query($GLOBALS['db_c'], "SET NAMES UTF8");
+/**
+ * @param integer $row
+ */
 function mysqli_result($res, $row, $field = 0)
 {
 	$res->data_seek($row);
@@ -96,6 +99,9 @@ function grr_sql_version()
 // When called with i >= number of rows in the result, cleans up from
 // the query and returns 0.
 // Typical usage: $i = 0; while ((a = grr_sql_row($r, $i++))) { ... }
+/**
+ * @param integer $i
+ */
 function grr_sql_row ($r, $i)
 {
 	if ($i >= mysqli_num_rows($r))
@@ -112,6 +118,9 @@ function grr_sql_row ($r, $i)
 // routing also stores the data under number indexes.
 // When called with i >= number of rows in the result, cleans up from
 // the query and returns 0.
+/**
+ * @param integer $i
+ */
 function grr_sql_row_keyed ($r, $i)
 {
 	if ($i >= mysqli_num_rows($r))
@@ -129,6 +138,10 @@ function grr_sql_count ($r)
 }
 // Return the value of an autoincrement field from the last insert.
 // Must be called right after an insert on that table!
+/**
+ * @param string $table
+ * @param string $field
+ */
 function grr_sql_insert_id($table, $field)
 {
 	return mysqli_insert_id($GLOBALS['db_c']);
@@ -195,6 +208,9 @@ function grr_sql_syntax_limit($count, $offset)
 	return " LIMIT $offset,$count ";
 }
 // Generate non-standard SQL to output a TIMESTAMP as a Unix-time:
+/**
+ * @param string $fieldname
+ */
 function grr_sql_syntax_timestamp_to_unix($fieldname)
 {
 	return " UNIX_TIMESTAMP($fieldname) ";

@@ -41,7 +41,7 @@
  * @_login              string                  Login of the user
  * @_password           string                  Password
  *
- * @return              bool                    The session is open
+ * @return              string|null                    The session is open
  */
 function grr_opensession($_login, $_password, $_user_ext_authentifie = '', $tab_login = array(), $tab_groups = array())
 {
@@ -824,7 +824,7 @@ return "1";
  * Returns true if session resumes, false otherwise
  *
  *
- * @return              bool                    The session resumed
+ * @return              null|boolean                    The session resumed
  */
 function grr_resumeSession()
 {
@@ -1095,6 +1095,9 @@ function grr_ldap_search_user($ds, $basedn, $login_attr, $login, $filtre_sup = "
 			return false;
 	}
 }
+/**
+ * @return resource
+ */
 function grr_verif_imap($_login, $_password)
 {
 	if ($_password == '')
@@ -1113,6 +1116,9 @@ function grr_verif_imap($_login, $_password)
 		return false;
 	}
 }
+/**
+ * @return resource
+ */
 function grr_connect_imap($i_adresse,$i_port,$i_login,$i_pwd,$use_type,$use_ssl,$use_cert,$use_tls,$mode = "normal")
 {
 	$string1="";

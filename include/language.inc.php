@@ -106,6 +106,9 @@ switch ($dateformat)
 	$dformat = "%A %d %B %Y";
 	break;
 }
+/**
+ * @param string $string
+ */
 function utf8_convert($string)
 {
 	global $windows_locale, $unicode_encoding, $winlocale_codepage_map;
@@ -118,6 +121,9 @@ function utf8_convert($string)
 	}
 	return $string;
 }
+/**
+ * @return string
+ */
 function utf8_strftime($format, $time)
 {
 	$result = strftime($format, $time);

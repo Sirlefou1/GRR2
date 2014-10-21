@@ -43,6 +43,15 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 		var $week;
 		var $mois_precedent;
 		var $mois_suivant;
+
+		/**
+		 * @param string $day
+		 * @param string $month
+		 * @param string $year
+		 * @param integer $h
+		 * @param integer $mois_precedent
+		 * @param integer $mois_suivant
+		 */
 		function Calendar($day, $month, $year, $h, $area, $room, $dmy, $mois_precedent, $mois_suivant)
 		{
 			$this->day   = $day;
@@ -59,6 +68,11 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 		{
 			return "";
 		}
+
+		/**
+		 * @param integer $day
+		 * @param double $month
+		 */
 		function getDateLink($day, $month, $year)
 		{
 			global $vocab;
