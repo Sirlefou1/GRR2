@@ -19,7 +19,7 @@
 [correction] Encodage des caracteres UTF-8 des fichier genere
 [correction] affichage des pages de moderation avec l'option popup
 [correction] CSS print
-[correction] Traduction
+[correction] Traductions
 [correction] session/traduction sur certaines pages
 [correction] affichage du menu sur certaine page de l'admin
 [correction] Balise php courte dans contactFormulaire.php
@@ -36,7 +36,8 @@
 [maj] lib Jquery-ui 1.11.1
 [maj] lib datepicker
 [maj] lib timepicker 1.5.0
-[maj] lib phpmailer 5.2.8
+[maj] lib phpmailer 5.2.9+
+[maj] Traductions
 [change] Correction diverse du code HTML generer W3c validation
 [change] Ordre de chargemet des fichier css et js
 [change] Création et deplacemet des fichier js dans le dossier js
@@ -44,5 +45,6 @@
 [change] Apparance utilisation de bootstrap et de glyphicon
 [change] Simplification de la fonction grr_sql_version par l'utilisation de mysqli_get_server_info
 [change] Horloge mise a jour pour fonctionner sur chrome
+[change] Affichage du menu gauche dans toutes les pages de l'administration
 [suppression] Fichier inutile
 

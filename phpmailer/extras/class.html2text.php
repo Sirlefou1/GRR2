@@ -199,8 +199,8 @@ class Html2Text
      */
     protected $pre_replace = array(
         '<br>',
-        '    ',
-        ' ',
+        '&nbsp;&nbsp;&nbsp;&nbsp;',
+        '&nbsp;',
         '',
         ''
     );

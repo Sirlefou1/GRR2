@@ -44,7 +44,7 @@ class PHPMailer
      * The character set of the message.
      * @type string
      */
-    public $CharSet = 'utf-8';
+    public $CharSet = 'iso-8859-1';
 
     /**
      * The MIME Content-type of the message.
@@ -2932,7 +2932,7 @@ class PHPMailer
                         $cid,
                         $filename,
                         'base64',
-                        self::_mime_types(self::mb_pathinfo($filename, PATHINFO_EXTENSION))
+                        self::_mime_types((string)self::mb_pathinfo($filename, PATHINFO_EXTENSION))
                     )
                     ) {
                         $message = preg_replace(
