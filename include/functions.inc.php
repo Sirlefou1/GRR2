@@ -896,9 +896,9 @@ function print_header($day = '', $month = '', $year = '', $area = '', $type_sess
 			else
 			{
 				echo '<br /> <b>'.get_vocab("welcome_to").htmlspecialchars($_SESSION['prenom']).' '.htmlspecialchars($_SESSION['nom']).'</b>';
-				echo '<br /> <a href="my_account.php?day='.$day.'&amp;year='.$year.'&amp;month='.$month.'">'.get_vocab("manage_my_account").'</a><br/>';
+				echo '<br /> <a href="my_account.php?day='.$day.'&amp;year='.$year.'&amp;month='.$month.'">'.get_vocab("manage_my_account").'</a>';
 				if (verif_access_search(getUserName()))
-					echo '<a href="report.php">'.get_vocab("report").'</a>';
+					echo '<br/><a href="report.php">'.get_vocab("report").'</a>';
 				$disconnect_link = false;
 				if (!((getSettingValue("cacher_lien_deconnecter") == 'y') && (isset($_SESSION['est_authentifie_sso']))))
 				{
