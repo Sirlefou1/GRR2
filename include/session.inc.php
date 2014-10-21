@@ -163,12 +163,7 @@ function grr_opensession($_login, $_password, $_user_ext_authentifie = '', $tab_
 						etat != 'inactif'";
 						$res_user = grr_sql_query($sql);
 						$num_row = grr_sql_count($res_user);
-						if ($num_row == 1)
-						{
-							// on récupère les données de l'utilisateur dans $row
-							$row = grr_sql_row($res_user,0);
-						}
-						else
+						if ($num_row != 1)
 						{
 							return "2";
 							die();
@@ -691,6 +686,8 @@ if (($num_row > 0) and isset($_SESSION['start']))
 	$sql = "UPDATE ".TABLE_PREFIX."_log set END = now() + interval " . getSettingValue("sessionMaxLength") . " minute where SESSION_ID = '" . session_id() . "' and START = '" . $_SESSION['start'] . "'";
 		//  $sql = "update ".TABLE_PREFIX."_log set END = now() + interval " . getSettingValue("sessionMaxLength") . " minute where SESSION_ID = '" . session_id() . "'";
 	$res = grr_sql_query($sql);
+	if (!$res)
+		fatal_error(0, 'erreur mysql' . grr_sql_error());
 	return "1";
 }
 else
@@ -876,6 +873,8 @@ function grr_resumeSession()
 			{
 				$sql = "UPDATE ".TABLE_PREFIX."_log set END = now() + interval " . $_SESSION['maxLength'] . " minute where SESSION_ID = '" . session_id() . "' and START = '" . $_SESSION['start'] . "'";
 				$res = grr_sql_query($sql);
+				if (!$res)
+					fatal_error(0, 'erreur mysql' . grr_sql_error());
 				return (true);
 			}
 			else
@@ -888,6 +887,8 @@ function grr_resumeSession()
 	{
 		$sql = "UPDATE ".TABLE_PREFIX."_log set END = now() + interval " . $_SESSION['maxLength'] . " minute where SESSION_ID = '" . session_id() . "' and START = '" . $_SESSION['start'] . "'";
 		$res = grr_sql_query($sql);
+		if (!$res)
+			fatal_error(0, 'erreur mysql' . grr_sql_error());
 		return (true);
 	}
 }
