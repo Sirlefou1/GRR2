@@ -46,9 +46,6 @@
  td.BL { vertical-align: baseline; text-align: left}
  td.TR { vertical-align: top; text-align: right}
  td.TL { vertical-align: top; text-align: left}
- .clock {
-	font-size: 1em;
- }
  .fontcolor1{color:white}
  .fontcolor2{color:#99CCFF}
  .fontcolor3{color:#99CCFF}
@@ -522,3 +519,10 @@
 .glyphicon-plus {
 	color: #5c2862;
 }
+
+.clock {margin:0 auto;}
+
+#Date { font-size:1em; text-align:center; }
+
+.clock ul {margin:0 auto; padding:0px; list-style:none; text-align:center; }
+.clock ul li { display:inline; font-size:1em; text-align:center; }

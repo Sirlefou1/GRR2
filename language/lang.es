@@ -2,7 +2,7 @@
 # GRR : fichier de langue espagnole
 # Last modification : 07/05/2010
 # Charset (jeu de caractères) utilisé dans l'en-tête des pages HTML
-$charset_html = "iso-8859-1";
+$charset_html = "utf-8";
 $vocab = array();
 $vocab['a acces au domaine'] = "Este usuario tiene acceso a este campo limitado";
 $vocab['accepter_resa'] = "Aceptar la reserva";

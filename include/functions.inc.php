@@ -219,20 +219,20 @@ function bouton_retour_haut()
 {
 	echo '<script type="text/javascript">'.PHP_EOL;
 	echo '$(function()'.PHP_EOL;
-	echo '	{'.PHP_EOL;
-	echo '		$(window).scroll(function()'.PHP_EOL;
-	echo '		{'.PHP_EOL;
-	echo '			if ($(this).scrollTop() != 0)'.PHP_EOL;
-	echo '				$("#toTop").fadeIn();'.PHP_EOL;
-	echo '			else'.PHP_EOL;
-	echo '				$("#toTop").fadeOut();'.PHP_EOL;
-	echo '		});'.PHP_EOL;
-	echo '		$("#toTop").click(function()'.PHP_EOL;
+		echo '	{'.PHP_EOL;
+		echo '		$(window).scroll(function()'.PHP_EOL;
+			echo '		{'.PHP_EOL;
+			echo '			if ($(this).scrollTop() != 0)'.PHP_EOL;
+			echo '				$("#toTop").fadeIn();'.PHP_EOL;
+			echo '			else'.PHP_EOL;
+			echo '				$("#toTop").fadeOut();'.PHP_EOL;
+			echo '		});'.PHP_EOL;
+echo '		$("#toTop").click(function()'.PHP_EOL;
 	echo '		{'.PHP_EOL;
 	echo '			$("body,html").animate({scrollTop:0},800);'.PHP_EOL;
 	echo '		});'.PHP_EOL;
-	echo '	});'.PHP_EOL;
-	echo '</script>'.PHP_EOL;
+echo '	});'.PHP_EOL;
+echo '</script>'.PHP_EOL;
 }
 /**
 *function affiche_ressource_empruntee
@@ -760,7 +760,7 @@ function begin_page($title,$page="with_session")
 		echo '<script type="text/javascript" src="./include/tooltip.js"></script>'.PHP_EOL;
 	if (!isset($_SESSION['selection']))
 		$a .= '<script src="js/selection.js" type="text/javascript" ></script>'.PHP_EOL;
-	if (@file_exists($clock_file))
+	if (@file_exists('js/'.$clock_file))
 		$a .= '<script type="text/javascript" src="js/'.$clock_file.'"></script>'.PHP_EOL;
 	//show a warning if this is using a low version of php
 	if (substr(phpversion(), 0, 1) == 3)
@@ -768,6 +768,7 @@ function begin_page($title,$page="with_session")
 	$a .= '</head>'.PHP_EOL.'<body>'.PHP_EOL;
 	return $a;
 }
+
 /*
 ** Fonction qui affiche le header
 */
@@ -858,6 +859,18 @@ function print_header($day = '', $month = '', $year = '', $area = '', $type_sess
 			if ($type_session != "with_session")
 				echo '<script>selection()</script>'.PHP_EOL;
 			echo '<td class="configuration" >'.PHP_EOL;
+			if (@file_exists('js/'.$clock_file))
+			{
+				echo '<div class="clock">
+				<div id="Date"></div>
+				<ul>
+					<li id="hours"> </li>
+					<li id="point">:</li>
+					<li id="min"> </li>
+					<li id="point">:</li>
+					<li id="sec"> </li>
+				</ul>';
+			}
 			$parametres_url = '';
 			$_SESSION['chemin_retour'] = '';
 			if (isset($_SERVER['QUERY_STRING']) && ($_SERVER['QUERY_STRING'] != ''))
