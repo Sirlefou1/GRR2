@@ -3907,6 +3907,7 @@ Construit les informations à afficher sur les plannings
 */
 function affichage_resa_planning($_description, $id_resa)
 {
+	$affichage = "";
 	if (getSettingValue("display_full_description") == 1)
 		$affichage = htmlspecialchars($_description,ENT_NOQUOTES);
 	// Les champs add :
