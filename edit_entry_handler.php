@@ -83,18 +83,21 @@ $month = isset($_GET["start_month"]) ? $_GET["start_month"] : NULL;
 $year = isset($_GET["start_year"]) ? $_GET["start_year"] : NULL;
 $duration = isset($_GET["duration"]) ? $_GET["duration"] : NULL;
 $duration = str_replace(",", ".", "$duration ");
-$hour = isset($_GET["hour"]) ? $_GET["hour"] : NULL;
+$debut = array();
+$debut = explode(':', $_GET["start_"]);
+$hour = $debut[0];
+$minute = $debut[1];
 if (isset($hour))
 {
 	settype($hour, "integer");
-	if ($hour > 23) $hour = 23;
+	if ($hour > 23)
+		$hour = 23;
 }
-$minute = isset($_GET["minute"]) ? $_GET["minute"] : NULL;
 if (isset($minute))
 {
 	settype($minute, "integer");
 	if ($minute > 59)
-		$hour = 59;
+		$minute = 59;
 }
 $statut_entry = isset($_GET["statut_entry"]) ? $_GET["statut_entry"] : "-";
 $rep_jour_c = isset($_GET["rep_jour_"]) ? $_GET["rep_jour_"] : 0;
@@ -293,15 +296,17 @@ else
 		else
 			$erreur = 'y';
 	}
-	if (!isset($_GET["end_day"]) || !isset($_GET["end_month"]) || !isset($_GET["end_year"]) || !isset($_GET["end_hour"]) || !isset($_GET["end_minute"]))
+	if (!isset($_GET["end_day"]) || !isset($_GET["end_month"]) || !isset($_GET["end_year"]) || !isset($_GET["end_"]))
 		$erreur = 'y';
 	else
 	{
 		$end_day = $_GET["end_day"];
 		$end_year = $_GET["end_year"];
 		$end_month = $_GET["end_month"];
-		$end_hour = $_GET["end_hour"];
-		$end_minute = $_GET["end_minute"];
+		$fin = array();
+		$fin = explode(':', $_GET["end_"]);
+		$end_hour = $fin[0];
+		$end_minute = $fin[1];
 		settype($end_month, "integer");
 		settype($end_day, "integer");
 		settype($end_year, "integer");

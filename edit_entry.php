@@ -532,17 +532,6 @@ print_header($day, $month, $year, $area);
 				}
 			}
 		}
-		if ($enable_periods!='y')
-		{
-			?>   h = parseInt(document.forms["main"].hour.value);
-			m = parseInt(document.forms["main"].minute.value);
-			if (h > 23 || m > 59)
-			{
-				alert("<?php echo get_vocab('you_have_not_entered') . '\n' . get_vocab('valid_time_of_day') ?>");
-				return false;
-			}
-			<?php
-		}
 		?>
 		if  (document.forms["main"].type.value=='0')
 		{
@@ -673,6 +662,12 @@ echo '<form id="main" action="edit_entry_handler.php" method="get">'.PHP_EOL;
 		}
 	}
 </script>
+  <style type="text/css">
+        .input-group {
+            width: 110px;
+            margin-bottom: 10px;
+        }
+    </style>
 <?php
 echo '<table class="table-bordered EditEntryTable"><tr>'.PHP_EOL;
 echo '<td style="width:50%; vertical-align:top;">'.PHP_EOL;
@@ -805,19 +800,19 @@ if ($enable_periods == 'y')
 			echo ' selected="selected"';
 		echo '>'.$p_val.'</option>'.PHP_EOL;
 	}
-	echo '</select>'.PHP_EOL;
+	echo '</select></td>'.PHP_EOL;
 }
 else
 {
 	//jQuery_TimePicker($typeDate, $typeTime, $start_hour, $start_min, $end_hour, $end_min)
-	echo '<b>'.get_vocab("time")."</b>";
+	echo "<td class=\"E\"><b>".get_vocab("time")."</b><td class=\"CL\">";
 	if (isset ($_GET['id']))
 	{
-		jQuery_TimePicker('start', '', $start_hour, $start_min);
+		jQuery_TimePicker('start', 'start_', $start_hour, $start_min);
 	}
 	else
 	{
-		jQuery_TimePicker('start', '', '', '');
+		jQuery_TimePicker('start', 'start_', '', '');
 	}
 	if (!$twentyfourhour_format)
 	{
@@ -826,6 +821,7 @@ else
 		$checked = ($start_hour >= 12) ? 'checked="checked"' : "";
 		echo '<input name="ampm" type="radio" value="pm" '.$checked.' />'.date("a",mktime(13,0,0,1,1,1970));
 	}
+	echo "</td>";
 }
 echo '</td></tr></table>'.PHP_EOL;
 echo '</td></tr>';

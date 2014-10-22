@@ -779,22 +779,25 @@ function begin_page($title,$page="with_session")
 	$a.= '<style type="text/css">div#fixe   { position: fixed; bottom: 5%; right: 5%;}</style>'.PHP_EOL;
 	$a.= '<style type="text/css">div#file_upload-queue  { position: fixed; bottom: 10%; right: 5%;}</style>'.PHP_EOL;
 	$a.= '<style type="text/css">div#file_upload   { position: fixed; bottom: 25%; right: 5%;}</style>'.PHP_EOL;
-	$a.= '<link rel="SHORTCUT ICON" href="./favicon.ico" />';
+	$a.= '<link rel="SHORTCUT ICON" href="./favicon.ico" />'.PHP_EOL;
 	$a .= '<link rel="stylesheet" type="text/css" href="js/uploadify/uploadify.css"/>'.PHP_EOL;
-	$a .= '<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />';
-	$a .= '<link href="themes/default/css/jquery-ui-timepicker-addon.css" rel="stylesheet" type="text/css">';
+	$a .= '<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />'.PHP_EOL;
+	$a .= '<link href="themes/default/css/jquery-ui-timepicker-addon.css" rel="stylesheet" type="text/css">'.PHP_EOL;
+    $a .= '<link rel="stylesheet" type="text/css" href="themes/default/css/bootstrap-clockpicker.min.css">'.PHP_EOL;
 	$a .= PHP_EOL.'<title>'.$title.'</title>';
 	$a .= PHP_EOL.'<meta http-equiv="Content-Type" content="text/html; charset=';
 	if ($unicode_encoding)
 		$a .= 'utf-8';
 	else
 		$a .= $charset_html;
-	$a .=  '" />';
-	$a .= PHP_EOL.'<meta name="Robots" content="noindex" />';
+	$a .=  '" />'.PHP_EOL;
+	$a .= PHP_EOL.'<meta name="Robots" content="noindex" />'.PHP_EOL;
 	$a .= '<script src="js/jquery-2.1.1.min.js"></script>'.PHP_EOL;
-	$a .= '<script src="js/jquery-ui.min.js"></script>';
-	$a .= '<script src="js/jquery.validate.js"></script>';
-	$a .= '<script src="js/jquery-ui-timepicker-addon.js"></script>';
+	$a .= '<script src="js/jquery-ui.min.js"></script>'.PHP_EOL;
+	$a .= '<script src="js/jquery.validate.js"></script>'.PHP_EOL;
+	$a .= '<script src="js/jquery-ui-timepicker-addon.js"></script>'.PHP_EOL;
+    $a .= '<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>'.PHP_EOL;
+    $a .= '<script type="text/javascript" src="js/bootstrap-clockpicker.js"></script>'.PHP_EOL;
 	$a .= '<script src="js/jspdf/jspdf.js"></script>'.PHP_EOL;
 	$a .= '<script src="js/jspdf/libs/FileSaver.js/FileSaver.js"></script>'.PHP_EOL;
 	$a .= '<script src="js/jspdf/jspdf.plugin.from_html.js"></script>'.PHP_EOL;
@@ -4324,17 +4327,18 @@ function jQuery_TimePicker($typeDate, $typeTime, $start_hour, $start_min)
 		$minute = '00';
 	global $resolution;
 	$minuteJQ = $resolution / 60;
-	echo '<input type="text" id="hour_' .$typeDate. '" value="' .$hour. '" name="' .$typeTime. 'hour" size="2" /> : <input type="text" id="minute_' .$typeDate. '" value="' .$minute. '" name="' .$typeTime. 'minute" size="2" />
-	<script>
-		$("#hour_' .$typeDate. '").timepicker({
-			controlType: \'select\',
-			timeFormat: \'H\',
-			stepMinute:'.$minuteJQ.',
-			altField: "#minute_' .$typeDate. '",
-			altTimeFormat: "mm",
-			hour : ' .$hour. ',
-			minute : ' .$minute. '
-		});
+	echo '<div class="input-group clockpicker">
+	<input name="' .$typeTime. '" type="text" class="form-control" value="' .$hour. ':' .$minute. '">
+	<span class="input-group-addon">
+		<span class="glyphicon glyphicon-time"></span>
+	</span>
+</div>';
+	//<input type="text" id="hour_' .$typeDate. '" value="' .$hour. '" name="' .$typeTime. 'hour" size="2" /> : <input type="text" id="minute_' .$typeDate. '" value="' .$minute. '" name="' .$typeTime. 'minute" size="2" />
+echo '<script type="text/javascript">
+$(\'.clockpicker\').clockpicker({
+	align: \'left\',
+	donetext: \'Valider\'
+});
 </script>';
 }
 function spinner ($duration)
