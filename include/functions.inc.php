@@ -783,7 +783,7 @@ function begin_page($title,$page="with_session")
 	$a .= '<link rel="stylesheet" type="text/css" href="js/uploadify/uploadify.css"/>'.PHP_EOL;
 	$a .= '<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />'.PHP_EOL;
 	$a .= '<link href="themes/default/css/jquery-ui-timepicker-addon.css" rel="stylesheet" type="text/css">'.PHP_EOL;
-    $a .= '<link rel="stylesheet" type="text/css" href="themes/default/css/bootstrap-clockpicker.min.css">'.PHP_EOL;
+	$a .= '<link rel="stylesheet" type="text/css" href="themes/default/css/bootstrap-clockpicker.min.css">'.PHP_EOL;
 	$a .= PHP_EOL.'<title>'.$title.'</title>';
 	$a .= PHP_EOL.'<meta http-equiv="Content-Type" content="text/html; charset=';
 	if ($unicode_encoding)
@@ -796,8 +796,8 @@ function begin_page($title,$page="with_session")
 	$a .= '<script src="js/jquery-ui.min.js"></script>'.PHP_EOL;
 	$a .= '<script src="js/jquery.validate.js"></script>'.PHP_EOL;
 	$a .= '<script src="js/jquery-ui-timepicker-addon.js"></script>'.PHP_EOL;
-    $a .= '<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>'.PHP_EOL;
-    $a .= '<script type="text/javascript" src="js/bootstrap-clockpicker.js"></script>'.PHP_EOL;
+	$a .= '<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>'.PHP_EOL;
+	$a .= '<script type="text/javascript" src="js/bootstrap-clockpicker.js"></script>'.PHP_EOL;
 	$a .= '<script src="js/jspdf/jspdf.js"></script>'.PHP_EOL;
 	$a .= '<script src="js/jspdf/libs/FileSaver.js/FileSaver.js"></script>'.PHP_EOL;
 	$a .= '<script src="js/jspdf/jspdf.plugin.from_html.js"></script>'.PHP_EOL;
@@ -3039,13 +3039,13 @@ function UserRoomMaxBooking($user, $id_room, $number)
  			$resolution_area = grr_sql_query1("select resolution_area from ".TABLE_PREFIX."_area WHERE id = '".$id_area."'");
  			if ($date_booking > $date_now - $resolution_area)
  				return true;
-			return false;
+ 			return false;
  		}
  		else
  		{
  			if ($date_booking > $date_now)
  				return true;
-			return false;
+ 			return false;
  		}
  	}
  }
@@ -3067,7 +3067,7 @@ function UserRoomMaxBooking($user, $id_room, $number)
  		return true;
  	else if ($endtime - $starttime > $duree_max_resa_area * 60)
  		return false;
-	return true;
+ 	return true;
  }
 // function verif_delais_max_resa_room($user, $id_room, $date_booking)
 // $user : le login de l'utilisateur
@@ -3087,7 +3087,7 @@ function UserRoomMaxBooking($user, $id_room, $number)
  		return true;
  	else if ($datenow + $delais_max_resa_room * 24 * 3600 + 1 < $date_booking)
  		return false;
-	return true;
+ 	return true;
  }
 // function verif_access_search : vérifier l'accès à l'outil de recherche
 // $user : le login de l'utilisateur
@@ -3096,7 +3096,7 @@ function UserRoomMaxBooking($user, $id_room, $number)
  {
  	if (authGetUserLevel($user,-1) >= getSettingValue("allow_search_level"))
  		return TRUE;
-	return FALSE;
+ 	return FALSE;
  }
 // function verif_display_fiche_ressource : vérifier l'accès à la visualisation de la fiche d'une ressource
 // $user : le login de l'utilisateur
@@ -3108,9 +3108,9 @@ function UserRoomMaxBooking($user, $id_room, $number)
  	{
  		if (authGetUserLevel($user,$id_room) >= getSettingValue("visu_fiche_description"))
  			return TRUE;
-		return FALSE;
+ 		return FALSE;
  	}
-	return FALSE;
+ 	return FALSE;
  }
 // function verif_acces_fiche_reservation : vérifier l'accès à la fiche de réservation d'une ressource
 // $user : le login de l'utilisateur
@@ -3119,7 +3119,7 @@ function UserRoomMaxBooking($user, $id_room, $number)
  {
  	if (authGetUserLevel($user,$id_room) >= getSettingValue("acces_fiche_reservation"))
  		return TRUE;
-	return FALSE;
+ 	return FALSE;
  }
 /* function verif_display_email : vérifier l'accès à l'adresse email
  *$user : le login de l'utilisateur
@@ -3877,13 +3877,9 @@ function numero_semaine($date)
 		{
 			// Les années qui commence un Jeudi et les années bissextiles commençant un Mercredi en possède 53
 			if (date("w", mktime(12,0,0,1,1,date("Y",$jeudiSemaine))) == 4 || (date("w", mktime(12, 0, 0, 1, 1, date("Y", $jeudiSemaine))) == 3 && date("z", mktime(12, 0, 0, 12, 31, date("Y", $jeudiSemaine))) == 365))
-			{
 				$numeroSemaine = 53;
-			}
 			else
-			{
 				$numeroSemaine = 1;
-			}
 		}
 		return sprintf("%02d",$numeroSemaine);
 	}
@@ -4030,10 +4026,7 @@ function donne_nom_email($_beneficiaire)
 	$tab_benef["nom"] = "";
 	$tab_benef["email"] = "";
 	if ($_beneficiaire == "")
-	{
 		return $tab_benef;
-		die();
-	}
 	$temp = explode("|",$_beneficiaire);
 	if (isset($temp[0]))
 		$tab_benef["nom"] = $temp[0];
@@ -4049,19 +4042,12 @@ function concat_nom_email($_nom, $_email)
 	// On supprime les caractères | de $_nom
 	$_nom = trim(str_replace("|","",$_nom));
 	if ($_nom == "")
-	{
 		return "-1";
-		die();
-	}
 	$_email = trim($_email);
 	if ($_email != "")
 	{
 		if (strstr($_email,"|"))
-		{
-			// l'adresse email contient le catactère | ce qui n'est pas normal et peut compromettre la suite du traitement.
 			return "-2";
-			die();
-		}
 	}
 	$chaine = $_nom."|".$_email;
 	return $chaine;
@@ -4086,72 +4072,67 @@ function affiche_nom_prenom_email($_beneficiaire, $_beneficiaire_ext, $type = "n
 		{
 			$nb_result = grr_sql_count($res_beneficiaire);
 			if ($nb_result == 0)
-				$chaine = get_vocab("utilisateur_inconnu").$_beneficiaire.")";
-else
-{
-	$row_user = grr_sql_row($res_beneficiaire, 0);
-	if ($type == "formail")
-	{
-		$chaine = removeMailUnicode($row_user[0])." ".removeMailUnicode($row_user[1]);
-		if ($row_user[2] != "")
-			$chaine .= " (".$row_user[2].")";
-	}
-	else if ($type == "onlymail")
-	{
+				$chaine = get_vocab("utilisateur_inconnu").$_beneficiaire;
+			else
+			{
+				$row_user = grr_sql_row($res_beneficiaire, 0);
+				if ($type == "formail")
+				{
+					$chaine = removeMailUnicode($row_user[0])." ".removeMailUnicode($row_user[1]);
+					if ($row_user[2] != "")
+						$chaine .= " (".$row_user[2].")";
+				}
+				else if ($type == "onlymail")
+				{
 					// Cas où en envoie uniquement le mail
-		$chaine = grr_sql_query1("select email from ".TABLE_PREFIX."_utilisateurs where login='$_beneficiaire'");
-	}
-	else if (($type == "withmail") and ($row_user[2] != ""))
-	{
+					$chaine = grr_sql_query1("select email from ".TABLE_PREFIX."_utilisateurs where login='$_beneficiaire'");
+				}
+				else if (($type == "withmail") and ($row_user[2] != ""))
+				{
 					// Cas où en envoie les noms, prénoms et mail
-		$chaine = affiche_lien_contact($_beneficiaire,"identifiant:oui","afficher_toujours");
-	}
-	else
-	{
+					$chaine = affiche_lien_contact($_beneficiaire,"identifiant:oui","afficher_toujours");
+				}
+				else
+				{
 					// Cas où en envoie les noms, prénoms sans le mail
-		$chaine = $row_user[0]." ".$row_user[1];
-	}
-}
-return $chaine;
-die();
-}
-else
-{
-	return "";
-	die();
-}
-}
-else
-{
-		// cas d'un bénéficiaire extérieur
-		// On récupère le tableau des nom et emails
-	$tab_benef = donne_nom_email($_beneficiaire_ext);
-		// Cas où en envoie uniquement le mail
-	if ($type == "onlymail")
-	{
-		$chaine = $tab_benef["email"];
-			// Cas où en envoie les noms, prénoms et mail
-	}
-	else if (($type == "withmail") && ($tab_benef["email"] != ""))
-	{
-		$email = explode('@',$tab_benef["email"]);
-		$person = $email[0];
-		if (isset($email[1]))
-		{
-			$domain = $email[1];
-			$chaine = "<script type=\"text/javascript\">encode_adresse('".$person."','".$domain."','".AddSlashes($tab_benef["nom"])."',1);</script>";
+					$chaine = $row_user[0]." ".$row_user[1];
+				}
+			}
+			return $chaine;
 		}
 		else
-			$chaine = $tab_benef["nom"];
+			return "";
 	}
 	else
 	{
+		// cas d'un bénéficiaire extérieur
+		// On récupère le tableau des nom et emails
+		$tab_benef = donne_nom_email($_beneficiaire_ext);
+		// Cas où en envoie uniquement le mail
+		if ($type == "onlymail")
+		{
+			$chaine = $tab_benef["email"];
+			// Cas où en envoie les noms, prénoms et mail
+		}
+		else if (($type == "withmail") && ($tab_benef["email"] != ""))
+		{
+			$email = explode('@',$tab_benef["email"]);
+			$person = $email[0];
+			if (isset($email[1]))
+			{
+				$domain = $email[1];
+				$chaine = "<script type=\"text/javascript\">encode_adresse('".$person."','".$domain."','".AddSlashes($tab_benef["nom"])."',1);</script>";
+			}
+			else
+				$chaine = $tab_benef["nom"];
+		}
+		else
+		{
 		// Cas où en envoie les noms, prénoms sans le mail
-		$chaine = $tab_benef["nom"];
+			$chaine = $tab_benef["nom"];
+		}
+		return $chaine;
 	}
-	return $chaine;
-	die();
-}
 }
 /*
  Fonction permettant d'effectuer une correspondance entre
