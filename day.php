@@ -241,13 +241,13 @@ else
 			$a = $a + 1;
 			echo "><a id=\"afficherBoutonSelection$a\" class=\"lienPlanning\" href=\"#\" onclick=\"afficherMoisSemaine($a)\" style=\"display:inline;\">".htmlspecialchars($row[0])."</a>\n";
 			echo "<a id=\"cacherBoutonSelection$a\" class=\"lienPlanning\" href=\"#\" onclick=\"cacherMoisSemaine($a)\" style=\"display:none;\">".htmlspecialchars($row[0])."</a>\n";
-			if (htmlspecialchars($row[3]. $temp != ''))
+			if (htmlspecialchars($row[3]).$temp != '')
 			{
 				if (htmlspecialchars($row[3] != ''))
 					$saut = "<br />";
 				else
 					$saut = "";
-				echo $saut.htmlspecialchars($row[3]) . $temp."\n";
+				echo $saut.htmlspecialchars($row[3]).$temp."\n";
 			}
 			echo "<br />";
 			if (verif_display_fiche_ressource(getUserName(), $id_room[$i]) && $_GET['pview'] != 1)
@@ -262,9 +262,9 @@ else
 			echo "</span>";
 			echo "</th>";
 			$tab[1][$i + 1] = htmlspecialchars($row[0]);
-			if (htmlspecialchars($row[3]. $temp != ''))
+			if (htmlspecialchars($row[3]).$temp != '')
 			{
-				if (htmlspecialchars($row[3] != ''))
+				if (htmlspecialchars($row[3]) != '')
 					$saut = "<br />";
 				else
 					$saut = "";
