@@ -67,7 +67,7 @@ if (isset($_SERVER['HTTP_REFERER']))
 Definition_ressource_domaine_site();
 if (check_begin_end_bookings($day, $month, $year))
 {
-	showNoBookings($day, $month, $year, $area,$back,$type_session);
+	showNoBookings($day, $month, $year, $back);
 	exit();
 }
 print_header($day, $month, $year, $area, $type_session);

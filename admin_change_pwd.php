@@ -58,7 +58,7 @@ if (isset($_SERVER['HTTP_REFERER']))
 $day   = date("d");
 $month = date("m");
 $year  = date("Y");
-check_access(6, $day, $month, $year, $back);
+check_access(6, $back);
 // Restriction dans le cas d'une démo
 VerifyModeDemo();
 unset($user_login);

@@ -55,7 +55,7 @@ $display = isset($_GET["display"]) ? $_GET["display"] : NULL;
 $day   = date("d");
 $month = date("m");
 $year  = date("Y");
-check_access(6, $day, $month, $year, $back);
+check_access(6, $back);
 if (isset($_GET['valid']) && ($_GET['valid'] == "yes"))
 {
 	if (!saveSetting("begin_bookings", $_GET['begin_bookings']))

@@ -99,7 +99,7 @@ print_header($day, $month, $year, $area, $type_session, "no_admin", $room);
 //Renseigne les droits de l'utilisateur, si les droits sont insufisants, l'utilisateur est avertit.
 if (check_begin_end_bookings($day, $month, $year))
 {
-	showNoBookings($day, $month, $year, $area,$back,$type_session );
+	showNoBookings($day, $month, $year, $back);
 	exit();
 }
 if (((authGetUserLevel(getUserName(), -1) < 1) && (getSettingValue("authentification_obli") == 1)) || !$verif_acces_ressource)

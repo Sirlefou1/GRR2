@@ -113,7 +113,7 @@ function cal($month, $year)
 	$s .= "</table>\n";
 	return $s;
 }
-check_access(5, $day, $month, $year, $back);
+check_access(5, $back);
 // Initialisation
 $etape = isset($_POST["etape"]) ? $_POST["etape"] : NULL;
 $areas = isset($_POST["areas"]) ? $_POST["areas"] : NULL;

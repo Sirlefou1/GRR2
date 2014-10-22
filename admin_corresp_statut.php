@@ -40,7 +40,7 @@ if (getSettingValue("sso_ac_corr_profil_statut") != 'y')
 	showAccessDenied($day, $month, $year, '',$back);
 	exit();
 }
-check_access(5, $day, $month, $year, $back);
+check_access(5, $back);
 $themessage = str_replace("'" , "\\'" , get_vocab("confirmdel"));
 $themessage2 = str_replace("'" , "\\'" , get_vocab("confirm_del"));
 //

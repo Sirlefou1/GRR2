@@ -44,7 +44,7 @@ $_SESSION['chemin_retour'] = "admin_calend_jour_cycle.php";
 $day   = date("d");
 $month = date("m");
 $year  = date("Y");
-check_access(6, $day, $month, $year, $back);
+check_access(6, $back);
 $page_calend = isset($_GET["page_calend"]) ? $_GET["page_calend"] : '3';
 if ($page_calend == 3)
 	include "./admin_config_calend3.php";

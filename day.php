@@ -80,7 +80,7 @@ if (authUserAccesArea(getUserName(), $area) == 0)
 }
 if (check_begin_end_bookings($day, $month, $year))
 {
-	showNoBookings($day, $month, $year, $area, $back, $type_session);
+	showNoBookings($day, $month, $year, $back);
 	exit();
 }
 if (getSettingValue("verif_reservation_auto") == 0)

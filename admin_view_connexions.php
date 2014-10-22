@@ -35,7 +35,7 @@ if (isset($_SERVER['HTTP_REFERER']))
 $day   = date("d");
 $month = date("m");
 $year  = date("Y");
-check_access(6, $day, $month, $year, $back);
+check_access(6, $back);
 if (isset($_POST['cleanDay']) && isset($_POST['cleanMonth']) && isset($_POST['cleanYear']))
 {
 	$sql = "DELETE FROM ".TABLE_PREFIX."_log WHERE START < '" . $_POST['cleanYear'] . "-" . $_POST['cleanMonth'] . "-" . $_POST['cleanDay'] . "' and END < now()";

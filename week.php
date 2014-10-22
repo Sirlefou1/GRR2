@@ -70,7 +70,7 @@ $authGetUserLevel = authGetUserLevel(getUserName(), -1);
 $auth_visiteur = auth_visiteur(getUserName(), $room);
 if (check_begin_end_bookings($day, $month, $year))
 {
-	showNoBookings($day, $month, $year, $area,$back,$type_session);
+	showNoBookings($day, $month, $year, $back);
 	exit();
 }
 if (((authGetUserLevel(getUserName(),-1) < 1) && (getSettingValue("authentification_obli") == 1)) || !$verif_acces_ressource)

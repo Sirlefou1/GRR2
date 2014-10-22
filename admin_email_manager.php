@@ -55,7 +55,7 @@ if (isset($_SERVER['HTTP_REFERER']))
 $day   = date("d");
 $month = date("m");
 $year  = date("Y");
-check_access(4, $day, $month, $year, $back);
+check_access(4, $back);
 // tableau des ressources auxquelles l'utilisateur n'a pas accès
 $tab_rooms_noaccess = verif_acces_ressource(getUserName(), 'all');
 if (isset($_POST['mail1']))
@@ -92,7 +92,7 @@ if ($reg_admin_login) {
 			exit();
 		}
 		// La ressource existe : on vérifie les privilèges de l'utilisateur
-		check_access(4, $day, $month, $year, $back);
+		check_access(4, $back);
 		$sql = "SELECT * FROM ".TABLE_PREFIX."_j_mailuser_room WHERE (login = '$reg_admin_login' and id_room = '$room')";
 		$res = grr_sql_query($sql);
 		$test = grr_sql_count($res);

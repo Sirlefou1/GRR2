@@ -47,7 +47,7 @@ if (isset($_SERVER['HTTP_REFERER']))
 $day   = date("d");
 $month = date("m");
 $year  = date("Y");
-check_access(4, $day, $month, $year, $back);
+check_access(4, $back);
 # print the page header
 print_header("", "", "", "", $type = "with_session", $page = "admin");
 // Affichage de la colonne de gauche

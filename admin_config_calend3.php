@@ -145,7 +145,7 @@ function cal($month, $year)
 		$s .= "</table>\n";
 		return $s;
 	}
-	check_access(6, $day, $month, $year, $back);
+	check_access(6, $back);
 	# print the page header
 	print_header("","","","",$type="with_session", $page="admin");
 	// Affichage de la colonne de gauche

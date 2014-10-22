@@ -215,7 +215,7 @@ if (check_begin_end_bookings($day, $month, $year))
 		$type_session = "no_session";
 	else
 		$type_session = "with_session";
-	showNoBookings($day, $month, $year, '', $back."&amp;Err=yes", $type_session);
+	showNoBookings($day, $month, $year, $back."&amp;Err=yes");
 	exit();
 }
 if ($type_affichage_reser == 0)

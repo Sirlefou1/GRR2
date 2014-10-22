@@ -36,7 +36,7 @@ if (isset($_SERVER['HTTP_REFERER']))
 $day   = date("d");
 $month = date("m");
 $year  = date("Y");
-check_access(6, $day, $month, $year, $back);
+check_access(6, $back);
 // Initialisation
 $id_type = isset($_GET["id_type"]) ? $_GET["id_type"] : 0;
 $type_name = isset($_GET["type_name"]) ? $_GET["type_name"] : NULL;

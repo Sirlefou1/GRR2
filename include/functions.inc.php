@@ -34,11 +34,11 @@ header("Cache-Control:no-cache");
  * Fonction de verification d'access
  * @param int $level
  */
-function check_access($level, $day, $month, $year, $back)
+function check_access($level, $back)
 {
 	if (authGetUserLevel(getUserName(), -1, 'area') < $level)
 	{
-		showAccessDenied($day, $month, $year, '', $back);
+		showAccessDenied($back);
 		exit();
 	}
 }
@@ -1523,7 +1523,7 @@ function span_bgground($colclass)
 	$num_couleur = grr_sql_query1("SELECT couleur FROM ".TABLE_PREFIX."_type_area WHERE type_letter='".$colclass."'");
 	echo "<span style=\"background-color: ".$tab_couleur[$num_couleur]."; background-image: none; background-repeat: repeat; background-attachment: scroll;\">";
 }
-# Output a start table cell tag <td> with color class and fallback color.
+//Output a start table cell tag <td> with color class and fallback color.
 function tdcell($colclass, $width = '')
 {
 	if ($width != "")
@@ -1540,8 +1540,7 @@ function tdcell($colclass, $width = '')
 	else
 		echo "<td class=\"$colclass\" ".$temp.">";
 }
-// Paul Force
-function tdcell_rowspan($colclass , $step)
+function tdcell_rowspan($colclass, $step)
 {
 	global $tab_couleur;
 	static $ecolors;
@@ -1769,7 +1768,6 @@ function make_room_select_html($link, $current_area, $current_room, $year, $mont
 	$out_html .= "</select></div><script type=\"text/javascript\"></script><noscript><div><input type=\"submit\" value=\"Change\" /></div></noscript></form>";
 	return $out_html;
 }
-//end make_room_select_html
 /**
  * Affichage des domaines sous la forme d'une liste
  *
@@ -1838,7 +1836,6 @@ function make_site_list_html($link,$current_site,$year,$month,$day,$user)
 					}
 				}
 			}
-			grr_sql_free($res2);
 		}
 		if ($nb_sites_a_afficher > 1)
 			return $out_html;
@@ -1882,6 +1879,7 @@ function make_area_list_html($link, $current_site, $current_area, $year, $month,
 		FROM ".TABLE_PREFIX."_area
 		ORDER BY order_display, area_name";
 	}
+	$res = 0;
 	if (($current_site != -1) || ($use_multi_site == 'n'))
 		$res = grr_sql_query($sql);
 	if ($res)
@@ -1932,7 +1930,6 @@ function make_room_list_html($link,$current_area, $current_room, $year, $month, 
 		}
 	}
 }
-//Affichage par bouton
 /**
  * Affichage des domaines sous la forme d'un input
  *
@@ -1941,12 +1938,12 @@ function make_room_list_html($link,$current_area, $current_room, $year, $month, 
  * @param string $year
  * @param string $month
  * @param string $day
- * @param string $user
  * @return string
  */
-function make_site_item_html($link, $current_site, $year, $month, $day,$user)
+function make_site_item_html($link, $current_site, $year, $month, $day, $user)
 {
 	global $vocab;
+	$nb_sites_a_afficher = 0;
 	$out_html = '<ul class="list-group"><li class="list-group-item">'.get_vocab('sites').get_vocab('deux_points').'</li></ul><form class="ressource" id="site_001" action="'.$_SERVER['PHP_SELF'].'"><div>';
 	$sql = "SELECT id, sitename
 	FROM ".TABLE_PREFIX."_site
@@ -1958,7 +1955,6 @@ function make_site_item_html($link, $current_site, $year, $month, $day,$user)
 	$res = grr_sql_query($sql);
 	if ($res)
 	{
-		$nb_sites_a_afficher = 0;
 		for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 		{
 			$sql = "SELECT id_area FROM ".TABLE_PREFIX."_j_site_area WHERE ".TABLE_PREFIX."_j_site_area.id_site='".$row[0]."'";
@@ -1983,6 +1979,8 @@ function make_site_item_html($link, $current_site, $year, $month, $day,$user)
 				$link2 = $link.'?year='.$year.'&amp;month='.$month.'&amp;day='.$day.'&amp;area='.$default_area;
 				$out_html .="\n";
 			}
+			else
+				$link2 = $link.'?year='.$year.'&amp;month='.$month.'&amp;day='.$day;
 			if ($current_site != null)
 			{
 				if ($current_site == $row[0])
@@ -2009,7 +2007,6 @@ function make_site_item_html($link, $current_site, $year, $month, $day,$user)
  * @param string $year
  * @param string $month
  * @param string $day
- * @param string $user
  * @return string
  */
 function make_area_item_html( $link, $current_site, $current_area, $year, $month, $day, $user)
@@ -2072,10 +2069,9 @@ function make_area_item_html( $link, $current_site, $current_area, $year, $month
  * @param string $year
  * @param string $month
  * @param string $day
- * @param string $user
  * @return string
  */
-function make_room_item_html($link, $current_area, $current_room, $year, $month, $day, $user)
+function make_room_item_html($link, $current_area, $current_room, $year, $month, $day)
 {
 	global $vocab;
 	$out_html = "<br /><div class=\"panel panel-default\"><div class=\"panel-heading\">".get_vocab('rooms').get_vocab("deux_points")."</div><form class=\"ressource\" id=\"room_001\" action=\"".$_SERVER['PHP_SELF']."\"><div class=\"panel-body\">\n";
@@ -2188,11 +2184,11 @@ function send_mail($id_entry, $action, $dformat, $tab_id_moderes = array())
 	$jours_cycle 				= htmlspecialchars($row[17]);
 	$duration     				= $row[9];
 	if ($enable_periods == 'y')
-		list( $start_period, $start_date) = period_date_string($row[10]);
+		list($start_period, $start_date) = period_date_string($row[10]);
 	else
 		$start_date = time_date_string($row[10],$dformat);
 	if ($enable_periods == 'y')
-		list( , $end_date) =  period_date_string($row[11], -1);
+		list( , $end_date) = period_date_string($row[11], -1);
 	else
 		$end_date = time_date_string($row[11],$dformat);
 	$rep_type = 0;
@@ -2201,7 +2197,10 @@ function send_mail($id_entry, $action, $dformat, $tab_id_moderes = array())
 		$res = grr_sql_query("SELECT rep_type, end_date, rep_opt, rep_num_weeks FROM ".TABLE_PREFIX."_repeat WHERE id='".protect_data_sql($repeat_id)."'");
 		if (!$res)
 			fatal_error(0, grr_sql_error());
-		if (grr_sql_count($res) == 1)
+		$test = grr_sql_count($res);
+		if ($test != 1)
+			fatal_error(0, "Deux reservation on le meme id.");
+		else
 		{
 			$row2 = grr_sql_row($res, 0);
 			$rep_type     = $row2[0];
@@ -2626,8 +2625,6 @@ function getWritable($beneficiaire, $user, $id)
 				return 0;
 		}
 	}
-	else
-		return 0;
 	return 0;
 }
 //auth_visiteur($user,$id_room)
@@ -2653,8 +2650,7 @@ function auth_visiteur($user,$id_room)
 		else
 			return 0;
 	}
-	else
-		return 0;
+	return 0;
 }
 //authGetUserLevel($user,$id,$type)
 //Determine le niveau d'accès de l'utilisateur
@@ -2693,10 +2689,8 @@ function authGetUserLevel($user, $id, $type = 'room')
 	{
 		case 'visiteur':
 		return 1;
-		break;
 		case 'administrateur':
 		return 6;
-		break;
 		default:
 		break;
 	}
@@ -2814,10 +2808,7 @@ function authGetUserLevel($user, $id, $type = 'room')
 function authUserAccesArea($user,$id)
 {
 	if ($id == '')
-	{
 		return 0;
-		die();
-	}
 	$sql = "SELECT login FROM ".TABLE_PREFIX."_utilisateurs WHERE (login = '".protect_data_sql($user)."' and statut='administrateur')";
 	$res = grr_sql_query($sql);
 	if (grr_sql_count($res) != "0")
@@ -2854,24 +2845,14 @@ function UserRoomMaxBooking($user, $id_room, $number)
 {
 	global $enable_periods,$id_room_autorise;
 	$level = authGetUserLevel($user,$id_room);
-	if ($id_room == '') return 0;
+	if ($id_room == '')
+		return 0;
 	if ($level >= 3)
-	{
-		// l'utilisateur est soit admin, soit gestionnaire de la ressource.
 		return 1;
-		exit();
-	}
 	else if (($level == 1 ) &&  !((in_array($id_room,$id_room_autorise)) && ($id_room_autorise != "")))
-	{
-		// l'utilisateur est simple visiteur.
 		return 0;
-		exit();
-	}
 	else if ($level  < 1 )
-	{
 		return 0;
-		exit();
-	}
 	// A ce niveau, l'utilisateur est simple utilisateur ou bien simple visiteur sur un domaine autorisé
 	// On regarde si le nombre de réservation de la ressource est limité
 	$max_booking_per_room = grr_sql_query1("SELECT max_booking FROM ".TABLE_PREFIX."_room WHERE id = '".protect_data_sql($id_room)."'");
@@ -2883,10 +2864,7 @@ function UserRoomMaxBooking($user, $id_room, $number)
 	$max_booking = getSettingValue("UserAllRoomsMaxBooking");
 	// Si aucune limitation
 	if (($max_booking_per_room < 0) && ($max_booking_per_area < 0) && ($max_booking < 0))
-	{
 		return 1;
-		exit();
-	}
 	// A ce niveau, il s'agit d'un utilisateur et il y a au moins une limitation
 	$day   = date("d");
 	$month = date("m");
@@ -3263,7 +3241,7 @@ function MajMysqlModeDemo() {
  *
  * Returns: Nothing
  */
-function showAccessDenied($day, $month, $year, $area, $back)
+function showAccessDenied($back)
 {
 	global $vocab;
 	if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))
@@ -3352,7 +3330,7 @@ function check_begin_end_bookings($day, $month, $year)
 	if (($date < getSettingValue("begin_bookings")) || ($date > getSettingValue("end_bookings")))
 		return -1;
 }
-function showNoBookings($day, $month, $year, $area, $back, $type_session)
+function showNoBookings($day, $month, $year, $back)
 {
 	global $vocab;
 	$date = mktime(0, 0, 0, $month, $day,$year);

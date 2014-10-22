@@ -116,7 +116,7 @@ if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
 if (check_begin_end_bookings($day, $from_month, $from_year))
 {
-	showNoBookings($day, $from_month, $from_year, $area,$back,$type_session);
+	showNoBookings($day, $from_month, $from_year, $back);
 	exit();
 }
 if ((authGetUserLevel(getUserName(),-1) < 1) && (getSettingValue("authentification_obli") == 1))

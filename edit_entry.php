@@ -106,7 +106,7 @@ if (check_begin_end_bookings($day, $month, $year))
 		$type_session = "no_session";
 	else
 		$type_session = "with_session";
-	showNoBookings($day, $month, $year, $area,$back,$type_session);
+	showNoBookings($day, $month, $year, $back);
 	exit();
 }
 if ((authGetUserLevel(getUserName(),-1) < 2) && (auth_visiteur(getUserName(),$room) == 0))

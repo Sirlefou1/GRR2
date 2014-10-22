@@ -67,7 +67,7 @@ if (isset($_SERVER['HTTP_REFERER']))
 $day   = date("d");
 $month = date("m");
 $year  = date("Y");
-check_access(6, $day, $month, $year, $back);
+check_access(6, $back);
 if (getSettingValue("module_multisite") != "Oui")
 {
 	showAccessDenied($day, $month, $year, '', $back);

@@ -44,7 +44,7 @@ $_SESSION['chemin_retour'] = "admin_config.php";
 $day   = date("d");
 $month = date("m");
 $year  = date("Y");
-check_access(6, $day, $month, $year, $back);
+check_access(6, $back);
 $page_config = isset($_GET["page_config"]) ? $_GET["page_config"] : '1';
 if ($page_config == 1)
 	include "./admin_config1.php";
