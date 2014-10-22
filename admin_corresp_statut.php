@@ -32,22 +32,15 @@ $grr_script_name = "admin_config_sso.php";
 $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
+$day   = date("d");
+$month = date("m");
+$year  = date("Y");
 if (getSettingValue("sso_ac_corr_profil_statut") != 'y')
 {
-	$day   = date("d");
-	$month = date("m");
-	$year  = date("Y");
 	showAccessDenied($day, $month, $year, '',$back);
 	exit();
 }
-if (authGetUserLevel(getUserName(), -1) < 5)
-{
-	$day   = date("d");
-	$month = date("m");
-	$year  = date("Y");
-	showAccessDenied($day, $month, $year, '',$back);
-	exit();
-}
+check_access(5, $day, $month, $year, $back);
 $themessage = str_replace("'" , "\\'" , get_vocab("confirmdel"));
 $themessage2 = str_replace("'" , "\\'" , get_vocab("confirm_del"));
 //

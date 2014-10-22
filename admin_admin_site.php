@@ -61,33 +61,22 @@ if (empty($id_site))
 	$id_site = get_default_site();
 if (!isset($id_site))
 	settype($id_site, "integer");
-
-
 $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
-if (authGetUserLevel(getUserName(), -1) < 6)
-{
-	$day   = date("d");
-	$month = date("m");
-	$year  = date("Y");
-	showAccessDenied($day, $month, $year, '', $back);
-	exit();
-}
+$day   = date("d");
+$month = date("m");
+$year  = date("Y");
+check_access(6, $day, $month, $year, $back);
 if (getSettingValue("module_multisite") != "Oui")
 {
-	$day   = date("d");
-	$month = date("m");
-	$year  = date("Y");
 	showAccessDenied($day, $month, $year, '', $back);
 	exit();
 }
-
 # print the page header
 print_header("", "", "", "", $type = "with_session", $page = "admin");
 // Affichage de la colonne de gauche
 include "admin_col_gauche.php";
-
 $reg_admin_login = isset($_GET["reg_admin_login"]) ? $_GET["reg_admin_login"] : NULL;
 $action = isset($_GET["action"]) ? $_GET["action"] : NULL;
 $msg = '';
@@ -203,7 +192,7 @@ echo "<b>".$this_site_name."</b>";
 			echo "<h3><span class=\"avertissement\">".get_vocab("no_admin_this_site")."</span></h3>";
 		?>
 		<h3>
-		<?php echo get_vocab("add_user_to_list"); ?>
+			<?php echo get_vocab("add_user_to_list"); ?>
 		</h3>
 		<form action="admin_admin_site.php" method='get'>
 			<div><select size="1" name="reg_admin_login">
@@ -214,16 +203,16 @@ echo "<b>".$this_site_name."</b>";
 				if ($res)
 					for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 						echo "<option value='$row[0]'>$row[1]  $row[2] </option>";
-				?>
-			</select>
-			<input type="hidden" name="id_site" value="<?php echo $id_site; ?>" />
-			<input type="submit" value="Enregistrer" />
-		</div></form>
-	</td></tr></table>
+					?>
+				</select>
+				<input type="hidden" name="id_site" value="<?php echo $id_site; ?>" />
+				<input type="submit" value="Enregistrer" />
+			</div></form>
+		</td></tr></table>
 
-	<?php
+		<?php
 // fin de l'affichage de la colonne de droite
-	echo "</td></tr></table>";
-	?>
-</body>
-</html>
+		echo "</td></tr></table>";
+		?>
+	</body>
+	</html>

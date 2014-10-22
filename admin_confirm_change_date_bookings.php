@@ -52,14 +52,10 @@ if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
 unset($display);
 $display = isset($_GET["display"]) ? $_GET["display"] : NULL;
-if (authGetUserLevel(getUserName(), -1) < 6)
-{
-	$day   = date("d");
-	$month = date("m");
-	$year  = date("Y");
-	showAccessDenied($day, $month, $year, '', $back);
-	exit();
-}
+$day   = date("d");
+$month = date("m");
+$year  = date("Y");
+check_access(6, $day, $month, $year, $back);
 if (isset($_GET['valid']) && ($_GET['valid'] == "yes"))
 {
 	if (!saveSetting("begin_bookings", $_GET['begin_bookings']))

@@ -40,17 +40,13 @@ if (isset($id_area))
 if (!isset($id_site))
 	$id_site = isset($_POST['id_site']) ? $_POST['id_site'] : (isset($_GET['id_site']) ? $_GET['id_site'] : -1);
 settype($id_site,"integer");
-if (authGetUserLevel(getUserName(), -1, 'area') < 4)
-{
-	$back = '';
-	if (isset($_SERVER['HTTP_REFERER']))
-		$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
-	$day   = date("d");
-	$month = date("m");
-	$year  = date("Y");
-	showAccessDenied($day, $month, $year, '',$back);
-	exit();
-}
+$back = '';
+if (isset($_SERVER['HTTP_REFERER']))
+	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
+$day   = date("d");
+$month = date("m");
+$year  = date("Y");
+check_access(4, $day, $month, $year, $back);
 //print the page header
 print_header("", "", "", "", $type = "with_session", $page = "admin");
 // Affichage de la colonne de gauche

@@ -41,14 +41,10 @@ $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
 $_SESSION['chemin_retour'] = "admin_config.php";
-if (authGetUserLevel(getUserName(), -1) < 6)
-{
-	$day   = date("d");
-	$month = date("m");
-	$year  = date("Y");
-	showAccessDenied($day, $month, $year, '', $back);
-	exit();
-}
+$day   = date("d");
+$month = date("m");
+$year  = date("Y");
+check_access(6, $day, $month, $year, $back);
 $page_config = isset($_GET["page_config"]) ? $_GET["page_config"] : '1';
 if ($page_config == 1)
 	include "./admin_config1.php";

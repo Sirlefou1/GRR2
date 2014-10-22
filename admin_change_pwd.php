@@ -55,14 +55,10 @@ $grr_script_name = "admin_change_pwd.php";
 $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
     $back = htmlspecialchars($_SERVER['HTTP_REFERER']);
-if (authGetUserLevel(getUserName(), -1) < 6)
-{
-    $day   = date("d");
-    $month = date("m");
-    $year  = date("Y");
-    showAccessDenied($day, $month, $year, '',$back);
-    exit();
-}
+$day   = date("d");
+$month = date("m");
+$year  = date("Y");
+check_access(6, $day, $month, $year, $back);
 // Restriction dans le cas d'une démo
 VerifyModeDemo();
 unset($user_login);

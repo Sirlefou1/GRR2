@@ -49,14 +49,11 @@
  */
 include "include/admin.inc.php";
 $grr_script_name = "admin_open_mysql.php";
-if (authGetUserLevel(getUserName(), -1) < 6)
-{
-	$day   = date("d");
-	$month = date("m");
-	$year  = date("Y");
-	showAccessDenied($day, $month, $year, '', $back);
-	exit();
-}
+$back = "";
+$day   = date("d");
+$month = date("m");
+$year  = date("Y");
+check_access(6, $day, $month, $year, $back);
 $sql_file = isset($_FILES["sql_file"]) ? $_FILES["sql_file"] : NULL;
 $file_name = isset($_GET["file_name"]) ? $_GET["file_name"] : NULL;
 VerifyModeDemo();
@@ -106,7 +103,7 @@ else
 	{
 		$line = fgets($file);
 		while ($line[0] != '#' && !stristr($line, ';') && !feof($file))
-			$line .= fgets($file);
+		$line .= fgets($file);
 		if (grr_sql_query($line))
 			$ok .= "1";
 		else

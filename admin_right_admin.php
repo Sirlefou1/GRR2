@@ -50,14 +50,10 @@ if (!isset($id_area))
 $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
-if (authGetUserLevel(getUserName(), -1) < 6)
-{
-	$day   = date("d");
-	$month = date("m");
-	$year  = date("Y");
-	showAccessDenied($day, $month, $year, '',$back);
-	exit();
-}
+$day   = date("d");
+$month = date("m");
+$year  = date("Y");
+check_access(6, $day, $month, $year, $back);
 //print the page header
 print_header("", "", "", "", $type = "with_session", $page = "admin");
 // Affichage de la colonne de gauche

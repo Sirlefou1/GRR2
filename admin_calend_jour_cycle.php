@@ -41,14 +41,10 @@ $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
 $_SESSION['chemin_retour'] = "admin_calend_jour_cycle.php";
-if (authGetUserLevel(getUserName(), -1) < 6)
-{
-    $day   = date("d");
-    $month = date("m");
-    $year  = date("Y");
-    showAccessDenied($day, $month, $year, '', $back);
-    exit();
-}
+$day   = date("d");
+$month = date("m");
+$year  = date("Y");
+check_access(6, $day, $month, $year, $back);
 $page_calend = isset($_GET["page_calend"]) ? $_GET["page_calend"] : '3';
 if ($page_calend == 3)
 	include "./admin_config_calend3.php";

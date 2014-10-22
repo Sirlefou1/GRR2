@@ -31,17 +31,13 @@ include "include/admin.inc.php";
 $grr_script_name = "admin_type_area.php";
 // Initialisation
 $id_area = isset($_GET["id_area"]) ? $_GET["id_area"] : NULL;
-if (authGetUserLevel(getUserName(),$id_area,'area') < 4)
-{
-	$back = '';
-	if (isset($_SERVER['HTTP_REFERER']))
-		$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
-	$day   = date("d");
-	$month = date("m");
-	$year  = date("Y");
-	showAccessDenied($day, $month, $year, '',$back);
-	exit();
-}
+$back = '';
+if (isset($_SERVER['HTTP_REFERER']))
+	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
+$day   = date("d");
+$month = date("m");
+$year  = date("Y");
+check_access(4, $day, $month, $year, $back);
 $back = "";
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
