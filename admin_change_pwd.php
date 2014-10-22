@@ -27,44 +27,18 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-/**
- * $Log: admin_change_pwd.php,v $
- * Revision 1.9  2009-12-02 20:11:07  grr
- * *** empty log message ***
- *
- * Revision 1.8  2009-06-04 15:30:17  grr
- * *** empty log message ***
- *
- * Revision 1.7  2009-04-14 12:59:17  grr
- * *** empty log message ***
- *
- * Revision 1.6  2009-02-27 13:28:19  grr
- * *** empty log message ***
- *
- * Revision 1.5  2008-11-16 22:00:58  grr
- * *** empty log message ***
- *
- * Revision 1.4  2008-11-11 22:01:14  grr
- * *** empty log message ***
- *
- *
- */
-
 include "include/admin.inc.php";
 $grr_script_name = "admin_change_pwd.php";
 $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
     $back = htmlspecialchars($_SERVER['HTTP_REFERER']);
-$day   = date("d");
-$month = date("m");
-$year  = date("Y");
 check_access(6, $back);
 // Restriction dans le cas d'une démo
 VerifyModeDemo();
 unset($user_login);
 $user_login = isset($_POST["user_login"]) ? $_POST["user_login"] : ($user_login = isset($_GET["user_login"]) ? $_GET["user_login"] : NULL);
 $valid = isset($_POST["valid"]) ? $_POST["valid"] : NULL;
-$msg='';
+$msg = '';
 if ($valid == "yes")
 {
     unset($reg_password1);
@@ -102,7 +76,7 @@ if (isset($user_login) && ($user_login!=''))
 
 if (($user_source != 'local') && ($user_source != ''))
 {
-    showAccessDenied($day, $month, $year, '',$back);
+    showAccessDenied($back);
     exit();
 }
 

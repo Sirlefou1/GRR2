@@ -27,39 +27,16 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-/**
- * $Log: admin_accueil.php,v $
- * Revision 1.4  2009-02-27 13:28:19  grr
- * *** empty log message ***
- *
- * Revision 1.3  2009-01-20 07:19:16  grr
- * *** empty log message ***
- *
- * Revision 1.2  2008-11-16 22:00:58  grr
- * *** empty log message ***
- *
- * Revision 1.3  2008-11-11 22:01:14  grr
- * *** empty log message ***
- *
- *
- */
-
 include "include/admin.inc.php";
 $grr_script_name = "admin_accueil.php";
-
 $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
 if ((authGetUserLevel(getUserName(), -1, 'area') < 4) && (authGetUserLevel(getUserName(), -1, 'user') !=  1))
 {
-	$day   = date("d");
-	$month = date("m");
-	$year  = date("Y");
-	showAccessDenied($day, $month, $year, '',$back);
+	showAccessDenied($back);
 	exit();
 }
-
-# print the page header
 print_header("", "", "", "",$type = "with_session", $page = "admin");
 include "admin_col_gauche.php";
 ?>

@@ -113,9 +113,6 @@ if (!isset($retour_page))
 	$long = strlen($retour_page) - $long_chaine_a_supprimer;
 	$retour_page = substr($retour_page, 0, $long);
 }
-$day   = date("d");
-$month = date("m");
-$year  = date("Y");
 // modification d'une resource : admin ou gestionnaire
 if (authGetUserLevel(getUserName(),-1) < 6)
 {
@@ -124,7 +121,7 @@ if (authGetUserLevel(getUserName(),-1) < 6)
 		// Il s'agit d'une modif de ressource
 		if (((authGetUserLevel(getUserName(),$room) < 3)) || (!verif_acces_ressource(getUserName(), $room)))
 		{
-			showAccessDenied($day, $month, $year, '',$back);
+			showAccessDenied($back);
 			exit();
 		}
 	}
@@ -133,33 +130,33 @@ if (authGetUserLevel(getUserName(),-1) < 6)
 		if (isset($area_id))
 		{
 			// On verifie que le domaine $area_id existe
-			$test = grr_sql_query1("select id from ".TABLE_PREFIX."_area where id='".$area_id."'");
+			$test = grr_sql_query1("SELECT id FROM ".TABLE_PREFIX."_area WHERE id='".$area_id."'");
 			if ($test == -1)
 			{
-				showAccessDenied($day, $month, $year, '',$back);
+				showAccessDenied($back);
 				exit();
 			}
 			// Il s'agit de l'ajout d'une ressource
 			// On verifie que l'utilisateur a le droit d'ajouter des ressources
 			if ((authGetUserLevel(getUserName(), $area_id, 'area') < 4))
 			{
-				showAccessDenied($day, $month, $year, '', $back);
+				showAccessDenied($back);
 				exit();
 			}
 		}
 		else if (isset($id_area))
 		{
 			// On verifie que le domaine $area existe
-			$test = grr_sql_query1("select id from ".TABLE_PREFIX."_area where id='".$id_area."'");
+			$test = grr_sql_query1("SELECT id FROM ".TABLE_PREFIX."_area WHERE id='".$id_area."'");
 			if ($test == -1)
 			{
-				showAccessDenied($day, $month, $year, '',$back);
+				showAccessDenied($back);
 				exit();
 			}
 			// Il s'agit de la modif d'un domaine
-			if ((authGetUserLevel(getUserName(),$id_area,'area') < 4))
+			if ((authGetUserLevel(getUserName(), $id_area, 'area') < 4))
 			{
-				showAccessDenied($day, $month, $year, '',$back);
+				showAccessDenied($back);
 				exit();
 			}
 		}

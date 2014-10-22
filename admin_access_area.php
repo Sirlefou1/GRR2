@@ -65,7 +65,7 @@ if ($test_user == "multi")
 		{
 			if (authGetUserLevel(getUserName(), $id_area, 'area') < 4)
 			{
-				showAccessDenied($day, $month, $year, '',$back);
+				showAccessDenied($back);
 				exit();
 			}
 			$sql = "SELECT * FROM ".TABLE_PREFIX."_j_user_area WHERE (login = '".$valeur."' and id_area = '$id_area')";
@@ -96,7 +96,7 @@ if ($test_user == "simple")
 	{
 		if (authGetUserLevel(getUserName(), $id_area, 'area') < 4)
 		{
-			showAccessDenied($day, $month, $year, '', $back);
+			showAccessDenied($back);
 			exit();
 		}
 		$sql = "SELECT * FROM ".TABLE_PREFIX."_j_user_area WHERE (login = '$reg_user_login' and id_area = '$id_area')";
@@ -122,7 +122,7 @@ if ($action=='del_user')
 {
 	if (authGetUserLevel(getUserName(), $id_area, 'area') < 4)
 	{
-		showAccessDenied($day, $month, $year, '', $back);
+		showAccessDenied($back);
 		exit();
 	}
 	unset($login_user);

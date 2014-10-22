@@ -28,17 +28,6 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-/**
- * $Log: admin_config_imap.php,v $
- * Revision 1.2  2009-12-02 20:11:07  grr
- * *** empty log message ***
- *
- * Revision 1.1  2009-09-29 18:03:57  grr
- * *** empty log message ***
- *
- *
- */
-
 include "include/admin.inc.php";
 $grr_script_name = "admin_config_imap.php";
 require_once("./include/settings.inc.php");
@@ -69,27 +58,19 @@ if (isset($_POST['imap_statut']))
 		$grrSettings['imap_statut'] = $_POST['imap_statut'];
 	}
 }
-
 $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
 if ((isset($sso_restrictions)) && ($sso_restrictions == true))
 {
-	$day   = date("d");
-	$month = date("m");
-	$year  = date("Y");
-	showAccessDenied($day, $month, $year, '',$back);
+	showAccessDenied($back);
 	exit();
 }
 if ((authGetUserLevel(getUserName(),-1) < 5) && ($valid != 'yes'))
 {
-	$day   = date("d");
-	$month = date("m");
-	$year  = date("Y");
-	showAccessDenied($day, $month, $year, $area,$back);
+	showAccessDenied($back);
 	exit();
 }
-# print the page header
 print_header("", "", "", "", $type = "with_session", $page = "admin");
 // Affichage de la colonne de gauche
 include "admin_col_gauche.php";

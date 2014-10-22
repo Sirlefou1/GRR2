@@ -27,34 +27,10 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-/**
- * $Log: admin_config_calend3.php,v $
- * Revision 1.7  2009-04-14 12:59:17  grr
- * *** empty log message ***
- *
- * Revision 1.6  2009-04-09 14:52:31  grr
- * *** empty log message ***
- *
- * Revision 1.5  2009-02-27 13:28:19  grr
- * *** empty log message ***
- *
- * Revision 1.4  2009-01-20 07:19:16  grr
- * *** empty log message ***
- *
- * Revision 1.3  2008-11-16 22:00:58  grr
- * *** empty log message ***
- *
- *
- */
-
 $grr_script_name = "admin_calend_jour_cycle.php";
 $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
-$day   = date("d");
-$month = date("m");
-$year  = date("Y");
-
 function cal($month, $year)
 {
 	global $weekstarts;
@@ -146,7 +122,6 @@ function cal($month, $year)
 		return $s;
 	}
 	check_access(6, $back);
-	# print the page header
 	print_header("","","","",$type="with_session", $page="admin");
 	// Affichage de la colonne de gauche
 	if (!isset($_GET['pview']))

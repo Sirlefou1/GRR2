@@ -27,37 +27,6 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-/**
- * $Log: admin_config_ldap.php,v $
- * Revision 1.12  2009-12-02 20:11:07  grr
- * *** empty log message ***
- *
- * Revision 1.11  2009-04-14 12:59:17  grr
- * *** empty log message ***
- *
- * Revision 1.10  2009-04-09 14:52:31  grr
- * *** empty log message ***
- *
- * Revision 1.9  2009-02-27 22:05:01  grr
- * *** empty log message ***
- *
- * Revision 1.8  2009-02-27 13:28:19  grr
- * *** empty log message ***
- *
- * Revision 1.7  2009-01-20 07:19:17  grr
- * *** empty log message ***
- *
- * Revision 1.6  2008-11-16 22:00:58  grr
- * *** empty log message ***
- *
- * Revision 1.5  2008-11-13 21:32:51  grr
- * *** empty log message ***
- *
- * Revision 1.4  2008-11-10 07:06:39  grr
- * *** empty log message ***
- *
- *
- */
 include "include/connect.inc.php";
 include "include/config.inc.php";
 include "include/misc.inc.php";
@@ -203,24 +172,17 @@ if ((!grr_resumeSession()) && $valid != 'yes')
 			$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
 		if ((isset($sso_restrictions)) && ($sso_restrictions == true))
 		{
-			$day   = date("d");
-			$month = date("m");
-			$year  = date("Y");
-			showAccessDenied($day, $month, $year, '', $back);
+			showAccessDenied($back);
 			exit();
 		}
 		if ((authGetUserLevel(getUserName(), -1) < 6) && ($valid != 'yes'))
 		{
-			$day   = date("d");
-			$month = date("m");
-			$year  = date("Y");
-			showAccessDenied($day, $month, $year, '',$back);
+			showAccessDenied($back);
 			exit();
 		}
 		if ($valid == 'no')
 		{
-			# print the page header
-			print_header("","","","",$type="with_session", $page="admin");
+			print_header("", "", "", "", $type = "with_session", $page = "admin");
 			// Affichage de la colonne de gauche
 			include "admin_col_gauche.php";
 		}

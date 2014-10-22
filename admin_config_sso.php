@@ -27,38 +27,6 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-/**
- * $Log: admin_config_sso.php,v $
- * Revision 1.12  2010-04-07 15:38:14  grr
- * *** empty log message ***
- *
- * Revision 1.11  2009-12-16 14:52:31  grr
- * *** empty log message ***
- *
- * Revision 1.10  2009-12-02 21:37:20  grr
- * *** empty log message ***
- *
- * Revision 1.9  2009-12-02 20:11:07  grr
- * *** empty log message ***
- *
- * Revision 1.8  2009-06-04 15:30:17  grr
- * *** empty log message ***
- *
- * Revision 1.7  2009-04-14 12:59:17  grr
- * *** empty log message ***
- *
- * Revision 1.6  2009-04-09 14:52:31  grr
- * *** empty log message ***
- *
- * Revision 1.5  2009-02-27 22:05:03  grr
- * *** empty log message ***
- *
- * Revision 1.4  2008-11-16 22:00:58  grr
- * *** empty log message ***
- *
- *
- */
-
 include "include/admin.inc.php";
 $grr_script_name = "admin_config_sso.php";
 
@@ -67,22 +35,14 @@ if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
 if ((isset($sso_restrictions)) && ($sso_restrictions==true))
 {
-	$day   = date("d");
-	$month = date("m");
-	$year  = date("Y");
-	showAccessDenied($day, $month, $year, '',$back);
+	showAccessDenied($back);
 	exit();
 }
-
-if (authGetUserLevel(getUserName(),-1) < 6)
+if (authGetUserLevel(getUserName(), -1) < 6)
 {
-	$day   = date("d");
-	$month = date("m");
-	$year  = date("Y");
-	showAccessDenied($day, $month, $year, '',$back);
+	showAccessDenied($back);
 	exit();
 }
-
 if (isset($_POST['valid']))
 {
 	VerifyModeDemo();
