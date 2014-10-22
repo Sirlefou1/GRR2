@@ -137,18 +137,8 @@ function get_request_uri()
 	}
 	return $RequestUri;
 }
-/*
-Affiche un lien email
-$option_affichage
------------------
-Si $option_affichage="afficher_toujours", en l'absence de mail, on affiche quand même l'intitulé
-Sinon, en l'absence de mail, on affiche rien.
-$_type_cible
-------------
-si "identifiant:non" -> $_cible n'est pas l'identifiant d'un utilisateur de la base
-si "identifiant:oui" -> $_cible est l'identifiant d'un utilisateur de la base
-*/
 /**
+ * Affiche un lien email
  * @param string $_cible
  * @param string $_type_cible
  * @param string $option_affichage
@@ -483,7 +473,6 @@ function plages_libre_semaine_ressource($id_room, $month_week, $day_week, $year_
 	$date_end = mktime($eveningends, $eveningends_minutes, 0, $month_week, $day_week, $year_week);
 	$date_start = mktime($morningstarts, 0, 0, $month_week, $day_week, $year_week);
 	$t = $date_start - 1;
-	$plage_libre = FALSE;
 	$plage_libre = 0;
 	while ($t < $date_end)
 	{
@@ -491,7 +480,7 @@ function plages_libre_semaine_ressource($id_room, $month_week, $day_week, $year_
 		$test = grr_sql_query1("SELECT id FROM ".TABLE_PREFIX."_entry WHERE room_id='".$id_room."' AND start_time <= ".$t." AND end_time >= ".$t." ");
 		if ($test == -1)
 		{
-			$plage_libre = TRUE;
+			$plage_libre = true;
 			break;
 		}
 	}
@@ -574,11 +563,11 @@ return $tag_help;
  			}
  		}
  		else
- 			return FALSE;
+ 			return false;
  		@ldap_close($ds);
  	}
  	else
- 		return FALSE;
+ 		return false;
  	return $est_membre;
  }
 /*
@@ -593,7 +582,7 @@ function  grr_backup($id_entry, $login_moderateur, $motivation_moderation)
 	$sql = "SELECT * FROM ".TABLE_PREFIX."_entry WHERE id='".$id_entry."'";
 	$res = grr_sql_query($sql);
 	if (!$res)
-		return FALSE;
+		return false;
 	$row = grr_sql_row_keyed($res, 0);
 	grr_sql_free($res);
 	$req = "INSERT INTO ".TABLE_PREFIX."_entry_moderate SET
@@ -617,11 +606,11 @@ function  grr_backup($id_entry, $login_moderateur, $motivation_moderation)
 	login_moderateur = '".protect_data_sql($login_moderateur)."'";
 	$res = grr_sql_query($req);
 	if (!$res)
-		return FALSE;
+		return false;
 	else
 	{
 		grr_sql_free($res);
-		return TRUE;
+		return true;
 	}
 }
 /*
@@ -779,7 +768,7 @@ function page_accueil($param = 'no')
 		$page_accueil .= "&amp;";
 	return $page_accueil ;
 }
-function begin_page($title,$page="with_session")
+function begin_page($title, $page="with_session")
 {
 	if ($page == "with_session")
 	{
@@ -1047,61 +1036,61 @@ function VerifNomPrenomUser($type)
 	}
 }
 //Vérifie si utilisateur autorisé à changer ses noms et prénoms et mail
-//Renvoie True (peut changer ses noms et prénoms et email) ou False (ne peut pas)
+//Renvoie true (peut changer ses noms et prénoms et email) ou false (ne peut pas)
 function sso_IsAllowedModify()
 {
 	if (getSettingValue("sso_IsNotAllowedModify")=="y")
 	{
 		$source = grr_sql_query1("SELECT source FROM grr_utilisateurs WHERE login = '".getUserName()."'");
 		if ($source == "ext")
-			return FALSE;
+			return false;
 		else
-			return TRUE;
+			return true;
 	}
 	else
-		return TRUE;
+		return true;
 }
 //Vérifie que l'utilisateur est autorisé à changer ses noms et prénoms
-//Renvoie True (peut changer ses noms et prénoms) ou False (ne peut pas)
+//Renvoie true (peut changer ses noms et prénoms) ou false (ne peut pas)
 function IsAllowedToModifyProfil()
 {
 	if (!(sso_IsAllowedModify()))
-		return FALSE;
+		return false;
 		// l'utilisateur connecté n'a pas le niveau suffisant pour modifier son compte
 	if (authGetUserLevel(getUserName(),-1) < getSettingValue("allow_users_modify_profil"))
-		return FALSE;
+		return false;
 	else
-		return TRUE;
+		return true;
 }
 //Vérifie que l'utilisateur est autorisé à changer son emai
-//Renvoie True (peut changer son email) ou False (ne peut pas)
+//Renvoie true (peut changer son email) ou false (ne peut pas)
 function IsAllowedToModifyEmail()
 {
 	if (!(sso_IsAllowedModify()))
-		return FALSE;
+		return false;
 		// l'utilisateur connecté n'a pas le niveau suffisant pour modifier son compte
 	if (authGetUserLevel(getUserName(),-1) < getSettingValue("allow_users_modify_email"))
-		return FALSE;
+		return false;
 	else
-		return TRUE;
+		return true;
 }
 //Vérifie que l'utilisateur est autorisé à changer son mot de passe
-//Renvoie True (peut changer) ou False (ne peut pas)
+//Renvoie true (peut changer) ou false (ne peut pas)
 function IsAllowedToModifyMdp() {
 		// l'utilisateur connecté n'a pas le niveau suffisant pour modifier son compte
 	if (authGetUserLevel(getUserName(), -1) < getSettingValue("allow_users_modify_mdp"))
-		return FALSE;
+		return false;
 	else if ((getSettingValue("sso_statut") != "") or (getSettingValue("ldap_statut") != '') or (getSettingValue("imap_statut") != ''))
 	{
 			// ou bien on est dans un environnement SSO ou ldap et l'utilisateur n'est pas un utilisateur local
 		$source = grr_sql_query1("SELECT source FROM ".TABLE_PREFIX."_utilisateurs WHERE login = '".getUserName()."'");
 		if ($source == "ext")
-			return FALSE;
+			return false;
 		else
-			return TRUE;
+			return true;
 	}
 	else
-		return TRUE;
+		return true;
 }
 // Transforme $dur en une durée exprimée en années, semaines, jours, heures, minutes et secondes
 // OU en durée numérique exprimée dans l'une des unités de façon fixe, pour l'édition des
@@ -1404,9 +1393,9 @@ function compare_ip_adr($ip1, $ip2)
 function get_default_area($id_site = -1)
 {
 	if (getSettingValue("module_multisite") == "Oui")
-		$use_multisite = TRUE;
+		$use_multisite = true;
 	else
-		$use_multisite = FALSE;
+		$use_multisite = false;
 	if (OPTION_IP_ADR==1)
 	{
 		$sql = "SELECT ip_adr, id FROM ".TABLE_PREFIX."_area WHERE ip_adr!='' ORDER BY access, order_display, area_name";
@@ -1853,7 +1842,7 @@ function make_site_list_html($link,$current_site,$year,$month,$day,$user)
 				FROM ".TABLE_PREFIX."_j_site_area
 				WHERE ".TABLE_PREFIX."_j_site_area.id_site='".$row[0]."'";
 				$res2 = grr_sql_query($sql);
-				$au_moins_un_domaine = FALSE;
+				$au_moins_un_domaine = false;
 				if ($res2 && grr_sql_count($res2) > 0)
 				{
 					for ($j = 0; ($row2 = grr_sql_row($res2, $j)); $j++)
@@ -1861,7 +1850,7 @@ function make_site_list_html($link,$current_site,$year,$month,$day,$user)
 						if (authUserAccesArea($user,$row2[0]) == 1)
 						{
 							// on a trouvé un domaine autorisé
-							$au_moins_un_domaine = TRUE;
+							$au_moins_un_domaine = true;
 							$j = grr_sql_count($res2) + 1;
 							// On arrête la boucle
 						}
@@ -3013,7 +3002,7 @@ function UserRoomMaxBooking($user, $id_room, $number)
  		else
  		{
 			// dans le cas où le créneau est entamé, on teste si l'utilisateur a le droit de supprimer la réservation
-			// Si oui, on transmet la variable $only_modify = TRUE avant que la fonction de retourne true.
+			// Si oui, on transmet la variable $only_modify = true avant que la fonction de retourne true.
  			if (getSettingValue("allow_user_delete_after_begin") == 2)
  			{
  				$date_debut = grr_sql_query1("SELECT start_time FROM ".TABLE_PREFIX."_entry WHERE id = '".protect_data_sql($id)."'");
@@ -3089,8 +3078,8 @@ function UserRoomMaxBooking($user, $id_room, $number)
  function verif_access_search($user)
  {
  	if (authGetUserLevel($user,-1) >= getSettingValue("allow_search_level"))
- 		return TRUE;
- 	return FALSE;
+ 		return true;
+ 	return false;
  }
 // function verif_display_fiche_ressource : vérifier l'accès à la visualisation de la fiche d'une ressource
 // $user : le login de l'utilisateur
@@ -3101,10 +3090,10 @@ function UserRoomMaxBooking($user, $id_room, $number)
  	if ($show_fic_room == "y")
  	{
  		if (authGetUserLevel($user,$id_room) >= getSettingValue("visu_fiche_description"))
- 			return TRUE;
- 		return FALSE;
+ 			return true;
+ 		return false;
  	}
- 	return FALSE;
+ 	return false;
  }
 // function verif_acces_fiche_reservation : vérifier l'accès à la fiche de réservation d'une ressource
 // $user : le login de l'utilisateur
@@ -3112,8 +3101,8 @@ function UserRoomMaxBooking($user, $id_room, $number)
  function verif_acces_fiche_reservation($user, $id_room)
  {
  	if (authGetUserLevel($user,$id_room) >= getSettingValue("acces_fiche_reservation"))
- 		return TRUE;
- 	return FALSE;
+ 		return true;
+ 	return false;
  }
 /* function verif_display_email : vérifier l'accès à l'adresse email
  *$user : le login de l'utilisateur
@@ -3122,9 +3111,9 @@ function UserRoomMaxBooking($user, $id_room, $number)
 function verif_display_email($user, $id_room)
 {
 	if (authGetUserLevel($user,$id_room) >= getSettingValue("display_level_email"))
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 }
 /* function verif_acces_ressource : vérifier l'accès à la ressource
  *$user : le login de l'utilisateur
@@ -3136,9 +3125,9 @@ function verif_acces_ressource($user, $id_room)
 	{
 		$who_can_see = grr_sql_query1("SELECT who_can_see FROM ".TABLE_PREFIX."_room WHERE id='".$id_room."'");
 		if (authGetUserLevel($user,$id_room) >= $who_can_see)
-			return TRUE;
+			return true;
 		else
-			return FALSE;
+			return false;
 	}
 	else
 	{
@@ -3201,13 +3190,13 @@ function verif_date_option_reservation($option_reservation, $starttime)
 function verif_qui_peut_reserver_pour($_room_id, $user, $_beneficiaire)
 {
 	if ($_beneficiaire == "")
-		return TRUE;
+		return true;
 	if (strtolower($user) == strtolower($_beneficiaire))
-		return TRUE;
+		return true;
 	$qui_peut_reserver_pour  = grr_sql_query1("SELECT qui_peut_reserver_pour FROM ".TABLE_PREFIX."_room WHERE id='".$_room_id."'");
 	if (authGetUserLevel($user, $_room_id) >= $qui_peut_reserver_pour)
-		return TRUE;
-	return FALSE;
+		return true;
+	return false;
 }
 /*
 function verif_heure_debut_fin($start_time,$end_time,$area)
@@ -3230,11 +3219,11 @@ function verif_heure_debut_fin($start_time,$end_time,$area)
 		$year = date("Y",$end_time);
 		$endday = mktime($eveningends, $eveningends_minutes , $resolution, $month, $day, $year);
 		if ($start_time < $startday)
-			return FALSE;
+			return false;
 		else if ($end_time > $endday)
-			return FALSE;
+			return false;
 	}
-	return TRUE;
+	return true;
 }
 /* VerifyModeDemo()
  *
@@ -3634,7 +3623,7 @@ function est_hors_reservation($time,$area="-1")
 	// Premier test : s'agit-il d'un jour du calendrier "hors réservation" ?
 	$test = grr_sql_query1("SELECT DAY FROM ".TABLE_PREFIX."_calendar where DAY = '".$time."'");
 	if ($test != -1)
-		return TRUE;
+		return true;
 	// 2ème test : s'agit-il d'une journée qui n'est pas affichée pour le domaine considéré ?
 	if ($area!=-1)
 	{
@@ -3642,18 +3631,18 @@ function est_hors_reservation($time,$area="-1")
 		$result = grr_sql_query1($sql);
 		$jour_semaine = date("w",$time);
 		if (substr($result,$jour_semaine,1) == 'n')
-			return TRUE;
+			return true;
 	}
-	return FALSE;
+	return false;
 }
 function resa_est_hors_reservation($start_time,$end_time)
 {
 	// On teste si la réservation est dans le calendrier "hors réservations"
 	$test = grr_sql_query1("select DAY from ".TABLE_PREFIX."_calendar where DAY = '".$start_time."' or DAY = '".$end_time."'");
 	if ($test != -1)
-		return TRUE;
+		return true;
 	else
-		return FALSE;
+		return false;
 }
 function resa_est_hors_reservation2($start_time,$end_time,$area)
 {
@@ -3662,11 +3651,11 @@ function resa_est_hors_reservation2($start_time,$end_time,$area)
 	$result = grr_sql_query1($sql);
 	$jour_semaine = date("w",$start_time);
 	if (substr($result, $jour_semaine, 1) == 'n')
-		return TRUE;
+		return true;
 	$jour_semaine = date("w",$end_time);
 	if (substr($result, $jour_semaine, 1) == 'n')
-		return TRUE;
-	return FALSE;
+		return true;
+	return false;
 }
 // trouve les utilisateurs gestionnaires de ressource
 function find_user_room ($id_room)
@@ -3969,7 +3958,7 @@ Affiche un message pop-up
 $type_affichage = "user" -> Affichage des "pop-up" de confirmation après la création/modification/suppression d'une réservation
 Dans ce cas, l'affichage n'a lieu que si $_SESSION['displ_msg']='yes'
 $type_affichage = "admin" -> Affichage des "pop-up" de confirmation dans les menus d'administration
-$type_affichage = "force" -> On force l'affichage du pop-up même si javascript_info_admin_disabled est TRUE
+$type_affichage = "force" -> On force l'affichage du pop-up même si javascript_info_admin_disabled est true
 */
 function affiche_pop_up($msg = "",$type_affichage = "user")
 {

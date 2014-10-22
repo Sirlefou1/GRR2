@@ -141,7 +141,7 @@ if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
 if ((authGetUserLevel(getUserName(), -1) < 6) && ($valid != 'yes'))
 {
-	showAccessDenied($day, $month, $year, '', $back);
+	showAccessDenied($back);
 	exit();
 }
 # print the page header
