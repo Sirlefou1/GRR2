@@ -30,6 +30,57 @@
  */
 header("Cache-Control:no-cache");
 
+function cal($month, $year)
+{
+	global $weekstarts;
+	if (!isset($weekstarts))
+		$weekstarts = 0;
+	$s = "";
+	$daysInMonth = getDaysInMonth($month, $year);
+	$date = mktime(12, 0, 0, $month, 1, $year);
+	$first = (strftime("%w",$date) + 7 - $weekstarts) % 7;
+	$monthName = utf8_encode(strftime("%B", $date));
+	$s .= "<table class=\"calendar2\" border=\"1\" cellspacing=\"3\">\n";
+	$s .= "<tr>\n";
+	$s .= "<td class=\"calendarHeader2\" colspan=\"8\">$monthName $year</td>\n";
+	$s .= "</tr>\n";
+	$d = 1 - $first;
+	$is_ligne1 = 'y';
+	while ($d <= $daysInMonth)
+	{
+		$s .= "<tr>\n";
+		for ($i = 0; $i < 7; $i++)
+		{
+			$basetime = mktime(12, 0, 0, 6, 11 + $weekstarts, 2000);
+			$show = $basetime + ($i * 24 * 60 * 60);
+			$nameday = utf8_strftime('%A',$show);
+			$temp = mktime(0, 0, 0, $month, $d,$year);
+			if ($i==0)
+				$s .= "<td class=\"calendar2\" style=\"vertical-align:bottom;\"><b>S".numero_semaine($temp)."</b></td>\n";
+			$s .= "<td class=\"calendar2\" align=\"center\" valign=\"top\">";
+			if ($is_ligne1 == 'y')
+				$s .=  '<b>'.ucfirst(substr($nameday,0,1)).'</b><br />';
+			if ($d > 0 && $d <= $daysInMonth)
+			{
+				$s .= $d;
+				$day = grr_sql_query1("SELECT day FROM ".TABLE_PREFIX."_calendar WHERE day='$temp'");
+				$s .= "<br /><input type=\"checkbox\" name=\"$temp\" value=\"$nameday\" ";
+				if (!($day < 0))
+					$s .= "checked=\"checked\" ";
+				$s .= " />";
+			}
+			else
+				$s .= " ";
+			$s .= "</td>\n";
+			$d++;
+		}
+		$s .= "</tr>\n";
+		$is_ligne1 = 'n';
+	}
+	$s .= "</table>\n";
+	return $s;
+}
+
 /**
  * Fonction de verification d'access
  * @param int $level

@@ -29,32 +29,6 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-/**
- * $Log: admin_calend.php,v $
- * Revision 1.12  2009-09-29 18:02:56  grr
- * *** empty log message ***
- *
- * Revision 1.11  2009-06-04 15:30:17  grr
- * *** empty log message ***
- *
- * Revision 1.10  2009-04-14 12:59:16  grr
- * *** empty log message ***
- *
- * Revision 1.9  2009-04-09 14:52:31  grr
- * *** empty log message ***
- *
- * Revision 1.8  2009-02-27 13:28:19  grr
- * *** empty log message ***
- *
- * Revision 1.7  2008-11-16 22:00:58  grr
- * *** empty log message ***
- *
- * Revision 1.6  2008-11-11 22:01:14  grr
- * *** empty log message ***
- *
- *
- */
-
 include "include/admin.inc.php";
 $grr_script_name = "admin_calend.php";
 
@@ -102,7 +76,7 @@ function cal($month, $year)
 					$s .= "<br /><input type=\"checkbox\" name=\"$temp\" value=\"$nameday\" />";
 				else
 					$s .= "<br /><input type=\"checkbox\" name=\"$temp\" value=\"$nameday\"  disabled />";
-			} 
+			}
 			else
 				$s .= " ";
 			$s .= "</td>\n";
@@ -215,7 +189,7 @@ if (isset($_POST['record']) && ($_POST['record'] == 'yes'))
 										// Par sécurité, on teste quand même s'il reste des conflits
 										$err = mrbsCheckFree($row[0], $starttime, $endtime, 0,0);
 										if (!$err)
-											mrbsCreateSingleEntry($starttime, $endtime, 0, 0, $row[0], getUserName(), $beneficiaire, "", $name, $type_, $description, -1,array(),0,0,'-');
+											mrbsCreateSingleEntry($starttime, $endtime, 0, 0, $row[0], getUserName(), $beneficiaire, "", $name, $type_, $description, -1,array(),0,0,'-', 0, 0);
 									}
 								}
 							}

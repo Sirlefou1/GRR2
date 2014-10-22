@@ -27,26 +27,6 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-/**
- * $Log: admin_calend_ignore.php,v $
- * Revision 1.8  2009-06-04 15:30:17  grr
- * *** empty log message ***
- *
- * Revision 1.7  2009-04-14 12:59:17  grr
- * *** empty log message ***
- *
- * Revision 1.6  2009-04-09 14:52:31  grr
- * *** empty log message ***
- *
- * Revision 1.5  2009-02-27 13:28:19  grr
- * *** empty log message ***
- *
- * Revision 1.4  2008-11-16 22:00:58  grr
- * *** empty log message ***
- *
- *
- */
-
 
 include "include/admin.inc.php";
 $grr_script_name = "admin_calend_ignore.php";
@@ -59,56 +39,6 @@ $day   = date("d");
 $month = date("m");
 $year  = date("Y");
 
-function cal($month, $year)
-{
-	global $weekstarts;
-	if (!isset($weekstarts))
-		$weekstarts = 0;
-	$s = "";
-	$daysInMonth = getDaysInMonth($month, $year);
-	$date = mktime(12, 0, 0, $month, 1, $year);
-	$first = (strftime("%w",$date) + 7 - $weekstarts) % 7;
-	$monthName = utf8_encode(strftime("%B", $date));
-	$s .= "<table class=\"calendar2\" border=\"1\" cellspacing=\"3\">\n";
-	$s .= "<tr>\n";
-	$s .= "<td class=\"calendarHeader2\" colspan=\"8\">$monthName $year</td>\n";
-	$s .= "</tr>\n";
-	$d = 1 - $first;
-	$is_ligne1 = 'y';
-	while ($d <= $daysInMonth)
-	{
-		$s .= "<tr>\n";
-		for ($i = 0; $i < 7; $i++)
-		{
-			$basetime = mktime(12, 0, 0, 6, 11 + $weekstarts, 2000);
-			$show = $basetime + ($i * 24 * 60 * 60);
-			$nameday = utf8_strftime('%A',$show);
-			$temp = mktime(0, 0, 0, $month, $d,$year);
-			if ($i==0)
-				$s .= "<td class=\"calendar2\" style=\"vertical-align:bottom;\"><b>S".numero_semaine($temp)."</b></td>\n";
-			$s .= "<td class=\"calendar2\" align=\"center\" valign=\"top\">";
-			if ($is_ligne1 == 'y')
-				$s .=  '<b>'.ucfirst(substr($nameday,0,1)).'</b><br />';
-			if ($d > 0 && $d <= $daysInMonth)
-			{
-				$s .= $d;
-				$day = grr_sql_query1("SELECT day FROM ".TABLE_PREFIX."_calendar WHERE day='$temp'");
-				$s .= "<br /><input type=\"checkbox\" name=\"$temp\" value=\"$nameday\" ";
-				if (!($day < 0))
-					$s .= "checked=\"checked\" ";
-				$s .= " />";
-			}
-			else
-				$s .= " ";
-			$s .= "</td>\n";
-			$d++;
-		}
-		$s .= "</tr>\n";
-		$is_ligne1 = 'n';
-	}
-	$s .= "</table>\n";
-	return $s;
-}
 check_access(6, $back);
 # print the page header
 print_header("", "", "", "", $type = "with_session", $page = "admin");

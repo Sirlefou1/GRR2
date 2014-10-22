@@ -27,20 +27,6 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-/**
- * $Log: admin_config_calend1.php,v $
- * Revision 1.4  2009-04-09 14:52:31  grr
- * *** empty log message ***
- *
- * Revision 1.3  2009-02-27 13:28:19  grr
- * *** empty log message ***
- *
- * Revision 1.2  2008-11-16 22:00:58  grr
- * *** empty log message ***
- *
- *
- */
-
 if (!loadSettings())
 	die("Erreur chargement settings");
 # print the page header

@@ -38,6 +38,8 @@
 echo "<div style=\"text-align:center;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n";
 echo "<tbody>\n";
 echo "<tr>";
+if (!isset($page_calend))
+	$page_calend = 1;
 for ($k = 1; $k < 4; $k++)
 {
 	echo "<td>";
