@@ -243,7 +243,7 @@ else
 			echo "<a id=\"cacherBoutonSelection$a\" class=\"lienPlanning\" href=\"#\" onclick=\"cacherMoisSemaine($a)\" style=\"display:none;\">".htmlspecialchars($row[0])."</a>\n";
 			if (htmlspecialchars($row[3]).$temp != '')
 			{
-				if (htmlspecialchars($row[3] != ''))
+				if (htmlspecialchars($row[3]) != '')
 					$saut = "<br />";
 				else
 					$saut = "";
