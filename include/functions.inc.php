@@ -4297,7 +4297,7 @@ echo '	});'.PHP_EOL;
 echo '</script>'.PHP_EOL;
 }
 
-function jQuery_TimePicker($typeDate, $typeTime, $start_hour, $start_min)
+function jQuery_TimePicker($typeTime, $start_hour, $start_min)
 {
 	if (isset ($_GET['id']))
 	{
@@ -4325,8 +4325,6 @@ function jQuery_TimePicker($typeDate, $typeTime, $start_hour, $start_min)
 	}
 	if ($minute == 0)
 		$minute = '00';
-	global $resolution;
-	$minuteJQ = $resolution / 60;
 	echo '<div class="input-group clockpicker">
 	<input name="' .$typeTime. '" type="text" class="form-control" value="' .$hour. ':' .$minute. '">
 	<span class="input-group-addon">

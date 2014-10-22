@@ -808,11 +808,11 @@ else
 	echo "<td class=\"E\"><b>".get_vocab("time")."</b><td class=\"CL\">";
 	if (isset ($_GET['id']))
 	{
-		jQuery_TimePicker('start', 'start_', $start_hour, $start_min);
+		jQuery_TimePicker('start_', $start_hour, $start_min);
 	}
 	else
 	{
-		jQuery_TimePicker('start', 'start_', '', '');
+		jQuery_TimePicker('start_', '', '');
 	}
 	if (!$twentyfourhour_format)
 	{
@@ -908,11 +908,11 @@ else
 		echo "<td class=\"E\"><b>".get_vocab("time")."</b><td class=\"CL\">";
 		if (isset ($_GET['id']))
 		{
-			jQuery_TimePicker ('end','end_', $end_hour, $end_min);
+			jQuery_TimePicker ('end_', $end_hour, $end_min);
 		}
 		else
 		{
-			jQuery_TimePicker ('end','end_', '', '');
+			jQuery_TimePicker ('end_', '', '');
 		}
 		if (!$twentyfourhour_format)
 		{
