@@ -47,13 +47,7 @@ if (isset($_SERVER['HTTP_REFERER']))
 $day   = date("d");
 $month = date("m");
 $year  = date("Y");
-
-if (authGetUserLevel(getUserName(), -1, 'area') < 4)
-{
-	showAccessDenied($day, $month, $year, '', $back);
-	exit();
-}
-
+check_access(4, $day, $month, $year, $back);
 # print the page header
 print_header("", "", "", "", $type = "with_session", $page = "admin");
 // Affichage de la colonne de gauche

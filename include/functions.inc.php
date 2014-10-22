@@ -31,6 +31,18 @@
 header("Cache-Control:no-cache");
 
 /**
+ * Fonction de verification d'access
+ * @param int $level
+ */
+function check_access($level, $day, $month, $year, $back)
+{
+	if (authGetUserLevel(getUserName(), -1, 'area') < $level)
+	{
+		showAccessDenied($day, $month, $year, '', $back);
+		exit();
+	}
+}
+/**
  * Fonction qui compare 2 valeur
  * @param string $a
  * @param integer $b
@@ -4499,7 +4511,7 @@ function supprimerReservationsUtilisateursEXT($avec_resa,$avec_privileges)
 			$nb += $s;
 		echo "<p class='avertissement'>".get_vocab("tables_reservations").get_vocab("deux_points").$nb.get_vocab("entres_supprimees")."</p>\n";
 	}
-	$nb=0;
+	$nb = 0;
 	if ($avec_privileges == "y")
 	{
 		if ($req_j_mailuser_room != "")

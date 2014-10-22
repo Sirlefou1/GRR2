@@ -102,11 +102,7 @@ function cal($month, $year)
 	$s .= "</table>\n";
 	return $s;
 }
-if (authGetUserLevel(getUserName(), -1) < 6)
-{
-	showAccessDenied($day, $month, $year, '',$back);
-	exit();
-}
+check_access(6, $day, $month, $year, $back);
 # print the page header
 print_header("", "", "", "",$type = "with_session", $page = "admin");
 // Affichage de la colonne de gauche

@@ -29,12 +29,8 @@
  */
 include "include/admin.inc.php";
 $grr_script_name = "admin_type.php";
-if (authGetUserLevel(getUserName(), -1) < 6)
-{
-	showAccessDenied($day, $month, $year, '',$back);
-	exit();
-}
 $back = "";
+check_access(6, '', '', '', $back);
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
 if ((isset($_GET['msg'])) && isset($_SESSION['displ_msg']) && ($_SESSION['displ_msg'] == 'yes') )

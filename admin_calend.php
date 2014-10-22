@@ -113,13 +113,7 @@ function cal($month, $year)
 	$s .= "</table>\n";
 	return $s;
 }
-
-if (authGetUserLevel(getUserName(), -1, 'area') < 5)
-{
-	showAccessDenied($day, $month, $year, '',$back);
-	exit();
-}
-
+check_access(5, $day, $month, $year, $back);
 // Initialisation
 $etape = isset($_POST["etape"]) ? $_POST["etape"] : NULL;
 $areas = isset($_POST["areas"]) ? $_POST["areas"] : NULL;
@@ -544,27 +538,27 @@ else if ($etape == 2)
 				$ind = 1;
 			}
 			$sql .= ")) ORDER BY order_display";
-			$res = grr_sql_query($sql);
-			if ($res)
-			{
-				for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
-				{
-					echo "<option value=\"".$row[1]."\" ";
-					if ($type_ == $row[1])
-						echo " selected=\"selected\"";
-					echo " >".$row[0]."</option>\n";
-				}
-			}
-			echo "</select></td></tr>";
-		}
-		echo "</table>\n";
-		echo "<div><input type=\"hidden\" name=\"etape\" value=\"3\" />\n";
-		echo "<input type=\"hidden\" name=\"type_resa\" value=\"".$type_resa."\" />\n";
-		echo "<input type=\"submit\" value=\"".get_vocab("next")."\" />";
-		echo "</div></form>";
-	} 
-	else if (!$etape)
+$res = grr_sql_query($sql);
+if ($res)
+{
+	for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 	{
+		echo "<option value=\"".$row[1]."\" ";
+		if ($type_ == $row[1])
+			echo " selected=\"selected\"";
+		echo " >".$row[0]."</option>\n";
+	}
+}
+echo "</select></td></tr>";
+}
+echo "</table>\n";
+echo "<div><input type=\"hidden\" name=\"etape\" value=\"3\" />\n";
+echo "<input type=\"hidden\" name=\"type_resa\" value=\"".$type_resa."\" />\n";
+echo "<input type=\"submit\" value=\"".get_vocab("next")."\" />";
+echo "</div></form>";
+} 
+else if (!$etape)
+{
 	// Etape 1 :
 	echo get_vocab("admin_calendar_explain_1.php");
 	echo "<h3 style=\"text-align:center;\">".get_vocab("etape_n")."1/3</h3>\n";
@@ -583,24 +577,24 @@ else if ($etape == 2)
 	$res = grr_sql_query($sql);
 	if ($res)
 		for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
-		echo "<option value=\"".$row[0]."\">".$row[1]."</option>\n";
-	echo "</select><br />".get_vocab("ctrl_click");
-	echo "</td><td>";
-	echo "<p><b>".get_vocab("choix_action")."</b></p>";
-	echo "<table><tr>";
-	echo "<td><input type=\"radio\" name=\"type_resa\" value=\"resa\" checked=\"checked\" /></td>\n";
-	echo "<td>".get_vocab("reservation_en_bloc")."</td>\n";
-	echo "</tr><tr>\n";
-	echo "<td><input type=\"radio\" name=\"type_resa\" value=\"suppression\" /></td>\n";
-	echo "<td>".get_vocab("suppression_en_bloc")."</td>\n";
-	echo "</tr></table>\n";
-	echo "</td></tr></table>\n";
-	echo "<div><input type=\"hidden\" name=\"etape\" value=\"2\" />\n";
-	echo "<br /><input type=\"submit\" name=\"Continuer\" value=\"".get_vocab("next")."\" />\n";
-	echo "</div></form>\n";
-}
+			echo "<option value=\"".$row[0]."\">".$row[1]."</option>\n";
+		echo "</select><br />".get_vocab("ctrl_click");
+		echo "</td><td>";
+		echo "<p><b>".get_vocab("choix_action")."</b></p>";
+		echo "<table><tr>";
+		echo "<td><input type=\"radio\" name=\"type_resa\" value=\"resa\" checked=\"checked\" /></td>\n";
+		echo "<td>".get_vocab("reservation_en_bloc")."</td>\n";
+		echo "</tr><tr>\n";
+		echo "<td><input type=\"radio\" name=\"type_resa\" value=\"suppression\" /></td>\n";
+		echo "<td>".get_vocab("suppression_en_bloc")."</td>\n";
+		echo "</tr></table>\n";
+		echo "</td></tr></table>\n";
+		echo "<div><input type=\"hidden\" name=\"etape\" value=\"2\" />\n";
+		echo "<br /><input type=\"submit\" name=\"Continuer\" value=\"".get_vocab("next")."\" />\n";
+		echo "</div></form>\n";
+	}
 // fin de l'affichage de la colonne de droite
-echo "</td></tr></table>";
-?>
+	echo "</td></tr></table>";
+	?>
 </body>
 </html>

@@ -96,11 +96,7 @@ if ($reg_admin_login) {
 			exit();
 		}
 		// La ressource existe : on vérifie les privilèges de l'utilisateur
-		if (authGetUserLevel(getUserName(),$room) < 4)
-		{
-			showAccessDenied('','','', '',$back);
-			exit();
-		}
+		check_access(4, $day, $month, $year, $back);
 		$sql = "SELECT * FROM ".TABLE_PREFIX."_j_mailuser_room WHERE (login = '$reg_admin_login' and id_room = '$room')";
 		$res = grr_sql_query($sql);
 		$test = grr_sql_count($res);
