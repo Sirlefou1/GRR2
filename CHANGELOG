@@ -46,5 +46,6 @@
 [change] Simplification de la fonction grr_sql_version par l'utilisation de mysqli_get_server_info
 [change] Horloge mise a jour pour fonctionner sur chrome
 [change] Affichage du menu gauche dans toutes les pages de l'administration
+[change] Passage de la verification des droit via une fonction
 [suppression] Fichier inutile
 

@@ -52,14 +52,10 @@ if (!isset($id_area))
 $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
-if (authGetUserLevel(getUserName(), -1, 'area') < 4)
-{
-	$day   = date("d");
-	$month = date("m");
-	$year  = date("Y");
-	showAccessDenied($day, $month, $year, '',$back);
-	exit();
-}
+$day   = date("d");
+$month = date("m");
+$year  = date("Y");
+check_access(4, $day, $month, $year, $back);
 // tableau des ressources auxquelles l'utilisateur n'a pas accès
 $tab_rooms_noaccess = verif_acces_ressource(getUserName(), 'all');
 if (isset($_POST['mail1']))
