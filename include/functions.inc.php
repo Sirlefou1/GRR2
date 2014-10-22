@@ -3760,11 +3760,11 @@ function grrDelOverloadFromEntries($id_field)
 	// On cherche à quel domaine est rattaché le champ additionnel
 	$id_area = grr_sql_query1("SELECT id_area FROM ".TABLE_PREFIX."_overload WHERE id='".$id_field."'");
 	if ($id_area == -1)
-		fatal_error(0, get_vocab('error_area') . $id_area . get_vocab('not_found'));
+		fatal_error(0, get_vocab('error_area') . $id_field . get_vocab('not_found'));
 	// On cherche toutes les ressources du domaine
 	$call_rooms = grr_sql_query("SELECT id FROM ".TABLE_PREFIX."_room WHERE area_id = '".$id_area."'");
 	if (!$call_rooms)
-		fatal_error(0, get_vocab('error_room') . $id_room . get_vocab('not_found'));
+		fatal_error(0, get_vocab('error_room') . $id_area . get_vocab('not_found'));
 	for ($i = 0; ($row = grr_sql_row($call_rooms, $i)); $i++)
 	{
 		// On cherche toutes les resas de cette resources
