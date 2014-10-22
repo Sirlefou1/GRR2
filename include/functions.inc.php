@@ -513,7 +513,6 @@ return $tag_help;
  				$info = @ldap_get_entries($ds, $result);
  				if ($info["count"] == 1)
  				{
- 					$init = 0;
  					for ($loop = 0; $loop < $info[0]["memberuid"]["count"]; $loop++)
  					{
  						if ($info[0]["memberuid"][$loop] == $uid)
@@ -620,10 +619,6 @@ function affiche_date($x)
 	$j = date("d",$x);
 	$m = date("m",$x);
 	$a = date("Y",$x);
-	$h = date("H",$x);
-	$mi = date("i",$x);
-	$s = date("s",$x);
-	//$result = $h.":".$mi.":".$s.": le ".$j."/".$m."/".$a;
 	$result = $j."/".$m."/".$a;
 	return $result;
 }
@@ -925,7 +920,6 @@ function print_header($day = '', $month = '', $year = '', $area = '', $type_sess
 					<li id="sec"> </li>
 				</ul>';
 			}
-			$parametres_url = '';
 			$_SESSION['chemin_retour'] = '';
 			if (isset($_SERVER['QUERY_STRING']) && ($_SERVER['QUERY_STRING'] != ''))
 			{
@@ -1107,76 +1101,66 @@ function toTimeString(&$dur, &$units, $edition = false)
 	{
 		$duree_formatee = "";
 		$not_first_unit = false;
-				// On définit la durée en secondes de chaque type d'unité
+		// On définit la durée en secondes de chaque type d'unité
 		$annee   = 60 * 60 * 24 * 365;
 		$semaine = 60 * 60 * 24 * 7;
 		$jour    = 60 * 60 * 24;
 		$heure   = 60 * 60;
 		$minute  = 60;
-				// On calcule le nombre d'années.
+		// On calcule le nombre d'années.
 		$nb_annees = floor($dur / $annee);
 		if ($nb_annees > 0)
 		{
 			if ($not_first_unit)
-			{
 				$duree_formatee .= ", ";
-			}
 			else
 				$not_first_unit = true;
 			$duree_formatee .= $nb_annees . " " . get_vocab("years");
-						// On soustrait le nombre d'années déjà déterminées à la durée initiale.
+			// On soustrait le nombre d'années déjà déterminées à la durée initiale.
 			$dur = $dur - $nb_annees * $annee;
 		}
-				// On calcule le nombre de semaines.
+		// On calcule le nombre de semaines.
 		$nb_semaines = floor($dur / $semaine);
 		if ($nb_semaines > 0)
 		{
 			if ($not_first_unit)
-			{
 				$duree_formatee .= ", ";
-			}
 			else
 				$not_first_unit = true;
 			$duree_formatee .= $nb_semaines . " " . get_vocab("weeks");
-						// On soustrait le nombre de semaines déjà déterminées à la durée initiale.
+			// On soustrait le nombre de semaines déjà déterminées à la durée initiale.
 			$dur = $dur - $nb_semaines * $semaine;
 		}
-				// On calcule le nombre de jours.
+		// On calcule le nombre de jours.
 		$nb_jours = floor($dur / $jour);
 		if ($nb_jours > 0)
 		{
 			if ($not_first_unit)
-			{
 				$duree_formatee .= ", ";
-			}
 			else
 				$not_first_unit = true;
 			$duree_formatee .= $nb_jours . " " . get_vocab("days");
-						// On soustrait le nombre de jours déjà déterminés à la durée initiale.
+			// On soustrait le nombre de jours déjà déterminés à la durée initiale.
 			$dur = $dur - $nb_jours * $jour;
 		}
-				// On calcule le nombre d'heures.
+		// On calcule le nombre d'heures.
 		$nb_heures = floor($dur / $heure);
 		if ($nb_heures > 0)
 		{
 			if ($not_first_unit)
-			{
 				$duree_formatee .= ", ";
-			}
 			else
 				$not_first_unit = true;
 			$duree_formatee .= $nb_heures . " " . get_vocab("hours");
-						// On soustrait le nombre d'heures déjà déterminées à la durée initiale.
+			// On soustrait le nombre d'heures déjà déterminées à la durée initiale.
 			$dur = $dur - $nb_heures * $heure;
 		}
-				// On calcule le nombre de minutes.
+		// On calcule le nombre de minutes.
 		$nb_minutes = floor($dur / $minute);
 		if ($nb_minutes > 0)
 		{
 			if ($not_first_unit)
-			{
 				$duree_formatee .= ", ";
-			}
 			else
 				$not_first_unit = true;
 			$duree_formatee .= $nb_minutes . " " . get_vocab("minutes");
@@ -1187,26 +1171,22 @@ function toTimeString(&$dur, &$units, $edition = false)
 		if ($dur > 0)
 		{
 			if ($not_first_unit)
-			{
 				$duree_formatee .= ", ";
-			}
-			else
-				$not_first_unit = true;
 			$duree_formatee .= $dur . " " . get_vocab("seconds");
 		}
-				// On sépare les différentes unités de la chaine.
+		// On sépare les différentes unités de la chaine.
 		$tmp = explode(", ", $duree_formatee);
-				// Si on a plus d'une unitée...
+		// Si on a plus d'une unitée...
 		if (count($tmp) > 1)
 		{
-						// ... on dépile le tableau par la fin...
+			// ... on dépile le tableau par la fin...
 			$tmp_fin = array_pop($tmp);
-						// ... on reconstiture la chaine avec les premiers éléments...
+			// ... on reconstiture la chaine avec les premiers éléments...
 			$duree_formatee = implode(", ", $tmp);
-						// ... et on ajoute le dernier élément
+			// ... et on ajoute le dernier élément
 			$duree_formatee .= " et " . $tmp_fin;
 		}
-				// Sinon, on ne change rien.
+		// Sinon, on ne change rien.
 		$dur = $duree_formatee;
 		$units = "";
 	}
@@ -1515,35 +1495,25 @@ function period_time_string($t, $mod_time = 0)
 		$p_num = count($periods_name) - 1;
 	return $periods_name[$p_num];
 }
-function time_date_string($t,$dformat)
+function time_date_string($t, $dformat)
 {
 	global $twentyfourhour_format;
-				# This bit's necessary, because it seems %p in strftime format
-				# strings doesn't work
-	$ampm = date("a", $t);
+	// This bit's necessary, because it seems %p in strftime format
+	// strings doesn't work
 	if ($twentyfourhour_format)
-	{
 		return utf8_strftime("%H:%M - ".$dformat,$t);
-	}
 	else
-	{
-		return utf8_strftime("%I:%M$ampm - ".$dformat,$t);
-	}
+		return utf8_strftime("%I:%M".date("a", $t)." - ".$dformat,$t);
 }
 function time_date_string_jma($t,$dformat)
 {
 	global $twentyfourhour_format;
-				# This bit's necessary, because it seems %p in strftime format
-				# strings doesn't work
-	$ampm = date("a", $t);
+	//his bit's necessary, because it seems %p in strftime format
+	//strings doesn't work
 	if ($twentyfourhour_format)
-	{
 		return utf8_strftime($dformat, $t);
-	}
 	else
-	{
 		return utf8_strftime($dformat, $t);
-	}
 }
 // Renvoie une balise span avec un style backgrounf-color correspondant au type de  la réservation
 function span_bgground($colclass)
@@ -1587,7 +1557,6 @@ function tdcell_rowspan($colclass , $step)
 function show_colour_key($area_id)
 {
 	echo "<table class=\"legende\"><caption class=\"titre\">Légendes des réservations</caption>\n";
-	$nct = 1;
 	$sql = "SELECT DISTINCT t.id, t.type_name, t.type_letter FROM ".TABLE_PREFIX."_type_area t
 	LEFT JOIN ".TABLE_PREFIX."_j_type_area j on j.id_type=t.id
 	WHERE (j.id_area  IS NULL or j.id_area != '".$area_id."')
@@ -1602,7 +1571,6 @@ function show_colour_key($area_id)
 			$test = grr_sql_query1("SELECT id_type FROM ".TABLE_PREFIX."_j_type_area WHERE id_type = '".$row[0]."' and id_area='".$area_id."'");
 			if ($test == -1)
 			{
-				$id_type     = $row[0];
 				$type_name   = $row[1];
 				$type_letter = $row[2];
 				if ($nct == -1)
@@ -1651,6 +1619,7 @@ function round_t_up($t, $resolution, $am7)
 function make_site_select_html($link, $current_site, $year, $month, $day, $user)
 {
 	global $vocab;
+	$nb_sites_a_afficher = 0;
 	$out_html = '<b><i>'.get_vocab('sites').get_vocab('deux_points').'</i></b><form id="site_001" action="'.$_SERVER['PHP_SELF'].'"><div><select name="site" onchange="site_go()">';
 	if (strncmp("4.1", grr_sql_version(), 3) < 0)
 	{
@@ -1672,7 +1641,6 @@ function make_site_select_html($link, $current_site, $year, $month, $day, $user)
 	$res = grr_sql_query($sql);
 	if ($res)
 	{
-		$nb_sites_a_afficher = 0;
 		for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 		{
 							// Pour chaque site, on détermine le premier domaine disponible
@@ -1684,7 +1652,6 @@ function make_site_select_html($link, $current_site, $year, $month, $day, $user)
 			$default_area = -1;
 			if ($res2 && grr_sql_count($res2) > 0)
 			{
-				$row2 = grr_sql_row($res2, 0);
 				for ($j = 0; ($row2 = grr_sql_row($res2, $j)); $j++)
 				{
 					if (authUserAccesArea($user,$row2[0]) == 1)
@@ -1826,13 +1793,13 @@ function make_site_list_html($link,$current_site,$year,$month,$day,$user)
 		$sql = "SELECT id,sitename
 		FROM ".TABLE_PREFIX."_site
 		ORDER BY sitename";
+		$nb_sites_a_afficher = 0;
 		$res = grr_sql_query($sql);
 		if ($res)
 		{
-			$nb_sites_a_afficher = 0;
 			for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 			{
-			// Pour chaque site, on détermine s'il y a des domaines visibles par l'utilisateur
+				// Pour chaque site, on détermine s'il y a des domaines visibles par l'utilisateur
 				$sql = "SELECT id_area
 				FROM ".TABLE_PREFIX."_j_site_area
 				WHERE ".TABLE_PREFIX."_j_site_area.id_site='".$row[0]."'";
@@ -1840,14 +1807,13 @@ function make_site_list_html($link,$current_site,$year,$month,$day,$user)
 				$au_moins_un_domaine = FALSE;
 				if ($res2 && grr_sql_count($res2) > 0)
 				{
-					$row2 = grr_sql_row($res2, 0);
 					for ($j = 0; ($row2 = grr_sql_row($res2, $j)); $j++)
 					{
 						if (authUserAccesArea($user,$row2[0]) == 1)
 						{
 							// on a trouvé un domaine autorisé
 							$au_moins_un_domaine = TRUE;
-							$j = grr_sql_count($res2)+1;
+							$j = grr_sql_count($res2) + 1;
 							// On arrête la boucle
 						}
 					}
@@ -1874,8 +1840,7 @@ function make_site_list_html($link,$current_site,$year,$month,$day,$user)
 			}
 			grr_sql_free($res2);
 		}
-		grr_sql_free($res2);
-		if ($nb_sites_a_afficher>1)
+		if ($nb_sites_a_afficher > 1)
 			return $out_html;
 		else
 			return '';
