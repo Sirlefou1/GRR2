@@ -2002,7 +2002,6 @@ function make_site_item_html($link, $current_site, $year, $month, $day, $user)
 			$default_area = -1;
 			if ($res2 && grr_sql_count($res2) > 0)
 			{
-				$row2 = grr_sql_row($res2, 0);
 				for ($j = 0; ($row2 = grr_sql_row($res2, $j)); $j++)
 				{
 					if (authUserAccesArea($user,$row2[0]) == 1)
@@ -2081,8 +2080,7 @@ function make_area_item_html( $link, $current_site, $current_area, $year, $month
 		for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 		{
 			$link2 = "$link?year=$year&amp;month=$month&amp;day=$day&amp;area=$row[0]";
-			$area = $row[0];
-			if (authUserAccesArea($user,$row[0])==1)
+			if (authUserAccesArea($user, $row[0]) == 1)
 			{
 				/* Couleur du domaine selectionné*/
 				if ($current_area != null)
@@ -2123,10 +2121,6 @@ function make_room_item_html($link, $current_area, $current_room, $year, $month,
 		{
 			if (verif_acces_ressource(getUserName(),$row[0]))
 			{
-				if ($row[2])
-					$temp = " (".htmlspecialchars($row[2]).")";
-				else
-					$temp="";
 				$link2 = "$link.php?year=$year&amp;month=$month&amp;day=$day&amp;room=$row[0]";
 				$link_all_room = "week_all.php?year=$year&amp;month=$month&amp;day=$day&amp;area=$current_area";
 				if (!isset($_GET['room']))
@@ -2212,10 +2206,8 @@ function send_mail($id_entry, $action, $dformat, $tab_id_moderes = array())
 	$beneficiaire 				= htmlspecialchars($row[2]);
 	$room_name    				= removeMailUnicode(htmlspecialchars($row[3]));
 	$area_name    				= removeMailUnicode(htmlspecialchars($row[4]));
-	$type         				= $row[5];
 	$room_id      				= $row[6];
 	$repeat_id    				= $row[7];
-	$updated      				= time_date_string($row[8],$dformat);
 	$date_avis    				= strftime("%Y/%m/%d", $row[10]);
 	$delais_option_reservation 	= $row[13];
 	$option_reservation 		= $row[14];
@@ -2227,10 +2219,6 @@ function send_mail($id_entry, $action, $dformat, $tab_id_moderes = array())
 		list($start_period, $start_date) = period_date_string($row[10]);
 	else
 		$start_date = time_date_string($row[10],$dformat);
-	if ($enable_periods == 'y')
-		list( , $end_date) = period_date_string($row[11], -1);
-	else
-		$end_date = time_date_string($row[11],$dformat);
 	$rep_type = 0;
 	if ($repeat_id != 0)
 	{
@@ -2675,8 +2663,6 @@ function getWritable($beneficiaire, $user, $id)
 function auth_visiteur($user,$id_room)
 {
 	global $id_room_autorise;
-	$level = "";
-		// User not logged in, user level '0'
 	if ((!isset($user)) || (!isset($id_room)))
 		return 0;
 	$res = grr_sql_query("SELECT statut FROM ".TABLE_PREFIX."_utilisateurs WHERE login ='".protect_data_sql($user)."'");
@@ -2700,8 +2686,6 @@ function auth_visiteur($user,$id_room)
 ////Retourne le niveau d'accès de l'utilisateur
 function authGetUserLevel($user, $id, $type = 'room')
 {
-	// Initialise les variables
-	$level = '';
 	//user level '0': User not logged in, or User value is NULL (getUserName()='')
 	if (!isset($user) || ($user == ''))
 		return 0;
@@ -3258,13 +3242,12 @@ function MajMysqlModeDemo() {
 		if ((getSettingValue("date_verify_demo") == "") || (getSettingValue("date_verify_demo") < $date_now))
 		{
 			$fd = fopen($fic_sql, "r");
-			$result_ok = 'yes';
 			while (!feof($fd))
 			{
 				$query = fgets($fd, 5000);
 				$query = trim($query);
 				if ($query != '')
-					$reg = mysqli_query($GLOBALS['db_c'], $query);
+					mysqli_query($GLOBALS['db_c'], $query);
 			}
 			fclose($fd);
 			if (!saveSetting("date_verify_demo", $date_now))
@@ -3284,10 +3267,12 @@ function MajMysqlModeDemo() {
 function showAccessDenied($back)
 {
 	global $vocab;
+	/*
 	if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))
 		$type_session = "no_session";
 	else
 		$type_session = "with_session";
+	*/
 	?>
 	<h1><?php echo get_vocab("accessdenied")?></h1>
 	<p>
@@ -3922,7 +3907,6 @@ Construit les informations à afficher sur les plannings
 */
 function affichage_resa_planning($_description, $id_resa)
 {
-	$affichage = "";
 	if (getSettingValue("display_full_description") == 1)
 		$affichage = htmlspecialchars($_description,ENT_NOQUOTES);
 	// Les champs add :
@@ -4141,7 +4125,7 @@ function affiche_nom_prenom_email($_beneficiaire, $_beneficiaire_ext, $type = "n
  		{
 			// Le code n'existe pas dans la base, alors on l'insère en lui attribuant le statut par défaut.
  			$libellefonction = protect_data_sql($libellefonction);
- 			$sql = grr_sql_command("INSERT INTO grr_correspondance_statut(code_fonction,libelle_fonction,statut_grr) VALUES ('$codefonction', '$libellefonction', '$_statut')");
+ 			grr_sql_command("INSERT INTO grr_correspondance_statut(code_fonction,libelle_fonction,statut_grr) VALUES ('$codefonction', '$libellefonction', '$_statut')");
  			return $_statut;
  		}
 		//Le code fonction n'est pas défini, alors on retourne le statut par défaut.
@@ -4152,7 +4136,6 @@ function affiche_nom_prenom_email($_beneficiaire, $_beneficiaire_ext, $type = "n
 
  function jQuery_DatePicker($typeDate)
  {
- 	$dformat = "%B %d %Y";
  	if ($typeDate == 'rep_end' && isset($_GET['id']))
  	{
  		$res = grr_sql_query("SELECT repeat_id FROM ".TABLE_PREFIX."_entry WHERE id=".$_GET['id'].";");
@@ -4164,8 +4147,7 @@ function affiche_nom_prenom_email($_beneficiaire, $_beneficiaire_ext, $type = "n
  			fatal_error(0, grr_sql_error());
  		if (grr_sql_count($res) == 1)
  		{
- 			$row6 			= grr_sql_row($res, 0);
- 			$rep_end_date 	= $row6[1];
+ 			$row6 = grr_sql_row($res, 0);
  			$date = date_parse(date("Y-m-d H:i:s",$row6[1]));
  			$day = $date['day'];
  			$month = $date['month'];
