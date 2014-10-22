@@ -51,7 +51,7 @@ else
 header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 if ((authGetUserLevel(getUserName(),-1) < 2))
 {
-	showAccessDenied("","","","","");
+	showAccessDenied("");
 	exit();
 }
 $sql = "SELECT nom, login, etat, statut FROM ".TABLE_PREFIX."_utilisateurs WHERE  (login='".$beneficiaire."')";

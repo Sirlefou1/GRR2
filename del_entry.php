@@ -1,9 +1,9 @@
 <?php
 /**
  * del_entry.php
- * Interface de suppresssion d'une réservation
+ * Interface de suppresssion d'une rÃ©servation
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2009-06-04 15:30:17 $
+ * DerniÃ¨re modification : $Date: 2009-06-04 15:30:17 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -26,22 +26,6 @@
  * You should have received a copy of the GNU General Public License
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
-/**
- * $Log: del_entry.php,v $
- * Revision 1.7  2009-06-04 15:30:17  grr
- * *** empty log message ***
- *
- * Revision 1.6  2009-04-14 12:59:17  grr
- * *** empty log message ***
- *
- * Revision 1.5  2009-01-20 07:19:17  grr
- * *** empty log message ***
- *
- * Revision 1.4  2008-11-16 22:00:58  grr
- * *** empty log message ***
- *
- *
  */
 include "include/connect.inc.php";
 include "include/config.inc.php";
@@ -82,20 +66,19 @@ if ($info = mrbsGetEntryInfo($id))
 		$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
 	if (authGetUserLevel(getUserName(), -1) < 1)
 	{
-		showAccessDenied($day, $month, $year, $area, $back);
+		showAccessDenied($back);
 		exit();
 	}
 	if (!getWritable($info["beneficiaire"], getUserName(), $id))
 	{
-		showAccessDenied($day, $month, $year, $area, $back);
+		showAccessDenied($back);
 		exit;
 	}
 	if (authUserAccesArea(getUserName(), $area) == 0)
 	{
-		showAccessDenied($day, $month, $year, $area, $back);
+		showAccessDenied($back);
 		exit();
 	}
-	grr_sql_begin();
 	if (getSettingValue("automatic_mail") == 'yes')
 		$_SESSION['session_message_error'] = send_mail($id,3,$dformat);
 	$room_id = grr_sql_query1("SELECT ".TABLE_PREFIX."_entry.room_id FROM ".TABLE_PREFIX."_entry, ".TABLE_PREFIX."_room WHERE ".TABLE_PREFIX."_entry.room_id = ".TABLE_PREFIX."_room.id AND ".TABLE_PREFIX."_entry.id='".$id."'");
@@ -103,11 +86,10 @@ if ($info = mrbsGetEntryInfo($id))
 	get_planning_area_values($area);
 	if ((!(verif_booking_date(getUserName(), $id, $room_id, -1, $date_now, $enable_periods))) || ((verif_booking_date(getUserName(), $id, $room_id, -1, $date_now, $enable_periods)) && ($can_delete_or_create != "y")))
 	{
-		showAccessDenied($day, $month, $year, $area,$back);
+		showAccessDenied($back);
 		exit();
 	}
 	$result = mrbsDelEntry(getUserName(), $id, $series, 1);
-	grr_sql_commit();
 	if ($result)
 	{
 		$_SESSION['displ_msg'] = 'yes';
@@ -115,8 +97,5 @@ if ($info = mrbsGetEntryInfo($id))
 		exit();
 	}
 }
-$day   = date("d");
-$month = date("m");
-$year  = date("Y");
-showAccessDenied($day, $month, $year, $area,$back);
+showAccessDenied($back);
 ?>

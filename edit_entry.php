@@ -111,12 +111,12 @@ if (check_begin_end_bookings($day, $month, $year))
 }
 if ((authGetUserLevel(getUserName(),-1) < 2) && (auth_visiteur(getUserName(),$room) == 0))
 {
-	showAccessDenied($day, $month, $year, $area,$back);
+	showAccessDenied($back);
 	exit();
 }
 if (authUserAccesArea(getUserName(), $area) == 0)
 {
-	showAccessDenied($day, $month, $year, $area,$back);
+	showAccessDenied($back);
 	exit();
 }
 if (isset($id) && ($id != 0))
@@ -297,7 +297,7 @@ else
 	toTimeString($duration, $dur_units, true);
 if (!getWritable($beneficiaire, getUserName(),$id))
 {
-	showAccessDenied($day, $month, $year, $area,$back);
+	showAccessDenied($back);
 	exit;
 }
 $nb_areas = 0;

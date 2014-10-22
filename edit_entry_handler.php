@@ -206,7 +206,7 @@ if (!isset($day) || !isset($month) || !isset($year))
 get_planning_area_values($area);
 if (authGetUserLevel(getUserName(), -1) < 1)
 {
-	showAccessDenied($day, $month, $year, '',$back);
+	showAccessDenied($back);
 	exit();
 }
 if (check_begin_end_bookings($day, $month, $year))
@@ -512,13 +512,13 @@ if ($rep_type == 2)
 			{
 				if (!getWritable($beneficiaire, getUserName(), $id))
 				{
-					showAccessDenied($day, $month, $year, '', $back);
+					showAccessDenied($back);
 					exit;
 				}
 			}
 			if (authUserAccesArea(getUserName(), $area) == 0)
 			{
-				showAccessDenied($day, $month, $year, '', $back);
+				showAccessDenied($back);
 				exit();
 			}
 			if (isset($id) and ($id != 0))

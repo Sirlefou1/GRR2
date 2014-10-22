@@ -31,12 +31,9 @@ $grr_script_name = "admin_user_modify.php";
 $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
-$day   = date("d");
-$month = date("m");
-$year  = date("Y");
 if ((authGetUserLevel(getUserName(), -1) < 6) && (authGetUserLevel(getUserName(), -1, 'user') !=  1))
 {
-	showAccessDenied($day, $month, $year, '',$back);
+	showAccessDenied($back);
 	exit();
 }
 // un gestionnaire d'utilisateurs ne peut pas modifier un administrateur général ou un gestionnaire d'utilisateurs
@@ -45,7 +42,7 @@ if (isset($_GET["user_login"]) && (authGetUserLevel(getUserName(),-1,'user') == 
 	$test_statut = grr_sql_query1("SELECT statut FROM ".TABLE_PREFIX."_utilisateurs WHERE login='".$_GET["user_login"]."'");
 	if (($test_statut == "administrateur") or ($test_statut == "gestionnaire_utilisateur"))
 	{
-		showAccessDenied($day, $month, $year, '',$back);
+		showAccessDenied($back);
 		exit();
 	}
 }
@@ -325,7 +322,7 @@ else
 	$statut_div = "hidden";
 if ((authGetUserLevel(getUserName(), -1) < 1) && (getSettingValue("authentification_obli") == 1))
 {
-	showAccessDenied($day, $month, $year, '',$back);
+	showAccessDenied($back);
 	exit();
 }
 // Utilisation de la bibliothèqye prototype dans ce script

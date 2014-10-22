@@ -70,12 +70,12 @@ if ($area <= 0)
 print_header($day, $month, $year, $area, $type_session);
 if ((authGetUserLevel(getUserName(), -1) < 1) && (getSettingValue("authentification_obli") == 1))
 {
-	showAccessDenied($day, $month, $year, $area, $back);
+	showAccessDenied($back);
 	exit();
 }
 if (authUserAccesArea(getUserName(), $area) == 0)
 {
-	showAccessDenied($day, $month, $year, $area, $back);
+	showAccessDenied($back);
 	exit();
 }
 if (check_begin_end_bookings($day, $month, $year))

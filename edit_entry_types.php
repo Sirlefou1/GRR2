@@ -53,13 +53,13 @@ else
 
 if ((authGetUserLevel(getUserName(),-1) < 2) && (auth_visiteur(getUserName(),$room) == 0))
 {
-	showAccessDenied("", "", "", "", "");
+	showAccessDenied("");
 	exit();
 }
 
 if (authUserAccesArea(getUserName(), $areas) == 0)
 {
-	showAccessDenied("", "", "", "", "");
+	showAccessDenied("");
 	exit();
 }
 

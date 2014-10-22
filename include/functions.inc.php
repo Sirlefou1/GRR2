@@ -3895,7 +3895,6 @@ Construit les informations à afficher sur les plannings
 */
 function affichage_lien_resa_planning($breve_description, $id_resa)
 {
-	$affichage = "";
 	if ((getSettingValue("display_short_description") == 1) && ($breve_description != ""))
 		$affichage = $breve_description;
 	else
