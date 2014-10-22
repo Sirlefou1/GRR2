@@ -1638,15 +1638,15 @@ function round_t_up($t, $resolution, $am7)
 	}
 }
 /**
- * TODO: Enter description here...
+ * Menu gauche affichage des sites via select
  *
- * @param unknown_type $link
- * @param unknown_type $current_site
- * @param unknown_type $year
- * @param unknown_type $month
- * @param unknown_type $day
- * @param unknown_type $user
- * @return string|null
+ * @param string $link
+ * @param string $current_site
+ * @param string $year
+ * @param string $month
+ * @param string $day
+ * @param string $user
+ * @return string
  */
 function make_site_select_html($link, $current_site, $year, $month, $day, $user)
 {
@@ -1715,8 +1715,17 @@ function make_site_select_html($link, $current_site, $year, $month, $day, $user)
 		return $out_html;
 	}
 }
-//generates some html that can be used to select which area should be
-//displayed.
+/**
+ * Menu gauche affichage des area via select
+ *
+ * @param string $link
+ * @param string $current_site
+ * @param string $year
+ * @param string $month
+ * @param string $day
+ * @param string $user
+ * @return string
+ */
 function make_area_select_html( $link, $current_site, $current_area, $year, $month, $day, $user)
 {
 	global $vocab;
@@ -1756,7 +1765,17 @@ function make_area_select_html( $link, $current_site, $current_area, $year, $mon
 	$out_html .= "</form>";
 	return $out_html;
 }
-//end make_area_select_html
+/**
+ * Menu gauche affichage des room via select
+ *
+ * @param string $link
+ * @param string $current_site
+ * @param string $year
+ * @param string $month
+ * @param string $day
+ * @param string $user
+ * @return string
+ */
 function make_room_select_html($link, $current_area, $current_room, $year, $month, $day, $user)
 {
 	global $vocab;
@@ -1787,12 +1806,13 @@ function make_room_select_html($link, $current_area, $current_room, $year, $mont
 /**
  * Affichage des domaines sous la forme d'une liste
  *
- * @param unknown_type $link
- * @param unknown_type $current_site
- * @param unknown_type $year
- * @param unknown_type $month
- * @param unknown_type $day
- * @param unknown_type $user
+ * @param string $link
+ * @param string $current_site
+ * @param string $year
+ * @param string $month
+ * @param string $day
+ * @param string $user
+ * @return string
  */
 function make_site_list_html($link,$current_site,$year,$month,$day,$user)
 {
@@ -1861,6 +1881,17 @@ function make_site_list_html($link,$current_site,$year,$month,$day,$user)
 			return '';
 	}
 }
+/**
+ * Affichage des area sous la forme d'une liste
+ *
+ * @param string $link
+ * @param string $current_site
+ * @param string $year
+ * @param string $month
+ * @param string $day
+ * @param string $user
+ * @return string
+ */
 function make_area_list_html($link, $current_site, $current_area, $year, $month, $day, $user)
 {
 	global $vocab;
@@ -1905,6 +1936,17 @@ function make_area_list_html($link, $current_site, $current_area, $year, $month,
 	}
 	grr_sql_free($res);
 }
+/**
+ * Affichage des room sous la forme d'une liste
+ *
+ * @param string $link
+ * @param string $current_site
+ * @param string $year
+ * @param string $month
+ * @param string $day
+ * @param string $user
+ * @return string
+ */
 function make_room_list_html($link,$current_area, $current_room, $year, $month, $day, $user) {
 	global $vocab;
 	echo "<b><i><span class=\"bground\">".get_vocab("rooms").get_vocab("deux_points")."</span></i></b><br />";
@@ -1927,15 +1969,15 @@ function make_room_list_html($link,$current_area, $current_room, $year, $month, 
 }
 //Affichage par bouton
 /**
- * TODO: Enter description here...
+ * Affichage des domaines sous la forme d'un input
  *
- * @param unknown_type $link
- * @param unknown_type $current_site
- * @param unknown_type $year
- * @param unknown_type $month
- * @param unknown_type $day
- * @param unknown_type $user
- * @return string|null
+ * @param string $link
+ * @param string $current_site
+ * @param string $year
+ * @param string $month
+ * @param string $day
+ * @param string $user
+ * @return string
  */
 function make_site_item_html($link, $current_site, $year, $month, $day,$user)
 {
@@ -1994,8 +2036,17 @@ function make_site_item_html($link, $current_site, $year, $month, $day,$user)
 		return $out_html;
 	}
 }
-# generates some html that can be used to select which area should be
-# displayed.
+/**
+ * Affichage des area sous la forme d'un input
+ *
+ * @param string $link
+ * @param string $current_site
+ * @param string $year
+ * @param string $month
+ * @param string $day
+ * @param string $user
+ * @return string
+ */
 function make_area_item_html( $link, $current_site, $current_area, $year, $month, $day, $user)
 {
 	global $vocab;
@@ -2048,7 +2099,17 @@ function make_area_item_html( $link, $current_site, $current_area, $year, $month
 	return $out_html;
 }
 //end make_area_select_html
-/*-----MAJ Loïs THOMAS  --> Création des ressources du menu gauche sous forme d'item -----*/
+/**
+ * Affichage des rooms sous la forme d'un input
+ *
+ * @param string $link
+ * @param string $current_site
+ * @param string $year
+ * @param string $month
+ * @param string $day
+ * @param string $user
+ * @return string
+ */
 function make_room_item_html($link, $current_area, $current_room, $year, $month, $day, $user)
 {
 	global $vocab;
