@@ -606,7 +606,7 @@ if ($rep_type == 2)
 				else
 					$entry_type = 0;
 				mrbsCreateSingleEntry($starttime, $endtime, $entry_type, $repeat_id, $room_id, $create_by, $beneficiaire, $beneficiaire_ext, $name, $type, $description, $option_reservation, $overload_data, $entry_moderate, $rep_jour_c, $statut_entry, $keys, $courrier);
-				$new_id = grr_sql_insert_id("".TABLE_PREFIX."_entry", "id");
+				$new_id = grr_sql_insert_id();
 				if (getSettingValue("automatic_mail") == 'yes')
 				{
 					if (isset($id) && ($id != 0))

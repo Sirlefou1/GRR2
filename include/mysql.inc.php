@@ -142,7 +142,7 @@ function grr_sql_count ($r)
  * @param string $table
  * @param string $field
  */
-function grr_sql_insert_id($table, $field)
+function grr_sql_insert_id()
 {
 	return mysqli_insert_id($GLOBALS['db_c']);
 }
@@ -150,16 +150,6 @@ function grr_sql_insert_id($table, $field)
 function grr_sql_error()
 {
 	return mysqli_error($GLOBALS['db_c']);
-}
-// Begin a transaction, if the database supports it. This is used to
-// improve PostgreSQL performance for multiple insert/delete/updates.
-// There is no rollback support, since MySQL doesn't support it.
-function grr_sql_begin()
-{
-}
-// Commit (end) a transaction. See grr_sql_begin().
-function grr_sql_commit()
-{
 }
 // Acquire a mutual-exclusion lock on the named table. For portability:
 // This will not lock out SELECTs.

@@ -786,7 +786,7 @@ if ((!empty($id_area)) || (isset($add_area)))
 				";
 				if (grr_sql_command($sql) < 0)
 					fatal_error(1, "<p>" . grr_sql_error());
-				$id_area = grr_sql_insert_id("".TABLE_PREFIX."_area", "id");
+				$id_area = grr_sql_insert_id();
 			}
 	  		// Affectation e un site
 			if (getSettingValue("module_multisite") == "Oui")

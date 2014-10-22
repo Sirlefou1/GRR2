@@ -64,11 +64,6 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 			$this->mois_precedent = $mois_precedent;
 			$this->mois_suivant = $mois_suivant;
 		}
-		function getCalendarLink($month, $year)
-		{
-			return "";
-		}
-
 		/**
 		 * @param integer $day
 		 * @param double $month
@@ -104,14 +99,8 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 			$date = mktime(12, 0, 0, $this->month, 1, $this->year);
 			$first = (strftime("%w",$date) + 7 - $weekstarts) % 7;
 			$monthName = utf8_strftime("%B", $date);
-			$prevMonth = $this->getCalendarLink($this->month - 1 >   0 ? $this->month - 1 : 12, $this->month - 1 >   0 ? $this->year : $this->year - 1);
-			$nextMonth = $this->getCalendarLink($this->month + 1 <= 12 ? $this->month + 1 :  1, $this->month + 1 <= 12 ? $this->year : $this->year + 1);
 			$s .= "\n<table class=\"calendar\">\n";
 			$s .= "<caption>";
-			if (($this->h) && (($this->dmy == 'month') || ($this->dmy == 'month_all') || ($this->dmy == 'month_all2')))
-				$bg_lign = "week";
-			else
-				$bg_lign = 'calendarcol1';
 			//Permet de récupérer le numéro de la 1ere semaine affichée par le mini calendrier.
 			$week = numero_semaine($date);
 			$weekd = $week;

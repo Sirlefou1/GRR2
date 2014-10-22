@@ -137,7 +137,6 @@ function grrDelEntryInConflict($room_id, $starttime, $endtime, $ignore, $repigno
 		return "";
 	}
 	//Efface les résas concernées
-	$err = "";
 	for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 	{
 		if (getSettingValue("automatic_mail") == 'yes')
@@ -394,11 +393,8 @@ function mrbsEntryGetOverloadDesc($id_entry)
 */
 function grrExtractValueFromOverloadDesc($chaine,$id)
 {
-	//$begin_string = "<".$id.">";
-	//$end_string = "</".$id.">";
 	$begin_string = "@".$id."@";
 	$end_string = "@/".$id."@";
-	$data = "";
 	$begin_pos = strpos($chaine,$begin_string);
 	$end_pos = strpos($chaine,$end_string);
 	if ( $begin_pos !== false && $end_pos !== false)
@@ -458,7 +454,7 @@ function mrbsCreateSingleEntry($starttime, $endtime, $entry_type, $repeat_id, $r
 	if (grr_sql_command($sql) < 0)
 		fatal_error(0, "Requete error  = ".$sql);
 	// s'il s'agit d'une modification d'une ressource déjà modérée et acceptée : on met à jour les infos dans la table ".TABLE_PREFIX."_entry_moderate
-	$new_id = grr_sql_insert_id("".TABLE_PREFIX."_entry", "id");
+	$new_id = grr_sql_insert_id();
 	if ($moderate == 2)
 		moderate_entry_do($new_id,1,"","no");
 }
@@ -505,7 +501,7 @@ function mrbsCreateRepeatEntry($starttime, $endtime, $rep_type, $rep_enddate, $r
 	$sql = "INSERT INTO ".TABLE_PREFIX."_repeat (start_time, end_time, rep_type, end_date, rep_opt, room_id, create_by, beneficiaire, beneficiaire_ext, type, name, description, rep_num_weeks, overload_desc, jours, courrier) VALUES ($starttime, $endtime,  $rep_type, $rep_enddate, '$rep_opt', $room_id,   '".protect_data_sql($creator)."','".protect_data_sql($beneficiaire)."','".protect_data_sql($beneficiaire_ext)."', '".protect_data_sql($type)."', '".protect_data_sql($name)."', '".protect_data_sql($description)."', '$rep_num_weeks','".protect_data_sql($overload_data_string)."',".$rep_jour_c." , $courrier)";
 	if (grr_sql_command($sql) < 0)
 		return 0;
-	return grr_sql_insert_id("".TABLE_PREFIX."_repeat", "id");
+	return grr_sql_insert_id();
 }
 /** same_day_next_month
  *  Return the number of days to step forward for a "monthly repeat,
@@ -603,7 +599,6 @@ function mrbsGetRepeatEntryList($time, $enddate, $rep_type, $rep_opt, $max_ittr,
 				$kk++;
 			}
 			return $tableFinale;
-			break;
 			//Unknown repeat option
 			default:
 			return;
@@ -642,7 +637,7 @@ function mrbsCreateRepeatingEntrys($starttime, $endtime, $rep_type, $rep_enddate
 	if (empty($reps))
 	{
 		mrbsCreateSingleEntry($starttime, $endtime, 0, 0, $room_id, $creator, $beneficiaire, $beneficiaire_ext, $name, $type, $description, $option_reservation,$overload_data,$moderate, $rep_jour_c,"-", 0, $courrier);
-		$id_first_resa = grr_sql_insert_id("".TABLE_PREFIX."_entry", "id");
+		$id_first_resa = grr_sql_insert_id();
 		return;
 	}
 	$ent = mrbsCreateRepeatEntry($starttime, $endtime, $rep_type, $rep_enddate, $rep_opt, $room_id, $creator, $beneficiaire, $beneficiaire_ext, $name, $type, $description, $rep_num_weeks,$overload_data, $rep_jour_c, $courrier);
@@ -653,7 +648,7 @@ function mrbsCreateRepeatingEntrys($starttime, $endtime, $rep_type, $rep_enddate
 		for($i = 0; $i < $total_reps; $i++)
 		{
 			mrbsCreateSingleEntry($reps[$i], $reps[$i] + $diff, 1, $ent, $room_id, $creator, $beneficiaire, $beneficiaire_ext, $name, $type, $description, $option_reservation,$overload_data, $moderate, $rep_jour_c,"-", 0, $courrier);
-			$id_new_resa = grr_sql_insert_id("".TABLE_PREFIX."_entry", "id");
+			$id_new_resa = grr_sql_insert_id();
 				// s'il s'agit d'une modification d'une ressource déjà modérée et acceptée : on met à jour les infos dans la table ".TABLE_PREFIX."_entry_moderate
 			if ($moderate == 2)
 				moderate_entry_do($id_new_resa,1,"","no");
@@ -827,11 +822,11 @@ function moderate_entry_do($_id,$_moderate,$_description,$send_mail="yes")
 				$test = grr_sql_query1("SELECT count(id) FROM ".TABLE_PREFIX."_entry_moderate WHERE id = '".$entry_tom."' AND moderate='3'");
 				// Si oui, on supprime la réservation
 				if ($test > 0)
-					$del = grr_sql_query("DELETE FROM ".TABLE_PREFIX."_entry WHERE id = '".$entry_tom."'");
+					grr_sql_query("DELETE FROM ".TABLE_PREFIX."_entry WHERE id = '".$entry_tom."'");
 			}
 			// On supprime l'info de périodicité
-			$del_repeat = grr_sql_query("DELETE FROM ".TABLE_PREFIX."_repeat WHERE id='".$repeat_id."'");
-			$dupdate_repeat = grr_sql_query("UPDATE ".TABLE_PREFIX."_entry SET repead_id = '0' WHERE repead_id='".$repeat_id."'");
+			grr_sql_query("DELETE FROM ".TABLE_PREFIX."_repeat WHERE id='".$repeat_id."'");
+			grr_sql_query("UPDATE ".TABLE_PREFIX."_entry SET repead_id = '0' WHERE repead_id='".$repeat_id."'");
 		}
 	}
 }
