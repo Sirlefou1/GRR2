@@ -44,8 +44,7 @@ require_once("./include/session.inc.php");
 include "include/language.inc.php";
 function traite_requete($requete = "")
 {
-	$retour="";
-	$res = mysqli_query($GLOBALS['db_c'], $requete);
+	mysqli_query($GLOBALS['db_c'], $requete);
 	$erreur_no = mysqli_errno($GLOBALS['db_c']);
 	if (!$erreur_no)
 		$retour = "";
@@ -187,10 +186,7 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 			$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
 		if ((authGetUserLevel(getUserName(),-1) < 6) && ($valid != 'yes'))
 		{
-			$day   = date("d");
-			$month = date("m");
-			$year  = date("Y");
-			showAccessDenied($day, $month, $year, $area,$back);
+			showAccessDenied($back);
 			exit();
 		}
 		if ($valid == 'no')
@@ -204,21 +200,21 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 		else
 		{
 			?>
-			<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
-			<HTML>
-				<HEAD>
-					<META HTTP-EQUIV="Content-Type" content="text/html; charset=<?php
+			<!doctype html>
+			<html>
+				<head>
+					<meta http-equiv="content-type" content="text/html; charset=<?php
 					if ($unicode_encoding)
 						echo "utf-8";
 					else
 						echo $charset_html;
 					?>">
 
-					<link REL="stylesheet" href="themes/default/css/style.css" type="text/css">
-					<LINK REL="SHORTCUT ICON" href="favicon.ico">
-						<TITLE> GRR </TITLE>
-					</HEAD>
-					<BODY>
+					<link rel="stylesheet" href="themes/default/css/style.css" type="text/css">
+					<link rel="shortcut icon" href="favicon.ico">
+						<title> grr </title>
+					</head>
+					<body>
 						<?php
 					}
 

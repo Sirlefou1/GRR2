@@ -35,20 +35,9 @@ if (isset($_SERVER['HTTP_REFERER']))
 $display = isset($_GET["display"]) ? $_GET["display"] : NULL;
 $order_by = isset($_GET["order_by"]) ? $_GET["order_by"] : NULL;
 $msg = '';
-if ((getSettingValue("ldap_statut") == "") && (getSettingValue("sso_statut") == "") && (getSettingValue("imap_statut") == ""))
+if (((getSettingValue("ldap_statut") == "") && (getSettingValue("sso_statut") == "") && (getSettingValue("imap_statut") == "")) || (authGetUserLevel(getUserName(), -1) < 6) && (authGetUserLevel(getUserName(), -1,'user') !=  1))
 {
-	$day   = date("d");
-	$month = date("m");
-	$year  = date("Y");
-	showAccessDenied($day, $month, $year, $area,$back);
-	exit();
-}
-if ((authGetUserLevel(getUserName(), -1) < 6) && (authGetUserLevel(getUserName(), -1,'user') !=  1))
-{
-	$day   = date("d");
-	$month = date("m");
-	$year  = date("Y");
-	showAccessDenied($day, $month, $year, $area,$back);
+	showAccessDenied($back);
 	exit();
 }
 print_header("", "", "", "", $type = "with_session", $page = "admin");

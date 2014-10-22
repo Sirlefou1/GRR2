@@ -67,10 +67,7 @@ else
 		$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
 	if (authGetUserLevel(getUserName(),-1) < 6)
 	{
-		$day   = date("d");
-		$month = date("m");
-		$year  = date("Y");
-		showAccessDenied($day, $month, $year, '',$back);
+		showAccessDenied($back);
 		exit();
 	}
 }

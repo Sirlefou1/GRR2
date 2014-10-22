@@ -42,20 +42,16 @@ if (isset($id_site))
 	settype($id_site,"integer");
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
-$day   = date("d");
-$month = date("m");
-$year  = date("Y");
 if ($type == "room")
 {
 	if ((authGetUserLevel(getUserName(),$room) < 4) || (!verif_acces_ressource(getUserName(), $room)))
 	{
-		showAccessDenied($day, $month, $year, '', $back);
+		showAccessDenied($back);
 		exit();
 	}
 	if (isset($confirm))
 	{
 		//They have confirmed it already, so go blast!
-		grr_sql_begin();
 		//First take out all appointments for this room
 		grr_sql_command("DELETE FROM ".TABLE_PREFIX."_entry WHERE room_id=$room");
 		grr_sql_command("DELETE FROM ".TABLE_PREFIX."_entry_moderate WHERE room_id=$room");
@@ -63,7 +59,6 @@ if ($type == "room")
 		grr_sql_command("DELETE FROM ".TABLE_PREFIX."_j_user_room WHERE id_room=$room");
 		//Now take out the room itself
 		grr_sql_command("DELETE FROM ".TABLE_PREFIX."_room WHERE id=$room");
-		grr_sql_commit();
 		//Go back to the admin page
 		Header("Location: admin_room.php?id_area=$id_area&id_site=$id_site");
 	}
@@ -99,7 +94,7 @@ if ($type == "area")
 	// Seul l'admin peut supprimer un domaine
 	if (authGetUserLevel(getUserName(), $id_area, 'area') < 5)
 	{
-		showAccessDenied($day, $month, $year, '', $back);
+		showAccessDenied($back);
 		exit();
 	}
 	//We are only going to let them delete an area if there are

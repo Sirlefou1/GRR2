@@ -37,9 +37,6 @@ if (isset($room))
 	settype($room,"integer");
 if (!isset($id_area))
 	settype($id_area,"integer");
-$day   = date("d");
-$month = date("m");
-$year  = date("Y");
 check_access(4, $back);
 //print the page header
 print_header("", "", "", "", $type = "with_session", $page = "admin");
@@ -65,18 +62,18 @@ if ($test_user == "multi")
 			$test = grr_sql_query1("SELECT id FROM ".TABLE_PREFIX."_room WHERE id='".$room."'");
 			if ($test == -1)
 			{
-				showAccessDenied($day, $month, $year, '',$back);
+				showAccessDenied($back);
 				exit();
 			}
 			if (in_array($room,$tab_rooms_noaccess))
 			{
-				showAccessDenied($day, $month, $year, '',$back);
+				showAccessDenied($back);
 				exit();
 			}
 		// La ressource existe : on vérifie les privilèges de l'utilisateur
 			if (authGetUserLevel(getUserName(),$room) < 4)
 			{
-				showAccessDenied($day, $month, $year, '',$back);
+				showAccessDenied($back);
 				exit();
 			}
 			$sql = "SELECT * FROM ".TABLE_PREFIX."_j_user_room WHERE (login = '$valeur' and id_room = '$room')";
@@ -106,13 +103,13 @@ if ($test_user == "multi")
 			$test = grr_sql_query1("SELECT id FROM ".TABLE_PREFIX."_area WHERE id='".$id_area."'");
 			if ($test == -1)
 			{
-				showAccessDenied($day, $month, $year, '',$back);
+				showAccessDenied($back);
 				exit();
 			}
 		// Le domaine existe : on vérifie les privilèges de l'utilisateur
 			if (authGetUserLevel(getUserName(),$id_area,'area') < 4)
 			{
-				showAccessDenied($day, $month, $year, '',$back);
+				showAccessDenied($back);
 				exit();
 			}
 			$sql = "SELECT id FROM ".TABLE_PREFIX."_room WHERE area_id=$id_area";
@@ -153,18 +150,18 @@ if ($test_user == "simple")
 			$test = grr_sql_query1("SELECT id FROM ".TABLE_PREFIX."_room WHERE id='".$room."'");
 			if ($test == -1)
 			{
-				showAccessDenied($day, $month, $year, '',$back);
+				showAccessDenied($back);
 				exit();
 			}
 			if (in_array($room,$tab_rooms_noaccess))
 			{
-				showAccessDenied($day, $month, $year, '',$back);
+				showAccessDenied($back);
 				exit();
 			}
 		// La ressource existe : on vérifie les privilèges de l'utilisateur
 			if (authGetUserLevel(getUserName(),$room) < 4)
 			{
-				showAccessDenied($day, $month, $year, '',$back);
+				showAccessDenied($back);
 				exit();
 			}
 			$sql = "SELECT * FROM ".TABLE_PREFIX."_j_user_room WHERE (login = '$reg_admin_login' and id_room = '$room')";
@@ -192,13 +189,13 @@ if ($test_user == "simple")
 			$test = grr_sql_query1("SELECT id FROM ".TABLE_PREFIX."_area WHERE id='".$id_area."'");
 			if ($test == -1)
 			{
-				showAccessDenied($day, $month, $year, '',$back);
+				showAccessDenied($back);
 				exit();
 			}
 			// Le domaine existe : on vérifie les privilèges de l'utilisateur
 			if (authGetUserLevel(getUserName(),$id_area,'area') < 4)
 			{
-				showAccessDenied($day, $month, $year, '',$back);
+				showAccessDenied($back);
 				exit();
 			}
 			$sql = "SELECT id FROM ".TABLE_PREFIX."_room WHERE area_id=$id_area";
@@ -232,7 +229,7 @@ if ($action)
 	{
 		if (authGetUserLevel(getUserName(),$room) < 4)
 		{
-			showAccessDenied($day, $month, $year, '', $back);
+			showAccessDenied($back);
 			exit();
 		}
 		unset($login_admin); $login_admin = $_GET["login_admin"];
@@ -246,7 +243,7 @@ if ($action)
 	{
 		if (authGetUserLevel(getUserName(),$id_area,'area') < 4)
 		{
-			showAccessDenied($day, $month, $year, '',$back);
+			showAccessDenied($back);
 			exit();
 		}
 		$sql = "SELECT id FROM ".TABLE_PREFIX."_room WHERE area_id=$id_area ";

@@ -52,9 +52,6 @@ if (!isset($id_area))
 $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
-$day   = date("d");
-$month = date("m");
-$year  = date("Y");
 check_access(4, $back);
 // tableau des ressources auxquelles l'utilisateur n'a pas accès
 $tab_rooms_noaccess = verif_acces_ressource(getUserName(), 'all');
@@ -83,12 +80,12 @@ if ($reg_admin_login) {
 		$test = grr_sql_query1("select id from ".TABLE_PREFIX."_room where id='".$room."'");
 		if ($test == -1)
 		{
-			showAccessDenied('', '', '', '',$back);
+			showAccessDenied($back);
 			exit();
 		}
 		if (in_array($room,$tab_rooms_noaccess))
 		{
-			showAccessDenied('','','', '',$back);
+			showAccessDenied($back);
 			exit();
 		}
 		// La ressource existe : on vérifie les privilèges de l'utilisateur
@@ -117,7 +114,7 @@ if ($action)
 	{
 		if (authGetUserLevel(getUserName(),$room) < 4)
 		{
-			showAccessDenied($day, $month, $year, '',$back);
+			showAccessDenied($back);
 			exit();
 		}
 		$sql = "DELETE FROM ".TABLE_PREFIX."_j_mailuser_room WHERE (login='".$_GET['login_admin']."' and id_room = '$room')";

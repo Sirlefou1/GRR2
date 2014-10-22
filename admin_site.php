@@ -120,7 +120,6 @@ function create_site($id)
 	}
 	else
 	{
-		$msg = '';
 		// On vérifie que le code et le nom du site ont été renseignés
 		if ($sitecode == '' || $sitecode == NULL || $sitename == '' || $sitename == NULL)
 		{
@@ -144,7 +143,7 @@ function create_site($id)
 			fax='".protect_data_sql($fax)."'";
 			if (grr_sql_command($sql) < 0)
 				fatal_error(0,'<p>'.grr_sql_error().'</p>');
-			$site = mysqli_insert_id($GLOBALS['db_c']);
+			mysqli_insert_id($GLOBALS['db_c']);
 		}
 		// On affiche le tableau des sites
 		read_sites();
@@ -255,7 +254,6 @@ function update_site($id)
 		}
 		else
 		{
-			$msg = '';
 			if (!isset($id))
 				$id = isset($_POST['id']) ? $_POST['id'] :  NULL;
 			if (!isset($sitecode))
@@ -302,7 +300,7 @@ function update_site($id)
 				WHERE id='".$id."'";
 				if (grr_sql_command($sql) < 0)
 					fatal_error(0,'<p>'.grr_sql_error().'</p>');
-				$site = mysqli_insert_id($GLOBALS['db_c']);
+				mysqli_insert_id($GLOBALS['db_c']);
 			}
 			// On affiche le tableau des sites
 			read_sites();
@@ -349,17 +347,14 @@ function update_site($id)
 		$back = '';
 		if (isset($_SERVER['HTTP_REFERER']))
 			$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
-		$day   = date('d');
-		$month = date('m');
-		$year  = date('Y');
-		showAccessDenied($day,$month,$year,'',$back);
+		showAccessDenied($back);
 		exit();
 	}
-	$back = NULL;
+	$back = "";
 	if (isset($_SERVER['HTTP_REFERER']))
 		$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
 	// print the page header
-	print_header(NULL,NULL,NULL,NULL,$type='with_session',$page='admin');
+	print_header("","","","", $type = 'with_session', $page = 'admin');
 	// Affichage de la colonne de gauche
 	include_once('admin_col_gauche.php');
 	if ((isset($_GET['msg'])) && isset($_SESSION['displ_msg']) && ($_SESSION['displ_msg'] == 'yes') )

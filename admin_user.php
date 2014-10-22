@@ -36,10 +36,7 @@ $order_by = isset($_GET["order_by"]) ? $_GET["order_by"] : NULL;
 $msg = '';
 if ((authGetUserLevel(getUserName(), -1) < 6) && (authGetUserLevel(getUserName(), -1,'user') != 1))
 {
-	$day   = date("d");
-	$month = date("m");
-	$year  = date("Y");
-	showAccessDenied($day, $month, $year, '',$back);
+	showAccessDenied($back);
 	exit();
 }
 if ((isset($_GET['action_del'])) && ($_GET['js_confirmed'] == 1))
