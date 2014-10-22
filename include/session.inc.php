@@ -38,10 +38,9 @@
  *
  * Returns 1 if login succeeded, >= 1 otherwise
  *
- * @_login              string                  Login of the user
- * @_password           string                  Password
- *
- * @return              string|null                    The session is open
+ * @param string _login
+ * @param string _password
+ * @return string
  */
 function grr_opensession($_login, $_password, $_user_ext_authentifie = '', $tab_login = array(), $tab_groups = array())
 {
@@ -727,7 +726,7 @@ return "1";
  * Returns true if session resumes, false otherwise
  *
  *
- * @return              null|boolean                    The session resumed
+ * @return boolean
  */
 function grr_resumeSession()
 {
@@ -979,7 +978,7 @@ function grr_ldap_search_user($ds, $basedn, $login_attr, $login, $filtre_sup = "
 	}
 }
 /**
- * @return resource
+ * @return boolean
  */
 function grr_verif_imap($_login, $_password)
 {
@@ -993,7 +992,7 @@ function grr_verif_imap($_login, $_password)
 		return false;
 }
 /**
- * @return resource
+ * @return resource|boolean
  */
 function grr_connect_imap($i_adresse,$i_port,$i_login,$i_pwd,$use_type,$use_ssl,$use_cert,$use_tls,$mode = "normal")
 {

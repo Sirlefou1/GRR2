@@ -577,6 +577,9 @@ $login_moderateur : identifiant du modérateur
 $motivation_moderation : texte facultatif
 Insère dans la table ".TABLE_PREFIX."_entry_moderate les valeurs de ".TABLE_PREFIX."_entry dont l'identifiant est $id_entry
 */
+/**
+ * @param string $motivation_moderation
+ */
 function  grr_backup($id_entry, $login_moderateur, $motivation_moderation)
 {
 	$sql = "SELECT * FROM ".TABLE_PREFIX."_entry WHERE id='".$id_entry."'";
@@ -1271,6 +1274,10 @@ function toPeriodString($start_period, &$dur, &$units)
 		$units = get_vocab("periods");
 }
 
+/**
+* @param string $prefix
+* @param string $option
+*/
 function genDateSelectorForm($prefix, $day, $month, $year,$option)
 {
 	global $nb_year_calendar;
@@ -1726,6 +1733,7 @@ function make_site_select_html($link, $current_site, $year, $month, $day, $user)
  *
  * @param string $link
  * @param string $current_site
+ * @param string $current_area
  * @param string $year
  * @param string $month
  * @param string $day
@@ -1775,7 +1783,8 @@ function make_area_select_html( $link, $current_site, $current_area, $year, $mon
  * Menu gauche affichage des room via select
  *
  * @param string $link
- * @param string $current_site
+ * @param string $current_area
+ * @param string $current_room
  * @param string $year
  * @param string $month
  * @param string $day
@@ -1819,7 +1828,7 @@ function make_room_select_html($link, $current_area, $current_room, $year, $mont
  * @param string $user
  * @return string
  */
-function make_site_list_html($link,$current_site,$year,$month,$day,$user)
+function make_site_list_html($link, $current_site, $year, $month, $day,$user)
 {
 	global $vocab;
 	// On affiche le site
@@ -1888,6 +1897,7 @@ function make_site_list_html($link,$current_site,$year,$month,$day,$user)
  *
  * @param string $link
  * @param string $current_site
+ * @param string $current_area
  * @param string $year
  * @param string $month
  * @param string $day
@@ -1943,7 +1953,8 @@ function make_area_list_html($link, $current_site, $current_area, $year, $month,
  * Affichage des room sous la forme d'une liste
  *
  * @param string $link
- * @param string $current_site
+ * @param string $current_area
+ * @param string $current_room
  * @param string $year
  * @param string $month
  * @param string $day
@@ -2043,6 +2054,7 @@ function make_site_item_html($link, $current_site, $year, $month, $day, $user)
  *
  * @param string $link
  * @param string $current_site
+ * @param string $current_area
  * @param string $year
  * @param string $month
  * @param string $day
@@ -2103,7 +2115,8 @@ function make_area_item_html( $link, $current_site, $current_area, $year, $month
  * Affichage des rooms sous la forme d'un input
  *
  * @param string $link
- * @param string $current_site
+ * @param string $current_area
+ * @param string $current_room
  * @param string $year
  * @param string $month
  * @param string $day
@@ -3497,6 +3510,10 @@ function encode_message_utf8($tag)
 	else
 		return $tag;
 }
+/**
+ * @param string $string
+ * @return string
+ */
 function removeMailUnicode($string)
 {
 	global $unicode_encoding, $charset_html;

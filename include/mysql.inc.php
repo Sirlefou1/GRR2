@@ -138,10 +138,6 @@ function grr_sql_count ($r)
 }
 // Return the value of an autoincrement field from the last insert.
 // Must be called right after an insert on that table!
-/**
- * @param string $table
- * @param string $field
- */
 function grr_sql_insert_id()
 {
 	return mysqli_insert_id($GLOBALS['db_c']);
