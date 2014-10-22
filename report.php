@@ -58,10 +58,7 @@ if (isset($_SERVER['HTTP_REFERER']))
 //Renseigne les droits de l'utilisateur, si les droits sont insufisants, l'utilisateur est avertit.
 if (!verif_access_search(getUserName()))
 {
-	$day   = date("d");
-	$month = date("m");
-	$year  = date("Y");
-	showAccessDenied($day, $month, $year, '',$back);
+	showAccessDenied($back);
 	exit();
 }
 // Construction des identifiants de la ressource $room, du domaine $area, du site $id_site

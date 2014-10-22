@@ -71,17 +71,11 @@ if (check_begin_end_bookings($day, $month, $year))
 	exit();
 }
 print_header($day, $month, $year, $area, $type_session);
-if ((authGetUserLevel(getUserName(),-1) < 1) && (getSettingValue("authentification_obli") == 1))
+if (((authGetUserLevel(getUserName(),-1) < 1) && (getSettingValue("authentification_obli") == 1)) || (authUserAccesArea(getUserName(), $area) == 0))
 {
-	showAccessDenied($day, $month, $year, $area,$back);
+	showAccessDenied($back);
 	exit();
 }
-if (authUserAccesArea(getUserName(), $area)==0)
-{
-	showAccessDenied($day, $month, $year, $area,$back);
-	exit();
-}
-
 if (getSettingValue("verif_reservation_auto") == 0)
 {
 	verify_confirm_reservation();

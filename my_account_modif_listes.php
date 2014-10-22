@@ -39,7 +39,7 @@
 include "include/admin.inc.php";
 if ((authGetUserLevel(getUserName(), -1) < 1))
 {
-	showAccessDenied("","","","","");
+	showAccessDenied("");
 	exit();
 }
 if ($_GET['type'] == "domaine")

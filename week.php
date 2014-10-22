@@ -73,14 +73,9 @@ if (check_begin_end_bookings($day, $month, $year))
 	showNoBookings($day, $month, $year, $back);
 	exit();
 }
-if (((authGetUserLevel(getUserName(),-1) < 1) && (getSettingValue("authentification_obli") == 1)) || !$verif_acces_ressource)
+if (((authGetUserLevel(getUserName(),-1) < 1) && (getSettingValue("authentification_obli") == 1)) || !$verif_acces_ressource || authUserAccesArea(getUserName(), $area) == 0)
 {
-	showAccessDenied($day, $month, $year, $area,$back);
-	exit();
-}
-if (authUserAccesArea(getUserName(), $area) == 0)
-{
-	showAccessDenied($day, $month, $year, $area,$back);
+	showAccessDenied($back);
 	exit();
 }
 $time = mktime(0, 0, 0, $month, $day, $year);

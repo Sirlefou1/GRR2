@@ -54,10 +54,7 @@ if (isset($area_id))
 	settype($area_id,"integer");
 if (authGetUserLevel(getUserName(),$area_id,"area") < 4)
 {
-	$day   = date("d");
-	$month = date("m");
-	$year  = date("Y");
-	showAccessDenied($day, $month, $year, '',$back);
+	showAccessDenied($back);
 	exit();
 }
 echo begin_page(getSettingValue("company").get_vocab("deux_points").get_vocab("mrbs"));

@@ -61,7 +61,7 @@ if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
 if (authGetUserLevel(getUserName(), $room_id) < 3)
 {
-	showAccessDenied($day, $month, $year, '', $back);
+	showAccessDenied($back);
 	exit();
 }
 // j'ai besoin de $repeat_id '

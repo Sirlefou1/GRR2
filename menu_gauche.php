@@ -20,20 +20,20 @@ if ($_GET['pview'] != 1)
 		{
 			echo make_site_select_html('week_all.php', $id_site, $year, $month, $day, getUserName());
 			echo make_area_select_html('week_all.php', $id_site, $area, $year, $month, $day, getUserName());
-			echo make_room_select_html('week', $area, $room, $year, $month, $day, getUserName());
+			echo make_room_select_html('week', $area, $room, $year, $month, $day);
 		}
 		else
 		{
 			echo make_site_item_html('week_all.php', $id_site, $year, $month, $day, getUserName());
 			echo make_area_item_html('week_all.php',$id_site, $area, $year, $month, $day, getUserName());
-			echo make_room_item_html('week', $area, $room, $year, $month, $day, getUserName());
+			echo make_room_item_html('week', $area, $room, $year, $month, $day);
 		}
 	}
 	else
 	{
 		echo make_site_list_html('week_all.php',$id_site,$year,$month,$day,getUserName());
 		echo make_area_list_html('week_all.php',$id_site, $area, $year, $month, $day, getUserName());
-		echo make_room_list_html('week.php', $area, $room, $year, $month, $day,getUserName());
+		echo make_room_list_html('week.php', $area, $room, $year, $month, $day);
 
 	}
 	if (getSettingValue("legend") == '0')

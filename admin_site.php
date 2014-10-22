@@ -59,7 +59,7 @@ function count_sites()
 		die();
 	}
 }
-function create_site($id)
+function create_site($id_site)
 {
 	if ((isset($_POST['back']) || isset($_GET['back'])))
 	{

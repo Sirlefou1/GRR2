@@ -1788,10 +1788,9 @@ function make_area_select_html( $link, $current_site, $current_area, $year, $mon
  * @param string $year
  * @param string $month
  * @param string $day
- * @param string $user
  * @return string
  */
-function make_room_select_html($link, $current_area, $current_room, $year, $month, $day, $user)
+function make_room_select_html($link, $current_area, $current_room, $year, $month, $day)
 {
 	global $vocab;
 	$out_html = "<b><i>".get_vocab('rooms').get_vocab("deux_points")."</i></b><br /><form id=\"room_001\" action=\"".$_SERVER['PHP_SELF']."\"><div><select name=\"room\" onchange=\"room_go()\">";
@@ -1958,10 +1957,10 @@ function make_area_list_html($link, $current_site, $current_area, $year, $month,
  * @param string $year
  * @param string $month
  * @param string $day
- * @param string $user
  * @return string
  */
-function make_room_list_html($link,$current_area, $current_room, $year, $month, $day, $user) {
+function make_room_list_html($link,$current_area, $current_room, $year, $month, $day)
+{
 	global $vocab;
 	echo "<b><i><span class=\"bground\">".get_vocab("rooms").get_vocab("deux_points")."</span></i></b><br />";
 	$sql = "select id, room_name, description from ".TABLE_PREFIX."_room WHERE area_id='".protect_data_sql($current_area)."' order by order_display,room_name";

@@ -119,14 +119,9 @@ if (check_begin_end_bookings($day, $from_month, $from_year))
 	showNoBookings($day, $from_month, $from_year, $back);
 	exit();
 }
-if ((authGetUserLevel(getUserName(),-1) < 1) && (getSettingValue("authentification_obli") == 1))
+if (((authGetUserLevel(getUserName(),-1) < 1) && (getSettingValue("authentification_obli") == 1)) || authUserAccesArea(getUserName(), $area) == 0)
 {
-	showAccessDenied($day, $from_month, $from_year, $area,$back);
-	exit();
-}
-if (authUserAccesArea(getUserName(), $area) == 0)
-{
-	showAccessDenied($day, $from_month, $from_year, $area,$back);
+	showAccessDenied($back);
 	exit();
 }
 

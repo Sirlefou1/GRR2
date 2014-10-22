@@ -655,7 +655,7 @@ $sql = "INSERT INTO ".TABLE_PREFIX."_log (LOGIN, START, SESSION_ID, REMOTE_ADDR,
 	'" . $_SESSION['start'] . "' + interval " . getSettingValue("sessionMaxLength") . " minute
 	)
 ;";
-$res = grr_sql_query($sql);
+grr_sql_query($sql);
 /* Fonctionnalité SE3 (Palissy - Saintes - philippe.duval@ac-poitiers.fr) :
 Utilisation du LDAP pour inscrire automatiquement les utilisateurs dans les groupes administration, accès et gestion
 Ce code est associé à une nouvelle table :
@@ -686,9 +686,9 @@ if ($grp)
 			$table_user_se3 = "".TABLE_PREFIX."_j_user_room"; $type_res = 'id_room';
 		}
 		if (se3_grp_members($resgrp['groupe'],$_login)=="oui")
-			$add_user_se3 = @grr_sql_query("INSERT INTO `".$table_user_se3."` (login, ".$type_res.") values('".$_login."',".$area_se3.")");
+			@grr_sql_query("INSERT INTO `".$table_user_se3."` (login, ".$type_res.") values('".$_login."',".$area_se3.")");
 		else
-			$del_user_se3 = @grr_sql_query("DELETE FROM `".$table_user_se3."` WHERE `login`='".$_login."' AND `".$type_res."`=".$area_se3);
+			@grr_sql_query("DELETE FROM `".$table_user_se3."` WHERE `login`='".$_login."' AND `".$type_res."`=".$area_se3);
 	}
 }
 	// Note : Il reste à gérer finement l'interface graphique et à déduire l'incompatibilité éventuelle entre le domaine par défaut et les domaines autorisés pour chaque utilisateur
@@ -804,7 +804,7 @@ function grr_closeSession(&$_auto)
 	if (isset($_SESSION['start']))
 	{
 		$sql = "update ".TABLE_PREFIX."_log set AUTOCLOSE = '" . $_auto . "', END = now() where SESSION_ID = '" . session_id() . "' and START = '" . $_SESSION['start'] . "'";
-		$res = grr_sql_query($sql);
+		grr_sql_query($sql);
 	}
 		// Détruit toutes les variables de session
 	$_SESSION = array();

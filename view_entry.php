@@ -232,14 +232,14 @@ if (!isset($day) || !isset($month) || !isset($year))
 }
 if (!verif_acces_fiche_reservation(getUserName(), $room_id))
 {
-	showAccessDenied($day, $month, $year, $area, $back);
+	showAccessDenied($back);
 	exit();
 }
 if (@file_exists("language/lang_subst_".$area.".".$locale))
 	include "language/lang_subst_".$area.".".$locale;
 if ((authGetUserLevel(getUserName(), -1) < 1) and (getSettingValue("authentification_obli") == 1))
 {
-	showAccessDenied($day, $month, $year, $area, $back);
+	showAccessDenied($back);
 	exit();
 }
 if (authUserAccesArea(getUserName(), $area) == 0)
@@ -247,7 +247,7 @@ if (authUserAccesArea(getUserName(), $area) == 0)
 	if (isset($reservation_is_delete))
 		showNoReservation($day, $month, $year, $area, $back);
 	else
-		showAccessDenied($day, $month, $year, $area, $back);
+		showAccessDenied($back);
 	exit();
 }
 $date_now = time();

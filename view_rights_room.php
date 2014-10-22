@@ -54,10 +54,7 @@ if (isset($id_room))
 	settype($id_room,"integer");
 if ((authGetUserLevel(getUserName(),$id_room) < 4) || (!verif_acces_ressource(getUserName(), $id_room)))
 {
-	$day   = date("d");
-	$month = date("m");
-	$year  = date("Y");
-	showAccessDenied($day, $month, $year, '','');
+	showAccessDenied('');
 	exit();
 }
 echo begin_page(getSettingValue("company").get_vocab("deux_points").get_vocab("mrbs"));

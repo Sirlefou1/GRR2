@@ -60,10 +60,7 @@ else
 }
 if (((authGetUserLevel(getUserName(),-1) < 1) && (getSettingValue("authentification_obli") == 1)) || (!verif_acces_ressource(getUserName(), $id_room)))
 {
-	$day   = date("d");
-	$month = date("m");
-	$year  = date("Y");
-	showAccessDenied($day, $month, $year, '','');
+	showAccessDenied('');
 	exit();
 }
 echo begin_page(get_vocab("mrbs").get_vocab("deux_points").getSettingValue("company"));

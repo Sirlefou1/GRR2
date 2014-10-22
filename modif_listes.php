@@ -38,7 +38,7 @@
 include "include/admin.inc.php";
 if ((authGetUserLevel(getUserName(), -1) < 1) && (getSettingValue("authentification_obli") == 1))
 {
-	showAccessDenied("","","","","");
+	showAccessDenied("");
 	exit();
 }
 // Actualiser la liste des domaines
