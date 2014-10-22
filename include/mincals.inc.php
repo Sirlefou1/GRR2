@@ -113,23 +113,18 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 			else
 				$bg_lign = 'calendarcol1';
 			//Permet de récupérer le numéro de la 1ere semaine affichée par le mini calendrier.
-			//$week = number_format(strftime("%W",$date),0);
 			$week = numero_semaine($date);
 			$weekd = $week;
 			// on ajoute un lien vers l''année précédente
 			if ($this->mois_precedent == 1)
 			{
-				$tmp = mktime(0, 0, 0, ($this->month), 1, ($this->year)-1);
+				$tmp = mktime(0, 0, 0, ($this->month), 1, ($this->year) - 1);
 				$lastmonth = date("m",$tmp);
 				$lastyear = date("Y",$tmp);
 				if (($this->dmy != 'day') && ($this->dmy != 'week_all') && ($this->dmy != 'month_all') && ($this->dmy != 'month_all2'))
 					$s .= "<div class=\"btn-group\"><button title=\"".htmlspecialchars(get_vocab("previous_year"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='month.php?year=$lastyear&amp;month=$lastmonth&amp;day=1&amp;area=$this->area&amp;room=$this->room';\"><span class=\"glyphicon glyphicon-backward\"></span></button>\n";
 				else
 					$s .= "<div class=\"btn-group\"><button title=\"".htmlspecialchars(get_vocab("previous_year"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='".$type_month_all.".php?year=$lastyear&amp;month=$lastmonth&amp;day=1&amp;area=$this->area';\"><span class=\"glyphicon glyphicon-backward\"></span></button>\n";
-			}
-			// on ajoute un lien vers le mois précédent
-			if ($this->mois_precedent == 1)
-			{
 				$tmp = mktime(0, 0, 0, ($this->month) - 1, 1, $this->year);
 				$lastmonth = date("m",$tmp);
 				$lastyear = date("Y",$tmp);
@@ -153,10 +148,6 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 					$s .= "<button title=\"".htmlspecialchars(get_vocab("see_month_for_this_room"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='month.php?year=$nextyear&amp;month=$nextmonth&amp;day=1&amp;area=$this->area&amp;room=$this->room';\"><span class=\"glyphicon glyphicon-chevron-right\"></span></button>\n";
 				else
 					$s .= "<button title=\"".htmlspecialchars(get_vocab("see_month_for_this_room"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='".$type_month_all.".php?year=$nextyear&amp;month=$nextmonth&amp;day=1&amp;area=$this->area';\"><span class=\"glyphicon glyphicon-chevron-right\"></span></button>\n";
-			}
-			// on ajoute un lien vers l'année suivante
-			if ($this->mois_suivant == 1)
-			{
 				$tmp = mktime(0, 0, 0, ($this->month), 1, ($this->year) + 1);
 				$nextmonth = date("m",$tmp);
 				$nextyear= date("Y",$tmp);
@@ -165,7 +156,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 				else
 					$s .= "<button title=\"".htmlspecialchars(get_vocab("following_year"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='".$type_month_all.".php?year=$nextyear&amp;month=$nextmonth&amp;day=1&amp;area=$this->area';\"><span class=\"glyphicon glyphicon-forward\"></span></button></div>\n";
 			}
- 			//Hugo - Variable qui permet de rester dans la meme room au changement de salle
+			//Hugo - Variable qui permet de rester dans la meme room au changement de salle
 			$action = $_SERVER['PHP_SELF']."?year=".date('Y',time())."&amp;month=".date('m',time())."&amp;day=".date('d',time());
 			if (isset($_GET['area']) && $_GET['area'] != null)
 				$action .= "&amp;area=".$_GET['area'] ;
@@ -173,10 +164,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 				$action .= "&amp;room=".$_GET['room'] ;
 			if (isset($_GET['id_site']) && $_GET['id_site'] != null)
 				$action .= "&amp;site=".$_GET['id_site'] ;
-			//MAJ Hugo FORESTIER - Ajout d'un bouton "aujourd'hui" fonctionnel en utilisant la variable $action
-			//19/05/2013
 			$s.= "<br/><button title=\"".htmlspecialchars(get_vocab("gototoday"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='".$action."';\">".get_vocab("gototoday")."</button>";
-			/*$s.= "<br /><input type=\"button\" class=\"btn btn-default btn-xs\" title=\"".htmlspecialchars(get_vocab("gototoday"))."\" onclick=\"charger();javascript: location.href='".$action."';\" value=\"> ".get_vocab("gototoday")." \" />;*/
 			$s .= "</caption>";
 			$s .= "<tr><td class=\"calendarcol1\">".get_vocab("semaine")."</td>\n";
 			$s .= getFirstDays();
@@ -185,7 +173,6 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 			$temp = 1;
 			while ($d <= $daysInMonth)
 			{
-				//if (($date_today <= $date) and ($this->h) and (($this->dmy=='week_all') or ($this->dmy=='week') )) $bg_lign = " class=\"week\""; else $bg_lign = '';
 				if (($week_today == $week) && ($this->h) && (($this->dmy == 'week_all') || ($this->dmy == 'week')))
 					$bg_lign = " class=\"week\"";
 				else
@@ -256,7 +243,8 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 		for ($k = $milieu; $k < $nb_calendar; $k++)
 			$month_[] = mktime(0, 0, 0, $month + $k - $milieu + 1, 1, $year);
 		$ind = 1;
-		foreach ($month_ as $key) {
+		foreach ($month_ as $key)
+		{
 			if ($ind == 1)
 				$mois_precedent = 1;
 			else
@@ -269,12 +257,10 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 				$flag_surlignage = 1;
 			else
 				$flag_surlignage = 0;
-			//echo "<td>";
 			$cal = new Calendar(date("d",$key), date("m",$key), date("Y",$key), $flag_surlignage, $area, $room, $dmy, $mois_precedent, $mois_suivant);
 			echo $cal->getHTML();
-			//if ($ind == $milieu) echo "<a title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_several_months"))."\" href=\"year.php?area=$area\">".$vocab["viewyear"]."</a>";
-			//echo "</td>";
 			$ind++;
 		}
 	}
-}?>
+}
+?>
