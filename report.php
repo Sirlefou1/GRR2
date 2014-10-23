@@ -300,7 +300,7 @@ function do_summary(&$count, &$hours, &$room_hash, &$breve_description_hash, $en
 	if ($csv == "n")
 		echo "<td class=\"BR\" align=\"right\"><br /><b>".get_vocab("total")."</b></td></tr>\n";
 	else
-		echo html_entity_decode_all_version($vocab['total']).";\r\n";
+		echo html_entity_decode($vocab['total']).";\r\n";
 	$grand_count_total = 0;
 	$grand_hours_total = 0;
 	for ($r = 0; $r < $n_names; $r++)
@@ -344,7 +344,7 @@ function do_summary(&$count, &$hours, &$room_hash, &$breve_description_hash, $en
 	if ($csv == "n")
 		echo "<tr><td class=\"BR\" align=\"right\"><b>".get_vocab("total")."</b></td>\n";
 	else
-		echo html_entity_decode_all_version($vocab['total']).";";
+		echo html_entity_decode($vocab['total']).";";
 	for ($c = 0; $c < $n_rooms; $c++)
 		cell($col_count_total[$c], $col_hours_total[$c], $csv,$decompte);
 	cell($grand_count_total, $grand_hours_total, $csv,$decompte);
@@ -829,13 +829,13 @@ else
 			$nmatch = grr_sql_count($res);
 			if ($nmatch == 0)
 			{
-				echo html_entity_decode_all_version($vocab["nothing_found"]) . "\r\n";
+				echo html_entity_decode($vocab["nothing_found"]) . "\r\n";
 				grr_sql_free($res);
 			}
 			else
 			{
 				// Ligne d'en-tête
-				echo html_entity_decode_all_version($vocab["reservee au nom de"]).";".html_entity_decode_all_version($vocab["areas"]).";".html_entity_decode_all_version($vocab["room"]).html_entity_decode_all_version(preg_replace("/ /", " ",$vocab["deux_points"])).";".html_entity_decode_all_version($vocab["description"]).";".html_entity_decode_all_version($vocab["time"])." - ".html_entity_decode_all_version($vocab["duration"]).";".html_entity_decode_all_version($vocab["namebooker"]).html_entity_decode_all_version(preg_replace("/ /", " ",$vocab["deux_points"])).";".html_entity_decode_all_version($vocab["match_descr"]).";".html_entity_decode_all_version($vocab["lastupdate"]).";\n";
+				echo html_entity_decode($vocab["reservee au nom de"]).";".html_entity_decode($vocab["areas"]).";".html_entity_decode($vocab["room"]).html_entity_decode(preg_replace("/ /", " ",$vocab["deux_points"])).";".html_entity_decode($vocab["description"]).";".html_entity_decode($vocab["time"])." - ".html_entity_decode($vocab["duration"]).";".html_entity_decode($vocab["namebooker"]).html_entity_decode(preg_replace("/ /", " ",$vocab["deux_points"])).";".html_entity_decode($vocab["match_descr"]).";".html_entity_decode($vocab["lastupdate"]).";\n";
 			}
 			for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 			{
@@ -878,21 +878,21 @@ else
 			$nmatch = grr_sql_count($res);
 			if ($nmatch == 0)
 			{
-				echo html_entity_decode_all_version($vocab["nothing_found"]) . "\r\n";
+				echo html_entity_decode($vocab["nothing_found"]) . "\r\n";
 				grr_sql_free($res);
 			}
 			else
 			{
 				if ($_GET["sumby"] == "6")
-					echo html_entity_decode_all_version($vocab["summarize_by"])." " .html_entity_decode_all_version($vocab["sum_by_creator"])." - $day $month $year;";
+					echo html_entity_decode($vocab["summarize_by"])." " .html_entity_decode($vocab["sum_by_creator"])." - $day $month $year;";
 				else if ($_GET["sumby"] == "3")
-					echo html_entity_decode_all_version($vocab["summarize_by"])." " .html_entity_decode_all_version($vocab["sum_by_descrip"])." - $day $month $year;";
+					echo html_entity_decode($vocab["summarize_by"])." " .html_entity_decode($vocab["sum_by_descrip"])." - $day $month $year;";
 				else if ($_GET["sumby"] == "5")
-					echo html_entity_decode_all_version($vocab["summarize_by"])." " .html_entity_decode_all_version($vocab["type"])." - $day $month $year;";
+					echo html_entity_decode($vocab["summarize_by"])." " .html_entity_decode($vocab["type"])." - $day $month $year;";
 				else
 				{
 					$fieldname = grr_sql_query1("SELECT fieldname FROM ".TABLE_PREFIX."_overload WHERE id='".$_GET["sumby"]."'");
-					echo html_entity_decode_all_version($vocab["summarize_by"])." " .html_entity_decode_all_version($fieldname)." - $day $month $year;";
+					echo html_entity_decode($vocab["summarize_by"])." " .html_entity_decode($fieldname)." - $day $month $year;";
 				}
 				echo "\r\n";
 			}
@@ -918,17 +918,17 @@ else
 			// Décompte des heures (cas ou $enable_periods != 'y')
 			if (isset($do_sum1))
 			{
-				echo "\r\n".html_entity_decode_all_version($vocab["summary_header"])."\r\n";
+				echo "\r\n".html_entity_decode($vocab["summary_header"])."\r\n";
 				do_summary($count1, $hours1, $room_hash1, $breve_description_hash1, "n", "heure", "y");
 			}
 			// Décompte des créneaux (cas ou $enable_periods == 'y')
 			if (isset($do_sum2))
 			{
-				echo "\r\n".html_entity_decode_all_version($vocab["summary_header_per"])."\r\n";
+				echo "\r\n".html_entity_decode($vocab["summary_header_per"])."\r\n";
 				do_summary($count2, $hours2, $room_hash2, $breve_description_hash2, "y", "heure", "y" );
 			}
 			// Décompte des réservations
-			echo "\r\n\r\n\r\n".html_entity_decode_all_version($vocab["summary_header_resa"])."\r\n";
+			echo "\r\n\r\n\r\n".html_entity_decode($vocab["summary_header_resa"])."\r\n";
 			do_summary($count, $hours, $room_hash, $breve_description_hash, "", "resa", "y");
 		}
 	}

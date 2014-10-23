@@ -49,4 +49,5 @@
 [change] Passage de la verification des droit via une fonction
 [change] timepicker to clockpicker
 [suppression] Fichiers inutile
+[suppression] fonction html_entity_decode_all_version
 

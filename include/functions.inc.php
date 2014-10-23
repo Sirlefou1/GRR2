@@ -55,7 +55,7 @@ function cal($month, $year)
 			$show = $basetime + ($i * 24 * 60 * 60);
 			$nameday = utf8_strftime('%A',$show);
 			$temp = mktime(0, 0, 0, $month, $d,$year);
-			if ($i==0)
+			if ($i == 0)
 				$s .= "<td class=\"calendar2\" style=\"vertical-align:bottom;\"><b>S".numero_semaine($temp)."</b></td>\n";
 			$s .= "<td class=\"calendar2\" align=\"center\" valign=\"top\">";
 			if ($is_ligne1 == 'y')
@@ -497,7 +497,7 @@ Un lien sur l'image renvoie sur un article de la documentation sur le site http:
  * @param string $mot_clef
  * @return string
  */
-function grr_help($mot_clef,$ancre = "")
+function grr_help($mot_clef, $ancre = "")
 {
 	// lien aide sur la page d'accueil
 	if ($mot_clef == "")
@@ -615,26 +615,6 @@ function  grr_backup($id_entry, $login_moderateur, $motivation_moderation)
 		grr_sql_free($res);
 		return true;
 	}
-}
-/*
-Remplace la fonction PHP html_entity_decode(), pour les utilisateurs ayant des versions antérieures à PHP 4.3.0 :
-En effet, la fonction html_entity_decode() est disponible a partir de la version 4.3.0 de php.
-*/
-function html_entity_decode_all_version ($string)
-{
-	global $use_function_html_entity_decode;
-	if (isset($use_function_html_entity_decode) && ($use_function_html_entity_decode == 0))
-	{
-		// Remplace les entités numériques
-		$string = preg_replace('~&#x([0-9a-f]+);~ei', 'chr(hexdec("\\1"))', $string);
-		$string = preg_replace('~&#([0-9]+);~e', 'chr(\\1)', $string);
-		// Remplace les entités litérales
-		$trans_tbl = get_html_translation_table (HTML_ENTITIES);
-		$trans_tbl = array_flip ($trans_tbl);
-		return strtr ($string, $trans_tbl);
-	}
-	else
-		return html_entity_decode($string);
 }
 function verif_version()
 {
@@ -2413,7 +2393,7 @@ function send_mail($id_entry, $action, $dformat, $tab_id_moderes = array())
 	$reservation = $reservation."-----\n";
 	$message = $message.$reservation;
 	$message = $message.$vocab["msg_no_email"].getSettingValue("webmaster_email");;
-	$message = html_entity_decode_all_version($message);
+	$message = html_entity_decode($message);
 	$sql = "SELECT u.email FROM ".TABLE_PREFIX."_utilisateurs u, ".TABLE_PREFIX."_j_mailuser_room j WHERE (j.id_room='".protect_data_sql($room_id)."' AND u.login=j.login and u.etat='actif') ORDER BY u.nom, u.prenom";
 	$res = grr_sql_query($sql);
 	$nombre = grr_sql_count($res);
@@ -2472,7 +2452,7 @@ function send_mail($id_entry, $action, $dformat, $tab_id_moderes = array())
 		$message7 .= $vocab["ressource empruntee non restituée"]."\n";
 		$message7 .= $room_name." (".$area_name.")";
 		$message7 .= "\n".$reservation;
-		$message7 = html_entity_decode_all_version($message7);
+		$message7 = html_entity_decode($message7);
 		$destinataire7 = $beneficiaire_email;
 		$repondre7 = getSettingValue("webmaster_email");
 		$mail->AddAddress( $destinataire7 );
@@ -2517,7 +2497,7 @@ function send_mail($id_entry, $action, $dformat, $tab_id_moderes = array())
 			$message5 .= "\n".traite_grr_url("","y")."view_entry.php?id=".$id_entry;
 			$message5 .= "\n\n".$vocab['created_by'].affiche_nom_prenom_email($user_login,"","formail");
 			$message5 .= "\n".$vocab['room'].$vocab['deux_points'].$room_name." (".$area_name.") \n";
-			$message5 = html_entity_decode_all_version($message5);
+			$message5 = html_entity_decode($message5);
 			$repondre5 = getSettingValue("webmaster_email");
 			$mail->Subject = $sujet5;
 			$mail->Body = $message5;
@@ -2539,7 +2519,7 @@ function send_mail($id_entry, $action, $dformat, $tab_id_moderes = array())
 		$message5 .= "\n".$vocab["rappel_de_la_demande"].$vocab["deux_points"];
 		$message5 .= "\n".$vocab["the_room"].$room_name." (".$area_name.")";
 		$message5 .= "\n".$reservation;
-		$message5 = html_entity_decode_all_version($message5);
+		$message5 = html_entity_decode($message5);
 		$destinataire5 = $beneficiaire_email;
 		$repondre5 = getSettingValue("webmaster_email");
 		$mail->AddAddress( $destinataire5 );
@@ -2594,7 +2574,7 @@ function send_mail($id_entry, $action, $dformat, $tab_id_moderes = array())
 			$message2 = $message2.$vocab["created_by_you"];
 		}
 		$message2 = $message2."\n".$reservation;
-		$message2 = html_entity_decode_all_version($message2);
+		$message2 = html_entity_decode($message2);
 		$destinataire2 = $beneficiaire_email;
 		$repondre2 = $user_email;
 		$mail->AddAddress($destinataire2);

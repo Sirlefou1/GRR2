@@ -1,6 +1,11 @@
 GRR
 ===================
 
+**Requière :**
+
+> PHP 5.4+
+> Mysql 5.4+
+
 https://github.com/Sirlefou1/GRR2
 
 GRR est un outil de gestion et de réservation de ressources. **GRR** est une adaptation d'une application **MRBS**.
