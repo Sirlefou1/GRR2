@@ -211,13 +211,13 @@ else
 					if ($start_str == $end_str)
 						$d[$day_num]["data"][] = $start_str;
 					else
-						$d[$day_num]["data"][] = $start_str . "~" . $end_str;
+						$d[$day_num]["data"][] = $start_str . get_vocab("to") . $end_str;
 					break;
 					case "> = ":
-					$d[$day_num]["data"][] = $start_str . "~24:00";
+					$d[$day_num]["data"][] = $start_str . get_vocab("to")."24:00";
 					break;
 					case "> > ":
-					$d[$day_num]["data"][] = $start_str . "~&gt;";
+					$d[$day_num]["data"][] = $start_str . get_vocab("to")."&gt;";
 					break;
 					case "= = ":
 					$d[$day_num]["data"][] = $all_day;
@@ -226,7 +226,7 @@ else
 					$d[$day_num]["data"][] = $all_day . "&gt;";
 					break;
 					case "< < ":
-					$d[$day_num]["data"][] = "&lt;~" . $end_str;
+					$d[$day_num]["data"][] = "&lt;".get_vocab("to") . $end_str;
 					break;
 					case "< = ":
 					$d[$day_num]["data"][] = "&lt;" . $all_day;
@@ -242,13 +242,13 @@ else
 				{
 					case "> < ":
 					case "= < ":
-					$d[$day_num]["data"][] = date(hour_min_format(), $row[0]) . "~" . date(hour_min_format(), $row[1]);
+					$d[$day_num]["data"][] = date(hour_min_format(), $row[0]) . get_vocab("to") . date(hour_min_format(), $row[1]);
 					break;
 					case "> = ":
-					$d[$day_num]["data"][] = date(hour_min_format(), $row[0]) . "~24:00";
+					$d[$day_num]["data"][] = date(hour_min_format(), $row[0]) . get_vocab("to")."24:00";
 					break;
 					case "> > ":
-					$d[$day_num]["data"][] = date(hour_min_format(), $row[0]) . "~&gt;";
+					$d[$day_num]["data"][] = date(hour_min_format(), $row[0]) . get_vocab("to")."&gt;";
 					break;
 					case "= = ":
 					$d[$day_num]["data"][] = $all_day;
@@ -257,7 +257,7 @@ else
 					$d[$day_num]["data"][] = $all_day . "&gt;";
 					break;
 					case "< < ":
-					$d[$day_num]["data"][] = "&lt;~" . date(hour_min_format(), $row[1]);
+					$d[$day_num]["data"][] = "&lt;".get_vocab("to") . date(hour_min_format(), $row[1]);
 					break;
 					case "< = ":
 					$d[$day_num]["data"][] = "&lt;" . $all_day;

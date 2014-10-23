@@ -923,4 +923,5 @@ $vocab['msg_clef'] = "Cocher si la clé est empruntée";
 $vocab['status_courrier'] = "Courrier de validation";
 $vocab['courrier'] = "Courrier";
 $vocab['msg_courrier'] = "Cocher si courrier de validation";
+$vocab['to'] = " ~ ";
 ?>

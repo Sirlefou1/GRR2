@@ -1481,7 +1481,7 @@ function get_default_site()
  */
 function day_name($daynumber)
 {
-	return utf8_strftime("%A", mktime(0, 0, 0, 1, 2 + $daynumber, 2000));
+	return utf8_encode(strftime("%A", mktime(0, 0, 0, 1, 2 + $daynumber, 2000)));
 }
 function affiche_heure_creneau($t,$resolution)
 {

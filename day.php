@@ -426,7 +426,7 @@ else
 								$end_time   = $row[2];
 								$clef 		= $row[3];
 								$courrier	= $row[4];
-								echo "<br/>".date('H:i', $start_time)."~".date('H:i', $end_time)."<br/>";
+								echo "<br/>".date('H:i', $start_time).get_vocab("to").date('H:i', $end_time)."<br/>";
 								if ($type_name != -1)
 									echo  $type_name;
 								echo '<br>';

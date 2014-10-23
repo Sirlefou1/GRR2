@@ -3,7 +3,7 @@
  * week.php
  * Permet l'affichage de la page d'accueil lorsque l'on est en mode d'affichage "semaine".
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2010-03-03 14:41:34 $
+ * DerniÃ¨re modification : $Date: 2010-03-03 14:41:34 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -191,7 +191,7 @@ if (isset($_GET['precedent']))
 	if ($_GET['pview'] == 1 AND $_GET['precedent'] == 1)
 	{
 		echo "<span id=\"lienPrecedent\">
-		<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript:history.back();\">Précedent</button>
+		<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript:history.back();\">PrÃ©cedent</button>
 	</span>";
 }
 }
@@ -474,7 +474,7 @@ for ($t = $week_start; $t <= $week_end; $t += 86400)
 							$Son_GenreRepeat = grr_sql_query1("SELECT type_name FROM ".TABLE_PREFIX."_type_area ,".TABLE_PREFIX."_entry  WHERE  ".TABLE_PREFIX."_entry.id= ". $d[$weekday][$slot - $decale_slot * $nb_case]['id']." AND ".TABLE_PREFIX."_entry.type= ".TABLE_PREFIX."_type_area.type_letter");
 							if ($Son_GenreRepeat != -1)
 							{
-								echo "<br />" .date('H:i',$d[$weekday][$slot - $decale_slot * $nb_case]["horaireDebut"])."~". date('H:i',$d[$weekday][$slot-$decale_slot*$nb_case]["horaireFin"])."";
+								echo "<br />" .date('H:i',$d[$weekday][$slot - $decale_slot * $nb_case]["horaireDebut"]).get_vocab("to"). date('H:i',$d[$weekday][$slot-$decale_slot*$nb_case]["horaireFin"])."";
 								echo " <br/>". $Son_GenreRepeat ." <br/><br/>" ;
 							}
 							if ($d[$weekday][$slot - $decale_slot * $nb_case]["description"]!= "")

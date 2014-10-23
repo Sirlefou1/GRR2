@@ -920,5 +920,5 @@ $vocab['msg_clef'] = "Controllare se è preso la chiave";
 $vocab['status_courrier'] = "Validazione di posta";
 $vocab['courrier'] = "Posta";
 $vocab['msg_courrier'] = "Se la convalida casella di posta elettronica";
-
+$vocab['to'] = " ~ ";
 ?>
