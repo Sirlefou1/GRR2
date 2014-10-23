@@ -90,15 +90,16 @@ if (getSettingValue("verif_reservation_auto") == 0)
 }
 $ind = 1;
 $test = 0;
+$i = 0;
 while (($test == 0) && ($ind <= 7))
 {
 	$i = mktime(0, 0, 0, $month, $day - $ind, $year);
 	$test = $display_day[date("w",$i)];
 	$ind++;
 }
-$yy = date("Y",$i);
-$ym = date("m",$i);
-$yd = date("d",$i);
+$yy = date("Y", $i);
+$ym = date("m", $i);
+$yd = date("d", $i);
 $i = mktime(0, 0, 0, $month, $day, $year);
 $jour_cycle = grr_sql_query1("SELECT Jours FROM ".TABLE_PREFIX."_calendrier_jours_cycle WHERE day='$i'");
 $ind = 1;

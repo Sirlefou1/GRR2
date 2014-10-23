@@ -522,7 +522,7 @@
 
 .clock {margin:0 auto;}
 
-#Date { font-size:1em; text-align:center; }
+#Date { font-size:1em; text-align:center; font-weight: bold;}
 
-.clock ul {margin:0 auto; padding:0px; list-style:none; text-align:center; }
-.clock ul li { display:inline; font-size:1em; text-align:center; }
+.clock ul {margin:0 auto; padding:0px; list-style:none; text-align:center; font-weight: bold;}
+.clock ul li { display:inline; font-size:1em; text-align:center; font-weight: bold; }
