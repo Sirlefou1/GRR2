@@ -126,7 +126,7 @@ if ((isset($_GET['change_done'])) && (!isset($ok)))
 	exit();
 }
 # print the page header
-print_header("", "", "", "", $type = "with_session", $page = "admin");
+print_header("", "", "", $type="with_session");
 include "admin_col_gauche.php";
 echo "<div class=\"page_sans_col_gauche\">";
 affiche_pop_up($msg,"admin");

@@ -30,7 +30,7 @@
 if (!loadSettings())
 	die("Erreur chargement settings");
 # print the page header
-print_header("", "", "", "",$type="with_session", $page="admin");
+print_header("", "", "", $type="with_session");
 // Affichage de la colonne de gauche
 include "admin_col_gauche.php";
 // Affichage du tableau de choix des sous-configuration

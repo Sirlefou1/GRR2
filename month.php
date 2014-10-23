@@ -95,7 +95,7 @@ $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
 //Affiche les informations dans l'header
-print_header($day, $month, $year, $area, $type_session, "no_admin", $room);
+print_header($day, $month, $year, $type="with_session");
 //Renseigne les droits de l'utilisateur, si les droits sont insufisants, l'utilisateur est avertit.
 if (check_begin_end_bookings($day, $month, $year))
 {

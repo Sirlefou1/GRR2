@@ -43,7 +43,7 @@ if ((isset($_GET['action_del'])) && ($_GET['js_confirmed'] == 1))
 {
 	VerifyModeDemo();
 }
-print_header("", "", "", "", $type = "with_session", $page = "admin");
+print_header("", "", "", $type="with_session");
 include "admin_col_gauche.php";
 // Enregistrement de allow_users_modify_profil
 // Un gestionnaire d'utilisateurs ne peut pas Autoriser ou non la modification par un utilisateur de ses informations personnelles

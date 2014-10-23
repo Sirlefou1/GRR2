@@ -33,7 +33,7 @@ if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
 check_access(6, $back);
 # print the page header
-print_header("", "", "", "",$type = "with_session", $page = "admin");
+print_header("", "", "", $type="with_session");
 // Affichage de la colonne de gauche
 include "admin_col_gauche.php";
 // Affichage du tableau de choix des sous-configuration pour les Jours/Cycles (Créer et voir calendrier Jours/Cycle)

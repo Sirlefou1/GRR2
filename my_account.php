@@ -195,7 +195,7 @@ if (($valid == 'yes') || ($valid=='reset'))
 	}
 }
 $use_prototype = 'y';
-print_header($day, $month, $year, isset($area) ? $area : '');
+print_header($day, $month, $year, $type="with_session");
 echo "\n    <!-- Repere ".$grr_script_name." -->\n";
 if (getSettingValue("module_multisite") == "Oui")
 	$use_site = 'y';

@@ -58,7 +58,7 @@ $sql_file = isset($_FILES["sql_file"]) ? $_FILES["sql_file"] : NULL;
 $file_name = isset($_GET["file_name"]) ? $_GET["file_name"] : NULL;
 VerifyModeDemo();
 if (!$file_name)
-	print_header("", "", "", "", $type = "with_session", $page = "admin");
+	print_header("", "", "", $type="with_session");
 else
 	echo begin_page("", "no_session");
 echo "<div class=\"page_sans_col_gauche\">";

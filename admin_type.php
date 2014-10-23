@@ -37,7 +37,7 @@ if ((isset($_GET['msg'])) && isset($_SESSION['displ_msg']) && ($_SESSION['displ_
 	$msg = $_GET['msg'];
 else
 	$msg = '';
-print_header("", "", "", "", $type = "with_session", $page = "admin");
+print_header("", "", "", $type="with_session");
 include "admin_col_gauche.php";
 if ((isset($_GET['action_del'])) && ($_GET['js_confirmed'] == 1) && ($_GET['action_del'] = 'yes'))
 {

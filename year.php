@@ -135,7 +135,7 @@ if (getSettingValue("verif_reservation_auto") == 0)
 	verify_retard_reservation();
 }
 //print the page header
-print_header($day, $from_month, $from_year, $area, $type_session);
+print_header($day, $from_month, $from_year, $type_session);
 //Month view start time. This ignores morningstarts/eveningends because it
 //doesn't make sense to not show all entries for the day, and it messes
 //things up when entries cross midnight.

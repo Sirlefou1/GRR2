@@ -442,11 +442,12 @@ if (isset($_POST['begin_day']) && isset($_POST['begin_month']) && isset($_POST['
 				echo "Erreur lors de l'enregistrement de end_bookings !<br />";
 		}
 	}
-}
-if ($demande_confirmation == 'yes')
-{
-	header("Location: ./admin_confirm_change_date_bookings.php?end_bookings=$end_bookings&begin_bookings=$begin_bookings");
-	die();
+
+	if ($demande_confirmation == 'yes')
+	{
+		header("Location: ./admin_confirm_change_date_bookings.php?end_bookings=$end_bookings&begin_bookings=$begin_bookings");
+		die();
+	}
 }
 if (!loadSettings())
 	die("Erreur chargement settings");
@@ -466,7 +467,7 @@ else
 // Utilisation de la bibliothèqye prototype dans ce script
 $use_prototype = 'y';
 # print the page header
-print_header("", "", "", "", $type = "with_session", $page = "admin");
+print_header("", "", "", $type="with_session");
 affiche_pop_up($msg,"admin");
 // Affichage de la colonne de gauche
 include "admin_col_gauche.php";

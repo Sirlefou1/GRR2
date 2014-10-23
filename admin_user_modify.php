@@ -328,7 +328,7 @@ if ((authGetUserLevel(getUserName(), -1) < 1) && (getSettingValue("authentificat
 // Utilisation de la bibliothèqye prototype dans ce script
 $use_prototype = 'y';
 # print the page header
-print_header("", "", "", "", $type = "with_session", $page = "admin");
+print_header("", "", "", $type="with_session");
 include "admin_col_gauche.php";
 ?>
 <script type='text/javascript'>

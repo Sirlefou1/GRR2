@@ -361,7 +361,7 @@ if (!isset($day) || !isset($month) || !isset($year))
 if (($summarize != 4) && ($summarize != 5))
 {
 	//Affiche les informations dans l'header
-	print_header($day, $month, $year, $area, $type_session, 'no_admin', '');
+	print_header($day, $month, $year, $type="with_session");
 }
 if (isset($champ[0]))
 {

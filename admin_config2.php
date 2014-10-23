@@ -121,7 +121,7 @@ if (isset($_GET['allow_gestionnaire_modify_del']))
 if (!loadSettings())
     die("Erreur chargement settings");
 # print the page header
-print_header("", "", "", "", $type = "with_session", $page = "admin");
+print_header("", "", "", $type="with_session");
 if (isset($_GET['ok']))
 {
     $msg = get_vocab("message_records");

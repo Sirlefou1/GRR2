@@ -70,7 +70,7 @@ if (check_begin_end_bookings($day, $month, $year))
 	showNoBookings($day, $month, $year, $back);
 	exit();
 }
-print_header($day, $month, $year, $area, $type_session);
+print_header($day, $month, $year, $type_session);
 if (((authGetUserLevel(getUserName(),-1) < 1) && (getSettingValue("authentification_obli") == 1)) || (authUserAccesArea(getUserName(), $area) == 0))
 {
 	showAccessDenied($back);

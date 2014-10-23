@@ -37,7 +37,7 @@ if ((authGetUserLevel(getUserName(), -1, 'area') < 4) && (authGetUserLevel(getUs
 	showAccessDenied($back);
 	exit();
 }
-print_header("", "", "", "",$type = "with_session", $page = "admin");
+print_header("", "", "", $type="with_session");
 include "admin_col_gauche.php";
 ?>
 <table>

@@ -45,7 +45,7 @@ if (getSettingValue("module_multisite") != "Oui")
 	exit();
 }
 # print the page header
-print_header("", "", "", "", $type = "with_session", $page = "admin");
+print_header("", "", "", $type="with_session");
 // Affichage de la colonne de gauche
 include "admin_col_gauche.php";
 $reg_admin_login = isset($_GET["reg_admin_login"]) ? $_GET["reg_admin_login"] : NULL;

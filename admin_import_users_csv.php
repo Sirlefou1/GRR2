@@ -39,7 +39,7 @@ if ((authGetUserLevel(getUserName(), -1) < 6) && (authGetUserLevel(getUserName()
 	exit();
 }
 # print the page header
-print_header("", "", "", "", $type = "with_session", $page = "admin");
+print_header("", "", "", $type="with_session");
 ?>
 <p>| <a href="admin_user.php"><?php echo get_vocab("back");?></a> |</p>
 <?php

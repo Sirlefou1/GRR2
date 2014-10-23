@@ -35,54 +35,6 @@ $grr_script_name = "admin_calend.php";
 $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
-function cal($month, $year)
-{
-	global $weekstarts;
-	if (!isset($weekstarts))
-		$weekstarts = 0;
-	$s = "";
-	$daysInMonth = getDaysInMonth($month, $year);
-	$date = mktime(12, 0, 0, $month, 1, $year);
-	$first = (strftime("%w", $date) + 7 - $weekstarts) % 7;
-	$monthName = utf8_strftime("%B", $date);
-	$s .= "<table class=\"calendar2\" border=\"1\" cellspacing=\"3\">\n";
-	$s .= "<tr>\n";
-	$s .= "<td class=\"calendarHeader2\" colspan=\"7\">$monthName $year</td>\n";
-	$s .= "</tr>\n";
-	$s .= "<tr>\n";
-	$s .= getFirstDays();
-	$s .= "</tr>\n";
-	$d = 1 - $first;
-	while ($d <= $daysInMonth)
-	{
-		$s .= "<tr>\n";
-		for ($i = 0; $i < 7; $i++)
-		{
-			$basetime = mktime(12, 0, 0, 6, 11 + $weekstarts, 2000);
-			$show = $basetime + ($i * 24 * 60 * 60);
-			$nameday = utf8_strftime('%A',$show);
-			$s .= "<td class=\"calendar2\" valign=\"top\">";
-			if ($d > 0 && $d <= $daysInMonth)
-			{
-				$s .= $d;
-				$temp = mktime(0, 0, 0, $month, $d,$year);
-				// On teste si le jour est férié :
-				$test = grr_sql_query1("select DAY from ".TABLE_PREFIX."_calendar where DAY = '".$temp."'");
-				if ($test == '-1')
-					$s .= "<br /><input type=\"checkbox\" name=\"$temp\" value=\"$nameday\" />";
-				else
-					$s .= "<br /><input type=\"checkbox\" name=\"$temp\" value=\"$nameday\"  disabled />";
-			}
-			else
-				$s .= " ";
-			$s .= "</td>\n";
-			$d++;
-		}
-		$s .= "</tr>\n";
-	}
-	$s .= "</table>\n";
-	return $s;
-}
 check_access(5, $back);
 // Initialisation
 $etape = isset($_POST["etape"]) ? $_POST["etape"] : NULL;
@@ -104,7 +56,7 @@ settype($end_minute,"integer");
 $period = isset($_POST["period"]) ? $_POST["period"] : NULL;
 $end_period = isset($_POST["end_period"]) ? $_POST["end_period"] : NULL;
 $all_day = isset($_POST["all_day"]) ? $_POST["all_day"] : NULL;
-print_header("", "", "", "",$type = "with_session", $page = "admin");
+print_header("", "", "", $type="with_session");
 // Affichage de la colonne de gauche
 include "admin_col_gauche.php";
 echo "<h2>".get_vocab('admin_calendar_title.php')."</h2>\n";

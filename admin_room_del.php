@@ -65,7 +65,7 @@ if ($type == "room")
 	else
 	{
 		//print the page header
-		print_header("", "", "", "", $type = "with_session", $page = "admin");
+		print_header("", "", "", $type="with_session");
 		echo "<div class=\"page_sans_col_gauche\">";
 		//We tell them how bad what theyre about to do is
 		//Find out how many appointments would be deleted
@@ -139,7 +139,7 @@ if ($type == "area")
 	{
 		//There are rooms left in the area
 		//print the page header
-		print_header("", "", "", "", $type = "with_session", $page = "admin");
+		print_header("", "", "", $type="with_session");
 		//print_banner("", "", "", "", $type = "with_session", $page = "admin");
 		echo "<div class=\"page_sans_col_gauche\">";
 		echo "<p>".get_vocab('delarea');

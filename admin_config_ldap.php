@@ -182,7 +182,7 @@ if ((!grr_resumeSession()) && $valid != 'yes')
 		}
 		if ($valid == 'no')
 		{
-			print_header("", "", "", "", $type = "with_session", $page = "admin");
+			print_header("", "", "", $type="with_session");
 			// Affichage de la colonne de gauche
 			include "admin_col_gauche.php";
 		}

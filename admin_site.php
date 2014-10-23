@@ -354,7 +354,7 @@ function update_site($id)
 	if (isset($_SERVER['HTTP_REFERER']))
 		$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
 	// print the page header
-	print_header("","","","", $type = 'with_session', $page = 'admin');
+	print_header("", "", "", $type="with_session");
 	// Affichage de la colonne de gauche
 	include_once('admin_col_gauche.php');
 	if ((isset($_GET['msg'])) && isset($_SESSION['displ_msg']) && ($_SESSION['displ_msg'] == 'yes') )

@@ -81,7 +81,7 @@ if (($user_source != 'local') && ($user_source != ''))
     exit();
 }
 # print the page header
-print_header("", "", "", "", $type = "with_session", $page = "admin");
+print_header("", "", "", $type="with_session");
 affiche_pop_up($msg,"admin");
 
 ?>

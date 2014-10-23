@@ -32,7 +32,7 @@ $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
 	check_access(6, $back);
-	print_header("","","","",$type="with_session", $page="admin");
+	print_header("", "", "", $type="with_session");
 	// Affichage de la colonne de gauche
 	if (!isset($_GET['pview']))
 		include "admin_col_gauche.php";

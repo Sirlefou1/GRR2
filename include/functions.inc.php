@@ -864,7 +864,7 @@ function begin_page($title, $page="with_session")
 /*
 ** Fonction qui affiche le header
 */
-function print_header($day = '', $month = '', $year = '', $area = '', $type_session = 'with_session', $page = 'no_admin', $room = '')
+function print_header($day = '', $month = '', $year = '', $type_session = 'with_session')
 {
 	global $vocab, $search_str, $grrSettings, $clock_file, $desactive_VerifNomPrenomUser, $grr_script_name;
 	global $use_prototype, $use_tooltip_js, $desactive_bandeau_sup, $id_site;
@@ -3310,7 +3310,7 @@ function showNoReservation($day, $month, $year, $area, $back)
 		$type_session = "no_session";
 	else
 		$type_session = "with_session";
-	print_header($day, $month, $year, $area,$type_session);
+	print_header($day, $month, $year, $type_session);
 	?>
 	<h1><?php echo get_vocab("accessdenied")?></h1>
 	<p>
@@ -3332,7 +3332,7 @@ function showNoReservation($day, $month, $year, $area, $back)
 function showAccessDeniedMaxBookings($day, $month, $year, $area, $id_room,$back)
 {
 	global $vocab;
-	print_header($day, $month, $year, $area);
+	print_header($day, $month, $year, $type="with_session");
 	?>
 	<h1><?php echo get_vocab("accessdenied")?></h1>
 	<p>

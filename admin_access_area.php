@@ -49,7 +49,7 @@ $month = date("m");
 $year  = date("Y");
 check_access(4, $back);
 # print the page header
-print_header("", "", "", "", $type = "with_session", $page = "admin");
+print_header("", "", "", $type="with_session");
 // Affichage de la colonne de gauche
 include "admin_col_gauche.php";
 

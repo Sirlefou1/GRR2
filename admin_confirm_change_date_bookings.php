@@ -82,7 +82,7 @@ if (isset($_GET['valid']) && ($_GET['valid'] == "yes"))
 else if (isset($_GET['valid']) && ($_GET['valid'] == "no"))
 	header("Location: ./admin_config.php");
 # print the page header
-print_header("", "", "", "", $type = "with_session", $page = "admin");
+print_header("", "", "", $type="with_session");
 echo "<h2>".get_vocab('admin_confirm_change_date_bookings.php')."</h2>";
 echo "<p>".get_vocab("msg_del_bookings")."</p>";
 ?>

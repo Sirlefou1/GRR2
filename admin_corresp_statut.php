@@ -92,7 +92,7 @@ $back = "";
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
 //print the page header
-print_header("", "", "", "",$type = "with_session", $page = "admin");
+print_header("", "", "", $type="with_session");
 // Affichage de la colonne de gauche
 include "admin_col_gauche.php";
 ?>

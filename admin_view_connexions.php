@@ -41,7 +41,7 @@ if (isset($_POST['cleanDay']) && isset($_POST['cleanMonth']) && isset($_POST['cl
 	$sql = "DELETE FROM ".TABLE_PREFIX."_log WHERE START < '" . $_POST['cleanYear'] . "-" . $_POST['cleanMonth'] . "-" . $_POST['cleanDay'] . "' and END < now()";
 	$res = grr_sql_query($sql);
 }
-print_header("", "", "", "", $type = "with_session", $page = "admin");
+print_header("", "", "", $type="with_session");
 include "admin_col_gauche.php";
 echo "<h2>".get_vocab('admin_view_connexions.php').grr_help("aide_grr_suivi_connexions")."</h2>";
 echo "<h3>".get_vocab("users_connected")."</h3>";

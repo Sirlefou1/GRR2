@@ -71,7 +71,7 @@ $type_month_all = 'month_all2';
 $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
-print_header($day, $month, $year, $area, $type_session);
+print_header($day, $month, $year, $type_session);
 if (check_begin_end_bookings($day, $month, $year))
 {
 	showNoBookings($day, $month, $year,$back);

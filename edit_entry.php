@@ -316,7 +316,7 @@ if ($res)
 	}
 }
 $use_prototype = 'y';
-print_header($day, $month, $year, $area);
+print_header($day, $month, $year, $type="with_session");
 ?>
 <script type="text/javascript" >
 	jQuery.ajax({

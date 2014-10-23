@@ -51,7 +51,7 @@ if ((isset($_GET['msg'])) && isset($_SESSION['displ_msg']) && ($_SESSION['displ_
 	$msg = $_GET['msg'];
 else
 	$msg = '';
-print_header("", "", "", "", $type = "with_session", $page = "admin");
+print_header("", "", "", $type="with_session");
 include "admin_col_gauche.php";
 $sql = "SELECT id, type_name, order_display, couleur, type_letter FROM ".TABLE_PREFIX."_type_area
 ORDER BY order_display, type_letter";

@@ -354,7 +354,7 @@ if ((!empty($room)) || (isset($area_id)))
 		exit();
 	}
 	# print the page header
-	print_header("", "", "", "", $type = "with_session", $page = "admin");
+	print_header("", "", "", $type="with_session");
 	affiche_pop_up($msg,"admin");
 	include "admin_col_gauche.php";
 	echo "<div class=\"page_sans_col_gauche\">";
@@ -862,7 +862,7 @@ if ((!empty($id_area)) || (isset($add_area)))
 		exit();
 	}
   	# print the page header
-	print_header("", "", "", "", $type = "with_session", $page = "admin");
+	print_header("", "", "", $type="with_session");
 	affiche_pop_up($msg,"admin");
 	$avertissement = get_vocab("avertissement_change_type");
 	include "admin_col_gauche.php";

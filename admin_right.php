@@ -39,7 +39,7 @@ if (!isset($id_area))
 	settype($id_area,"integer");
 check_access(4, $back);
 //print the page header
-print_header("", "", "", "", $type = "with_session", $page = "admin");
+print_header("", "", "", $type="with_session");
 // Affichage de la colonne de gauche
 include "admin_col_gauche.php";
 // tableau des ressources auxquelles l'utilisateur n'a pas accès

@@ -16,7 +16,7 @@ include "include/language.inc.php";
 <?php
 if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))
 	$type_session = "no_session";
-print_header("", "", "", "", $type_session);
+print_header("", "", "", $type="with_session");
 ?>
 <form class='contactreservation' id="contactreservation" name="contactreservation" action='form'>
 	<fieldset><legend><b>Vos coordonnées</b></legend>

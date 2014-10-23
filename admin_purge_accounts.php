@@ -40,7 +40,7 @@ if (((getSettingValue("ldap_statut") == "") && (getSettingValue("sso_statut") ==
 	showAccessDenied($back);
 	exit();
 }
-print_header("", "", "", "", $type = "with_session", $page = "admin");
+print_header("", "", "", $type="with_session");
 // Affichage de la colonne de gauche
 include "admin_col_gauche.php";
 $themessage = str_replace ( "'"  , "\\'"  , get_vocab("admin_purge_accounts_confirm"));

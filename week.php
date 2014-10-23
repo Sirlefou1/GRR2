@@ -59,7 +59,7 @@ if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))
 	$type_session = "no_session";
 else
 	$type_session = "with_session";
-print_header($day, $month, $year, $area, $type_session);
+print_header($day, $month, $year, $type_session);
 $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);

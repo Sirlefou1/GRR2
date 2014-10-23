@@ -62,12 +62,12 @@ else
 get_planning_area_values($area);
 if ($area <= 0)
 {
-	print_header($day, $month, $year, $area,$type_session);
+	print_header($day, $month, $year, $type_session);
 	echo '<h1>'.get_vocab("noareas").'</h1>';
 	echo '<a href="admin_accueil.php">'.get_vocab("admin").'</a>'.PHP_EOL.'</body>'.PHP_EOL.'</html>';
 	exit();
 }
-print_header($day, $month, $year, $area, $type_session);
+print_header($day, $month, $year, $type_session);
 if ((authGetUserLevel(getUserName(), -1) < 1) && (getSettingValue("authentification_obli") == 1))
 {
 	showAccessDenied($back);
