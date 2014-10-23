@@ -816,6 +816,7 @@ function begin_page($title, $page="with_session")
 	$a .= '<script src="js/jquery-ui-timepicker-addon.js"></script>'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="js/bootstrap-clockpicker.js"></script>'.PHP_EOL;
+	$a .= '<script src="js/menu.js"></script>'.PHP_EOL;
 	$a .= '<script src="js/jspdf/jspdf.js"></script>'.PHP_EOL;
 	$a .= '<script src="js/jspdf/libs/FileSaver.js/FileSaver.js"></script>'.PHP_EOL;
 	$a .= '<script src="js/jspdf/jspdf.plugin.from_html.js"></script>'.PHP_EOL;
@@ -888,7 +889,7 @@ function print_header($day = '', $month = '', $year = '', $type_session = 'with_
 			$day   = date("d",$date_);
 			$month = date("m",$date_);
 			$year  = date("Y",$date_);
-			echo '<table id="header">'.PHP_EOL;
+			echo '<div id="toppanel"><div id="panel"><div class="content"><table id="header">'.PHP_EOL;
 			echo '<tr>'.PHP_EOL;
 			//Logo
 			$nom_picture = "./images/".getSettingValue("logo");
@@ -997,6 +998,14 @@ function print_header($day = '', $month = '', $year = '', $type_session = 'with_
 				}
 			}
 			echo '</td>'.PHP_EOL.'</tr>'.PHP_EOL.'</table>'.PHP_EOL;
+			echo '</div></div><div class="tab">
+		<ul class="login">
+			<li id="toggle">
+				<a id="close1" class="close1" href="#">Fermer</a>
+				<a id="open" style="display: none;" class="open" href="#">Ouvrir</a>
+			</li>
+		</ul>
+	</div> <!-- / top --></div>';
 		}
 	}
 }
