@@ -515,7 +515,7 @@ if (($summarize != 4) && ($summarize != 5))
 											// [5]   Type -> e.type
 											// [6]   réservé par (nom ou IP), (HTML) -> e.beneficiaire
 											// [12]  les champs additionnele -> e.overload_desc
-											echo "<select name=\"sumby\" size=\"1\">\n";
+											echo "<select class=\"form-control\" name=\"sumby\" size=\"1\">\n";
 											echo "<option value=\"6\" ";
 											if ($_GET["sumby"] == "6")
 												echo " selected=\"selected\"";
@@ -546,7 +546,7 @@ if (($summarize != 4) && ($summarize != 5))
 										</td></tr>
 										<tr><td colspan="2" align="center">
 											<input type="hidden" name="is_posted" value="y" />
-											<input type="submit" value="<?php echo get_vocab('submit') ?>" />
+											<input class="btn btn-primary" type="submit" value="<?php echo get_vocab('submit') ?>" />
 										</td></tr>
 									</table>
 									<?php
@@ -573,7 +573,7 @@ if (($summarize != 4) && ($summarize != 5))
 							<a href="' . traite_grr_url("","y")."report.php" . '?' . htmlspecialchars($_SERVER['QUERY_STRING']) . '&amp;pview=1" ';
 							if (getSettingValue("pview_new_windows") == 1)
 								echo ' target="_blank"';
-							echo '>' . get_vocab("ppreview") . '</a>
+							echo '><span class="glyphicon glyphicon-print"></span></a>
 						</p>';
 					}
 	//S'assurer que ces paramètres ne sont pas cités.

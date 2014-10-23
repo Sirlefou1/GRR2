@@ -191,7 +191,7 @@ function affiche_lien_contact($_cible, $_type_cible, $option_affichage)
 				$affichage = "";
 		}
 		else
-			$affichage = '<a href="javascript:centrerpopup("contact.php?cible='.$_cible.'&amp;type_cible='.$_type_cible.'",600,480,"scrollbars=yes,statusbar=no,resizable=yes")" title="'.$_identite.'">'.$_identite.'</a>'.PHP_EOL;
+			$affichage = '<a href="javascript:centrerpopup(\'contact.php?cible='.$_cible.'&amp;type_cible='.$_type_cible.'\',600,480,\'scrollbars=yes,statusbar=no,resizable=yes\')\' title=\''.$_identite.'\'>'.$_identite.'</a>'.PHP_EOL;
 	}
 	else
 	{
