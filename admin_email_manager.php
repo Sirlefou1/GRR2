@@ -2,7 +2,7 @@
 /**
  * admin_email_manager.php
  * Interface de gestion des mails automatiques
- * DerniËre modification : $Date: 2009-04-14 12:59:17 $
+ * Derni√®re modification : $Date: 2009-04-14 12:59:17 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -53,7 +53,7 @@ $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
 check_access(4, $back);
-// tableau des ressources auxquelles l'utilisateur n'a pas accËs
+// tableau des ressources auxquelles l'utilisateur n'a pas acc√®s
 $tab_rooms_noaccess = verif_acces_ressource(getUserName(), 'all');
 if (isset($_POST['mail1']))
 {
@@ -72,11 +72,11 @@ $action = isset($_GET["action"]) ? $_GET["action"] : NULL;
 $msg='';
 
 if ($reg_admin_login) {
-	// On commence par vÈrifier que le professeur n'est pas dÈj‡ prÈsent dans cette liste.
+	// On commence par v√©rifier que le professeur n'est pas d√©j√† pr√©sent dans cette liste.
 	if ($room !=-1)
 	{
 		// Ressource
-		// On vÈrifie que la ressource $room existe
+		// On v√©rifie que la ressource $room existe
 		$test = grr_sql_query1("select id from ".TABLE_PREFIX."_room where id='".$room."'");
 		if ($test == -1)
 		{
@@ -88,7 +88,7 @@ if ($reg_admin_login) {
 			showAccessDenied($back);
 			exit();
 		}
-		// La ressource existe : on vÈrifie les privilËges de l'utilisateur
+		// La ressource existe : on v√©rifie les privil√®ges de l'utilisateur
 		check_access(4, $back);
 		$sql = "SELECT * FROM ".TABLE_PREFIX."_j_mailuser_room WHERE (login = '$reg_admin_login' and id_room = '$room')";
 		$res = grr_sql_query($sql);
@@ -133,7 +133,7 @@ if (empty($room))
 	$room = -1;
 echo "<h2>".get_vocab('admin_email_manager.php').grr_help("aide_grr_mail_auto")."</h2>\n";
 if (getSettingValue("automatic_mail") != 'yes')
-	echo "<h3 class=\"avertissement\">".get_vocab("attention_mail_automatique_dÈsactive")."</h3>";
+	echo "<h3 class=\"avertissement\">".get_vocab("attention_mail_automatique_d√©sactive")."</h3>";
 echo get_vocab("explain_automatic_mail3")."<br /><br /><hr />\n";
 echo "<form action=\"admin_email_manager.php\" method=\"post\">\n";
 echo "<div><input type=\"checkbox\" name=\"send_always_mail_to_creator\" value=\"y\" ";
@@ -160,7 +160,7 @@ if ($res)
 	{
 		$selected = ($row[0] == $id_area) ? "selected=\"selected\"" : "";
 		$link = "admin_email_manager.php?id_area=$row[0]";
-			// On affiche uniquement les domaines administrÈs par l'utilisateur
+			// On affiche uniquement les domaines administr√©s par l'utilisateur
 		if (authGetUserLevel(getUserName(), $row[0], 'area') >= 4)
 			$out_html .= "<option $selected value=\"$link\">" . htmlspecialchars($row[1])."</option>\n";
 	}
