@@ -125,7 +125,7 @@ else
 	$compt = 1;
 if (UserRoomMaxBooking(getUserName(), $room, $compt) == 0)
 {
-	showAccessDeniedMaxBookings($day, $month, $year, $area, $room, $back);
+	showAccessDeniedMaxBookings($day, $month, $year, $room, $back);
 	exit();
 }
 if (isset($id))

@@ -529,7 +529,7 @@ if ($rep_type == 2)
 			{
 				if (UserRoomMaxBooking(getUserName(), $room_id, count($reps) - 1 + $compt + $compt_room) == 0)
 				{
-					showAccessDeniedMaxBookings($day, $month, $year, '', $room_id, $back);
+					showAccessDeniedMaxBookings($day, $month, $year, $room_id, $back);
 					exit();
 				}
 				else
@@ -539,7 +539,7 @@ if ($rep_type == 2)
 			{
 				if (UserRoomMaxBooking(getUserName(), $room_id, $compt + $compt_room) == 0)
 				{
-					showAccessDeniedMaxBookings($day, $month, $year, '', $room_id, $back);
+					showAccessDeniedMaxBookings($day, $month, $year, $room_id, $back);
 					exit();
 				}
 				else

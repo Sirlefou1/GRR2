@@ -3230,7 +3230,7 @@ function verif_heure_debut_fin($start_time,$end_time,$area)
 function VerifyModeDemo() {
 	if (getSettingValue("ActiveModeDemo") == 'y')
 	{
-		print_header("", "", "", "", "");
+		print_header("", "", "", "");
 		?>
 		<h1>Op&eacute;ration non autoris&eacute;e</h1>
 		<p>Vous êtes dans une <b>version de démonstration de GRR</b>.
@@ -3303,7 +3303,7 @@ function showAccessDenied($back)
  *
  * Returns: Nothing
  */
-function showNoReservation($day, $month, $year, $area, $back)
+function showNoReservation($day, $month, $year, $back)
 {
 	global $vocab;
 	if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))
@@ -3329,7 +3329,7 @@ function showNoReservation($day, $month, $year, $area, $back)
  *
  * Returns: Nothing
  */
-function showAccessDeniedMaxBookings($day, $month, $year, $area, $id_room,$back)
+function showAccessDeniedMaxBookings($day, $month, $year, $id_room, $back)
 {
 	global $vocab;
 	print_header($day, $month, $year, $type="with_session");

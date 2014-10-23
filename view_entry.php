@@ -245,7 +245,7 @@ if ((authGetUserLevel(getUserName(), -1) < 1) and (getSettingValue("authentifica
 if (authUserAccesArea(getUserName(), $area) == 0)
 {
 	if (isset($reservation_is_delete))
-		showNoReservation($day, $month, $year, $area, $back);
+		showNoReservation($day, $month, $year, $back);
 	else
 		showAccessDenied($back);
 	exit();
