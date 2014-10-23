@@ -1,7 +1,4 @@
 <?php
-# GRR : fichier de langue française
-# Last modification : 06/02/2011
-# Charset (jeu de caractères) utilisé dans l'en-tête des pages HTML
 $charset_html = "utf-8";
 $vocab = array();
 $vocab['a acces au domaine'] = "Cet utilisateur a accès à ce domaine restreint.";
@@ -899,49 +896,28 @@ $vocab['wrong_pwd2'] = "Erreur lors de la saisie du mot de passe, veuillez recom
 $vocab['years'] = "années";
 $vocab['YES'] = "OUI";
 $vocab['you_have_not_entered'] = "Vous n'avez pas saisi ";
-
-//MAJ Hugo FORESTIER - Ajout de vocabs
-//19/05/2013
 $vocab['display_menu'] = "Affichage du menu gauche";
 $vocab['display_menu_1'] = "Choisir si le menu de gauche (calendrier, domaines et ressources) sera affiché par default";
 $vocab['display_menu_2'] = "Le menu de gauche ne s'affiche pas";
 $vocab['display_menu_3'] = "Le menu de gauche s'affiche";
-
-//MAJ David VOUE - Ajout de vocabs
-//21/01/2014
-
 $vocab['display_mail_etat_destinataire'] = "Affichage du formulaire de contact ( non stable )";
 $vocab['display_mail_etat_destinataire_1'] = "Choisir si le formulaire de contact sera affiché par défaut";
 $vocab['display_mail_etat_destinataire_2'] = "Le formulaire de contact est désactivé";
 $vocab['display_mail_etat_destinataire_3'] = "Le formulaire de contact est activé";
 $vocab['display_mail_destinataire'] = "Adresse mail du destinataire :";
-
-//MAJ DAVID VOUE - Ajout de vocabs
-//07/02/2014
-
 $vocab['top_of_page'] = "^ Haut de la page";
-
-//MAJ DAVID VOUE - Ajout de vocabs
-//11/02/2014
 $vocab['nomR'] = "Nom";
-
-//MAJ David VOUE - Ajout de vocabs
-
 $vocab['display_file'] = "Autoriser l'envoie de fichiers ";
 $vocab['display_file1'] = "Permettre de lier des fichiers aux réservations ";
 $vocab['display_file2'] = "L'envoie de fichiers est autorisé ";
 $vocab['display_file3'] = "L'envoie de fichiers n'est pas autorisé ";
-
 $vocab['Generer_pdf'] = "Générer un PDF";
 $vocab['semaine'] = "Sem";
-
 $vocab['status_clef'] = "Statut de la clé";
 $vocab['clef'] = "Clé preté";
 $vocab['msg_clef'] = "Cocher si la clé est empruntée";
-
 $vocab['status_courrier'] = "Courrier de validation";
 $vocab['courrier'] = "Courrier";
 $vocab['msg_courrier'] = "Cocher si courrier de validation";
 $vocab['to'] = " à ";
-
 ?>
