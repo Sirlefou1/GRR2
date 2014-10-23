@@ -424,22 +424,23 @@ if (isset($_POST['begin_day']) && isset($_POST['begin_month']) && isset($_POST['
 		if (!saveSetting("begin_bookings", $begin_bookings))
 			echo "Erreur lors de l'enregistrement de begin_bookings !<br />";
 	}
-}
-if (isset($_POST['end_day']) && isset($_POST['end_month']) && isset($_POST['end_year']))
-{
-	while (!checkdate($_POST['end_month'], $_POST['end_day'], $_POST['end_year']))
-		$_POST['end_day']--;
-	$end_bookings = mktime(0, 0, 0, $_POST['end_month'], $_POST['end_day'] ,$_POST['end_year']);
-	if ($end_bookings < $begin_bookings)
-		$end_bookings = $begin_bookings;
-	$test_del1 = mysqli_num_rows(mysqli_query($GLOBALS['db_c'], "SELECT * FROM ".TABLE_PREFIX."_entry WHERE (start_time > '$end_bookings' )"));
-	$test_del2 = mysqli_num_rows(mysqli_query($GLOBALS['db_c'], "SELECT * FROM ".TABLE_PREFIX."_repeat WHERE (start_time > '$end_bookings')"));
-	if (($test_del1 != 0) || ($test_del2 != 0))
-		$demande_confirmation = 'yes';
-	else
+
+	if (isset($_POST['end_day']) && isset($_POST['end_month']) && isset($_POST['end_year']))
 	{
-		if (!saveSetting("end_bookings", $end_bookings))
-			echo "Erreur lors de l'enregistrement de end_bookings !<br />";
+		while (!checkdate($_POST['end_month'], $_POST['end_day'], $_POST['end_year']))
+			$_POST['end_day']--;
+		$end_bookings = mktime(0, 0, 0, $_POST['end_month'], $_POST['end_day'] ,$_POST['end_year']);
+		if ($end_bookings < $begin_bookings)
+			$end_bookings = $begin_bookings;
+		$test_del1 = mysqli_num_rows(mysqli_query($GLOBALS['db_c'], "SELECT * FROM ".TABLE_PREFIX."_entry WHERE (start_time > '$end_bookings' )"));
+		$test_del2 = mysqli_num_rows(mysqli_query($GLOBALS['db_c'], "SELECT * FROM ".TABLE_PREFIX."_repeat WHERE (start_time > '$end_bookings')"));
+		if (($test_del1 != 0) || ($test_del2 != 0))
+			$demande_confirmation = 'yes';
+		else
+		{
+			if (!saveSetting("end_bookings", $end_bookings))
+				echo "Erreur lors de l'enregistrement de end_bookings !<br />";
+		}
 	}
 }
 if ($demande_confirmation == 'yes')

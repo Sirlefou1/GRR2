@@ -31,10 +31,6 @@ $grr_script_name = "admin_calend_jour_cycle.php";
 $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
-$day   = date("d");
-$month = date("m");
-$year  = date("Y");
-
 check_access(6, $back);
 # print the page header
 print_header("", "", "", "",$type = "with_session", $page = "admin");
@@ -115,6 +111,7 @@ $end_bookings = getSettingValue("end_bookings");
 $debligne = 1;
 $month = strftime("%m", getSettingValue("begin_bookings"));
 $year = strftime("%Y", getSettingValue("begin_bookings"));
+$inc = 0;
 while ($n <= $end_bookings)
 {
 	if ($debligne == 1)

@@ -394,10 +394,10 @@ else
 			$login_search = preg_replace("/[^\-@._[:space:]a-zA-Z0-9]/", "", $_login);
 			if ($login_search != $_login)
 				return "6";
-			$user_imap=grr_verif_imap($_login,$_password);
+			$user_imap = grr_verif_imap($_login, $_password);
 			if ($user_imap)
 			{
-				$auth_imap='yes';
+				$auth_imap = 'yes';
 				imap_close($user_imap);
 			}
 			else
@@ -408,7 +408,7 @@ else
 	}
 	else
 	{
-		$row = grr_sql_row($res_user,0);
+		$row = grr_sql_row($res_user, 0);
 		// S'il s'agit d'un utilisateur inactif, on s'arrête là
 		if ($row[12] == 'inactif')
 			return "5";
@@ -978,7 +978,7 @@ function grr_ldap_search_user($ds, $basedn, $login_attr, $login, $filtre_sup = "
 	}
 }
 /**
- * @return boolean
+ * @return resource|boolean
  */
 function grr_verif_imap($_login, $_password)
 {
@@ -1062,7 +1062,7 @@ function grr_connect_imap($i_adresse,$i_port,$i_login,$i_pwd,$use_type,$use_ssl,
 	}
 	return false;
 }
-function grr_getinfo_ldap($_dn,$_login,$_password)
+function grr_getinfo_ldap($_dn, $_login, $_password)
 {
 	// Lire les infos sur l'utilisateur depuis LDAP
 	include "config_ldap.inc.php";

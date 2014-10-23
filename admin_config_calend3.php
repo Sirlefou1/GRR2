@@ -113,6 +113,7 @@ if (isset($_SERVER['HTTP_REFERER']))
 	$debligne = 1;
 	$month = strftime("%m", getSettingValue("begin_bookings"));
 	$year = strftime("%Y", getSettingValue("begin_bookings"));
+	$inc = 0;
 	while ($n <= $end_bookings)
 	{
 		if ($debligne == 1)

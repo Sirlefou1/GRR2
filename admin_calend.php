@@ -35,10 +35,6 @@ $grr_script_name = "admin_calend.php";
 $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
-$day   = date("d");
-$month = date("m");
-$year  = date("Y");
-
 function cal($month, $year)
 {
 	global $weekstarts;
@@ -108,19 +104,17 @@ settype($end_minute,"integer");
 $period = isset($_POST["period"]) ? $_POST["period"] : NULL;
 $end_period = isset($_POST["end_period"]) ? $_POST["end_period"] : NULL;
 $all_day = isset($_POST["all_day"]) ? $_POST["all_day"] : NULL;
-
-# print the page header
 print_header("", "", "", "",$type = "with_session", $page = "admin");
 // Affichage de la colonne de gauche
 include "admin_col_gauche.php";
 echo "<h2>".get_vocab('admin_calendar_title.php')."</h2>\n";
+$result = 0;
 if (isset($_POST['record']) && ($_POST['record'] == 'yes'))
 {
 	$etape = 4;
-	$result = 0;
 	$end_bookings = getSettingValue("end_bookings");
 	// On reconstitue le tableau des ressources
-	$sql = "select id from ".TABLE_PREFIX."_room";
+	$sql = "SELECT id FROM ".TABLE_PREFIX."_room";
 	$res = grr_sql_query($sql);
 	if ($res)
 	{
@@ -165,9 +159,9 @@ if (isset($_POST['record']) && ($_POST['record'] == 'yes'))
 										else
 											$minute = 0;
 										if (isset($end_period))
-											$end_minute = $end_period+1;
+											$end_minute = $end_period + 1;
 										else
-											$end_minute = $eveningends_minutes+1;
+											$end_minute = $eveningends_minutes + 1;
 									}
 									$starttime = mktime($hour, $minute, 0, $month, $day, $year);
 									$endtime   = mktime($end_hour, $end_minute, 0, $month, $day, $year);
@@ -176,8 +170,8 @@ if (isset($_POST['record']) && ($_POST['record'] == 'yes'))
 								}
 								else
 								{
-									$starttime = mktime($morningstarts, 0, 0, $month, $day  , $year);
-									$endtime   = mktime($eveningends, $eveningends_minutes , $resolution, $month, $day, $year);
+									$starttime = mktime($morningstarts, 0, 0, $month, $day, $year);
+									$endtime   = mktime($eveningends, $eveningends_minutes , 0, $month, $day, $year);
 								}
 								if ($erreur != 'y')
 								{
@@ -207,7 +201,6 @@ if (isset($_POST['record']) && ($_POST['record'] == 'yes'))
 		}
 	}
 }
-
 if ($etape == 4)
 {
 	if ($result == '')
@@ -252,8 +245,8 @@ if ($etape == 3)
 		$temp = "id_room_".$room_id;
 		echo "<div><input type=\"hidden\" name=\"".$temp."\" value=\"yes\" /></div>\n";
 		$area_id = grr_sql_query1("SELECT area_id FROM ".TABLE_PREFIX."_room WHERE id = '".$room_id."'");
-		$test_enable_periods_y += grr_sql_query1("select count(enable_periods) FROM ".TABLE_PREFIX."_area WHERE (id = '".$area_id."' and enable_periods='y')");
-		$test_enable_periods_n += grr_sql_query1("select count(enable_periods) FROM ".TABLE_PREFIX."_area WHERE (id = '".$area_id."' and enable_periods='n')");
+		$test_enable_periods_y += grr_sql_query1("SELECT count(enable_periods) FROM ".TABLE_PREFIX."_area WHERE (id = '".$area_id."' and enable_periods='y')");
+		$test_enable_periods_n += grr_sql_query1("SELECT count(enable_periods) FROM ".TABLE_PREFIX."_area WHERE (id = '".$area_id."' and enable_periods='n')");
 
 	}
 		// On teste si tous les domaines selectionnés sont du même type d'affichage à savoir :
@@ -273,7 +266,7 @@ if ($etape == 3)
 			// On prend comme domaine de référence le dernier domaine de la boucle  foreach ( $rooms as $room_id ) {
 			// C'est pas parfait mais bon !
 		get_planning_area_values($area_id);
-		if ($all_enable_periods=='y')
+		if ($all_enable_periods == 'y')
 		{
 				// Créneaux basés sur les intitulés pré-définis
 				// Heure ou créneau de début de réservation
@@ -336,6 +329,7 @@ if ($etape == 3)
 	$debligne = 1;
 	$month = strftime("%m", getSettingValue("begin_bookings"));
 	$year = strftime("%Y", getSettingValue("begin_bookings"));
+	$inc = 0;
 	while ($n <= $end_bookings)
 	{
 		if ($debligne == 1)

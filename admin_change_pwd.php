@@ -57,7 +57,9 @@ if ($valid == "yes")
             $msg = get_vocab('update_pwd_succeed');
     }
 }
-
+$user_nom = '';
+$user_prenom = '';
+$user_source = '';
 // On appelle les informations de l'utilisateur
 if (isset($user_login) && ($user_login!=''))
 {
@@ -73,13 +75,11 @@ if (isset($user_login) && ($user_login!=''))
         }
     }
 }
-
 if (($user_source != 'local') && ($user_source != ''))
 {
     showAccessDenied($back);
     exit();
 }
-
 # print the page header
 print_header("", "", "", "", $type = "with_session", $page = "admin");
 affiche_pop_up($msg,"admin");
@@ -101,7 +101,7 @@ if ($user_login != getUserName())
     echo "\n<input type=\"hidden\" name=\"valid\" value=\"yes\" />";
     echo "\n<input type=\"hidden\" name=\"user_login\" value=\"$user_login\" />";
     echo "\n<br /><input type=\"submit\" value=\"".get_vocab("save")."\" /></div></form>";
-} 
+}
 else
     echo "<\ndiv><br />".get_vocab("pwd_msg_warning2")."</div>";
 ?>

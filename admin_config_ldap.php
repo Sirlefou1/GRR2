@@ -133,14 +133,14 @@ if (isset($_POST['submit']))
 if ((!grr_resumeSession()) && $valid != 'yes')
 {
 	?>
-	<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
-	<HTML>
-		<HEAD>
-			<link REL="stylesheet" href="style.css" type="text/css">
-			<TITLE> GRR </TITLE>
-			<LINK REL="SHORTCUT ICON" href="./favicon.ico">
-			</HEAD>
-			<BODY>
+	<!doctype html>
+	<html>
+		<head>
+			<link rel="stylesheet" href="style.css" type="text/css">
+			<title> grr </title>
+			<link rel="shortcut icon" href="./favicon.ico">
+			</head>
+			<body>
 				<form action="admin_config_ldap.php" method='post' style="width: 100%; margin-top: 24px; margin-bottom: 48px;">
 					<h2>Configuration de l'accès à LDAP</h2>
 					<?php
@@ -189,14 +189,14 @@ if ((!grr_resumeSession()) && $valid != 'yes')
 		else
 		{
 			?>
-			<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
-			<HTML>
-				<HEAD>
-					<link REL="stylesheet" href="style.css" type="text/css">
-					<LINK REL="SHORTCUT ICON" href="favicon.ico">
-						<TITLE> GRR </TITLE>
-					</HEAD>
-					<BODY>
+			<!doctype html>
+			<html>
+				<head>
+					<link rel="stylesheet" href="style.css" type="text/css">
+					<link rel="shortcut icon" href="favicon.ico">
+						<title> grr </title>
+					</head>
+					<body>
 						<?php
 					}
 					if ($etape == 3)

@@ -30,19 +30,12 @@
 
 include "include/admin.inc.php";
 $grr_script_name = "admin_calend_ignore.php";
-
-
 $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
-$day   = date("d");
-$month = date("m");
-$year  = date("Y");
-
 check_access(6, $back);
 # print the page header
 print_header("", "", "", "", $type = "with_session", $page = "admin");
-
 // Affichage de la colonne de gauche
 include "admin_col_gauche.php";
 echo "<h2>".get_vocab('calendrier_des_jours_hors_reservation')."</h2>\n";
@@ -103,7 +96,6 @@ if (isset($_POST['record']) && ($_POST['record'] == 'yes'))
 		}
 	}
 }
-
 echo "\n<p>".get_vocab("les_journees_cochees_sont_ignorees")."</p>";
 echo "\n<table cellpadding=\"3\">\n";
 $basetime = mktime(12, 0, 0, 6, 11 + $weekstarts, 2000);
@@ -126,7 +118,7 @@ $end_bookings = getSettingValue("end_bookings");
 $debligne = 1;
 $month = utf8_encode(strftime("%m", getSettingValue("begin_bookings")));
 $year = strftime("%Y", getSettingValue("begin_bookings"));
-
+$inc = 0;
 while ($n <= $end_bookings)
 {
 	if ($debligne == 1)
