@@ -84,6 +84,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 				return "<a onclick=\"charger();\" class=\"calendar\" title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day"))."\" href=\"day.php?year=$year&amp;month=$month&amp;day=$day&amp;area=".$this->area."\"";
 			}
 		}
+
 		function getHTML()
 		{
 			global $weekstarts, $vocab, $type_month_all, $display_day, $nb_display_day;
@@ -102,20 +103,22 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 			$weekd = $week;
 			if ($this->mois_precedent == 1)
 			{
-				$tmp = mktime(0, 0, 0, ($this->month), 1, ($this->year) - 1);
-				$lastmonth = date("m",$tmp);
-				$lastyear = date("Y",$tmp);
-				if (($this->dmy != 'day') && ($this->dmy != 'week_all') && ($this->dmy != 'month_all') && ($this->dmy != 'month_all2'))
-					$s .= "<div class=\"btn-group\"><button title=\"".htmlspecialchars(get_vocab("previous_year"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='month.php?year=$lastyear&amp;month=$lastmonth&amp;day=1&amp;area=$this->area&amp;room=$this->room';\"><span class=\"glyphicon glyphicon-backward\"></span></button>\n";
-				else
-					$s .= "<div class=\"btn-group\"><button title=\"".htmlspecialchars(get_vocab("previous_year"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='".$type_month_all.".php?year=$lastyear&amp;month=$lastmonth&amp;day=1&amp;area=$this->area';\"><span class=\"glyphicon glyphicon-backward\"></span></button>\n";
-				$tmp = mktime(0, 0, 0, ($this->month) - 1, 1, $this->year);
-				$lastmonth = date("m",$tmp);
-				$lastyear = date("Y",$tmp);
-				if (($this->dmy != 'day') && ($this->dmy != 'week_all') && ($this->dmy != 'month_all') && ($this->dmy != 'month_all2'))
-					$s .= "<button title=\"".htmlspecialchars(get_vocab("see_month_for_this_room"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='month.php?year=$lastyear&amp;month=$lastmonth&amp;day=1&amp;area=$this->area&amp;room=$this->room';\"><span class=\"glyphicon glyphicon-chevron-left\"></span></button>\n";
-				else
-					$s .= "<button title=\"".htmlspecialchars(get_vocab("see_month_for_this_room"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='".$type_month_all.".php?year=$lastyear&amp;month=$lastmonth&amp;day=1&amp;area=$this->area';\"><span class=\"glyphicon glyphicon-chevron-left\"></span></button>\n";
+				$s .= createlink(0, -1, $this->month, $this->year, $this->dmy, $this->room, $this->area, "previous_year", "backward");
+				//$tmp = mktime(0, 0, 0, ($this->month), 1, ($this->year) - 1);
+				//$lastmonth = date("m",$tmp);
+				//$lastyear = date("Y",$tmp);
+				//if (($this->dmy != 'day') && ($this->dmy != 'week_all') && ($this->dmy != 'month_all') && ($this->dmy != 'month_all2'))
+				//	$s .= "<div class=\"btn-group\"><button title=\"".htmlspecialchars(get_vocab("previous_year"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='month.php?year=$lastyear&amp;month=$lastmonth&amp;day=1&amp;area=$this->area&amp;room=$this->room';\"><span class=\"glyphicon glyphicon-backward\"></span></button>\n";
+				//else
+				//	$s .= "<div class=\"btn-group\"><button title=\"".htmlspecialchars(get_vocab("previous_year"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='".$type_month_all.".php?year=$lastyear&amp;month=$lastmonth&amp;day=1&amp;area=$this->area';\"><span class=\"glyphicon glyphicon-backward\"></span></button>\n";
+				$s .= createlink(-1, 0, $this->month, $this->year, $this->dmy, $this->room, $this->area, "see_month_for_this_room", "chevron-left");
+				//$tmp = mktime(0, 0, 0, ($this->month) - 1, 1, $this->year);
+				//$lastmonth = date("m",$tmp);
+				//$lastyear = date("Y",$tmp);
+				//if (($this->dmy != 'day') && ($this->dmy != 'week_all') && ($this->dmy != 'month_all') && ($this->dmy != 'month_all2'))
+				//	$s .= "<button title=\"".htmlspecialchars(get_vocab("see_month_for_this_room"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='month.php?year=$lastyear&amp;month=$lastmonth&amp;day=1&amp;area=$this->area&amp;room=$this->room';\"><span class=\"glyphicon glyphicon-chevron-left\"></span></button>\n";
+				//else
+				//	$s .= "<button title=\"".htmlspecialchars(get_vocab("see_month_for_this_room"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='".$type_month_all.".php?year=$lastyear&amp;month=$lastmonth&amp;day=1&amp;area=$this->area';\"><span class=\"glyphicon glyphicon-chevron-left\"></span></button>\n";
 			}
 			if (($this->dmy != 'day') && ($this->dmy != 'week_all') && ($this->dmy != 'month_all') && ($this->dmy != 'month_all2'))
 				$s .= "<button title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_month"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='month.php?year=$this->year&amp;month=$this->month&amp;day=1&amp;area=$this->area&amp;room=$this->room';\">$monthName $this->year</button>\n";
@@ -207,12 +210,6 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 	{
 		$month_ = array();
 		$milieu = ($nb_calendar % 2 == 1) ? ($nb_calendar + 1) / 2 : $nb_calendar / 2;
-		/**
-		 * if ($nb_calendar % 2 == 1)
-		 *	 $milieu = ($nb_calendar + 1) / 2;
-		 * else
-		 *	 $milieu = $nb_calendar / 2;
-		 */
 		for ($k = 1; $k < $milieu; $k++)
 			$month_[] = mktime(0, 0, 0, $month + $k - $milieu, 1, $year);
 		$month_[] = mktime(0, 0, 0, $month, $day, $year);

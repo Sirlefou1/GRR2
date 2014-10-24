@@ -30,6 +30,18 @@
  */
 header("Cache-Control:no-cache");
 
+function createlink($m, $y, $month, $year, $dmy, $room, $area, $text, $glyph)
+{
+	global $vocab, $type_month_all;
+	$tmp = mktime(0, 0, 0, ($month) + $m, 1, ($year) + $y);
+	$lastmonth = date("m", $tmp);
+	$lastyear = date("Y", $tmp);
+	if (($dmy != 'day') && ($dmy != 'week_all') && ($dmy != 'month_all') && ($dmy != 'month_all2'))
+		return "<div class=\"btn-group\"><button title=\"".htmlspecialchars(get_vocab($text))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='month.php?year=$lastyear&amp;month=$lastmonth&amp;day=1&amp;area=$this->area&amp;room=$room';\"><span class=\"glyphicon glyphicon-$glyph\"></span></button>\n";
+	else
+		return "<div class=\"btn-group\"><button title=\"".htmlspecialchars(get_vocab($text))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='".$type_month_all.".php?year=$lastyear&amp;month=$lastmonth&amp;day=1&amp;area=$area';\"><span class=\"glyphicon glyphicon-$glyph\"></span></button>\n";
+}
+
 function cal($month, $year)
 {
 	global $weekstarts;
@@ -1005,14 +1017,14 @@ function print_header($day = '', $month = '', $year = '', $type_session = 'with_
 			}
 			echo '</td>'.PHP_EOL.'</tr>'.PHP_EOL.'</table>'.PHP_EOL;
 			echo '</div></div><div class="tab">
-		<ul class="login">
-			<li>
-				<a id="open" class="open" href="#">Menu</span></a>
-			</li>
-		</ul>
-	</div> <!-- / top --></div>';
-		}
+			<ul class="login">
+				<li>
+					<a id="open" class="open" href="#">Menu</span></a>
+				</li>
+			</ul>
+		</div> <!-- / top --></div>';
 	}
+}
 }
 
 /**
@@ -3279,17 +3291,17 @@ function showAccessDenied($back)
 	else
 		$type_session = "with_session";
 	*/
-	?>
-	<h1><?php echo get_vocab("accessdenied")?></h1>
-	<p>
-		<?php echo get_vocab("norights")?>
-	</p>
-	<p>
-		<a href="<?php echo $back; ?>"><?php echo get_vocab("returnprev"); ?></a>
-	</p>
-</body>
-</html>
-<?php
+		?>
+		<h1><?php echo get_vocab("accessdenied")?></h1>
+		<p>
+			<?php echo get_vocab("norights")?>
+		</p>
+		<p>
+			<a href="<?php echo $back; ?>"><?php echo get_vocab("returnprev"); ?></a>
+		</p>
+	</body>
+	</html>
+	<?php
 }
 /* showNoReservation()
  *
