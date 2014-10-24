@@ -35,7 +35,7 @@ $grr_script_name = "admin_calend.php";
 $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
-check_access(5, $back);
+check_access(4, $back);
 // Initialisation
 $etape = isset($_POST["etape"]) ? $_POST["etape"] : NULL;
 $areas = isset($_POST["areas"]) ? $_POST["areas"] : NULL;
