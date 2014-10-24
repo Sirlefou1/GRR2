@@ -185,7 +185,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 				$date = mktime(12, 0, 0, $this->month, $temp, $this->year);
 				$week = numero_semaine($date);
 				$s .= "</td>\n";
-				$ret = $this->getNumber($weekstarts, $d, $daysInMonth, $s, $this->dmy, $this->day, $this->month, $this->year, $this->h);
+				$ret = $this->getNumber($weekstarts, $d, $daysInMonth);
 				$d = $ret[0];
 				$s .= $ret[1];
 				$s .= "</tr>\n";
