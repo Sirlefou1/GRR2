@@ -39,7 +39,7 @@ function cal($month, $year)
 	$daysInMonth = getDaysInMonth($month, $year);
 	$date = mktime(12, 0, 0, $month, 1, $year);
 	$first = (strftime("%w",$date) + 7 - $weekstarts) % 7;
-	$monthName = utf8_encode(strftime("%B", $date));
+	$monthName = ucfirst(utf8_encode(strftime("%B", $date)));
 	$s .= "<table class=\"calendar2\" border=\"1\" cellspacing=\"3\">\n";
 	$s .= "<tr>\n";
 	$s .= "<td class=\"calendarHeader2\" colspan=\"8\">$monthName $year</td>\n";

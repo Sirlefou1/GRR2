@@ -320,7 +320,7 @@ if ($etape == 3)
 	}
 
 	echo "</table>";
-	echo "<div id=\"fixe\"><input type=\"submit\" name=\"".get_vocab('save')."\" /></div>\n";
+	echo "<div id=\"fixe\"><input type=\"submit\" class=\"btn btn-primary\" name=\"".get_vocab('save')."\" /></div>\n";
 	echo "<div>\n<input type=\"hidden\" name=\"record\" value=\"yes\" />\n";
 	echo "<input type=\"hidden\" name=\"etape\" value=\"4\" />\n";
 	echo "<input type=\"hidden\" name=\"name\" value=\"".$name."\" />\n";
@@ -329,7 +329,7 @@ if ($etape == 3)
 	echo "<input type=\"hidden\" name=\"type_\" value=\"".$type_."\" />\n";
 	echo "<input type=\"hidden\" name=\"type_resa\" value=\"".$type_resa."\" />\n";
 	echo "</div>\n</form>";
-} 
+}
 
 else if ($etape == 2)
 {
@@ -401,7 +401,7 @@ else if ($etape == 2)
 	if ($type_resa == "resa")
 	{
 		echo "<tr><td class=\"CR\"><b>".ucfirst(trim(get_vocab("reservation au nom de"))).get_vocab("deux_points")."</b></td>\n\n";
-		echo "<td class=\"CL\"><select size=\"1\" name=\"beneficiaire\">\n";
+		echo "<td class=\"CL\"><select size=\"1\" name=\"beneficiaire\" class=\"form-control\">\n";
 		$sql = "SELECT DISTINCT login, nom, prenom FROM ".TABLE_PREFIX."_utilisateurs WHERE  (etat!='inactif' and statut!='visiteur' ) order by nom, prenom";
 		$res = grr_sql_query($sql);
 		if ($res)
@@ -416,17 +416,17 @@ else if ($etape == 2)
 		}
 		echo "</select></td>\n</tr>\n";
 		echo "<tr><td class=\"CR\"><b>".get_vocab("namebooker").get_vocab("deux_points")."</b></td>\n";
-		echo "<td class=\"CL\"><input name=\"name\" size=\"40\" value=\"\" /></td></tr>";
+		echo "<td class=\"CL\"><input class=\"form-control\" name=\"name\" size=\"40\" value=\"\" /></td></tr>";
 		echo "<tr><td class=\"TR\"><b>".get_vocab("fulldescription")."</b></td>\n";
-		echo "<td class=\"TL\"><textarea name=\"description\" rows=\"8\" cols=\"40\" ></textarea></td></tr>";
+		echo "<td class=\"TL\"><textarea class=\"form-control\" name=\"description\" rows=\"8\" cols=\"40\" ></textarea></td></tr>";
 	}
 	echo "<tr><td class=\"CR\"><b>".get_vocab("rooms").get_vocab("deux_points")."</b></td>\n";
 	echo "<td class=\"CL\" valign=\"top\"><table border=\"0\"><tr><td>";
-	echo "<select name=\"rooms[]\" multiple=\"multiple\">";
+	echo "<select name=\"rooms[]\" multiple class=\"form-control\">";
 	foreach ( $areas as $area_id )
 	{
 		# then select the rooms in that area
-		$sql = "select id, room_name from ".TABLE_PREFIX."_room where area_id=$area_id ";
+		$sql = "SELECT id, room_name FROM ".TABLE_PREFIX."_room WHERE area_id=$area_id ";
 		// tableau des ressources auxquelles l'utilisateur n'a pas accès
 		$tab_rooms_noaccess = verif_acces_ressource(getUserName(), 'all');
 		// on ne cherche pas parmi les ressources invisibles pour l'utilisateur
@@ -445,7 +445,7 @@ else if ($etape == 2)
 	if ($type_resa == "resa")
 	{
 		echo "<tr><td class=\"CR\"><b>".get_vocab("type").get_vocab("deux_points")."</b></td>\n";
-		echo "<td class=\"CL\"><select name=\"type_\">\n";
+		echo "<td class=\"CL\"><select name=\"type_\" class=\"form-control\">\n";
 		echo "<option value='0'>".get_vocab("choose")."</option>\n";
 		$sql = "SELECT t.type_name, t.type_letter FROM ".TABLE_PREFIX."_type_area t
 		LEFT JOIN ".TABLE_PREFIX."_j_type_area j on j.id_type=t.id
@@ -475,7 +475,7 @@ echo "</select></td></tr>";
 echo "</table>\n";
 echo "<div><input type=\"hidden\" name=\"etape\" value=\"3\" />\n";
 echo "<input type=\"hidden\" name=\"type_resa\" value=\"".$type_resa."\" />\n";
-echo "<input type=\"submit\" value=\"".get_vocab("next")."\" />";
+echo "<input type=\"submit\" class=\"btn btn-primary\" value=\"".get_vocab("next")."\" />";
 echo "</div></form>";
 }
 else if (!$etape)
@@ -487,7 +487,7 @@ else if (!$etape)
 	echo "<form action=\"admin_calend.php\" method=\"post\">\n";
 	echo "<table border=\"1\"><tr><td>\n";
 	echo "<p><b>".get_vocab("choix_domaines")."</b></p>";
-	echo "<select name=\"areas[]\" multiple=\"multiple\">\n";
+	echo "<select name=\"areas[]\" multiple=\"multiple\" class=\"form-control\">\n";
 	if (authGetUserLevel(getUserName(), -1) >= 2)
 		$sql = "SELECT id, area_name FROM ".TABLE_PREFIX."_area
 	ORDER BY order_display, area_name";
@@ -516,7 +516,7 @@ else if (!$etape)
 		echo "</tr></table>\n";
 		echo "</td></tr></table>\n";
 		echo "<div><input type=\"hidden\" name=\"etape\" value=\"2\" />\n";
-		echo "<br /><input type=\"submit\" name=\"Continuer\" value=\"".get_vocab("next")."\" />\n";
+		echo "<br /><input class=\"btn btn-primary\" type=\"submit\" name=\"Continuer\" value=\"".get_vocab("next")."\" />\n";
 		echo "</div></form>\n";
 	}
 // fin de l'affichage de la colonne de droite
