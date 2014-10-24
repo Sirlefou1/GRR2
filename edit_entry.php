@@ -662,15 +662,15 @@ echo '<form id="main" action="edit_entry_handler.php" method="get">'.PHP_EOL;
 		}
 	}
 </script>
-  <style type="text/css">
-        .input-group {
-            width: 110px;
-            margin-bottom: 10px;
-        }
-    </style>
+<style type="text/css">
+	.input-group {
+		width: 110px;
+		margin-bottom: 10px;
+	}
+</style>
 <?php
 echo '<table class="table-bordered EditEntryTable"><tr>'.PHP_EOL;
-echo '<td style="width:50%; vertical-align:top;">'.PHP_EOL;
+echo '<td style="width:50%; vertical-align:top; padding-left:15px; padding-top:5px; padding-bottom:5px;">'.PHP_EOL;
 echo '<table class="table-header">'.PHP_EOL;
 if (((authGetUserLevel(getUserName(), -1, "room") >= $qui_peut_reserver_pour) || (authGetUserLevel(getUserName(), $area, "area") >= $qui_peut_reserver_pour)) && (($id == 0) || (($id != 0) && (authGetUserLevel(getUserName(), $room) > 2) )))
 {
@@ -746,13 +746,13 @@ echo '<tr><td class="E">'.PHP_EOL;
 echo '<b>'.$B.'</b>'.PHP_EOL;
 echo '</td></tr>'.PHP_EOL;
 echo '<tr><td class="CL">'.PHP_EOL;
-echo '<input id="name" class="form-control" name="name" size="80" value="'.$C.'" />'.PHP_EOL;
+echo '<div class="col-xs-12"><input id="name" class="form-control" name="name" size="80" value="'.$C.'" /></div>'.PHP_EOL;
 echo '</td></tr>'.PHP_EOL;
 echo '<tr><td class="E">'.PHP_EOL;
 echo '<b>'.$D.'</b>'.PHP_EOL;
 echo '</td></tr>'.PHP_EOL;
 echo '<tr><td class="TL">'.PHP_EOL;
-echo '<textarea name="description" class="form-control" rows="2" cols="80">'.$E.'</textarea>'.PHP_EOL;
+echo '<div class="col-xs-12"><textarea name="description" class="form-control" rows="4">'.$E.'</textarea></div>'.PHP_EOL;
 echo '</td></tr>'.PHP_EOL;
 echo '<tr><td>'.PHP_EOL;
 echo '<div id="div_champs_add">'.PHP_EOL;
@@ -976,7 +976,7 @@ echo "<tr ";
 if ($nb_areas == 1)
 	echo "style=\"display:none\" ";
 echo "><td class=\"CL\" style=\"vertical-align:top;\" >\n";
-echo "<select class=\"form-control\" id=\"areas\" name=\"areas\" onchange=\"changeRooms(this.form);changeResolution(this.form);insertChampsAdd();insertTypes()\" >";
+echo "<div class=\"col-xs-3\"><select class=\"form-control\" id=\"areas\" name=\"areas\" onchange=\"changeRooms(this.form);changeResolution(this.form);insertChampsAdd();insertTypes()\" >";
 if ($enable_periods == 'y')
 	$sql = "SELECT id, area_name FROM ".TABLE_PREFIX."_area WHERE id='".$area."' ORDER BY area_name";
 else
@@ -995,7 +995,7 @@ if ($res)
 		}
 	}
 }
-echo "</select>\n";
+echo "</select></div\n";
 echo "</td></tr>\n";
 echo "\n<!-- ************* Ressources edition ***************** -->\n";
 echo "<tr><td class=\"E\"><b>".get_vocab("rooms").get_vocab("deux_points")."</b></td></tr>\n";
@@ -1008,7 +1008,7 @@ foreach ($tab_rooms_noaccess as $key)
 $sql .= " order by order_display,room_name";
 $res = grr_sql_query($sql);
 $len = grr_sql_count($res);
-echo "<tr><td class=\"CL\" style=\"vertical-align:top;\"><table border=\"0\"><tr><td><select name=\"rooms[]\" size=\"".min($longueur_liste_ressources_max,$len)."\" multiple class=\"form-control\">";
+echo "<tr><td class=\"CL\" style=\"vertical-align:top;\"><table border=\"0\"><tr><td><div class=\"col-xs-3\"><select name=\"rooms[]\" size=\"".min($longueur_liste_ressources_max,$len)."\" class=\"multiselect\" multiple=\"multiple\">";
 if ($res)
 {
 	for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
@@ -1018,7 +1018,7 @@ if ($res)
 		echo "<option $selected value=\"".$row[0]."\">".$row[1]."</option>\n";
 	}
 }
-echo "</select></td><td>".get_vocab("ctrl_click")."</td></tr></table>\n";
+echo "</select></div></td><td>".get_vocab("ctrl_click")."</td></tr></table>\n";
 echo "</td></tr>\n";
 echo "<tr><td><div id=\"div_types\">";
 echo "</div></td></tr>";
@@ -1239,6 +1239,11 @@ else
 			echo "<input type=\"hidden\" name=\"type_affichage_reser\" value=\"$type_affichage_reser\" />\n"; ?>
 		</div>
 	</form>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.multiselect').multiselect();
+		});
+	</script>
 	<script type="text/javascript" >
 		document.getElementById('main').name.focus();
 		<?php

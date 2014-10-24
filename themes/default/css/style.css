@@ -591,5 +591,6 @@
  	text-decoration: none;
  }
 
-
-
+.pad-15, .pad-15 tboby {
+	padding-left: 15px !important;
+}

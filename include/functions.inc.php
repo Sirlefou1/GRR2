@@ -805,6 +805,7 @@ function begin_page($title, $page="with_session")
 	$a .= '<link rel="stylesheet" type="text/css" href="js/uploadify/uploadify.css"/>'.PHP_EOL;
 	$a .= '<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />'.PHP_EOL;
 	$a .= '<link href="themes/default/css/jquery-ui-timepicker-addon.css" rel="stylesheet" type="text/css">'.PHP_EOL;
+	$a .= '<link href="themes/default/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css">'.PHP_EOL;
 	$a .= '<link rel="stylesheet" type="text/css" href="themes/default/css/bootstrap-clockpicker.min.css">'.PHP_EOL;
 	$a .= PHP_EOL.'<title>'.$title.'</title>';
 	$a .= PHP_EOL.'<meta http-equiv="Content-Type" content="text/html; charset=';
@@ -820,6 +821,7 @@ function begin_page($title, $page="with_session")
 	$a .= '<script src="js/jquery-ui-timepicker-addon.js"></script>'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="js/bootstrap-clockpicker.js"></script>'.PHP_EOL;
+	$a .= '<script type="text/javascript" src="js/bootstrap-multiselect.js"></script>'.PHP_EOL;
 	$a .= '<script src="js/menu.js"></script>'.PHP_EOL;
 	$a .= '<script src="js/jspdf/jspdf.js"></script>'.PHP_EOL;
 	$a .= '<script src="js/jspdf/libs/FileSaver.js/FileSaver.js"></script>'.PHP_EOL;
