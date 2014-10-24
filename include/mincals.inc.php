@@ -206,7 +206,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 	if ($nb_calendar >= 1)
 	{
 		$month_ = array();
-		$milieu = ($nb_calendar % 2 == 1) ? $nb_calendar + 1) / 2 : $nb_calendar / 2;
+		$milieu = ($nb_calendar % 2 == 1) ? ($nb_calendar + 1) / 2 : $nb_calendar / 2;
 		/**
 		 * if ($nb_calendar % 2 == 1)
 		 *	 $milieu = ($nb_calendar + 1) / 2;
