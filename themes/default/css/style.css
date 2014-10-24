@@ -537,6 +537,9 @@
 .tab ul.login {
 	background-color: #FFF;
 	border-radius: 0px 0px 10px 10px;
+	border-bottom: 1px solid #5c2862;
+	border-left: 1px solid #5c2862;
+	border-right: 1px solid #5c2862;
 	display: block;
 	position: relative;
   	float: right;
@@ -573,6 +576,7 @@
     width: 100%;
     z-index: 999;
     text-align: center;
+    border-bottom: 1px solid #5c2862;
 }
 
 #panel {
