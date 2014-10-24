@@ -77,12 +77,10 @@
  {
  	background-color : white;
  	width : 32%;
- 	border : 0px solid red;
  }
  .administration {
  	background-color : white;
  	width : 20%;
- 	border : 0px solid red;
  	text-align: center;
  	margin: 0 auto;
  }
@@ -91,14 +89,12 @@
  	width : 20% ;
  	vertical-align: middle;
  	text-align: center;
- 	border : 0px solid red;
  }
  .contactformulaire {
  	background-color : white;
  	width : 20% ;
  	vertical-align: middle;
  	text-align: center;
- 	border : 0px solid red;
  }
  #menuGauche {
  	background-color:#5c2862;
@@ -154,7 +150,7 @@
  	width:80px ;
  }
  .dayBoutonJourApres{
- 	*/width:125px;*/
+ 	width:125px;
  }
  a.calendar{
  	display:block;

@@ -1000,9 +1000,8 @@ function print_header($day = '', $month = '', $year = '', $type_session = 'with_
 			echo '</td>'.PHP_EOL.'</tr>'.PHP_EOL.'</table>'.PHP_EOL;
 			echo '</div></div><div class="tab">
 		<ul class="login">
-			<li id="toggle">
-				<a id="close1" class="close1" href="#">Fermer</a>
-				<a id="open" style="display: none;" class="open" href="#">Ouvrir</a>
+			<li>
+				<a id="open" class="open" href="#">Menu</a>
 			</li>
 		</ul>
 	</div> <!-- / top --></div>';
