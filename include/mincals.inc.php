@@ -87,24 +87,19 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 		function getHTML()
 		{
 			global $weekstarts, $vocab, $type_month_all, $display_day, $nb_display_day;
-			// Calcul de la date courante
 			$date_today = mktime(12, 0, 0, $this->month, $this->day, $this->year);
-			// Calcul du numéro de semaine courante
 			$week_today = numero_semaine($date_today);
 			if (!isset($weekstarts))
 				$weekstarts = 0;
 			$s = "";
 			$daysInMonth = getDaysInMonth($this->month, $this->year);
-			// Calcul de la date au 1er du mois de la date courante
 			$date = mktime(12, 0, 0, $this->month, 1, $this->year);
 			$first = (strftime("%w",$date) + 7 - $weekstarts) % 7;
 			$monthName = utf8_strftime("%B", $date);
 			$s .= "\n<table class=\"calendar\">\n";
 			$s .= "<caption>";
-			//Permet de récupérer le numéro de la 1ere semaine affichée par le mini calendrier.
 			$week = numero_semaine($date);
 			$weekd = $week;
-			// on ajoute un lien vers l''année précédente
 			if ($this->mois_precedent == 1)
 			{
 				$tmp = mktime(0, 0, 0, ($this->month), 1, ($this->year) - 1);
@@ -122,12 +117,10 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 				else
 					$s .= "<button title=\"".htmlspecialchars(get_vocab("see_month_for_this_room"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='".$type_month_all.".php?year=$lastyear&amp;month=$lastmonth&amp;day=1&amp;area=$this->area';\"><span class=\"glyphicon glyphicon-chevron-left\"></span></button>\n";
 			}
-			//Lien du mois acutel
 			if (($this->dmy != 'day') && ($this->dmy != 'week_all') && ($this->dmy != 'month_all') && ($this->dmy != 'month_all2'))
 				$s .= "<button title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_month"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='month.php?year=$this->year&amp;month=$this->month&amp;day=1&amp;area=$this->area&amp;room=$this->room';\">$monthName $this->year</button>\n";
 			else
 				$s .= "<button title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_month"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='".$type_month_all.".php?year=$this->year&amp;month=$this->month&amp;day=1&amp;area=$this->area';\">$monthName $this->year</button>\n";
-			// on ajoute un lien vers le mois suivant
 			if ($this->mois_suivant == 1)
 			{
 				$tmp = mktime(0, 0, 0, ($this->month) + 1, 1, $this->year);
@@ -145,7 +138,6 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 				else
 					$s .= "<button title=\"".htmlspecialchars(get_vocab("following_year"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='".$type_month_all.".php?year=$nextyear&amp;month=$nextmonth&amp;day=1&amp;area=$this->area';\"><span class=\"glyphicon glyphicon-forward\"></span></button></div>\n";
 			}
-			//Hugo - Variable qui permet de rester dans la meme room au changement de salle
 			$action = $_SERVER['PHP_SELF']."?year=".date('Y',time())."&amp;month=".date('m',time())."&amp;day=".date('d',time());
 			if (isset($_GET['area']) && $_GET['area'] != null)
 				$action .= "&amp;area=".$_GET['area'] ;
@@ -167,7 +159,6 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 				else
 					$bg_lign = '';
 				$s .= "<tr ".$bg_lign."><td class=\"calendarcol1 lienSemaine\">";
-				#Affichage du numéro de la semaine en cours à droite du calendrier et génère un lien sur la semaine voulue.
 				if (($this->dmy != 'day') && ($this->dmy != 'week_all') && ($this->dmy != 'month_all') && ($this->dmy != 'month_all2'))
 					$s .="<a onclick=\"charger();\" title=\"".htmlspecialchars(get_vocab("see_week_for_this_room"))."\" href=\"week.php?year=$this->year&amp;month=$this->month&amp;day=$temp&amp;area=$this->area&amp;room=$this->room\">".sprintf("%02d",$week)."</a>";
 				else
@@ -175,7 +166,6 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 				$temp = $temp + 7;
 				while ((!checkdate($this->month, $temp, $this->year)) && ($temp > 0))
 					$temp--;
-				#Nouveau affichage, affiche le numéro de la semaine dans l'année.Incrémentation de ce numéro à chaque nouvelle semaine.
 				$date = mktime(12, 0, 0, $this->month, $temp, $this->year);
 				$week = numero_semaine($date);
 				$s .= "</td>\n";
@@ -184,7 +174,6 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 					$j = ($i + 7 + $weekstarts) % 7;
 					if ($display_day[$j] == "1")
 					{
-						// début condition "on n'affiche pas tous les jours de la semaine"
 						if (($this->dmy == 'day') && ($d == $this->day) && ($this->h))
 							$s .= "<td class=\"week\">";
 						else
@@ -194,7 +183,6 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 							$link = $this->getDateLink($d, $this->month, $this->year);
 							if ($link == "")
 								$s .= $d;
-							#Permet de colorer la date affichée sur la page
 							elseif (($d == $this->day) && ($this->h))
 								$s .= $link."><span class=\"cal_current_day\">$d</span></a>";
 							else
@@ -204,7 +192,6 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 							$s .= " ";
 						$s .= "</td>\n";
 					}
-					// fin condition "on n'affiche pas tous les jours de la semaine"
 					$d++;
 				}
 				$s .= "</tr>\n";
@@ -219,16 +206,16 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 	if ($nb_calendar >= 1)
 	{
 		$month_ = array();
-		if ($nb_calendar % 2 == 1)
-			$milieu = ($nb_calendar + 1) / 2;
-		else
-			$milieu = $nb_calendar / 2;
-		// Les mois avant le mois courant
+		$milieu = ($nb_calendar % 2 == 1) ? $nb_calendar + 1) / 2 : $nb_calendar / 2;
+		/**
+		 * if ($nb_calendar % 2 == 1)
+		 *	 $milieu = ($nb_calendar + 1) / 2;
+		 * else
+		 *	 $milieu = $nb_calendar / 2;
+		 */
 		for ($k = 1; $k < $milieu; $k++)
 			$month_[] = mktime(0, 0, 0, $month + $k - $milieu, 1, $year);
-		// Le mois courant
 		$month_[] = mktime(0, 0, 0, $month, $day, $year);
-		// Les mois après le mois courant
 		for ($k = $milieu; $k < $nb_calendar; $k++)
 			$month_[] = mktime(0, 0, 0, $month + $k - $milieu + 1, 1, $year);
 		$ind = 1;
