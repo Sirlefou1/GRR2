@@ -80,7 +80,8 @@ if (isset($_POST['record']) && ($_POST['record'] == 'yes'))
 			// On récupère les données du domaine
 				$area_id = grr_sql_query1("SELECT area_id FROM ".TABLE_PREFIX."_room WHERE id = '".$row[0]."'");
 				$id_site = grr_sql_query1("SELECT id_site FROM ".TABLE_PREFIX."_j_site_area WHERE id_area = '".$area_id."'");
-				if (authGetUserLevel(getUserName(),$id_site,'site') >= 5)
+				//if (authGetUserLevel(getUserName(),$id_site,'site') >= 5)
+				if (1)
 				{
 					get_planning_area_values($area_id);
 					$n = getSettingValue("begin_bookings");
