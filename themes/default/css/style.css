@@ -545,13 +545,13 @@
  	border-left: 1px solid #5c2862;
  	border-right: 1px solid #5c2862;
  	display: block;
- 	position: relative;
- 	float: right;
- 	clear: right;
+ 	position: absolute;
+ 	float: right  !important;
+ 	clear: right  !important;
  	height: 42px;
  	width: auto;
  	font-weight: bold;
- 	right: 150px;
+ 	right: 250px;
  	text-align: center;
  }
 
