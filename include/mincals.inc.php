@@ -113,29 +113,23 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 			$s .= "<caption>";
 			$week = numero_semaine($date);
 			$weekd = $week;
-			if ($this->mois_precedent == 1)
-			{
-				$s .= "<div class=\"btn-group\">";
-				$s .= $this->createlink(0, -1, $this->month, $this->year, $this->dmy, $this->room, $this->area, "previous_year", "backward");
-				$s .= $this->createlink(-1, 0, $this->month, $this->year, $this->dmy, $this->room, $this->area, "see_month_for_this_room", "chevron-left");
-				}
+			$s .= "<div class=\"btn-group\">";
+			$s .= $this->createlink(0, -1, $this->month, $this->year, $this->dmy, $this->room, $this->area, "previous_year", "backward");
+			$s .= $this->createlink(-1, 0, $this->month, $this->year, $this->dmy, $this->room, $this->area, "see_month_for_this_room", "chevron-left");
 			if (($this->dmy != 'day') && ($this->dmy != 'week_all') && ($this->dmy != 'month_all') && ($this->dmy != 'month_all2'))
 				$s .= "<button title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_month"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='month.php?year=$this->year&amp;month=$this->month&amp;day=1&amp;area=$this->area&amp;room=$this->room';\">$monthName $this->year</button>\n";
 			else
 				$s .= "<button title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_month"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='".$type_month_all.".php?year=$this->year&amp;month=$this->month&amp;day=1&amp;area=$this->area';\">$monthName $this->year</button>\n";
-			if ($this->mois_suivant == 1)
-			{
-				$s .= $this->createlink(1, 0, $this->month, $this->year, $this->dmy, $this->room, $this->area, "see_month_for_this_room", "chevron-right");
-				$s .= $this->createlink(0, 1, $this->month, $this->year, $this->dmy, $this->room, $this->area, "following_year", "forward");
-				$s .= "</div>";
-			}
+			$s .= $this->createlink(1, 0, $this->month, $this->year, $this->dmy, $this->room, $this->area, "see_month_for_this_room", "chevron-right");
+			$s .= $this->createlink(0, 1, $this->month, $this->year, $this->dmy, $this->room, $this->area, "following_year", "forward");
+			$s .= "</div>";
 			$action = $_SERVER['PHP_SELF']."?year=".date('Y',time())."&amp;month=".date('m',time())."&amp;day=".date('d',time());
-			if (isset($_GET['area']) && $_GET['area'] != null)
+			/*if (isset($_GET['area']) && $_GET['area'] != null)
 				$action .= "&amp;area=".$_GET['area'] ;
 			if (isset($_GET['room']) && $_GET['room'] != null)
 				$action .= "&amp;room=".$_GET['room'] ;
 			if (isset($_GET['id_site']) && $_GET['id_site'] != null)
-				$action .= "&amp;site=".$_GET['id_site'] ;
+				$action .= "&amp;site=".$_GET['id_site'] ;*/
 			$s.= "<br/><button title=\"".htmlspecialchars(get_vocab("gototoday"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='".$action."';\">".get_vocab("gototoday")."</button>";
 			$s .= "</caption>";
 			$s .= "<tr><td class=\"calendarcol1\">".get_vocab("semaine")."</td>\n";
@@ -193,6 +187,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 			return $s;
 		}
 	}
+
 	$nb_calendar = getSettingValue("nb_calendar");
 	if ($nb_calendar >= 1)
 	{
