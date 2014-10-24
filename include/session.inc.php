@@ -243,11 +243,11 @@ function grr_opensession($_login, $_password, $_user_ext_authentifie = '', $tab_
 									if (isset($val[getSettingValue("ldap_champ_nom")][0]))
 										$l_nom = ucfirst($val[getSettingValue("ldap_champ_nom")][0]);
 									else
-										$l_nom=iconv("ISO-8859-1","utf-8","Nom à préciser");
+										$l_nom = iconv("ISO-8859-1","utf-8","Nom à préciser");
 									if (isset($val[getSettingValue("ldap_champ_prenom")][0]))
 										$l_prenom = ucfirst($val[getSettingValue("ldap_champ_prenom")][0]);
 									else
-										$l_prenom=iconv("ISO-8859-1","utf-8","Prénom à préciser");
+										$l_prenom = iconv("ISO-8859-1","utf-8","Prénom à préciser");
 									if (isset($val[getSettingValue("ldap_champ_email")][0]))
 										$l_email = $val[getSettingValue("ldap_champ_email")][0];
 									else
@@ -456,6 +456,9 @@ if ($auth_ldap == 'yes')
 		// Lire les infos sur l'utilisateur depuis LDAP
 		$user_info = grr_getinfo_ldap($user_dn,$_login,$_password);
 		// Update GRR database
+		$user_info[0] = utf8_encode($user_info[0]);
+		$user_info[1] = utf8_encode($user_info[1]);
+		$user_info[2] = utf8_encode($user_info[2]);
 		$sql2 = "UPDATE ".TABLE_PREFIX."_utilisateurs SET
 		nom='".protect_data_sql($user_info[0])."',
 		prenom='".protect_data_sql($user_info[1])."',
@@ -478,6 +481,9 @@ if ($auth_ldap == 'yes')
 			return "3";
 		else
 		{
+			$user_info[0] = utf8_encode($user_info[0]);
+			$user_info[1] = utf8_encode($user_info[1]);
+			$user_info[2] = utf8_encode($user_info[2]);
 			// On insère le nouvel utilisateur
 			$sql = "INSERT INTO ".TABLE_PREFIX."_utilisateurs SET
 			nom='".protect_data_sql($user_info[0])."',
