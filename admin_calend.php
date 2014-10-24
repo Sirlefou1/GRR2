@@ -497,8 +497,13 @@ else if (!$etape)
 	ORDER BY a.order_display, a.area_name";
 	$res = grr_sql_query($sql);
 	if ($res)
+	{
 		for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
+		{
+			if (authUserAccesArea(getUserName(),$row[0]) == 1)
 			echo "<option value=\"".$row[0]."\">".$row[1]."</option>\n";
+		}
+	}
 		echo "</select><br />".get_vocab("ctrl_click");
 		echo "</td><td>";
 		echo "<p><b>".get_vocab("choix_action")."</b></p>";
