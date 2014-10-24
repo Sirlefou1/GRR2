@@ -30,18 +30,6 @@
  */
 header("Cache-Control:no-cache");
 
-function createlink($m, $y, $month, $year, $dmy, $room, $area, $text, $glyph)
-{
-	global $vocab, $type_month_all;
-	$tmp = mktime(0, 0, 0, ($month) + $m, 1, ($year) + $y);
-	$lastmonth = date("m", $tmp);
-	$lastyear = date("Y", $tmp);
-	if (($dmy != 'day') && ($dmy != 'week_all') && ($dmy != 'month_all') && ($dmy != 'month_all2'))
-		return "<div class=\"btn-group\"><button title=\"".htmlspecialchars(get_vocab($text))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='month.php?year=$lastyear&amp;month=$lastmonth&amp;day=1&amp;area=$this->area&amp;room=$room';\"><span class=\"glyphicon glyphicon-$glyph\"></span></button>\n";
-	else
-		return "<div class=\"btn-group\"><button title=\"".htmlspecialchars(get_vocab($text))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='".$type_month_all.".php?year=$lastyear&amp;month=$lastmonth&amp;day=1&amp;area=$area';\"><span class=\"glyphicon glyphicon-$glyph\"></span></button>\n";
-}
-
 function cal($month, $year)
 {
 	global $weekstarts;
