@@ -97,6 +97,37 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 				return "<button title=\"".htmlspecialchars(get_vocab($text))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='".$type_month_all.".php?year=$lastyear&amp;month=$lastmonth&amp;day=1&amp;area=$area';\"><span class=\"glyphicon glyphicon-$glyph\"></span></button>\n";
 		}
 
+		function getNumber($weekstarts, $d, $daysInMonth)
+		{
+			global $display_day;
+			$s = '';
+			for ($i = 0; $i < 7; $i++)
+			{
+				$j = ($i + 7 + $weekstarts) % 7;
+				if ($display_day[$j] == "1")
+				{
+					if (($this->dmy == 'day') && ($d == $this->day) && ($this->h))
+						$s .= "<td class=\"week\">";
+					else
+						$s .= "<td class=\"cellcalendar\">";
+					if ($d > 0 && $d <= $daysInMonth)
+					{
+						$link = $this->getDateLink($d, $this->month, $this->year);
+						if ($link == "")
+							$s .= $d;
+						elseif (($d == $this->day) && ($this->h))
+							$s .= $link."><span class=\"cal_current_day\">$d</span></a>";
+						else
+							$s .= $link.">$d</a>";
+					}
+					else
+						$s .= " ";
+					$s .= "</td>\n";
+				}
+				$d++;
+			}
+			return array($d, $s);
+		}
 		function getHTML()
 		{
 			global $weekstarts, $vocab, $type_month_all, $display_day, $nb_display_day;
@@ -124,12 +155,12 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 			$s .= $this->createlink(0, 1, $this->month, $this->year, $this->dmy, $this->room, $this->area, "following_year", "forward");
 			$s .= "</div>";
 			$action = $_SERVER['PHP_SELF']."?year=".date('Y',time())."&amp;month=".date('m',time())."&amp;day=".date('d',time());
-			/*if (isset($_GET['area']) && $_GET['area'] != null)
+			if (isset($_GET['area']) && $_GET['area'] != null)
 				$action .= "&amp;area=".$_GET['area'] ;
 			if (isset($_GET['room']) && $_GET['room'] != null)
 				$action .= "&amp;room=".$_GET['room'] ;
 			if (isset($_GET['id_site']) && $_GET['id_site'] != null)
-				$action .= "&amp;site=".$_GET['id_site'] ;*/
+				$action .= "&amp;site=".$_GET['id_site'] ;
 			$s.= "<br/><button title=\"".htmlspecialchars(get_vocab("gototoday"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='".$action."';\">".get_vocab("gototoday")."</button>";
 			$s .= "</caption>";
 			$s .= "<tr><td class=\"calendarcol1\">".get_vocab("semaine")."</td>\n";
@@ -154,31 +185,9 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 				$date = mktime(12, 0, 0, $this->month, $temp, $this->year);
 				$week = numero_semaine($date);
 				$s .= "</td>\n";
-				for ($i = 0; $i < 7; $i++)
-				{
-					$j = ($i + 7 + $weekstarts) % 7;
-					if ($display_day[$j] == "1")
-					{
-						if (($this->dmy == 'day') && ($d == $this->day) && ($this->h))
-							$s .= "<td class=\"week\">";
-						else
-							$s .= "<td class=\"cellcalendar\">";
-						if ($d > 0 && $d <= $daysInMonth)
-						{
-							$link = $this->getDateLink($d, $this->month, $this->year);
-							if ($link == "")
-								$s .= $d;
-							elseif (($d == $this->day) && ($this->h))
-								$s .= $link."><span class=\"cal_current_day\">$d</span></a>";
-							else
-								$s .= $link.">$d</a>";
-						}
-						else
-							$s .= " ";
-						$s .= "</td>\n";
-					}
-					$d++;
-				}
+				$ret = $this->getNumber($weekstarts, $d, $daysInMonth, $s, $this->dmy, $this->day, $this->month, $this->year, $this->h);
+				$d = $ret[0];
+				$s .= $ret[1];
 				$s .= "</tr>\n";
 			}
 			if ($week - $weekd < 6)
