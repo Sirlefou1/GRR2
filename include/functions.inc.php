@@ -787,6 +787,10 @@ function begin_page($title, $page="with_session")
 	}
 	global $vocab, $charset_html, $unicode_encoding, $clock_file;
 	header('Content-Type: text/html; charset=utf-8');
+	if (!isset($_COOKIE['open']))
+	{
+		setcookie("open", "true", time()+3600);
+	}
 	$a = '<!DOCTYPE html>'.PHP_EOL;
 	$a.= '<html>'.PHP_EOL.'<head>'.PHP_EOL.'<meta charset="utf-8">'.PHP_EOL.'<link rel="stylesheet" href="'.$sheetcss.'" type="text/css" />'.PHP_EOL;
 	$a.= '<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css" />'.PHP_EOL;
@@ -1001,7 +1005,7 @@ function print_header($day = '', $month = '', $year = '', $type_session = 'with_
 			echo '</div></div><div class="tab">
 		<ul class="login">
 			<li>
-				<a id="open" class="open" href="#">Menu</a>
+				<a id="open" class="open" href="#">Menu</span></a>
 			</li>
 		</ul>
 	</div> <!-- / top --></div>';
