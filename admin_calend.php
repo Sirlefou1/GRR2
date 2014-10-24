@@ -93,7 +93,7 @@ if (isset($_POST['record']) && ($_POST['record'] == 'yes'))
 						$day = 1;
 						while ($day <= $daysInMonth)
 						{
-							$n = mktime(0,0,0,$month,$day,$year);
+							$n = mktime(0, 0, 0, $month, $day, $year);
 							if (isset($_POST[$n]))
 							{
 								$erreur = 'n';
@@ -476,7 +476,7 @@ echo "<div><input type=\"hidden\" name=\"etape\" value=\"3\" />\n";
 echo "<input type=\"hidden\" name=\"type_resa\" value=\"".$type_resa."\" />\n";
 echo "<input type=\"submit\" value=\"".get_vocab("next")."\" />";
 echo "</div></form>";
-} 
+}
 else if (!$etape)
 {
 	// Etape 1 :
@@ -487,13 +487,13 @@ else if (!$etape)
 	echo "<table border=\"1\"><tr><td>\n";
 	echo "<p><b>".get_vocab("choix_domaines")."</b></p>";
 	echo "<select name=\"areas[]\" multiple=\"multiple\">\n";
-	if (authGetUserLevel(getUserName(), -1) >= 6)
-		$sql = "select id, area_name from ".TABLE_PREFIX."_area
-	order by order_display, area_name";
+	if (authGetUserLevel(getUserName(), -1) >= 2)
+		$sql = "SELECT id, area_name FROM ".TABLE_PREFIX."_area
+	ORDER BY order_display, area_name";
 	else
-		$sql = "select a.id, a.area_name from ".TABLE_PREFIX."_area a, ".TABLE_PREFIX."_j_site_area j, ".TABLE_PREFIX."_site s, ".TABLE_PREFIX."_j_useradmin_site u
+		$sql = "SELECT a.id, a.area_name FROM ".TABLE_PREFIX."_area a, ".TABLE_PREFIX."_j_site_area j, ".TABLE_PREFIX."_site s, ".TABLE_PREFIX."_j_useradmin_site u
 	WHERE a.id=j.id_area and j.id_site = s.id and s.id=u.id_site and u.login='".getUserName()."'
-	order by a.order_display, a.area_name";
+	ORDER BY a.order_display, a.area_name";
 	$res = grr_sql_query($sql);
 	if ($res)
 		for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)

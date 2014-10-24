@@ -115,7 +115,7 @@ echo "<table border=\"0\" cellspacing=\"4\" cellpadding=\"4\">";
 			$liste[] = 'admin_email_manager.php';
 		if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
 			$liste[] = 'admin_view_connexions.php';
-		if (authGetUserLevel(getUserName(), -1, 'area') >= 5)
+		if (authGetUserLevel(getUserName(), -1, 'area') >= 4)
 			$liste[] = 'admin_calend.php';
 		if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
 			$liste[] = 'admin_maj.php';
