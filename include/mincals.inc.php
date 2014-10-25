@@ -67,6 +67,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 		/**
 		 * @param integer $day
 		 * @param double $month
+		 * @param string $year
 		 */
 		function getDateLink($day, $month, $year)
 		{
@@ -85,6 +86,14 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 			}
 		}
 
+		/**
+		 * @param integer $m
+		 * @param integer $y
+		 * @param string $month
+		 * @param string $year
+		 * @param string $text
+		 * @param string $glyph
+		 */
 		function createlink($m, $y, $month, $year, $dmy, $room, $area, $text, $glyph)
 		{
 			global $vocab, $type_month_all;
@@ -129,6 +138,14 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 			return array($d, $s);
 		}
 
+		/**
+		 * @param integer $d
+		 * @param integer $daysInMonth
+		 * @param string $week_today
+		 * @param string $week
+		 * @param integer $temp
+		 * @return string $s
+		 */
 		function DayOfMonth($d, $daysInMonth, $week_today, $week, $temp)
 		{
 			global $weekstarts;
@@ -155,6 +172,18 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 				$s .= "</tr>\n";
 			}
 			return $s;
+		}
+
+		function GetAction()
+		{
+			$action = $_SERVER['PHP_SELF']."?year=".date('Y',time())."&amp;month=".date('m',time())."&amp;day=".date('d',time());
+			if (isset($_GET['area']) && $_GET['area'] != null)
+				$action .= "&amp;area=".$_GET['area'] ;
+			if (isset($_GET['room']) && $_GET['room'] != null)
+				$action .= "&amp;room=".$_GET['room'] ;
+			if (isset($_GET['id_site']) && $_GET['id_site'] != null)
+				$action .= "&amp;site=".$_GET['id_site'] ;
+			return $action;
 		}
 
 
@@ -184,13 +213,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 			$s .= $this->createlink(1, 0, $this->month, $this->year, $this->dmy, $this->room, $this->area, "see_month_for_this_room", "chevron-right");
 			$s .= $this->createlink(0, 1, $this->month, $this->year, $this->dmy, $this->room, $this->area, "following_year", "forward");
 			$s .= "</div>";
-			$action = $_SERVER['PHP_SELF']."?year=".date('Y',time())."&amp;month=".date('m',time())."&amp;day=".date('d',time());
-			if (isset($_GET['area']) && $_GET['area'] != null)
-				$action .= "&amp;area=".$_GET['area'] ;
-			if (isset($_GET['room']) && $_GET['room'] != null)
-				$action .= "&amp;room=".$_GET['room'] ;
-			if (isset($_GET['id_site']) && $_GET['id_site'] != null)
-				$action .= "&amp;site=".$_GET['id_site'] ;
+			$action = $this->GetAction();
 			$s .= "<br/><button title=\"".htmlspecialchars(get_vocab("gototoday"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='".$action."';\">".get_vocab("gototoday")."</button>";
 			$s .= "</caption>";
 			$s .= "<tr><td class=\"calendarcol1\">".get_vocab("semaine")."</td>\n";
