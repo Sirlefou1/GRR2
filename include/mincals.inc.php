@@ -128,6 +128,37 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 			}
 			return array($d, $s);
 		}
+
+		function DayOfMonth($d, $daysInMonth, $week_today, $week, $temp)
+		{
+			global $weekstarts;
+			$s = '';
+			while ($d <= $daysInMonth)
+			{
+				if (($week_today == $week) && ($this->h) && (($this->dmy == 'week_all') || ($this->dmy == 'week')))
+					$bg_lign = " class=\"week\"";
+				else
+					$bg_lign = '';
+				$s .= "<tr ".$bg_lign."><td class=\"calendarcol1 lienSemaine\">";
+				if (($this->dmy != 'day') && ($this->dmy != 'week_all') && ($this->dmy != 'month_all') && ($this->dmy != 'month_all2'))
+					$s .="<a onclick=\"charger();\" title=\"".htmlspecialchars(get_vocab("see_week_for_this_room"))."\" href=\"week.php?year=$this->year&amp;month=$this->month&amp;day=$temp&amp;area=$this->area&amp;room=$this->room\">".sprintf("%02d",$week)."</a>";
+				else
+					$s .="<a onclick=\"charger();\" title=\"".htmlspecialchars(get_vocab("see_week_for_this_area"))."\" href=\"week_all.php?year=$this->year&amp;month=$this->month&amp;day=$temp&amp;area=$this->area\">".sprintf("%02d",$week)."</a>";
+				$temp = $temp + 7;
+				while ((!checkdate($this->month, $temp, $this->year)) && ($temp > 0))
+					$temp--;
+				$date = mktime(12, 0, 0, $this->month, $temp, $this->year);
+				$week = numero_semaine($date);
+				$s .= "</td>\n";
+				$ret = $this->getNumber($weekstarts, $d, $daysInMonth);
+				$d = $ret[0];
+				$s .= $ret[1];
+				$s .= "</tr>\n";
+			}
+			return $s;
+		}
+
+
 		function getHTML()
 		{
 			global $weekstarts, $vocab, $type_month_all, $display_day, $nb_display_day;
@@ -168,28 +199,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 			$s .= "</tr>\n";
 			$d = 1 - $first;
 			$temp = 1;
-			while ($d <= $daysInMonth)
-			{
-				if (($week_today == $week) && ($this->h) && (($this->dmy == 'week_all') || ($this->dmy == 'week')))
-					$bg_lign = " class=\"week\"";
-				else
-					$bg_lign = '';
-				$s .= "<tr ".$bg_lign."><td class=\"calendarcol1 lienSemaine\">";
-				if (($this->dmy != 'day') && ($this->dmy != 'week_all') && ($this->dmy != 'month_all') && ($this->dmy != 'month_all2'))
-					$s .="<a onclick=\"charger();\" title=\"".htmlspecialchars(get_vocab("see_week_for_this_room"))."\" href=\"week.php?year=$this->year&amp;month=$this->month&amp;day=$temp&amp;area=$this->area&amp;room=$this->room\">".sprintf("%02d",$week)."</a>";
-				else
-					$s .="<a onclick=\"charger();\" title=\"".htmlspecialchars(get_vocab("see_week_for_this_area"))."\" href=\"week_all.php?year=$this->year&amp;month=$this->month&amp;day=$temp&amp;area=$this->area\">".sprintf("%02d",$week)."</a>";
-				$temp = $temp + 7;
-				while ((!checkdate($this->month, $temp, $this->year)) && ($temp > 0))
-					$temp--;
-				$date = mktime(12, 0, 0, $this->month, $temp, $this->year);
-				$week = numero_semaine($date);
-				$s .= "</td>\n";
-				$ret = $this->getNumber($weekstarts, $d, $daysInMonth);
-				$d = $ret[0];
-				$s .= $ret[1];
-				$s .= "</tr>\n";
-			}
+			$s .= $this->DayOfMonth($d, $daysInMonth, $week_today, $week, $temp);
 			if ($week - $weekd < 6)
 				$s .= "";
 			$s .= "</table>\n";
