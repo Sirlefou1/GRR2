@@ -135,15 +135,14 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 			$s = '';
 			while ($d <= $daysInMonth)
 			{
+				$bg_lign = '';
 				if (($week_today == $week) && ($this->h) && (($this->dmy == 'week_all') || ($this->dmy == 'week')))
 					$bg_lign = " class=\"week\"";
-				else
-					$bg_lign = '';
 				$s .= "<tr ".$bg_lign."><td class=\"calendarcol1 lienSemaine\">";
+				$t = "<a onclick=\"charger();\" title=\"".htmlspecialchars(get_vocab("see_week_for_this_area"))."\" href=\"week_all.php?year=$this->year&amp;month=$this->month&amp;day=$temp&amp;area=$this->area\">".sprintf("%02d",$week)."</a>";
 				if (($this->dmy != 'day') && ($this->dmy != 'week_all') && ($this->dmy != 'month_all') && ($this->dmy != 'month_all2'))
-					$s .="<a onclick=\"charger();\" title=\"".htmlspecialchars(get_vocab("see_week_for_this_room"))."\" href=\"week.php?year=$this->year&amp;month=$this->month&amp;day=$temp&amp;area=$this->area&amp;room=$this->room\">".sprintf("%02d",$week)."</a>";
-				else
-					$s .="<a onclick=\"charger();\" title=\"".htmlspecialchars(get_vocab("see_week_for_this_area"))."\" href=\"week_all.php?year=$this->year&amp;month=$this->month&amp;day=$temp&amp;area=$this->area\">".sprintf("%02d",$week)."</a>";
+					$t = "<a onclick=\"charger();\" title=\"".htmlspecialchars(get_vocab("see_week_for_this_room"))."\" href=\"week.php?year=$this->year&amp;month=$this->month&amp;day=$temp&amp;area=$this->area&amp;room=$this->room\">".sprintf("%02d",$week)."</a>";
+				$s .= $t;
 				$temp = $temp + 7;
 				while ((!checkdate($this->month, $temp, $this->year)) && ($temp > 0))
 					$temp--;
@@ -192,7 +191,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 				$action .= "&amp;room=".$_GET['room'] ;
 			if (isset($_GET['id_site']) && $_GET['id_site'] != null)
 				$action .= "&amp;site=".$_GET['id_site'] ;
-			$s.= "<br/><button title=\"".htmlspecialchars(get_vocab("gototoday"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='".$action."';\">".get_vocab("gototoday")."</button>";
+			$s .= "<br/><button title=\"".htmlspecialchars(get_vocab("gototoday"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='".$action."';\">".get_vocab("gototoday")."</button>";
 			$s .= "</caption>";
 			$s .= "<tr><td class=\"calendarcol1\">".get_vocab("semaine")."</td>\n";
 			$s .= getFirstDays();
