@@ -470,3 +470,12 @@ else
 	affiche_pop_up(get_vocab("message_records"), "user");
 	echo "\n<div id=\"popup_name\" class=\"popup_block\" ></div>";
 	?>
+	<script type="text/javascript">
+	$(document).ready(function(){
+    $('table td').each(function(){
+        var $row = $(this);
+        var height = $row.height();
+        $row.find('a').css('height', height).append('&nbsp;');
+    });
+});
+	</script>
