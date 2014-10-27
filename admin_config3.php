@@ -196,7 +196,7 @@ echo "<form action=\"./admin_config.php\"  method=\"get\" style=\"width: 100%;\"
 // Automatic mail
 //********************************
 //
-echo "<h3>".get_vocab('title_automatic_mail').grr_help("aide_grr_mail_auto")."</h3>\n";
+echo "<h3>".get_vocab('title_automatic_mail')."</h3>\n";
 echo "<p><i>".get_vocab("warning_message_mail")."</i></p>\n";
 echo "<p>".get_vocab("explain_automatic_mail")."\n";
 ?>
@@ -291,7 +291,7 @@ echo "\n</table>";
 
 # tâche automatique de suppression
 echo "\n<hr /><h3>".get_vocab("suppression_automatique_des_reservations")."</h3>";
-echo "\n<p>".get_vocab('Explications suppression_automatique_des_reservations').grr_help("aide_grr_verif_auto_grr")."</p>";
+echo "\n<p>".get_vocab('Explications suppression_automatique_des_reservations')."</p>";
 echo "\n<table cellspacing=\"5\">";
 echo "\n<tr><td>".get_vocab("verif_reservation_auto0")."</td><td>";
 echo "\n<input type='radio' name='verif_reservation_auto' value='0' ";

@@ -281,7 +281,7 @@ if ((empty($id_area)) && (isset($row[0])))
 }
 if (empty($room))
 	$room = -1;
-echo "<h2>".get_vocab('admin_right.php').grr_help("aide_grr_gestion_ressources")."</h2>\n";
+echo "<h2>".get_vocab('admin_right.php')."</h2>\n";
 echo "<p><i>".get_vocab("admin_right_explain")."</i></p>\n";
 // Affichage d'un pop-up
 affiche_pop_up($msg,"admin");

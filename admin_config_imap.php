@@ -74,7 +74,7 @@ if ((authGetUserLevel(getUserName(),-1) < 5) && ($valid != 'yes'))
 print_header("", "", "", $type="with_session");
 // Affichage de la colonne de gauche
 include "admin_col_gauche.php";
-echo encode_message_utf8("<h2>Configuration de l'authentification IMAP/POP".grr_help("aide_grr_authentification_imap")."</h2>");
+echo encode_message_utf8("<h2>Configuration de l'authentification IMAP/POP"."</h2>");
 ?>
 <script type="text/javascript" src="./functions.js"></script>
 <?php

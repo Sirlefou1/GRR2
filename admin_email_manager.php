@@ -27,20 +27,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/**
- * $Log: admin_email_manager.php,v $
- * Revision 1.11  2009-04-14 12:59:17  grr
- * *** empty log message ***
- *
- * Revision 1.10  2009-04-09 14:52:31  grr
- * *** empty log message ***
- *
- * Revision 1.9  2009-02-27 13:28:19  grr
- * *** empty log message ***
- *
- *
- */
-
 include "include/admin.inc.php";
 $grr_script_name = "admin_email_manager.php";
 $id_area = isset($_GET["id_area"]) ? $_GET["id_area"] : NULL;
@@ -131,7 +117,7 @@ include "admin_col_gauche.php";
 affiche_pop_up($msg,"admin");
 if (empty($room))
 	$room = -1;
-echo "<h2>".get_vocab('admin_email_manager.php').grr_help("aide_grr_mail_auto")."</h2>\n";
+echo "<h2>".get_vocab('admin_email_manager.php')."</h2>\n";
 if (getSettingValue("automatic_mail") != 'yes')
 	echo "<h3 class=\"avertissement\">".get_vocab("attention_mail_automatique_désactive")."</h3>";
 echo get_vocab("explain_automatic_mail3")."<br /><br /><hr />\n";

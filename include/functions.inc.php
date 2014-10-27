@@ -486,42 +486,6 @@ function plages_libre_semaine_ressource($id_room, $month_week, $day_week, $year_
 	}
 	return $plage_libre ;
 }
-/*
-Arguments :
-$mot_clef : mot clé référencé dans la base de données de la documentation et permettant d'accéder au bon article
-$ancre : ancre à l'intérieur de l'article (facultatif)
-Renvoie une portion de code html correspondant à l'affichage d'une image indiquant la présence d'une aide
-Un lien sur l'image renvoie sur un article de la documentation sur le site http://grr.mutualibre.org/documentation
-*/
-/**
- * @param string $mot_clef
- * @return string
- */
-function grr_help($mot_clef, $ancre = "")
-{
-	// lien aide sur la page d'accueil
-	if ($mot_clef == "")
-	{
-		if (getSettingValue("gestion_lien_aide") == 'perso')
-		{
-			$tag_help = " <a href='javascript:centrerpopup(\"".getSettingValue("lien_aide")."\",800,480,\"scrollbars=yes,statusbar=no,resizable=yes\")'>".get_vocab("help")."</a>";
-			//$tag_help = " <a href='".getSettingValue("lien_aide")."' target='_blank'>".get_vocab("help")."</a>";
-		}
-		else
-		{
-			$tag_help = " <a href='javascript:centrerpopup(\"http://grr.mutualibre.org/documentation/index.php\",800,480,\"scrollbars=yes,statusbar=no,resizable=yes\")'>".get_vocab("help")."</a>";
-			//$tag_help = " <a href='http://grr.mutualibre.org/documentation/index.php' target='_blank'>".get_vocab("help")."</a>";
-		}
-	}
-	else
-	{
-		$tag_help = " <a href='javascript:centrerpopup(\"http://grr.mutualibre.org/documentation/index.php?mot_clef=".$mot_clef;
-			if ($ancre !="")
-				$tag_help .="&amp;ancre=".$ancre;
-			$tag_help .= "\",800,480,\"scrollbars=yes,statusbar=no,resizable=yes\")'><img src=\"img_grr/help.png\" alt=\"Help\" title=\"Help\" width=\"16\" height=\"16\" class=\"image\" /></a>";
-}
-return $tag_help;
-}
 /* Fonction spéciale SE3
  $grp : le nom du groupe
  $uid : l'uid de l'utilisateur
@@ -1335,12 +1299,29 @@ function genDateSelector($prefix, $day, $month, $year, $option)
 /**
  * @param integer $need_header
  */
-function fatal_error($need_header, $message)
+function fatal_error($need_header, $message, $show_form_data = true)
 {
 	global $vocab;
 	if ($need_header)
 		print_header(0, 0, 0, 0);
-	echo $message;
+	error_log("GRR: ".$message);
+
+  if ($show_form_data)
+  {
+    if (!empty($_GET))
+    {
+      error_log("GRR GET: ".print_r($_GET, true));
+    }
+    if (!empty($_POST))
+    {
+      error_log("GRR POST: ".print_r($_POST, true));
+    }
+  }
+  if (!empty($_SESSION))
+  {
+    error_log("GRR SESSION: ".print_r($_SESSION, true));
+  }
+  echo "<p>$message</p>";
 	include "trailer.inc.php";
 	exit;
 }

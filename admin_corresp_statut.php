@@ -98,7 +98,7 @@ include "admin_col_gauche.php";
 ?>
 <script src="./functions.js" type="text/javascript"></script>
 <?php
-echo "<h2>".get_vocab('admin_corresp_statut.php').grr_help("aide_grr_cas_attributs_ldap")."</h2>";
+echo "<h2>".get_vocab('admin_corresp_statut.php')."</h2>";
 echo get_vocab('admin_corresp_statut_desc');
 echo "<br />\n";
 echo "<br />\n";

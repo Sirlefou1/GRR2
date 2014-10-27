@@ -112,7 +112,7 @@ if ($action)
 			$msg = get_vocab("del_user_succeed");
 	}
 }
-echo "<h2>".get_vocab('admin_right_admin.php').grr_help("aide_grr_administateur_restreint")."</h2>\n";
+echo "<h2>".get_vocab('admin_right_admin.php')."</h2>\n";
 echo "<p><i>".get_vocab("admin_right_admin_explain")."</i></p>\n";
 // Affichage d'un pop-up
 affiche_pop_up($msg,"admin");

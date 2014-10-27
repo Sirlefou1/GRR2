@@ -47,7 +47,7 @@ $themessage = str_replace ( "'"  , "\\'"  , get_vocab("admin_purge_accounts_conf
 $themessage2 = str_replace ( "'"  , "\\'"  , get_vocab("admin_purge_accounts_confirm2"));
 $themessage3 = str_replace ( "'"  , "\\'"  , get_vocab("admin_purge_tables_confirm"));
 $themessage4 = str_replace ( "'"  , "\\'"  , get_vocab("admin_purge_accounts_confirm4"));
-echo "<h2>".get_vocab('admin_purge_accounts.php').grr_help("aide_grr_purge_accounts")."</h2>";
+echo "<h2>".get_vocab('admin_purge_accounts.php')."</h2>";
 echo get_vocab('admin_clean_accounts_desc');
 echo "<div style=\"text-align:center;\">\n
 <form id=\"purge_liaison\" action=\"admin_purge_accounts.php\" method=\"post\">\n

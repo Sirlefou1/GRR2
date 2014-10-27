@@ -27,6 +27,7 @@
 [ajout] bootstrap twitter pour l'apparence
 [ajout] fonction cle donne/rendu
 [ajout] fonction courrier recu
+[ajout] choix de reservation periodique chaque Xeme Yjour du mois
 [maj] lib Jquery 2.1.1
 [maj] script popup.js compatibilité jquery
 [maj] script appeldelete.js compatibilité jquery

@@ -201,7 +201,7 @@ if ((!grr_resumeSession()) && $valid != 'yes')
 					}
 					if ($etape == 3)
 					{
-						echo "<h2>".$titre_ldap.grr_help("aide_grr_configuration_LDAP")."</h2>\n";
+						echo "<h2>".$titre_ldap."</h2>\n";
 						echo "<h2>".encode_message_utf8("Enregistrement de la configuration.")."</h2>\n";
 						if (!$base_ldap)
 							$base_ldap = $base_ldap_autre;
@@ -289,7 +289,7 @@ if ((!grr_resumeSession()) && $valid != 'yes')
 					}
 					else if ($etape == 2)
 					{
-						echo "<h2>".$titre_ldap.grr_help("aide_grr_configuration_LDAP")."</h2>\n";
+						echo "<h2>".$titre_ldap."</h2>\n";
 						echo "<h2>".encode_message_utf8("Connexion à l'annuaire LDAP.")."</h2>\n";
 						// Connexion à l'annuaire
 						$ds = grr_connect_ldap($adresse,$port,$login_ldap,$pwd_ldap,$use_tls);
@@ -395,7 +395,7 @@ if ((!grr_resumeSession()) && $valid != 'yes')
 						}
 						else if (@file_exists("include/config_ldap.inc.php"))
 							include("include/config_ldap.inc.php");
-						echo encode_message_utf8("<h2>".$titre_ldap.grr_help("aide_grr_configuration_LDAP")."</h2>\n");
+						echo encode_message_utf8("<h2>".$titre_ldap."</h2>\n");
 						echo "<h2>".encode_message_utf8("Informations de connexion à l'annuaire LDAP.")."</h2>\n";
 						echo "<form action=\"admin_config_ldap.php\" method=\"post\">\n";
 						if ((!(isset($ldap_adresse))) || ($ldap_adresse == ""))
@@ -442,12 +442,12 @@ if ((!grr_resumeSession()) && $valid != 'yes')
 					{
 						if (!(function_exists("ldap_connect")))
 						{
-							echo encode_message_utf8("<h2>".$titre_ldap.grr_help("aide_grr_configuration_LDAP")."</h2>\n");
+							echo encode_message_utf8("<h2>".$titre_ldap."</h2>\n");
 							echo encode_message_utf8("<p class=\"avertissement\"><b>Attention </b> : les fonctions liées à l'authentification <b>LDAP</b> ne sont pas activées sur votre serveur PHP.
 								<br />La configuration LDAP est donc actuellement impossible.</p></td></tr></table></body></html>");
 							die();
 						}
-						echo encode_message_utf8("<h2>".$titre_ldap.grr_help("aide_grr_configuration_LDAP")."</h2>\n");
+						echo encode_message_utf8("<h2>".$titre_ldap."</h2>\n");
 						echo "<p>".encode_message_utf8("Si vous avez accès à un annuaire <b>LDAP</b>, vous pouvez configurer GRR afin que cet annuaire soit utilisé pour importer automatiquement des utilisateurs.")."</p>";
 						echo "<form action=\"admin_config_ldap.php\" method=\"post\">\n";
 						echo "<div>\n<input type=\"hidden\" name=\"etape\" value=\"0\" />\n";

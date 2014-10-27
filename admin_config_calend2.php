@@ -38,7 +38,7 @@ print_header("", "", "", $type="with_session");
 include "admin_col_gauche.php";
 // Affichage du tableau de choix des sous-configuration pour les Jours/Cycles (Créer et voir calendrier Jours/Cycle)
 include "include/admin_calend_jour_cycle.inc.php";
-echo "<h3>".get_vocab('calendrier_jours/cycles').grr_help("aide_grr_jours_cycle")."</h3>";
+echo "<h3>".get_vocab('calendrier_jours/cycles')."</h3>";
 if (isset($_POST['record']) && ($_POST['record'] == 'yes'))
 {
 	// On vide la table

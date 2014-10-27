@@ -136,7 +136,7 @@ if ($action=='del_user')
 
 if (empty($id_area))
 	$id_area = -1;
-echo "<h2>".get_vocab('admin_access_area.php').grr_help("aide_grr_domaine_restreint")."</h2>\n";
+echo "<h2>".get_vocab('admin_access_area.php')."</h2>\n";
 affiche_pop_up($msg,"admin");
 echo "<table><tr>\n";
 $this_area_name = "";

@@ -346,7 +346,6 @@ echo "<hr />\n";
 echo "<table cellspacing=\"5\">\n";
 echo "<tr><td>".get_vocab("max_booking")." ";
 echo " - ".get_vocab("all_rooms");
-echo grr_help("aide_grr_config_generale");
 echo "</td><td><input type=\"text\" name=\"UserAllRoomsMaxBooking\" value=\"".getSettingValue("UserAllRoomsMaxBooking")."\" size=\"5\"/></td></tr>\n";
 echo "</table>\n";
 echo "<p><input type=\"hidden\" name=\"page_config\" value=\"2\" />\n";

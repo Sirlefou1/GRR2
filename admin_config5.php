@@ -108,7 +108,7 @@ if (isset($_GET['ok']))
 include "admin_col_gauche.php";
 include "include/admin_config_tableau.inc.php";
 echo "<form action=\"./admin_config.php\"  method=\"get\" style=\"width: 100%;\" onsubmit=\"return verifierJoursCycles(false);\">\n";
-echo "<h3>".get_vocab("Activer_module_jours_cycles").grr_help("aide_grr_jours_cycle")."</h3>\n";
+echo "<h3>".get_vocab("Activer_module_jours_cycles")."</h3>\n";
 echo "<table border='0'>\n<tr>\n<td>\n";
 echo get_vocab("Activer_module_jours_cycles").get_vocab("deux_points");
 echo "<select name='jours_cycles'>\n";
@@ -123,7 +123,7 @@ else
 	echo "<option value=\"Non\" selected=\"selected\">".get_vocab('NO')."</option>\n";
 }
 echo "</select>\n</td>\n</tr>\n</table><hr />\n";
-echo "<h3>".get_vocab("Activer_module_multisite").grr_help("aide_grr_multisites")."</h3>\n";
+echo "<h3>".get_vocab("Activer_module_multisite")."</h3>\n";
 echo "<table border='0'>\n<tr>\n<td>\n";
 echo get_vocab("Activer_module_multisite").get_vocab("deux_points");
 echo "<select name='module_multisite'>\n";

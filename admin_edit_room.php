@@ -596,7 +596,6 @@ echo "<tr><td>".get_vocab("capacity").": </td><td><input type=\"text\" name=\"ca
 if ((authGetUserLevel(getUserName(),$area_id,"area") >= 4) || (authGetUserLevel(getUserName(),$room) >= 4))
 {
 	echo "<tr><td>".get_vocab("max_booking")." ";
-	echo grr_help("aide_grr_max_reservation");
 	echo "</td><td><input type=\"text\" name=\"max_booking\" size=\"1\" value=\"".$row["max_booking"]."\" /></td></tr>";
 
 }
@@ -608,10 +607,9 @@ echo "<tr><td>".get_vocab("delais_max_resa_room").": </td><td><input type=\"text
 echo "<tr><td>".get_vocab("delais_min_resa_room").": ";
 echo "</td><td><input type=\"text\" name=\"delais_min_resa_room\" size=\"5\" value=\"".$row["delais_min_resa_room"]."\" /></td></tr>\n";
 // L'utilisateur peut poser poser une option de reservation
-echo "<tr><td>".get_vocab("msg_option_de_reservation")." ".grr_help("aide_grr_reservation_sous_reserve")."</td><td><input type=\"text\" name=\"delais_option_reservation\" size=\"5\" value=\"".$row["delais_option_reservation"]."\" /></td></tr>\n";
+echo "<tr><td>".get_vocab("msg_option_de_reservation")."</td><td><input type=\"text\" name=\"delais_option_reservation\" size=\"5\" value=\"".$row["delais_option_reservation"]."\" /></td></tr>\n";
 // Les demandes de reservations sont moderes
 echo "<tr><td>".get_vocab("msg_moderation_reservation").get_vocab("deux_points");
-echo grr_help("aide_grr_moderation");
 echo "</td>" ."<td><input type='checkbox' name='moderate' ";
 if ($row['moderate'])
 	echo 'checked="checked"';
@@ -645,7 +643,7 @@ if ($row["qui_peut_reserver_pour"]==2)
 echo ">".get_vocab("tous les utilisateurs")."</option>\n
 </select></td></tr>\n";
 // Activer la fonctionalite "ressource empruntee/restituee"
-echo "<tr><td>".get_vocab("activer_fonctionalite_ressource_empruntee_restituee").grr_help("aide_grr_ressource_empruntee")."</td><td><input type=\"checkbox\" name=\"active_ressource_empruntee\" ";
+echo "<tr><td>".get_vocab("activer_fonctionalite_ressource_empruntee_restituee")."</td><td><input type=\"checkbox\" name=\"active_ressource_empruntee\" ";
 if ($row['active_ressource_empruntee'] == "y")
 	echo " checked=\"checked\" ";
 echo "/></td></tr>\n";
@@ -1035,7 +1033,7 @@ if ((!empty($id_area)) || (isset($add_area)))
 		}
 		echo "</table>";
 		// Configuration des plages horaires ...
-		echo "<h3>".get_vocab("configuration_plages_horaires").grr_help("Configuration_affichage","conf_planning")."</h3>";
+		echo "<h3>".get_vocab("configuration_plages_horaires")."</h3>";
 		// Debut de la semaine: 0 pour dimanche, 1 pou lundi, etc.
 		echo "<table border=\"1\" cellspacing=\"1\" cellpadding=\"6\">";
 		echo "<tr>\n";
@@ -1066,7 +1064,7 @@ if ((!empty($id_area)) || (isset($add_area)))
 		}
 		echo "</td>\n";
 		echo "</tr></table>";
-		echo "<h3>".get_vocab("type_de_creneaux").grr_help("Configuration_affichage","conf_planning")."</h3>";
+		echo "<h3>".get_vocab("type_de_creneaux")."</h3>";
 		echo "<table>";
 		//echo "<p style=\"text-align:left;\"><b>ATTENTION :</b> Les deux types de configuration des creneaux sont incompatibles entre eux : un changement du type de creneaux entraene donc, apres validation, un <b>effacement de toutes les reservations  de ce domaine</b></p>.";
 		echo "<tr><td colspan=\"2\"><label><input type=\"radio\" name=\"enable_periods\" value=\"n\" onclick=\"bascule()\" ";
@@ -1109,7 +1107,7 @@ if ((!empty($id_area)) || (isset($add_area)))
 				$nb_jour = max(round($row["duree_max_resa_area"]/1440,0),1);
 			else
 				$nb_jour = -1;
-			echo "</td></tr>\n<tr><td>".get_vocab("duree_max_resa_area2").grr_help("Configuration_affichage","duree_max_reser").get_vocab("deux_points");
+			echo "</td></tr>\n<tr><td>".get_vocab("duree_max_resa_area2").get_vocab("deux_points");
 			echo "\n</td><td><input type=\"text\" name=\"duree_max_resa_area2\" size=\"5\" value=\"".$nb_jour."\" /></td></tr>\n";
 			echo "</table>";
 			// Cas ou les creneaux de reservations sont bases sur le temps
@@ -1175,7 +1173,7 @@ if ((!empty($id_area)) || (isset($add_area)))
 			echo "</td>\n";
 			echo "</tr>\n";
 			// L'utilisateur ne peut reserver qu'une duree limitee (-1 desactivee), exprimee en minutes
-			echo "<tr>\n<td>".get_vocab("duree_max_resa_area").grr_help("Configuration_affichage","duree_max_reser").get_vocab("deux_points");
+			echo "<tr>\n<td>".get_vocab("duree_max_resa_area").get_vocab("deux_points");
 			echo "</td>\n<td><input type=\"text\" name=\"duree_max_resa_area1\" size=\"5\" value=\"".$row["duree_max_resa_area"]."\" /></td></tr>\n";
 			echo "</table>";
 			echo "<table>";

@@ -181,7 +181,7 @@ if (getSettingValue("sso_statut") != '')
 }
 echo "</div><hr />\n";
 // Configuration cas
-echo "<h2>".get_vocab("config_cas_title").grr_help("aide_grr_cas_sso")."</h2>\n";
+echo "<h2>".get_vocab("config_cas_title")."</h2>\n";
 echo "<div>\n<input type=\"hidden\" name=\"valid\" value=\"1\" /></div>\n";
 echo "<p>".get_vocab("CAS_SSO_explain")."</p>\n";
 echo "<h3>".get_vocab("Statut_par_defaut_utilisateurs_importes")."</h3>\n";
@@ -211,7 +211,7 @@ echo get_vocab("sso_active_correspondance_profil_statut");
 echo "</div>";
 echo "<hr />\n";
 // Configuration lemonldap
-echo "<h2>".get_vocab("config_lemon_title").grr_help("aide_grr_lemon")."</h2>\n";
+echo "<h2>".get_vocab("config_lemon_title")."</h2>\n";
 echo "<div><input type=\"hidden\" name=\"valid\" value=\"1\" /></div>\n";
 echo "<p>".get_vocab("lemon_SSO_explain")."</p>\n";
 echo "<h3>".get_vocab("Statut_par_defaut_utilisateurs_importes")."</h3>\n";
@@ -226,7 +226,7 @@ if (getSettingValue("sso_statut") == 'lemon_utilisateur')
 echo "/>".get_vocab("statut_user")."<br /></div>\n";
 echo "<hr />\n";
 // Configuration lcs
-echo "<h2>".get_vocab("config_lcs_title").grr_help("aide_grr_lcs")."</h2>\n";
+echo "<h2>".get_vocab("config_lcs_title")."</h2>\n";
 echo "<div><input type=\"hidden\" name=\"valid\" value=\"1\" /></div>\n";
 echo "<p>".get_vocab("lcs_SSO_explain")."</p>\n";
 echo "<h3>".get_vocab("Statut_par_defaut_utilisateurs_importes")."</h3>\n";
@@ -273,7 +273,7 @@ echo get_vocab("lcs_SSO_explain_3");
 echo "<br /><input type=\"text\" name=\"lcs_liste_groupes_autorises\" value=\"".htmlentities( getSettingValue("lcs_liste_groupes_autorises"))."\" size=\"50\" /></div>\n";
 echo "<hr />\n";
 // Configuration Lasso
-echo "<h2>".get_vocab("config_lasso_title").grr_help("aide_grr_lasso_sso")."</h2>\n";
+echo "<h2>".get_vocab("config_lasso_title")."</h2>\n";
 echo "<div><input type=\"hidden\" name=\"valid\" value=\"1\" /></div>\n";
 echo "<p>".get_vocab("lasso_SSO_explain")."</p>\n";
 echo "<h3>".get_vocab("Statut_par_defaut_utilisateurs_importes")."</h3>\n";
@@ -288,7 +288,7 @@ if (getSettingValue("sso_statut") == 'lasso_utilisateur')
 echo "/>".get_vocab("statut_user")."<br /></div>\n";
 echo "<hr />\n";
 // Configuration apache
-echo "<h2>".get_vocab("config_http_title").grr_help("aide_grr_authentification_http")."</h2>\n";
+echo "<h2>".get_vocab("config_http_title")."</h2>\n";
 echo "<div><input type=\"hidden\" name=\"valid\" value=\"1\" /></div>\n";
 echo "<p>".get_vocab("http_SSO_explain")."</p>\n";
 echo "<h3>".get_vocab("Statut_par_defaut_utilisateurs_importes")."</h3>\n";

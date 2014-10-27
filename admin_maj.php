@@ -154,7 +154,7 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 			<BODY>
 				<form action="admin_maj.php" method='post' style="width: 100%; margin-top: 24px; margin-bottom: 48px;">
 					<div class="center">
-						<h2><?php echo get_vocab("maj_bdd").grr_help("aide_grr_maj"); ?></h2>
+						<h2><?php echo get_vocab("maj_bdd"); ?></h2>
 
 						<?php
 						if (isset($message))
@@ -811,7 +811,7 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 						$display_version_grr = $version_grr.$sous_version_grr;
 					else
 						$display_version_grr = $version_grr."_RC".$version_grr_RC;
-					echo "<h2>".get_vocab('admin_maj.php').grr_help("aide_grr_maj")."</h2>";
+					echo "<h2>".get_vocab('admin_maj.php')."</h2>";
 					echo "<hr />";
 					// Numéro de version
 					//Hugo - Mise a jour temporaire du numéro de version à afficher

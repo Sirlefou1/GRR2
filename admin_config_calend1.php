@@ -52,7 +52,7 @@ if (isset($_GET['jourDebut']))
 // Configurations du nombre de jours par Jours/Cycles et du premier jour du premier Jours/Cycles
 //******************************
 //
-echo "<h3>".get_vocab("titre_config_Jours/Cycles").grr_help("aide_grr_jours_cycle")."</h3>\n";
+echo "<h3>".get_vocab("titre_config_Jours/Cycles")."</h3>\n";
 echo "<form action=\"./admin_calend_jour_cycle.php\"  method=\"get\" style=\"width: 100%;\" onsubmit=\"return verifierJoursCycles(false);\">\n";
 echo "<p>".get_vocab("explication_Jours_Cycles1");
 echo "<br />".get_vocab("explication_Jours_Cycles2");

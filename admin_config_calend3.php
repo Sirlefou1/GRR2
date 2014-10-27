@@ -40,8 +40,6 @@ if (isset($_SERVER['HTTP_REFERER']))
 	if (!isset($_GET['pview']))
 		include "include/admin_calend_jour_cycle.inc.php";
 	echo "<h3>".get_vocab('calendrier_jours/cycles');
-	if (!isset($_GET['pview']))
-		echo grr_help("aide_grr_jours_cycle");
 	echo "</h3>\n";
 	if (!isset($_GET['pview']))
 	{
