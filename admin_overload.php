@@ -42,7 +42,7 @@ $use_prototype = 'y';
 $use_tooltip_js = 'y';
 print_header("", "", "", $type="with_session");
 include "admin_col_gauche.php";
-echo "<h2>".get_vocab("admin_overload.php").grr_help("aide_grr_champs_add")."</h2>\n";
+echo "<h2>".get_vocab("admin_overload.php")."</h2>\n";
 if (isset($_POST["action"]))
 	$action = $_POST["action"];
 else

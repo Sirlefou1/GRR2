@@ -243,7 +243,7 @@ if ((isset($_GET['action_del'])) and ($_GET['js_confirmed'] == 1))
 }
 if (isset($mess) and ($mess != ""))
 	echo "<p>".$mess."</p>";
-echo "<h2>".get_vocab('admin_user.php').grr_help("aide_grr_gestion_utilisateurs")."</h2>";
+echo "<h2>".get_vocab('admin_user.php')."</h2>";
 if (empty($display))
 {
 	$display = 'actifs';

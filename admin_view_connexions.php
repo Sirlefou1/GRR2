@@ -43,7 +43,7 @@ if (isset($_POST['cleanDay']) && isset($_POST['cleanMonth']) && isset($_POST['cl
 }
 print_header("", "", "", $type="with_session");
 include "admin_col_gauche.php";
-echo "<h2>".get_vocab('admin_view_connexions.php').grr_help("aide_grr_suivi_connexions")."</h2>";
+echo "<h2>".get_vocab('admin_view_connexions.php')."</h2>";
 echo "<h3>".get_vocab("users_connected")."</h3>";
 ?>
 <div title="Utilisateur connecté">

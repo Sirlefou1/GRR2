@@ -475,7 +475,7 @@ else
     $('table td').each(function(){
         var $row = $(this);
         var height = $row.height();
-        $row.find('a').css('height', height).append('&nbsp;');
+        $row.find('a').css('height', height);
     });
 });
 	</script>

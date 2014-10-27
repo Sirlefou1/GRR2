@@ -568,7 +568,7 @@ if ($id == 0)
 else
 {
 	if ($edit_type == "series")
-		$A = get_vocab("editseries").grr_help("aide_grr_periodicite");
+		$A = get_vocab("editseries");
 	else
 	{
 		if (isset($_GET["copy"]))

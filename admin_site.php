@@ -152,7 +152,7 @@ function create_site($id_site)
 function read_sites()
 {
 	// Affichage des titres de la page
-	echo '      <h2>'.get_vocab('admin_site.php').grr_help("aide_grr_multisites").'</h2>';
+	echo '      <h2>'.get_vocab('admin_site.php').'</h2>';
 	echo '      <p>'.get_vocab('admin_site_explications').'</p>
 	| <a href="admin_site.php?action=create&amp;id=0">'.get_vocab('display_add_site').'</a> |';
 	if (count_sites() > 0)
