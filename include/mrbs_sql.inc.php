@@ -525,12 +525,6 @@ function get_day_of_month($time, $rep_month_abs1, $rep_month_abs2)
 {
 	$days = array('monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
 	$rep = array('first', 'second', 'third', 'fourth', 'five', 'last');
-	$sec   = date("s", $time);
-	$min   = date("i", $time);
-	$hour  = date("G", $time);
-	$day   = date("d", $time);
-	$month = date("m", $time);
-	$year  = date("Y", $time);
 	$time = strtotime('+1 month', $time);
 	$str = $rep[$rep_month_abs1].' '.$days[$rep_month_abs2 - 1].' of '.date("F", $time).' '.date("Y", $time);
 	return strtotime($str);
