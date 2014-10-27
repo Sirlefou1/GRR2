@@ -1041,6 +1041,7 @@ $sql = "SELECT id FROM ".TABLE_PREFIX."_area;";
 $res = grr_sql_query($sql);
 echo "\n<!-- ************* Periodic edition ***************** -->\n";
 $weeklist = array("unused","every week","week 1/2","week 1/3","week 1/4","week 1/5");
+$monthlist = array("firstofmonth","secondofmonth","thirdofmonth","fouthofmonth","fiveofmonth","lastofmonth");
 if (($edit_type == "series") || (isset($flag_periodicite)))
 {
 	echo "
@@ -1059,11 +1060,13 @@ if (($edit_type == "series") || (isset($flag_periodicite)))
 	echo "<tr><td class=\"F\"><b>".get_vocab("rep_type")."</b></td></tr><tr><td class=\"CL\">\n";
 	echo "<table border=\"0\"  width=\"100%\" >\n";
 	if (getSettingValue("jours_cycles_actif") == "Oui")
-		$max = 7;
+		$max = 8;
 	else
-		$max = 6;
+		$max = 7;
 	for ($i = 0; $i < $max ; $i++)
 	{
+		if ($i == 6 && getSettingValue("jours_cycles_actif") == "Non")
+			$i++;
 		if ($i != 5)
 		{
 			echo "<tr><td><input name=\"rep_type\" type=\"radio\" value=\"" . $i . "\"";
@@ -1100,6 +1103,28 @@ if (($edit_type == "series") || (isset($flag_periodicite)))
 				echo "<option value=\"3\" $monthrep3>".get_vocab("rep_type_3")."</option>\n";
 				echo "<option value=\"5\" $monthrep5>".get_vocab("rep_type_5")."</option>\n";
 				echo "</select>\n";
+			}
+			if ($i == '7')
+			{
+				echo "<select name=\"rep_month_abs1\" size=\"1\" onfocus=\"check_7()\" onclick=\"check_7()\">\n";
+				for ($weekit = 0; $weekit < 6; $weekit++)
+				{
+					echo "<option value=\"".$weekit."\"";
+					/*if ($rep_month_abs1 == $weekit)
+						echo " selected=\"selected\"";*/
+					echo ">".get_vocab($monthlist[$weekit])."</option>\n";
+				}
+				echo "</select>\n";
+				echo "<select name=\"rep_month_abs2\" size=\"1\" onfocus=\"check_8()\" onclick=\"check_8()\">\n";
+				for ($weekit = 1; $weekit < 8; $weekit++)
+				{
+					echo "<option value=\"".$weekit."\"";
+					/*if ($rep_month_abs2 == $weekit)
+						echo " selected=\"selected\"";*/
+					echo ">".day_name($weekit)."</option>\n";
+				}
+				echo "</select>\n";
+				echo get_vocab("ofmonth");
 			}
 			echo "</td></tr>\n";
 		}

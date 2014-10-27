@@ -942,4 +942,12 @@ $vocab['status_courrier'] = "Courrier de validation";
 $vocab['courrier'] = "Courrier";
 $vocab['msg_courrier'] = "Cocher si courrier de validation";
 $vocab['to'] = " to ";
+$vocab['rep_type_7'] = "X Y du mois";
+$vocab['firstofmonth'] = "1er";
+$vocab['secondofmonth'] = "2eme";
+$vocab['thirdofmonth'] = "3eme";
+$vocab['fouthofmonth'] = "4eme";
+$vocab['fiveofmonth'] = "5eme";
+$vocab['lastofmonth'] = "dernier";
+$vocab['ofmonth'] = "du mois.";
 ?>

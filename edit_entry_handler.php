@@ -115,6 +115,12 @@ if (($rep_type == 3) && ($rep_month == 3))
 	$rep_type = 3;
 if (($rep_type == 3) && ($rep_month == 5))
 	$rep_type = 5;
+$rep_month_abs1 = isset($_GET["rep_month_abs1"]) ? $_GET["rep_month_abs1"] : NULL;
+$rep_month_abs2 = isset($_GET["rep_month_abs2"]) ? $_GET["rep_month_abs2"] : NULL;
+if (isset($rep_month_abs1))
+	settype($rep_month_abs1,"integer");
+if (isset($rep_month_abs2))
+	settype($rep_month_abs2,"integer");
 $create_by = isset($_GET["create_by"]) ? $_GET["create_by"] : NULL;
 $beneficiaire = isset($_GET["beneficiaire"]) ? $_GET["beneficiaire"] : "";
 $benef_ext_nom = isset($_GET["benef_ext_nom"]) ? $_GET["benef_ext_nom"] : "";
@@ -375,373 +381,374 @@ if (resa_est_hors_reservation($starttime_midnight , $endtime_midnight))
 }
 $rep_opt = "";
 if ($rep_type == 2)
+{
 	for ($i = 0; $i < 7; $i++)
 		$rep_opt .= empty($rep_day[$i]) ? "0" : "1";
-	if ($rep_type != 0)
-		$reps = mrbsGetRepeatEntryList($starttime, isset($rep_enddate) ? $rep_enddate : 0,
-			$rep_type, $rep_opt, $max_rep_entrys, $rep_num_weeks,$rep_jour_c,$area);
-	$repeat_id = 0;
-	if (isset($id) && ($id != 0))
+}
+if ($rep_type != 0)
+	$reps = mrbsGetRepeatEntryList($starttime, isset($rep_enddate) ? $rep_enddate : 0, $rep_type, $rep_opt, $max_rep_entrys, $rep_num_weeks, $rep_jour_c, $area, $rep_month_abs1, $rep_month_abs2);
+$repeat_id = 0;
+if (isset($id) && ($id != 0))
+{
+	$ignore_id = $id;
+	$repeat_id = grr_sql_query1("SELECT repeat_id FROM ".TABLE_PREFIX."_entry WHERE id=$id");
+	if ($repeat_id < 0)
+		$repeat_id = 0;
+}
+else
+	$ignore_id = 0;
+if (!grr_sql_mutex_lock("".TABLE_PREFIX."_entry"))
+	fatal_error(1, get_vocab('failed_to_acquire'));
+$date_now = time();
+$error_booking_in_past = 'no';
+$error_booking_room_out = 'no';
+$error_duree_max_resa_area = 'no';
+$error_delais_max_resa_room = 'no';
+$error_delais_min_resa_room = 'no';
+$error_date_option_reservation = 'no';
+$error_chevaussement = 'no';
+$error_qui_peut_reserver_pour = 'no';
+$error_heure_debut_fin = 'no';
+foreach ( $_GET['rooms'] as $room_id )
+{
+	if ($rep_type != 0 && !empty($reps))
 	{
-		$ignore_id = $id;
-		$repeat_id = grr_sql_query1("SELECT repeat_id FROM ".TABLE_PREFIX."_entry WHERE id=$id");
-		if ($repeat_id < 0)
-			$repeat_id = 0;
-	}
-	else
-		$ignore_id = 0;
-	if (!grr_sql_mutex_lock("".TABLE_PREFIX."_entry"))
-		fatal_error(1, get_vocab('failed_to_acquire'));
-	$date_now = time();
-	$error_booking_in_past = 'no';
-	$error_booking_room_out = 'no';
-	$error_duree_max_resa_area = 'no';
-	$error_delais_max_resa_room = 'no';
-	$error_delais_min_resa_room = 'no';
-	$error_date_option_reservation = 'no';
-	$error_chevaussement = 'no';
-	$error_qui_peut_reserver_pour = 'no';
-	$error_heure_debut_fin = 'no';
-	foreach ( $_GET['rooms'] as $room_id )
-	{
-		if ($rep_type != 0 && !empty($reps))
-		{
-			$diff = $endtime - $starttime;
-			if (!grrCheckOverlap($reps, $diff))
-				$error_chevaussement = 'yes';
-			$i = 0;
-			while (($i < count($reps)) && ($error_booking_in_past == 'no') && ($error_duree_max_resa_area == 'no') && ($error_delais_max_resa_room == 'no') && ($error_delais_min_resa_room == 'no') && ($error_date_option_reservation == 'no') && ($error_qui_peut_reserver_pour == 'no') && ($error_heure_debut_fin == 'no'))
-			{
-				if ((authGetUserLevel(getUserName(),-1) < 2) && (auth_visiteur(getUserName(),$room_id) == 0))
-					$error_booking_room_out = 'yes';
-				if (!(verif_booking_date(getUserName(), -1, $room_id, $reps[$i], $date_now, $enable_periods)))
-					$error_booking_in_past = 'yes';
-				if (!(verif_duree_max_resa_area(getUserName(), $room_id, $starttime, $endtime)))
-					$error_duree_max_resa_aera = 'yes';
-				if (!(verif_delais_max_resa_room(getUserName(), $room_id, $reps[$i])))
-					$error_delais_max_resa_room = 'yes';
-				if (!(verif_delais_min_resa_room(getUserName(), $room_id, $reps[$i])))
-					$error_delais_min_resa_room = 'yes';
-				if (!(verif_date_option_reservation($option_reservation, $reps[$i])))
-					$error_date_option_reservation = 'yes';
-				if (!(verif_qui_peut_reserver_pour($room_id, getUserName(), $beneficiaire)))
-					$error_qui_peut_reserver_pour = 'yes';
-				if (!(verif_heure_debut_fin($reps[$i], $reps[$i]+$diff, $area)))
-					$error_heure_debut_fin = 'yes';
-				$i++;
-			}
-		}
-		else
+		$diff = $endtime - $starttime;
+		if (!grrCheckOverlap($reps, $diff))
+			$error_chevaussement = 'yes';
+		$i = 0;
+		while (($i < count($reps)) && ($error_booking_in_past == 'no') && ($error_duree_max_resa_area == 'no') && ($error_delais_max_resa_room == 'no') && ($error_delais_min_resa_room == 'no') && ($error_date_option_reservation == 'no') && ($error_qui_peut_reserver_pour == 'no') && ($error_heure_debut_fin == 'no'))
 		{
 			if ((authGetUserLevel(getUserName(),-1) < 2) && (auth_visiteur(getUserName(),$room_id) == 0))
 				$error_booking_room_out = 'yes';
-			if (isset($id) && ($id != 0))
-			{
-				if (!(verif_booking_date(getUserName(), $id, $room_id, $starttime, $date_now, $enable_periods, $endtime)))
-					$error_booking_in_past = 'yes';
-			}
-			else
-			{
-				if (!(verif_booking_date(getUserName(), -1, $room_id, $starttime, $date_now, $enable_periods)))
-					$error_booking_in_past = 'yes';
-			}
+			if (!(verif_booking_date(getUserName(), -1, $room_id, $reps[$i], $date_now, $enable_periods)))
+				$error_booking_in_past = 'yes';
 			if (!(verif_duree_max_resa_area(getUserName(), $room_id, $starttime, $endtime)))
-				$error_duree_max_resa_area = 'yes';
-			if (!(verif_delais_max_resa_room(getUserName(), $room_id, $starttime)))
+				$error_duree_max_resa_aera = 'yes';
+			if (!(verif_delais_max_resa_room(getUserName(), $room_id, $reps[$i])))
 				$error_delais_max_resa_room = 'yes';
-			if (!(verif_delais_min_resa_room(getUserName(), $room_id, $starttime)))
+			if (!(verif_delais_min_resa_room(getUserName(), $room_id, $reps[$i])))
 				$error_delais_min_resa_room = 'yes';
-			if (!(verif_date_option_reservation($option_reservation, $starttime)))
+			if (!(verif_date_option_reservation($option_reservation, $reps[$i])))
 				$error_date_option_reservation = 'yes';
 			if (!(verif_qui_peut_reserver_pour($room_id, getUserName(), $beneficiaire)))
 				$error_qui_peut_reserver_pour = 'yes';
-			if (!(verif_heure_debut_fin($starttime, $endtime, $area)))
+			if (!(verif_heure_debut_fin($reps[$i], $reps[$i]+$diff, $area)))
 				$error_heure_debut_fin = 'yes';
-			if (resa_est_hors_reservation2($starttime, $endtime, $area))
-				$error_heure_debut_fin = 'yes';
-		}
-		$statut_room = grr_sql_query1("SELECT statut_room from ".TABLE_PREFIX."_room where id = '$room_id'");
-		if (($statut_room == "0") && authGetUserLevel(getUserName(),$room_id) < 3)
-			$error_booking_room_out = 'yes';
-		if (!verif_acces_ressource(getUserName(), $room_id))
-			$error_booking_room_out = 'yes';
-	}
-	$err = "";
-	if (($error_booking_in_past == 'no') && ($error_chevaussement == 'no') && ($error_duree_max_resa_area == 'no') && ($error_delais_max_resa_room == 'no') && ($error_delais_min_resa_room == 'no')  && ($error_date_option_reservation == 'no') && ($error_qui_peut_reserver_pour == 'no') && ($error_heure_debut_fin == 'no'))
-	{
-		foreach ($_GET['rooms'] as $room_id)
-		{
-			if ($rep_type != 0 && !empty($reps))
-			{
-				if (count($reps) < $max_rep_entrys)
-				{
-					$diff = $endtime - $starttime;
-					for ($i = 0; $i < count($reps); $i++)
-					{
-						if (isset($_GET['del_entry_in_conflict']) && ($_GET['del_entry_in_conflict'] == 'yes'))
-							grrDelEntryInConflict($room_id, $reps[$i], $reps[$i] + $diff, $ignore_id, $repeat_id, 0);
-						if ($i == (count($reps) - 1))
-							$tmp = mrbsCheckFree($room_id, $reps[$i], $reps[$i] + $diff, $ignore_id, $repeat_id);
-						else
-							$tmp = mrbsCheckFree($room_id, $reps[$i], $reps[$i] + $diff, $ignore_id, $repeat_id);
-						if (!empty($tmp))
-							$err = $err . $tmp;
-					}
-				}
-				else
-				{
-					$err .= get_vocab("too_may_entrys") . "<p>";
-					$hide_title  = 1;
-				}
-			}
-			else
-			{
-				if (isset($_GET['del_entry_in_conflict']) && ($_GET['del_entry_in_conflict'] == 'yes'))
-					grrDelEntryInConflict($room_id, $starttime, $endtime-1, $ignore_id, $repeat_id, 0);
-				$err .= mrbsCheckFree($room_id, $starttime, $endtime - 1, $ignore_id, $repeat_id);
-			}
+			$i++;
 		}
 	}
-	if (empty($err) && ($error_booking_in_past == 'no') && ($error_duree_max_resa_area == 'no') && ($error_delais_max_resa_room == 'no') && ($error_delais_min_resa_room == 'no') && ($error_booking_room_out == 'no') && ($error_date_option_reservation == 'no') && ($error_chevaussement == 'no') && ($error_qui_peut_reserver_pour == 'no') && ($error_heure_debut_fin == 'no'))
+	else
 	{
-		$compt_room = 0;
-		foreach ($_GET['rooms'] as $room_id)
-		{
-			$area = mrbsGetRoomArea($room_id);
-			if (isset($id) && ($id != 0))
-			{
-				if (!getWritable($beneficiaire, getUserName(), $id))
-				{
-					showAccessDenied($back);
-					exit;
-				}
-			}
-			if (authUserAccesArea(getUserName(), $area) == 0)
-			{
-				showAccessDenied($back);
-				exit();
-			}
-			if (isset($id) and ($id != 0))
-				$compt = 0;
-			else
-				$compt = 1;
-			if ($rep_type != 0 && !empty($reps))
-			{
-				if (UserRoomMaxBooking(getUserName(), $room_id, count($reps) - 1 + $compt + $compt_room) == 0)
-				{
-					showAccessDeniedMaxBookings($day, $month, $year, $room_id, $back);
-					exit();
-				}
-				else
-					$compt_room += 1;
-			}
-			else
-			{
-				if (UserRoomMaxBooking(getUserName(), $room_id, $compt + $compt_room) == 0)
-				{
-					showAccessDeniedMaxBookings($day, $month, $year, $room_id, $back);
-					exit();
-				}
-				else
-					$compt_room += 1;
-			}
-		}
-		foreach ($_GET['rooms'] as $room_id)
-		{
-			$moderate = grr_sql_query1("SELECT moderate FROM ".TABLE_PREFIX."_room WHERE id = '".$room_id."'");
-			if ($moderate == 1)
-			{
-				$send_mail_moderate = 1;
-				if (isset($id))
-				{
-					$old_entry_moderate =  grr_sql_query1("SELECT moderate FROM ".TABLE_PREFIX."_entry where id='".$id."'");
-					if (authGetUserLevel(getUserName(),$room_id) < 3)
-						$entry_moderate = 1;
-					else
-						$entry_moderate = $old_entry_moderate;
-					if ($entry_moderate != 1)
-						$send_mail_moderate = 0;
-				}
-				else
-				{
-					if (authGetUserLevel(getUserName(),$room_id) < 3)
-						$entry_moderate = 1;
-					else
-					{
-						$entry_moderate = 0;
-						$send_mail_moderate = 0;
-					}
-				}
-			}
-			else
-			{
-				$entry_moderate = 0;
-				$send_mail_moderate = 0;
-			}
-			if ($rep_type != 0)
-			{
-				mrbsCreateRepeatingEntrys($starttime, $endtime, $rep_type, $rep_enddate, $rep_opt, $room_id, $create_by, $beneficiaire, $beneficiaire_ext, $name, $type, $description, $rep_num_weeks, $option_reservation, $overload_data, $entry_moderate, $rep_jour_c, $courrier);
-				if (getSettingValue("automatic_mail") == 'yes')
-				{
-					if (isset($id) && ($id != 0))
-					{
-						if ($send_mail_moderate)
-							$message_error = send_mail($id_first_resa, 5, $dformat);
-						else
-							$message_error = send_mail($id_first_resa, 2, $dformat);
-					}
-					else
-					{
-						if ($send_mail_moderate)
-							$message_error = send_mail($id_first_resa, 5, $dformat);
-						else
-							$message_error = send_mail($id_first_resa, 1, $dformat);
-					}
-				}
-			}
-			else
-			{
-				if ($repeat_id > 0)
-					$entry_type = 2;
-				else
-					$entry_type = 0;
-				mrbsCreateSingleEntry($starttime, $endtime, $entry_type, $repeat_id, $room_id, $create_by, $beneficiaire, $beneficiaire_ext, $name, $type, $description, $option_reservation, $overload_data, $entry_moderate, $rep_jour_c, $statut_entry, $keys, $courrier);
-				$new_id = grr_sql_insert_id();
-				if (getSettingValue("automatic_mail") == 'yes')
-				{
-					if (isset($id) && ($id != 0))
-					{
-						if ($send_mail_moderate)
-							$message_error = send_mail($new_id,5,$dformat);
-						else
-							$message_error = send_mail($new_id,2,$dformat);
-					}
-					else
-					{
-						if ($send_mail_moderate)
-							$message_error = send_mail($new_id,5,$dformat);
-						else
-							$message_error = send_mail($new_id,1,$dformat);
-					}
-				}
-			}
-		}
+		if ((authGetUserLevel(getUserName(),-1) < 2) && (auth_visiteur(getUserName(),$room_id) == 0))
+			$error_booking_room_out = 'yes';
 		if (isset($id) && ($id != 0))
 		{
-			if ($rep_type != 0)
-				mrbsDelEntry(getUserName(), $id, "series", 1);
-			else
-				mrbsDelEntry(getUserName(), $id, NULL, 1);
+			if (!(verif_booking_date(getUserName(), $id, $room_id, $starttime, $date_now, $enable_periods, $endtime)))
+				$error_booking_in_past = 'yes';
 		}
-		grr_sql_mutex_unlock("".TABLE_PREFIX."_entry");
-		$area = mrbsGetRoomArea($room_id);
-		$_SESSION['displ_msg'] = 'yes';
-		if ($message_error != "")
-			$_SESSION['session_message_error'] = $message_error;
-		Header("Location: ".$page.".php?year=$year&month=$month&day=$day&area=$area&room=$room_back");
-		exit;
-	}
-
-	grr_sql_mutex_unlock("".TABLE_PREFIX."_entry");
-
-	if ($error_booking_in_past == 'yes')
-	{
-		$str_date = utf8_strftime("%d %B %Y, %H:%M", $date_now);
-		print_header();
-		echo "<h2>" . get_vocab("booking_in_past") . "</h2>";
-		if ($rep_type != 0 && !empty($reps))
-			echo "<p>" . get_vocab("booking_in_past_explain_with_periodicity") . $str_date."</p>";
 		else
-			echo "<p>" . get_vocab("booking_in_past_explain") . $str_date."</p>";
-		echo "<a href=\"".$back."&amp;Err=yes\">".get_vocab('returnprev')."</a>";
-		include "include/trailer.inc.php";
-		die();
-	}
-	if ($error_duree_max_resa_area == 'yes')
-	{
-		$area_id = grr_sql_query1("SELECT area_id FROM ".TABLE_PREFIX."_room WHERE id='".protect_data_sql($room_id)."'");
-		$duree_max_resa_area = grr_sql_query1("SELECT duree_max_resa_area FROM ".TABLE_PREFIX."_area WHERE id='".$area_id."'");
-		print_header();
-		$temps_format = $duree_max_resa_area*60;
-		toTimeString($temps_format, $dur_units, true);
-		echo "<h2>" . get_vocab("error_duree_max_resa_area").$temps_format ." " .$dur_units."</h2>";
-		echo "<a href=\"".$back."&amp;Err=yes\">".get_vocab('returnprev')."</a>";
-		include "include/trailer.inc.php";
-		die();
-	}
-
-	if ($error_delais_max_resa_room == 'yes')
-	{
-		print_header();
-		echo "<h2>" . get_vocab("error_delais_max_resa_room") ."</h2>";
-		echo "<a href=\"".$back."&amp;Err=yes\">".get_vocab('returnprev')."</a>";
-		include "include/trailer.inc.php";
-		die();
-	}
-	if ($error_chevaussement == 'yes')
-	{
-		print_header();
-		echo "<h2>" . get_vocab("error_chevaussement") ."</h2>";
-		echo "<a href=\"".$back."&amp;Err=yes\">".get_vocab('returnprev')."</a>";
-		include "include/trailer.inc.php";
-		die();
-	}
-	if ($error_delais_min_resa_room == 'yes')
-	{
-		print_header();
-		echo "<h2>" . get_vocab("error_delais_min_resa_room") ."</h2>";
-		echo "<a href=\"".$back."&amp;Err=yes\">".get_vocab('returnprev')."</a>";
-		include "include/trailer.inc.php";
-		die();
-	}
-	if ($error_date_option_reservation == 'yes')
-	{
-		print_header();
-		echo "<h2>" . get_vocab("error_date_confirm_reservation") ."</h2>";
-		echo "<a href=\"".$back."&amp;Err=yes\">".get_vocab('returnprev')."</a>";
-		include "include/trailer.inc.php";
-		die();
-	}
-	if ($error_booking_room_out == 'yes')
-	{
-		print_header();
-		echo "<h2>" . get_vocab("norights") . "</h2>";
-		echo "<p><b>" . get_vocab("tentative_reservation_ressource_indisponible") . "</b></p>";
-		echo "<a href=\"".$back."&amp;Err=yes\">".get_vocab('returnprev')."</a>";
-		include "include/trailer.inc.php";
-		die();
-	}
-	if ($error_qui_peut_reserver_pour == 'yes')
-	{
-		print_header();
-		echo "<h2>" . get_vocab("error_qui_peut_reserver_pour") ."</h2>";
-		echo "<a href=\"".$back."&amp;Err=yes\">".get_vocab('returnprev')."</a>";
-		include "include/trailer.inc.php";
-		die();
-	}
-	if ($error_heure_debut_fin == 'yes')
-	{
-		print_header();
-		echo "<h2>" . get_vocab("error_heure_debut_fin") ."</h2>";
-		echo $start_day;
-		echo "<a href=\"".$back."&amp;Err=yes\">".get_vocab('returnprev')."</a>";
-		include "include/trailer.inc.php";
-		die();
-	}
-	if (strlen($err))
-	{
-		print_header();
-		echo "<h2>" . get_vocab("sched_conflict") . "</h2>";
-		if (!isset($hide_title))
 		{
-			echo get_vocab("conflict");
-			echo "<UL>";
+			if (!(verif_booking_date(getUserName(), -1, $room_id, $starttime, $date_now, $enable_periods)))
+				$error_booking_in_past = 'yes';
 		}
-		echo $err;
-		if (!isset($hide_title))
-			echo "</UL>";
-		if (authGetUserLevel(getUserName(),$area,'area') >= 4)
-			echo "<center><table border=\"1\" cellpadding=\"10\" cellspacing=\"1\"><tr><td class='avertissement'><h3><a href='".traite_grr_url("","y")."edit_entry_handler.php?".$_SERVER['QUERY_STRING']."&amp;del_entry_in_conflict=yes'>".get_vocab("del_entry_in_conflict")."</a></h4></td></tr></table></center><br />";
+		if (!(verif_duree_max_resa_area(getUserName(), $room_id, $starttime, $endtime)))
+			$error_duree_max_resa_area = 'yes';
+		if (!(verif_delais_max_resa_room(getUserName(), $room_id, $starttime)))
+			$error_delais_max_resa_room = 'yes';
+		if (!(verif_delais_min_resa_room(getUserName(), $room_id, $starttime)))
+			$error_delais_min_resa_room = 'yes';
+		if (!(verif_date_option_reservation($option_reservation, $starttime)))
+			$error_date_option_reservation = 'yes';
+		if (!(verif_qui_peut_reserver_pour($room_id, getUserName(), $beneficiaire)))
+			$error_qui_peut_reserver_pour = 'yes';
+		if (!(verif_heure_debut_fin($starttime, $endtime, $area)))
+			$error_heure_debut_fin = 'yes';
+		if (resa_est_hors_reservation2($starttime, $endtime, $area))
+			$error_heure_debut_fin = 'yes';
 	}
-	echo "<a href=\"".$back."&amp;Err=yes\">".get_vocab('returnprev')."</a><p>";
-	include "include/trailer.inc.php"; ?>
+	$statut_room = grr_sql_query1("SELECT statut_room from ".TABLE_PREFIX."_room where id = '$room_id'");
+	if (($statut_room == "0") && authGetUserLevel(getUserName(),$room_id) < 3)
+		$error_booking_room_out = 'yes';
+	if (!verif_acces_ressource(getUserName(), $room_id))
+		$error_booking_room_out = 'yes';
+}
+$err = "";
+if (($error_booking_in_past == 'no') && ($error_chevaussement == 'no') && ($error_duree_max_resa_area == 'no') && ($error_delais_max_resa_room == 'no') && ($error_delais_min_resa_room == 'no')  && ($error_date_option_reservation == 'no') && ($error_qui_peut_reserver_pour == 'no') && ($error_heure_debut_fin == 'no'))
+{
+	foreach ($_GET['rooms'] as $room_id)
+	{
+		if ($rep_type != 0 && !empty($reps))
+		{
+			if (count($reps) < $max_rep_entrys)
+			{
+				$diff = $endtime - $starttime;
+				for ($i = 0; $i < count($reps); $i++)
+				{
+					if (isset($_GET['del_entry_in_conflict']) && ($_GET['del_entry_in_conflict'] == 'yes'))
+						grrDelEntryInConflict($room_id, $reps[$i], $reps[$i] + $diff, $ignore_id, $repeat_id, 0);
+					if ($i == (count($reps) - 1))
+						$tmp = mrbsCheckFree($room_id, $reps[$i], $reps[$i] + $diff, $ignore_id, $repeat_id);
+					else
+						$tmp = mrbsCheckFree($room_id, $reps[$i], $reps[$i] + $diff, $ignore_id, $repeat_id);
+					if (!empty($tmp))
+						$err = $err . $tmp;
+				}
+			}
+			else
+			{
+				$err .= get_vocab("too_may_entrys") . "<p>";
+				$hide_title  = 1;
+			}
+		}
+		else
+		{
+			if (isset($_GET['del_entry_in_conflict']) && ($_GET['del_entry_in_conflict'] == 'yes'))
+				grrDelEntryInConflict($room_id, $starttime, $endtime-1, $ignore_id, $repeat_id, 0);
+			$err .= mrbsCheckFree($room_id, $starttime, $endtime - 1, $ignore_id, $repeat_id);
+		}
+	}
+}
+if (empty($err) && ($error_booking_in_past == 'no') && ($error_duree_max_resa_area == 'no') && ($error_delais_max_resa_room == 'no') && ($error_delais_min_resa_room == 'no') && ($error_booking_room_out == 'no') && ($error_date_option_reservation == 'no') && ($error_chevaussement == 'no') && ($error_qui_peut_reserver_pour == 'no') && ($error_heure_debut_fin == 'no'))
+{
+	$compt_room = 0;
+	foreach ($_GET['rooms'] as $room_id)
+	{
+		$area = mrbsGetRoomArea($room_id);
+		if (isset($id) && ($id != 0))
+		{
+			if (!getWritable($beneficiaire, getUserName(), $id))
+			{
+				showAccessDenied($back);
+				exit;
+			}
+		}
+		if (authUserAccesArea(getUserName(), $area) == 0)
+		{
+			showAccessDenied($back);
+			exit();
+		}
+		if (isset($id) and ($id != 0))
+			$compt = 0;
+		else
+			$compt = 1;
+		if ($rep_type != 0 && !empty($reps))
+		{
+			if (UserRoomMaxBooking(getUserName(), $room_id, count($reps) - 1 + $compt + $compt_room) == 0)
+			{
+				showAccessDeniedMaxBookings($day, $month, $year, $room_id, $back);
+				exit();
+			}
+			else
+				$compt_room += 1;
+		}
+		else
+		{
+			if (UserRoomMaxBooking(getUserName(), $room_id, $compt + $compt_room) == 0)
+			{
+				showAccessDeniedMaxBookings($day, $month, $year, $room_id, $back);
+				exit();
+			}
+			else
+				$compt_room += 1;
+		}
+	}
+	foreach ($_GET['rooms'] as $room_id)
+	{
+		$moderate = grr_sql_query1("SELECT moderate FROM ".TABLE_PREFIX."_room WHERE id = '".$room_id."'");
+		if ($moderate == 1)
+		{
+			$send_mail_moderate = 1;
+			if (isset($id))
+			{
+				$old_entry_moderate =  grr_sql_query1("SELECT moderate FROM ".TABLE_PREFIX."_entry where id='".$id."'");
+				if (authGetUserLevel(getUserName(),$room_id) < 3)
+					$entry_moderate = 1;
+				else
+					$entry_moderate = $old_entry_moderate;
+				if ($entry_moderate != 1)
+					$send_mail_moderate = 0;
+			}
+			else
+			{
+				if (authGetUserLevel(getUserName(),$room_id) < 3)
+					$entry_moderate = 1;
+				else
+				{
+					$entry_moderate = 0;
+					$send_mail_moderate = 0;
+				}
+			}
+		}
+		else
+		{
+			$entry_moderate = 0;
+			$send_mail_moderate = 0;
+		}
+		if ($rep_type != 0)
+		{
+			mrbsCreateRepeatingEntrys($starttime, $endtime, $rep_type, $rep_enddate, $rep_opt, $room_id, $create_by, $beneficiaire, $beneficiaire_ext, $name, $type, $description, $rep_num_weeks, $option_reservation, $overload_data, $entry_moderate, $rep_jour_c, $courrier, $rep_month_abs1, $rep_month_abs2);
+			if (getSettingValue("automatic_mail") == 'yes')
+			{
+				if (isset($id) && ($id != 0))
+				{
+					if ($send_mail_moderate)
+						$message_error = send_mail($id_first_resa, 5, $dformat);
+					else
+						$message_error = send_mail($id_first_resa, 2, $dformat);
+				}
+				else
+				{
+					if ($send_mail_moderate)
+						$message_error = send_mail($id_first_resa, 5, $dformat);
+					else
+						$message_error = send_mail($id_first_resa, 1, $dformat);
+				}
+			}
+		}
+		else
+		{
+			if ($repeat_id > 0)
+				$entry_type = 2;
+			else
+				$entry_type = 0;
+			mrbsCreateSingleEntry($starttime, $endtime, $entry_type, $repeat_id, $room_id, $create_by, $beneficiaire, $beneficiaire_ext, $name, $type, $description, $option_reservation, $overload_data, $entry_moderate, $rep_jour_c, $statut_entry, $keys, $courrier);
+			$new_id = grr_sql_insert_id();
+			if (getSettingValue("automatic_mail") == 'yes')
+			{
+				if (isset($id) && ($id != 0))
+				{
+					if ($send_mail_moderate)
+						$message_error = send_mail($new_id,5,$dformat);
+					else
+						$message_error = send_mail($new_id,2,$dformat);
+				}
+				else
+				{
+					if ($send_mail_moderate)
+						$message_error = send_mail($new_id,5,$dformat);
+					else
+						$message_error = send_mail($new_id,1,$dformat);
+				}
+			}
+		}
+	}
+	if (isset($id) && ($id != 0))
+	{
+		if ($rep_type != 0)
+			mrbsDelEntry(getUserName(), $id, "series", 1);
+		else
+			mrbsDelEntry(getUserName(), $id, NULL, 1);
+	}
+	grr_sql_mutex_unlock("".TABLE_PREFIX."_entry");
+	$area = mrbsGetRoomArea($room_id);
+	$_SESSION['displ_msg'] = 'yes';
+	if ($message_error != "")
+		$_SESSION['session_message_error'] = $message_error;
+	Header("Location: ".$page.".php?year=$year&month=$month&day=$day&area=$area&room=$room_back");
+	exit;
+}
+
+grr_sql_mutex_unlock("".TABLE_PREFIX."_entry");
+
+if ($error_booking_in_past == 'yes')
+{
+	$str_date = utf8_strftime("%d %B %Y, %H:%M", $date_now);
+	print_header();
+	echo "<h2>" . get_vocab("booking_in_past") . "</h2>";
+	if ($rep_type != 0 && !empty($reps))
+		echo "<p>" . get_vocab("booking_in_past_explain_with_periodicity") . $str_date."</p>";
+	else
+		echo "<p>" . get_vocab("booking_in_past_explain") . $str_date."</p>";
+	echo "<a href=\"".$back."&amp;Err=yes\">".get_vocab('returnprev')."</a>";
+	include "include/trailer.inc.php";
+	die();
+}
+if ($error_duree_max_resa_area == 'yes')
+{
+	$area_id = grr_sql_query1("SELECT area_id FROM ".TABLE_PREFIX."_room WHERE id='".protect_data_sql($room_id)."'");
+	$duree_max_resa_area = grr_sql_query1("SELECT duree_max_resa_area FROM ".TABLE_PREFIX."_area WHERE id='".$area_id."'");
+	print_header();
+	$temps_format = $duree_max_resa_area*60;
+	toTimeString($temps_format, $dur_units, true);
+	echo "<h2>" . get_vocab("error_duree_max_resa_area").$temps_format ." " .$dur_units."</h2>";
+	echo "<a href=\"".$back."&amp;Err=yes\">".get_vocab('returnprev')."</a>";
+	include "include/trailer.inc.php";
+	die();
+}
+
+if ($error_delais_max_resa_room == 'yes')
+{
+	print_header();
+	echo "<h2>" . get_vocab("error_delais_max_resa_room") ."</h2>";
+	echo "<a href=\"".$back."&amp;Err=yes\">".get_vocab('returnprev')."</a>";
+	include "include/trailer.inc.php";
+	die();
+}
+if ($error_chevaussement == 'yes')
+{
+	print_header();
+	echo "<h2>" . get_vocab("error_chevaussement") ."</h2>";
+	echo "<a href=\"".$back."&amp;Err=yes\">".get_vocab('returnprev')."</a>";
+	include "include/trailer.inc.php";
+	die();
+}
+if ($error_delais_min_resa_room == 'yes')
+{
+	print_header();
+	echo "<h2>" . get_vocab("error_delais_min_resa_room") ."</h2>";
+	echo "<a href=\"".$back."&amp;Err=yes\">".get_vocab('returnprev')."</a>";
+	include "include/trailer.inc.php";
+	die();
+}
+if ($error_date_option_reservation == 'yes')
+{
+	print_header();
+	echo "<h2>" . get_vocab("error_date_confirm_reservation") ."</h2>";
+	echo "<a href=\"".$back."&amp;Err=yes\">".get_vocab('returnprev')."</a>";
+	include "include/trailer.inc.php";
+	die();
+}
+if ($error_booking_room_out == 'yes')
+{
+	print_header();
+	echo "<h2>" . get_vocab("norights") . "</h2>";
+	echo "<p><b>" . get_vocab("tentative_reservation_ressource_indisponible") . "</b></p>";
+	echo "<a href=\"".$back."&amp;Err=yes\">".get_vocab('returnprev')."</a>";
+	include "include/trailer.inc.php";
+	die();
+}
+if ($error_qui_peut_reserver_pour == 'yes')
+{
+	print_header();
+	echo "<h2>" . get_vocab("error_qui_peut_reserver_pour") ."</h2>";
+	echo "<a href=\"".$back."&amp;Err=yes\">".get_vocab('returnprev')."</a>";
+	include "include/trailer.inc.php";
+	die();
+}
+if ($error_heure_debut_fin == 'yes')
+{
+	print_header();
+	echo "<h2>" . get_vocab("error_heure_debut_fin") ."</h2>";
+	echo $start_day;
+	echo "<a href=\"".$back."&amp;Err=yes\">".get_vocab('returnprev')."</a>";
+	include "include/trailer.inc.php";
+	die();
+}
+if (strlen($err))
+{
+	print_header();
+	echo "<h2>" . get_vocab("sched_conflict") . "</h2>";
+	if (!isset($hide_title))
+	{
+		echo get_vocab("conflict");
+		echo "<UL>";
+	}
+	echo $err;
+	if (!isset($hide_title))
+		echo "</UL>";
+	if (authGetUserLevel(getUserName(),$area,'area') >= 4)
+		echo "<center><table border=\"1\" cellpadding=\"10\" cellspacing=\"1\"><tr><td class='avertissement'><h3><a href='".traite_grr_url("","y")."edit_entry_handler.php?".$_SERVER['QUERY_STRING']."&amp;del_entry_in_conflict=yes'>".get_vocab("del_entry_in_conflict")."</a></h4></td></tr></table></center><br />";
+}
+echo "<a href=\"".$back."&amp;Err=yes\">".get_vocab('returnprev')."</a><p>";
+include "include/trailer.inc.php"; ?>

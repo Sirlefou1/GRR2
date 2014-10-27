@@ -520,6 +520,22 @@ function same_day_next_month($time)
 	else
 		return 28;
 }
+
+function get_day_of_month($time, $rep_month_abs1, $rep_month_abs2)
+{
+	$days = array('monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
+	$rep = array('first', 'second', 'third', 'fourth', 'five', 'last');
+	$sec   = date("s", $time);
+	$min   = date("i", $time);
+	$hour  = date("G", $time);
+	$day   = date("d", $time);
+	$month = date("m", $time);
+	$year  = date("Y", $time);
+	$time = strtotime('+1 month', $time);
+	$str = $rep[$rep_month_abs1].' '.$days[$rep_month_abs2 - 1].' of '.date("F", $time).' '.date("Y", $time);
+	return strtotime($str);
+
+}
 /** mrbsGetRepeatEntryList
  *
  * Returns a list of the repeating entrys
@@ -535,7 +551,7 @@ function same_day_next_month($time)
  *   empty     - The entry does not repeat
  *   an array  - This is a list of start times of each of the repeat entrys
  */
-function mrbsGetRepeatEntryList($time, $enddate, $rep_type, $rep_opt, $max_ittr, $rep_num_weeks, $rep_jour_c, $area)
+function mrbsGetRepeatEntryList($time, $enddate, $rep_type, $rep_opt, $max_ittr, $rep_num_weeks, $rep_jour_c, $area, $rep_month_abs1, $rep_month_abs2)
 {
 	$sec   = date("s", $time);
 	$min   = date("i", $time);
@@ -599,6 +615,11 @@ function mrbsGetRepeatEntryList($time, $enddate, $rep_type, $rep_opt, $max_ittr,
 				$kk++;
 			}
 			return $tableFinale;
+			case 7:
+			$your_date = get_day_of_month($time, $rep_month_abs1, $rep_month_abs2);
+			$datediff = $your_date - $time;
+			$day += floor($datediff / (60 * 60 * 24)) + 1;
+			break;
 			//Unknown repeat option
 			default:
 			return;
@@ -627,11 +648,11 @@ function mrbsGetRepeatEntryList($time, $enddate, $rep_type, $rep_opt, $max_ittr,
  *   0        - An error occured while inserting the entry
  *   non-zero - The entry's ID
  */
-function mrbsCreateRepeatingEntrys($starttime, $endtime, $rep_type, $rep_enddate, $rep_opt, $room_id, $creator, $beneficiaire, $beneficiaire_ext, $name, $type, $description, $rep_num_weeks, $option_reservation,$overload_data, $moderate, $rep_jour_c, $courrier)
+function mrbsCreateRepeatingEntrys($starttime, $endtime, $rep_type, $rep_enddate, $rep_opt, $room_id, $creator, $beneficiaire, $beneficiaire_ext, $name, $type, $description, $rep_num_weeks, $option_reservation,$overload_data, $moderate, $rep_jour_c, $courrier, $rep_month_abs1, $rep_month_abs2)
 {
 	global $max_rep_entrys, $id_first_resa;
 	$area = mrbsGetRoomArea($room_id);
-	$reps = mrbsGetRepeatEntryList($starttime, $rep_enddate, $rep_type, $rep_opt, $max_rep_entrys, $rep_num_weeks, $rep_jour_c, $area);
+	$reps = mrbsGetRepeatEntryList($starttime, $rep_enddate, $rep_type, $rep_opt, $max_rep_entrys, $rep_num_weeks, $rep_jour_c, $area, $rep_month_abs1, $rep_month_abs2);
 	if (count($reps) > $max_rep_entrys)
 		return 0;
 	if (empty($reps))

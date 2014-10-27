@@ -440,6 +440,7 @@
  	width : 100%;
  	vertical-align: middle;
  	text-align: center;
+ 	border-bottom: 1px solid white;
 
  }
  .popup_block{
