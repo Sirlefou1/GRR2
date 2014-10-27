@@ -176,7 +176,9 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 
 		function GetAction()
 		{
-			$action = $_SERVER['PHP_SELF']."?year=".date('Y',time())."&amp;month=".date('m',time())."&amp;day=".date('d',time());
+			$d = $_SERVER['PHP_SELF'];
+			$d = explode('/', $d);
+			$action = "/".$d[1]."/day.php?year=".date('Y',time())."&amp;month=".date('m',time())."&amp;day=".date('d',time());
 			if (isset($_GET['area']) && $_GET['area'] != null)
 				$action .= "&amp;area=".$_GET['area'] ;
 			if (isset($_GET['room']) && $_GET['room'] != null)
