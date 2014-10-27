@@ -787,12 +787,7 @@ function begin_page($title, $page="with_session")
 	$a .= '<script type="text/javascript" src="js/bootstrap-clockpicker.js"></script>'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="js/bootstrap-multiselect.js"></script>'.PHP_EOL;
 	$a .= '<script src="js/menu.js"></script>'.PHP_EOL;
-	$a .= '<script src="js/jspdf/jspdf.js"></script>'.PHP_EOL;
-	$a .= '<script src="js/jspdf/libs/FileSaver.js/FileSaver.js"></script>'.PHP_EOL;
-	$a .= '<script src="js/jspdf/jspdf.plugin.from_html.js"></script>'.PHP_EOL;
-	$a .= '<script src="js/jspdf/jspdf.plugin.standard_fonts_metrics.js"></script>'.PHP_EOL;
-	$a .= '<script src="js/jspdf/jspdf.plugin.split_text_to_size.js"></script>'.PHP_EOL;
-	$a .= '<script src="js/jspdf/libs/Blob.js/BlobBuilder.js"></script>'.PHP_EOL;
+	$a .= '<script src="js/jspdf.min.js"></script>'.PHP_EOL;
 	$a .= '<script src="js/pdf.js" type="text/javascript" ></script>'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="js/uploadify/jquery.uploadify.js"></script>'.PHP_EOL;
 	$a .= '<script src="js/appeldelete.js" type="text/javascript" ></script>'.PHP_EOL;
