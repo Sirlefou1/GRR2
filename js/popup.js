@@ -23,11 +23,19 @@ $(document).ready(function()
 		}).fadeIn();
 		return false;
 	});
-	$('body').on('click', 'a.close, #fade', function()
+	$('body').on('click', 'a.closepop, #fade', function()
 	{
 		$('#fade , .popup_block').fadeOut(function()
 		{
-			$('#fade, a.close').remove();
+			$('#fade, a.closepop').remove();
+		});
+		return false;
+	});
+	$('body').on('click', 'input.closepop, #fade', function()
+	{
+		$('#fade , .popup_block').fadeOut(function()
+		{
+			$('#fade, input.closepop').remove();
 		});
 		return false;
 	});
@@ -52,5 +60,5 @@ function request(id,day,month,year,currentPage,callback)
 }
 function readData(sData)
 {
-	document.getElementById('popup_name').innerHTML +='<a class=\"close\" href=\"#\" title=\"Fermeture\" ><img class=\"btn_close\" src=\"images/croix.jpeg\"/></a>'+sData + '<a class=\"close\" href=\"#\" title=\"Fermeture\" >Fermer </a></div> ';
+	document.getElementById('popup_name').innerHTML +='<a class=\"closepop\" href=\"#\" title=\"Fermeture\" ><img class=\"btn_close\" src=\"images/croix.jpeg\"/></a>'+sData + '<input class=\"closepop btn btn-primary\" type=\"button\" onclick=\"location.href=\'#\'\" title=\"Fermeture\" value=\"Fermer\" ></div> ';
 }

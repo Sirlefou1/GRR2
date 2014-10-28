@@ -559,7 +559,10 @@
  	height: 42px;
  }
 
-
+.closepop {
+	float: right;
+	cursor: pointer;
+}
  .tab a.open, .tab a.close1 {
  	height: 20px;
  	cursor: pointer;
