@@ -151,7 +151,7 @@ $area_name    		= htmlspecialchars($row[4]);
 $type         		= $row[5];
 $room_id      		= $row[6];
 $repeat_id    		= $row[7];
-$updated      		= time_date_string($row[8],$dformat);
+$updated      		= time_date_string($row[8], $dformat);
 $duration     		= $row[9];
 $area      			= $row[12];
 $statut_id 			= $row[13];
@@ -260,7 +260,7 @@ else
 if ($enable_periods == 'y')
 	list( , $end_date) =  period_date_string($row[11], -1);
 else
-	$end_date = time_date_string($row[11],$dformat);
+	$end_date = time_date_string($row[11], $dformat);
 if ($beneficiaire != "")
 	$mail_exist = grr_sql_query1("SELECT email FROM ".TABLE_PREFIX."_utilisateurs WHERE login='$beneficiaire'");
 else
@@ -654,7 +654,8 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 				if (!isset($room))
 					$room = 1;
 				if ((authGetUserLevel(getUserName(), $area_id, "area") > 1) || (authGetUserLevel(getUserName(), $room) >= 4))
-					echo "<br /><input class=\"btn btn-primary\" type=\"button\" onclick=\"javascript:generationpdf()\" value=\"".get_vocab("Generer_pdf")."\" >";
+					echo "<br /><a class=\"poplight\" href=\"#?w=960\" onclick=\"request2($id, readData);\" rel=\"pop_name\">".get_vocab("Generer_pdf")."</a>";
+					//echo "<br /><input class=\"btn btn-primary\" type=\"button\" onclick=\"javascript:generationpdf()\" value=\"".get_vocab("Generer_pdf")."\" >";
 				if ((getUserName() != '') && (authGetUserLevel(getUserName(), $room_id) >= 3) && ($moderate == 1))
 				{
 					echo "<form action=\"view_entry.php\" method=\"get\">\n";
@@ -673,9 +674,9 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 					}
 					echo "</p><p>";
 					echo "<label for=\"description\">".get_vocab("justifier_decision_moderation").get_vocab("deux_points")."</label>\n";
-					echo "<textarea name=\"description\" id=\"description\" cols=\"40\" rows=\"3\"></textarea>";
+					echo "<textarea class=\"form-control\" name=\"description\" id=\"description\" cols=\"40\" rows=\"3\"></textarea>";
 					echo "</p>";
-					echo "<br /><div style=\"text-align:center;\"><input type=\"submit\" name=\"commit\" value=\"".get_vocab("save")."\" /></div>\n";
+					echo "<br /><div style=\"text-align:center;\"><input class=\"btn btn-primary\" type=\"submit\" name=\"commit\" value=\"".get_vocab("save")."\" /></div>\n";
 					echo "</fieldset></form>\n";
 				}
 				if ($active_ressource_empruntee == 'y')
@@ -716,7 +717,7 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 						}
 						if ((!(getSettingValue("automatic_mail") == 'yes')) || ($mail_exist == ""))
 							echo "<br /><i>(".get_vocab("necessite fonction mail automatique").")</i>";
-						echo "<br /><div style=\"text-align:center;\"><input type=\"submit\" name=\"ok\" value=\"".get_vocab("save")."\" /></div></fieldset>\n";
+						echo "<br /><div style=\"text-align:center;\"><input class=\"btn btn-primary\" type=\"submit\" name=\"ok\" value=\"".get_vocab("save")."\" /></div></fieldset>\n";
 						echo "<div><input type=\"hidden\" name=\"day\" value=\"".$day."\" />";
 						echo "<input type=\"hidden\" name=\"month\" value=\"".$month."\" />";
 						echo "<input type=\"hidden\" name=\"year\" value=\"".$year."\" />";

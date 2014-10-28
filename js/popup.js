@@ -40,6 +40,20 @@ $(document).ready(function()
 		return false;
 	});
 });
+function request2(id,callback)
+{
+	document.getElementById('popup_name').innerHTML="";
+	var Id = id;
+	var xhr = getXMLHttpRequest();
+	xhr.onreadystatechange = function()
+	{
+		if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0))
+			callback(xhr.responseText);
+	};
+	xhr.overrideMimeType('text/html; charset=UTF-8');
+	xhr.open("GET","pdfgenerator.php?id="+Id+"", true);
+	xhr.send(null);
+}
 function request(id,day,month,year,currentPage,callback)
 {
 	document.getElementById('popup_name').innerHTML="";

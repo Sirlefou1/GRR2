@@ -3,22 +3,9 @@
  */
  function generationpdf()
  {
-   var doc = new jsPDF('p', 'in', 'letter');
-   var source = document.getElementById('popup_name');
-   var specialElementHandlers = {
-       '#bypassme': function(element, renderer)
-       {
-           return true;
-           alert("c'est instancié ! ");
-       }
-   };
-   doc.fromHTML(
-       source,
-       0.5,
-       0.5,
-       {
-           'width': 7.5,
-           'elementHandlers': specialElementHandlers
-       });
-   doc.output('dataurl');
+   var pdf = new jsPDF('p','pt','a4');
+
+pdf.addHTML(document.getElementById('popup_name'),function() {
+pdf.output('dataurl');
+});
 }
