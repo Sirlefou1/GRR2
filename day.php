@@ -404,7 +404,7 @@ else
 								if (getSettingValue("display_level_view_entry") == 0)
 								{
 									$currentPage = 'day';
-									echo "<a title=\"".htmlspecialchars($today[$room][$t]["who"])."\" href=\"#?w=600\" onclick=\"request($id,$day,$month,$year,'$currentPage',readData);\" rel=\"popup_name\" class=\"poplight\">$descr";
+									echo "<a title=\"".htmlspecialchars($today[$room][$t]["who"])."\" href=\"#?w=675\" onclick=\"request($id,$day,$month,$year,'$currentPage',readData);\" rel=\"popup_name\" class=\"poplight\">$descr";
 								}
 								else
 								{
@@ -475,7 +475,10 @@ else
     $('table td').each(function(){
         var $row = $(this);
         var height = $row.height();
+        var h2 = $row.find('a').height();
         $row.find('a').css('height', height);
+        $row.find('a').css('padding-top', height/2 - h2/2);
+
     });
 });
 	</script>

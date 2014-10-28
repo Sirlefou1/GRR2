@@ -376,7 +376,7 @@ for ($ir = 0; ($row = grr_sql_row($res, $ir)); $ir++)
 										{
 											$currentPage = 'month_all2';
 											$id =   $d[$cday]["id"][$i];
-											echo "<a title=\"".htmlspecialchars($d[$cday]["who1"][$i])."\" href=\"#?w=600\" onclick=\"request($id,$cday,$month,$year,'$currentPage',readData);\" rel=\"popup_name\" class=\"poplight\">" .$d[$cday]["who1"][$i]."</a>";
+											echo "<a title=\"".htmlspecialchars($d[$cday]["who1"][$i])."\" href=\"#?w=675\" onclick=\"request($id,$cday,$month,$year,'$currentPage',readData);\" rel=\"popup_name\" class=\"poplight\">" .$d[$cday]["who1"][$i]."</a>";
 											echo  "<div id=\"popup_name\" class=\"popup_block\" ></div>";
 										}
 										else

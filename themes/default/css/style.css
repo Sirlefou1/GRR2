@@ -595,3 +595,8 @@
 .pad-15, .pad-15 tboby {
 	padding-left: 15px !important;
 }
+
+#fixe {
+	position: fixed;
+	right: 5%;
+}

@@ -762,11 +762,7 @@ function begin_page($title, $page="with_session")
 	// Pour le format imprimable, on impose un fond de page blanc
 	if ((isset($_GET['pview'])) && ($_GET['pview'] == 1))
 		$a .=  '<link rel="stylesheet" href="themes/print/css/style.css" type="text/css" />'.PHP_EOL;
-	$a.= '<style type="text/css">div#fixe   { position: fixed; bottom: 5%; right: 5%;}</style>'.PHP_EOL;
-	$a.= '<style type="text/css">div#file_upload-queue  { position: fixed; bottom: 10%; right: 5%;}</style>'.PHP_EOL;
-	$a.= '<style type="text/css">div#file_upload   { position: fixed; bottom: 25%; right: 5%;}</style>'.PHP_EOL;
 	$a.= '<link rel="SHORTCUT ICON" href="./favicon.ico" />'.PHP_EOL;
-	$a .= '<link rel="stylesheet" type="text/css" href="js/uploadify/uploadify.css"/>'.PHP_EOL;
 	$a .= '<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />'.PHP_EOL;
 	$a .= '<link href="themes/default/css/jquery-ui-timepicker-addon.css" rel="stylesheet" type="text/css">'.PHP_EOL;
 	$a .= '<link href="themes/default/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css">'.PHP_EOL;
@@ -789,7 +785,6 @@ function begin_page($title, $page="with_session")
 	$a .= '<script src="js/menu.js"></script>'.PHP_EOL;
 	$a .= '<script src="js/jspdf.min.js"></script>'.PHP_EOL;
 	$a .= '<script src="js/pdf.js" type="text/javascript" ></script>'.PHP_EOL;
-	$a .= '<script type="text/javascript" src="js/uploadify/jquery.uploadify.js"></script>'.PHP_EOL;
 	$a .= '<script src="js/appeldelete.js" type="text/javascript" ></script>'.PHP_EOL;
 	$a .= '<script src="js/popup.js" type="text/javascript" charset="utf-8"></script>'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="js/oXHR.js"></script>'.PHP_EOL;

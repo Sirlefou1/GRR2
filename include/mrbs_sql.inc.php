@@ -456,7 +456,7 @@ function mrbsCreateSingleEntry($starttime, $endtime, $entry_type, $repeat_id, $r
 	// s'il s'agit d'une modification d'une ressource déjà modérée et acceptée : on met à jour les infos dans la table ".TABLE_PREFIX."_entry_moderate
 	$new_id = grr_sql_insert_id();
 	if ($moderate == 2)
-		moderate_entry_do($new_id,1,"","no");
+		moderate_entry_do($new_id, 1, "", "no");
 }
 /** mrbsCreateRepeatEntry()
  *

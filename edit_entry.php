@@ -1111,7 +1111,7 @@ if (($edit_type == "series") || (isset($flag_periodicite)))
 				{
 					echo "<option value=\"".$weekit."\"";
 					/*if ($rep_month_abs1 == $weekit)
-						echo " selected=\"selected\"";*/
+					echo " selected=\"selected\"";*/
 					echo ">".get_vocab($monthlist[$weekit])."</option>\n";
 				}
 				echo "</select>\n";
@@ -1120,7 +1120,7 @@ if (($edit_type == "series") || (isset($flag_periodicite)))
 				{
 					echo "<option value=\"".$weekit."\"";
 					/*if ($rep_month_abs2 == $weekit)
-						echo " selected=\"selected\"";*/
+					echo " selected=\"selected\"";*/
 					echo ">".day_name($weekit)."</option>\n";
 				}
 				echo "</select>\n";
@@ -1214,33 +1214,6 @@ else
 	echo "</td></tr></table>\n";
 	?>
 	<div id="fixe">
-		<?php
-		$allowupload = getSettingValue("file");
-		if ($allowupload != 0)
-		{
-			if ((getUserName() != '') && (authGetUserLevel(getUserName(), $room_id) >= 3))
-			{
-				?>
-				<script type="text/javascript">
-					<?php $timestamp = time();?>
-					$(function() {
-						$('#file_upload').uploadify({
-							'formData'     : {
-								'timestamp' : '<?php echo $timestamp;?>',
-								'token'     : '<?php echo md5('unique_salt' . $timestamp);?>',
-								'id'     : '<?php echo $id ;?>'
-							},
-							'swf'      : '/uploadify/uploadify.swf',
-							'uploader' : '/uploadify/uploadify.php',
-							'buttonText'     : 'Lier fichiers ...' ,
-							'multi'    : true
-						});
-					});
-				</script>
-				<?php
-			}
-		}
-		?>
 		<input type="button" class="btn btn-primary" value="<?php echo get_vocab("cancel")?>" onclick="window.location.href='<?php echo $page.".php?year=".$year."&amp;month=".$month."&amp;day=".$day."&amp;area=".$area."&amp;room=".$room; ?>'" />
 		<input type="button" class="btn btn-primary" value="<?php echo get_vocab("save")?>" onclick="Save_entry();validate_and_submit();" />
 		<input type="hidden" name="rep_id"    value="<?php echo $rep_id?>" />

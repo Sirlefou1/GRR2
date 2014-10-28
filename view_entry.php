@@ -561,13 +561,13 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 		<tr>
 			<td colspan="2">
 				<?php
-				echo "<a href=\"edit_entry.php?id=$id&amp;day=$day&amp;month=$month&amp;year=$year&amp;page=$page\">".get_vocab("editentry")."</a>";
-				echo " - <a href=\"edit_entry.php?id=$id&amp;day=$day&amp;month=$month&amp;year=$year&amp;page=$page&amp;copy\">".get_vocab("copyentry")."</a>";
-				if ($can_delete_or_create=="y")
+				echo "<input class=\"btn btn-primary\" type=\"button\" onclick=\"location.href='edit_entry.php?id=$id&amp;day=$day&amp;month=$month&amp;year=$year&amp;page=$page'\" value=\"".get_vocab("editentry")."\">";
+				echo "<input class=\"btn btn-info\" type=\"button\" onclick=\"location.href='edit_entry.php?id=$id&amp;day=$day&amp;month=$month&amp;year=$year&amp;page=$page&amp;copy'\" value=\"".get_vocab("copyentry")."\">";
+				if ($can_delete_or_create == "y")
 				{
 					$message_confirmation = str_replace("'", "\\'", get_vocab("confirmdel").get_vocab("deleteentry"));
 					?>
-					- <a href="del_entry.php?id=<?php echo $id; ?>&amp;series=0&amp;page=<?php echo $page; ?>" onclick="return confirm('<?php echo $message_confirmation; ?>');"><?php echo get_vocab("deleteentry"); ?></a></td>
+					<input class="btn btn-danger" type="button" onclick="location.href='del_entry.php?id=<?php echo $id; ?>&amp;series=0&amp;page=<?php echo $page; ?>';return confirm('<?php echo $message_confirmation; ?>');" value="<?php echo get_vocab("deleteentry"); ?>" ></td>
 					<?php
 				}
 				echo "</tr>";
@@ -654,11 +654,7 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 				if (!isset($room))
 					$room = 1;
 				if ((authGetUserLevel(getUserName(), $area_id, "area") > 1) || (authGetUserLevel(getUserName(), $room) >= 4))
-					echo "<a href=\"javascript:generationpdf()\" class=\"button\">".get_vocab("Generer_pdf")."</a> ";
-				?>
-				<div id="file">
-				</div>
-				<?php
+					echo "<input class=\"btn btn-primary\" type=\"button\" onclick=\"javascript:generationpdf()\" value=\"".get_vocab("Generer_pdf")."\" >";
 				if ((getUserName() != '') && (authGetUserLevel(getUserName(), $room_id) >= 3) && ($moderate == 1))
 				{
 					echo "<form action=\"view_entry.php\" method=\"get\">\n";
@@ -735,16 +731,16 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 					echo "<form action=\"view_entry.php\" method=\"get\">";
 					echo "<fieldset><legend style=\"font-weight:bold\">".get_vocab("reservation_en_cours")."</legend>\n";
 					echo "<span class=\"larger\">".get_vocab("status_clef").get_vocab("deux_points")."</span>";
-					echo "<br /><br /><input type=\"checkbox\" name=\"clef\" value=\"y\" ";
+					echo "<br /><input type=\"checkbox\" name=\"clef\" value=\"y\" ";
 					if ($keys == 1)
 						echo " checked ";
 					echo " /> ".get_vocab("msg_clef");
-					echo "<br /><br /><span class=\"larger\">".get_vocab("status_courrier").get_vocab("deux_points")."</span>";
-					echo "<br /><br /><input type=\"checkbox\" name=\"courrier\" value=\"y\" ";
+					echo "<br /><span class=\"larger\">".get_vocab("status_courrier").get_vocab("deux_points")."</span>";
+					echo "<br /><input type=\"checkbox\" name=\"courrier\" value=\"y\" ";
 					if ($courrier == 1)
 						echo " checked ";
 					echo " /> ".get_vocab("msg_courrier");
-					echo "<br /><div style=\"text-align:center;\"><input type=\"submit\" name=\"ok\" value=\"".get_vocab("save")."\" /></div></fieldset>\n";
+					echo "<br /><br /><div style=\"text-align:center;\"><input class=\"btn btn-primary\" type=\"submit\" name=\"ok\" value=\"".get_vocab("save")."\" /></div></fieldset>\n";
 					echo "<div><input type=\"hidden\" name=\"day\" value=\"".$day."\" />";
 					echo "<input type=\"hidden\" name=\"month\" value=\"".$month."\" />";
 					echo "<input type=\"hidden\" name=\"year\" value=\"".$year."\" />";
