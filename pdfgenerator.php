@@ -38,9 +38,10 @@ if (isset($_POST['civ']))
 	<head>
 		<title></title>
 		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="themes/default/css/pdf.css">
 	</head>
 	<body>
-		<div id="pdf">
+		<div class="content">
 				<div class="row">
 					<div class="col-md-1">
 						<img src="'.$logo.'" width="100" height="100" alt="logo">
@@ -114,7 +115,7 @@ if (isset($_POST['civ']))
 			</div>
 		<script src="http://html2canvas.hertzen.com/build/html2canvas.js"></script>
 		<script type="text/javascript" src="js/jspdf.min.js"></script>
-		<script type="text/javascript">
+<script type="text/javascript">
 			var pdf = new jsPDF(\'p\',\'pt\',\'a4\');
 
 			pdf.addHTML(document.body,function() {
@@ -123,6 +124,8 @@ if (isset($_POST['civ']))
 </script>
 </body>
 </html>';
+/*		
+*/
 }
 
 else
