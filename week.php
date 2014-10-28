@@ -478,44 +478,56 @@ for ($t = $week_start; $t <= $week_end; $t += 86400)
 								echo " <br/>". $Son_GenreRepeat ." <br/><br/>" ;
 							}
 							if ($d[$weekday][$slot - $decale_slot * $nb_case]["description"]!= "")
-								echo "<i>".$d[$weekday][$slot - $decale_slot * $nb_case]["description"]."</i>";
-							if ($acces_fiche_reservation)
-								echo"</a>";
+								echo "<i>".$d[$weekday][$slot - $decale_slot * $nb_case]["description"]."</i><br>";
 							$clef = grr_sql_query1("SELECT clef FROM ".TABLE_PREFIX."_entry WHERE  ".TABLE_PREFIX."_entry.id= ". $d[$weekday][$slot - $decale_slot * $nb_case]['id']."");
 							if ($clef == 1)
 								echo '<img src="img_grr/skey.png" alt="clef">';
 							$courrier = grr_sql_query1("SELECT courrier FROM ".TABLE_PREFIX."_entry WHERE  ".TABLE_PREFIX."_entry.id= ". $d[$weekday][$slot - $decale_slot * $nb_case]['id']."");
 							if ($courrier == 1)
 								echo '<img src="img_grr/scourrier.png" alt="courrier">';
+							if ($acces_fiche_reservation)
+								echo"</a>";
 						}
-					if ((isset($d[$weekday][$slot - $decale_slot * $nb_case]["statut"])) && ($d[$weekday][$slot - $decale_slot * $nb_case]["statut"] != '-'))
-						echo '<img src="img_grr/buzy.png" alt="'.get_vocab("ressource actuellement empruntee").'" title="'.get_vocab("ressource actuellement empruntee").'" width="20" height="20" class="image" />'.PHP_EOL;
-					if (($this_delais_option_reservation > 0) && (isset($d[$weekday][$slot - $decale_slot * $nb_case]["option_reser"])) && ($d[$weekday][$slot - $decale_slot * $nb_case]["option_reser"] != -1))
-						echo '<img src="img_grr/small_flag.png" alt="'.get_vocab("reservation_a_confirmer_au_plus_tard_le").'" title="'.get_vocab("reservation_a_confirmer_au_plus_tard_le").' '.time_date_string_jma($d[$weekday][$slot - $decale_slot * $nb_case]["option_reser"], $dformat).'" width="20" height="20" class="image" />'.PHP_EOL;
-					if ((isset($d[$weekday][$slot - $decale_slot * $nb_case]["moderation"])) && ($d[$weekday][$slot - $decale_slot * $nb_case]["moderation"] == '1'))
-						echo '<img src="img_grr/flag_moderation.png" alt="'.get_vocab("en_attente_moderation").'" title="'.get_vocab("en_attente_moderation").'" class="image" />'.PHP_EOL;
+						if ((isset($d[$weekday][$slot - $decale_slot * $nb_case]["statut"])) && ($d[$weekday][$slot - $decale_slot * $nb_case]["statut"] != '-'))
+							echo '<img src="img_grr/buzy.png" alt="'.get_vocab("ressource actuellement empruntee").'" title="'.get_vocab("ressource actuellement empruntee").'" width="20" height="20" class="image" />'.PHP_EOL;
+						if (($this_delais_option_reservation > 0) && (isset($d[$weekday][$slot - $decale_slot * $nb_case]["option_reser"])) && ($d[$weekday][$slot - $decale_slot * $nb_case]["option_reser"] != -1))
+							echo '<img src="img_grr/small_flag.png" alt="'.get_vocab("reservation_a_confirmer_au_plus_tard_le").'" title="'.get_vocab("reservation_a_confirmer_au_plus_tard_le").' '.time_date_string_jma($d[$weekday][$slot - $decale_slot * $nb_case]["option_reser"], $dformat).'" width="20" height="20" class="image" />'.PHP_EOL;
+						if ((isset($d[$weekday][$slot - $decale_slot * $nb_case]["moderation"])) && ($d[$weekday][$slot - $decale_slot * $nb_case]["moderation"] == '1'))
+							echo '<img src="img_grr/flag_moderation.png" alt="'.get_vocab("en_attente_moderation").'" title="'.get_vocab("en_attente_moderation").'" class="image" />'.PHP_EOL;
+					}
 				}
-			}
 				//echo "</td>\n";
+			}
+			$wt += 86400;
+			$num_week_day++;
+			$num_week_day = $num_week_day % 7;
 		}
-		$wt += 86400;
-		$num_week_day++;
-		$num_week_day = $num_week_day % 7;
+		if ($enable_periods == 'y')
+		{
+			$time_t = date("i", $t);
+			$time_t_stripped = preg_replace( "/^0/", "", $time_t);
+		}
+		$t += $resolution;
 	}
-	if ($enable_periods == 'y')
-	{
-		$time_t = date("i", $t);
-		$time_t_stripped = preg_replace( "/^0/", "", $time_t);
-	}
-	$t += $resolution;
-}
-echo "</table>";
-if ($_GET['pview'] != 1)
-	echo "<div id=\"toTop\"><b>".get_vocab("top_of_page")."</b>";
-bouton_retour_haut ();
-echo " </div>";
-echo " </div>";
-echo " </div>";
-echo  "<div id=\"popup_name\" class=\"popup_block\" ></div>";
-affiche_pop_up(get_vocab("message_records"),"user");
-?>
+	echo "</table>";
+	if ($_GET['pview'] != 1)
+		echo "<div id=\"toTop\"><b>".get_vocab("top_of_page")."</b>";
+	bouton_retour_haut ();
+	echo " </div>";
+	echo " </div>";
+	echo " </div>";
+	echo  "<div id=\"popup_name\" class=\"popup_block\" ></div>";
+	affiche_pop_up(get_vocab("message_records"),"user");
+	?>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('table td').each(function(){
+				var $row = $(this);
+				var height = $row.height();
+				var h2 = $row.find('a').height();
+				$row.find('a').css('height', height);
+				$row.find('a').css('padding-top', height/2 - h2/2);
+
+			});
+		});
+	</script>
