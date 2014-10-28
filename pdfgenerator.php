@@ -113,7 +113,7 @@ if (isset($_POST['civ']))
 					</div>
 				</div>
 			</div>
-		<script src="http://html2canvas.hertzen.com/build/html2canvas.js"></script>
+		<script src="js/html2canvas.js"></script>
 		<script type="text/javascript" src="js/jspdf.min.js"></script>
 <script type="text/javascript">
 			var pdf = new jsPDF(\'p\',\'pt\',\'a4\');
