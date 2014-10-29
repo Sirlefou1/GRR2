@@ -54,7 +54,7 @@ if ((authGetUserLevel(getUserName(),-1) < 2))
 	showAccessDenied("");
 	exit();
 }
-$sql = "SELECT nom, login, etat, statut FROM ".TABLE_PREFIX."_utilisateurs WHERE  (login='".$beneficiaire."')";
+$sql = "SELECT nom, login, etat, statut FROM ".TABLE_PREFIX."_utilisateurs WHERE  (login='".$identifiant_beneficiaire."')";
 $res = grr_sql_query($sql);
 if ($res)
 {

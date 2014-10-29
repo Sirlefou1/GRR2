@@ -28,22 +28,6 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-/**
- * $Log: admin_confirm_change_date_bookings.php,v $
- * Revision 1.8  2009-06-04 15:30:17  grr
- * *** empty log message ***
- *
- * Revision 1.7  2009-04-14 12:59:17  grr
- * *** empty log message ***
- *
- * Revision 1.6  2009-02-27 13:28:19  grr
- * *** empty log message ***
- *
- * Revision 1.5  2008-11-16 22:00:58  grr
- * *** empty log message ***
- *
- *
- */
 
 include "include/admin.inc.php";
 $grr_script_name = "admin_confirm_change_date_bookings.php";
@@ -88,7 +72,7 @@ echo "<p>".get_vocab("msg_del_bookings")."</p>";
 ?>
 <form action="admin_confirm_change_date_bookings.php" method='get'>
 	<div>
-		<input type="submit" value="<?php echo get_vocab("save");?>" />
+		<input class="btn btn-primary" type="submit" value="<?php echo get_vocab("save");?>" />
 		<input type="hidden" name="valid" value="yes" />
 		<input type="hidden" name="begin_bookings" value=" <?php echo $_GET['begin_bookings']; ?>" />
 		<input type="hidden" name="end_bookings" value=" <?php echo $_GET['end_bookings']; ?>" />
@@ -97,7 +81,7 @@ echo "<p>".get_vocab("msg_del_bookings")."</p>";
 
 <form action="admin_confirm_change_date_bookings.php" method='get'>
 	<div>
-		<input type="submit" value="<?php echo get_vocab("cancel");?>" />
+		<input class="btn btn-primary" type="submit" value="<?php echo get_vocab("cancel");?>" />
 		<input type="hidden" name="valid" value="no" />
 	</div>
 </form>

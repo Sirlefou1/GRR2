@@ -279,7 +279,7 @@ else
 	<input type="hidden" name="add_admin" value="yes" />
 	<input type="hidden" name="id_area" value="<?php echo $id_area;?>" />
 	<input type="hidden" name="room" value="<?php echo $room;?>" />
-	<input type="submit" value="Enregistrer" /></div>
+	<input class="btn btn-primary" type="submit" value="Enregistrer" /></div>
 </form>
 </td>
 </tr>

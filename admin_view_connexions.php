@@ -180,7 +180,7 @@ if (!isset($_POST['histDay']))
 					<td><input type="text" name="histYear" size="4" value="<?php echo($_POST['histYear']); ?>" style="text-align: center;"/></td>
 				</tr>
 			</table>
-			<input type="submit" value="<?php echo get_vocab("OK"); ?>" style="font-variant: small-caps;"/>
+			<input class="btn btn-primary" type="submit" value="<?php echo get_vocab("OK"); ?>" style="font-variant: small-caps;"/>
 		</fieldset>
 	</form>
 </div>
@@ -228,7 +228,7 @@ if (!isset($_POST['cleanDay']))
 					<td><input type="text" name="cleanYear" size="4" value="<?php echo($_POST['cleanYear']); ?>" style="text-align: center;"/></td>
 				</tr>
 			</table>
-			<input type="submit" value="<?php echo get_vocab("OK"); ?>" style="font-variant: small-caps;" />
+			<input class="btn btn-primary" type="submit" value="<?php echo get_vocab("OK"); ?>" style="font-variant: small-caps;" />
 		</fieldset>
 	</form>
 </div>
