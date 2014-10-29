@@ -404,7 +404,7 @@ else
 							if (getSettingValue("display_level_view_entry") == 0)
 							{
 								$currentPage = 'day';
-								echo "<a title=\"".htmlspecialchars($today[$room][$t]["who"])."\" href=\"#?w=675\" onclick=\"request($id,$day,$month,$year,'$currentPage',readData);\" rel=\"popup_name\" class=\"poplight\">$descr";
+								echo "<a title=\"".htmlspecialchars($today[$room][$t]["who"])."\" data-width=\"675\" onclick=\"request($id,$day,$month,$year,'$currentPage',readData);\" data-rel=\"popup_name\" class=\"poplight\">$descr";
 							}
 							else
 							{

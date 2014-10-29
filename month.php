@@ -398,7 +398,7 @@ else
 								{
 									$currentPage ='month_all2';
 									$id = $d[$cday]["id"][$i];
-									echo "<a title=\"".htmlspecialchars($d[$cday]["who"][$i])."\" href=\"#?w=675\" onclick=\"request($id,$cday,$month,$year,'$currentPage',readData);\" rel=\"popup_name\" class=\"poplight\">";
+									echo "<a title=\"".htmlspecialchars($d[$cday]["who"][$i])."\" data-width=\"675\" onclick=\"request($id,$cday,$month,$year,'$currentPage',readData);\" data-rel=\"popup_name\" class=\"poplight\">";
 								}
 								else
 								{
