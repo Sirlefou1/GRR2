@@ -6,6 +6,9 @@
  	margin :0 auto ;
  }
  a:after {content: "" !important;}
+ .ferie {
+ 	background-color: #bbbbbb;
+ }
  p
  {
  	font-size: 10pt;
