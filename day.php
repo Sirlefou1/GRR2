@@ -472,7 +472,7 @@ echo "\n<div id=\"popup_name\" class=\"popup_block\" ></div>";
 ?>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$('table td').each(function(){
+		$('table.table-bordered td').each(function(){
 			var $row = $(this);
 			var height = $row.height();
 			var h2 = $row.find('a').height();

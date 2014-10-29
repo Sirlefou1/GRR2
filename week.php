@@ -521,7 +521,7 @@ for ($t = $week_start; $t <= $week_end; $t += 86400)
 	?>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$('table td').each(function(){
+			$('table.table-bordered td').each(function(){
 				var $row = $(this);
 				var height = $row.height();
 				var h2 = $row.find('a').height();
