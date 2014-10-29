@@ -644,8 +644,8 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 					if ((getWritable($beneficiaire, getUserName(), $id)) && verif_booking_date(getUserName(), $id, $room_id, -1, $date_now, $enable_periods) && verif_delais_min_resa_room(getUserName(), $room_id, $row[10]) && (!$was_del))
 					{
 						$message_confirmation = str_replace ( "'"  , "\\'"  , get_vocab("confirmdel").get_vocab("deleteseries"));
-						echo "<tr><td colspan = \"2\"><input class=\"btn btn-primary\" type=\"button\" onclick=\"location.href='edit_entry.php?id=$id&amp;edit_type=series&amp;day=$day&amp;month=$month&amp;year=$year&amp;page=$page\" value=\"".get_vocab("editseries")."\"></td></tr>";
-						echo "<tr><td colspan = \"2\"><input class=\"btn btn-danger\" type=\"button\" onclick=\"location.href='del_entry.php?id=$id&amp;series=1&amp;day=$day&amp;month=$month&amp;year=$year&amp;page=$page\";return confirm('".$message_confirmation."');\" value=\"".get_vocab("deleteseries")."\"></td></tr>";
+						echo "<tr><td colspan = \"2\"><input class=\"btn btn-primary\" type=\"button\" onclick=\"location.href='edit_entry.php?id=$id&amp;edit_type=series&amp;day=$day&amp;month=$month&amp;year=$year&amp;page=$page'\" value=\"".get_vocab("editseries")."\"></td></tr>";
+						echo "<tr><td colspan = \"2\"><input class=\"btn btn-danger\" type=\"button\" onclick=\"location.href='del_entry.php?id=$id&amp;series=1&amp;day=$day&amp;month=$month&amp;year=$year&amp;page=$page';return confirm('".$message_confirmation."');\" value=\"".get_vocab("deleteseries")."\"></td></tr>";
 					}
 					echo "</table></fieldset>";
 				}
