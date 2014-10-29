@@ -527,7 +527,6 @@ for ($t = $week_start; $t <= $week_end; $t += 86400)
 				var h2 = $row.find('a').height();
 				$row.find('a').css('height', height);
 				$row.find('a').css('padding-top', height/2 - h2/2);
-
 			});
 		});
 	</script>

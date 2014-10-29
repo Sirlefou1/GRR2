@@ -1564,7 +1564,7 @@ function tdcell_rowspan($colclass, $step)
 		echo "<td rowspan=\"$step\" style=\"background-color:".$tab_couleur[$num_couleur].";\">";
 	}
 	else
-		echo "<td  rowspan=\"$step\" td class=\"".$colclass."\">";
+		echo "<td rowspan=\"$step\" td class=\"".$colclass."\">";
 }
 //Display the entry-type color key. This has up to 2 rows, up to 10 columns.
 function show_colour_key($area_id)

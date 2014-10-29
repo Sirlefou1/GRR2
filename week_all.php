@@ -418,7 +418,7 @@ else
 									}
 									else
 										echo "<a class=\"lienCellule\" title=\"".htmlspecialchars($d[$cday]["who"][$i])."\" href=\"view_entry.php?id=" . $d[$cday]["id"][$i]."&amp;page=week_all&amp;day=$cday&amp;month=$cmonth&amp;year=$cyear&amp;\">";
-									echo "\n<table class='table-header'><tr>";
+									echo PHP_EOL.'<table class="table-header"><tr>';
 									tdcell($d[$cday]["color"][$i]);
 									if ($d[$cday]["res"][$i] !='-')
 										echo " <img src=\"img_grr/buzy.png\" alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("ressource actuellement empruntee")."\" width=\"20\" height=\"20\" class=\"image\" /> \n";
@@ -430,11 +430,10 @@ else
 									if ($Son_GenreRepeat == -1)
 										echo "<span class=\"small_planning\">".$d[$cday]["data"][$i]."";
 									else
-										echo "<span class=\"small_planning\">".$d[$cday]["data"][$i]."<br/>". $Son_GenreRepeat."<br/>";
+										echo "<span class=\"small_planning\">".$d[$cday]["data"][$i]."<br>". $Son_GenreRepeat."<br>";
 									echo $d[$cday]["who1"][$i]. "<br/>" ;
 									if ($d[$cday]["description"][$i] != "")
 										echo "<i>".$d[$cday]["description"][$i]."</i>";
-									echo "</a>";
 									$clef = grr_sql_query1("SELECT clef FROM ".TABLE_PREFIX."_entry WHERE ".TABLE_PREFIX."_entry.id = '".$d[$cday]["id"][$i]."'");
 									if ($clef == 1)
 										echo '<img src="img_grr/skey.png" alt="clef">';
@@ -445,7 +444,7 @@ else
 								}
 								else
 								{
-									echo "\n<table class='table-header'><tr>";
+									echo PHP_EOL.'<table class="table-header"><tr>';
 									tdcell($d[$cday]["color"][$i]);
 									if ($d[$cday]["res"][$i] != '-')
 										echo " <img src=\"img_grr/buzy.png\" alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("ressource actuellement empruntee")."\" width=\"20\" height=\"20\" class=\"image\" /> \n";
@@ -462,16 +461,17 @@ else
 									else
 									{
 										echo "<span class=\"small_planning\">
-										". $d[$cday]["data"][$i]."<br/>
-										". $Son_GenreRepeat."<br/>";
+										". $d[$cday]["data"][$i]."<br>
+										". $Son_GenreRepeat."<br>";
 									}
-									echo $d[$cday]["who1"][$i]. " <br/>" ;
+									echo $d[$cday]["who1"][$i]. " <br>" ;
 									if ($d[$cday]["description"][$i] != "")
 										echo "<i>".$d[$cday]["description"][$i]."</i>";
 										//echo "</a>";
 									echo "</span>";
 								}
 								echo "</td></tr></table>";
+								echo "</a>";
 							}
 						}
 					}
