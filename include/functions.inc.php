@@ -899,11 +899,12 @@ function print_header($day = '', $month = '', $year = '', $type_session = 'with_
 				<div id="Date"></div>
 				<ul>
 					<li id="hours"> </li>
-					<li id="point">:</li>
+					<li class="point">:</li>
 					<li id="min"> </li>
-					<li id="point">:</li>
+					<li class="point">:</li>
 					<li id="sec"> </li>
-				</ul>';
+				</ul>
+				</div>';
 			}
 			$_SESSION['chemin_retour'] = '';
 			if (isset($_SERVER['QUERY_STRING']) && ($_SERVER['QUERY_STRING'] != ''))
@@ -962,7 +963,7 @@ function print_header($day = '', $month = '', $year = '', $type_session = 'with_
 			echo '</div></div><div class="tab">
 			<ul class="login">
 				<li>
-					<a id="open" class="open" href="#">Menu</span></a>
+					<a id="open" class="open" href="#">Menu</a>
 				</li>
 			</ul>
 		</div> <!-- / top --></div>';
@@ -1596,6 +1597,8 @@ function show_colour_key($area_id)
 				echo "$type_name</td>\n";
 			}
 		}
+		if ($i % 2 == 1)
+			echo '<td></td></tr>';
 		echo "</table>\n";
 	}
 }
