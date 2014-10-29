@@ -567,7 +567,7 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 				{
 					$message_confirmation = str_replace("'", "\\'", get_vocab("confirmdel").get_vocab("deleteentry"));
 					?>
-					<input class="btn btn-danger" type="button" onclick="location.href='del_entry.php?id=<?php echo $id; ?>&amp;series=0&amp;page=<?php echo $page; ?>';return confirm('<?php echo $message_confirmation; ?>');" value="<?php echo get_vocab("deleteentry"); ?>" ></td>
+						<a class="btn btn-danger" type="button" href="del_entry.php?id=<?php echo $id ?>&amp;series=0&amp;page=<?php echo $page; ?>" onclick="return confirm('<?php echo $message_confirmation ?>');"><?php echo get_vocab("deleteentry") ?></a></td>
 					<?php
 				}
 				echo "</tr>";
@@ -645,7 +645,7 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 					{
 						$message_confirmation = str_replace ( "'"  , "\\'"  , get_vocab("confirmdel").get_vocab("deleteseries"));
 						echo "<tr><td colspan = \"2\"><input class=\"btn btn-primary\" type=\"button\" onclick=\"location.href='edit_entry.php?id=$id&amp;edit_type=series&amp;day=$day&amp;month=$month&amp;year=$year&amp;page=$page'\" value=\"".get_vocab("editseries")."\"></td></tr>";
-						echo "<tr><td colspan = \"2\"><input class=\"btn btn-danger\" type=\"button\" onclick=\"location.href='del_entry.php?id=$id&amp;series=1&amp;day=$day&amp;month=$month&amp;year=$year&amp;page=$page';return confirm('".$message_confirmation."');\" value=\"".get_vocab("deleteseries")."\"></td></tr>";
+						echo "<tr><td colspan = \"2\"><a class=\"btn btn-danger\" type=\"button\" href=\"del_entry.php?id=$id&amp;series=1&amp;day=$day&amp;month=$month&amp;year=$year&amp;page=$page\" onclick=\"return confirm('".$message_confirmation."');\">".get_vocab("deleteseries")."</a></td></tr>";
 					}
 					echo "</table></fieldset>";
 				}

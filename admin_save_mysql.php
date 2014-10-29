@@ -34,7 +34,7 @@ if ((!isset($_GET['mdp'])) && (!isset($argv[1])) && (!isset($_GET['flag_connect'
 	die();
 }
 if ((!isset($_GET['mdp'])) && isset($argv[1]))
-	$_GET['mdp']=$argv[1];
+	$_GET['mdp'] = $argv[1];
 if (isset($_GET['mdp']))
 {
 	include "include/connect.inc.php";
@@ -49,7 +49,7 @@ if (isset($_GET['mdp']))
 	if ((($_GET['mdp'] != getSettingValue("motdepasse_backup")) || (getSettingValue("motdepasse_backup")== '' )))
 	{
 		if (!isset($argv[1]))
-			echo begin_page("backup",$page="no_session")."<p>";
+			echo begin_page("backup", $page = "no_session")."<p>";
 		echo "Le mot de passe fourni est invalide.";
 		if (!isset($argv[1]))
 		{
