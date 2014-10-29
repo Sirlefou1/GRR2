@@ -654,7 +654,8 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 				if (!isset($room))
 					$room = 1;
 				if ((authGetUserLevel(getUserName(), $area_id, "area") > 1) || (authGetUserLevel(getUserName(), $room) >= 4))
-					echo "<br /><a class=\"poplight\" href=\"#?w=960\" onclick=\"request2($id, readData);\" rel=\"pop_name\">".get_vocab("Generer_pdf")."</a>";
+					echo "<br /><input class=\"btn btn-primary\" type=\"button\" onclick=\"myFunction($id)\" value=\"".get_vocab("Generer_pdf")."\" >";
+					//echo "<br /><a class=\"poplight\" href=\"#?w=960\" onclick=\"request2($id, readData);\" rel=\"pop_name\">".get_vocab("Generer_pdf")."</a>";
 					//echo "<br /><input class=\"btn btn-primary\" type=\"button\" onclick=\"javascript:generationpdf()\" value=\"".get_vocab("Generer_pdf")."\" >";
 				if ((getUserName() != '') && (authGetUserLevel(getUserName(), $room_id) >= 3) && ($moderate == 1))
 				{

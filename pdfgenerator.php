@@ -41,93 +41,90 @@ if (isset($_POST['civ']))
 		<link rel="stylesheet" type="text/css" href="themes/default/css/pdf.css">
 	</head>
 	<body>
-		<div class="content">
-				<div class="row">
-					<div class="col-md-1">
-						<img src="'.$logo.'" width="100" height="100" alt="logo">
-					</div>
-					<div class="col-md-4 col-md-offset-7">
-						'.$etablisement.'
-					</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-1">
+					<img src="'.$logo.'" width="100" height="100" alt="logo">
 				</div>
-				<br>
-				<br>
-				<br>
-				<br>
-				<br>
-				<div class="row">
-					<div class="col-md-4 col-md-offset-8">
-						<address>
-							'.$civ.' '.$prenom.' '.$nom.'<br>
-							'.$orga.'<br>
-							'.$adresse.'<br>
-							'.$cp.' '.$ville.'
-						</address>
-					</div>
-				</div>
-				<br>
-				<br>
-				<br>
-				<br>
-				<br>
-				<div class="col-md-4">
-					<strong>Objet : Réservation de salle</strong>
-				</div>
-
-				<br>
-				<br>
-				<br>
-
-				<div class="row">
-					<div class="col-md-8 col-md-offset-1">
-						'.$civ.',<br>
-						Comme suite à votre demande du '.$date.' dernier,<br><br>
-						J\'ai le plaisir de vous informer que la salle '.$salle.' sera mise à votre disposition,
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4 col-md-offset-4">
-						<br>
-						<strong>Du '.$jour.' à '.$heure.'</strong>
-						<br>
-						<strong>Au  '.$jour2.' à '.$heure2.'</strong>
-						<br>
-						<br>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-8 col-md-offset-1">
-						Vous pourrez retirer les clés auprès du service '.$cle.'. Eles devront être remises immédiatement après dans la boîte aux letres de la '.$etablisement.'.<br><br>
-						Restant à votre disposition pour tous renseignements complémentaires,<br>
-						Je vous prie de croire, '.$civ.', à l\'assurance des mes sentiments les meilleurs.
-					</div>
-				</div>
-				<br>
-				<br>
-				<br>
-				<br>
-				<br>
-				<div class="row">
-					<div class="col-md-3 col-md-offset-7">
-						Signature
-					</div>
+				<div class="col-md-4 col-md-offset-7">
+					'.$etablisement.'
 				</div>
 			</div>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<div class="row">
+				<div class="col-md-4 col-md-offset-8">
+					<address>
+						'.$civ.' '.$prenom.' '.$nom.'<br>
+						'.$orga.'<br>
+						'.$adresse.'<br>
+						'.$cp.' '.$ville.'
+					</address>
+				</div>
+			</div>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<div class="col-md-4">
+				<strong>Objet : Réservation de salle</strong>
+			</div>
+
+			<br>
+			<br>
+			<br>
+
+			<div class="row">
+				<div class="col-md-8 col-md-offset-1">
+					'.$civ.',<br>
+					Comme suite à votre demande du '.$date.' dernier,<br><br>
+					J\'ai le plaisir de vous informer que la salle '.$salle.' sera mise à votre disposition,
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 col-md-offset-4">
+					<br>
+					<strong>Du '.$jour.' à '.$heure.'</strong>
+					<br>
+					<strong>Au  '.$jour2.' à '.$heure2.'</strong>
+					<br>
+					<br>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-8 col-md-offset-1">
+					Vous pourrez retirer les clés auprès du service '.$cle.'. Eles devront être remises immédiatement après dans la boîte aux letres de la '.$etablisement.'.<br><br>
+					Restant à votre disposition pour tous renseignements complémentaires,<br>
+					Je vous prie de croire, '.$civ.', à l\'assurance des mes sentiments les meilleurs.
+				</div>
+			</div>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<div class="row">
+				<div class="col-md-3 col-md-offset-7">
+					Signature
+				</div>
+			</div>
+		</div>
 		<script src="js/html2canvas.js"></script>
 		<script type="text/javascript" src="js/jspdf.min.js"></script>
-<script type="text/javascript">
+		<script type="text/javascript">
 			var pdf = new jsPDF(\'p\',\'pt\',\'a4\');
 
 			pdf.addHTML(document.body,function() {
-				pdf.output(\'dataurl\');
+				pdf.output(\'dataurlnewwindow\');
 			});
 </script>
 </body>
 </html>';
-/*		
-*/
 }
-
 else
 {
 	if (isset($_GET['id']))
@@ -150,7 +147,7 @@ else
 		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
 	</head>
 	<body>
-		<form method="post" class="contact-us" action="pdfgenerator.php" target="_blank">
+		<form method="post" class="contact-us" action="pdfgenerator.php">
 			<h2>Test de formulaire</h2>
 			<div class="input-group">
 				<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>

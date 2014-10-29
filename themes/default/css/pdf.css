@@ -2,3 +2,7 @@
 	width: 100%;
 	margin: auto 0 !important;
 }
+
+.preview-pane {
+	border: 3px solid #ccc;
+}
