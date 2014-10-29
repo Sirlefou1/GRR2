@@ -520,4 +520,5 @@ echo "</div>";
 echo "</div>";
 echo "<div id=\"popup_name\" class=\"popup_block\" ></div>";
 echo "<div id=\"popup_name2\" class=\"popup_block2\" ></div>";
+include "footer.php";
 ?>

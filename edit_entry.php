@@ -1254,3 +1254,6 @@ else
 		?>
 	</script>
 	<?php include "include/trailer.inc.php" ?>
+	<?php
+include "footer.php";
+?>

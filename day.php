@@ -482,3 +482,6 @@ echo "\n<div id=\"popup_name\" class=\"popup_block\" ></div>";
 		});
 	});
 </script>
+<?php
+include "footer.php";
+?>

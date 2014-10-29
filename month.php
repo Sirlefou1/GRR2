@@ -468,4 +468,5 @@ else
 		echo " </div>";
 		echo  "<div id=\"popup_name\" class=\"popup_block\" ></div>";
 		affiche_pop_up(get_vocab("message_records"),"user");
-		?>
+include "footer.php";
+?>

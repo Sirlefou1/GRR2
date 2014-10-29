@@ -408,4 +408,5 @@ echo " </div>";
 echo " </div>";
 echo " </div>";
 affiche_pop_up(get_vocab("message_records"),"user");
+include "footer.php";
 ?>

@@ -478,4 +478,5 @@ show_colour_key($area);
 	// Affichage d'un message pop-up
 affiche_pop_up(get_vocab("message_records"),"user");
 include "include/trailer.inc.php";
+include "footer.php";
 ?>

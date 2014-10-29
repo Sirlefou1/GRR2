@@ -530,3 +530,6 @@ for ($t = $week_start; $t <= $week_end; $t += 86400)
 			});
 		});
 	</script>
+<?php
+include "footer.php";
+?>

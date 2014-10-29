@@ -451,4 +451,5 @@ for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 		// Affichage d'un message pop-up
 	echo  "<div id=\"popup_name\" class=\"popup_block\" ></div>";
 	affiche_pop_up(get_vocab("message_records"),"user");
-	?>
+include "footer.php";
+?>
