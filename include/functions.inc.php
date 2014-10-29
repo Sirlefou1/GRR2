@@ -782,7 +782,7 @@ function begin_page($title, $page="with_session")
 	$a .= '<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="js/bootstrap-clockpicker.js"></script>'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="js/bootstrap-multiselect.js"></script>'.PHP_EOL;
-	$a .= '<script src="http://html2canvas.hertzen.com/build/html2canvas.js"></script>'.PHP_EOL;
+	$a .= '<script src="js/html2canvas.js"></script>'.PHP_EOL;
 	$a .= '<script src="js/menu.js"></script>'.PHP_EOL;
 	$a .= '<script src="js/jspdf.min.js"></script>'.PHP_EOL;
 	$a .= '<script src="js/pdf.js" type="text/javascript" ></script>'.PHP_EOL;
