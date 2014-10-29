@@ -38,6 +38,7 @@
 [maj] lib datepicker
 [maj] lib timepicker 1.5.0
 [maj] lib phpmailer 5.2.9+
+[maj] lib jspdf master-43eb081
 [maj] Traductions
 [change] Correction diverse du code HTML generer W3c validation
 [change] Ordre de chargemet des fichier css et js
@@ -49,6 +50,9 @@
 [change] Affichage du menu gauche dans toutes les pages de l'administration
 [change] Passage de la verification des droit via une fonction
 [change] timepicker to clockpicker
+[change] Generation de pdf avancé
+[change] optimisation du mincals
+[change] suppression des variable inutile dans showaccessdenied
 [suppression] Fichiers inutile
 [suppression] fonction html_entity_decode_all_version
-
+[suppression] des fragments de code pour l'upload des fichiers

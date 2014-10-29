@@ -193,15 +193,6 @@ if (isset($_POST['menu_gauche']))
 		die();
 	}
 }
-// ANTHONY ARCHAMBEAU -- UPLOAD FICHIERS
-if (isset($_POST['file']))
-{
-	if (!saveSetting("file", $_POST['file']))
-	{
-		echo "Erreur lors de l'enregistrement de l'upload de fichier !<br />";
-		die();
-	}
-}
 // display_full_description
 if (isset($_POST['display_full_description']))
 {
@@ -812,7 +803,6 @@ echo "</table>";
 #SQL : menu_gauche==1  //le bouton s'affiche par default
 # menu_gauche==0 //le bouton ne s'affiche pas par default
 #Test pour savoir la valeur présente dans la base de données : echo getSettingValue("menu_gauche");
-#A FAIRE : permettre de cacher ou non le menu gauche directement
 echo "<hr /><h3>".get_vocab("display_menu")."</h3>\n";
 echo "<p>".get_vocab("display_menu_1")."</p>";
 echo "<table>";
@@ -829,24 +819,6 @@ if (getSettingValue("menu_gauche") == '1')
 echo " />";
 echo "</td></tr>";
 echo "</table>";
-// ANTHONY ARCHAMBEAU PERMETTRE L'UPLOAD
-echo "<hr /><h3>".get_vocab("display_file")."</h3>\n";
-echo "<p>".get_vocab("display_file1")."</p>";
-echo "<table>";
-echo "<tr><td>".get_vocab("display_file3")."</td><td>";
-echo "<input type='radio' name='file' value='0' ";
-if (getSettingValue("file") == '0')
-	echo "checked=\"checked\"";
-echo " />";
-echo "</td></tr>";
-echo "<tr><td>".get_vocab("display_file2")."</td><td>";
-echo "<input type='radio' name='file' value='1' ";
-if (getSettingValue("file") == '1')
-	echo "checked=\"checked\"";
-echo " />";
-echo "</td></tr>";
-echo "</table>";
-#MAJ David VOUE - 21/01/2014 Choix de l'affichage de la fonctionnalité formulaire de contact
 #mail_destinataire = 0 //Le formulaire de contact est désactivé (0 par défaut)
 #mail_destinataire = 1 //Le formulaire de contact est activé
 echo "<hr /><h3>".get_vocab("display_mail_etat_destinataire")."</h3>\n";
