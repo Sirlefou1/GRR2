@@ -30,6 +30,7 @@
 [ajout] choix de reservation periodique chaque Xeme Yjour du mois
 [ajout] Jour férié
 [ajout] Vacance scolaire francaise
+[ajout] Settings pour les jours feries et vacances
 [maj] lib Jquery 2.1.1
 [maj] script popup.js compatibilité jquery
 [maj] script appeldelete.js compatibilité jquery

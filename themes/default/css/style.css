@@ -12,10 +12,6 @@
  .vacance {
  	background-color: rgba(46, 204, 113,0.5) !important;
  }
- .vacance h4:before{ content:"Vacance "; }
- .vacance a:before{ content:"Vacance "; }
- .ferie h4:before{ content:"Férié "; }
- .ferie a:before{ content:"Férié "; }
  p
  {
  	font-size: 10pt;

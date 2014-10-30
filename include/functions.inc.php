@@ -30,7 +30,6 @@
  */
 header("Cache-Control:no-cache");
 
-
 function getSchoolHolidays($now, $year)
 {
 	$zone = 'A';
@@ -63,8 +62,6 @@ function getSchoolHolidays($now, $year)
 	}
 	return $sh;
 }
-
-
 function getHolidays($year = null)
 {
 	if ($year === null)
