@@ -357,6 +357,8 @@ else
 	$ferie = getHolidays($year);
 	for ($cday = 1; $cday <= $days_in_month; $cday++)
 	{
+		$class = "";
+		$title = "";
 		$num_week_day = ($weekcol + $weekstarts) % 7;
 		$t = mktime(0, 0, 0, $month, $cday,$year);
 		$name_day = ucfirst(utf8_strftime("%d", $t));
@@ -374,10 +376,15 @@ else
 					break;
 				}
 			}
+			$sh = getSchoolHolidays($t, $year);
+			if ($sh[0] == true)
+			{
+				$class .= "vacance ";
+				$title = " ".$sh[1];
+			}
 			if ($ferie_true)
-				echo "<td valign=\"top\" class=\"cell_month\">\n<div class=\"monthday ferie\"><a title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day"))."\" href=\"day.php?year=$year&amp;month=$month&amp;day=$cday&amp;area=$area\">".$name_day;
-			else
-				echo "<td valign=\"top\" class=\"cell_month\">\n<div class=\"monthday\"><a title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day"))."\" href=\"day.php?year=$year&amp;month=$month&amp;day=$cday&amp;area=$area\">".$name_day;
+				$class .= "ferie ";
+			echo "<td valign=\"top\" class=\"cell_month\">\n<div class=\"monthday ".$class."\"><a title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day")).$title."\" href=\"day.php?year=$year&amp;month=$month&amp;day=$cday&amp;area=$area\">".$name_day;
 			if (getSettingValue("jours_cycles_actif") == "Oui" && intval($jour_cycle) >- 1)
 			{
 				if (intval($jour_cycle) > 0)

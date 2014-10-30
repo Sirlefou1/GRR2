@@ -340,6 +340,8 @@ else
 		}
 		if ($display_day[$num_week_day] == 1)
 		{
+			$class = "";
+			$title = "";
 			$ferie_true = 0;
 			foreach ($ferie as $key => $value)
 			{
@@ -349,10 +351,15 @@ else
 					break;
 				}
 			}
+			$sh = getSchoolHolidays($tt, $temp_year);
+			if ($sh[0] == true)
+			{
+				$class .= "vacance ";
+				$title = " ".$sh[1];
+			}
 			if ($ferie_true)
-				echo "<th class=\"jour_sem\"><a class=\"lienPlanning ferie\" href='day.php?year=".$temp_year."&amp;month=".$temp_month."&amp;day=".$num_day."&amp;area=".$area."'>"  . day_name(($weekcol + $weekstarts) % 7) . " ".$num_day. " ".$temp_month2."</a>";
-			else
-				echo "<th class=\"jour_sem\"><a class=\"lienPlanning\" href='day.php?year=".$temp_year."&amp;month=".$temp_month."&amp;day=".$num_day."&amp;area=".$area."'>"  . day_name(($weekcol + $weekstarts) % 7) . " ".$num_day. " ".$temp_month2."</a>";
+				$class .= "ferie ";
+			echo "<th class=\"jour_sem\"><a class=\"lienPlanning ".$class."\" href='day.php?year=".$temp_year."&amp;month=".$temp_month."&amp;day=".$num_day."&amp;area=".$area."'>"  . day_name(($weekcol + $weekstarts) % 7) . " ".$num_day. " ".$temp_month2."</a>";
 			if (getSettingValue("jours_cycles_actif") == "Oui" && intval($jour_cycle) >- 1)
 			{
 				if (intval($jour_cycle) > 0)

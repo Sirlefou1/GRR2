@@ -357,6 +357,8 @@ for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 			echo "<td valign=\"top\" class=\"cell_month\">";
 			// On affiche les jours du mois dans le coin supérieur gauche de chaque cellule
 			$ferie_true = 0;
+			$class = "";
+			$title = "";
 			foreach ($ferie as $key => $value)
 			{
 				if ($t == $value)
@@ -365,10 +367,15 @@ for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 					break;
 				}
 			}
+			$sh = getSchoolHolidays($t, $year);
+			if ($sh[0] == true)
+			{
+				$class .= "vacance ";
+				$title = " ".$sh[1];
+			}
 			if ($ferie_true)
-				echo "<div class=\"monthday ferie\"><a title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day"))."\" href=\"day.php?year=$year&amp;month=$month&amp;day=$cday&amp;area=$area\">".$name_day;
-			else
-				echo "<div class=\"monthday\"><a title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day"))."\" href=\"day.php?year=$year&amp;month=$month&amp;day=$cday&amp;area=$area\">".$name_day;
+				$class .= "ferie ";
+			echo "<div class=\"monthday ".$class."\"><a title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day")).$title."\" href=\"day.php?year=$year&amp;month=$month&amp;day=$cday&amp;area=$area\">".$name_day;
 			if (getSettingValue("jours_cycles_actif") == "Oui" && intval($jour_cycle) > -1)
 			{
 				if (intval($jour_cycle) > 0)
@@ -464,5 +471,5 @@ for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 		// Affichage d'un message pop-up
 	echo  "<div id=\"popup_name\" class=\"popup_block\" ></div>";
 	affiche_pop_up(get_vocab("message_records"),"user");
-include "footer.php";
-?>
+	include "footer.php";
+	?>

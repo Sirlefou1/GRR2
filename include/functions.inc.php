@@ -30,6 +30,38 @@
  */
 header("Cache-Control:no-cache");
 
+
+function getSchoolHolidays($now, $year)
+{
+	$sh = array(false, "");
+	$vacances = simplexml_load_file('vacances.xml');
+	$libelle = $vacances->libelles->children();
+	$node = $vacances->calendrier->children();
+	foreach ($node as $key => $value)
+	{
+		if ($value['libelle'] == 'A')
+		{
+			foreach ($value->vacances as $key => $value)
+			{
+				$y = date('Y', strtotime($value['debut']));
+				if ($y == $year)
+				{
+					if (strtotime($value['debut']) <= $now && $now <= strtotime($value['fin']))
+					{
+						$nom = (int)$value['libelle'];
+						$nom = $libelle->libelle[$nom - 1];
+						$sh = array(true, $nom);
+						break;
+					}
+
+				}
+			}
+		}
+	}
+	return $sh;
+}
+
+
 function getHolidays($year = null)
 {
 	if ($year === null)
@@ -521,45 +553,45 @@ function plages_libre_semaine_ressource($id_room, $month_week, $day_week, $year_
 */
  function se3_grp_members ($grp, $uid)
  {
-	include "config_ldap.inc.php";
-	$est_membre="non";
+ 	include "config_ldap.inc.php";
+ 	$est_membre="non";
 	// LDAP attributs
-	$members_attr = array (
-		"memberUid"
+ 	$members_attr = array (
+ 		"memberUid"
 		// Recherche des Membres du groupe
-		);
+ 		);
 		// Avec des GroupOfNames, ce ne serait pas ça.
-	$ds = @ldap_connect($ldap_adresse, $ldap_port);
-	if ($ds)
-	{
-		$r = @ldap_bind ($ds);
+ 	$ds = @ldap_connect($ldap_adresse, $ldap_port);
+ 	if ($ds)
+ 	{
+ 		$r = @ldap_bind ($ds);
 		// Bind anonyme
-		if ($r)
-		{
+ 		if ($r)
+ 		{
 			// La requête est adaptée à un serveur SE3...
-			$result = @ldap_read($ds,"cn=$grp,ou=Groups,$ldap_base","cn=*",$members_attr);
+ 			$result = @ldap_read($ds,"cn=$grp,ou=Groups,$ldap_base","cn=*",$members_attr);
 			// Peut-être faudrait-il dans le $tab_grp_autorise mettre des chaines 'cn=$grp,ou=Groups'
-			if ($result)
-			{
-				$info = @ldap_get_entries($ds, $result);
-				if ($info["count"] == 1)
-				{
-					for ($loop = 0; $loop < $info[0]["memberuid"]["count"]; $loop++)
-					{
-						if ($info[0]["memberuid"][$loop] == $uid)
-							$est_membre="oui";
-					}
-				}
-				@ldap_free_result($result);
-			}
-		}
-		else
-			return false;
-		@ldap_close($ds);
-	}
-	else
-		return false;
-	return $est_membre;
+ 			if ($result)
+ 			{
+ 				$info = @ldap_get_entries($ds, $result);
+ 				if ($info["count"] == 1)
+ 				{
+ 					for ($loop = 0; $loop < $info[0]["memberuid"]["count"]; $loop++)
+ 					{
+ 						if ($info[0]["memberuid"][$loop] == $uid)
+ 							$est_membre="oui";
+ 					}
+ 				}
+ 				@ldap_free_result($result);
+ 			}
+ 		}
+ 		else
+ 			return false;
+ 		@ldap_close($ds);
+ 	}
+ 	else
+ 		return false;
+ 	return $est_membre;
  }
 /*
 Arguments :
@@ -2953,76 +2985,76 @@ function UserRoomMaxBooking($user, $id_room, $number)
   */
  function verif_booking_date($user, $id, $id_room, $date_booking, $date_now, $enable_periods, $endtime = '')
  {
-	global $correct_diff_time_local_serveur, $can_delete_or_create;
-	$can_delete_or_create = "y";
+ 	global $correct_diff_time_local_serveur, $can_delete_or_create;
+ 	$can_delete_or_create = "y";
 	// On teste si l'utilisateur est administrateur
-	$sql = "SELECT statut FROM ".TABLE_PREFIX."_utilisateurs WHERE login = '".protect_data_sql($user)."'";
-	$statut_user = grr_sql_query1($sql);
-	if ($statut_user == 'administrateur')
-		return true;
+ 	$sql = "SELECT statut FROM ".TABLE_PREFIX."_utilisateurs WHERE login = '".protect_data_sql($user)."'";
+ 	$statut_user = grr_sql_query1($sql);
+ 	if ($statut_user == 'administrateur')
+ 		return true;
 	// A-t-on le droit d'agir dans le passé ?
-	$allow_action_in_past = grr_sql_query1("SELECT allow_action_in_past FROM ".TABLE_PREFIX."_room WHERE id = '".protect_data_sql($id_room)."'");
-	if ($allow_action_in_past == 'y')
-		return true;
+ 	$allow_action_in_past = grr_sql_query1("SELECT allow_action_in_past FROM ".TABLE_PREFIX."_room WHERE id = '".protect_data_sql($id_room)."'");
+ 	if ($allow_action_in_past == 'y')
+ 		return true;
 	// Correction de l'avance en nombre d'heure du serveur sur les postes clients
-	if ((isset($correct_diff_time_local_serveur)) && ($correct_diff_time_local_serveur!=0))
-		$date_now -= 3600 * $correct_diff_time_local_serveur;
+ 	if ((isset($correct_diff_time_local_serveur)) && ($correct_diff_time_local_serveur!=0))
+ 		$date_now -= 3600 * $correct_diff_time_local_serveur;
 	// Créneaux basés sur les intitulés
 	// Dans ce cas, on prend comme temps présent le jour même à minuit.
 	// Cela signifie qu'il est possible de modifier/réserver/supprimer tout au long d'une journée
 	// même si l'heure est passée.
 	// Cela demande donc à être améliorer en introduisant pour chaque créneau une heure limite de réservation.
-	if ($enable_periods == "y")
-	{
-		$month = date("m",$date_now);
-		$day = date("d",$date_now);
-		$year = date("Y",$date_now);
-		$date_now = mktime(0, 0, 0, $month, $day, $year);
-	}
-	if ($id != -1)
-	{
+ 	if ($enable_periods == "y")
+ 	{
+ 		$month = date("m",$date_now);
+ 		$day = date("d",$date_now);
+ 		$year = date("Y",$date_now);
+ 		$date_now = mktime(0, 0, 0, $month, $day, $year);
+ 	}
+ 	if ($id != -1)
+ 	{
 		// il s'agit de l'edition d'une réservation existante
-		if (($endtime != '') && ($endtime < $date_now))
-			return false;
-		if ((getSettingValue("allow_user_delete_after_begin") == 1) || (getSettingValue("allow_user_delete_after_begin") == 2))
-			$sql = "SELECT end_time FROM ".TABLE_PREFIX."_entry WHERE id = '".protect_data_sql($id)."'";
-		else
-			$sql = "SELECT start_time FROM ".TABLE_PREFIX."_entry WHERE id = '".protect_data_sql($id)."'";
-		$date_booking = grr_sql_query1($sql);
-		if ($date_booking < $date_now)
-			return false;
-		else
-		{
+ 		if (($endtime != '') && ($endtime < $date_now))
+ 			return false;
+ 		if ((getSettingValue("allow_user_delete_after_begin") == 1) || (getSettingValue("allow_user_delete_after_begin") == 2))
+ 			$sql = "SELECT end_time FROM ".TABLE_PREFIX."_entry WHERE id = '".protect_data_sql($id)."'";
+ 		else
+ 			$sql = "SELECT start_time FROM ".TABLE_PREFIX."_entry WHERE id = '".protect_data_sql($id)."'";
+ 		$date_booking = grr_sql_query1($sql);
+ 		if ($date_booking < $date_now)
+ 			return false;
+ 		else
+ 		{
 			// dans le cas où le créneau est entamé, on teste si l'utilisateur a le droit de supprimer la réservation
 			// Si oui, on transmet la variable $only_modify = true avant que la fonction de retourne true.
-			if (getSettingValue("allow_user_delete_after_begin") == 2)
-			{
-				$date_debut = grr_sql_query1("SELECT start_time FROM ".TABLE_PREFIX."_entry WHERE id = '".protect_data_sql($id)."'");
-				if ($date_debut < $date_now)
-					$can_delete_or_create = "n";
-				else
-					$can_delete_or_create = "y";
-			}
-			return true;
-		}
-	}
-	else
-	{
-		if (getSettingValue("allow_user_delete_after_begin") == 1)
-		{
-			$id_area = grr_sql_query1("select area_id from ".TABLE_PREFIX."_room WHERE id = '".protect_data_sql($id_room)."'");
-			$resolution_area = grr_sql_query1("select resolution_area from ".TABLE_PREFIX."_area WHERE id = '".$id_area."'");
-			if ($date_booking > $date_now - $resolution_area)
-				return true;
-			return false;
-		}
-		else
-		{
-			if ($date_booking > $date_now)
-				return true;
-			return false;
-		}
-	}
+ 			if (getSettingValue("allow_user_delete_after_begin") == 2)
+ 			{
+ 				$date_debut = grr_sql_query1("SELECT start_time FROM ".TABLE_PREFIX."_entry WHERE id = '".protect_data_sql($id)."'");
+ 				if ($date_debut < $date_now)
+ 					$can_delete_or_create = "n";
+ 				else
+ 					$can_delete_or_create = "y";
+ 			}
+ 			return true;
+ 		}
+ 	}
+ 	else
+ 	{
+ 		if (getSettingValue("allow_user_delete_after_begin") == 1)
+ 		{
+ 			$id_area = grr_sql_query1("select area_id from ".TABLE_PREFIX."_room WHERE id = '".protect_data_sql($id_room)."'");
+ 			$resolution_area = grr_sql_query1("select resolution_area from ".TABLE_PREFIX."_area WHERE id = '".$id_area."'");
+ 			if ($date_booking > $date_now - $resolution_area)
+ 				return true;
+ 			return false;
+ 		}
+ 		else
+ 		{
+ 			if ($date_booking > $date_now)
+ 				return true;
+ 			return false;
+ 		}
+ 	}
  }
 // function verif_duree_max_resa_area($user, $id_room, $starttime, $endtime)
 // $user : le login de l'utilisateur
@@ -3031,18 +3063,18 @@ function UserRoomMaxBooking($user, $id_room, $number)
 // $endtime : fin de la réservation
  function verif_duree_max_resa_area($user, $id_room, $starttime, $endtime)
  {
-	if (authGetUserLevel($user,$id_room) >= 3)
-		return true;
-	$id_area = grr_sql_query1("SELECT area_id from ".TABLE_PREFIX."_room WHERE id='".protect_data_sql($id_room)."'");
-	$duree_max_resa_area = grr_sql_query1("SELECT duree_max_resa_area from ".TABLE_PREFIX."_area WHERE id='".$id_area."'");
-	$enable_periods =  grr_sql_query1("SELECT enable_periods from ".TABLE_PREFIX."_area WHERE id='".$id_area."'");
-	if ($enable_periods == 'y')
-		$duree_max_resa_area = $duree_max_resa_area * 24 * 60;
-	if ($duree_max_resa_area < 0)
-		return true;
-	else if ($endtime - $starttime > $duree_max_resa_area * 60)
-		return false;
-	return true;
+ 	if (authGetUserLevel($user,$id_room) >= 3)
+ 		return true;
+ 	$id_area = grr_sql_query1("SELECT area_id from ".TABLE_PREFIX."_room WHERE id='".protect_data_sql($id_room)."'");
+ 	$duree_max_resa_area = grr_sql_query1("SELECT duree_max_resa_area from ".TABLE_PREFIX."_area WHERE id='".$id_area."'");
+ 	$enable_periods =  grr_sql_query1("SELECT enable_periods from ".TABLE_PREFIX."_area WHERE id='".$id_area."'");
+ 	if ($enable_periods == 'y')
+ 		$duree_max_resa_area = $duree_max_resa_area * 24 * 60;
+ 	if ($duree_max_resa_area < 0)
+ 		return true;
+ 	else if ($endtime - $starttime > $duree_max_resa_area * 60)
+ 		return false;
+ 	return true;
  }
 // function verif_delais_max_resa_room($user, $id_room, $date_booking)
 // $user : le login de l'utilisateur
@@ -3051,50 +3083,50 @@ function UserRoomMaxBooking($user, $id_room, $number)
 // $date_now : la date actuelle
  function verif_delais_max_resa_room($user, $id_room, $date_booking)
  {
-	$day   = date("d");
-	$month = date("m");
-	$year  = date("Y");
-	$datenow = mktime(0, 0, 0, $month, $day, $year);
-	if (authGetUserLevel($user,$id_room) >= 3)
-		return true;
-	$delais_max_resa_room = grr_sql_query1("select delais_max_resa_room from ".TABLE_PREFIX."_room where id='".protect_data_sql($id_room)."'");
-	if ($delais_max_resa_room == -1)
-		return true;
-	else if ($datenow + $delais_max_resa_room * 24 * 3600 + 1 < $date_booking)
-		return false;
-	return true;
+ 	$day   = date("d");
+ 	$month = date("m");
+ 	$year  = date("Y");
+ 	$datenow = mktime(0, 0, 0, $month, $day, $year);
+ 	if (authGetUserLevel($user,$id_room) >= 3)
+ 		return true;
+ 	$delais_max_resa_room = grr_sql_query1("select delais_max_resa_room from ".TABLE_PREFIX."_room where id='".protect_data_sql($id_room)."'");
+ 	if ($delais_max_resa_room == -1)
+ 		return true;
+ 	else if ($datenow + $delais_max_resa_room * 24 * 3600 + 1 < $date_booking)
+ 		return false;
+ 	return true;
  }
 // function verif_access_search : vérifier l'accès à l'outil de recherche
 // $user : le login de l'utilisateur
 // $id_room : l'id de la ressource.
  function verif_access_search($user)
  {
-	if (authGetUserLevel($user,-1) >= getSettingValue("allow_search_level"))
-		return true;
-	return false;
+ 	if (authGetUserLevel($user,-1) >= getSettingValue("allow_search_level"))
+ 		return true;
+ 	return false;
  }
 // function verif_display_fiche_ressource : vérifier l'accès à la visualisation de la fiche d'une ressource
 // $user : le login de l'utilisateur
 // $id_room : l'id de la ressource.
  function verif_display_fiche_ressource($user, $id_room)
  {
-	$show_fic_room = grr_sql_query1("SELECT show_fic_room FROM ".TABLE_PREFIX."_room WHERE id='".$id_room."'");
-	if ($show_fic_room == "y")
-	{
-		if (authGetUserLevel($user,$id_room) >= getSettingValue("visu_fiche_description"))
-			return true;
-		return false;
-	}
-	return false;
+ 	$show_fic_room = grr_sql_query1("SELECT show_fic_room FROM ".TABLE_PREFIX."_room WHERE id='".$id_room."'");
+ 	if ($show_fic_room == "y")
+ 	{
+ 		if (authGetUserLevel($user,$id_room) >= getSettingValue("visu_fiche_description"))
+ 			return true;
+ 		return false;
+ 	}
+ 	return false;
  }
 // function verif_acces_fiche_reservation : vérifier l'accès à la fiche de réservation d'une ressource
 // $user : le login de l'utilisateur
 // $id_room : l'id de la ressource.
  function verif_acces_fiche_reservation($user, $id_room)
  {
-	if (authGetUserLevel($user,$id_room) >= getSettingValue("acces_fiche_reservation"))
-		return true;
-	return false;
+ 	if (authGetUserLevel($user,$id_room) >= getSettingValue("acces_fiche_reservation"))
+ 		return true;
+ 	return false;
  }
 /* function verif_display_email : vérifier l'accès à l'adresse email
  *$user : le login de l'utilisateur
@@ -4119,91 +4151,91 @@ function affiche_nom_prenom_email($_beneficiaire, $_beneficiaire_ext, $type = "n
 */
  function effectuer_correspondance_profil_statut($codefonction, $libellefonction) {
 		# On récupère le statut par défaut des utilisateurs CAS
-	$sso = getSettingValue("sso_statut");
-	if ($sso == "cas_visiteur")
-		$_statut = "visiteur";
-	else if ($sso == "cas_utilisateur")
-		$_statut = "utilisateur";
+ 	$sso = getSettingValue("sso_statut");
+ 	if ($sso == "cas_visiteur")
+ 		$_statut = "visiteur";
+ 	else if ($sso == "cas_utilisateur")
+ 		$_statut = "utilisateur";
 		# Le code fonction est défini
-	if ($codefonction != "")
-	{
-		$sql = grr_sql_query1("SELECT statut_grr from ".TABLE_PREFIX."_correspondance_statut where code_fonction='".$codefonction."'");
-		if ($sql != -1)
-		{
+ 	if ($codefonction != "")
+ 	{
+ 		$sql = grr_sql_query1("SELECT statut_grr from ".TABLE_PREFIX."_correspondance_statut where code_fonction='".$codefonction."'");
+ 		if ($sql != -1)
+ 		{
 			// Si la fonction existe dans la table de correspondance, on retourne le statut_grr associé
-			return $sql;
-		}
-		else
-		{
+ 			return $sql;
+ 		}
+ 		else
+ 		{
 			// Le code n'existe pas dans la base, alors on l'insère en lui attribuant le statut par défaut.
-			$libellefonction = protect_data_sql($libellefonction);
-			grr_sql_command("INSERT INTO grr_correspondance_statut(code_fonction,libelle_fonction,statut_grr) VALUES ('$codefonction', '$libellefonction', '$_statut')");
-			return $_statut;
-		}
+ 			$libellefonction = protect_data_sql($libellefonction);
+ 			grr_sql_command("INSERT INTO grr_correspondance_statut(code_fonction,libelle_fonction,statut_grr) VALUES ('$codefonction', '$libellefonction', '$_statut')");
+ 			return $_statut;
+ 		}
 		//Le code fonction n'est pas défini, alors on retourne le statut par défaut.
-	}
-	else
-		return $_statut;
+ 	}
+ 	else
+ 		return $_statut;
  }
 
  function jQuery_DatePicker($typeDate)
  {
-	if ($typeDate == 'rep_end' && isset($_GET['id']))
-	{
-		$res = grr_sql_query("SELECT repeat_id FROM ".TABLE_PREFIX."_entry WHERE id=".$_GET['id'].";");
-		if (!$res)
-			fatal_error(0, grr_sql_error());
-		$repeat_id = implode('', grr_sql_row($res, 0));
-		$res = grr_sql_query("SELECT rep_type, end_date, rep_opt, rep_num_weeks, start_time, end_time FROM ".TABLE_PREFIX."_repeat WHERE id=$repeat_id");
-		if (!$res)
-			fatal_error(0, grr_sql_error());
-		if (grr_sql_count($res) == 1)
-		{
-			$row6 = grr_sql_row($res, 0);
-			$date = date_parse(date("Y-m-d H:i:s",$row6[1]));
-			$day = $date['day'];
-			$month = $date['month'];
-			$year = $date['year'];
-		}
-		else
-		{
-			if (isset ($_GET['day']))
-				$day = $_GET['day'];
-			else
-				$day = date("d");
-			if (isset ($_GET['month']))
-				$month = $_GET['month'];
-			else
-				$month = date("m");
-			if (isset ($_GET['year']))
-				$year = $_GET['year'];
-			else
-				$year = date("Y");
-		}
-	}
-	else
-	{
-		if (isset ($_GET['day']))
-			$day = $_GET['day'];
-		else
-			$day = date("d");
-		if (isset ($_GET['month']))
-			$month = $_GET['month'];
-		else
-			$month = date("m");
-		if (isset ($_GET['year']))
-			$year = $_GET['year'];
-		else
-			$year = date("Y");
-	}
-	genDateSelector("".$typeDate."_", "$day", "$month", "$year","");
-	echo '<input type="hidden" disabled="disabled" id="mydate_' .$typeDate. '">'.PHP_EOL;
-	echo '<script>'.PHP_EOL;
-	echo '	$(function() {'.PHP_EOL;
-		echo '$.datepicker.setDefaults( $.datepicker.regional[\'fr\'] );'.PHP_EOL;
-		echo '	$(\'#mydate_' .$typeDate. '\').datepicker({'.PHP_EOL;
-			echo '		beforeShow: readSelected, onSelect: updateSelected,'.PHP_EOL;
-			echo '		showOn: \'both\', buttonImageOnly: true, buttonImage: \'images/calendar.png\',buttonText: "Choisir la date"});'.PHP_EOL;
+ 	if ($typeDate == 'rep_end' && isset($_GET['id']))
+ 	{
+ 		$res = grr_sql_query("SELECT repeat_id FROM ".TABLE_PREFIX."_entry WHERE id=".$_GET['id'].";");
+ 		if (!$res)
+ 			fatal_error(0, grr_sql_error());
+ 		$repeat_id = implode('', grr_sql_row($res, 0));
+ 		$res = grr_sql_query("SELECT rep_type, end_date, rep_opt, rep_num_weeks, start_time, end_time FROM ".TABLE_PREFIX."_repeat WHERE id=$repeat_id");
+ 		if (!$res)
+ 			fatal_error(0, grr_sql_error());
+ 		if (grr_sql_count($res) == 1)
+ 		{
+ 			$row6 = grr_sql_row($res, 0);
+ 			$date = date_parse(date("Y-m-d H:i:s",$row6[1]));
+ 			$day = $date['day'];
+ 			$month = $date['month'];
+ 			$year = $date['year'];
+ 		}
+ 		else
+ 		{
+ 			if (isset ($_GET['day']))
+ 				$day = $_GET['day'];
+ 			else
+ 				$day = date("d");
+ 			if (isset ($_GET['month']))
+ 				$month = $_GET['month'];
+ 			else
+ 				$month = date("m");
+ 			if (isset ($_GET['year']))
+ 				$year = $_GET['year'];
+ 			else
+ 				$year = date("Y");
+ 		}
+ 	}
+ 	else
+ 	{
+ 		if (isset ($_GET['day']))
+ 			$day = $_GET['day'];
+ 		else
+ 			$day = date("d");
+ 		if (isset ($_GET['month']))
+ 			$month = $_GET['month'];
+ 		else
+ 			$month = date("m");
+ 		if (isset ($_GET['year']))
+ 			$year = $_GET['year'];
+ 		else
+ 			$year = date("Y");
+ 	}
+ 	genDateSelector("".$typeDate."_", "$day", "$month", "$year","");
+ 	echo '<input type="hidden" disabled="disabled" id="mydate_' .$typeDate. '">'.PHP_EOL;
+ 	echo '<script>'.PHP_EOL;
+ 	echo '	$(function() {'.PHP_EOL;
+ 		echo '$.datepicker.setDefaults( $.datepicker.regional[\'fr\'] );'.PHP_EOL;
+ 		echo '	$(\'#mydate_' .$typeDate. '\').datepicker({'.PHP_EOL;
+ 			echo '		beforeShow: readSelected, onSelect: updateSelected,'.PHP_EOL;
+ 			echo '		showOn: \'both\', buttonImageOnly: true, buttonImage: \'images/calendar.png\',buttonText: "Choisir la date"});'.PHP_EOL;
 echo '		function readSelected()'.PHP_EOL;
 echo '		{'.PHP_EOL;
 echo '			$(\'#mydate_' .$typeDate. '\').val($(\'#' .$typeDate. '_day\').val() + \'/\' +'.PHP_EOL;
