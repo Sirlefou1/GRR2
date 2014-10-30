@@ -307,7 +307,8 @@ for ($t = $week_start; $t <= $week_end; $t += 86400)
 	if ($display_day[$num_week_day] == 1)
 	{
 		$ferie_true = 0;
-		foreach ($ferie as $key => $value) {
+		foreach ($ferie as $key => $value)
+		{
 			if ($tt == $value)
 			{
 				$ferie_true = 1;

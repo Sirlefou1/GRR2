@@ -357,7 +357,8 @@ for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 			echo "<td valign=\"top\" class=\"cell_month\">";
 			// On affiche les jours du mois dans le coin supérieur gauche de chaque cellule
 			$ferie_true = 0;
-			foreach ($ferie as $key => $value) {
+			foreach ($ferie as $key => $value)
+			{
 				if ($t == $value)
 				{
 					$ferie_true = 1;

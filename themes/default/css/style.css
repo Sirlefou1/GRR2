@@ -7,8 +7,9 @@
  }
  a:after {content: "" !important;}
  .ferie {
- 	background-color: #c0392b;
+ 	background-color: #c0392b !important;
  }
+ .ferie h4:before{ content:"Férié "; }
  .ferie a:before{ content:"Férié "; }
  p
  {

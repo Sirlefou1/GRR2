@@ -183,7 +183,21 @@ else
 	else
 		echo '<div id="print_planning">'.PHP_EOL;
 	include "chargement.php";
-	echo '<div class="titre_planning">'.PHP_EOL;
+	$ferie_true = 0;
+	$ferie = getHolidays($year);
+	$tt = mktime(0, 0, 0, $month, $day,$year);
+	foreach ($ferie as $key => $value)
+	{
+		if ($tt == $value)
+		{
+			$ferie_true = 1;
+			break;
+		}
+	}
+	if ($ferie_true)
+		echo '<div class="titre_planning ferie">'.PHP_EOL;
+	else
+		echo '<div class="titre_planning">'.PHP_EOL;
 	if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
 	{
 		echo "<table class=\"table-header\"><tr><td class=\"left\"><button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='day.php?year=$yy&amp;month=$ym&amp;day=$yd&amp;area=$area';\"> <span class=\"glyphicon glyphicon-backward\"></span> ".get_vocab('daybefore')."</button></td><td>";
