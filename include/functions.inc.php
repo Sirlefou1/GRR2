@@ -815,17 +815,8 @@ function begin_page($title, $page="with_session")
 		setcookie("open", "true", time()+3600);
 	}
 	$a = '<!DOCTYPE html>'.PHP_EOL;
-	$a.= '<html>'.PHP_EOL.'<head>'.PHP_EOL.'<meta charset="utf-8">'.PHP_EOL.'<link rel="stylesheet" href="'.$sheetcss.'" type="text/css" />'.PHP_EOL;
-	$a.= '<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css" />'.PHP_EOL;
-	$a.= '<link href="include/admin_grr.css" rel="stylesheet" type="text/css" />'.PHP_EOL;
-	// Pour le format imprimable, on impose un fond de page blanc
-	if ((isset($_GET['pview'])) && ($_GET['pview'] == 1))
-		$a .=  '<link rel="stylesheet" href="themes/print/css/style.css" type="text/css" />'.PHP_EOL;
-	$a.= '<link rel="SHORTCUT ICON" href="./favicon.ico" />'.PHP_EOL;
-	$a .= '<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />'.PHP_EOL;
-	$a .= '<link href="themes/default/css/jquery-ui-timepicker-addon.css" rel="stylesheet" type="text/css">'.PHP_EOL;
-	$a .= '<link href="themes/default/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css">'.PHP_EOL;
-	$a .= '<link rel="stylesheet" type="text/css" href="themes/default/css/bootstrap-clockpicker.min.css">'.PHP_EOL;
+	$a .= '<html>'.PHP_EOL.'<head>'.PHP_EOL.'<meta charset="utf-8">'.PHP_EOL;
+	$a .= '<link rel="SHORTCUT ICON" href="./favicon.ico" />'.PHP_EOL;
 	$a .= PHP_EOL.'<title>'.$title.'</title>';
 	$a .= PHP_EOL.'<meta http-equiv="Content-Type" content="text/html; charset=';
 	if ($unicode_encoding)
@@ -834,25 +825,34 @@ function begin_page($title, $page="with_session")
 		$a .= $charset_html;
 	$a .=  '" />'.PHP_EOL;
 	$a .= PHP_EOL.'<meta name="Robots" content="noindex" />'.PHP_EOL;
-	$a .= '<script src="js/jquery-2.1.1.min.js"></script>'.PHP_EOL;
-	$a .= '<script src="js/jquery-ui.min.js"></script>'.PHP_EOL;
-	$a .= '<script src="js/jquery.validate.js"></script>'.PHP_EOL;
-	$a .= '<script src="js/jquery-ui-timepicker-addon.js"></script>'.PHP_EOL;
+	$a .= '<link rel="stylesheet" type="text/css" href="'.$sheetcss.'" />'.PHP_EOL;
+	$a .= '<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css" />'.PHP_EOL;
+	$a .= '<link rel="stylesheet" type="text/css" href="include/admin_grr.css" />'.PHP_EOL;
+	if ((isset($_GET['pview'])) && ($_GET['pview'] == 1))
+		$a .=  '<link rel="stylesheet" href="themes/print/css/style.css" type="text/css" />'.PHP_EOL;
+	$a .= '<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />'.PHP_EOL;
+	$a .= '<link rel="stylesheet" type="text/css" href="themes/default/css/jquery-ui-timepicker-addon.css" >'.PHP_EOL;
+	$a .= '<link rel="stylesheet" type="text/css" href="themes/default/css/bootstrap-multiselect.css">'.PHP_EOL;
+	$a .= '<link rel="stylesheet" type="text/css" href="themes/default/css/bootstrap-clockpicker.min.css">'.PHP_EOL;
+	$a .= '<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>'.PHP_EOL;
+	$a .= '<script type="text/javascript" src="js/jquery-ui.min.js"></script>'.PHP_EOL;
+	$a .= '<script type="text/javascript" src="js/jquery.validate.js"></script>'.PHP_EOL;
+	$a .= '<script type="text/javascript" src="js/jquery-ui-timepicker-addon.js"></script>'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="js/bootstrap-clockpicker.js"></script>'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="js/bootstrap-multiselect.js"></script>'.PHP_EOL;
-	$a .= '<script src="js/html2canvas.js"></script>'.PHP_EOL;
-	$a .= '<script src="js/menu.js"></script>'.PHP_EOL;
-	$a .= '<script src="js/jspdf.min.js"></script>'.PHP_EOL;
-	$a .= '<script src="js/pdf.js" type="text/javascript" ></script>'.PHP_EOL;
-	$a .= '<script src="js/appeldelete.js" type="text/javascript" ></script>'.PHP_EOL;
-	$a .= '<script src="js/popup.js" type="text/javascript" charset="utf-8"></script>'.PHP_EOL;
+	$a .= '<script type="text/javascript" src="js/html2canvas.js"></script>'.PHP_EOL;
+	$a .= '<script type="text/javascript" src="js/menu.js"></script>'.PHP_EOL;
+	$a .= '<script type="text/javascript" src="js/jspdf.min.js"></script>'.PHP_EOL;
+	$a .= '<script type="text/javascript" src="js/pdf.js" ></script>'.PHP_EOL;
+	$a .= '<script type="text/javascript" src="js/appeldelete.js" ></script>'.PHP_EOL;
+	$a .= '<script type="text/javascript" src="js/popup.js" charset="utf-8"></script>'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="js/oXHR.js"></script>'.PHP_EOL;
-	$a .= '<script src="js/functions.js" type="text/javascript" ></script>'.PHP_EOL;
+	$a .= '<script type="text/javascript" src="js/functions.js" ></script>'.PHP_EOL;
 	if (isset($use_tooltip_js))
 		echo '<script type="text/javascript" src="./include/tooltip.js"></script>'.PHP_EOL;
 	if (!isset($_SESSION['selection']))
-		$a .= '<script src="js/selection.js" type="text/javascript" ></script>'.PHP_EOL;
+		$a .= '<script type="text/javascript" src="js/selection.js" ></script>'.PHP_EOL;
 	if (@file_exists('js/'.$clock_file))
 		$a .= '<script type="text/javascript" src="js/'.$clock_file.'"></script>'.PHP_EOL;
 	//show a warning if this is using a low version of php
