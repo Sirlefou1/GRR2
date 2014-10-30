@@ -49,7 +49,7 @@ function getSchoolHolidays($now, $year)
 				$y = date('Y', strtotime($value['debut']));
 				if ($y == $year)
 				{
-					if (strtotime($value['debut']) <= $now && $now <= strtotime($value['fin']))
+					if (strtotime($value['debut']) <= $now && $now < strtotime($value['fin']))
 					{
 						$nom = (int)$value['libelle'];
 						$nom = $libelle->libelle[$nom - 1];
