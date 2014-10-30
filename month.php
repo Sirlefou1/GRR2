@@ -143,7 +143,7 @@ if ($room <= 0)
 	include "include/trailer.inc.php";
 	exit;
 }
-if (($this_room_name_des) and ($this_room_name_des!="-1"))
+if (($this_room_name_des) && ($this_room_name_des!="-1"))
 	$this_room_name_des = " (".$this_room_name_des.")";
 else
 	$this_room_name_des = "";
@@ -156,33 +156,32 @@ $tm = date("n", $i);
 include("menu_gauche.php");
 include "chargement.php";
 if ($_GET['pview'] != 1)
-	echo "<div id=\"planning\">";
+	echo '<div id="planning">'.PHP_EOL;
 else
-	echo "<div id=\"print_planning\">";
-echo "<div class=\"titre_planning\"><table width=\"100%\">";
+	echo '<div id="print_planning">'.PHP_EOL;
+echo '<div class="titre_planning">'.PHP_EOL;
+echo '<table width="100%">'.PHP_EOL;
 if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
 {
-	echo "\n
-	<tr>
-		<td align=\"left\">
-			<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='month.php?year=$yy&amp;month=$ym&amp;room=$room';\"><span class=\"glyphicon glyphicon-backward\"></span> ".get_vocab("monthbefore")." </button>
-		</td>
-		<td>";
-			include "include/trailer.inc.php";
-			echo "</td>
-			<td align=\"right\">
-				<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='month.php?year=$ty&amp;month=$tm&amp;room=$room';\"> ".get_vocab('monthafter')."  <span class=\"glyphicon glyphicon-forward\"></span></button>
-			</td>
-		</tr>
-	</table>
-	";
+	echo '<tr>'.PHP_EOL;
+	echo '<td align="left">'.PHP_EOL;
+	echo '<button class="btn btn-default btn-xs" onclick="charger();javascript: location.href=\'month.php?year='.$yy.'&amp;month='.$ym.'&amp;room='.$room.'\';"><span class="glyphicon glyphicon-backward"></span> '.get_vocab("monthbefore").'</button>'.PHP_EOL;
+	echo '</td>'.PHP_EOL;
+	echo '<td>'.PHP_EOL;
+	include "include/trailer.inc.php";
+	echo '</td>'.PHP_EOL;
+	echo '<td align="right">'.PHP_EOL;
+	echo '<button class="btn btn-default btn-xs" onclick="charger();javascript: location.href=\'month.php?year='.$ty.'&amp;month='.$tm.'&amp;room='.$room.'\';"> '.get_vocab('monthafter').'  <span class=\"glyphicon glyphicon-forward\"></span></button>'.PHP_EOL;
+	echo '</td>'.PHP_EOL;
+	echo '</tr>'.PHP_EOL;
+	echo '</table>'.PHP_EOL;
 }
-echo "<tr>";
-echo " <td>";
-echo "<h4 class=\"titre\"> ". ucfirst(utf8_strftime("%B %Y", $month_start)). "".ucfirst($this_area_name)." - $this_room_name $this_room_name_des </h4>";
-echo " </td>";
-echo " </tr>";
-echo "</table>";
+echo '<tr>'.PHP_EOL;
+echo '<td>'.PHP_EOL;
+echo '<h4 class="titre"> '. ucfirst(utf8_strftime("%B %Y", $month_start)).''.ucfirst($this_area_name).' - '.$this_room_name.' '.$this_room_name_des.'</h4>'.PHP_EOL;
+echo '</td>'.PHP_EOL;
+echo '</tr>'.PHP_EOL;
+echo '</table>'.PHP_EOL;
 if (verif_display_fiche_ressource(getUserName(), $room) && $_GET['pview'] != 1)
 	echo "<a href='javascript:centrerpopup(\"view_room.php?id_room=$room\",600,480,\"scrollbars=yes,statusbar=no,resizable=yes\")' title=\"".get_vocab("fiche_ressource")."\">
 <span class=\"glyphcolor glyphicon glyphicon-search\"></span></a>";

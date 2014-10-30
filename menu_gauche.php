@@ -4,9 +4,9 @@ if ($_GET['pview'] != 1)
 	$path = $_SERVER['PHP_SELF'];
 	$file = basename ($path);
 	if ( $file== 'month_all2.php')
-		echo PHP_EOL.'<div id="menuGaucheMonthAll2">'.PHP_EOL;
+		echo '<div id="menuGaucheMonthAll2">';
 	else
-		echo PHP_EOL.'<div id="menuGauche">'.PHP_EOL;
+		echo '<div id="menuGauche">';
 	$pageActuel = str_replace(".php","",basename($_SERVER['PHP_SELF']));
 	minicals($year, $month, $day, $area, $room, $pageActuel);
 	$this_area_name = "";
@@ -38,6 +38,6 @@ if ($_GET['pview'] != 1)
 	}
 	if (getSettingValue("legend") == '0')
 		show_colour_key($area);
-	echo '</div>'.PHP_EOL;
+	echo '</div>';
 }
 ?>

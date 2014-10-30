@@ -815,16 +815,18 @@ function begin_page($title, $page="with_session")
 		setcookie("open", "true", time()+3600);
 	}
 	$a = '<!DOCTYPE html>'.PHP_EOL;
-	$a .= '<html>'.PHP_EOL.'<head>'.PHP_EOL.'<meta charset="utf-8">'.PHP_EOL;
+	$a .= '<html>'.PHP_EOL;
+	$a .= '<head>'.PHP_EOL;
+	$a .= '<meta charset="utf-8">'.PHP_EOL;
 	$a .= '<link rel="SHORTCUT ICON" href="./favicon.ico" />'.PHP_EOL;
-	$a .= PHP_EOL.'<title>'.$title.'</title>';
-	$a .= PHP_EOL.'<meta http-equiv="Content-Type" content="text/html; charset=';
+	$a .= '<title>'.$title.'</title>'.PHP_EOL;
+	$a .= '<meta http-equiv="Content-Type" content="text/html; charset=';
 	if ($unicode_encoding)
 		$a .= 'utf-8';
 	else
 		$a .= $charset_html;
 	$a .=  '" />'.PHP_EOL;
-	$a .= PHP_EOL.'<meta name="Robots" content="noindex" />'.PHP_EOL;
+	$a .= '<meta name="Robots" content="noindex" />'.PHP_EOL;
 	$a .= '<link rel="stylesheet" type="text/css" href="'.$sheetcss.'" />'.PHP_EOL;
 	$a .= '<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css" />'.PHP_EOL;
 	$a .= '<link rel="stylesheet" type="text/css" href="include/admin_grr.css" />'.PHP_EOL;
@@ -855,10 +857,10 @@ function begin_page($title, $page="with_session")
 		$a .= '<script type="text/javascript" src="js/selection.js" ></script>'.PHP_EOL;
 	if (@file_exists('js/'.$clock_file))
 		$a .= '<script type="text/javascript" src="js/'.$clock_file.'"></script>'.PHP_EOL;
-	//show a warning if this is using a low version of php
 	if (substr(phpversion(), 0, 1) == 3)
 		$a .= get_vocab('not_php3');
-	$a .= '</head>'.PHP_EOL.'<body>'.PHP_EOL;
+	$a .= '</head>'.PHP_EOL;
+	$a .= '<body>'.PHP_EOL;
 	return $a;
 }
 
@@ -917,8 +919,8 @@ function print_header($day = '', $month = '', $year = '', $type_session = 'with_
 				echo '<td class="logo">'.PHP_EOL.'<a href="'.page_accueil('yes').'day='.$day.'&amp;year='.$year.'&amp;month='.$month.'"><img src="'.$nom_picture.'" alt="logo"/></a>'.PHP_EOL.'</td>'.PHP_EOL;
 			//Accueil
 			echo '<td class="accueil">'.PHP_EOL;
-			echo '	<h2><a href="'.page_accueil('yes').'day='.$day.'&amp;year='.$year.'&amp;month='.$month.'">'.get_vocab("welcome");
-			echo ' - <b>'.getSettingValue("company").'</b></a></h2>'.PHP_EOL;
+			echo '<h2>'.PHP_EOL.'<a href="'.page_accueil('yes').'day='.$day.'&amp;year='.$year.'&amp;month='.$month.'">'.get_vocab("welcome");
+			echo ' - <b>'.getSettingValue("company").'</b></a>'.PHP_EOL.'</h2>'.PHP_EOL;
 			//Mail réservartion
 			echo getSettingValue('message_accueil');
 			$sql = "SELECT value FROM ".TABLE_PREFIX."_setting WHERE name='mail_etat_destinataire'";
@@ -943,10 +945,14 @@ function print_header($day = '', $month = '', $year = '', $type_session = 'with_
 					echo '<a href="admin_accueil.php?day='.$day.'&amp;month='.$month.'&amp;year='.$year.'">'.get_vocab("admin").'</a>'.PHP_EOL;
 					if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
 					{
-						echo '<br />'.PHP_EOL.'<form action="admin_save_mysql.php" method="get"><div>'.PHP_EOL.'<input type="hidden" name="flag_connect" value="yes" />'.PHP_EOL.'<input type="submit" class="btn btn-default" value="'.get_vocab("submit_backup").'" /></div>'.PHP_EOL.'</form>'.PHP_EOL;
+						echo '<br />'.PHP_EOL;
+						echo '<form action="admin_save_mysql.php" method="get"><div>'.PHP_EOL;
+						echo '<input type="hidden" name="flag_connect" value="yes" />'.PHP_EOL;
+						echo '<input type="submit" class="btn btn-default" value="'.get_vocab("submit_backup").'" /></div>'.PHP_EOL;
+						echo '</form>'.PHP_EOL;
 						how_many_connected();
 					}
-					echo PHP_EOL.'</td>';
+					echo '</td>'.PHP_EOL;
 				}
 			}
 			if ($type_session != "with_session")
@@ -954,80 +960,85 @@ function print_header($day = '', $month = '', $year = '', $type_session = 'with_
 			echo '<td class="configuration" >'.PHP_EOL;
 			if (@file_exists('js/'.$clock_file))
 			{
-				echo '<div class="clock">
-				<div id="Date"></div>
-				<ul>
-					<li id="hours"> </li>
-					<li class="point">:</li>
-					<li id="min"> </li>
-					<li class="point">:</li>
-					<li id="sec"> </li>
-				</ul>
-			</div>';
-		}
-		$_SESSION['chemin_retour'] = '';
-		if (isset($_SERVER['QUERY_STRING']) && ($_SERVER['QUERY_STRING'] != ''))
-		{
-			$parametres_url = htmlspecialchars($_SERVER['QUERY_STRING'])."&amp;";
-			$_SESSION['chemin_retour'] = traite_grr_url($grr_script_name)."?". $_SERVER['QUERY_STRING'];
-			echo '<a onclick="charger();" href="'.traite_grr_url($grr_script_name).'?'.$parametres_url.'default_language=fr"><img src="img_grr/fr_dp.png" alt="France" title="france" width="20" height="13" class="image" /></a>'.PHP_EOL;
-			echo '<a onclick="charger();" href="'.traite_grr_url($grr_script_name).'?'.$parametres_url.'default_language=de"><img src="img_grr/de_dp.png" alt="Deutch" title="deutch" width="20" height="13" class="image" /></a>'.PHP_EOL;
-			echo '<a onclick="charger();" href="'.traite_grr_url($grr_script_name).'?'.$parametres_url.'default_language=en"><img src="img_grr/en_dp.png" alt="English" title="English" width="20" height="13" class="image" /></a>'.PHP_EOL;
-			echo '<a onclick="charger();" href="'.traite_grr_url($grr_script_name).'?'.$parametres_url.'default_language=it"><img src="img_grr/it_dp.png" alt="Italiano" title="Italiano" width="20" height="13" class="image" /></a>'.PHP_EOL;
-			echo '<a onclick="charger();" href="'.traite_grr_url($grr_script_name).'?'.$parametres_url.'default_language=es"><img src="img_grr/es_dp.png" alt="Spanish" title="Spanish" width="20" height="13" class="image" /></a>'.PHP_EOL;
-		}
-		if ($type_session == 'no_session')
-		{
-			if ((getSettingValue('sso_statut') == 'cas_visiteur') || (getSettingValue('sso_statut') == 'cas_utilisateur'))
+				echo '<div class="clock">'.PHP_EOL;
+				echo '<div id="Date"></div>'.PHP_EOL;
+				echo '<ul>'.PHP_EOL;
+				echo '<li id="hours"> </li>'.PHP_EOL;
+				echo '<li class="point">:</li>'.PHP_EOL;
+				echo '<li id="min"> </li>'.PHP_EOL;
+				echo '<li class="point">:</li>'.PHP_EOL;
+				echo '<li id="sec"> </li>'.PHP_EOL;
+				echo '</ul>'.PHP_EOL;
+				echo '</div>'.PHP_EOL;
+			}
+			$_SESSION['chemin_retour'] = '';
+			if (isset($_SERVER['QUERY_STRING']) && ($_SERVER['QUERY_STRING'] != ''))
 			{
-				echo '<br /> <a href="index.php?force_authentification=y">'.get_vocab("authentification").'</a>';
-				echo '<br /> <small><i><a href="login.php">'.get_vocab("connect_local").'</a></i></small>';
+				$parametres_url = htmlspecialchars($_SERVER['QUERY_STRING'])."&amp;";
+				$_SESSION['chemin_retour'] = traite_grr_url($grr_script_name)."?". $_SERVER['QUERY_STRING'];
+				echo '<a onclick="charger();" href="'.traite_grr_url($grr_script_name).'?'.$parametres_url.'default_language=fr"><img src="img_grr/fr_dp.png" alt="France" title="france" width="20" height="13" class="image" /></a>'.PHP_EOL;
+				echo '<a onclick="charger();" href="'.traite_grr_url($grr_script_name).'?'.$parametres_url.'default_language=de"><img src="img_grr/de_dp.png" alt="Deutch" title="deutch" width="20" height="13" class="image" /></a>'.PHP_EOL;
+				echo '<a onclick="charger();" href="'.traite_grr_url($grr_script_name).'?'.$parametres_url.'default_language=en"><img src="img_grr/en_dp.png" alt="English" title="English" width="20" height="13" class="image" /></a>'.PHP_EOL;
+				echo '<a onclick="charger();" href="'.traite_grr_url($grr_script_name).'?'.$parametres_url.'default_language=it"><img src="img_grr/it_dp.png" alt="Italiano" title="Italiano" width="20" height="13" class="image" /></a>'.PHP_EOL;
+				echo '<a onclick="charger();" href="'.traite_grr_url($grr_script_name).'?'.$parametres_url.'default_language=es"><img src="img_grr/es_dp.png" alt="Spanish" title="Spanish" width="20" height="13" class="image" /></a>'.PHP_EOL;
+			}
+			if ($type_session == 'no_session')
+			{
+				if ((getSettingValue('sso_statut') == 'cas_visiteur') || (getSettingValue('sso_statut') == 'cas_utilisateur'))
+				{
+					echo '<br /> <a href="index.php?force_authentification=y">'.get_vocab("authentification").'</a>';
+					echo '<br /> <small><i><a href="login.php">'.get_vocab("connect_local").'</a></i></small>';
+				}
+				else
+					echo '<br /> <a href="login.php">'.get_vocab("connect").'</a>';
 			}
 			else
-				echo '<br /> <a href="login.php">'.get_vocab("connect").'</a>';
-		}
-		else
-		{
-			echo '<br /> <b>'.get_vocab("welcome_to").htmlspecialchars($_SESSION['prenom']).' '.htmlspecialchars($_SESSION['nom']).'</b>';
-			echo '<br /> <a href="my_account.php?day='.$day.'&amp;year='.$year.'&amp;month='.$month.'">'.get_vocab("manage_my_account").'</a>';
-			if (verif_access_search(getUserName()))
-				echo '<br/><a href="report.php">'.get_vocab("report").'</a>';
-			$disconnect_link = false;
-			if (!((getSettingValue("cacher_lien_deconnecter") == 'y') && (isset($_SESSION['est_authentifie_sso']))))
 			{
-				$disconnect_link = true;
-				if (getSettingValue("authentification_obli") == 1)
-					echo '<br /> <a href="./logout.php?auto=0" >'.get_vocab('disconnect').'</a>';
-				else
-					echo '<br /> <a href="./logout.php?auto=0&amp;redirect_page_accueil=yes" >'.get_vocab('disconnect').'</a>';
-			}
-			if ((getSettingValue("Url_portail_sso") != '') && (isset($_SESSION['est_authentifie_sso'])))
-			{
-				if ($disconnect_link)
-					echo ' - ';
-				else
+				echo '<br /> <b>'.get_vocab("welcome_to").htmlspecialchars($_SESSION['prenom']).' '.htmlspecialchars($_SESSION['nom']).'</b>';
+				echo '<br /> <a href="my_account.php?day='.$day.'&amp;year='.$year.'&amp;month='.$month.'">'.get_vocab("manage_my_account").'</a>';
+				if (verif_access_search(getUserName()))
+					echo '<br/><a href="report.php">'.get_vocab("report").'</a>';
+				$disconnect_link = false;
+				if (!((getSettingValue("cacher_lien_deconnecter") == 'y') && (isset($_SESSION['est_authentifie_sso']))))
+				{
+					$disconnect_link = true;
+					if (getSettingValue("authentification_obli") == 1)
+						echo '<br /> <a href="./logout.php?auto=0" >'.get_vocab('disconnect').'</a>';
+					else
+						echo '<br /> <a href="./logout.php?auto=0&amp;redirect_page_accueil=yes" >'.get_vocab('disconnect').'</a>';
+				}
+				if ((getSettingValue("Url_portail_sso") != '') && (isset($_SESSION['est_authentifie_sso'])))
+				{
+					if ($disconnect_link)
+						echo ' - ';
+					else
+						echo '<br />';
+					echo '<a href="'.getSettingValue("Url_portail_sso").'">'.get_vocab("Portail_accueil").'</a>';
+				}
+				if ((getSettingValue('sso_statut') == 'lasso_visiteur') || (getSettingValue('sso_statut') == 'lasso_utilisateur'))
+				{
 					echo '<br />';
-				echo '<a href="'.getSettingValue("Url_portail_sso").'">'.get_vocab("Portail_accueil").'</a>';
+					if ($_SESSION['lasso_nameid'] == NULL)
+						echo '<a href="lasso/federate.php">'.get_vocab('lasso_federate_this_account').'</a>';
+					else
+						echo '<a href="lasso/defederate.php">'.get_vocab('lasso_defederate_this_account').'</a>';
+				}
 			}
-			if ((getSettingValue('sso_statut') == 'lasso_visiteur') || (getSettingValue('sso_statut') == 'lasso_utilisateur'))
-			{
-				echo '<br />';
-				if ($_SESSION['lasso_nameid'] == NULL)
-					echo '<a href="lasso/federate.php">'.get_vocab('lasso_federate_this_account').'</a>';
-				else
-					echo '<a href="lasso/defederate.php">'.get_vocab('lasso_defederate_this_account').'</a>';
-			}
+			echo '</td>'.PHP_EOL;
+			echo '</tr>'.PHP_EOL;
+			echo '</table>'.PHP_EOL;
+			echo '</div>'.PHP_EOL;
+			echo '</div>'.PHP_EOL;
+			echo '<div class="tab">'.PHP_EOL;
+			echo '<ul class="login">'.PHP_EOL;
+			echo '<li>'.PHP_EOL;
+			echo '<a id="open" class="open" href="#">Menu</a>'.PHP_EOL;
+			echo '</li>'.PHP_EOL;
+			echo '</ul>'.PHP_EOL;
+			echo '</div>'.PHP_EOL;
+			echo '</div>'.PHP_EOL;
 		}
-		echo '</td>'.PHP_EOL.'</tr>'.PHP_EOL.'</table>'.PHP_EOL;
-		echo '</div></div><div class="tab">
-		<ul class="login">
-			<li>
-				<a id="open" class="open" href="#">Menu</a>
-			</li>
-		</ul>
-	</div> <!-- / top --></div>';
-}
-}
+	}
 }
 
 /**
