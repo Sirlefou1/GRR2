@@ -342,6 +342,7 @@ for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 		}
 	}
 	// Début Première boucle sur les jours du mois
+	$ferie = getHolidays($year);
 	for ($cday = 1; $cday <= $days_in_month; $cday++)
 	{
 		$num_week_day = ($weekcol + $weekstarts) % 7;
@@ -355,7 +356,18 @@ for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 			// début condition "on n'affiche pas tous les jours de la semaine"
 			echo "<td valign=\"top\" class=\"cell_month\">";
 			// On affiche les jours du mois dans le coin supérieur gauche de chaque cellule
-			echo "<div class=\"monthday\"><a title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day"))."\" href=\"day.php?year=$year&amp;month=$month&amp;day=$cday&amp;area=$area\">".$name_day;
+			$ferie_true = 0;
+			foreach ($ferie as $key => $value) {
+				if ($t == $value)
+				{
+					$ferie_true = 1;
+					break;
+				}
+			}
+			if ($ferie_true)
+				echo "<div class=\"monthday ferie\"><a title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day"))."\" href=\"day.php?year=$year&amp;month=$month&amp;day=$cday&amp;area=$area\">".$name_day;
+			else
+				echo "<div class=\"monthday\"><a title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day"))."\" href=\"day.php?year=$year&amp;month=$month&amp;day=$cday&amp;area=$area\">".$name_day;
 			if (getSettingValue("jours_cycles_actif") == "Oui" && intval($jour_cycle) > -1)
 			{
 				if (intval($jour_cycle) > 0)

@@ -321,12 +321,14 @@ else
 	echo "<th class=\"jour_sem\"> </th>\n";
 	$t = $time;
 	$num_week_day = $weekstarts;
+	$ferie = getHolidays($year);
 	for ($weekcol = 0; $weekcol < 7; $weekcol++)
 	{
 		$num_day = strftime("%d", $t);
 		$temp_month = utf8_encode(strftime("%m", $t));
 		$temp_month2 = utf8_encode(strftime("%b", $t));
 		$temp_year = strftime("%Y", $t);
+		$tt = mktime(0, 0, 0, $temp_month, $num_day, $temp_year);
 		$jour_cycle = grr_sql_query1("SELECT Jours FROM ".TABLE_PREFIX."_calendrier_jours_cycle WHERE day='$t'");
 		$t += 86400;
 		if (!isset($correct_heure_ete_hiver) || ($correct_heure_ete_hiver == 1))
@@ -338,7 +340,18 @@ else
 		}
 		if ($display_day[$num_week_day] == 1)
 		{
-			echo "<th class=\"jour_sem\"><a class=\"lienPlanning\" href='day.php?year=".$temp_year."&amp;month=".$temp_month."&amp;day=".$num_day."&amp;area=".$area."'>"  . day_name(($weekcol + $weekstarts) % 7) . " ".$num_day. " ".$temp_month2."</a>";
+			$ferie_true = 0;
+			foreach ($ferie as $key => $value) {
+				if ($tt == $value)
+				{
+					$ferie_true = 1;
+					break;
+				}
+			}
+			if ($ferie_true)
+				echo "<th class=\"jour_sem\"><a class=\"lienPlanning ferie\" href='day.php?year=".$temp_year."&amp;month=".$temp_month."&amp;day=".$num_day."&amp;area=".$area."'>"  . day_name(($weekcol + $weekstarts) % 7) . " ".$num_day. " ".$temp_month2."</a>";
+			else
+				echo "<th class=\"jour_sem\"><a class=\"lienPlanning\" href='day.php?year=".$temp_year."&amp;month=".$temp_month."&amp;day=".$num_day."&amp;area=".$area."'>"  . day_name(($weekcol + $weekstarts) % 7) . " ".$num_day. " ".$temp_month2."</a>";
 			if (getSettingValue("jours_cycles_actif") == "Oui" && intval($jour_cycle) >- 1)
 			{
 				if (intval($jour_cycle) > 0)

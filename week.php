@@ -296,15 +296,28 @@ $num_week_day = $weekstarts;
 $k = $day_week;
 $i = $time;
 $num_week_day = $weekstarts;
+$ferie = getHolidays($year);
 for ($t = $week_start; $t <= $week_end; $t += 86400)
 {
 	$num_day = strftime("%d", $t);
 	$month_actuel = strftime("%m", $t);
 	$year_actuel  = date("Y",$t);
+	$tt = mktime(0, 0, 0, $month_actuel, $num_day,$year_actuel);
 	$jour_cycle = grr_sql_query1("SELECT Jours FROM ".TABLE_PREFIX."_calendrier_jours_cycle WHERE DAY='$i'");
 	if ($display_day[$num_week_day] == 1)
 	{
-		echo "<th style=\"width:14%;\"><a onclick=\"charger()\" class=\"lienPlanning\" title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day"))."\" href=\"day.php?year=$year_actuel&amp;month=$month_actuel&amp;day=$num_day&amp;area=$area\">". utf8_strftime($dformat, $t)."</a>";
+		$ferie_true = 0;
+		foreach ($ferie as $key => $value) {
+			if ($tt == $value)
+			{
+				$ferie_true = 1;
+				break;
+			}
+		}
+		if ($ferie_true)
+			echo "<th style=\"width:14%;\"><a onclick=\"charger()\" class=\"lienPlanning ferie\" title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day"))."\" href=\"day.php?year=$year_actuel&amp;month=$month_actuel&amp;day=$num_day&amp;area=$area\">". utf8_strftime($dformat, $t)."</a>";
+		else
+			echo "<th style=\"width:14%;\"><a onclick=\"charger()\" class=\"lienPlanning\" title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day"))."\" href=\"day.php?year=$year_actuel&amp;month=$month_actuel&amp;day=$num_day&amp;area=$area\">". utf8_strftime($dformat, $t)."</a>";
 		if (getSettingValue("jours_cycles_actif") == "Oui" && intval($jour_cycle) >- 1)
 			if (intval($jour_cycle) > 0)
 				echo "<br />".get_vocab("rep_type_6")." ".$jour_cycle;
@@ -530,6 +543,6 @@ for ($t = $week_start; $t <= $week_end; $t += 86400)
 			});
 		});
 	</script>
-<?php
-include "footer.php";
-?>
+	<?php
+	include "footer.php";
+	?>
