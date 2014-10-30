@@ -308,23 +308,26 @@ for ($t = $week_start; $t <= $week_end; $t += 86400)
 	{
 		$class = "";
 		$title = "";
-		$ferie_true = 0;
-		foreach ($ferie as $key => $value)
+		if (getSettingValue("show_holidays") == "Oui")
 		{
-			if ($tt == $value)
+			$ferie_true = 0;
+			foreach ($ferie as $key => $value)
 			{
-				$ferie_true = 1;
-				break;
+				if ($tt == $value)
+				{
+					$ferie_true = 1;
+					break;
+				}
 			}
+			$sh = getSchoolHolidays($tt, $year_actuel);
+			if ($sh[0] == true)
+			{
+				$class .= "vacance ";
+				$title = " ".$sh[1];
+			}
+			if ($ferie_true)
+				$class .= "ferie ";
 		}
-		$sh = getSchoolHolidays($tt, $year_actuel);
-		if ($sh[0] == true)
-		{
-			$class .= "vacance ";
-			$title = " ".$sh[1];
-		}
-		if ($ferie_true)
-			$class .= "ferie ";
 		echo "<th style=\"width:14%;\"><a onclick=\"charger()\" class=\"lienPlanning ".$class."\" title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day"))."\" href=\"day.php?year=$year_actuel&amp;month=$month_actuel&amp;day=$num_day&amp;area=$area\">". utf8_strftime($dformat, $t)."</a>";
 		if (getSettingValue("jours_cycles_actif") == "Oui" && intval($jour_cycle) >- 1)
 			if (intval($jour_cycle) > 0)

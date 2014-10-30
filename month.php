@@ -367,23 +367,26 @@ else
 			echo "<tr>\n";
 		if ($display_day[$num_week_day] == 1)
 		{
-			$ferie_true = 0;
-			foreach ($ferie as $key => $value)
+			if (getSettingValue("show_holidays") == "Oui")
 			{
-				if ($t == $value)
+				$ferie_true = 0;
+				foreach ($ferie as $key => $value)
 				{
-					$ferie_true = 1;
-					break;
+					if ($t == $value)
+					{
+						$ferie_true = 1;
+						break;
+					}
 				}
+				$sh = getSchoolHolidays($t, $year);
+				if ($sh[0] == true)
+				{
+					$class .= "vacance ";
+					$title = " ".$sh[1];
+				}
+				if ($ferie_true)
+					$class .= "ferie ";
 			}
-			$sh = getSchoolHolidays($t, $year);
-			if ($sh[0] == true)
-			{
-				$class .= "vacance ";
-				$title = " ".$sh[1];
-			}
-			if ($ferie_true)
-				$class .= "ferie ";
 			echo "<td valign=\"top\" class=\"cell_month\">\n<div class=\"monthday ".$class."\"><a title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day")).$title."\" href=\"day.php?year=$year&amp;month=$month&amp;day=$cday&amp;area=$area\">".$name_day;
 			if (getSettingValue("jours_cycles_actif") == "Oui" && intval($jour_cycle) >- 1)
 			{

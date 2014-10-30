@@ -35,6 +35,22 @@ if (isset($_POST['title_home_page']))
 		die();
 	}
 }
+if (isset($_POST['show_holidays']))
+{
+	if (!saveSetting("show_holidays", $_POST['show_holidays']))
+	{
+		echo "Erreur lors de l'enregistrement de show_holidays !<br />";
+		die();
+	}
+}
+if (isset($_POST['holidays_zone']))
+{
+	if (!saveSetting("holidays_zone", $_POST['holidays_zone']))
+	{
+		echo "Erreur lors de l'enregistrement de holidays_zone !<br />";
+		die();
+	}
+}
 if (isset($_POST['message_home_page']))
 {
 	if (!saveSetting("message_home_page", $_POST['message_home_page']))
@@ -1009,6 +1025,28 @@ echo "<input type='radio' name='legend' value='1' ";
 if (getSettingValue("legend") == '1')
 	echo "checked=\"checked\"";
 echo " />";
+echo "</td></tr>";
+echo "</table>";
+# Afficher vacance et jour ferie
+echo "<hr /><h3>".get_vocab("holidays_msg")."</h3>\n";
+echo "<table>";
+echo "<tr><td>".get_vocab("legend0")."</td><td>";
+echo "<input type='radio' name='show_holidays' value='Oui' ";
+if (getSettingValue("show_holidays") == '0')
+	echo "checked=\"checked\"";
+echo " />";
+echo "</td></tr>";
+echo "<tr><td>".get_vocab("legend1")."</td><td>";
+echo "<input type='radio' name='show_holidays' value='Non' ";
+if (getSettingValue("show_holidays") == '1')
+	echo "checked=\"checked\"";
+echo " />";
+echo "</td></tr>";
+echo "</table>";
+# Choix de la zone de vacance
+echo "<hr /><h3>".get_vocab("holidays_zone_msg")."</h3>\n";
+echo "<table>";
+echo "<input type='text' name='holidays_zone' value='".getSettingValue("holidays_zone")."'/>";
 echo "</td></tr>";
 echo "</table>";
 # Gestion du lien aide

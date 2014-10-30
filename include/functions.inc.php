@@ -33,6 +33,9 @@ header("Cache-Control:no-cache");
 
 function getSchoolHolidays($now, $year)
 {
+	$zone = 'A';
+	if (getSettingValue("holidays_zone") != NULL)
+		$zone = getSettingValue("holidays_zone");
 	$sh = array(false, "");
 	$vacances = simplexml_load_file('vacances.xml');
 	$libelle = $vacances->libelles->children();

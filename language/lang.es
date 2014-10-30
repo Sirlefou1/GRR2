@@ -932,4 +932,6 @@ $vocab['fouthofmonth'] = "4eme";
 $vocab['fiveofmonth'] = "5eme";
 $vocab['lastofmonth'] = "dernier";
 $vocab['ofmonth'] = "du mois.";
+$vocab['holidays_msg'] = "Afficher les Vacances scolaire et les jour fériés (france)";
+$vocab['holidays_zone_msg'] = "Choix de la zone de vacances scolaire (france)";
 ?>
