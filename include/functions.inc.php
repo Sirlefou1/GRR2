@@ -42,7 +42,7 @@ function getSchoolHolidays($now, $year)
 	$node = $vacances->calendrier->children();
 	foreach ($node as $key => $value)
 	{
-		if ($value['libelle'] == 'A')
+		if ($value['libelle'] == $zone)
 		{
 			foreach ($value->vacances as $key => $value)
 			{
