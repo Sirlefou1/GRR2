@@ -1032,13 +1032,13 @@ echo "<hr /><h3>".get_vocab("holidays_msg")."</h3>\n";
 echo "<table>";
 echo "<tr><td>".get_vocab("legend0")."</td><td>";
 echo "<input type='radio' name='show_holidays' value='Oui' ";
-if (getSettingValue("show_holidays") == '0')
+if (getSettingValue("show_holidays") == 'Oui')
 	echo "checked=\"checked\"";
 echo " />";
 echo "</td></tr>";
 echo "<tr><td>".get_vocab("legend1")."</td><td>";
 echo "<input type='radio' name='show_holidays' value='Non' ";
-if (getSettingValue("show_holidays") == '1')
+if (getSettingValue("show_holidays") == 'Non')
 	echo "checked=\"checked\"";
 echo " />";
 echo "</td></tr>";
