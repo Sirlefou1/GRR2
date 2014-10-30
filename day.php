@@ -184,6 +184,8 @@ else
 		echo '<div id="print_planning">'.PHP_EOL;
 	include "chargement.php";
 	$ferie_true = 0;
+	$class = "";
+	$title = "";
 	$ferie = getHolidays($year);
 	$tt = mktime(0, 0, 0, $month, $day,$year);
 	foreach ($ferie as $key => $value)
@@ -194,10 +196,15 @@ else
 			break;
 		}
 	}
+	$sh = getSchoolHolidays($t, $year);
+	if ($sh[0] == true)
+	{
+		$class .= "vacance ";
+		$title = " ".$sh[1];
+	}
 	if ($ferie_true)
-		echo '<div class="titre_planning ferie">'.PHP_EOL;
-	else
-		echo '<div class="titre_planning">'.PHP_EOL;
+		$class .= "ferie ";
+	echo '<div class="titre_planning '.$class.'">'.PHP_EOL;
 	if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
 	{
 		echo "<table class=\"table-header\"><tr><td class=\"left\"><button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='day.php?year=$yy&amp;month=$ym&amp;day=$yd&amp;area=$area';\"> <span class=\"glyphicon glyphicon-backward\"></span> ".get_vocab('daybefore')."</button></td><td>";
