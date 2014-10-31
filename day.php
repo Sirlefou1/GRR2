@@ -318,10 +318,15 @@ else
 		$tab[2][] = get_vocab('time');
 	echo "\n</tr>\n";
 	$tab_ligne = 3;
+	$iii = 0;
 	for ($t = $am7; $t <= $pm7; $t += $resolution)
 	{
 		echo "<tr>\n";
-		tdcell("cell_hours");
+		if ($iii % 2 == 1)
+			tdcell("cell_hours");
+		else
+			tdcell("cell_hours2");
+		$iii++;
 		if ($enable_periods == 'y')
 		{
 			$time_t = date("i", $t);

@@ -358,7 +358,10 @@ for ($t = $week_start; $t <= $week_end; $t += 86400)
 	for ($slot = $first_slot; $slot <= $last_slot; $slot++)
 	{
 		echo "<tr>";
-		tdcell("cell_hours");
+		if ($slot % 2 == 1)
+			tdcell("cell_hours");
+		else
+			tdcell("cell_hours2");
 		if ($enable_periods=='y')
 		{
 			$time_t = date("i", $t);
