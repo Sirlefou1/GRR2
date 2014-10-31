@@ -1046,26 +1046,20 @@ echo "</table>";
 # Choix de la zone de vacance
 echo "<hr /><h3>".get_vocab("holidays_zone_msg")."</h3>\n";
 echo "<table>";
-echo "<input type='text' name='holidays_zone' value='".getSettingValue("holidays_zone")."'/>";
+echo '<tr><td>';
+$vacances = simplexml_load_file('vacances.xml');
+$libelle = $vacances->academies->children();
+echo '<select class="form-control" name="holidays_zone">'.PHP_EOL;
+	foreach ($libelle as $key => $value)
+	{
+		echo '<option value="'.$value['zone'].'"';
+		if (getSettingValue("holidays_zone") == $value['zone'])
+			echo ' selected="selected"';
+		echo '>'.$value['zone'].'</option>'.PHP_EOL;
+	}
+	echo '</select></td>'.PHP_EOL;
 echo "</td></tr>";
 echo "</table>";
-# Gestion du lien aide
-echo "<hr /><h3>".get_vocab("Gestion lien aide bandeau superieur")."</h3>\n";
-echo "<table>\n";
-echo "<tr><td>".get_vocab("lien aide pointe vers documentation officielle site GRR")."</td><td>\n";
-echo "<input type='radio' name='gestion_lien_aide' value='ext' ";
-if (getSettingValue("gestion_lien_aide") == 'ext')
-	echo "checked=\"checked\"";
-echo " />";
-echo "</td></tr>\n";
-echo "<tr><td>".get_vocab("lien aide pointe vers adresse perso").get_vocab("deux_points")."</td><td>\n";
-echo "<input type='radio' name='gestion_lien_aide' value='perso' ";
-if (getSettingValue("gestion_lien_aide") == 'perso')
-	echo "checked=\"checked\"";
-echo " />\n";
-echo "<input type=\"text\" name=\"lien_aide\" value=\"".getSettingValue("lien_aide")."\" size=\"40\" />\n";
-echo "</td></tr>\n";
-echo "</table>\n";
 # Lors de l'édition d'un rapport, valeur par défaut en nombre de jours
 # de l'intervalle de temps entre la date de début du rapport et la date de fin du rapport.
 echo "<hr /><h3>".get_vocab("default_report_days_msg")."</h3>\n";
