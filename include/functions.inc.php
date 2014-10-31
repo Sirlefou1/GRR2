@@ -352,20 +352,20 @@ function bouton_retour_haut()
 {
 	echo '<script type="text/javascript">'.PHP_EOL;
 	echo '$(function()'.PHP_EOL;
-		echo '	{'.PHP_EOL;
-		echo '		$(window).scroll(function()'.PHP_EOL;
-			echo '		{'.PHP_EOL;
-			echo '			if ($(this).scrollTop() != 0)'.PHP_EOL;
-			echo '				$("#toTop").fadeIn();'.PHP_EOL;
-			echo '			else'.PHP_EOL;
-			echo '				$("#toTop").fadeOut();'.PHP_EOL;
-			echo '		});'.PHP_EOL;
-echo '		$("#toTop").click(function()'.PHP_EOL;
-	echo '		{'.PHP_EOL;
-	echo '			$("body,html").animate({scrollTop:0},800);'.PHP_EOL;
-	echo '		});'.PHP_EOL;
-echo '	});'.PHP_EOL;
-echo '</script>'.PHP_EOL;
+	echo '{'.PHP_EOL;
+	echo '$(window).scroll(function()'.PHP_EOL;
+	echo '{'.PHP_EOL;
+	echo 'if ($(this).scrollTop() != 0)'.PHP_EOL;
+	echo '$("#toTop").fadeIn();'.PHP_EOL;
+	echo 'else'.PHP_EOL;
+	echo '$("#toTop").fadeOut();'.PHP_EOL;
+	echo '});'.PHP_EOL;
+	echo '$("#toTop").click(function()'.PHP_EOL;
+	echo '{'.PHP_EOL;
+	echo '$("body,html").animate({scrollTop:0},800);'.PHP_EOL;
+	echo '});'.PHP_EOL;
+	echo '});'.PHP_EOL;
+	echo '</script>'.PHP_EOL;
 }
 /**
  *function affiche_ressource_empruntee
@@ -1605,7 +1605,7 @@ function span_bgground($colclass)
 	global $tab_couleur;
 	static $ecolors;
 	$num_couleur = grr_sql_query1("SELECT couleur FROM ".TABLE_PREFIX."_type_area WHERE type_letter='".$colclass."'");
-	echo "<span style=\"background-color: ".$tab_couleur[$num_couleur]."; background-image: none; background-repeat: repeat; background-attachment: scroll;\">";
+	echo '<span style="background-color: '.$tab_couleur[$num_couleur].'; background-image: none; background-repeat: repeat; background-attachment: scroll;">'.PHP_EOL;
 }
 //Output a start table cell tag <td> with color class and fallback color.
 function tdcell($colclass, $width = '')
@@ -1619,10 +1619,10 @@ function tdcell($colclass, $width = '')
 	if (($colclass >= "A") && ($colclass <= "Z"))
 	{
 		$num_couleur = grr_sql_query1("SELECT couleur FROM ".TABLE_PREFIX."_type_area WHERE type_letter='".$colclass."'");
-		echo "<td style=\"background-color:".$tab_couleur[$num_couleur].";\" ".$temp.">";
+		echo '<td style="background-color:'.$tab_couleur[$num_couleur].';" '.$temp.'>'.PHP_EOL;
 	}
 	else
-		echo "<td class=\"$colclass\" ".$temp.">";
+		echo '<td class="'.$colclass.' '.$temp.'">'.PHP_EOL;
 }
 function tdcell_rowspan($colclass, $step)
 {
@@ -1631,10 +1631,10 @@ function tdcell_rowspan($colclass, $step)
 	if (($colclass >= "A") && ($colclass <= "Z"))
 	{
 		$num_couleur = grr_sql_query1("SELECT couleur FROM ".TABLE_PREFIX."_type_area WHERE type_letter='".$colclass."'");
-		echo "<td rowspan=\"$step\" style=\"background-color:".$tab_couleur[$num_couleur].";\">";
+		echo '<td rowspan="'.$step.'" style="background-color:'.$tab_couleur[$num_couleur].';">'.PHP_EOL;
 	}
 	else
-		echo "<td rowspan=\"$step\" td class=\"".$colclass."\">";
+		echo '<td rowspan="'.$step.'" td class="'.$colclass.'">'.PHP_EOL;
 }
 //Display the entry-type color key. This has up to 2 rows, up to 10 columns.
 function show_colour_key($area_id)

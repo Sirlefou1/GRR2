@@ -280,7 +280,11 @@ $res = grr_sql_query($sql);
 if (isset($_GET['precedent']))
 {
 	if ($_GET['pview'] == 1 && $_GET['precedent'] == 1)
-		echo "<span id=\"lienPrecedent\">\n<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript:history.back();\">Précedent</button>\n</span>";
+	{
+		echo '<span id="lienPrecedent">'.PHP_EOL;
+		echo '<button class="btn btn-default btn-xs" onclick="charger();javascript:history.back();">Précedent</button>'.PHP_EOL;
+		echo '</span>'.PHP_EOL;
+	}
 }
 if (!$res)
 	fatal_error(0, grr_sql_error());
@@ -297,28 +301,30 @@ else
 	else
 		echo '<div id="print_planning">'.PHP_EOL;
 	include "chargement.php";
-	echo '<div class="titre_planning">'.PHP_EOL.'<table class="table-header">'.PHP_EOL;
+	echo '<div class="titre_planning">'.PHP_EOL;
+	echo '<table class="table-header">'.PHP_EOL;
 	if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
 	{
-		echo "
-		<tr>
-			<td class=\"left\">
-				<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='week_all.php?year=$yy&amp;month=$ym&amp;day=$yd&amp;area=$area';\"><span class=\"glyphicon glyphicon-backward\"></span> ".get_vocab("weekbefore")." </button>
-			</td>
-			<td>";
-				include "include/trailer.inc.php";
-				echo "</td>
-				<td class=\"right\">
-					<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='week_all.php?year=$ty&amp;month=$tm&amp;day=$td&amp;area=$area';\"> ".get_vocab('weekafter')."  <span class=\"glyphicon glyphicon-forward\"></span></button>
-				</td>
-			</tr>
-		</table>";
+		echo '<tr>'.PHP_EOL;
+		echo '<td class="left">'.PHP_EOL;
+		echo '<button class="btn btn-default btn-xs" onclick="charger();javascript: location.href=\'week_all.php?year='.$yy.'&amp;month='.$ym.'&amp;day='.$yd.'&amp;area='.$area.'\';"><span class="glyphicon glyphicon-backward"></span> '.get_vocab("weekbefore").' </button>'.PHP_EOL;
+		echo '</td>'.PHP_EOL;
+		echo '<td>'.PHP_EOL;
+		include "include/trailer.inc.php";
+		echo '</td>'.PHP_EOL;
+		echo '<td class="right">'.PHP_EOL;
+		echo '<button class="btn btn-default btn-xs" onclick="charger();javascript: location.href=\'week_all.php?year='.$ty.'&amp;month='.$tm.'&amp;day='.$td.'&amp;area='.$area.'\';"> '.get_vocab('weekafter').'  <span class="glyphicon glyphicon-forward"></span></button>'.PHP_EOL;
+		echo '</td>'.PHP_EOL;
+		echo '</tr>'.PHP_EOL;
+		echo '</table>'.PHP_EOL;
 	}
-	echo "<h4 class=\"titre\">".utf8_strftime($dformat, $date_start)." au ". utf8_strftime($dformat, $date_end). " $this_area_name - ".get_vocab("all_rooms")."</h4>";
-	echo "</div>";
-	echo "\n<div class=\"contenu_planning\">\n" ;
-	echo "<table class=\"table-bordered table-striped\">\n<thead><tr>";
-	echo "<th class=\"jour_sem\"> </th>\n";
+	echo '<h4 class="titre">'.utf8_strftime($dformat, $date_start).' au '. utf8_strftime($dformat, $date_end). ' '.$this_area_name.' - '.get_vocab("all_rooms").'</h4>'.PHP_EOL;
+	echo '</div>'.PHP_EOL;
+	echo '<div class="contenu_planning">'.PHP_EOL;
+	echo '<table class="table-bordered table-striped">'.PHP_EOL;
+	echo '<thead>'.PHP_EOL;
+	echo '<tr>'.PHP_EOL;
+	echo '<th class="jour_sem"> </th>'.PHP_EOL;
 	$t = $time;
 	$num_week_day = $weekstarts;
 	$ferie = getHolidays($year);
@@ -362,7 +368,8 @@ else
 				if ($ferie_true)
 					$class .= "ferie ";
 			}
-			echo "<th class=\"jour_sem\"><a class=\"lienPlanning ".$class."\" href='day.php?year=".$temp_year."&amp;month=".$temp_month."&amp;day=".$num_day."&amp;area=".$area."'>"  . day_name(($weekcol + $weekstarts) % 7) . " ".$num_day. " ".$temp_month2."</a>";
+			echo '<th class="jour_sem">'.PHP_EOL;
+			echo '<a class="lienPlanning '.$class.'" href="day.php?year='.$temp_year.'&amp;month='.$temp_month.'&amp;day='.$num_day.'&amp;area='.$area.'">'  . day_name(($weekcol + $weekstarts) % 7) . ' '.$num_day.' '.$temp_month2.'</a>'.PHP_EOL;
 			if (getSettingValue("jours_cycles_actif") == "Oui" && intval($jour_cycle) >- 1)
 			{
 				if (intval($jour_cycle) > 0)
@@ -370,12 +377,13 @@ else
 				else
 					echo "<br />".$jour_cycle;
 			}
-			echo "</th>\n";
+			echo '</th>'.PHP_EOL;
 		}
 		$num_week_day++;
 		$num_week_day = $num_week_day % 7;
 	}
-	echo "</tr></thead>";
+	echo '</tr>'.PHP_EOL;
+	echo '</thead>'.PHP_EOL;
 	$li = 0;
 	for ($ir = 0; ($row = grr_sql_row($res, $ir)); $ir++)
 	{
@@ -386,21 +394,23 @@ else
 			$UserRoomMaxBooking = UserRoomMaxBooking(getUserName(), $row[2], 1);
 			$authGetUserLevel = authGetUserLevel(getUserName(), -1);
 			$auth_visiteur = auth_visiteur(getUserName(), $row[2]);
-			echo "<tr>\n";
+			echo '<tr>'.PHP_EOL;
 			if ($ir % 2 == 1)
 				echo tdcell("cell_hours");
 			else
 				echo tdcell("cell_hours2");
-			echo "<a title=\"".htmlspecialchars(get_vocab("see_week_for_this_room"))."\" href='week.php?year=".$year."&amp;month=".$month."&amp;day=".$day."&amp;area=".$area."&amp;room=".$row[2]."'>" . htmlspecialchars($row[0]) ."</a><br />\n";
+			echo '<a title="'.htmlspecialchars(get_vocab("see_week_for_this_room")).'" href="week.php?year='.$year.'&amp;month='.$month.'&amp;day='.$day.'&amp;area='.$area.'&amp;room='.$row[2].'">' . htmlspecialchars($row[0]) .'</a><br />'.PHP_EOL;
 			if ($row[4] == "0")
-				echo "<span class=\"texte_ress_tempo_indispo\">".get_vocab("ressource_temporairement_indisponible")."</span><br />";
+				echo '<span class="texte_ress_tempo_indispo">'.get_vocab("ressource_temporairement_indisponible").'</span><br />'.PHP_EOL;
 			if (verif_display_fiche_ressource(getUserName(), $row[2]) && $_GET['pview'] != 1)
-				echo "<a href='javascript:centrerpopup(\"view_room.php?id_room=$row[2]\",600,480,\"scrollbars=yes,statusbar=no,resizable=yes\")' title=\"".get_vocab("fiche_ressource")."\">
-			<span class=\"glyphcolor glyphicon glyphicon-search\"></span></a>";
+			{
+				echo '<a href="javascript:centrerpopup(\'view_room.php?id_room='.$row[2].'\',600,480,\'scrollbars=yes,statusbar=no,resizable=yes\')" title="'.get_vocab("fiche_ressource").'">'.PHP_EOL;
+				echo '<span class="glyphcolor glyphicon glyphicon-search"></span></a>'.PHP_EOL;
+			}
 			if (authGetUserLevel(getUserName(),$row[2]) > 2 && $_GET['pview'] != 1)
-				echo "<a href='admin_edit_room.php?room=$row[2]'><span class=\"glyphcolor glyphicon glyphicon-cog\"></span></a>";
+				echo '<a href="admin_edit_room.php?room='.$row[2].'"><span class="glyphcolor glyphicon glyphicon-cog"></span></a>'.PHP_EOL;
 			affiche_ressource_empruntee($row[2]);
-			echo "</td>";
+			echo '</td>'.PHP_EOL;
 			$li++;
 			$t = $time;
 			$t2 = $time;
@@ -433,7 +443,7 @@ else
 							{
 								if ($no_td)
 								{
-									echo "<td class=\"cell_month\">";
+									echo '<td class="cell_month">'.PHP_EOL;
 									$no_td = FALSE;
 								}
 								if ($acces_fiche_reservation)
@@ -442,33 +452,34 @@ else
 									{
 										$currentPage = 'week_all';
 										$id = $d[$cday]["id"][$i];
-										echo "<a title=\"".htmlspecialchars($d[$cday]["who"][$i])."\" data-width=\"675\" onclick=\"request($id,$cday,$cmonth,$cyear,'$currentPage',readData);\" data-rel=\"popup_name\" class=\"poplight\">";
+										echo '<a title="'.htmlspecialchars($d[$cday]["who"][$i]).'" data-width="675" onclick="request('.$id.','.$cday.','.$cmonth.','.$cyear.',\''.$currentPage.'\',readData);" data-rel="popup_name" class="poplight">'.PHP_EOL;
 									}
 									else
-										echo "<a class=\"lienCellule\" title=\"".htmlspecialchars($d[$cday]["who"][$i])."\" href=\"view_entry.php?id=" . $d[$cday]["id"][$i]."&amp;page=week_all&amp;day=$cday&amp;month=$cmonth&amp;year=$cyear&amp;\">";
-									echo PHP_EOL.'<table class="table-header"><tr>';
+										echo '<a class="lienCellule" title="'.htmlspecialchars($d[$cday]["who"][$i]).'" href="view_entry.php?id='.$d[$cday]["id"][$i].'&amp;page=week_all&amp;day='.$cday.'&amp;month='.$cmonth.'&amp;year='.$cyear.'&amp;">'.PHP_EOL;
+									echo '<table class="table-header">'.PHP_EOL;
+									echo '<tr>'.PHP_EOL;
 									tdcell($d[$cday]["color"][$i]);
 									if ($d[$cday]["res"][$i] !='-')
-										echo " <img src=\"img_grr/buzy.png\" alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("ressource actuellement empruntee")."\" width=\"20\" height=\"20\" class=\"image\" /> \n";
+										echo '<img src="img_grr/buzy.png" alt="'.get_vocab("ressource actuellement empruntee").'" title="'.get_vocab("ressource actuellement empruntee").'" width="20" height="20" class="image" />'.PHP_EOL;
 									if ((isset($d[$cday]["option_reser"][$i])) && ($d[$cday]["option_reser"][$i] != -1))
-										echo " <img src=\"img_grr/small_flag.png\" alt=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."\" title=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")." ".time_date_string_jma($d[$cday]["option_reser"][$i],$dformat)."\" width=\"20\" height=\"20\" class=\"image\" /> \n";
+										echo "<img src=\"img_grr/small_flag.png\" alt=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."\" title=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")." ".time_date_string_jma($d[$cday]["option_reser"][$i],$dformat)."\" width=\"20\" height=\"20\" class=\"image\" /> \n";
 									if ((isset($d[$cday]["moderation"][$i])) && ($d[$cday]["moderation"][$i] == 1))
-										echo " <img src=\"img_grr/flag_moderation.png\" alt=\"".get_vocab("en_attente_moderation")."\" title=\"".get_vocab("en_attente_moderation")."\" class=\"image\" /> \n";
+										echo "<img src=\"img_grr/flag_moderation.png\" alt=\"".get_vocab("en_attente_moderation")."\" title=\"".get_vocab("en_attente_moderation")."\" class=\"image\" /> \n";
 									$Son_GenreRepeat = grr_sql_query1("SELECT ".TABLE_PREFIX."_type_area.type_name FROM ".TABLE_PREFIX."_type_area,".TABLE_PREFIX."_entry  WHERE  ".TABLE_PREFIX."_entry.type=".TABLE_PREFIX."_type_area.type_letter  AND ".TABLE_PREFIX."_entry.id = '".$d[$cday]["id"][$i]."';");
 									if ($Son_GenreRepeat == -1)
 										echo "<span class=\"small_planning\">".$d[$cday]["data"][$i]."";
 									else
 										echo "<span class=\"small_planning\">".$d[$cday]["data"][$i]."<br>". $Son_GenreRepeat."<br>";
-									echo $d[$cday]["who1"][$i]. "<br/>" ;
+									echo $d[$cday]["who1"][$i]. '<br/>'.PHP_EOL;
 									if ($d[$cday]["description"][$i] != "")
-										echo "<i>".$d[$cday]["description"][$i]."</i>";
+										echo '<i>'.$d[$cday]["description"][$i].'</i>'.PHP_EOL;
 									$clef = grr_sql_query1("SELECT clef FROM ".TABLE_PREFIX."_entry WHERE ".TABLE_PREFIX."_entry.id = '".$d[$cday]["id"][$i]."'");
 									if ($clef == 1)
-										echo '<img src="img_grr/skey.png" alt="clef">';
+										echo '<img src="img_grr/skey.png" alt="clef">'.PHP_EOL;
 									$courrier = grr_sql_query1("SELECT courrier FROM ".TABLE_PREFIX."_entry WHERE ".TABLE_PREFIX."_entry.id = '".$d[$cday]["id"][$i]."'");
 									if ($courrier == 1)
-										echo '<img src="img_grr/scourrier.png" alt="courrier">';
-									echo "</span>";
+										echo '<img src="img_grr/scourrier.png" alt="courrier">'.PHP_EOL;
+									echo '</span>'.PHP_EOL;
 								}
 								else
 								{
@@ -496,10 +507,12 @@ else
 									if ($d[$cday]["description"][$i] != "")
 										echo "<i>".$d[$cday]["description"][$i]."</i>";
 										//echo "</a>";
-									echo "</span>";
+									echo '</span>'.PHP_EOL;
 								}
-								echo "</td></tr></table>";
-								echo "</a>";
+								echo '</td>'.PHP_EOL;
+								echo '</tr>'.PHP_EOL;
+								echo '</table>'.PHP_EOL;
+								echo '</a>'.PHP_EOL;
 							}
 						}
 					}
@@ -526,27 +539,26 @@ else
 								echo "<a href=\"edit_entry.php?room=".$row[2]."&amp;hour=$hour&amp;minute=0&amp;year=$cyear&amp;month=$cmonth&amp;day=$cday&amp;page=week_all\" title=\"".get_vocab("cliquez_pour_effectuer_une_reservation")."\"><span class=\"glyphicon glyphicon-plus\"></span></a>";
 						}
 						else
-							echo " ";
+							echo ' '.PHP_EOL;
 					}
 					if (!$no_td)
-						echo "</div>";
-					echo "</td>\n";
+						echo '</div>'.PHP_EOL;
+					echo '</td>'.PHP_EOL;
 				}
 				$num_week_day++;
 				$num_week_day = $num_week_day % 7;
 			}
-			echo "</tr>";
+			echo '</tr>'.PHP_EOL;
 		}
 	}
 }
-echo "</table>\n";
+echo '</table>'.PHP_EOL;
 if ($_GET['pview'] != 1)
-	echo "<div id=\"toTop\"><b>".get_vocab("top_of_page")."</b>";
-bouton_retour_haut ();
-echo "</div>";
-echo "</div>";
-echo "</div>";
-echo "<div id=\"popup_name\" class=\"popup_block\" ></div>";
-echo "<div id=\"popup_name2\" class=\"popup_block2\" ></div>";
+	echo '<div id="toTop"><b>'.get_vocab("top_of_page").'</b>'.PHP_EOL;
+bouton_retour_haut();
+echo '</div>'.PHP_EOL;
+echo '</div>'.PHP_EOL;
+echo '</div>'.PHP_EOL;
+echo '<div id="popup_name" class="popup_block" ></div>'.PHP_EOL;
 include "footer.php";
 ?>

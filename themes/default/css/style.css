@@ -48,7 +48,7 @@ a.calendar{display:block;color:#FFF;height:100%;width:100%;vertical-align:middle
 .calendarcol1{padding:0;font-weight:700;background-color:#fff;text-align:center;height:30px;width:40px;line-height:30px}
 .lienSemaine a{height:100%;width:100%;display:block;vertical-align:middle;text-align:center;color:#000}
 .titre{color:#fff;text-align:center}
-.cellcalendar{background:#5c2862;color:#5c2862;vertical-align:middle;text-align:center;height:30px;width:40px;line-height:30px}
+.cellcalendar{background:#5c2862;vertical-align:middle;text-align:center;height:30px;width:40px;line-height:30px}
 .cellcalendar a:hover{background-color:#fff}
 a.lienPlanning:link,a.lienPlanning:visited{color:#fff;display:block}
 a.lienPlanning:hover{display:block}
@@ -67,7 +67,7 @@ table.legende td{width:125px;text-align:center}
 .pied_menuGauche{border-top:3px solid #5c2862}
 th{color:#eee;font-size:10pt;font-family:verdana,sans-serif;background-color:#5c2862 !important;vertical-align:top;text-align:center !important;border:none !important}
 td.cell_hours{color:#fff;background-color:gray !important;text-align:center;font-size:13px;height:20px;line-height:20px;border: none !important}
-td.cell_hours2{color:#000;background-color:#fff !important;text-align:center;font-size:13px;height:20px;line-height:20px;border: none !important}
+td.cell_hours2{color:#000;background-color:#ccc !important;text-align:center;font-size:13px;height:20px;line-height:20px;border: none !important}
 td.cell_hours a{color:#fff}
 td.cell_month{background-color:#fff}
 .cell_month a{color:#000;font-weight:400;text-align:center}
@@ -108,10 +108,10 @@ th.tableau_month2{padding:2px}
 a.poplight{display:block;color:#000;font-weight:400;font-size:14px;height:100%;width:100%;vertical-align:middle;text-align:center;border-bottom:1px solid #fff;cursor:pointer}
 .popup_block{display:none;background:#fff;padding:20px;border:20px solid #ddd;float:left;font-size:1.2em;position:fixed;top:10%;left:50%;z-index:99999;-webkit-box-shadow:0 0 20px #000;-moz-box-shadow:0 0 20px #000;box-shadow:0 0 20px #000}
 img.btn_close{position:relative;z-index:5;border:0;float:right;margin:-15px -15px 0 0}
-*html #fade,*html .popup_block{position:absolute}
+html #fade,html .popup_block{position:absolute}
 #toTop{width:100px;border:1px solid #ccc;background:#f7f7f7;text-align:center;padding:5px;position:fixed;bottom:10px;right:100px;cursor:pointer;color:#333;font-family:verdana;font-size:14px}
 #toTop b{color:#000}
-a.buttonsReservation{background-color:purple;color:purple;cursor:pointer}
+a.buttonsReservation{cursor:pointer}
 .glyphcolor{color:#FFF}
 .glyphalign{margin-left:70px}
 .btn-group-lg>.btn,.btn-lg,form.ressource div.panel-body{padding:0 !important}
