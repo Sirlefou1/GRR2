@@ -851,7 +851,6 @@ function begin_page($title, $page="with_session")
 	$a .= '<script type="text/javascript" src="js/pdf.js" ></script>'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="js/appeldelete.js" ></script>'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="js/popup.js" charset="utf-8"></script>'.PHP_EOL;
-	$a .= '<script type="text/javascript" src="js/oXHR.js"></script>'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="js/functions.js" ></script>'.PHP_EOL;
 	if (isset($use_tooltip_js))
 		echo '<script type="text/javascript" src="./include/tooltip.js"></script>'.PHP_EOL;

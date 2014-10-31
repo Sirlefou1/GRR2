@@ -33,6 +33,25 @@ jQuery(function($)
 	});
 });
 
+function getXMLHttpRequest() {
+    var xmlhttp = null;
+    if (window.XMLHttpRequest || window.ActiveXObject) {
+        if (window.ActiveXObject) {
+            try {
+                xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch(e) {
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+    } else {
+        xmlhttp = new XMLHttpRequest();
+    }
+    } else {
+        alert("Votre navigateur ne supporte pas l'objet XMLHTTPRequest...");
+        return null;
+    }
+    return xmlhttp;
+}
+
 function request(id,day,month,year,currentPage,callback)
 {
 	document.getElementById('popup_name').innerHTML="";
