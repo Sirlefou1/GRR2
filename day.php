@@ -282,8 +282,8 @@ else
 				echo "<a href='admin_edit_room.php?room=$id_room[$i]'><span class=\"glyphcolor glyphicon glyphicon-cog\"></span></a><br/>";
 			affiche_ressource_empruntee($id_room[$i]);
 			echo "<span id=\"boutonSelection$a\" style=\"display:none;\">
-			<input type=\"button\" type=\"button\" class=\"btn btn-default btn-xs\" title=\"".htmlspecialchars(get_vocab("see_week_for_this_room"))."\" onclick=\"charger();javascript: location.href='week.php?year=$year&amp;month=$month&amp;cher=$day&amp;room=$id_room[$i]';\" value=\" ".get_vocab('week')." \"/>
-			<input type=\"button\" type=\"button\" class=\"btn btn-default btn-xs\" title=\"".htmlspecialchars(get_vocab("see_month_for_this_room"))."\" onclick=\"charger();javascript: location.href='month.php?year=$year&amp;month=$month&amp;day=$day&amp;room=$id_room[$i]';\" value=\" ".get_vocab('month')." \"/>";
+			<input type=\"button\" class=\"btn btn-default btn-xs\" title=\"".htmlspecialchars(get_vocab("see_week_for_this_room"))."\" onclick=\"charger();javascript: location.href='week.php?year=$year&amp;month=$month&amp;cher=$day&amp;room=$id_room[$i]';\" value=\" ".get_vocab('week')." \"/>
+			<input type=\"button\" class=\"btn btn-default btn-xs\" title=\"".htmlspecialchars(get_vocab("see_month_for_this_room"))."\" onclick=\"charger();javascript: location.href='month.php?year=$year&amp;month=$month&amp;day=$day&amp;room=$id_room[$i]';\" value=\" ".get_vocab('month')." \"/>";
 			echo "</span>";
 			echo "</th>";
 			$tab[1][$i + 1] = htmlspecialchars($row[0]);

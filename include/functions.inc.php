@@ -2085,7 +2085,7 @@ function make_site_item_html($link, $current_site, $year, $month, $day, $user)
 	if ($nb_sites_a_afficher > 1)
 	{
 		// s'il y a au moins deux sites à afficher, on met une liste déroulante, sinon, on affiche rien.
-		$out_html .= '</div></form><script type="text/javascript"></script><noscript><div><input type="submit" value="change" /></div></noscript></form>';
+		$out_html .= '</form></div><script type="text/javascript"></script><noscript><div><input type="submit" value="change" /></div></noscript></form>';
 		return $out_html;
 	}
 }
@@ -2147,7 +2147,7 @@ function make_area_item_html( $link, $current_site, $current_area, $year, $month
 			}
 		}
 	}
-	$out_html .= " </div></form></div>";
+	$out_html .= "</form></div></div>";
 	return $out_html;
 }
 //end make_area_select_html
@@ -2196,7 +2196,7 @@ function make_room_item_html($link, $current_area, $current_room, $year, $month,
 			}
 		}
 	}
-	$out_html .= " </div></form></div>";
+	$out_html .= "</form></div></div>";
 	return $out_html;
 }
 # end make_room_item_html
