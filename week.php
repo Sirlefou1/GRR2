@@ -171,13 +171,13 @@ if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
 	echo "<table class=\"table-header\">
 	<tr>
 		<td class=\"left\">
-			<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='week.php?year=$yy&amp;month=$ym&amp;day=$yd&amp;room=$room';\"><span class=\"glyphicon glyphicon-backward\"></span>".get_vocab("weekbefore")."</button>
+			<button type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='week.php?year=$yy&amp;month=$ym&amp;day=$yd&amp;room=$room';\"><span class=\"glyphicon glyphicon-backward\"></span>".get_vocab("weekbefore")."</button>
 		</td>
 		<td>";
 			include "include/trailer.inc.php";
 			echo "</td>
 			<td class=\"right\">
-				<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='week.php?year=$ty&amp;month=$tm&amp;day=$td&amp;room=$room';\">".get_vocab('weekafter')."<span class=\"glyphicon glyphicon-forward\"></span></button>
+				<button type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='week.php?year=$ty&amp;month=$tm&amp;day=$td&amp;room=$room';\">".get_vocab('weekafter')."<span class=\"glyphicon glyphicon-forward\"></span></button>
 			</td>
 		</tr>
 	</table>";
@@ -191,7 +191,7 @@ if (isset($_GET['precedent']))
 	if ($_GET['pview'] == 1 AND $_GET['precedent'] == 1)
 	{
 		echo "<span id=\"lienPrecedent\">
-		<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript:history.back();\">Précedent</button>
+		<button type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript:history.back();\">Précedent</button>
 	</span>";
 }
 }

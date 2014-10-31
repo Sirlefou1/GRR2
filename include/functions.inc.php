@@ -815,9 +815,11 @@ function begin_page($title, $page="with_session")
 		setcookie("open", "true", time()+3600);
 	}
 	$a = '<!DOCTYPE html>'.PHP_EOL;
-	$a .= '<html>'.PHP_EOL;
+	$a .= '<html lang="fr">'.PHP_EOL;
 	$a .= '<head>'.PHP_EOL;
 	$a .= '<meta charset="utf-8">'.PHP_EOL;
+	$a .= '<meta http-equiv="X-UA-Compatible" content="IE=edge">'.PHP_EOL;
+    $a .= '<meta name="viewport" content="width=device-width, initial-scale=1">'.PHP_EOL;
 	$a .= '<link rel="SHORTCUT ICON" href="./favicon.ico" />'.PHP_EOL;
 	$a .= '<title>'.$title.'</title>'.PHP_EOL;
 	$a .= '<meta http-equiv="Content-Type" content="text/html; charset=';
@@ -2122,8 +2124,8 @@ function make_area_item_html( $link, $current_site, $current_area, $year, $month
 		FROM ".TABLE_PREFIX."_area
 		ORDER BY order_display, area_name";
 	}
-	$out_html = "<br /><div class=\"panel panel-default\"><div class=\"panel-heading\">".get_vocab("areas")."</div>\n";
-	$out_html .= "<form class=\"ressource\" id=\"area_001\" action=\"".$_SERVER['PHP_SELF']."\"><div class=\"panel-body\">\n";
+	$out_html = "<br /><div class=\"panel panel-default\"><div class=\"panel-heading\">".get_vocab("areas")."</div>\n<div class=\"panel-body\">\n";
+	$out_html .= "<form class=\"ressource\" id=\"area_001\" action=\"".$_SERVER['PHP_SELF']."\">\n";
 	$res = grr_sql_query($sql);
 	if ($res)
 	{
@@ -2163,7 +2165,7 @@ function make_area_item_html( $link, $current_site, $current_area, $year, $month
 function make_room_item_html($link, $current_area, $current_room, $year, $month, $day)
 {
 	global $vocab;
-	$out_html = "<br /><div class=\"panel panel-default\"><div class=\"panel-heading\">".get_vocab('rooms').get_vocab("deux_points")."</div><form class=\"ressource\" id=\"room_001\" action=\"".$_SERVER['PHP_SELF']."\"><div class=\"panel-body\">\n";
+	$out_html = "<br /><div class=\"panel panel-default\"><div class=\"panel-heading\">".get_vocab('rooms').get_vocab("deux_points")."</div><div class=\"panel-body\"><form class=\"ressource\" id=\"room_001\" action=\"".$_SERVER['PHP_SELF']."\">\n";
 	$sql = "SELECT id, room_name, description FROM ".TABLE_PREFIX."_room WHERE area_id='".protect_data_sql($current_area)."' ORDER BY order_display,room_name";
 	$res = grr_sql_query($sql);
 	if ($res)

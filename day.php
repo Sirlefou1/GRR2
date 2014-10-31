@@ -198,7 +198,7 @@ else
 				break;
 			}
 		}
-		$sh = getSchoolHolidays($t, $year);
+		$sh = getSchoolHolidays($tt, $year);
 		if ($sh[0] == true)
 		{
 			$class .= "vacance ";
@@ -210,9 +210,9 @@ else
 	echo '<div class="titre_planning '.$class.'">'.PHP_EOL;
 	if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
 	{
-		echo "<table class=\"table-header\"><tr><td class=\"left\"><button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='day.php?year=$yy&amp;month=$ym&amp;day=$yd&amp;area=$area';\"> <span class=\"glyphicon glyphicon-backward\"></span> ".get_vocab('daybefore')."</button></td><td>";
+		echo "<table class=\"table-header\"><tr><td class=\"left\"><button type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='day.php?year=$yy&amp;month=$ym&amp;day=$yd&amp;area=$area';\"> <span class=\"glyphicon glyphicon-backward\"></span> ".get_vocab('daybefore')."</button></td><td>";
 		include "include/trailer.inc.php";
-		echo "</td><td class=\"right\"><button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='day.php?year=$ty&amp;month=$tm&amp;day=$td&amp;area=$area';\"> ".get_vocab('dayafter')."  <span class=\"glyphicon glyphicon-forward\"></span></button></td></tr></table>";
+		echo "</td><td class=\"right\"><button type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='day.php?year=$ty&amp;month=$tm&amp;day=$td&amp;area=$area';\"> ".get_vocab('dayafter')."  <span class=\"glyphicon glyphicon-forward\"></span></button></td></tr></table>";
 	}
 	echo "<h4 class=\"titre\">" . ucfirst(utf8_strftime($dformat, $am7));
 	if (getSettingValue("jours_cycles_actif") == "Oui" && intval($jour_cycle) >- 1)
@@ -227,7 +227,7 @@ else
 	if (isset($_GET['precedent']))
 	{
 		if ($_GET['pview'] == 1 && $_GET['precedent'] == 1)
-			echo "<span id=\"lienPrecedent\"><button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript:history.back();\">Précedent</button></span>";
+			echo "<span id=\"lienPrecedent\"><button type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript:history.back();\">Précedent</button></span>";
 	}
 	echo "<div class=\"contenu_planning\">" ;
 	echo "<table class=\"table-bordered table-striped\">";
@@ -282,8 +282,8 @@ else
 				echo "<a href='admin_edit_room.php?room=$id_room[$i]'><span class=\"glyphcolor glyphicon glyphicon-cog\"></span></a><br/>";
 			affiche_ressource_empruntee($id_room[$i]);
 			echo "<span id=\"boutonSelection$a\" style=\"display:none;\">
-			<input type=\"button\" class=\"btn btn-default btn-xs\" title=\"".htmlspecialchars(get_vocab("see_week_for_this_room"))."\" onclick=\"charger();javascript: location.href='week.php?year=$year&amp;month=$month&amp;cher=$day&amp;room=$id_room[$i]';\" value=\" ".get_vocab('week')." \"/>
-			<input type=\"button\" class=\"btn btn-default btn-xs\" title=\"".htmlspecialchars(get_vocab("see_month_for_this_room"))."\" onclick=\"charger();javascript: location.href='month.php?year=$year&amp;month=$month&amp;day=$day&amp;room=$id_room[$i]';\" value=\" ".get_vocab('month')." \"/>";
+			<input type=\"button\" type=\"button\" class=\"btn btn-default btn-xs\" title=\"".htmlspecialchars(get_vocab("see_week_for_this_room"))."\" onclick=\"charger();javascript: location.href='week.php?year=$year&amp;month=$month&amp;cher=$day&amp;room=$id_room[$i]';\" value=\" ".get_vocab('week')." \"/>
+			<input type=\"button\" type=\"button\" class=\"btn btn-default btn-xs\" title=\"".htmlspecialchars(get_vocab("see_month_for_this_room"))."\" onclick=\"charger();javascript: location.href='month.php?year=$year&amp;month=$month&amp;day=$day&amp;room=$id_room[$i]';\" value=\" ".get_vocab('month')." \"/>";
 			echo "</span>";
 			echo "</th>";
 			$tab[1][$i + 1] = htmlspecialchars($row[0]);

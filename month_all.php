@@ -153,83 +153,82 @@ else
 	if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
 	{
 		#Show Go to week before and after links
-		echo "\n
-		<tr>
-			<td align=\"left\">
-				<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='month_all.php?year=$yy&amp;month=$ym&amp;area=$area';\"><span class=\"glyphicon glyphicon-backward\"></span>".get_vocab("monthbefore")."</button>
-			</td>";
-			echo " <td>";
-			include "include/trailer.inc.php";
-			echo "</td>
-			<td align=\"right\">
-				<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='month_all.php?year=$ty&amp;month=$tm&amp;area=$area';\">".get_vocab('monthafter')."  <span class=\"glyphicon glyphicon-forward\"></span></button>
-			</td>
-		</tr>
-	</table>";
-}
-echo " <td>";
-echo "<h4 class=\"titre\">" . ucfirst(utf8_strftime("%B %Y", $month_start)) . " ".ucfirst($this_area_name)." - ".get_vocab("all_areas")."</h4>";
-if ($_GET['pview'] != 1)
-	echo " <a href=\"month_all2.php?year=$year&amp;month=$month&amp;area=$area\"><img src=\"img_grr/change_view.png\" alt=\"".get_vocab("change_view")."\" title=\"".get_vocab("change_view")."\" class=\"image\" /></a>";
-echo " </td>";
-echo " </tr>";
-echo "</table>";
-echo "</div>\n";
-if (isset($_GET['precedent']))
-{
-	if ($_GET['pview'] == 1 && $_GET['precedent'] == 1)
+		echo '<tr>'.PHP_EOL;
+		echo '<td align="left">'.PHP_EOL;
+		echo '<button  type="button" class="btn btn-default btn-xs" onclick="charger();javascript: location.href=\'month_all.php?year='.$yy.'&amp;month='.$ym.'&amp;area='.$area.'\';"><span class="glyphicon glyphicon-backward"></span>'.get_vocab("monthbefore").'</button>'.PHP_EOL;
+		echo '</td>'.PHP_EOL;
+		echo '<td>'.PHP_EOL;
+		include "include/trailer.inc.php";
+		echo '</td>'.PHP_EOL;
+		echo '<td align="right">'.PHP_EOL;
+		echo '<button type="button" class="btn btn-default btn-xs" onclick="charger();javascript: location.href=\'month_all.php?year='.$ty.'&amp;month='.$tm.'&amp;area='.$area.'\';">'.get_vocab('monthafter').'  <span class="glyphicon glyphicon-forward"></span></button>'.PHP_EOL;
+		echo '</td>'.PHP_EOL;
+		echo '</tr>'.PHP_EOL;
+		echo '</table>'.PHP_EOL;
+	}
+	echo '<td>'.PHP_EOL;
+	echo '<h4 class="titre">'.ucfirst(utf8_strftime("%B %Y", $month_start)).' '.ucfirst($this_area_name).' - '.get_vocab("all_areas").'</h4>'.PHP_EOL;
+	if ($_GET['pview'] != 1)
+		echo ' <a href="month_all2.php?year='.$year.'&amp;month='.$month.'&amp;area='.$area.'"><img src="img_grr/change_view.png" alt="'.get_vocab("change_view").'" title="'.get_vocab("change_view").'" class="image" /></a>'.PHP_EOL;
+	echo '</td>'.PHP_EOL;
+	echo '</tr>'.PHP_EOL;
+	echo '</table>'.PHP_EOL;
+	echo '</div>'.PHP_EOL;
+	if (isset($_GET['precedent']))
 	{
-		echo "<span id=\"lienPrecedent\">
-		<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript:history.back();\">Précedent</button>
-	</span>";
-}
-}
-echo " <div class=\"contenu_planning\">";
-for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
-{
-	$verif_acces_ressource[$row[10]] = verif_acces_ressource(getUserName(), $row[10]);
-	$acces_fiche_reservation[$row[10]] = verif_acces_fiche_reservation(getUserName(), $row[10]);
-	if ($debug_flag)
-		echo "<br />DEBUG: result $i, id $row[2], starts $row[0], ends $row[1]\n";
-	$t = max((int)$row[0], $month_start);
-	$end_t = min((int)$row[1], $month_end);
-	$day_num = date("j", $t);
-	if ($enable_periods == 'y')
-		$midnight = mktime(12, 0, 0, $month, $day_num, $year);
-	else
-		$midnight = mktime(0, 0, 0, $month, $day_num, $year);
-	while ($t < $end_t)
+		if ($_GET['pview'] == 1 && $_GET['precedent'] == 1)
+		{
+			echo '<span id="lienPrecedent">'.PHP_EOL;
+			echo '<button class="btn btn-default btn-xs" onclick="charger();javascript:history.back();">Précedent</button>'.PHP_EOL;
+			echo '</span>'.PHP_EOL;
+		}
+	}
+	echo '<div class="contenu_planning">'.PHP_EOL;
+	for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 	{
+		$verif_acces_ressource[$row[10]] = verif_acces_ressource(getUserName(), $row[10]);
+		$acces_fiche_reservation[$row[10]] = verif_acces_fiche_reservation(getUserName(), $row[10]);
 		if ($debug_flag)
-			echo "<br />DEBUG: Entry $row[2] day $day_num\n";
-		$d[$day_num]["id"][] = $row[2];
-		$d[$day_num]["id_room"][] = $row[10];
-		if (getSettingValue("display_info_bulle") == 1)
-			$d[$day_num]["who"][] = get_vocab("reservee au nom de").affiche_nom_prenom_email($row[4], $row[9], "nomail");
-		else if (getSettingValue("display_info_bulle") == 2)
-			$d[$day_num]["who"][] = $row[6];
+			echo "<br />DEBUG: result $i, id $row[2], starts $row[0], ends $row[1]\n";
+		$t = max((int)$row[0], $month_start);
+		$end_t = min((int)$row[1], $month_end);
+		$day_num = date("j", $t);
+		if ($enable_periods == 'y')
+			$midnight = mktime(12, 0, 0, $month, $day_num, $year);
 		else
-			$d[$day_num]["who"][] = "";
-		$d[$day_num]["who1"][] = affichage_lien_resa_planning($row[3],$row[2]);
-		$d[$day_num]["room"][] = $row[5] ;
-		$d[$day_num]["color"][] = $row[7];
-		$d[$day_num]["description"][] = affichage_resa_planning($row[6],$row[2]);
-		$d[$day_num]["moderation"][] = $row[8];
-		$midnight_tonight = $midnight + 86400;
+			$midnight = mktime(0, 0, 0, $month, $day_num, $year);
+		while ($t < $end_t)
+		{
+			if ($debug_flag)
+				echo "<br />DEBUG: Entry $row[2] day $day_num\n";
+			$d[$day_num]["id"][] = $row[2];
+			$d[$day_num]["id_room"][] = $row[10];
+			if (getSettingValue("display_info_bulle") == 1)
+				$d[$day_num]["who"][] = get_vocab("reservee au nom de").affiche_nom_prenom_email($row[4], $row[9], "nomail");
+			else if (getSettingValue("display_info_bulle") == 2)
+				$d[$day_num]["who"][] = $row[6];
+			else
+				$d[$day_num]["who"][] = "";
+			$d[$day_num]["who1"][] = affichage_lien_resa_planning($row[3],$row[2]);
+			$d[$day_num]["room"][] = $row[5] ;
+			$d[$day_num]["color"][] = $row[7];
+			$d[$day_num]["description"][] = affichage_resa_planning($row[6],$row[2]);
+			$d[$day_num]["moderation"][] = $row[8];
+			$midnight_tonight = $midnight + 86400;
 		//Describe the start and end time, accounting for "all day"
 		//and for entries starting before/ending after today.
 		//There are 9 cases, for start time < = or > midnight this morning,
 		//and end time < = or > midnight tonight.
 		//Use ~ (not -) to separate the start and stop times, because MSIE
 		//will incorrectly line break after a -.
-		if ($enable_periods == 'y')
-		{
-			$start_str = preg_replace("/ /", " ", period_time_string($row[0]));
-			$end_str   = preg_replace("/ /", " ", period_time_string($row[1], -1));
+			if ($enable_periods == 'y')
+			{
+				$start_str = preg_replace("/ /", " ", period_time_string($row[0]));
+				$end_str   = preg_replace("/ /", " ", period_time_string($row[1], -1));
 			// Debug
 			//echo affiche_date($row[0])." ".affiche_date($midnight)." ".affiche_date($row[1])." ".affiche_date($midnight_tonight)."<br />";
-			switch (cmp3($row[0], $midnight) . cmp3($row[1], $midnight_tonight))
-			{
+				switch (cmp3($row[0], $midnight) . cmp3($row[1], $midnight_tonight))
+				{
 						case "> < ":         //Starts after midnight, ends before midnight
 						case "= < ":         //Starts at midnight, ends before midnight
 						if ($start_str == $end_str)

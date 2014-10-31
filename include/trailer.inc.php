@@ -46,7 +46,7 @@ if ((!isset($_GET['pview']) || ($_GET['pview'] != 1)) && (isset($affiche_pview))
 {
 	if (getSettingValue("pview_new_windows") == 1)
 	{
-		$s = "<button class=\"btn btn-default btn-xs\" onclick=\"";
+		$s = "<button type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"";
 		$s .= "javascript:window.open(";
 		$s .= "'".traite_grr_url($grr_script_name)."?";
 		if (isset($_SERVER['QUERY_STRING']) && ($_SERVER['QUERY_STRING'] != ''))
@@ -55,7 +55,7 @@ if ((!isset($_GET['pview']) || ($_GET['pview'] != 1)) && (isset($affiche_pview))
 	}
 	else
 	{
-		$s = "<button class=\"btn btn-default btn-xs\" onclick=\"charger();";
+		$s = "<button type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"charger();";
 		$s .= "   javascript:location.href=";
 		$s .= "'".traite_grr_url($grr_script_name)."?";
 		if (isset($_SERVER['QUERY_STRING']) && ($_SERVER['QUERY_STRING'] != ''))
