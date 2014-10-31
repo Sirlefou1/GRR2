@@ -662,12 +662,7 @@ echo '<form id="main" action="edit_entry_handler.php" method="get">'.PHP_EOL;
 		}
 	}
 </script>
-<style type="text/css">
-	.input-group {
-		width: 110px;
-		margin-bottom: 10px;
-	}
-</style>
+
 <?php
 echo '<table class="table-bordered EditEntryTable"><tr>'.PHP_EOL;
 echo '<td style="width:50%; vertical-align:top; padding-left:15px; padding-top:5px; padding-bottom:5px;">'.PHP_EOL;
