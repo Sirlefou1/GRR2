@@ -47,7 +47,6 @@ function request(id,day,month,year,currentPage,callback)
 		if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0))
 			callback(xhr.responseText);
 	};
-	xhr.overrideMimeType('text/html; charset=UTF-8');
 	xhr.open("GET","view_entry.php?id="+Id+"&day="+Day+"&month="+Month+"&year="+Year+"&page="+Page+"", true);
 	xhr.send(null);
 }
