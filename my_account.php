@@ -283,6 +283,7 @@ if ($res)
 <?php
 affiche_pop_up($msg,'admin');
 echo ('
+	<div class="container">
 	<form id="param_account" action="my_account.php" method="post">
 		<table>');
 	if (!(IsAllowedToModifyProfil()))
@@ -308,11 +309,11 @@ echo ('
 		echo '<tr><td><b>'.get_vocab('login').get_vocab('deux_points').'</b></td>';
 		echo '<td>'.getUserName().'</td></tr>';
 		echo '<tr><td><b>'.get_vocab('last_name').get_vocab('deux_points').'</b>*</td>';
-		echo '<td><input type="text" name="reg_nom" value="';
+		echo '<td><input class="form-control" type="text" name="reg_nom" value="';
 		if ($user_nom)
 			echo htmlspecialchars($user_nom);
 		echo '" size="30" /></td></tr>';
-		echo '<tr><td><b>'.get_vocab('first_name').get_vocab('deux_points').'</b>*</td><td><input type="text" name="reg_prenom" value="';
+		echo '<tr><td><b>'.get_vocab('first_name').get_vocab('deux_points').'</b>*</td><td><input class="form-control" type="text" name="reg_prenom" value="';
 		if ($user_prenom)
 			echo htmlspecialchars($user_prenom);
 		echo '" size="30" /></td></tr>';
@@ -327,7 +328,7 @@ echo ('
 	}
 	else
 	{
-		echo '<tr><td><b>'.get_vocab('mail_user').get_vocab('deux_points').'</b></td><td><input type="text" name="reg_email" value="';
+		echo '<tr><td><b>'.get_vocab('mail_user').get_vocab('deux_points').'</b></td><td><input class="form-control" type="text" name="reg_email" value="';
 		if ($user_email)
 			echo htmlspecialchars($user_email);
 		echo '" size="30" /></td></tr>';
@@ -463,7 +464,7 @@ echo ('
 						<tr>
 							<td>'.get_vocab('choose_css').'</td>
 							<td>
-								<select name="default_css">'."\n";
+								<select class="form-control" name="default_css">'."\n";
 									$i = 0;
 									while ($i < count($liste_themes))
 									{
@@ -483,7 +484,7 @@ echo ('
 							<tr>
 								<td>'.get_vocab('choose_css').'</td>
 								<td>
-									<select name="default_language">'."\n";
+									<select class="form-control" name="default_language">'."\n";
 										$i = 0;
 										while ($i < count($liste_language))
 										{
@@ -522,6 +523,7 @@ echo ('
 								<input class="btn btn-primary" type="submit" value="'.get_vocab('reset').'" />
 							</div>
 						</form>
+						</div>
 					</body>
 					</html>';
 					?>

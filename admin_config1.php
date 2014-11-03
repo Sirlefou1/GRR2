@@ -498,7 +498,7 @@ echo "<h3>".get_vocab("miscellaneous")."</h3>\n";
 			<?php echo get_vocab("title_home_page"); ?>
 		</td>
 		<td>
-			<input type="text" name="title_home_page" id="title_home_page" size="40" value="<?php echo(getSettingValue("title_home_page")); ?>" />
+			<input class="form-control" type="text" name="title_home_page" id="title_home_page" size="40" value="<?php echo(getSettingValue("title_home_page")); ?>" />
 		</td>
 	</tr>
 	<tr>
@@ -506,7 +506,7 @@ echo "<h3>".get_vocab("miscellaneous")."</h3>\n";
 			<?php echo get_vocab("message_home_page"); ?>
 		</td>
 		<td>
-			<textarea name="message_home_page" rows="3" cols="40"><?php echo(getSettingValue("message_home_page")); ?>
+			<textarea class="form-control" name="message_home_page" rows="3" cols="40"><?php echo(getSettingValue("message_home_page")); ?>
 			</textarea>
 		</td>
 	</tr>
@@ -515,7 +515,7 @@ echo "<h3>".get_vocab("miscellaneous")."</h3>\n";
 			<?php echo get_vocab("company"); ?>
 		</td>
 		<td>
-			<input type="text" name="company" size="40" value="<?php echo(getSettingValue("company")); ?>" />
+			<input class="form-control" type="text" name="company" size="40" value="<?php echo(getSettingValue("company")); ?>" />
 		</td>
 	</tr>
 	<tr>
@@ -523,7 +523,7 @@ echo "<h3>".get_vocab("miscellaneous")."</h3>\n";
 			<?php echo get_vocab("grr_url"); ?>
 		</td>
 		<td>
-			<input type="text" name="grr_url" size="40" value="<?php echo(getSettingValue("grr_url")); ?>" />
+			<input class="form-control" type="text" name="grr_url" size="40" value="<?php echo(getSettingValue("grr_url")); ?>" />
 		</td>
 	</tr>
 	<tr>
@@ -537,7 +537,7 @@ echo "<h3>".get_vocab("miscellaneous")."</h3>\n";
 			<?php echo get_vocab("webmaster_name"); ?>
 		</td>
 		<td>
-			<input type="text" name="webmaster_name" size="40" value="<?php echo(getSettingValue("webmaster_name")); ?>" />
+			<input class="form-control" type="text" name="webmaster_name" size="40" value="<?php echo(getSettingValue("webmaster_name")); ?>" />
 		</td>
 	</tr>
 	<tr>
@@ -545,7 +545,7 @@ echo "<h3>".get_vocab("miscellaneous")."</h3>\n";
 			<?php echo get_vocab("webmaster_email")."<br /><i>".get_vocab("plusieurs_adresses_separees_points_virgules")."</i>"; ?>
 		</td>
 		<td>
-			<input type="text" id="webmaster_email" name="webmaster_email" size="40" value="<?php echo(getSettingValue("webmaster_email")); ?>" />
+			<input class="form-control" type="text" id="webmaster_email" name="webmaster_email" size="40" value="<?php echo(getSettingValue("webmaster_email")); ?>" />
 		</td>
 	</tr>
 	<tr>
@@ -553,7 +553,7 @@ echo "<h3>".get_vocab("miscellaneous")."</h3>\n";
 			<?php echo get_vocab("technical_support_email")."<br /><i>".get_vocab("plusieurs_adresses_separees_points_virgules")."</i>"; ?>
 		</td>
 		<td>
-			<input type="text" id="technical_support_email" name="technical_support_email" size="40" value="<?php echo(getSettingValue("technical_support_email")); ?>" />
+			<input class="form-control" type="text" id="technical_support_email" name="technical_support_email" size="40" value="<?php echo(getSettingValue("technical_support_email")); ?>" />
 		</td>
 	</tr>
 </table>
@@ -571,7 +571,7 @@ if ((getSettingValue("logo") != '') && (@file_exists($nom_picture)))
 echo "</table>";
 echo "<h3>".get_vocab("affichage_calendriers")."</h3>\n";
 echo "<p>".get_vocab("affichage_calendriers_msg").get_vocab("deux_points");
-echo "<select name=\"nb_calendar\" >\n";
+echo "<select class=\"form-control\" name=\"nb_calendar\" >\n";
 for ($k = 0; $k < 6; $k++)
 {
 	echo "<option value=\"".$k."\" ";
@@ -628,13 +628,36 @@ echo "<hr /><h3>".get_vocab("title_begin_end_bookings")."</h3>\n";
 		</td>
 		<td>
 			<?php
+			$typeDate = "begin_";
 			$bday = strftime("%d", getSettingValue("begin_bookings"));
 			$bmonth = strftime("%m", getSettingValue("begin_bookings"));
 			$byear = strftime("%Y", getSettingValue("begin_bookings"));
-			genDateSelector("begin_", $bday, $bmonth, $byear,"more_years") ?>
-		</td>
-		<td> </td>
-	</tr>
+			genDateSelector("begin_", $bday, $bmonth, $byear,"more_years");
+			echo '<input type="hidden" disabled="disabled" id="mydate_' .$typeDate. '">'.PHP_EOL;
+			echo '<script>'.PHP_EOL;
+			echo '$(function() {'.PHP_EOL;
+			echo '$.datepicker.setDefaults( $.datepicker.regional[\'fr\'] );'.PHP_EOL;
+			echo '$(\'#mydate_' .$typeDate. '\').datepicker({'.PHP_EOL;
+			echo 'beforeShow: readSelected, onSelect: updateSelected,'.PHP_EOL;
+			echo 'showOn: \'both\', buttonImageOnly: true, buttonImage: \'images/calendar.png\',buttonText: "Choisir la date"});'.PHP_EOL;
+			echo 'function readSelected()'.PHP_EOL;
+			echo '{'.PHP_EOL;
+			echo '$(\'#mydate_' .$typeDate. '\').val($(\'#' .$typeDate. '_day\').val() + \'/\' +'.PHP_EOL;
+			echo '$(\'#' .$typeDate. '_month\').val() + \'/\' + $(\'#' .$typeDate. '_year\').val());'.PHP_EOL;
+			echo 'return {};'.PHP_EOL;
+			echo '}'.PHP_EOL;
+			echo 'function updateSelected(date)'.PHP_EOL;
+			echo '{'.PHP_EOL;
+			echo '$(\'#' .$typeDate. '_day\').val(date.substring(0, 2));'.PHP_EOL;
+			echo '$(\'#' .$typeDate. '_month\').val(date.substring(3, 5));'.PHP_EOL;
+			echo '$(\'#' .$typeDate. '_year\').val(date.substring(6, 10));'.PHP_EOL;
+			echo '}'.PHP_EOL;
+			echo '});'.PHP_EOL;
+			echo '</script>'.PHP_EOL;
+?>
+</td>
+<td> </td>
+</tr>
 </table>
 <?php echo "<p><i>".get_vocab("begin_bookings_explain")."</i>"; ?>
 <br /><br />
@@ -646,10 +669,33 @@ echo "<hr /><h3>".get_vocab("title_begin_end_bookings")."</h3>\n";
 </td>
 <td>
 	<?php
+	$typeDate = "end_";
 	$eday = strftime("%d", getSettingValue("end_bookings"));
 	$emonth = strftime("%m", getSettingValue("end_bookings"));
 	$eyear= strftime("%Y", getSettingValue("end_bookings"));
-	genDateSelector("end_",$eday,$emonth,$eyear,"more_years") ?>
+	genDateSelector("end_",$eday,$emonth,$eyear,"more_years");
+	echo '<input type="hidden" disabled="disabled" id="mydate_' .$typeDate. '">'.PHP_EOL;
+	echo '<script>'.PHP_EOL;
+	echo '$(function() {'.PHP_EOL;
+	echo '$.datepicker.setDefaults( $.datepicker.regional[\'fr\'] );'.PHP_EOL;
+	echo '$(\'#mydate_' .$typeDate. '\').datepicker({'.PHP_EOL;
+	echo 'beforeShow: readSelected, onSelect: updateSelected,'.PHP_EOL;
+	echo 'showOn: \'both\', buttonImageOnly: true, buttonImage: \'images/calendar.png\',buttonText: "Choisir la date"});'.PHP_EOL;
+	echo 'function readSelected()'.PHP_EOL;
+	echo '{'.PHP_EOL;
+	echo '$(\'#mydate_' .$typeDate. '\').val($(\'#' .$typeDate. '_day\').val() + \'/\' +'.PHP_EOL;
+	echo '$(\'#' .$typeDate. '_month\').val() + \'/\' + $(\'#' .$typeDate. '_year\').val());'.PHP_EOL;
+	echo 'return {};'.PHP_EOL;
+	echo '}'.PHP_EOL;
+	echo 'function updateSelected(date)'.PHP_EOL;
+	echo '{'.PHP_EOL;
+	echo '$(\'#' .$typeDate. '_day\').val(date.substring(0, 2));'.PHP_EOL;
+	echo '$(\'#' .$typeDate. '_month\').val(date.substring(3, 5));'.PHP_EOL;
+	echo '$(\'#' .$typeDate. '_year\').val(date.substring(6, 10));'.PHP_EOL;
+	echo '}'.PHP_EOL;
+	echo '});'.PHP_EOL;
+	echo '</script>'.PHP_EOL;
+?>
 </td>
 </tr>
 </table>
@@ -753,7 +799,7 @@ if (getSettingValue("module_multisite") == "Oui")
 			<tr>
 				<td>'.get_vocab('default_site').get_vocab('deux_points').'</td>
 				<td>
-					<select id="id_site" name="id_site" onchange="modifier_liste_domaines();modifier_liste_ressources(2)">
+					<select class="form-control" id="id_site" name="id_site" onchange="modifier_liste_domaines();modifier_liste_ressources(2)">
 						<option value="-1">'.get_vocab('choose_a_site').'</option>'."\n");
 	for ($enr = 0; ($row = grr_sql_row($resultat, $enr)); $enr++)
 	{
@@ -769,7 +815,7 @@ if (getSettingValue("module_multisite") == "Oui")
 }
 else
 {
-	echo '<input type="hidden" id="id_site" name="id_site" value="-1" />
+	echo '<input class="form-control" type="hidden" id="id_site" name="id_site" value="-1" />
 	<table>';
 	}
 /**
@@ -784,7 +830,7 @@ echo '</div></td></tr>';
  */
 echo '<tr><td colspan="2">';
 echo '<div id="div_liste_ressources">';
-echo '<input type="hidden" id="id_area" name="id_area" value="'.getSettingValue("default_area").'" />';
+echo '<input class="form-control" type="hidden" id="id_area" name="id_area" value="'.getSettingValue("default_area").'" />';
 // Ici, on insère la liste des ressouces avec de l'ajax !
 echo '</div></td></tr></table>';
 echo '<script type="text/javascript">modifier_liste_domaines();</script>'."\n";
@@ -794,7 +840,7 @@ echo '<script type="text/javascript">modifier_liste_ressources(1);</script>'."\n
 //
 echo "<h4>".get_vocab("explain_css")."</h4>";
 echo "<table><tr><td>".get_vocab("choose_css")."</td><td>";
-echo "<select name='default_css'>\n";
+echo "<select class=\"form-control\" name='default_css'>\n";
 $i = 0;
 while ($i < count($liste_themes))
 {
@@ -810,7 +856,7 @@ echo "</select></td></tr></table>\n";
 //
 echo "<h4>".get_vocab("choose_language")."</h4>";
 echo "<table><tr><td>".get_vocab("choose_css")."</td><td>";
-echo "<select name='default_language'>\n";
+echo "<select class=\"form-control\" name='default_language'>\n";
 $i = 0;
 while ($i < count($liste_language))
 {
@@ -887,7 +933,7 @@ echo "</td></tr>";
 //echo "<td><tr></td></tr>";
 echo "<tr><td>".get_vocab("display_mail_destinataire")."</td><td>";
 echo "</tr>";
-echo "<tr><td><input type=\"text\" id=\"mail_destinataire\" name=\"mail_destinataire\" value=\"".getSettingValue("mail_destinataire")."\" size=\"30\">\n";
+echo "<tr><td><input class=\"form-control\" type=\"text\" id=\"mail_destinataire\" name=\"mail_destinataire\" value=\"".getSettingValue("mail_destinataire")."\" size=\"30\">\n";
 echo "</td>";
 echo "</tr>";
 echo "</table>";
@@ -1095,10 +1141,10 @@ echo "</table>";
 # Lors de l'édition d'un rapport, valeur par défaut en nombre de jours
 # de l'intervalle de temps entre la date de début du rapport et la date de fin du rapport.
 echo "<hr /><h3>".get_vocab("default_report_days_msg")."</h3>\n";
-echo "<p>".get_vocab("default_report_days_explain").get_vocab("deux_points")."\n<input type=\"text\" name=\"default_report_days\" value=\"".getSettingValue("default_report_days")."\" size=\"5\" />\n";
+echo "<p>".get_vocab("default_report_days_explain").get_vocab("deux_points")."\n<input class=\"form-control\" type=\"text\" name=\"default_report_days\" value=\"".getSettingValue("default_report_days")."\" size=\"5\" />\n";
 # Formulaire de réservation
 echo "</p><hr /><h3>".get_vocab("formulaire_reservation")."</h3>\n";
-echo "<p>".get_vocab("longueur_liste_ressources").get_vocab("deux_points")."<input type=\"text\" name=\"longueur_liste_ressources_max\" value=\"".getSettingValue("longueur_liste_ressources_max")."\" size=\"5\" />";
+echo "<p>".get_vocab("longueur_liste_ressources").get_vocab("deux_points")."<input class=\"form-control\" type=\"text\" name=\"longueur_liste_ressources_max\" value=\"".getSettingValue("longueur_liste_ressources_max")."\" size=\"5\" />";
 /*
 # nb_year_calendar permet de fixer la plage de choix de l'année dans le choix des dates de début et fin des réservations
 # La plage s'étend de année_en_cours - $nb_year_calendar à année_en_cours + $nb_year_calendar
