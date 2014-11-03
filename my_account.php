@@ -239,15 +239,45 @@ if ($res)
 	}
 }
 ?>
-<script type="text/javascript" src="js/prototype.js" ></script>
 <script type="text/javascript" >
-	function modifier_liste_domaines()
-	{
-		new Ajax.Updater($('div_liste_domaines'),"my_account_modif_listes.php",{method: 'get', parameters: $('id_site').serialize(true)+'&'+'default_area=<?php echo $default_area; ?>'+'&'+'session_login=<?php echo getUserName(); ?>'+'&'+'use_site=<?php echo $use_site; ?>'+'&'+'type=domaine'});
+	function modifier_liste_domaines(){
+		$.ajax({
+			url: "my_account_modif_listes.php",
+			type: "get",
+			dataType: "html",
+			data: {
+				id_site: $('id_site').serialize(true),
+				default_area : '<?php echo getSettingValue("default_area"); ?>',
+				session_login:'<?php echo getUserName(); ?>',
+				use_site:'<?php echo $use_site; ?>',
+				type:'domaine',
+			},
+			success: function(returnData){
+				$("#div_liste_domaines").html(returnData);
+			},
+			error: function(e){
+				alert(e);
+			}
+		});
 	}
-	function modifier_liste_ressources(action)
-	{
-		new Ajax.Updater($('div_liste_ressources'),"my_account_modif_listes.php",{method: 'get', parameters: $('id_area').serialize(true)+'&'+'default_room=<?php echo $default_room; ?>'+'&'+'type=ressource'+'&'+'action='+action});
+	function modifier_liste_ressources(action){
+		$.ajax({
+			url: "my_account_modif_listes.php",
+			type: "get",
+			dataType: "html",
+			data: {
+				id_area:$('id_area').serialize(true),
+				default_room : '<?php echo getSettingValue("default_room"); ?>',
+				type:'ressource',
+				action:+action,
+				},
+			success: function(returnData){
+				$("#div_liste_ressources").html(returnData);
+			},
+			error: function(e){
+				alert(e);
+			}
+		});
 	}
 </script>
 <?php
