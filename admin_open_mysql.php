@@ -28,25 +28,6 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-/**
- * $Log: admin_open_mysql.php,v $
- * Revision 1.6  2009-06-04 15:30:17  grr
- * *** empty log message ***
- *
- * Revision 1.5  2009-02-27 22:05:03  grr
- * *** empty log message ***
- *
- * Revision 1.4  2008-11-16 22:00:58  grr
- * *** empty log message ***
- *
- * Revision 1.3  2008-11-06 21:57:34  grr
- * *** empty log message ***
- *
- * Revision 1.2  2008-11-05 15:04:16  grr
- * *** empty log message ***
- *
- *
- */
 include "include/admin.inc.php";
 $grr_script_name = "admin_open_mysql.php";
 $back = "";
@@ -73,6 +54,7 @@ if (!$file_name)
 	$ok = @copy($sql_file['tmp_name'],$file_name);
 	$file = fopen($file_name, "r") or exit("Unable to open file!");
 	$line = fgets($file);
+	var_dump($line);
 	if (!stristr($line,'#**************** BASE DE DONNEES'))
 	{
 		fclose($file);
