@@ -34,8 +34,9 @@ if (isset($_POST['civ']))
 	$jour2 = $_POST['jour2'];
 	$cle = $_POST['cle'];
 	echo '<!DOCTYPE html>
-	<html>
+	<html lang="fr">
 	<head>
+		<meta charset="utf-8">
 		<title></title>
 		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="themes/default/css/pdf.css">
@@ -114,7 +115,7 @@ if (isset($_POST['civ']))
 			</div>
 		</div>
 		<footer>
-		
+
 		</footer>
 		<script src="js/html2canvas.js"></script>
 		<script type="text/javascript" src="js/jspdf.min.js"></script>
@@ -144,8 +145,9 @@ else
 	$row2 = grr_sql_row($res, 0);
 	?>
 	<!DOCTYPE html>
-	<html>
+	<html lang="fr">
 	<head>
+		<meta charset="utf-8">
 		<title></title>
 		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
 	</head>
