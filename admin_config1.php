@@ -693,6 +693,7 @@ if (getSettingValue("module_multisite") == "Oui")
 else
 	$use_site='n';
 ?>
+<script type="text/javascript" src="js/prototype.js" ></script>
 <script type="text/javascript">
 	function modifier_liste_domaines(){
 		new Ajax.Updater($('div_liste_domaines'),"my_account_modif_listes.php",{method: 'get', parameters: $('id_site').serialize(true)+'&'+'default_area=<?php echo getSettingValue("default_area"); ?>'+'&'+'session_login=<?php echo getUserName(); ?>'+'&'+'use_site=<?php echo $use_site; ?>'+'&'+'type=domaine'});

@@ -239,6 +239,7 @@ if ($res)
 	}
 }
 ?>
+<script type="text/javascript" src="js/prototype.js" ></script>
 <script type="text/javascript" >
 	function modifier_liste_domaines()
 	{
