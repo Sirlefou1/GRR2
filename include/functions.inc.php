@@ -834,7 +834,7 @@ function begin_page($title, $page="with_session")
 	$a .= '<link rel="stylesheet" type="text/css" href="include/admin_grr.css" />'.PHP_EOL;
 	if ((isset($_GET['pview'])) && ($_GET['pview'] == 1))
 		$a .=  '<link rel="stylesheet" href="themes/print/css/style.css" type="text/css" />'.PHP_EOL;
-	//$a .= '<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />'.PHP_EOL;
+	$a .= '<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />'.PHP_EOL;
 	$a .= '<link rel="stylesheet" type="text/css" href="themes/default/css/jquery-ui-timepicker-addon.css" >'.PHP_EOL;
 	$a .= '<link rel="stylesheet" type="text/css" href="themes/default/css/bootstrap-multiselect.css">'.PHP_EOL;
 	$a .= '<link rel="stylesheet" type="text/css" href="themes/default/css/bootstrap-clockpicker.min.css">'.PHP_EOL;
