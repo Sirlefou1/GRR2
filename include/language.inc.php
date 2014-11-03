@@ -127,7 +127,7 @@ function utf8_convert($string)
 function utf8_strftime($format, $time)
 {
 	$result = strftime($format, $time);
-	return utf8_convert($result);
+	return utf8_encode($result);
 }
 # A map is needed to convert from the HTTP language specifier to a
 # locale specifier for Windows
