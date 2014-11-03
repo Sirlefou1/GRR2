@@ -1162,7 +1162,7 @@ while ($i < 101) {
 }
 echo "</select>\n";
 */
-echo "<br /><br /></p><div id=\"fixe\" style=\"text-align:center;\"><input type=\"submit\" name=\"ok\" value=\"".get_vocab("save")."\" style=\"font-variant: small-caps;\"/></div>";
+echo "<br /><br /></p><div id=\"fixe\" style=\"text-align:center;\"><input class=\"btn btn-primary\" type=\"submit\" name=\"ok\" value=\"".get_vocab("save")."\" style=\"font-variant: small-caps;\"/></div>";
 echo "</form>";
 ?>
 <!--MAJ David VOUE 23/01/2014 Script de validation du mail du destinataire -->

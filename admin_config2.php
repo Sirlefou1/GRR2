@@ -27,28 +27,6 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-/**
- * $Log: admin_config2.php,v $
- * Revision 1.11  2009-09-29 18:02:56  grr
- * *** empty log message ***
- *
- * Revision 1.10  2009-04-09 14:52:31  grr
- * *** empty log message ***
- *
- * Revision 1.9  2009-02-27 13:28:19  grr
- * *** empty log message ***
- *
- * Revision 1.8  2008-11-16 22:00:58  grr
- * *** empty log message ***
- *
- * Revision 1.7  2008-11-10 08:17:34  grr
- * *** empty log message ***
- *
- * Revision 1.6  2008-11-10 07:06:39  grr
- * *** empty log message ***
- *
- *
- */
 
 // Nombre maximum de réservation (tous domaines confondus)
 if (isset($_GET['UserAllRoomsMaxBooking']))
@@ -349,7 +327,7 @@ echo " - ".get_vocab("all_rooms");
 echo "</td><td><input type=\"text\" name=\"UserAllRoomsMaxBooking\" value=\"".getSettingValue("UserAllRoomsMaxBooking")."\" size=\"5\"/></td></tr>\n";
 echo "</table>\n";
 echo "<p><input type=\"hidden\" name=\"page_config\" value=\"2\" />\n";
-echo "<br /></p><div id=\"fixe\" style=\"text-align:center;\"><input type=\"submit\" name=\"ok\" value=\"".get_vocab("save")."\" style=\"font-variant: small-caps;\"/></div>\n";
+echo "<br /></p><div id=\"fixe\" style=\"text-align:center;\"><input class=\"btn btn-primary\" type=\"submit\" name=\"ok\" value=\"".get_vocab("save")."\" style=\"font-variant: small-caps;\"/></div>\n";
 echo "</form>\n";
 // fin de l'affichage de la colonne de droite
 echo "</td></tr></table>\n";

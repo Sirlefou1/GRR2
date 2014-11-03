@@ -27,22 +27,6 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-/**
- * $Log: admin_config5.php,v $
- * Revision 1.8  2009-04-14 12:59:17  grr
- * *** empty log message ***
- *
- * Revision 1.7  2009-04-09 14:52:31  grr
- * *** empty log message ***
- *
- * Revision 1.6  2009-02-27 13:28:19  grr
- * *** empty log message ***
- *
- * Revision 1.5  2008-11-16 22:00:58  grr
- * *** empty log message ***
- *
- *
- */
 
 if (!loadSettings())
 	die("Erreur chargement settings");
@@ -154,7 +138,7 @@ if (getSettingValue("use_fckeditor") == '1')
 echo " />";
 echo "\n</td></tr>";
 echo "\n</table>";
-echo "\n<div id=\"fixe\" style=\"text-align:center;\"><input type=\"submit\" name=\"ok\" value=\"".get_vocab("save")."\" style=\"font-variant: small-caps;\"/>\n";
+echo "\n<div id=\"fixe\" style=\"text-align:center;\"><input class=\"btn btn-primary\" type=\"submit\" name=\"ok\" value=\"".get_vocab("save")."\" style=\"font-variant: small-caps;\"/>\n";
 echo "<input type=\"hidden\" value=\"5\" name=\"page_config\" /></div>\n";
 echo "</form>";
 // fin de l'affichage de la colonne de droite

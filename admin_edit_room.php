@@ -417,7 +417,7 @@ if ((!empty($room)) || (isset($area_id)))
 		$nom_picture = '';
 		if ($row['picture_room'] != '') $nom_picture = "./images/".$row['picture_room'];
 		if (getSettingValue("use_fckeditor") == 1)
-			echo "<script type=\"text/javascript\" src=\"./ckeditor/ckeditor.js\"></script>\n";
+			echo "<script type=\"text/javascript\" src=\"js/ckeditor/ckeditor.js\"></script>\n";
 		echo "<table border=\"1\" cellspacing=\"1\" cellpadding=\"6\">\n";
 		echo "<tr><td>".get_vocab("name").get_vocab("deux_points")."</td><td style=\"width:30%;\">\n";
 		// seul l'administrateur peut modifier le nom de la ressource
@@ -455,7 +455,7 @@ if ((!empty($room)) || (isset($area_id)))
 			if ($nb_area > 1)
 			{
 				echo "<tr><td>".get_vocab('match_area').get_vocab('deux_points')."</td>\n";
-				echo "<td><select name=\"area_id\" >\n
+				echo "<td><select class=\"form-control\" name=\"area_id\" >\n
 				<option value=\"-1\">".get_vocab('choose_an_area')."</option>\n";
 				for ($enr = 0; ($row1 = grr_sql_row($res, $enr)); $enr++)
 				{
@@ -482,11 +482,11 @@ if ((!empty($room)) || (isset($area_id)))
 		}
 		// Ordre d'affichage du domaine
 		echo "<tr><td>".get_vocab("order_display").get_vocab("deux_points")."</td>\n";
-		echo "<td><input type=\"text\" name=\"area_order\" size=\"1\" value=\"".htmlspecialchars($row["order_display"])."\" /></td>\n";
+		echo "<td><input class=\"form-control\" type=\"text\" name=\"area_order\" size=\"1\" value=\"".htmlspecialchars($row["order_display"])."\" /></td>\n";
 		echo "</tr>\n";
 		// Qui peut voir cette ressource
 		echo "<tr><td colspan=\"2\">".get_vocab("qui_peut_voir_ressource")."<br />\n";
-		echo "<select name=\"who_can_see\" size=\"1\">\n
+		echo "<select class=\"form-control\" name=\"who_can_see\" size=\"1\">\n
 		<option value=\"0\" ";
 		if ($row["who_can_see"] == 0)
 			echo " selected=\"selected\" ";
@@ -543,121 +543,117 @@ if ((!empty($room)) || (isset($area_id)))
 			echo get_vocab("deux_points")."<br />";
 			if (getSettingValue("use_fckeditor") == 1)
 			{
-				echo "<textarea class=\"ckeditor\" id=\"editor1\" name=\"comment_room\" rows=\"8\" cols=\"120\">\n";
-				echo $row['comment_room'];
+				echo "<textarea class=\"ckeditor\" id=\"editor1\" name=\"message_accueil\" rows=\"8\" cols=\"120\">\n";
+				echo htmlspecialchars($row['comment_room']);
 				echo "</textarea>\n";
 				?>
 				<script type="text/javascript">
-		//<![CDATA[
-		CKEDITOR.replace( 'editor1',
-		{
-			toolbar :
-			[
-			['Source'],
-			['Cut','Copy','Paste','PasteText','PasteFromWord', 'SpellChecker', 'Scayt'],
-			['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
-			['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
-			['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
-			['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-			['Link','Unlink','Anchor'],
-			['Image','Table','HorizontalRule','SpecialChar','PageBreak'],
-			]
-		});
-
-		//]]>
-	</script>
-	<?php
-
-}
-else
-	echo "<textarea name=\"comment_room\" rows=\"8\" cols=\"120\" >".$row['comment_room']."</textarea>";
-echo "</td></tr></table>\n";
-echo "<h3>".get_vocab("configuration_ressource")."</h3>\n";
+					CKEDITOR.replace( 'editor1',
+					{
+						toolbar :
+						[
+						['Source'],
+						['Cut','Copy','Paste','PasteText','PasteFromWord', 'SpellChecker', 'Scayt'],
+						['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
+						['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
+						['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
+						['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
+						['Link','Unlink','Anchor'],
+						['Image','Table','HorizontalRule','SpecialChar','PageBreak'],
+						]
+					});
+				</script>
+				<?php
+			}
+			else
+				echo "<textarea class=\"form-control\" name=\"comment_room\" rows=\"8\" cols=\"120\" >".$row['comment_room']."</textarea>";
+			echo "</td></tr></table>\n";
+			echo "<h3>".get_vocab("configuration_ressource")."</h3>\n";
 // Type d'affichage : duree ou heure/date de fin de reservation
-echo "<table border=\"1\" cellspacing=\"1\" cellpadding=\"6\">\n";
-echo "<tr><td>".get_vocab("type_affichage_reservation").get_vocab("deux_points")."</td>\n";
-echo "<td>";
-echo "<label><input type=\"radio\" name=\"type_affichage_reser\" value=\"0\" ";
-if (($row["type_affichage_reser"]) == 0)
-	echo " checked=\"checked\" ";
-echo "/>";
-echo get_vocab("affichage_reservation_duree");
-echo "</label><br /><label><input type=\"radio\" name=\"type_affichage_reser\" value=\"1\" ";
-if (($row["type_affichage_reser"]) == 1)
-	echo " checked=\"checked\" ";
-echo "/>";
-echo get_vocab("affichage_reservation_date_heure");
-echo "</label></td>\n";
-echo "</tr>\n";
+			echo "<table border=\"1\" cellspacing=\"1\" cellpadding=\"6\">\n";
+			echo "<tr><td>".get_vocab("type_affichage_reservation").get_vocab("deux_points")."</td>\n";
+			echo "<td>";
+			echo "<label><input type=\"radio\" name=\"type_affichage_reser\" value=\"0\" ";
+			if (($row["type_affichage_reser"]) == 0)
+				echo " checked=\"checked\" ";
+			echo "/>";
+			echo get_vocab("affichage_reservation_duree");
+			echo "</label><br /><label><input type=\"radio\" name=\"type_affichage_reser\" value=\"1\" ";
+			if (($row["type_affichage_reser"]) == 1)
+				echo " checked=\"checked\" ";
+			echo "/>";
+			echo get_vocab("affichage_reservation_date_heure");
+			echo "</label></td>\n";
+			echo "</tr>\n";
 
 	// Capacite
-echo "<tr><td>".get_vocab("capacity").": </td><td><input type=\"text\" name=\"capacity\" size=\"1\" value=\"".$row["capacity"]."\" /></td></tr>\n";
+			echo "<tr><td>".get_vocab("capacity").": </td><td><input class=\"form-control\" type=\"text\" name=\"capacity\" size=\"1\" value=\"".$row["capacity"]."\" /></td></tr>\n";
 	// seul les administrateurs de la ressource peuvent modifier le nombre max de reservation par utilisateur
-if ((authGetUserLevel(getUserName(),$area_id,"area") >= 4) || (authGetUserLevel(getUserName(),$room) >= 4))
-{
-	echo "<tr><td>".get_vocab("max_booking")." ";
-	echo "</td><td><input type=\"text\" name=\"max_booking\" size=\"1\" value=\"".$row["max_booking"]."\" /></td></tr>";
+			if ((authGetUserLevel(getUserName(),$area_id,"area") >= 4) || (authGetUserLevel(getUserName(),$room) >= 4))
+			{
+				echo "<tr><td>".get_vocab("max_booking")." ";
+				echo "</td><td><input class=\"form-control\" type=\"text\" name=\"max_booking\" size=\"1\" value=\"".$row["max_booking"]."\" /></td></tr>";
 
-}
-else if ($row["max_booking"] != "-1")
-	echo "<tr><td>".get_vocab("msg_max_booking").get_vocab("deux_points")."</td><td><input type=\"hidden\" name=\"max_booking\" value=\"".$row["max_booking"]."\" /><b>".htmlspecialchars($row["max_booking"])."</b></td></tr>";
+			}
+			else if ($row["max_booking"] != "-1")
+				echo "<tr><td>".get_vocab("msg_max_booking").get_vocab("deux_points")."</td><td><input type=\"hidden\" name=\"max_booking\" value=\"".$row["max_booking"]."\" /><b>".htmlspecialchars($row["max_booking"])."</b></td></tr>";
 // L'utilisateur ne peut pas reserver au-dele d'un certain temps
-echo "<tr><td>".get_vocab("delais_max_resa_room").": </td><td><input type=\"text\" name=\"delais_max_resa_room\" size=\"1\" value=\"".$row["delais_max_resa_room"]."\" /></td></tr>\n";
+			echo "<tr><td>".get_vocab("delais_max_resa_room").": </td><td><input class=\"form-control\" type=\"text\" name=\"delais_max_resa_room\" size=\"1\" value=\"".$row["delais_max_resa_room"]."\" /></td></tr>\n";
 // L'utilisateur ne peut pas reserver en-dessous d'un certain temps
-echo "<tr><td>".get_vocab("delais_min_resa_room").": ";
-echo "</td><td><input type=\"text\" name=\"delais_min_resa_room\" size=\"5\" value=\"".$row["delais_min_resa_room"]."\" /></td></tr>\n";
+			echo "<tr><td>".get_vocab("delais_min_resa_room").": ";
+			echo "</td><td><input class=\"form-control\" type=\"text\" name=\"delais_min_resa_room\" size=\"5\" value=\"".$row["delais_min_resa_room"]."\" /></td></tr>\n";
 // L'utilisateur peut poser poser une option de reservation
-echo "<tr><td>".get_vocab("msg_option_de_reservation")."</td><td><input type=\"text\" name=\"delais_option_reservation\" size=\"5\" value=\"".$row["delais_option_reservation"]."\" /></td></tr>\n";
+			echo "<tr><td>".get_vocab("msg_option_de_reservation")."</td><td><input class=\"form-control\" type=\"text\" name=\"delais_option_reservation\" size=\"5\" value=\"".$row["delais_option_reservation"]."\" /></td></tr>\n";
 // Les demandes de reservations sont moderes
-echo "<tr><td>".get_vocab("msg_moderation_reservation").get_vocab("deux_points");
-echo "</td>" ."<td><input type='checkbox' name='moderate' ";
-if ($row['moderate'])
-	echo 'checked="checked"';
-echo " /></td></tr>\n";
+			echo "<tr><td>".get_vocab("msg_moderation_reservation").get_vocab("deux_points");
+			echo "</td>" ."<td><input type='checkbox' name='moderate' ";
+			if ($row['moderate'])
+				echo 'checked="checked"';
+			echo " /></td></tr>\n";
 // L'utilisateur peut reserver dans le passe
-echo "<tr><td>".get_vocab("allow_action_in_past")."<br /><i>".get_vocab("allow_action_in_past_explain")."</i></td><td><input type=\"checkbox\" name=\"allow_action_in_past\" value=\"y\" ";
-if ($row["allow_action_in_past"] == 'y')
-	echo " checked=\"checked\"";
-echo " /></td></tr>\n";
+			echo "<tr><td>".get_vocab("allow_action_in_past")."<br /><i>".get_vocab("allow_action_in_past_explain")."</i></td><td><input type=\"checkbox\" name=\"allow_action_in_past\" value=\"y\" ";
+			if ($row["allow_action_in_past"] == 'y')
+				echo " checked=\"checked\"";
+			echo " /></td></tr>\n";
 	// L'utilisateur ne peut pas modifier ou supprimer ses propres reservations
-echo "<tr><td>".get_vocab("dont_allow_modify")."</td><td><input type=\"checkbox\" name=\"dont_allow_modify\" value=\"y\" ";
-if ($row["dont_allow_modify"] == 'y')
-	echo " checked=\"checked\"";
-echo " /></td></tr>\n";
+			echo "<tr><td>".get_vocab("dont_allow_modify")."</td><td><input type=\"checkbox\" name=\"dont_allow_modify\" value=\"y\" ";
+			if ($row["dont_allow_modify"] == 'y')
+				echo " checked=\"checked\"";
+			echo " /></td></tr>\n";
 	// Quels utilisateurs ont le droit de reserver cette ressource au nom d'un autre utilisateur ?
-echo "<tr><td>".get_vocab("qui peut reserver pour autre utilisateur")."</td><td><select name=\"qui_peut_reserver_pour\" size=\"1\">\n<option value=\"5\" ";
-if ($row["qui_peut_reserver_pour"]==6)
-	echo " selected=\"selected\" ";
-echo ">".get_vocab("personne")."</option>\n
-<option value=\"4\" ";
-if ($row["qui_peut_reserver_pour"]==4)
-	echo " selected=\"selected\" ";
-echo ">".get_vocab("les administrateurs restreints")."</option>\n
-<option value=\"3\" ";
-if ($row["qui_peut_reserver_pour"]==3)
-	echo " selected=\"selected\" ";
-echo ">".get_vocab("les gestionnaires de la ressource")."</option>\n
-<option value=\"2\" ";
-if ($row["qui_peut_reserver_pour"]==2)
-	echo " selected=\"selected\" ";
-echo ">".get_vocab("tous les utilisateurs")."</option>\n
-</select></td></tr>\n";
+			echo "<tr><td>".get_vocab("qui peut reserver pour autre utilisateur")."</td><td><select class=\"form-control\" name=\"qui_peut_reserver_pour\" size=\"1\">\n<option value=\"5\" ";
+			if ($row["qui_peut_reserver_pour"]==6)
+				echo " selected=\"selected\" ";
+			echo ">".get_vocab("personne")."</option>\n
+			<option value=\"4\" ";
+			if ($row["qui_peut_reserver_pour"]==4)
+				echo " selected=\"selected\" ";
+			echo ">".get_vocab("les administrateurs restreints")."</option>\n
+			<option value=\"3\" ";
+			if ($row["qui_peut_reserver_pour"]==3)
+				echo " selected=\"selected\" ";
+			echo ">".get_vocab("les gestionnaires de la ressource")."</option>\n
+			<option value=\"2\" ";
+			if ($row["qui_peut_reserver_pour"]==2)
+				echo " selected=\"selected\" ";
+			echo ">".get_vocab("tous les utilisateurs")."</option>\n
+		</select></td></tr>\n";
 // Activer la fonctionalite "ressource empruntee/restituee"
-echo "<tr><td>".get_vocab("activer_fonctionalite_ressource_empruntee_restituee")."</td><td><input type=\"checkbox\" name=\"active_ressource_empruntee\" ";
-if ($row['active_ressource_empruntee'] == "y")
-	echo " checked=\"checked\" ";
-echo "/></td></tr>\n";
-echo "</table>\n";
-echo "<div style=\"text-align:center;\"><br />\n";
-echo "<input type=\"submit\" name=\"change_room\"  value=\"".get_vocab("save")."\" />\n";
-echo "<input type=\"submit\" name=\"change_done\" value=\"".get_vocab("back")."\" />";
-echo "<input type=\"submit\" name=\"change_room_and_back\" value=\"".get_vocab("save_and_back")."\" />";
-if (@file_exists($nom_picture) && $nom_picture)
-	echo "<br /><br /><b>".get_vocab("Image de la ressource").get_vocab("deux_points")."</b><br /><img src=\"".$nom_picture."\" alt=\"logo\" />";
-else
-	echo "<br /><br /><b>".get_vocab("Pas image disponible")."</b>";
-?>
-</div>
+		echo "<tr><td>".get_vocab("activer_fonctionalite_ressource_empruntee_restituee")."</td><td><input type=\"checkbox\" name=\"active_ressource_empruntee\" ";
+		if ($row['active_ressource_empruntee'] == "y")
+			echo " checked=\"checked\" ";
+		echo "/></td></tr>\n";
+		echo "</table>\n";
+		echo "<div style=\"text-align:center;\"><br />\n";
+		echo "<input class=\"btn btn-primary\" type=\"submit\" name=\"change_room\"  value=\"".get_vocab("save")."\" />\n";
+		echo "<input class=\"btn btn-primary\" type=\"submit\" name=\"change_done\" value=\"".get_vocab("back")."\" />";
+		echo "<input class=\"btn btn-primary\" type=\"submit\" name=\"change_room_and_back\" value=\"".get_vocab("save_and_back")."\" />";
+		if (@file_exists($nom_picture) && $nom_picture)
+			echo "<br /><br /><b>".get_vocab("Image de la ressource").get_vocab("deux_points")."</b><br /><img src=\"".$nom_picture."\" alt=\"logo\" />";
+		else
+			echo "<br /><br /><b>".get_vocab("Pas image disponible")."</b>";
+		?>
+	</div>
 </form>
 </div>
 <?php
@@ -665,7 +661,7 @@ else
 // Ajout ou modification d'un domaine
 if ((!empty($id_area)) || (isset($add_area)))
 {
-	if (isset($change_area)) 
+	if (isset($change_area))
 	{
 	// Affectation e un site : si aucun site n'a ete affecte
 		if ((getSettingValue("module_multisite") == "Oui") && ($id_site == -1))
@@ -760,7 +756,7 @@ if ((!empty($id_area)) || (isset($add_area)))
 					fatal_error(0, get_vocab('update_area_failed') . grr_sql_error());
 					$ok = 'no';
 				}
-			} 
+			}
 			else
 			{
 				$sql = "INSERT INTO ".TABLE_PREFIX."_area SET
@@ -1000,7 +996,7 @@ if ((!empty($id_area)) || (isset($add_area)))
 			echo "<tr><td>".get_vocab('site').get_vocab('deux_points')."</td>\n";
 			if ($nb_site > 1)
 			{
-				echo "<td><select name=\"id_site\" >\n
+				echo "<td><select class=\"form-control\" name=\"id_site\" >\n
 				<option value=\"-1\">".get_vocab('choose_a_site')."</option>\n";
 				for ($enr = 0; ($row1 = grr_sql_row($res, $enr)); $enr++)
 				{
@@ -1025,7 +1021,7 @@ if ((!empty($id_area)) || (isset($add_area)))
 		{
 			echo "<tr>\n";
 			echo "<td>".get_vocab("ip_adr").get_vocab("deux_points")."</td>";
-			echo "<td><input type=\"text\" name=\"ip_adr\" value=\"".htmlspecialchars($row["ip_adr"])."\" /></td>\n";
+			echo "<td><input class=\"form-control\" type=\"text\" name=\"ip_adr\" value=\"".htmlspecialchars($row["ip_adr"])."\" /></td>\n";
 			echo "</tr>\n";
 			echo "<tr>\n";
 			echo "<td colspan=\"2\">".get_vocab("ip_adr_explain")."</td>\n";
@@ -1038,7 +1034,7 @@ if ((!empty($id_area)) || (isset($add_area)))
 		echo "<table border=\"1\" cellspacing=\"1\" cellpadding=\"6\">";
 		echo "<tr>\n";
 		echo "<td>".get_vocab("weekstarts_area").get_vocab("deux_points")."</td>\n";
-		echo "<td style=\"width:30%;\"><select name=\"weekstarts_area\" size=\"1\">\n";
+		echo "<td style=\"width:30%;\"><select class=\"form-control\" name=\"weekstarts_area\" size=\"1\">\n";
 		$k = 0;
 		while ($k < 7)
 		{
@@ -1108,7 +1104,7 @@ if ((!empty($id_area)) || (isset($add_area)))
 			else
 				$nb_jour = -1;
 			echo "</td></tr>\n<tr><td>".get_vocab("duree_max_resa_area2").get_vocab("deux_points");
-			echo "\n</td><td><input type=\"text\" name=\"duree_max_resa_area2\" size=\"5\" value=\"".$nb_jour."\" /></td></tr>\n";
+			echo "\n</td><td><input class=\"form-control\" type=\"text\" name=\"duree_max_resa_area2\" size=\"5\" value=\"".$nb_jour."\" /></td></tr>\n";
 			echo "</table>";
 			// Cas ou les creneaux de reservations sont bases sur le temps
 			if ($row["enable_periods"] == 'n')
@@ -1118,7 +1114,7 @@ if ((!empty($id_area)) || (isset($add_area)))
 			// Heure de debut de reservation
 			echo "<tr>";
 			echo "<td>".get_vocab("morningstarts_area").get_vocab("deux_points")."</td>\n";
-			echo "<td style=\"width:30%;\"><select name=\"morningstarts_area\" size=\"1\">\n";
+			echo "<td style=\"width:30%;\"><select class=\"form-control\" name=\"morningstarts_area\" size=\"1\">\n";
 			$k = 0;
 			while ($k < 24)
 			{
@@ -1132,7 +1128,7 @@ if ((!empty($id_area)) || (isset($add_area)))
 			// Heure de fin de reservation
 			echo "<tr>\n";
 			echo "<td>".get_vocab("eveningends_area").get_vocab("deux_points")."</td>\n";
-			echo "<td><select name=\"eveningends_area\" size=\"1\">\n";
+			echo "<td><select class=\"form-control\" name=\"eveningends_area\" size=\"1\">\n";
 			$k = 0;
 			while ($k < 24)
 			{
@@ -1146,17 +1142,17 @@ if ((!empty($id_area)) || (isset($add_area)))
 			// Minutes e ajouter e l'heure $eveningends pour avoir la fin reelle d'une journee.
 			echo "<tr>\n";
 			echo "<td>".get_vocab("eveningends_minutes_area").get_vocab("deux_points")."</td>\n";
-			echo "<td><input type=\"text\" name=\"eveningends_minutes_area\" size=\"5\" value=\"".htmlspecialchars($row["eveningends_minutes_area"])."\" /></td>\n";
+			echo "<td><input class=\"form-control\" type=\"text\" name=\"eveningends_minutes_area\" size=\"5\" value=\"".htmlspecialchars($row["eveningends_minutes_area"])."\" /></td>\n";
 			echo "</tr>";
 			// Resolution - quel bloc peut etre reserve, en secondes
 			echo "<tr>\n";
 			echo "<td>".get_vocab("resolution_area").get_vocab("deux_points")."</td>\n";
-			echo "<td><input type=\"text\" name=\"resolution_area\" size=\"5\" value=\"".htmlspecialchars($row["resolution_area"])."\" /></td>\n";
+			echo "<td><input class=\"form-control\" type=\"text\" name=\"resolution_area\" size=\"5\" value=\"".htmlspecialchars($row["resolution_area"])."\" /></td>\n";
 			echo "</tr>";
 			// Valeur par defaut de la duree d'une reservation
 			echo "<tr>\n";
 			echo "<td>".get_vocab("duree_par_defaut_reservation_area").get_vocab("deux_points")."</td>\n";
-			echo "<td><input type=\"text\" name=\"duree_par_defaut_reservation_area\" size=\"5\" value=\"".htmlspecialchars($row["duree_par_defaut_reservation_area"])."\" /></td>\n";
+			echo "<td><input class=\"form-control\" type=\"text\" name=\"duree_par_defaut_reservation_area\" size=\"5\" value=\"".htmlspecialchars($row["duree_par_defaut_reservation_area"])."\" /></td>\n";
 			echo "</tr>";
 			// Format d'affichage du temps : valeur 0 pour un affichage ee12 heuresee et valeur 1 pour un affichage  ee24 heureee.
 			echo "<tr>\n";
@@ -1174,23 +1170,23 @@ if ((!empty($id_area)) || (isset($add_area)))
 			echo "</tr>\n";
 			// L'utilisateur ne peut reserver qu'une duree limitee (-1 desactivee), exprimee en minutes
 			echo "<tr>\n<td>".get_vocab("duree_max_resa_area").get_vocab("deux_points");
-			echo "</td>\n<td><input type=\"text\" name=\"duree_max_resa_area1\" size=\"5\" value=\"".$row["duree_max_resa_area"]."\" /></td></tr>\n";
+			echo "</td>\n<td><input class=\"form-control\" type=\"text\" name=\"duree_max_resa_area1\" size=\"5\" value=\"".$row["duree_max_resa_area"]."\" /></td></tr>\n";
 			echo "</table>";
 			echo "<table>";
 			// Nombre max de reservation par domaine
 			echo "<tr><td>".get_vocab("max_booking")." -  ".get_vocab("all_rooms_of_area").get_vocab("deux_points");
-			echo "</td><td><input type=\"text\" name=\"max_booking\" value=\"".$row['max_booking']."\" /></td>\n";
+			echo "</td><td><input class=\"form-control\" type=\"text\" name=\"max_booking\" value=\"".$row['max_booking']."\" /></td>\n";
 			echo "</tr></table>";
 			echo "<div style=\"text-align:center;\">\n";
-			echo "<input type=\"submit\" name=\"change_area\" value=\"".get_vocab("save")."\" />\n";
-			echo "<input type=\"submit\" name=\"change_done\" value=\"".get_vocab("back")."\" />";
-			echo "<input type=\"submit\" name=\"change_area_and_back\" value=\"".get_vocab("save_and_back")."\" />";
+			echo "<input class=\"btn btn-primary\" type=\"submit\" name=\"change_area\" value=\"".get_vocab("save")."\" />\n";
+			echo "<input class=\"btn btn-primary\" type=\"submit\" name=\"change_done\" value=\"".get_vocab("back")."\" />\n";
+			echo "<input class=\"btn btn-primary\" type=\"submit\" name=\"change_area_and_back\" value=\"".get_vocab("save_and_back")."\" />";
 			echo "</div></form>";
 			echo "<script type=\"text/javascript\">";
 			echo "aff_creneaux();";
 			echo "</script>";
 			echo "</div>";
-		} 
+		}
 		?>
 	</body>
 	</html>

@@ -28,25 +28,6 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-/**
- * $Log: admin_config4.php,v $
- * Revision 1.8  2010-04-07 15:38:14  grr
- * *** empty log message ***
- *
- * Revision 1.7  2009-10-09 07:55:48  grr
- * *** empty log message ***
- *
- * Revision 1.6  2009-09-29 18:02:56  grr
- * *** empty log message ***
- *
- * Revision 1.5  2009-02-27 13:28:19  grr
- * *** empty log message ***
- *
- * Revision 1.4  2008-11-16 22:00:58  grr
- * *** empty log message ***
- *
- *
- */
 if (isset($_GET['motdepasse_backup']))
 {
 	if (!saveSetting("motdepasse_backup", $_GET['motdepasse_backup']))
@@ -116,7 +97,7 @@ if ($dbsys == "mysql")
 	<form action="admin_save_mysql.php" method="get" style="width:100%;">
 		<div style="text-align:center;">
 			<input type="hidden" name="flag_connect" value="yes" />
-			<input type="submit" value=" <?php echo get_vocab("submit_backup"); ?>" style="font-variant: small-caps;" />
+			<input class="btn btn-primary" type="submit" value=" <?php echo get_vocab("submit_backup"); ?>" style="font-variant: small-caps;" />
 		</div></form>
 		<?php
 		//
@@ -131,7 +112,7 @@ if ($dbsys == "mysql")
 			<div style="text-align:center;">
 				<input type="file" name="sql_file" size="30" />
 				<br /><br />
-				<input type="submit" value="<?php echo get_vocab('Restaurer la sauvegarde'); ?>" style="font-variant: small-caps;" />
+				<input class="btn btn-primary" type="submit" value="<?php echo get_vocab('Restaurer la sauvegarde'); ?>" style="font-variant: small-caps;" />
 			</div>
 		</form>
 		<?php
@@ -141,7 +122,7 @@ if ($dbsys == "mysql")
 	echo "\n<hr /><h3>".get_vocab("execution automatique backup")."</h3>";
 	echo "<p>".get_vocab("execution automatique backup explications")."</p>";
 	echo "\n<p>".get_vocab("execution automatique backup mdp").get_vocab("deux_points");
-	echo "\n<input type=\"password\" name=\"motdepasse_backup\" value=\"".getSettingValue("motdepasse_backup")."\" size=\"20\" /></p>";
+	echo "\n<input class=\"form-control\" type=\"password\" name=\"motdepasse_backup\" value=\"".getSettingValue("motdepasse_backup")."\" size=\"20\" /></p>";
 	//
 	// Suspendre les connexions
 	//*************************
@@ -170,7 +151,7 @@ echo "<h3>".get_vocab("title_session_max_length")."</h3>";
 			<?php echo get_vocab("session_max_length"); ?>
 		</td>
 		<td>
-			<input type="text" name="sessionMaxLength" size="16" value="<?php echo(getSettingValue("sessionMaxLength")); ?>" />
+			<input class="form-control" type="text" name="sessionMaxLength" size="16" value="<?php echo(getSettingValue("sessionMaxLength")); ?>" />
 		</td>
 	</tr>
 </table>
@@ -178,7 +159,7 @@ echo "<h3>".get_vocab("title_session_max_length")."</h3>";
 //Longueur minimale du mot de passe exigé
 echo "<hr /><h3>".get_vocab("pwd")."</h3>";
 echo "\n<p>".get_vocab("pass_leng_explain").get_vocab("deux_points")."
-<input type=\"text\" name=\"pass_leng\" value=\"".htmlentities(getSettingValue("pass_leng"))."\" size=\"20\" /></p>";
+<input class=\"form-control\" type=\"text\" name=\"pass_leng\" value=\"".htmlentities(getSettingValue("pass_leng"))."\" size=\"20\" /></p>";
 //
 // Url de déconnexion
 //*******************
@@ -188,10 +169,10 @@ echo "<p>".get_vocab("Url_de_deconnexion_explain")."</p>\n";
 echo "<p><i>".get_vocab("Url_de_deconnexion_explain2")."</i>";
 echo "<br />".get_vocab("Url_de_deconnexion").get_vocab("deux_points")."\n";
 $value_url = getSettingValue("url_disconnect");
-echo "<input type=\"text\" name=\"url_disconnect\" size=\"40\" value =\"$value_url\"/>\n<br /><br /></p>";
+echo "<input class=\"form-control\" type=\"text\" name=\"url_disconnect\" size=\"40\" value =\"$value_url\"/>\n<br /><br /></p>";
 echo "\n<hr />";
 echo "\n<p><input type=\"hidden\" name=\"page_config\" value=\"4\" />";
-echo "\n<br /></p><div id=\"fixe\" style=\"text-align:center;\"><input type=\"submit\" name=\"ok\" value=\"".get_vocab("save")."\" style=\"font-variant: small-caps;\"/></div>";
+echo "\n<br /></p><div id=\"fixe\" style=\"text-align:center;\"><input class=\"btn btn-primary\" type=\"submit\" name=\"ok\" value=\"".get_vocab("save")."\" style=\"font-variant: small-caps;\"/></div>";
 echo "\n</form>";
 // fin de l'affichage de la colonne de droite
 echo "\n</td></tr></table>";

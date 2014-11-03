@@ -27,26 +27,6 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-/**
- * $Log: admin_config3.php,v $
- * Revision 1.9  2009-10-09 07:55:48  grr
- * *** empty log message ***
- *
- * Revision 1.8  2009-04-10 05:33:10  grr
- * *** empty log message ***
- *
- * Revision 1.6  2009-03-24 13:30:07  grr
- * *** empty log message ***
- *
- * Revision 1.5  2009-02-27 13:28:19  grr
- * *** empty log message ***
- *
- * Revision 1.4  2008-11-16 22:00:58  grr
- * *** empty log message ***
- *
- *
- */
-
 $msg = "";
 // Automatic mail
 if (isset($_GET['automatic_mail']))
@@ -313,7 +293,7 @@ echo "\n<input type=\"text\" name=\"chemin_complet_grr\" value=\"".getSettingVal
 echo "\n</td></tr>";
 echo "\n</table>";
 echo "\n<p><input type=\"hidden\" name=\"page_config\" value=\"3\" />";
-echo "\n<br /></p><div id=\"fixe\"  style=\"text-align:center;\"><input type=\"submit\" name=\"ok\" value=\"".get_vocab("save")."\" style=\"font-variant: small-caps;\"/></div>";
+echo "\n<br /></p><div id=\"fixe\" style=\"text-align:center;\"><input class=\"btn btn-primary\" type=\"submit\" name=\"ok\" value=\"".get_vocab("save")."\" style=\"font-variant: small-caps;\"/></div>";
 echo "\n</form>";
 // fin de l'affichage de la colonne de droite
 echo "\n</td></tr></table>";
