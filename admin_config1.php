@@ -483,16 +483,16 @@ include "include/admin_config_tableau.inc.php";
 //echo "<h2>".get_vocab('admin_config1.php')."</h2>";
 //echo "<p>".get_vocab('mess_avertissement_config')."</p>";
 // Adapter les fichiers de langue
-echo "<h3>".get_vocab("adapter fichiers langue")."</h3>\n";
-echo get_vocab("adapter fichiers langue explain");
+echo "<h3>".get_vocab("adapter fichiers langue")."</h3>".PHP_EOL;
+echo get_vocab("adapter fichiers langue explain").PHP_EOL;
 //
 // Config générale
 //****************
 //
-echo "<form enctype=\"multipart/form-data\" action=\"./admin_config.php\" id=\"nom_formulaire\" method=\"post\" action=\"#\" style=\"width: 100%;\">";
-echo "<h3>".get_vocab("miscellaneous")."</h3>\n";
+echo "<form enctype=\"multipart/form-data\" action=\"./admin_config.php\" id=\"nom_formulaire\" method=\"post\" style=\"width: 100%;\">".PHP_EOL;
+echo "<h3>".get_vocab("miscellaneous")."</h3>".PHP_EOL;
 ?>
-<table border='0'>
+<table class="table_adm">
 	<tr>
 		<td>
 			<?php echo get_vocab("title_home_page"); ?>
@@ -558,37 +558,44 @@ echo "<h3>".get_vocab("miscellaneous")."</h3>\n";
 	</tr>
 </table>
 <?php
-echo "<h3>".get_vocab("logo_msg")."</h3>\n";
-echo "<table><tr><td>".get_vocab("choisir_image_logo")."</td>
-<td><input type=\"file\" name=\"doc_file\" size=\"30\" /></td></tr>\n";
+echo '<h3>'.get_vocab("logo_msg").'</h3>'.PHP_EOL;
+echo '<table>'.PHP_EOL;
+echo '<tr>'.PHP_EOL;
+echo '<td>'.get_vocab("choisir_image_logo").'</td>'.PHP_EOL;
+echo '<td><input type="file" name="doc_file" /></td>'.PHP_EOL;
+echo '</tr>'.PHP_EOL;
 $nom_picture = "./images/".getSettingValue("logo");
 if ((getSettingValue("logo") != '') && (@file_exists($nom_picture)))
 {
-	echo "<tr><td>".get_vocab("supprimer_logo").get_vocab("deux_points");
-	echo "<img src=\"".$nom_picture."\" class=\"image\" alt=\"logo\" title=\"".$nom_picture."\"/>\n";
-	echo "</td><td><input type=\"checkbox\" name=\"sup_img\" /></td></tr>";
+	echo '<tr>'.PHP_EOL;
+	echo '<td>'.get_vocab("supprimer_logo").get_vocab("deux_points").PHP_EOL;
+	echo '<img src="'.$nom_picture.'" class="image" alt="logo" title="'.$nom_picture.'"/>'.PHP_EOL;
+	echo '</td>'.PHP_EOL;
+	echo '<td><input type="checkbox" name="sup_img" /></td>'.PHP_EOL;
+	echo '</tr>'.PHP_EOL;
 }
-echo "</table>";
-echo "<h3>".get_vocab("affichage_calendriers")."</h3>\n";
-echo "<p>".get_vocab("affichage_calendriers_msg").get_vocab("deux_points");
-echo "<select class=\"form-control\" name=\"nb_calendar\" >\n";
+echo '</table>'.PHP_EOL;
+echo '<h3>'.get_vocab("affichage_calendriers").'</h3>'.PHP_EOL;
+echo '<p>'.get_vocab("affichage_calendriers_msg").get_vocab("deux_points").PHP_EOL;
+echo '<select class="form-control" name="nb_calendar" >'.PHP_EOL;
 for ($k = 0; $k < 6; $k++)
 {
-	echo "<option value=\"".$k."\" ";
+	echo '<option value="'.$k.'" ';
 	if (getSettingValue("nb_calendar") == $k)
-		echo " selected=\"selected\" ";
-	echo ">".$k."</option>\n";
+		echo ' selected="selected" ';
+	echo '>'.$k.'</option>'.PHP_EOL;
 }
-echo "</select></p>";
+echo '</select>'.PHP_EOL;
+echo '</p>'.PHP_EOL;
 if (getSettingValue("use_fckeditor") == 1)
-	echo "<script type=\"text/javascript\" src=\"js/ckeditor/ckeditor.js\"></script>\n";
-echo "<h3>".get_vocab("message perso")."</h3>\n";
-echo "<p>".get_vocab("message perso explain");
+	echo '<script type="text/javascript" src="js/ckeditor/ckeditor.js"></script>'.PHP_EOL;
+echo '<h3>'.get_vocab("message perso").'</h3>'.PHP_EOL;
+echo '<p>'.get_vocab("message perso explain").PHP_EOL;
 if (getSettingValue("use_fckeditor") != 1)
-	echo " ".get_vocab("description complete2");
+	echo ' '.get_vocab("description complete2");
 if (getSettingValue("use_fckeditor") == 1)
 {
-	echo "<textarea class=\"ckeditor\" id=\"editor1\" name=\"message_accueil\" rows=\"8\" cols=\"120\">\n";
+	echo '<textarea class="ckeditor" id="editor1" name="message_accueil" rows="8" cols="120">'.PHP_EOL;
 	echo htmlspecialchars(getSettingValue('message_accueil'));
 	echo "</textarea>\n";
 	?>
@@ -613,15 +620,15 @@ if (getSettingValue("use_fckeditor") == 1)
 	<?php
 }
 else
-	echo "\n<textarea name=\"message_accueil\" rows=\"8\" cols=\"120\">".htmlspecialchars(getSettingValue('message_accueil'))."</textarea>\n";
-echo "</p>";
+	echo "\n<textarea name=\"message_accueil\" rows=\"8\" cols=\"120\">".htmlspecialchars(getSettingValue('message_accueil'))."</textarea>".PHP_EOL;
+echo "</p>".PHP_EOL;
 //
 // Début et fin des réservations
 //******************************
 //
 echo "<hr /><h3>".get_vocab("title_begin_end_bookings")."</h3>\n";
 ?>
-<table border='0'>
+<table class="table_adm">
 	<tr>
 		<td>
 			<?php echo get_vocab("begin_bookings"); ?>
@@ -662,7 +669,7 @@ echo "<hr /><h3>".get_vocab("title_begin_end_bookings")."</h3>\n";
 <?php echo "<p><i>".get_vocab("begin_bookings_explain")."</i>"; ?>
 <br /><br />
 </p>
-<table border='0'>
+<table class="table_adm">
 	<tr
 	><td>
 	<?php echo get_vocab("end_bookings"); ?>
@@ -699,41 +706,38 @@ echo "<hr /><h3>".get_vocab("title_begin_end_bookings")."</h3>\n";
 </td>
 </tr>
 </table>
-<?php echo "<p><i>".get_vocab("end_bookings_explain")."</i></p>";
+<?php echo "<p><i>".get_vocab("end_bookings_explain")."</i></p>".PHP_EOL;
 //
 // Configuration de l'affichage par défaut
 //****************************************
 //
 ?>
 <hr />
-<?php echo "<h3>".get_vocab("default_parameter_values_title")."</h3>\n";
-echo "<p>".get_vocab("explain_default_parameter")."</p>";
+<?php echo "<h3>".get_vocab("default_parameter_values_title")."</h3>".PHP_EOL;
+echo "<p>".get_vocab("explain_default_parameter")."</p>".PHP_EOL;
 //
 // Choix du type d'affichage
 //
-echo "<h4>".get_vocab("explain_area_list_format")."</h4>";
-echo "<table><tr><td>".get_vocab("liste_area_list_format")."</td><td>";
+echo "<h4>".get_vocab("explain_area_list_format")."</h4>".PHP_EOL;
+echo "<table><tr><td>".get_vocab("liste_area_list_format")."</td><td>".PHP_EOL;
 echo "<input type='radio' name='area_list_format' value='list' ";
 if (getSettingValue("area_list_format") == 'list')
 	echo "checked=\"checked\"";
-echo " />";
-echo "</td></tr>";
-echo "<tr><td>".get_vocab("select_area_list_format")."</td><td>";
+echo " />".PHP_EOL;
+echo "</td></tr>".PHP_EOL;
+echo "<tr><td>".get_vocab("select_area_list_format")."</td><td>".PHP_EOL;
 echo "<input type='radio' name='area_list_format' value='select' ";
 if (getSettingValue("area_list_format") == 'select')
 	echo "checked=\"checked\"";
-echo " />";
-echo "<tr><td>".get_vocab("item_area_list_format")."</td><td>";
+echo " />".PHP_EOL;
+echo "<tr><td>".get_vocab("item_area_list_format")."</td><td>".PHP_EOL;
 echo "<input type='radio' name='area_list_format' value='item' ";
 if (getSettingValue("area_list_format") == 'item')
 	echo "checked=\"checked\"";
-echo " />";
-echo "</td></tr>";
-echo "</td></tr></table>";
-//
-// Choix du domaine et de la ressource
-// http://www.phpinfo.net/articles/article_listes.html
-//
+echo " />".PHP_EOL;
+echo "</td>".PHP_EOL;
+echo "</tr>".PHP_EOL;
+echo "</table>".PHP_EOL;
 if (getSettingValue("module_multisite") == "Oui")
 	$use_site='y';
 else
@@ -821,26 +825,33 @@ else
 /**
   * Liste des domaines
  */
-echo '<tr><td colspan="2">';
-echo '<div id="div_liste_domaines">';
+echo '<tr>'.PHP_EOL;
+echo '<td>'.PHP_EOL;
+echo '<div id="div_liste_domaines">'.PHP_EOL;
 // Ici, on insère la liste des domaines avec de l'ajax !
-echo '</div></td></tr>';
+echo '</div>'.PHP_EOL;
+echo '</td>'.PHP_EOL;
+echo '</tr>'.PHP_EOL;
 /**
  * Liste des ressources
  */
-echo '<tr><td colspan="2">';
-echo '<div id="div_liste_ressources">';
-echo '<input class="form-control" type="hidden" id="id_area" name="id_area" value="'.getSettingValue("default_area").'" />';
+echo '<tr>'.PHP_EOL;
+echo '<td>'.PHP_EOL;
+echo '<div id="div_liste_ressources">'.PHP_EOL;
+echo '<input class="form-control" type="hidden" id="id_area" name="id_area" value="'.getSettingValue("default_area").'" />'.PHP_EOL;
 // Ici, on insère la liste des ressouces avec de l'ajax !
-echo '</div></td></tr></table>';
-echo '<script type="text/javascript">modifier_liste_domaines();</script>'."\n";
-echo '<script type="text/javascript">modifier_liste_ressources(1);</script>'."\n";
+echo '</div>'.PHP_EOL;
+echo '</td>'.PHP_EOL;
+echo '</tr>'.PHP_EOL;
+echo '</table>'.PHP_EOL;
+echo '<script type="text/javascript">modifier_liste_domaines();</script>'.PHP_EOL;
+echo '<script type="text/javascript">modifier_liste_ressources(1);</script>'.PHP_EOL;
 //
 // Choix de la feuille de style
 //
-echo "<h4>".get_vocab("explain_css")."</h4>";
-echo "<table><tr><td>".get_vocab("choose_css")."</td><td>";
-echo "<select class=\"form-control\" name='default_css'>\n";
+echo "<h4>".get_vocab("explain_css")."</h4>".PHP_EOL;
+echo "<table><tr><td>".get_vocab("choose_css")."</td><td>".PHP_EOL;
+echo "<select class=\"form-control\" name='default_css'>".PHP_EOL;
 $i = 0;
 while ($i < count($liste_themes))
 {
@@ -854,127 +865,170 @@ echo "</select></td></tr></table>\n";
 //
 // Choix de la langue
 //
-echo "<h4>".get_vocab("choose_language")."</h4>";
-echo "<table><tr><td>".get_vocab("choose_css")."</td><td>";
-echo "<select class=\"form-control\" name='default_language'>\n";
+echo '<h4>'.get_vocab("choose_language").'</h4>'.PHP_EOL;
+echo '<table>'.PHP_EOL;
+echo '<tr>'.PHP_EOL;
+echo '<td>'.get_vocab("choose_css").'</td>'.PHP_EOL;
+echo '<td>'.PHP_EOL;
+echo '<select class="form-control" name="default_language">'.PHP_EOL;
 $i = 0;
 while ($i < count($liste_language))
 {
 	echo "<option value='".$liste_language[$i]."'";
 	if (getSettingValue("default_language") == $liste_language[$i])
 		echo " selected=\"selected\"";
-	echo " >".encode_message_utf8($liste_name_language[$i])."</option>\n";
+	echo ' >'.encode_message_utf8($liste_name_language[$i]).'</option>'.PHP_EOL;
 	$i++;
 }
-echo "</select></td></tr></table>\n";
+echo '</select>'.PHP_EOL;
+echo '</td>'.PHP_EOL;
+echo '</tr>'.PHP_EOL;
+echo '</table>'.PHP_EOL;
 #
 # Affichage du contenu des "info-bulles" des réservations, dans les vues journées, semaine et mois.
 # display_info_bulle = 0 : pas d'info-bulle.
 # display_info_bulle = 1 : affichage des noms et prénoms du bénéficiaire de la réservation.
 # display_info_bulle = 2 : affichage de la description complète de la réservation.
-echo "<hr /><h3>".get_vocab("display_info_bulle_msg")."</h3>\n";
-echo "<table>";
-echo "<tr><td>".get_vocab("info-bulle0")."</td><td>";
-echo "<input type='radio' name='display_info_bulle' value='0' ";
+echo '<hr />'.PHP_EOL;
+echo '<h3>'.get_vocab("display_info_bulle_msg").'</h3>'.PHP_EOL;
+echo '<table>'.PHP_EOL;
+echo '<tr>'.PHP_EOL;
+echo '<td>'.get_vocab("info-bulle0").'</td>'.PHP_EOL;
+echo '<td>'.PHP_EOL;
+echo '<input type="radio" name="display_info_bulle" value="0" ';
 if (getSettingValue("display_info_bulle") == '0')
 	echo "checked=\"checked\"";
-echo " />";
-echo "</td></tr>";
-echo "<tr><td>".get_vocab("info-bulle1")."</td><td>";
-echo "<input type='radio' name='display_info_bulle' value='1' ";
+echo ' />'.PHP_EOL;;
+echo '</td>'.PHP_EOL;
+echo '</tr>'.PHP_EOL;
+echo '<tr>'.PHP_EOL;
+echo '<td>'.get_vocab("info-bulle1").'</td>'.PHP_EOL;
+echo '<td>'.PHP_EOL;
+echo '<input type="radio" name="display_info_bulle" value="1" ';
 if (getSettingValue("display_info_bulle") == '1')
 	echo "checked=\"checked\"";
-echo " />";
-echo "</td></tr>";
-echo "<tr><td>".get_vocab("info-bulle2")."</td><td>";
-echo "<input type='radio' name='display_info_bulle' value='2' ";
+echo ' />'.PHP_EOL;
+echo '</td>'.PHP_EOL;
+echo '</tr>'.PHP_EOL;
+echo '<tr>'.PHP_EOL;
+echo '<td>'.get_vocab("info-bulle2").'</td>'.PHP_EOL;
+echo '<td>'.PHP_EOL;
+echo '<input type="radio" name="display_info_bulle" value="2" ';
 if (getSettingValue("display_info_bulle") == '2')
-	echo "checked=\"checked\"";
-echo " />";
-echo "</td></tr>";
-echo "</table>";
+	echo 'checked="checked"';
+echo ' />'.PHP_EOL;
+echo '</td>'.PHP_EOL;
+echo '</tr>'.PHP_EOL;
+echo '</table>'.PHP_EOL;
 #MAJ Hugo FORESTIER - Choix  de l'affichage du bouton "afficher le menu de gauche ou non"
 #SQL : menu_gauche==1  //le bouton s'affiche par default
 # menu_gauche==0 //le bouton ne s'affiche pas par default
 #Test pour savoir la valeur présente dans la base de données : echo getSettingValue("menu_gauche");
-echo "<hr /><h3>".get_vocab("display_menu")."</h3>\n";
-echo "<p>".get_vocab("display_menu_1")."</p>";
-echo "<table>";
-echo "<tr><td>".get_vocab("display_menu_2")."</td><td>";
-echo "<input type='radio' name='menu_gauche' value='0' ";
+echo '<hr />'.PHP_EOL;
+echo '<h3>'.get_vocab("display_menu").'</h3>'.PHP_EOL;
+echo '<p>'.get_vocab("display_menu_1").'</p>'.PHP_EOL;
+echo '<table>'.PHP_EOL;
+echo '<tr>'.PHP_EOL;
+echo '<td>'.get_vocab("display_menu_2").'</td>'.PHP_EOL;
+echo '<td>'.PHP_EOL;
+echo '<input type="radio" name="menu_gauche" value="0" ';
 if (getSettingValue("menu_gauche") == '0')
-	echo "checked=\"checked\"";
-echo " />";
-echo "</td></tr>";
-echo "<tr><td>".get_vocab("display_menu_3")."</td><td>";
-echo "<input type='radio' name='menu_gauche' value='1' ";
+	echo 'checked="checked"';
+echo ' />'.PHP_EOL;
+echo '</td>'.PHP_EOL;
+echo '</tr>'.PHP_EOL;
+echo '<tr>'.PHP_EOL;
+echo '<td>'.get_vocab("display_menu_3").'</td>'.PHP_EOL;
+echo '<td>'.PHP_EOL;
+echo '<input type="radio" name="menu_gauche" value="1" ';
 if (getSettingValue("menu_gauche") == '1')
-	echo "checked=\"checked\"";
-echo " />";
-echo "</td></tr>";
-echo "</table>";
+	echo ' checked="checked"';
+echo ' />'.PHP_EOL;
+echo '</td>'.PHP_EOL;
+echo '</tr>'.PHP_EOL;
+echo '</table>'.PHP_EOL;
 #mail_destinataire = 0 //Le formulaire de contact est désactivé (0 par défaut)
 #mail_destinataire = 1 //Le formulaire de contact est activé
-echo "<hr /><h3>".get_vocab("display_mail_etat_destinataire")."</h3>\n";
-echo "<p>".get_vocab("display_mail_etat_destinataire_1")."</p>";
-echo "<table>";
-echo "<tr><td>".get_vocab("display_mail_etat_destinataire_2")."</td><td>";
-echo "<input type='radio' id='mail_etat_destinataire' name='mail_etat_destinataire' value='0' ";
+echo '<hr />'.PHP_EOL;
+echo '<h3>'.get_vocab("display_mail_etat_destinataire").'</h3>'.PHP_EOL;
+echo '<p>'.get_vocab("display_mail_etat_destinataire_1").'</p>'.PHP_EOL;
+echo '<table>'.PHP_EOL;
+echo '<tr>'.PHP_EOL;
+echo '<td>'.get_vocab("display_mail_etat_destinataire_2").'</td>'.PHP_EOL;
+echo '<td>'.PHP_EOL;
+echo '<input type="radio" name="mail_etat_destinataire" value="0" ';
 if (getSettingValue("mail_etat_destinataire") == '0')
-	echo "checked=\"checked\"";
-echo " />";
-echo "</td></tr>";
-echo "<tr><td>".get_vocab("display_mail_etat_destinataire_3")."</td><td>";
-echo "<input type='radio' id='mail_etat_destinataire' name='mail_etat_destinataire' value='1'";
+	echo ' checked="checked" ';
+echo ' />'.PHP_EOL;
+echo '</td>'.PHP_EOL;
+echo '</tr>'.PHP_EOL;
+echo '<tr>'.PHP_EOL;
+echo '<td>'.get_vocab("display_mail_etat_destinataire_3").'</td>'.PHP_EOL;
+echo '<td>'.PHP_EOL;
+echo '<input type="radio" name="mail_etat_destinataire" value="1" ';
 if (getSettingValue("mail_etat_destinataire") == '1')
 	echo "checked=\"checked\"";
-echo " />";
-echo "</td></tr>";
-//echo "<td><tr></td></tr>";
-echo "<tr><td>".get_vocab("display_mail_destinataire")."</td><td>";
-echo "</tr>";
-echo "<tr><td><input class=\"form-control\" type=\"text\" id=\"mail_destinataire\" name=\"mail_destinataire\" value=\"".getSettingValue("mail_destinataire")."\" size=\"30\">\n";
-echo "</td>";
-echo "</tr>";
-echo "</table>";
-//echo "<input type=\"text\" name=\"lien_aide\" value=\"".getSettingValue("lien_aide")."\" size=\"40\" />\n";
-//echo "</td></tr>\n";
+echo ' />'.PHP_EOL;
+echo '</td>'.PHP_EOL;
+echo '</tr>'.PHP_EOL;
+echo "<tr><td>".get_vocab("display_mail_destinataire")."</td><td>".PHP_EOL;
+echo "</tr>".PHP_EOL;
+echo "<tr>".PHP_EOL;
+echo "<td>".PHP_EOL;
+echo "<input class=\"form-control\" type=\"text\" id=\"mail_destinataire\" name=\"mail_destinataire\" value=\"".getSettingValue("mail_destinataire")."\" size=\"30\">".PHP_EOL;
+echo "</td>".PHP_EOL;
+echo "</tr>".PHP_EOL;
+echo "</table>".PHP_EOL;
 # Afficher la description complète de la réservation dans les vues semaine et mois.
 # display_full_description=1 : la description complète s'affiche.
 # display_full_description=0 : la description complète ne s'affiche pas.
-echo "<hr /><h3>".get_vocab("display_full_description_msg")."</h3>\n";
-echo "<table>";
-echo "<tr><td>".get_vocab("display_full_description0")."</td><td>";
+echo "<hr />".PHP_EOL;
+echo "<h3>".get_vocab("display_full_description_msg")."</h3>".PHP_EOL;
+echo "<table>".PHP_EOL;
+echo "<tr>".PHP_EOL;
+echo "<td>".get_vocab("display_full_description0")."</td>".PHP_EOL;
+echo "<td>".PHP_EOL;
 echo "<input type='radio' name='display_full_description' value='0' ";
 if (getSettingValue("display_full_description") == '0')
 	echo "checked=\"checked\"";
-echo " />";
-echo "</td></tr>";
-echo "<tr><td>".get_vocab("display_full_description1")."</td><td>";
+echo " />".PHP_EOL;
+echo "</td>".PHP_EOL;
+echo "</tr>".PHP_EOL;
+echo "<tr>".PHP_EOL;
+echo "<td>".get_vocab("display_full_description1")."</td>".PHP_EOL;
+echo "<td>".PHP_EOL;
 echo "<input type='radio' name='display_full_description' value='1' ";
 if (getSettingValue("display_full_description") == '1')
 	echo "checked=\"checked\"";
-echo " />";
-echo "</td></tr>";
-echo "</table>";
+echo " />".PHP_EOL;
+echo "</td>".PHP_EOL;
+echo "</tr>".PHP_EOL;
+echo "</table>".PHP_EOL;
 # Afficher la description courte de la réservation dans les vues semaine et mois.
 # display_short_description=1 : la description  s'affiche.
 # display_short_description=0 : la description  ne s'affiche pas.
-echo "<hr /><h3>".get_vocab("display_short_description_msg")."</h3>\n";
-echo "<table>";
-echo "<tr><td>".get_vocab("display_short_description0")."</td><td>";
+echo "<hr />".PHP_EOL;
+echo "<h3>".get_vocab("display_short_description_msg")."</h3>".PHP_EOL;
+echo "<table>".PHP_EOL;
+echo "<tr>".PHP_EOL;
+echo "<td>".get_vocab("display_short_description0")."</td>".PHP_EOL;
+echo "<td>".PHP_EOL;
 echo "<input type='radio' name='display_short_description' value='0' ";
 if (getSettingValue("display_short_description") == '0')
 	echo "checked=\"checked\"";
-echo " />";
-echo "</td></tr>";
-echo "<tr><td>".get_vocab("display_short_description1")."</td><td>";
+echo " />".PHP_EOL;
+echo "</td>".PHP_EOL;
+echo "</tr>".PHP_EOL;
+echo "<tr>".PHP_EOL;
+echo "<td>".get_vocab("display_short_description1")."</td>".PHP_EOL;
+echo "<td>";
 echo "<input type='radio' name='display_short_description' value='1' ";
 if (getSettingValue("display_short_description") == '1')
 	echo "checked=\"checked\"";
-echo " />";
-echo "</td></tr>";
-echo "</table>";
+echo " />".PHP_EOL;
+echo "</td>".PHP_EOL;
+echo "</tr>".PHP_EOL;
+echo "</table>".PHP_EOL;
 ###########################################################
 # Affichage des  adresses email dans la fiche de réservation
 ###########################################################
@@ -986,165 +1040,242 @@ echo "</table>";
 # display_level_email  = 4 : Il faut obligatoirement se connecter et être au moins administrateur du domaine
 # display_level_email  = 5 : Il faut obligatoirement se connecter et être administrateur de site
 # display_level_email  = 6 : Il faut obligatoirement se connecter et être administrateur général
-echo "<hr /><h3>".get_vocab("display_level_email_msg1")."</h3>\n";
-echo "<p>".get_vocab("display_level_email_msg2")."</p>";
-echo "<table cellspacing=\"5\">";
-echo "<tr><td>".get_vocab("visu_fiche_description0")."</td><td>";
+echo "<hr />".PHP_EOL;
+echo "<h3>".get_vocab("display_level_email_msg1")."</h3>".PHP_EOL;
+echo "<p>".get_vocab("display_level_email_msg2")."</p>".PHP_EOL;
+echo "<table>".PHP_EOL;
+echo "<tr>".PHP_EOL;
+echo "<td>".get_vocab("visu_fiche_description0")."</td>".PHP_EOL;
+echo "<td>".PHP_EOL;
 echo "<input type='radio' name='display_level_email' value='0' ";
 if (getSettingValue("display_level_email") == '0')
 	echo "checked=\"checked\"";
-echo " />";
-echo "</td></tr>";
-echo "<tr><td>".get_vocab("visu_fiche_description1")."</td><td>";
+echo " />".PHP_EOL;
+echo "</td>".PHP_EOL;
+echo "</tr>".PHP_EOL;
+echo "<tr>".PHP_EOL;
+echo "<td>".get_vocab("visu_fiche_description1")."</td>".PHP_EOL;
+echo "<td>".PHP_EOL;
 echo "<input type='radio' name='display_level_email' value='1' ";
 if (getSettingValue("display_level_email") == '1')
 	echo "checked=\"checked\"";
-echo " />";
-echo "</td></tr>";
-echo "<tr><td>".get_vocab("visu_fiche_description2")."</td><td>";
+echo " />".PHP_EOL;
+echo "</td>".PHP_EOL;
+echo "</tr>".PHP_EOL;
+echo "<tr>".PHP_EOL;
+echo "<td>".get_vocab("visu_fiche_description2")."</td>".PHP_EOL;
+echo "<td>".PHP_EOL;
 echo "<input type='radio' name='display_level_email' value='2' ";
 if (getSettingValue("display_level_email") == '2')
 	echo "checked=\"checked\"";
-echo " />";
-echo "</td></tr>";
-echo "<tr><td>".get_vocab("visu_fiche_description3")."</td><td>";
+echo " />".PHP_EOL;
+echo "</td>".PHP_EOL;
+echo "</tr>".PHP_EOL;
+echo "<tr>".PHP_EOL;
+echo "<td>".get_vocab("visu_fiche_description3")."</td>".PHP_EOL;
+echo "<td>".PHP_EOL;
 echo "<input type='radio' name='display_level_email' value='3' ";
 if (getSettingValue("display_level_email") == '3')
 	echo "checked=\"checked\"";
-echo " />";
-echo "</td></tr>";
-echo "<tr><td>".get_vocab("visu_fiche_description4")."</td><td>";
+echo " />".PHP_EOL;
+echo "</td>".PHP_EOL;
+echo "</tr>".PHP_EOL;
+echo "<tr>".PHP_EOL;
+echo "<td>".get_vocab("visu_fiche_description4")."</td>".PHP_EOL;
+echo "<td>".PHP_EOL;
 echo "<input type='radio' name='display_level_email' value='4' ";
 if (getSettingValue("display_level_email") == '4')
 	echo "checked=\"checked\"";
-echo " />";
-echo "</td></tr>";
+echo " />".PHP_EOL;
+echo "</td>".PHP_EOL;
+echo "</tr>".PHP_EOL;
 if (getSettingValue("module_multisite") == "Oui")
 {
-	echo "<tr><td>".get_vocab("visu_fiche_description5")."</td><td>";
+	echo "<tr>".PHP_EOL;
+	echo "<td>".get_vocab("visu_fiche_description5")."</td>".PHP_EOL;
+	echo "<td>".PHP_EOL;
 	echo "<input type='radio' name='display_level_email' value='5' ";
 	if (getSettingValue("display_level_email") == '5')
 		echo "checked=\"checked\"";
-	echo " />";
-	echo "</td></tr>";
+	echo " />".PHP_EOL;
+	echo "</td>".PHP_EOL;
+	echo "</tr>".PHP_EOL;
 }
-echo "<tr><td>".get_vocab("visu_fiche_description6")."</td><td>";
+echo "<tr>".PHP_EOL;
+echo "<td>".get_vocab("visu_fiche_description6")."</td>".PHP_EOL;
+echo "<td>".PHP_EOL;
 echo "<input type='radio' name='display_level_email' value='6' ";
 if (getSettingValue("display_level_email") == '6')
 	echo "checked=\"checked\"";
-echo " />";
-echo "</td></tr>";
-echo "</table>";
+echo " />".PHP_EOL;
+echo "</td>".PHP_EOL;
+echo "</tr>".PHP_EOL;
+echo "</table>".PHP_EOL;
 #Affichage de view_entry sous forme de page ou de popup
-echo "<hr /><h3>".get_vocab("display_level_view_entry")."</h3>\n";
-echo "<table>";
-echo "<tr><td>".get_vocab("display_level_view_entry_0")."</td><td>";
+echo "<hr />".PHP_EOL;
+echo "<h3>".get_vocab("display_level_view_entry")."</h3>".PHP_EOL;
+echo "<table>".PHP_EOL;
+echo "<tr>".PHP_EOL;
+echo "<td>".get_vocab("display_level_view_entry_0")."</td>".PHP_EOL;
+echo "<td>".PHP_EOL;
 echo "<input type='radio' name='display_level_view_entry' value='0' ";
 if (getSettingValue("display_level_view_entry") == '0')
 	echo "checked=\"checked\"";
-echo " />";
-echo "</td></tr>";
-echo "<tr><td>".get_vocab("display_level_view_entry_1")."</td><td>";
+echo " />".PHP_EOL;
+echo "</td>".PHP_EOL;
+echo "</tr>".PHP_EOL;
+echo "<tr>".PHP_EOL;
+echo "<td>".get_vocab("display_level_view_entry_1")."</td>".PHP_EOL;
+echo "<td>".PHP_EOL;
 echo "<input type='radio' name='display_level_view_entry' value='1' ";
 if (getSettingValue("display_level_view_entry") == '1')
 	echo "checked=\"checked\"";
-echo " />";
-echo "</td></tr>";
-echo " </table>";
+echo " />".PHP_EOL;
+echo "</td>".PHP_EOL;
+echo "</tr>".PHP_EOL;
+echo " </table>".PHP_EOL;
 # Remplissage de la description courte
-echo "<hr /><h3>".get_vocab("remplissage_description_breve_msg")."</h3>\n";
-echo "<table>";
-echo "<tr><td>".get_vocab("remplissage_description_breve0")."</td><td>";
+echo "<hr />".PHP_EOL;
+echo "<h3>".get_vocab("remplissage_description_breve_msg")."</h3>".PHP_EOL;
+echo "<table>".PHP_EOL;
+echo "<tr>".PHP_EOL;
+echo "<td>".get_vocab("remplissage_description_breve0")."</td>".PHP_EOL;
+echo "<td>".PHP_EOL;
 echo "<input type='radio' name='remplissage_description_breve' value='0' ";
 if (getSettingValue("remplissage_description_breve") == '0')
 	echo "checked=\"checked\"";
-echo " />";
-echo "</td></tr>";
-echo "<tr><td>".get_vocab("remplissage_description_breve1")."</td><td>";
+echo " />".PHP_EOL;
+echo "</td>".PHP_EOL;
+echo "</tr>".PHP_EOL;
+echo "<tr>".PHP_EOL;
+echo "<td>".get_vocab("remplissage_description_breve1")."</td>".PHP_EOL;
+echo "<td>".PHP_EOL;
 echo "<input type='radio' name='remplissage_description_breve' value='1' ";
 if (getSettingValue("remplissage_description_breve") == '1')
 	echo "checked=\"checked\"";
-echo " />";
-echo "</td></tr>";
-echo "<tr><td>".get_vocab("remplissage_description_breve2")."</td><td>";
+echo " />".PHP_EOL;
+echo "</td>".PHP_EOL;
+echo "</tr>".PHP_EOL;
+echo "<tr>".PHP_EOL;
+echo "<td>".get_vocab("remplissage_description_breve2")."</td>".PHP_EOL;
+echo "<td>".PHP_EOL;
 echo "<input type='radio' name='remplissage_description_breve' value='2' ";
 if (getSettingValue("remplissage_description_breve") == '2')
 	echo "checked=\"checked\"";
-echo " />";
-echo "</td></tr>";
-echo "</table>";
+echo " />".PHP_EOL;
+echo "</td>".PHP_EOL;
+echo "</tr>".PHP_EOL;
+echo "</table>".PHP_EOL;
 # Ouvrir les pages au format imprimable dans une nouvelle fenêtre du navigateur (0 pour non et 1 pour oui)
-echo "<hr /><h3>".get_vocab("pview_new_windows_msg")."</h3>\n";
-echo "<table>";
-echo "<tr><td>".get_vocab("pview_new_windows0")."</td><td>";
+echo "<hr />".PHP_EOL;
+echo "<h3>".get_vocab("pview_new_windows_msg")."</h3>".PHP_EOL;
+echo "<table>".PHP_EOL;
+echo "<tr>".PHP_EOL;
+echo "<td>".get_vocab("pview_new_windows0")."</td>".PHP_EOL;
+echo "<td>".PHP_EOL;
 echo "<input type='radio' name='pview_new_windows' value='0' ";
 if (getSettingValue("pview_new_windows") == '0')
 	echo "checked=\"checked\"";
 echo " />";
-echo "</td></tr>";
-echo "<tr><td>".get_vocab("pview_new_windows1")."</td><td>";
+echo "</td>".PHP_EOL;
+echo "</tr>".PHP_EOL;
+echo "<tr>".PHP_EOL;
+echo "<td>".get_vocab("pview_new_windows1")."</td>".PHP_EOL;
+echo "<td>".PHP_EOL;
 echo "<input type='radio' name='pview_new_windows' value='1' ";
 if (getSettingValue("pview_new_windows") == '1')
 	echo "checked=\"checked\"";
-echo " />";
-echo "</td></tr>";
-echo "</table>";
+echo " />".PHP_EOL;
+echo "</td>".PHP_EOL;
+echo "</tr>".PHP_EOL;
+echo "</table>".PHP_EOL;
 # Afficher la legende en couleur dans le menu gauche
-echo "<hr /><h3>".get_vocab("legend_msg")."</h3>\n";
-echo "<table>";
-echo "<tr><td>".get_vocab("legend0")."</td><td>";
+echo "<hr />".PHP_EOL;
+echo "<h3>".get_vocab("legend_msg")."</h3>".PHP_EOL;
+echo "<table>".PHP_EOL;
+echo "<tr>".PHP_EOL;
+echo "<td>".get_vocab("legend0")."</td>".PHP_EOL;
+echo "<td>".PHP_EOL;
 echo "<input type='radio' name='legend' value='0' ";
 if (getSettingValue("legend") == '0')
 	echo "checked=\"checked\"";
-echo " />";
-echo "</td></tr>";
-echo "<tr><td>".get_vocab("legend1")."</td><td>";
+echo " />".PHP_EOL;
+echo "</td>".PHP_EOL;
+echo "</tr>".PHP_EOL;
+echo "<tr>".PHP_EOL;
+echo "<td>".get_vocab("legend1")."</td>".PHP_EOL;
+echo "<td>".PHP_EOL;
 echo "<input type='radio' name='legend' value='1' ";
 if (getSettingValue("legend") == '1')
 	echo "checked=\"checked\"";
-echo " />";
-echo "</td></tr>";
-echo "</table>";
+echo " />".PHP_EOL;
+echo "</td>".PHP_EOL;
+echo "</tr>".PHP_EOL;
+echo "</table>".PHP_EOL;
 # Afficher vacance et jour ferie
-echo "<hr /><h3>".get_vocab("holidays_msg")."</h3>\n";
-echo "<table>";
-echo "<tr><td>".get_vocab("legend0")."</td><td>";
+echo "<hr />".PHP_EOL;
+echo "<h3>".get_vocab("holidays_msg")."</h3>".PHP_EOL;
+echo "<table>".PHP_EOL;
+echo "<tr>".PHP_EOL;
+echo "<td>".get_vocab("legend0")."</td>".PHP_EOL;
+echo "<td>".PHP_EOL;
 echo "<input type='radio' name='show_holidays' value='Oui' ";
 if (getSettingValue("show_holidays") == 'Oui')
 	echo "checked=\"checked\"";
-echo " />";
-echo "</td></tr>";
-echo "<tr><td>".get_vocab("legend1")."</td><td>";
+echo " />".PHP_EOL;
+echo "</td>".PHP_EOL;
+echo "</tr>".PHP_EOL;
+echo "<tr>".PHP_EOL;
+echo "<td>".get_vocab("legend1")."</td>".PHP_EOL;
+echo "<td>".PHP_EOL;
 echo "<input type='radio' name='show_holidays' value='Non' ";
 if (getSettingValue("show_holidays") == 'Non')
 	echo "checked=\"checked\"";
-echo " />";
-echo "</td></tr>";
-echo "</table>";
+echo " />".PHP_EOL;
+echo "</td>".PHP_EOL;
+echo "</tr>".PHP_EOL;
+echo "</table>".PHP_EOL;
 # Choix de la zone de vacance
-echo "<hr /><h3>".get_vocab("holidays_zone_msg")."</h3>\n";
-echo "<table>";
-echo '<tr><td>';
+echo "<hr />".PHP_EOL;
+echo "<h3>".get_vocab("holidays_zone_msg")."</h3>".PHP_EOL;
+echo "<table>".PHP_EOL;
+echo "<tr>".PHP_EOL;
+echo "<td>".PHP_EOL;
 $vacances = simplexml_load_file('vacances.xml');
 $libelle = $vacances->academies->children();
-echo '<select class="form-control" name="holidays_zone">'.PHP_EOL;
+$acad = array();
 foreach ($libelle as $key => $value)
 {
-	echo '<option value="'.$value['zone'].'"';
-	if (getSettingValue("holidays_zone") == $value['zone'])
-		echo ' selected="selected"';
-	echo '>'.$value['zone'].'</option>'.PHP_EOL;
+	if (!in_array($value['zone'], $acad))
+		$acad[] .= $value['zone'];
+
 }
-echo '</select></td>'.PHP_EOL;
-echo "</td></tr>";
-echo "</table>";
+sort($acad);
+echo '<select class="form-control" name="holidays_zone">'.PHP_EOL;
+foreach ($acad as $key => $value)
+{
+	echo '<option value="'.$value.'"';
+	if (getSettingValue("holidays_zone") == $value)
+		echo ' selected="selected"';
+	echo '>'.$value.'</option>'.PHP_EOL;
+}
+
+echo '</select>'.PHP_EOL;
+echo '</td>'.PHP_EOL;
+echo "</tr>".PHP_EOL;
+echo "</table>".PHP_EOL;
 # Lors de l'édition d'un rapport, valeur par défaut en nombre de jours
 # de l'intervalle de temps entre la date de début du rapport et la date de fin du rapport.
-echo "<hr /><h3>".get_vocab("default_report_days_msg")."</h3>\n";
-echo "<p>".get_vocab("default_report_days_explain").get_vocab("deux_points")."\n<input class=\"form-control\" type=\"text\" name=\"default_report_days\" value=\"".getSettingValue("default_report_days")."\" size=\"5\" />\n";
+echo "<hr />".PHP_EOL;
+echo "<h3>".get_vocab("default_report_days_msg")."</h3>\n";
+echo "<p>".get_vocab("default_report_days_explain").get_vocab("deux_points").PHP_EOL;
+echo "<input class=\"form-control\" type=\"text\" name=\"default_report_days\" value=\"".getSettingValue("default_report_days")."\" size=\"5\" />".PHP_EOL;
 # Formulaire de réservation
-echo "</p><hr /><h3>".get_vocab("formulaire_reservation")."</h3>\n";
-echo "<p>".get_vocab("longueur_liste_ressources").get_vocab("deux_points")."<input class=\"form-control\" type=\"text\" name=\"longueur_liste_ressources_max\" value=\"".getSettingValue("longueur_liste_ressources_max")."\" size=\"5\" />";
+echo "</p>".PHP_EOL;
+echo "<hr />".PHP_EOL;
+echo "<h3>".get_vocab("formulaire_reservation")."</h3>".PHP_EOL;
+echo "<p>".get_vocab("longueur_liste_ressources").get_vocab("deux_points").PHP_EOL;
+echo "<input class=\"form-control\" type=\"text\" name=\"longueur_liste_ressources_max\" value=\"".getSettingValue("longueur_liste_ressources_max")."\" size=\"5\" />".PHP_EOL;
 /*
 # nb_year_calendar permet de fixer la plage de choix de l'année dans le choix des dates de début et fin des réservations
 # La plage s'étend de année_en_cours - $nb_year_calendar à année_en_cours + $nb_year_calendar
@@ -1162,7 +1293,12 @@ while ($i < 101) {
 }
 echo "</select>\n";
 */
-echo "<br /><br /></p><div id=\"fixe\" style=\"text-align:center;\"><input class=\"btn btn-primary\" type=\"submit\" name=\"ok\" value=\"".get_vocab("save")."\" style=\"font-variant: small-caps;\"/></div>";
+echo "<br />".PHP_EOL;
+echo "<br />".PHP_EOL;
+echo "</p>".PHP_EOL;
+echo "<div id=\"fixe\" style=\"text-align:center;\">".PHP_EOL;
+echo "<input class=\"btn btn-primary\" type=\"submit\" name=\"ok\" value=\"".get_vocab("save")."\" style=\"font-variant: small-caps;\"/>".PHP_EOL;
+echo "</div>";
 echo "</form>";
 ?>
 <!--MAJ David VOUE 23/01/2014 Script de validation du mail du destinataire -->

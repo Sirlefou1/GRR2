@@ -50,95 +50,96 @@ function affichetableau($liste,$titre='')
 	}
 }
 
-echo "<table border=\"0\" cellspacing=\"4\" cellpadding=\"4\">";
+echo "<table class=\"table_adm4\">";
 // Affichage de la colonne de gauche
 ?>
-<tr><td class="colgauche_admin">
-	<?php
-	if (get_request_uri() != '')
-	{
-		$url_ = parse_url(get_request_uri());
-		$pos = strrpos($url_['path'], "/") + 1;
-		$chaine = substr($url_['path'], $pos);
-	}
-	else
-		$chaine = '';
-	echo "<div id=\"colgauche\">\n";
-	$liste = array();
-	if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
-		$liste[] = 'admin_config.php';
-	if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
-		$liste[] = 'admin_type.php';
-	if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
-		$liste[] = 'admin_calend_ignore.php';
-	if (getSettingValue("jours_cycles_actif") == "Oui")
-	{
-		if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
-			$liste[] = 'admin_calend_jour_cycle.php';
-	}
-	affichetableau($liste,get_vocab("admin_menu_general"));
-	$liste = array();
-	if (getSettingValue("module_multisite") == "Oui")
-	{
-		if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
-			$liste[] = 'admin_site.php';
-	}
-	if (authGetUserLevel(getUserName(), -1, 'area') >= 4)
-		$liste[] = 'admin_room.php';
-	if (authGetUserLevel(getUserName(), -1, 'area') >= 4)
-		$liste[] = 'admin_overload.php';
-	if (getSettingValue("module_multisite") == "Oui")
-		affichetableau($liste,get_vocab("admin_menu_site_area_room"));
-	else
-		affichetableau($liste,get_vocab("admin_menu_arearoom"));
-
-	$liste = array();
-	if ((authGetUserLevel(getUserName(), -1, 'area') >= 6) || (authGetUserLevel(getUserName(), -1, 'user') == 1))
-		$liste[] = 'admin_user.php';
-	if (getSettingValue("module_multisite") == "Oui")
-		if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
-			$liste[] = 'admin_admin_site.php';
-		if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
-			$liste[] = 'admin_right_admin.php';
-		if (authGetUserLevel(getUserName(), -1, 'area') >= 4)
-			$liste[] = 'admin_access_area.php';
-		if (authGetUserLevel(getUserName(), -1, 'area') >= 4)
-			$liste[] = 'admin_right.php' ;
-		if ((getSettingValue("ldap_statut") != "") || (getSettingValue("sso_statut") != "") || (getSettingValue("imap_statut") != ""))
+<tr>
+	<td class="colgauche_admin">
+		<?php
+		if (get_request_uri() != '')
 		{
-			if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
-				$liste[] = 'admin_purge_accounts.php';
+			$url_ = parse_url(get_request_uri());
+			$pos = strrpos($url_['path'], "/") + 1;
+			$chaine = substr($url_['path'], $pos);
 		}
-		affichetableau($liste,get_vocab("admin_menu_user"));
+		else
+			$chaine = '';
+		echo "<div id=\"colgauche\">\n";
 		$liste = array();
-		if (authGetUserLevel(getUserName(), -1, 'area') >= 4)
-			$liste[] = 'admin_email_manager.php';
 		if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
-			$liste[] = 'admin_view_connexions.php';
-		if (authGetUserLevel(getUserName(), -1, 'area') >= 4)
-			$liste[] = 'admin_calend.php';
+			$liste[] = 'admin_config.php';
 		if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
-			$liste[] = 'admin_maj.php';
-		if (getSettingValue("sso_ac_corr_profil_statut") == 'y') {
-			if (authGetUserLevel(getUserName(), -1, 'area') >= 5)
-				$liste[] = 'admin_corresp_statut.php';
-		}
-		affichetableau($liste,get_vocab("admin_menu_various"));
-		// Possibilité de bloquer l'affichage de la rubrique "Authentification et ldap"
-		if ((!isset($sso_restrictions)) || ($sso_restrictions == false))
+			$liste[] = 'admin_type.php';
+		if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
+			$liste[] = 'admin_calend_ignore.php';
+		if (getSettingValue("jours_cycles_actif") == "Oui")
 		{
-			$liste = array();
 			if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
-				$liste[] = 'admin_config_ldap.php';
-			if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
-				$liste[] = 'admin_config_sso.php';
-	 		//ajout page admin_config_imap.php
-			if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
-				$liste[] = 'admin_config_imap.php';
-			affichetableau($liste,get_vocab("admin_menu_auth"));
+				$liste[] = 'admin_calend_jour_cycle.php';
 		}
+		affichetableau($liste,get_vocab("admin_menu_general"));
+		$liste = array();
+		if (getSettingValue("module_multisite") == "Oui")
+		{
+			if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
+				$liste[] = 'admin_site.php';
+		}
+		if (authGetUserLevel(getUserName(), -1, 'area') >= 4)
+			$liste[] = 'admin_room.php';
+		if (authGetUserLevel(getUserName(), -1, 'area') >= 4)
+			$liste[] = 'admin_overload.php';
+		if (getSettingValue("module_multisite") == "Oui")
+			affichetableau($liste,get_vocab("admin_menu_site_area_room"));
+		else
+			affichetableau($liste,get_vocab("admin_menu_arearoom"));
+
+		$liste = array();
+		if ((authGetUserLevel(getUserName(), -1, 'area') >= 6) || (authGetUserLevel(getUserName(), -1, 'user') == 1))
+			$liste[] = 'admin_user.php';
+		if (getSettingValue("module_multisite") == "Oui")
+			if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
+				$liste[] = 'admin_admin_site.php';
+			if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
+				$liste[] = 'admin_right_admin.php';
+			if (authGetUserLevel(getUserName(), -1, 'area') >= 4)
+				$liste[] = 'admin_access_area.php';
+			if (authGetUserLevel(getUserName(), -1, 'area') >= 4)
+				$liste[] = 'admin_right.php' ;
+			if ((getSettingValue("ldap_statut") != "") || (getSettingValue("sso_statut") != "") || (getSettingValue("imap_statut") != ""))
+			{
+				if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
+					$liste[] = 'admin_purge_accounts.php';
+			}
+			affichetableau($liste,get_vocab("admin_menu_user"));
+			$liste = array();
+			if (authGetUserLevel(getUserName(), -1, 'area') >= 4)
+				$liste[] = 'admin_email_manager.php';
+			if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
+				$liste[] = 'admin_view_connexions.php';
+			if (authGetUserLevel(getUserName(), -1, 'area') >= 4)
+				$liste[] = 'admin_calend.php';
+			if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
+				$liste[] = 'admin_maj.php';
+			if (getSettingValue("sso_ac_corr_profil_statut") == 'y') {
+				if (authGetUserLevel(getUserName(), -1, 'area') >= 5)
+					$liste[] = 'admin_corresp_statut.php';
+			}
+			affichetableau($liste,get_vocab("admin_menu_various"));
+		// Possibilité de bloquer l'affichage de la rubrique "Authentification et ldap"
+			if ((!isset($sso_restrictions)) || ($sso_restrictions == false))
+			{
+				$liste = array();
+				if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
+					$liste[] = 'admin_config_ldap.php';
+				if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
+					$liste[] = 'admin_config_sso.php';
+	 		//ajout page admin_config_imap.php
+				if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
+					$liste[] = 'admin_config_imap.php';
+				affichetableau($liste,get_vocab("admin_menu_auth"));
+			}
 		// début affichage de la colonne de gauche
-		echo "</div>\n";
-		?>
-	</td>
-	<td>
+			echo "</div>\n";
+			?>
+		</td>
+		<td>

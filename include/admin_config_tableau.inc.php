@@ -35,7 +35,7 @@
 	}
 </script>
 <?php
-echo "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n";
+echo "<table class=\"table_adm\">\n";
 echo "<tbody>\n";
 echo "<tr>";
 for ($k = 1; $k < 6; $k++)

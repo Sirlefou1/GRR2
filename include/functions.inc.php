@@ -834,7 +834,7 @@ function begin_page($title, $page="with_session")
 	$a .= '<link rel="stylesheet" type="text/css" href="include/admin_grr.css" />'.PHP_EOL;
 	if ((isset($_GET['pview'])) && ($_GET['pview'] == 1))
 		$a .=  '<link rel="stylesheet" href="themes/print/css/style.css" type="text/css" />'.PHP_EOL;
-	$a .= '<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />'.PHP_EOL;
+	//$a .= '<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />'.PHP_EOL;
 	$a .= '<link rel="stylesheet" type="text/css" href="themes/default/css/jquery-ui-timepicker-addon.css" >'.PHP_EOL;
 	$a .= '<link rel="stylesheet" type="text/css" href="themes/default/css/bootstrap-multiselect.css">'.PHP_EOL;
 	$a .= '<link rel="stylesheet" type="text/css" href="themes/default/css/bootstrap-clockpicker.min.css">'.PHP_EOL;
@@ -987,42 +987,42 @@ function print_header($day = '', $month = '', $year = '', $type_session = 'with_
 			{
 				if ((getSettingValue('sso_statut') == 'cas_visiteur') || (getSettingValue('sso_statut') == 'cas_utilisateur'))
 				{
-					echo '<br /> <a href="index.php?force_authentification=y">'.get_vocab("authentification").'</a>';
-					echo '<br /> <small><i><a href="login.php">'.get_vocab("connect_local").'</a></i></small>';
+					echo '<br /> <a href="index.php?force_authentification=y">'.get_vocab("authentification").'</a>'.PHP_EOL;
+					echo '<br /> <small><i><a href="login.php">'.get_vocab("connect_local").'</a></i></small>'.PHP_EOL;
 				}
 				else
-					echo '<br /> <a href="login.php">'.get_vocab("connect").'</a>';
+					echo '<br /> <a href="login.php">'.get_vocab("connect").'</a>'.PHP_EOL;
 			}
 			else
 			{
-				echo '<br /> <b>'.get_vocab("welcome_to").htmlspecialchars($_SESSION['prenom']).' '.htmlspecialchars($_SESSION['nom']).'</b>';
-				echo '<br /> <a href="my_account.php?day='.$day.'&amp;year='.$year.'&amp;month='.$month.'">'.get_vocab("manage_my_account").'</a>';
+				echo '<br /> <b>'.get_vocab("welcome_to").htmlspecialchars($_SESSION['prenom']).' '.htmlspecialchars($_SESSION['nom']).'</b>'.PHP_EOL;
+				echo '<br /> <a href="my_account.php?day='.$day.'&amp;year='.$year.'&amp;month='.$month.'">'.get_vocab("manage_my_account").'</a>'.PHP_EOL;
 				if (verif_access_search(getUserName()))
-					echo '<br/><a href="report.php">'.get_vocab("report").'</a>';
+					echo '<br/><a href="report.php">'.get_vocab("report").'</a>'.PHP_EOL;
 				$disconnect_link = false;
 				if (!((getSettingValue("cacher_lien_deconnecter") == 'y') && (isset($_SESSION['est_authentifie_sso']))))
 				{
 					$disconnect_link = true;
 					if (getSettingValue("authentification_obli") == 1)
-						echo '<br /> <a href="./logout.php?auto=0" >'.get_vocab('disconnect').'</a>';
+						echo '<br /> <a href="./logout.php?auto=0" >'.get_vocab('disconnect').'</a>'.PHP_EOL;
 					else
-						echo '<br /> <a href="./logout.php?auto=0&amp;redirect_page_accueil=yes" >'.get_vocab('disconnect').'</a>';
+						echo '<br /> <a href="./logout.php?auto=0&amp;redirect_page_accueil=yes" >'.get_vocab('disconnect').'</a>'.PHP_EOL;
 				}
 				if ((getSettingValue("Url_portail_sso") != '') && (isset($_SESSION['est_authentifie_sso'])))
 				{
 					if ($disconnect_link)
-						echo ' - ';
+						echo ' - '.PHP_EOL;
 					else
-						echo '<br />';
-					echo '<a href="'.getSettingValue("Url_portail_sso").'">'.get_vocab("Portail_accueil").'</a>';
+						echo '<br />'.PHP_EOL;
+					echo '<a href="'.getSettingValue("Url_portail_sso").'">'.get_vocab("Portail_accueil").'</a>'.PHP_EOL;
 				}
 				if ((getSettingValue('sso_statut') == 'lasso_visiteur') || (getSettingValue('sso_statut') == 'lasso_utilisateur'))
 				{
 					echo '<br />';
 					if ($_SESSION['lasso_nameid'] == NULL)
-						echo '<a href="lasso/federate.php">'.get_vocab('lasso_federate_this_account').'</a>';
+						echo '<a href="lasso/federate.php">'.get_vocab('lasso_federate_this_account').'</a>'.PHP_EOL;
 					else
-						echo '<a href="lasso/defederate.php">'.get_vocab('lasso_defederate_this_account').'</a>';
+						echo '<a href="lasso/defederate.php">'.get_vocab('lasso_defederate_this_account').'</a>'.PHP_EOL;
 				}
 			}
 			echo '</td>'.PHP_EOL;
