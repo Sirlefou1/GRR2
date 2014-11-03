@@ -61,7 +61,7 @@ if (isset($id_area))
 {
 	if (empty($area_name))
 	{
-		$res = grr_sql_query("select area_name, access from ".TABLE_PREFIX."_area where id=$id_area");
+		$res = grr_sql_query("SELECT area_name, access FROM ".TABLE_PREFIX."_area WHERE id=$id_area");
 		if (!$res)
 			fatal_error(0, grr_sql_error());
 		if (grr_sql_count($res) == 1)
@@ -154,7 +154,7 @@ else
 {
 	// un seul site
 	$row = grr_sql_row($res, 0);
-	echo '<table border="1" width="100%" cellpadding="8" cellspacing="1">
+	echo '<table class="table">
 	<tr>
 		<th style="text-align:center;">
 			<b>'.get_vocab('site').get_vocab('deux_points').$row[2].'</b>
@@ -166,7 +166,7 @@ $id_site = $row[0];
 }
 }
 ?>
-<table border="1" width="100%" cellpadding="8" cellspacing="1">
+<table class="table table-bordered">
 	<tr>
 		<th  style="text-align:center; width:50%;"><b class="titre"><?php echo get_vocab('areas') ?></b></th>
 		<th  style="text-align:center; width:50%;"><b class="titre"><?php echo get_vocab('rooms') ?> <?php if (isset($id_area)) { echo get_vocab('in') . " " .
@@ -215,7 +215,7 @@ $id_site = $row[0];
 		if (grr_sql_count($res) != 0)
 		{
 			echo "<tr><td>\n";
-			echo "<table border=\"0\" cellpadding=\"3\" cellspacing=\"1\">\n";
+			echo "<table class=\"table\">\n";
 			for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 			{
 				// on affiche que les domaines que l'utilisateur connect?a le droit d'administrer
@@ -253,7 +253,7 @@ $id_site = $row[0];
 			//This one has the rooms
 			if (isset($id_area))
 			{
-				$sql = "select id, room_name, description, capacity, max_booking, statut_room from ".TABLE_PREFIX."_room where area_id=$id_area ";
+				$sql = "SELECT id, room_name, description, capacity, max_booking, statut_room from ".TABLE_PREFIX."_room where area_id=$id_area ";
 				// on ne cherche pas parmi les ressources invisibles pour l'utilisateur
 				$tab_rooms_noaccess = verif_acces_ressource(getUserName(), 'all');
 				foreach ($tab_rooms_noaccess as $key)
@@ -266,7 +266,7 @@ $id_site = $row[0];
 					fatal_error(0, grr_sql_error());
 				if (grr_sql_count($res) != 0)
 				{
-					echo "<table cellpadding=\"3\" cellspacing=\"1\">";
+					echo "<table class=\"table\">";
 					for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 					{
 						$color = '';

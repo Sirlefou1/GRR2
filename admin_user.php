@@ -359,7 +359,7 @@ echo " /></td>";
 </form>
 <?php
 // Affichage du tableau
-echo "<table border=\"1\" cellpadding=\"3\">";
+echo "<table class=\"table table-striped table-bordered\">";
 echo "<tr><td><b><a href='admin_user.php?order_by=login&amp;display=$display'>".get_vocab("login_name")."</a></b></td>";
 echo "<td><b><a href='admin_user.php?order_by=nom,prenom&amp;display=$display'>".get_vocab("names")."</a></b></td>";
 echo "<td><b>".get_vocab("privileges")."</b></td>";

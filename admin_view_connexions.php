@@ -84,7 +84,7 @@ if (!isset($_POST['histDay']))
 		echo get_vocab("msg_explain_log");
 		?>
 	</p>
-	<table class="col" style="width:90%; margin-left: auto; margin-right: auto; margin-bottom: 32px;" cellpadding="5" cellspacing="0">
+	<table class="col table" style="width:90%; margin-left: auto; margin-right: auto; margin-bottom: 32px;" cellpadding="5" cellspacing="0">
 		<tr>
 			<th class="col">
 				<?php
