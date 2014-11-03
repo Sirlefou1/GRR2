@@ -831,6 +831,7 @@ function begin_page($title, $page="with_session")
 	$a .= '<meta name="Robots" content="noindex" />'.PHP_EOL;
 	$a .= '<link rel="stylesheet" type="text/css" href="'.$sheetcss.'" />'.PHP_EOL;
 	$a .= '<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css" />'.PHP_EOL;
+	$a .= '<link rel="stylesheet" href="themes/default/css/mod_bootstrap.css" type="text/css" />'.PHP_EOL;
 	$a .= '<link rel="stylesheet" type="text/css" href="include/admin_grr.css" />'.PHP_EOL;
 	if ((isset($_GET['pview'])) && ($_GET['pview'] == 1))
 		$a .=  '<link rel="stylesheet" href="themes/print/css/style.css" type="text/css" />'.PHP_EOL;
