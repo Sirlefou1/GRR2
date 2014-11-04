@@ -1,9 +1,9 @@
 <?php
 /**
  * admin_config_calend2.php
- * interface permettant la la réservation en bloc de journées entières
+ * interface permettant la la rÃ©servation en bloc de journÃ©es entiÃ¨res
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2009-04-14 12:59:17 $
+ * DerniÃ¨re modification : $Date: 2009-04-14 12:59:17 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -36,7 +36,7 @@ check_access(6, $back);
 print_header("", "", "", $type="with_session");
 // Affichage de la colonne de gauche
 include "admin_col_gauche.php";
-// Affichage du tableau de choix des sous-configuration pour les Jours/Cycles (Créer et voir calendrier Jours/Cycle)
+// Affichage du tableau de choix des sous-configuration pour les Jours/Cycles (CrÃ©er et voir calendrier Jours/Cycle)
 include "include/admin_calend_jour_cycle.inc.php";
 echo "<h3>".get_vocab('calendrier_jours/cycles')."</h3>";
 if (isset($_POST['record']) && ($_POST['record'] == 'yes'))
@@ -51,7 +51,7 @@ if (isset($_POST['record']) && ($_POST['record'] == 'yes'))
 	$month = strftime("%m", getSettingValue("begin_bookings"));
 	$year = strftime("%Y", getSettingValue("begin_bookings"));
 	$day = 1;
-	// Pour aller chercher le Jour cycle qui débutera le premier cycle de jours
+	// Pour aller chercher le Jour cycle qui dÃ©butera le premier cycle de jours
 	$m = getSettingValue("jour_debut_Jours/Cycles");
 	while ($n <= $end_bookings)
 	{
@@ -62,10 +62,10 @@ if (isset($_POST['record']) && ($_POST['record'] == 'yes'))
 			$n = mktime(0, 0, 0, $month, $day, $year);
 			if (isset($_POST[$n]))
 			{
-				// Le jour a été selectionné dans le calendrier
+				// Le jour a Ã©tÃ© selectionnÃ© dans le calendrier
 				$starttime = mktime($morningstarts, 0, 0, $month, $day  , $year);
 				$endtime   = mktime($eveningends, 0, $resolution, $month, $day, $year);
-				 // On efface toutes les résa en conflit
+				 // On efface toutes les rÃ©sa en conflit
 				$sql = "select id from ".TABLE_PREFIX."_room";
 				$res = grr_sql_query($sql);
 				if ($res)

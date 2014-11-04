@@ -1,7 +1,7 @@
 <?php
-# Les quatre lignes suivantes sont à modifier selon votre configuration
+# Les quatre lignes suivantes sont Ã  modifier selon votre configuration
 # ligne suivante : le nom du serveur qui herberge votre base sql.
-# Si c'est le même que celui qui heberge les scripts, mettre "localhost"
+# Si c'est le mÃªme que celui qui heberge les scripts, mettre "localhost"
 $dbHost="localhost";
 # ligne suivante : le nom de votre base sql
 $dbDb="grr";
@@ -9,6 +9,6 @@ $dbDb="grr";
 $dbUser="root";
 # ligne suivante : le mot de passe de l'utilisateur sql ci-dessus
 $dbPass="root";
-# ligne suivante : préfixe du nom des tables de données
+# ligne suivante : prÃ©fixe du nom des tables de donnÃ©es
 $table_prefix="grr";
 ?>

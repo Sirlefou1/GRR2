@@ -2,7 +2,7 @@
 /**
  * admin_user.php
  * interface de gestion des utilisateurs de l'application GRR
- * Dernière modification : $Date: 2009-09-29 18:02:56 $
+ * DerniÃ¨re modification : $Date: 2009-09-29 18:02:56 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -73,10 +73,10 @@ if ((isset($_GET['action'])) && ($_GET['action'] == "modif_mdp") && (authGetUser
 		$msg = get_vocab("message_records");
 }
 // Nettoyage de la base locale
-// On propose de supprimer les utilisateurs ext de GRR qui ne sont plus présents dans la base LCS
+// On propose de supprimer les utilisateurs ext de GRR qui ne sont plus prÃ©sents dans la base LCS
 if ((isset($_GET['action'])) && ($_GET['action'] == "nettoyage") && (getSettingValue("sso_statut") == "lcs"))
 {
-	// Sélection des utilisateurs non locaux
+	// SÃ©lection des utilisateurs non locaux
 	$sql = "SELECT login, etat, source FROM ".TABLE_PREFIX."_utilisateurs where source='ext'";
 	$res = grr_sql_query($sql);
 	if ($res) {
@@ -94,8 +94,8 @@ if ((isset($_GET['action'])) && ($_GET['action'] == "nettoyage") && (getSettingV
 				if ($flag == 1)
 					$msg = get_vocab("mess2_maj_base_locale");
 				$flag = 0;
-				// L'utilisateur n'est plus présent dans la base LCS, on le supprime
-				// Etablir à nouveau la connexion à la base
+				// L'utilisateur n'est plus prÃ©sent dans la base LCS, on le supprime
+				// Etablir Ã  nouveau la connexion Ã  la base
 				if (empty($db_nopersist))
 					$db_c = mysqli_connect('p:'.$dbHost, $dbUser, $dbPass);
 				else
@@ -121,7 +121,7 @@ if ((isset($_GET['action'])) && ($_GET['action'] == "nettoyage") && (getSettingV
 	}
 }
 // Nettoyage de la base locale
-// On propose de supprimer les utilisateurs ext de GRR qui ne sont plus présents dans la base LCS
+// On propose de supprimer les utilisateurs ext de GRR qui ne sont plus prÃ©sents dans la base LCS
 if ((isset($_GET['action'])) && ($_GET['action'] == "synchro") && (getSettingValue("sso_statut") == "lcs"))
 {
 	$statut_eleve = getSettingValue("lcs_statut_eleve");
@@ -134,7 +134,7 @@ if ((isset($_GET['action'])) && ($_GET['action'] == "synchro") && (getSettingVal
 	$liste_pb_insertion = "";
 	$liste_update = "";
 	$liste_pb_update = "";
-	// Etablir à nouveau la connexion à la base
+	// Etablir Ã  nouveau la connexion Ã  la base
 	if (empty($db_nopersist))
 		$db_c = mysqli_connect('p:'.$dbHost, $dbUser, $dbPass);
 	else
@@ -184,7 +184,7 @@ if ((isset($_GET['action'])) && ($_GET['action'] == "synchro") && (getSettingVal
 			$test2 = grr_sql_query1("SELECT source FROM ".TABLE_PREFIX."_utilisateurs WHERE login = '".$user_login."'");
 			if ($test2 == 'ext')
 			{
-				// On met à jour
+				// On met Ã  jour
 				$sql = "UPDATE ".TABLE_PREFIX."_utilisateurs SET
 				nom='".protect_data_sql($user_nom)."',
 				prenom='".protect_data_sql($user_prenom)."',
@@ -196,7 +196,7 @@ if ((isset($_GET['action'])) && ($_GET['action'] == "synchro") && (getSettingVal
 			else
 				$liste_update .= $user_login." (".$user_prenom." ".$user_nom.")<br />";
 		}
-	//echo "login : ".$user_login." Nom : ".$user_nom." Prénom : ".$user_prenom." Email : ".$user_email." Etat : ".$etat." Groupes : ".$groupe;
+	//echo "login : ".$user_login." Nom : ".$user_nom." PrÃ©nom : ".$user_prenom." Email : ".$user_email." Etat : ".$etat." Groupes : ".$groupe;
 	//echo "<br />";
 	}
 	$mess = "";
@@ -215,7 +215,7 @@ if ((isset($_GET['action'])) && ($_GET['action'] == "synchro") && (getSettingVal
 if ((isset($_GET['action_del'])) and ($_GET['js_confirmed'] == 1))
 {
 	$temp = $_GET['user_del'];
-	// un gestionnaire d'utilisateurs ne peut pas supprimer un administrateur général ou un gestionnaire d'utilisateurs
+	// un gestionnaire d'utilisateurs ne peut pas supprimer un administrateur gÃ©nÃ©ral ou un gestionnaire d'utilisateurs
 	$can_delete = "yes";
 	if (authGetUserLevel(getUserName(), -1,'user') ==  1)
 	{
@@ -256,13 +256,13 @@ if (empty($order_by))
 | <a href="admin_user_modify.php?display=<?php echo $display; ?>"><?php echo get_vocab("display_add_user"); ?></a> |
 <a href="admin_import_users_csv.php"><?php echo get_vocab("display_add_user_list_csv"); ?></a> |
 <?php
-// On propose de supprimer les utilisateurs ext de GRR qui ne sont plus présents dans la base LCS
+// On propose de supprimer les utilisateurs ext de GRR qui ne sont plus prÃ©sents dans la base LCS
 if (getSettingValue("sso_statut") == "lcs")
 {
-	echo "<br />Opérations LCS : | <a href=\"admin_user.php?action=nettoyage\" onclick=\"return confirmlink(this, '".AddSlashes(get_vocab("mess_maj_base_locale"))."', '".get_vocab("maj_base_locale")."')\">".get_vocab("maj_base_locale")."</a> |";
+	echo "<br />OpÃ©rations LCS : | <a href=\"admin_user.php?action=nettoyage\" onclick=\"return confirmlink(this, '".AddSlashes(get_vocab("mess_maj_base_locale"))."', '".get_vocab("maj_base_locale")."')\">".get_vocab("maj_base_locale")."</a> |";
 	echo " <a href=\"admin_user.php?action=synchro\" onclick=\"return confirmlink(this, '".AddSlashes(get_vocab("mess_synchro_base_locale"))."', '".get_vocab("synchro_base_locale")."')\">".get_vocab("synchro_base_locale")."</a> |";
 }
-// Autoriser ou non la modification par un utilisateur de ses informations personnelles (nom, prénom)
+// Autoriser ou non la modification par un utilisateur de ses informations personnelles (nom, prÃ©nom)
 // Par ailleurs un gestionnaire d'utilisateurs ne peut pas Autoriser ou non la modification par un utilisateur de ses informations personnelles
 if (authGetUserLevel(getUserName(),-1,'user') !=  1)
 {
@@ -387,10 +387,10 @@ if ($res)
 			$affiche = 'no';
 		if ($affiche == 'yes')
 		{
-		// Affichage des login, noms et prénoms
+		// Affichage des login, noms et prÃ©noms
 			$col[$i][1] = $user_login;
 			$col[$i][2] = "$user_nom $user_prenom";
-		// Affichage des ressources gérées
+		// Affichage des ressources gÃ©rÃ©es
 			$col[$i][3] = "";
 			if (getSettingValue("module_multisite") == "Oui")
 			{
@@ -411,7 +411,7 @@ if ($res)
 				$col[$i][3] .= "<span class=\"style_privilege\"> A</span>";
 			else
 				$col[$i][3] .= "";
-		// Si le domaine est restreint, on teste si l'utilateur a accès
+		// Si le domaine est restreint, on teste si l'utilateur a accÃ¨s
 			$test_restreint = grr_sql_query1("SELECT count(a.area_name) FROM ".TABLE_PREFIX."_area a
 				left join ".TABLE_PREFIX."_j_user_area j on a.id = j.id_area
 				WHERE j.login = '".$user_login."'");
@@ -427,12 +427,12 @@ if ($res)
 				$col[$i][3] .= "<span class=\"style_privilege\"> G</span>";
 			else
 				$col[$i][3] .= "";
-		// On teste si l'utilisateur gère les utilisateurs
+		// On teste si l'utilisateur gÃ¨re les utilisateurs
 			if ($user_statut == "gestionnaire_utilisateur")
 				$col[$i][3] .= "<span class=\"style_privilege\"> U</span>";
 			else
 				$col[$i][3] .= "";
-		// On teste si l'utilisateur reçoit des mails automatiques
+		// On teste si l'utilisateur reÃ§oit des mails automatiques
 			$test_mail = grr_sql_query1("SELECT count(r.room_name) FROM ".TABLE_PREFIX."_room r
 				left join ".TABLE_PREFIX."_j_mailuser_room j on r.id=j.id_room
 				WHERE j.login = '".$user_login."'");
@@ -475,7 +475,7 @@ if ($res)
 				$col[$i][5] = "Ext.";
 			}
 			echo "\n<tr><td class=\"".$fond."\">{$col[$i][1]}</td>\n";
-		// un gestionnaire d'utilisateurs ne peut pas modifier un administrateur général ou un gestionnaire d'utilisateurs
+		// un gestionnaire d'utilisateurs ne peut pas modifier un administrateur gÃ©nÃ©ral ou un gestionnaire d'utilisateurs
 			if ((authGetUserLevel(getUserName(), -1, 'user') ==  1) && (($user_statut == "gestionnaire_utilisateur") || ($user_statut == "administrateur")))
 				echo "<td class=\"".$fond."\">{$col[$i][2]}</td>\n";
 			else
@@ -484,8 +484,8 @@ if ($res)
 			echo "<td class=\"".$fond."\"><span class=\"".$color[$i]."\">{$col[$i][4]}</span></td>\n";
 			echo "<td class=\"".$fond."\">{$col[$i][5]}</td>\n";
 		// Affichage du lien 'supprimer'
-		// un gestionnaire d'utilisateurs ne peut pas supprimer un administrateur général ou un gestionnaire d'utilisateurs
-		// Un administrateur ne peut pas se supprimer lui-même
+		// un gestionnaire d'utilisateurs ne peut pas supprimer un administrateur gÃ©nÃ©ral ou un gestionnaire d'utilisateurs
+		// Un administrateur ne peut pas se supprimer lui-mÃªme
 			if (((authGetUserLevel(getUserName(), -1, 'user') ==  1) && (($user_statut == "gestionnaire_utilisateur") || ($user_statut == "administrateur"))) || (strtolower(getUserName()) == strtolower($user_login)))
 				echo "<td class=\"".$fond."\"> </td>";
 			else

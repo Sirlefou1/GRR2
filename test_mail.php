@@ -75,13 +75,13 @@ if (isset($_POST['destinataire']))
 {
 $destinataire = $_POST['destinataire'];
 $sujet = "Test de la fonction mail() de PHP";
-$message = "Félicitations, la fonction mail() de votre hebergeur fonctionne!";
+$message = "FÃ©licitations, la fonction mail() de votre hebergeur fonctionne!";
 
 $envoi = mail($destinataire, $sujet, $message);
 
 	if ($envoi == true)
 	{
-	echo "<font color='green'><b>L'email a été envoyé avec succès.<br /><br />La fonction mail est bien activé.<br />Un email vous a été envoyé à l'adresse que vous avez indiqué.</b></font><br />";
+	echo "<font color='green'><b>L'email a Ã©tÃ© envoyÃ© avec succÃ¨s.<br /><br />La fonction mail est bien activÃ©.<br />Un email vous a Ã©tÃ© envoyÃ© Ã  l'adresse que vous avez indiquÃ©.</b></font><br />";
 	}
 	else
 	{

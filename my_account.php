@@ -1,8 +1,8 @@
 <?php
 /**
  * my_account.php
- * Interface permettant à l'utilisateur de gérer son compte dans l'application GRR
- * Dernière modification : $Date: 2009-06-04 15:30:17 $
+ * Interface permettant Ã  l'utilisateur de gÃ©rer son compte dans l'application GRR
+ * DerniÃ¨re modification : $Date: 2009-06-04 15:30:17 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @author    Marc-Henri PAMISEUX <marcori@users.sourceforge.net>
  * @copyright Copyright 2003-2008 Laurent Delineau
@@ -507,7 +507,7 @@ echo ('
 								<input class="btn btn-primary" type="submit" value="'.get_vocab('save').'" />
 							</div>
 						</form>
-						<!-- Formulaire de Reset des données -->
+						<!-- Formulaire de Reset des donnÃ©es -->
 						<form id="reset" action="my_account.php" method="post">
 							<div>
 								<input type="hidden" name="valid" value="reset" />

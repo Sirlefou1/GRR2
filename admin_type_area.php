@@ -1,9 +1,9 @@
 <?php
 /**
  * admin_type_area.php
- * interface de gestion des types de réservations pour un domaine
+ * interface de gestion des types de rÃ©servations pour un domaine
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2009-04-14 12:59:17 $
+ * DerniÃ¨re modification : $Date: 2009-04-14 12:59:17 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -41,7 +41,7 @@ check_access(4, $back);
 $back = "";
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
-// Gestion du retour à la page précédente sans enregistrement
+// Gestion du retour Ã  la page prÃ©cÃ©dente sans enregistrement
 if (isset($_GET['change_done']))
 {
 	Header("Location: "."admin_room.php?id_area=".$_GET['id_area']);
@@ -77,12 +77,12 @@ if (isset($_GET['valider']))
 				$test = grr_sql_query1("SELECT count(id_type) FROM ".TABLE_PREFIX."_j_type_area WHERE id_area = '".$id_area."' AND id_type = '".$row[0]."'");
 				if ($test == 0)
 				{
-					//faire le test si il existe une réservation en cours avec ce type de réservation
+					//faire le test si il existe une rÃ©servation en cours avec ce type de rÃ©servation
 					//$type_id = grr_sql_query1("select type_letter from ".TABLE_PREFIX."_type_area where id = '".$row[0]."'");
 					//$test1 = grr_sql_query1("select count(id) from ".TABLE_PREFIX."_entry where type= '".$type_id."'");
 					//$test2 = grr_sql_query1("select count(id) from ".TABLE_PREFIX."_repeat where type= '".$type_id."'");
 					//if (($test1 != 0) or ($test2 != 0)) {
-					//$msg =  "Suppression impossible : des réservations ont été enregistrées avec ce type.";
+					//$msg =  "Suppression impossible : des rÃ©servations ont Ã©tÃ© enregistrÃ©es avec ce type.";
 					//} else {
 					$sql1 = "INSERT INTO ".TABLE_PREFIX."_j_type_area SET id_area='".$id_area."', id_type = '".$row[0]."'";
 					if (grr_sql_command($sql1) < 0)
@@ -94,12 +94,12 @@ if (isset($_GET['valider']))
 	}
 	if ($nb_types_valides == 0)
 	{
-		// Aucun type n'a été sélectionné. Dans ce cas, on impose au moins un type :
+		// Aucun type n'a Ã©tÃ© sÃ©lectionnÃ©. Dans ce cas, on impose au moins un type :
 		$del = grr_sql_query("DELETE FROM ".TABLE_PREFIX."_j_type_area WHERE id_area='".$id_area."' AND id_type = '".$type_si_aucun."'");
-		$msg = "Vous devez au définir au moins un type valide !";
+		$msg = "Vous devez au dÃ©finir au moins un type valide !";
 	}
-	// Type par défaut :
-	// On enregistre le nouveau type par défaut :
+	// Type par dÃ©faut :
+	// On enregistre le nouveau type par dÃ©faut :
 	$reg_type_par_defaut = grr_sql_query("UPDATE ".TABLE_PREFIX."_area SET id_type_par_defaut='".$_GET['id_type_par_defaut']."' WHERE id='".$id_area."'");
 }
 affiche_pop_up($msg,"admin");
@@ -139,7 +139,7 @@ if ($res)
 		$order_display     = $row[2];
 		$couleur = $row[3];
 		$type_letter = $row[4];
-		// Affichage des numéros et descriptions
+		// Affichage des numÃ©ros et descriptions
 		$col[$i][1] = $type_letter;
 		$col[$i][2] = $id_type;
 		$col[$i][3] = $type_name;

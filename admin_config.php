@@ -1,9 +1,9 @@
 <?php
 /**
  * admin_config.php
- * Interface permettant à l'administrateur la configuration de certains paramètres généraux
+ * Interface permettant Ã  l'administrateur la configuration de certains paramÃ¨tres gÃ©nÃ©raux
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2008-11-16 22:00:58 $
+ * DerniÃ¨re modification : $Date: 2008-11-16 22:00:58 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html

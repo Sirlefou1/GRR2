@@ -3,7 +3,7 @@
  * trailer.inc.php
  * script de bas de page html
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2009-06-04 15:30:18 $
+ * DerniÃ¨re modification : $Date: 2009-06-04 15:30:18 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -41,7 +41,7 @@
  *
  */
 // Affichage d'un lien pour format imprimable
-//Appel d'une methode en fonction du paramétrage pour le lien imprimable
+//Appel d'une methode en fonction du paramÃ©trage pour le lien imprimable
 if ((!isset($_GET['pview']) || ($_GET['pview'] != 1)) && (isset($affiche_pview)))
 {
 	if (getSettingValue("pview_new_windows") == 1)
@@ -65,7 +65,7 @@ if ((!isset($_GET['pview']) || ($_GET['pview'] != 1)) && (isset($affiche_pview))
 	$s.= "><span class=\"glyphicon glyphicon-print\"></span> </button>";
 	echo $s;
 }
-// Affichage du message d'erreur en cas d'échec de l'envoi de mails automatiques
+// Affichage du message d'erreur en cas d'Ã©chec de l'envoi de mails automatiques
 if (!(getSettingValue("javascript_info_disabled")))
 {
 	if ((isset($_SESSION['session_message_error'])) && ($_SESSION['session_message_error'] != ''))

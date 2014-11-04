@@ -1,9 +1,9 @@
 <?php
 /**
  * admin_type_modify.php
- * interface de création/modification des types de réservations
+ * interface de crÃ©ation/modification des types de rÃ©servations
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2010-03-03 14:41:34 $
+ * DerniÃ¨re modification : $Date: 2010-03-03 14:41:34 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -55,7 +55,7 @@ if (isset($_GET['change_type']))
 {
 	$_SESSION['displ_msg'] = "yes";
 	if ($type_name == '')
-		$type_name = "A définir";
+		$type_name = "A dÃ©finir";
 	if ($type_letter == '')
 		$type_letter = "A";
 	if ($couleur == '')
@@ -67,7 +67,7 @@ if (isset($_GET['change_type']))
 		// Test sur $type_letter
 		$test = grr_sql_query1("SELECT count(id) FROM ".TABLE_PREFIX."_type_area WHERE type_letter='".$type_letter."' AND id!='".$id_type."'");
 		if ($test > 0)
-			$msg = "Enregistrement impossible : Un type portant la même lettre existe déjà.";
+			$msg = "Enregistrement impossible : Un type portant la mÃªme lettre existe dÃ©jÃ .";
 		else
 		{
 			$sql = "UPDATE ".TABLE_PREFIX."_type_area SET
@@ -95,7 +95,7 @@ if (isset($_GET['change_type']))
 		// Test sur $type_letter
 		$test = grr_sql_query1("SELECT count(id) FROM ".TABLE_PREFIX."_type_area WHERE type_letter='".$type_letter."'");
 		if ($test > 0)
-			$msg = "Enregistrement impossible : Un type portant la même lettre existe déjà.";
+			$msg = "Enregistrement impossible : Un type portant la mÃªme lettre existe dÃ©jÃ .";
 		else
 		{
 			$sql = "INSERT INTO ".TABLE_PREFIX."_type_area SET
@@ -118,7 +118,7 @@ if (isset($_GET['change_type']))
 
 	}
 }
-// Si pas de problème, retour à la page d'accueil après enregistrement
+// Si pas de problÃ¨me, retour Ã  la page d'accueil aprÃ¨s enregistrement
 if ((isset($_GET['change_done'])) && (!isset($ok)))
 {
 	$_SESSION['displ_msg'] = 'yes';

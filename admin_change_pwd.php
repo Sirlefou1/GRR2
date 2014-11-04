@@ -3,7 +3,7 @@
  * admin_change_pwd.php
  * Interface de changement du mot de passe pour les administrateurs
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2009-12-02 20:11:07 $
+ * DerniÃ¨re modification : $Date: 2009-12-02 20:11:07 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -33,7 +33,7 @@ $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
     $back = htmlspecialchars($_SERVER['HTTP_REFERER']);
 check_access(6, $back);
-// Restriction dans le cas d'une démo
+// Restriction dans le cas d'une dÃ©mo
 VerifyModeDemo();
 unset($user_login);
 $user_login = isset($_POST["user_login"]) ? $_POST["user_login"] : ($user_login = isset($_GET["user_login"]) ? $_GET["user_login"] : NULL);

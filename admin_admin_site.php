@@ -3,7 +3,7 @@
  * admin_admin_site.php
  * Interface de gestion des
  * administrateurs de sites de l'application GRR
- * Dernière modification : $Date: 2009-04-14 12:59:16 $
+ * DerniÃ¨re modification : $Date: 2009-04-14 12:59:16 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -118,7 +118,7 @@ echo $out_html;
 $this_site_name = grr_sql_query1("select sitename from ".TABLE_PREFIX."_site where id=$id_site");
 echo "</td>\n";
 echo "</tr></table>\n";
-# Ne pas continuer si aucun site n'est défini
+# Ne pas continuer si aucun site n'est dÃ©fini
 if ($id_site <= 0)
 {
 	echo "<h1>".get_vocab("no_site")."</h1>";

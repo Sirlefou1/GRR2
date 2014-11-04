@@ -2,7 +2,7 @@
 /**
  * admin_right.php
  * Interface de gestion des droits de gestion des utilisateurs
- * DerniËre modification : $Date: 2009-04-14 12:59:17 $
+ * Derni√®re modification : $Date: 2009-04-14 12:59:17 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -42,7 +42,7 @@ check_access(4, $back);
 print_header("", "", "", $type="with_session");
 // Affichage de la colonne de gauche
 include "admin_col_gauche.php";
-// tableau des ressources auxquelles l'utilisateur n'a pas accËs
+// tableau des ressources auxquelles l'utilisateur n'a pas acc√®s
 $tab_rooms_noaccess = verif_acces_ressource(getUserName(), 'all');
 $reg_admin_login = isset($_POST["reg_admin_login"]) ? $_POST["reg_admin_login"] : NULL;
 $reg_multi_admin_login = isset($_POST["reg_multi_admin_login"]) ? $_POST["reg_multi_admin_login"] : NULL;
@@ -53,12 +53,12 @@ if ($test_user == "multi")
 {
 	foreach ($reg_multi_admin_login as $valeur)
 	{
-	// On commence par vÈrifier que le professeur n'est pas dÈj‡ prÈsent dans cette liste.
+	// On commence par v√©rifier que le professeur n'est pas d√©j√† pr√©sent dans cette liste.
 	// ajout pour une ressource d'un domaine
 		if ($room != -1)
 		{
 		// Ressource
-		// On vÈrifie que la ressource $room existe
+		// On v√©rifie que la ressource $room existe
 			$test = grr_sql_query1("SELECT id FROM ".TABLE_PREFIX."_room WHERE id='".$room."'");
 			if ($test == -1)
 			{
@@ -70,7 +70,7 @@ if ($test_user == "multi")
 				showAccessDenied($back);
 				exit();
 			}
-		// La ressource existe : on vÈrifie les privilËges de l'utilisateur
+		// La ressource existe : on v√©rifie les privil√®ges de l'utilisateur
 			if (authGetUserLevel(getUserName(),$room) < 4)
 			{
 				showAccessDenied($back);
@@ -99,14 +99,14 @@ if ($test_user == "multi")
 		{
 		//ajout pour toutes les ressources du domaine
 		// Domaine
-		// On vÈrifie que le domaine $id_area existe
+		// On v√©rifie que le domaine $id_area existe
 			$test = grr_sql_query1("SELECT id FROM ".TABLE_PREFIX."_area WHERE id='".$id_area."'");
 			if ($test == -1)
 			{
 				showAccessDenied($back);
 				exit();
 			}
-		// Le domaine existe : on vÈrifie les privilËges de l'utilisateur
+		// Le domaine existe : on v√©rifie les privil√®ges de l'utilisateur
 			if (authGetUserLevel(getUserName(),$id_area,'area') < 4)
 			{
 				showAccessDenied($back);
@@ -141,12 +141,12 @@ if ($test_user == "simple")
 {
 	if ($reg_admin_login)
 	{
-	// On commence par vÈrifier que le professeur n'est pas dÈj‡ prÈsent dans cette liste.
+	// On commence par v√©rifier que le professeur n'est pas d√©j√† pr√©sent dans cette liste.
 	// ajout pour une ressource d'un domaine
 		if ($room != -1)
 		{
 		// Ressource
-		// On vÈrifie que la ressource $room existe
+		// On v√©rifie que la ressource $room existe
 			$test = grr_sql_query1("SELECT id FROM ".TABLE_PREFIX."_room WHERE id='".$room."'");
 			if ($test == -1)
 			{
@@ -158,7 +158,7 @@ if ($test_user == "simple")
 				showAccessDenied($back);
 				exit();
 			}
-		// La ressource existe : on vÈrifie les privilËges de l'utilisateur
+		// La ressource existe : on v√©rifie les privil√®ges de l'utilisateur
 			if (authGetUserLevel(getUserName(),$room) < 4)
 			{
 				showAccessDenied($back);
@@ -185,14 +185,14 @@ if ($test_user == "simple")
 		{
 			//ajout pour toutes les ressources du domaine
 			// Domaine
-			// On vÈrifie que le domaine $id_area existe
+			// On v√©rifie que le domaine $id_area existe
 			$test = grr_sql_query1("SELECT id FROM ".TABLE_PREFIX."_area WHERE id='".$id_area."'");
 			if ($test == -1)
 			{
 				showAccessDenied($back);
 				exit();
 			}
-			// Le domaine existe : on vÈrifie les privilËges de l'utilisateur
+			// Le domaine existe : on v√©rifie les privil√®ges de l'utilisateur
 			if (authGetUserLevel(getUserName(),$id_area,'area') < 4)
 			{
 				showAccessDenied($back);
@@ -271,8 +271,8 @@ if ((empty($id_area)) && (isset($row[0])))
 		$id_area = get_default_area();
 	else
 	{
-		//Retourne le domaine par dÈfaut; UtilisÈ si aucun domaine n'a ÈtÈ dÈfini.
-		// On cherche le premier domaine ‡ accËs non restreint
+		//Retourne le domaine par d√©faut; Utilis√© si aucun domaine n'a √©t√© d√©fini.
+		// On cherche le premier domaine √† acc√®s non restreint
 		$id_area = grr_sql_query1("SELECT a.id FROM ".TABLE_PREFIX."_area a, ".TABLE_PREFIX."_j_useradmin_area j
 			WHERE a.id=j.id_area and j.login='".getUserName()."'
 			ORDER BY a.access, a.order_display, a.area_name
@@ -301,7 +301,7 @@ if ($res)
 	{
 		$selected = ($row[0] == $id_area) ? "selected=\"selected\"" : "";
 		$link = "admin_right.php?id_area=$row[0]";
-		// On affiche uniquement les domaines administrÈs par l'utilisateur
+		// On affiche uniquement les domaines administr√©s par l'utilisateur
 		if (authGetUserLevel(getUserName(),$row[0],'area') >= 4)
 			$out_html .= "<option $selected value=\"$link\">" . htmlspecialchars($row[1])."</option>\n";
 	}

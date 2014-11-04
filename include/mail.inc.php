@@ -3,7 +3,7 @@
  * mail.inc.php
  * Configuration de phpmailer
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2008-11-16 22:00:59 $
+ * DerniÃ¨re modification : $Date: 2008-11-16 22:00:59 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html

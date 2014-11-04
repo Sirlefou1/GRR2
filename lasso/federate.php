@@ -31,7 +31,7 @@ require_once(SPKITLASSO.'/lassospkit_public_api.inc.php');
 
 if (lassospkit_nameid() == NULL)
 {
-  // TODO: vÈrifier qu'il n'existe pas dÈj‡ une fÈdÈration pour le
+  // TODO: v√©rifier qu'il n'existe pas d√©j√† une f√©d√©ration pour le
   // compte courant
   $return_url = $_SERVER['REQUEST_URI'];
   lassospkit_redirect_federate($return_url);

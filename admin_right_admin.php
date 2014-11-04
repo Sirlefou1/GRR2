@@ -2,7 +2,7 @@
 /**
  * admin_right_admin.php
  * Interface de gestion des droits d'administration des utilisateurs
- * DerniËre modification : $Date: 2010-04-07 15:38:14 $
+ * Derni√®re modification : $Date: 2010-04-07 15:38:14 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -67,7 +67,7 @@ if ($test_user == "multi")
 {
 	foreach ($reg_multi_admin_login as $valeur)
 	{
-	// On commence par vÈrifier que le professeur n'est pas dÈj‡ prÈsent dans cette liste.
+	// On commence par v√©rifier que le professeur n'est pas d√©j√† pr√©sent dans cette liste.
 		$res = grr_sql_query1("select login from ".TABLE_PREFIX."_j_useradmin_area where (login = '$valeur' and id_area = '$id_area')");
 		if ($res == -1)
 		{
@@ -83,7 +83,7 @@ if ($test_user == "multi")
 }
 if ($test_user == "simple")
 {
-   // On commence par vÈrifier que le professeur n'est pas dÈj‡ prÈsent dans cette liste.
+   // On commence par v√©rifier que le professeur n'est pas d√©j√† pr√©sent dans cette liste.
 	if ($reg_admin_login)
 	{
 		$sql = "select login from ".TABLE_PREFIX."_j_useradmin_area where (login = '$reg_admin_login' and id_area = '$id_area')";

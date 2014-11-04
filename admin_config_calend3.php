@@ -1,9 +1,9 @@
 <?php
 /**
  * admin_config_calend3.php
- * Interface permettant la la réservation en bloc de journées entières
+ * Interface permettant la la rÃ©servation en bloc de journÃ©es entiÃ¨res
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2009-04-14 12:59:17 $
+ * DerniÃ¨re modification : $Date: 2009-04-14 12:59:17 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -36,7 +36,7 @@ if (isset($_SERVER['HTTP_REFERER']))
 	// Affichage de la colonne de gauche
 	if (!isset($_GET['pview']))
 		include "admin_col_gauche.php";
-	// Affichage du tableau de choix des sous-configurations des jours/cycles (créer et voir le calendrier des jours/cycles)
+	// Affichage du tableau de choix des sous-configurations des jours/cycles (crÃ©er et voir le calendrier des jours/cycles)
 	if (!isset($_GET['pview']))
 		include "include/admin_calend_jour_cycle.inc.php";
 	echo "<h3>".get_vocab('calendrier_jours/cycles');

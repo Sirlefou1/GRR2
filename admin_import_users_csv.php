@@ -1,9 +1,9 @@
 <?php
 /**
  * admin_import_user_csv.php
- * script d'importation d'utilisateurs à partir d'un fichier CSV
+ * script d'importation d'utilisateurs Ã  partir d'un fichier CSV
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2009-09-29 18:02:56 $
+ * DerniÃ¨re modification : $Date: 2009-09-29 18:02:56 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -50,7 +50,7 @@ $test_nom_prenom_existant = '';
 $test_login = '';
 if ($reg_data != 'yes')
 {
-// $long_max : doit être plus grand que la plus grande ligne trouvée dans le fichier CSV
+// $long_max : doit Ãªtre plus grand que la plus grande ligne trouvÃ©e dans le fichier CSV
 	$long_max = 8000;
 	if ($is_posted != '1')
 	{
@@ -220,8 +220,8 @@ if ($reg_data != 'yes')
 										}
 										break;
 										case 5:
-										// Type d'utilisateur : quatre valeurs autorisées : visiteur, utilisateur, administrateur, gestionnaire_utilisateur
-										// Si c'est un gestionnaire d'utilisateurs qui importe, seuls les types visiteur et utilisateur sont autorisés
+										// Type d'utilisateur : quatre valeurs autorisÃ©es : visiteur, utilisateur, administrateur, gestionnaire_utilisateur
+										// Si c'est un gestionnaire d'utilisateurs qui importe, seuls les types visiteur et utilisateur sont autorisÃ©s
 										if (authGetUserLevel(getUserName(), -1) >= 6)
 											$filtre = "(visiteur|utilisateur|administrateur|gestionnaire_utilisateur)";
 										else
@@ -240,7 +240,7 @@ if ($reg_data != 'yes')
 										}
 										break;
 										case 6:
-										// statut: deux valeurs autorisées : actif ou inactif
+										// statut: deux valeurs autorisÃ©es : actif ou inactif
 										if (preg_match ("`(actif|inactif)`", $data[$c]))
 										{
 											$data_statut = htmlentities($data[$c]);
@@ -252,7 +252,7 @@ if ($reg_data != 'yes')
 										}
 										break;
 										case 7:
-										// Type d'authentification : deux valeurs autorisées : local ou ext
+										// Type d'authentification : deux valeurs autorisÃ©es : local ou ext
 										if (preg_match ("`(local|ext)`", $data[$c])) {
 											$data_type_auth = htmlentities($data[$c]);
 											if (($data_mdp == "") && ($data_type_auth == "local"))
@@ -314,9 +314,9 @@ if ($reg_data != 'yes')
 		}
 		else
 		{
-			// Restriction dans le cas d'une démo
+			// Restriction dans le cas d'une dÃ©mo
 			VerifyModeDemo();
-			// Phase d'enregistrement des données
+			// Phase d'enregistrement des donnÃ©es
 			$nb_row = isset($_POST["nb_row"]) ? $_POST["nb_row"] : NULL;
 			$reg_stat = isset($_POST["reg_stat"]) ? $_POST["reg_stat"] : NULL;
 			$reg_login = isset($_POST["reg_login"]) ? $_POST["reg_login"] : NULL;

@@ -2,7 +2,7 @@
 /**
  * admin_corresp_statut.php
  * interface de gestion de la correspondance entre profil LDAP et statut GRR
- * Dernière modification : $Date: 2009-12-16 14:52:31 $
+ * DerniÃ¨re modification : $Date: 2009-12-16 14:52:31 $
  * @author    Christian Daviau (GIP RECIA - Esco-Portail)
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
@@ -107,13 +107,13 @@ $res = grr_sql_query($sql);
 $nb_lignes = grr_sql_count($res);
 if ($nb_lignes == 0)
 {
-	// Si aucune ligne à afficher
+	// Si aucune ligne Ã  afficher
     // fin de l'affichage de la colonne de droite
 	echo get_vocab('aucune_correspondance');
 }
 else
 {
-	// S'il y a des lignes à afficher
+	// S'il y a des lignes Ã  afficher
 	// Affichage du tableau
 	echo "<div><table border=\"1\" cellpadding=\"3\" style=\"text-align:center;vertical-align:middle;\"><tr>\n";
 	echo "<td><b>".get_vocab("code_fonction")."</b></td>\n";
@@ -129,7 +129,7 @@ else
 			$codefonc = $row[0];
 			$libfonc = $row[1];
 			$statutgrr = $row[2];
-			// Affichage des numéros et descriptions
+			// Affichage des numÃ©ros et descriptions
 			$col[$i][1] = $codefonc;
 			$col[$i][2] = $libfonc;
 			$col[$i][3] = $statutgrr;

@@ -1,9 +1,9 @@
 <?php
 /**
  * admin_config_calend1.php
- * Interface permettant à l'administrateur la configuration des paramètres pour le module Jours Cycles
+ * Interface permettant Ã  l'administrateur la configuration des paramÃ¨tres pour le module Jours Cycles
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2009-04-09 14:52:31 $
+ * DerniÃ¨re modification : $Date: 2009-04-09 14:52:31 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -36,13 +36,13 @@ include "admin_col_gauche.php";
 // Affichage du tableau de choix des sous-configuration
 $grr_script_name = "admin_calend_jour_cycle.php";
 include "include/admin_calend_jour_cycle.inc.php";
-// Met à jour dans la BD le nombre de jours par cycle
+// Met Ã  jour dans la BD le nombre de jours par cycle
 if (isset($_GET['nombreJours']))
 {
 	if (!saveSetting("nombre_jours_Jours/Cycles", $_GET['nombreJours']))
 		echo "Erreur lors de l'enregistrement de nombre_jours_Jours/Cycles ! <br />";
 }
-// Met à jour dans la BD le premier jour du premier cycle
+// Met Ã  jour dans la BD le premier jour du premier cycle
 if (isset($_GET['jourDebut']))
 {
 	if (!saveSetting("jour_debut_Jours/Cycles", $_GET['jourDebut']))
@@ -65,7 +65,7 @@ echo "<br />".get_vocab("explication_Jours_Cycles2");
 			<?php echo get_vocab("nombre_jours_Jours/Cycles").get_vocab("deux_points"); ?>
 		</td>
 		<td>
-			<!-- Pour sélectionner le nombre de jours par Cycle  -->
+			<!-- Pour sÃ©lectionner le nombre de jours par Cycle  -->
 			<?php
 			echo "<select name='nombreJours' id='nombreJours'>\n";
 			for($i = 1; $i < 21; $i++)
@@ -79,7 +79,7 @@ echo "<br />".get_vocab("explication_Jours_Cycles2");
 			?>
 		</td>
 	</tr>
-	<!-- Pour sélectionner le jour_cycle qui débutera le premier Jours/Cycles  -->
+	<!-- Pour sÃ©lectionner le jour_cycle qui dÃ©butera le premier Jours/Cycles  -->
 	<tr>
 		<td>
 			<?php

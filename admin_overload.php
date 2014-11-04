@@ -1,9 +1,9 @@
 <?php
 /**
  * admin_overload.php
- * Interface de création/modification des champs additionnels.
+ * Interface de crÃ©ation/modification des champs additionnels.
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2009-09-29 18:02:56 $
+ * DerniÃ¨re modification : $Date: 2009-09-29 18:02:56 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @author    Marc-Henri PAMISEUX <marcori@users.sourceforge.net>
  * @copyright Copyright 2003-2008 Laurent Delineau

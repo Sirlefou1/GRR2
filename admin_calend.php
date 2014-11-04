@@ -1,9 +1,9 @@
 <?php
 /**
  * admin_calend.php
- * interface permettant la la réservation en bloc de journées entières
+ * interface permettant la la rÃ©servation en bloc de journÃ©es entiÃ¨res
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2009-09-29 18:02:56 $
+ * DerniÃ¨re modification : $Date: 2009-09-29 18:02:56 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @author    Marc-Henri PAMISEUX <marcori@users.sourceforge.net>
  * @copyright Copyright 2003-2008 Laurent Delineau
@@ -75,9 +75,9 @@ if (isset($_POST['record']) && ($_POST['record'] == 'yes'))
 			$temp = "id_room_".$row[0];
 			if ((isset($_POST[$temp])) && verif_acces_ressource(getUserName(),$row[0]))
 			{
-			// La ressource est selectionnée
+			// La ressource est selectionnÃ©e
 			// $rooms[] = $id;
-			// On récupère les données du domaine
+			// On rÃ©cupÃ¨re les donnÃ©es du domaine
 				$area_id = grr_sql_query1("SELECT area_id FROM ".TABLE_PREFIX."_room WHERE id = '".$row[0]."'");
 				$id_site = grr_sql_query1("SELECT id_site FROM ".TABLE_PREFIX."_j_site_area WHERE id_area = '".$area_id."'");
 				//if (authGetUserLevel(getUserName(),$id_site,'site') >= 5)
@@ -98,10 +98,10 @@ if (isset($_POST['record']) && ($_POST['record'] == 'yes'))
 							if (isset($_POST[$n]))
 							{
 								$erreur = 'n';
-								// Le jour a été selectionné dans le calendrier
+								// Le jour a Ã©tÃ© selectionnÃ© dans le calendrier
 								if (!isset($all_day))
 								{
-								// Cas des réservation par créneaux pré-définis
+								// Cas des rÃ©servation par crÃ©neaux prÃ©-dÃ©finis
 									if ($enable_periods=='y')
 									{
 										$resolution = 60;
@@ -128,12 +128,12 @@ if (isset($_POST['record']) && ($_POST['record'] == 'yes'))
 								}
 								if ($erreur != 'y')
 								{
-									// On efface toutes les résa en conflit
+									// On efface toutes les rÃ©sa en conflit
 									$result += grrDelEntryInConflict($row[0], $starttime, $endtime, 0, 0, 1);
-									// S'il s'agit d'une action de réservation, on réserve !
+									// S'il s'agit d'une action de rÃ©servation, on rÃ©serve !
 									if ($type_resa == "resa")
 									{
-										// Par sécurité, on teste quand même s'il reste des conflits
+										// Par sÃ©curitÃ©, on teste quand mÃªme s'il reste des conflits
 										$err = mrbsCheckFree($row[0], $starttime, $endtime, 0,0);
 										if (!$err)
 											mrbsCreateSingleEntry($starttime, $endtime, 0, 0, $row[0], getUserName(), $beneficiaire, "", $name, $type_, $description, -1,array(),0,0,'-', 0, 0);
@@ -174,7 +174,7 @@ if ($etape == 4)
 
 if ($etape == 3)
 {
-	// Etape N° 3
+	// Etape NÂ° 3
 	echo "<h3 style=\"text-align:center;\">".get_vocab("etape_n")."3/3</h3>\n";
 	if ($type_resa == "resa")
 		echo "<h3 style=\"text-align:center;\">".get_vocab("reservation_en_bloc")."</h3>\n";
@@ -202,9 +202,9 @@ if ($etape == 3)
 		$test_enable_periods_n += grr_sql_query1("SELECT count(enable_periods) FROM ".TABLE_PREFIX."_area WHERE (id = '".$area_id."' and enable_periods='n')");
 
 	}
-		// On teste si tous les domaines selectionnés sont du même type d'affichage à savoir :
-		// soit des créneaux de réservation basés sur le temps,
-		// soit des créneaux de réservation basés sur des intitulés pré-définis.
+		// On teste si tous les domaines selectionnÃ©s sont du mÃªme type d'affichage Ã  savoir :
+		// soit des crÃ©neaux de rÃ©servation basÃ©s sur le temps,
+		// soit des crÃ©neaux de rÃ©servation basÃ©s sur des intitulÃ©s prÃ©-dÃ©finis.
 	if ($test_enable_periods_y == 0)
 		$all_enable_periods = 'n';
 	else if ($test_enable_periods_n == 0)
@@ -214,15 +214,15 @@ if ($etape == 3)
 
 	if ($all_enable_periods != "incompatible")
 	{
-			// On propose une heure de début et une heure de fin de réservation
+			// On propose une heure de dÃ©but et une heure de fin de rÃ©servation
 		$texte_debut_fin_reservation = "";
-			// On prend comme domaine de référence le dernier domaine de la boucle  foreach ( $rooms as $room_id ) {
+			// On prend comme domaine de rÃ©fÃ©rence le dernier domaine de la boucle  foreach ( $rooms as $room_id ) {
 			// C'est pas parfait mais bon !
 		get_planning_area_values($area_id);
 		if ($all_enable_periods == 'y')
 		{
-				// Créneaux basés sur les intitulés pré-définis
-				// Heure ou créneau de début de réservation
+				// CrÃ©neaux basÃ©s sur les intitulÃ©s prÃ©-dÃ©finis
+				// Heure ou crÃ©neau de dÃ©but de rÃ©servation
 			$texte_debut_fin_reservation .= "<b>".get_vocab("date").get_vocab("deux_points")."</b>";
 			$texte_debut_fin_reservation .= "<br />".get_vocab("period")."\n";
 			$texte_debut_fin_reservation .= "<select name=\"period\">";
@@ -243,8 +243,8 @@ if ($etape == 3)
 		}
 		else
 		{
-				// Créneaux basés sur le temps
-				// Heure ou créneau de début de réservation
+				// CrÃ©neaux basÃ©s sur le temps
+				// Heure ou crÃ©neau de dÃ©but de rÃ©servation
 			$texte_debut_fin_reservation .= "<b>".get_vocab("date").get_vocab("deux_points")."</b>";
 			$texte_debut_fin_reservation .= "<br />".get_vocab("time")."
 			<input name=\"hour\" size=\"2\" value=\"".$morningstarts."\" MAXLENGTH=2 />
@@ -427,7 +427,7 @@ else if ($etape == 2)
 	{
 		# then select the rooms in that area
 		$sql = "SELECT id, room_name FROM ".TABLE_PREFIX."_room WHERE area_id=$area_id ";
-		// tableau des ressources auxquelles l'utilisateur n'a pas accès
+		// tableau des ressources auxquelles l'utilisateur n'a pas accÃ¨s
 		$tab_rooms_noaccess = verif_acces_ressource(getUserName(), 'all');
 		// on ne cherche pas parmi les ressources invisibles pour l'utilisateur
 		foreach ($tab_rooms_noaccess as $key)

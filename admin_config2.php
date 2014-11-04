@@ -1,9 +1,9 @@
 <?php
 /**
  * admin_config2.php
- * Interface permettant à l'administrateur la configuration de certains paramètres généraux
+ * Interface permettant Ã  l'administrateur la configuration de certains paramÃ¨tres gÃ©nÃ©raux
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2009-09-29 18:02:56 $
+ * DerniÃ¨re modification : $Date: 2009-09-29 18:02:56 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -28,7 +28,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// Nombre maximum de réservation (tous domaines confondus)
+// Nombre maximum de rÃ©servation (tous domaines confondus)
 if (isset($_GET['UserAllRoomsMaxBooking']))
 {
     settype($_GET['UserAllRoomsMaxBooking'],"integer");
@@ -42,7 +42,7 @@ if (isset($_GET['UserAllRoomsMaxBooking']))
         die();
     }
 }
-// Type d'accès
+// Type d'accÃ¨s
 if (isset($_GET['authentification_obli']))
 {
     if (!saveSetting("authentification_obli", $_GET['authentification_obli']))
@@ -60,7 +60,7 @@ if (isset($_GET['visu_fiche_description']))
         die();
     }
 }
-// Accès fiche de réservation d'une ressource.
+// AccÃ¨s fiche de rÃ©servation d'une ressource.
 if (isset($_GET['acces_fiche_reservation']))
 {
     if (!saveSetting("acces_fiche_reservation", $_GET['acces_fiche_reservation']))
@@ -69,7 +69,7 @@ if (isset($_GET['acces_fiche_reservation']))
         die();
     }
 }
-// Accès à l'outil de recherche/rapport/stat
+// AccÃ¨s Ã  l'outil de recherche/rapport/stat
 if (isset($_GET['allow_search_level']))
 {
     if (!saveSetting("allow_search_level", $_GET['allow_search_level']))
@@ -111,10 +111,10 @@ include "admin_col_gauche.php";
 include "include/admin_config_tableau.inc.php";
 //echo "<h2>".get_vocab('admin_config2.php')."</h2>";
 echo "<form action=\"./admin_config.php\" method=\"get\" style=\"width: 100%;\">\n";
-// Type d'accès
-# authentification_obli = 1 : il est obligatoire de se connecter pour accéder au site.
-# authentification_obli = 0 : Il n'est pas nécessaire de se connecter pour voir les réservations mais la connection est
-# obligatoire si l'utilisateur veut réserver ou modifier une réservation
+// Type d'accÃ¨s
+# authentification_obli = 1 : il est obligatoire de se connecter pour accÃ©der au site.
+# authentification_obli = 0 : Il n'est pas nÃ©cessaire de se connecter pour voir les rÃ©servations mais la connection est
+# obligatoire si l'utilisateur veut rÃ©server ou modifier une rÃ©servation
 echo "<h3>".get_vocab("authentification_obli_msg")."</h3>\n";
 echo "<table>\n";
 echo "<tr><td>".get_vocab("authentification_obli0")."</td><td>\n";
@@ -133,13 +133,13 @@ echo "</table>\n";
 ###########################################################
 # Visualisation de la fiche de description d'une ressource.
 ###########################################################
-# visu_fiche_description  = 0 : N'importe qui allant sur le site peut afficher la fiche de description d'une ressource, meme s'il n'est pas connecté
-# visu_fiche_description  = 1 : Il faut obligatoirement se connecter pour voir la fiche de description d'une ressource, même en simple visiteur.
+# visu_fiche_description  = 0 : N'importe qui allant sur le site peut afficher la fiche de description d'une ressource, meme s'il n'est pas connectÃ©
+# visu_fiche_description  = 1 : Il faut obligatoirement se connecter pour voir la fiche de description d'une ressource, mÃªme en simple visiteur.
 # visu_fiche_description  = 2 : Il faut obligatoirement se connecter et avoir le statut "utilisateur" pour voir la fiche de description d'une ressource
-# visu_fiche_description  = 3 : Il faut obligatoirement se connecter et être au moins gestionnaire d'une ressource pour voir la fiche de description d'une ressource
-# visu_fiche_description  = 4 : Il faut obligatoirement se connecter et être au moins administrateur du domaine pour voir la fiche de description d'une ressource du domaine.
-# visu_fiche_description  = 5 : Il faut obligatoirement se connecter et être administrateur de site pour voir la fiche de description d'une ressource.
-# visu_fiche_description  = 6 : Il faut obligatoirement se connecter et être administrateur général pour voir la fiche de description d'une ressource.
+# visu_fiche_description  = 3 : Il faut obligatoirement se connecter et Ãªtre au moins gestionnaire d'une ressource pour voir la fiche de description d'une ressource
+# visu_fiche_description  = 4 : Il faut obligatoirement se connecter et Ãªtre au moins administrateur du domaine pour voir la fiche de description d'une ressource du domaine.
+# visu_fiche_description  = 5 : Il faut obligatoirement se connecter et Ãªtre administrateur de site pour voir la fiche de description d'une ressource.
+# visu_fiche_description  = 6 : Il faut obligatoirement se connecter et Ãªtre administrateur gÃ©nÃ©ral pour voir la fiche de description d'une ressource.
 echo "<hr /><h3>".get_vocab("visu_fiche_description_msg")."</h3>\n";
 echo "<table cellspacing=\"5\">\n";
 echo "<tr><td>".get_vocab("visu_fiche_description0")."</td><td>\n";
@@ -188,15 +188,15 @@ echo " />\n";
 echo "</td></tr>\n";
 echo "</table>\n";
 ###########################################################
-# Visualisation de la fiche de réservatiob d'une ressource.
+# Visualisation de la fiche de rÃ©servatiob d'une ressource.
 ###########################################################
-# acces_fiche_reservation  = 0 : N'importe qui allant sur le site, meme s'il n'est pas connecté
-# acces_fiche_reservation  = 1 : Il faut obligatoirement se connecter, même en simple visiteur.
+# acces_fiche_reservation  = 0 : N'importe qui allant sur le site, meme s'il n'est pas connectÃ©
+# acces_fiche_reservation  = 1 : Il faut obligatoirement se connecter, mÃªme en simple visiteur.
 # acces_fiche_reservation  = 2 : Il faut obligatoirement se connecter et avoir le statut "utilisateur"
-# acces_fiche_reservation  = 3 : Il faut obligatoirement se connecter et être au moins gestionnaire d'une ressource
-# acces_fiche_reservation  = 4 : Il faut obligatoirement se connecter et être au moins administrateur du domaine
-# acces_fiche_reservation  = 5 : Il faut obligatoirement se connecter et être administrateur de site
-# acces_fiche_reservation  = 6 : Il faut obligatoirement se connecter et être administrateur général
+# acces_fiche_reservation  = 3 : Il faut obligatoirement se connecter et Ãªtre au moins gestionnaire d'une ressource
+# acces_fiche_reservation  = 4 : Il faut obligatoirement se connecter et Ãªtre au moins administrateur du domaine
+# acces_fiche_reservation  = 5 : Il faut obligatoirement se connecter et Ãªtre administrateur de site
+# acces_fiche_reservation  = 6 : Il faut obligatoirement se connecter et Ãªtre administrateur gÃ©nÃ©ral
 echo "<hr /><h3>".get_vocab("acces_fiche_reservation_msg")."</h3>\n";
 echo "<table cellspacing=\"5\">\n";
 echo "<tr><td>".get_vocab("visu_fiche_description0")."</td><td>\n";
@@ -244,11 +244,11 @@ if (getSettingValue("acces_fiche_reservation") == '6')
 echo " />\n";
 echo "</td></tr>\n";
 echo "</table>\n";
-// Définir le niveau d'accès à l'outil de recherche/rapport/stat #
-# allow_search_level  = 0 : N'importe qui allant sur le site peut accéder à l'outil de recherche, même s'il n'est pas connecté
-# allow_search_level  = 1 (valeur par défaut) : Il faut obligatoirement se connecter pour accéder à l'outil de recherche
-# allow_search_level  = 2 : Il faut obligatoirement se connecter et avoir le statut "utilisateur" pour accéder à l'outil de recherche
-# allow_search_level  = 5 : Il faut obligatoirement se connecter et être administrateur général pour accéder à l'outil de recherche.
+// DÃ©finir le niveau d'accÃ¨s Ã  l'outil de recherche/rapport/stat #
+# allow_search_level  = 0 : N'importe qui allant sur le site peut accÃ©der Ã  l'outil de recherche, mÃªme s'il n'est pas connectÃ©
+# allow_search_level  = 1 (valeur par dÃ©faut) : Il faut obligatoirement se connecter pour accÃ©der Ã  l'outil de recherche
+# allow_search_level  = 2 : Il faut obligatoirement se connecter et avoir le statut "utilisateur" pour accÃ©der Ã  l'outil de recherche
+# allow_search_level  = 5 : Il faut obligatoirement se connecter et Ãªtre administrateur gÃ©nÃ©ral pour accÃ©der Ã  l'outil de recherche.
 echo "<hr /><h3>".get_vocab("allow_search_level_msg")."</h3>\n";
 echo "<table cellspacing=\"5\">\n";
 echo "<tr><td>".get_vocab("allow_search_level0")."</td><td>\n";
@@ -276,11 +276,11 @@ if (getSettingValue("allow_search_level") == '6')
 echo " />\n";
 echo "</td></tr>\n";
 echo "</table>\n";
-//Nombre max de de réservations, toutes ressources confondues
-//Suppression/Modification de réservations
-# allow_user_delete_after_begin = 0 : un utilisateur ne peut pas supprimer ou modifier une réservation en cours ni créer une réservation sur un créneau "entamé".
-# allow_user_delete_after_begin = 1 : un utilisateur peut supprimer, modifier ou créer dans certaines conditions une réservation en cours (et dont il est bénéficiaire) et créer une réservation sur un créneau "entamé".
-# allow_user_delete_after_begin = 2 : un utilisateur peut modifier dans certaines conditions une réservation en cours (et dont il est bénéficiaire) et créer une réservation sur un créneau "entamé" (mais pas supprimer ni créer) .
+//Nombre max de de rÃ©servations, toutes ressources confondues
+//Suppression/Modification de rÃ©servations
+# allow_user_delete_after_begin = 0 : un utilisateur ne peut pas supprimer ou modifier une rÃ©servation en cours ni crÃ©er une rÃ©servation sur un crÃ©neau "entamÃ©".
+# allow_user_delete_after_begin = 1 : un utilisateur peut supprimer, modifier ou crÃ©er dans certaines conditions une rÃ©servation en cours (et dont il est bÃ©nÃ©ficiaire) et crÃ©er une rÃ©servation sur un crÃ©neau "entamÃ©".
+# allow_user_delete_after_begin = 2 : un utilisateur peut modifier dans certaines conditions une rÃ©servation en cours (et dont il est bÃ©nÃ©ficiaire) et crÃ©er une rÃ©servation sur un crÃ©neau "entamÃ©" (mais pas supprimer ni crÃ©er) .
 echo "<hr /><h3>".get_vocab("allow_user_delete_after_beginning_msg")."</h3>\n";
 echo "<table cellspacing=\"5\">\n";
 echo "<tr><td>".get_vocab("allow_user_delete_after_beginning0")."</td><td>\n";
@@ -302,8 +302,8 @@ if (getSettingValue("allow_user_delete_after_begin") == '2')
 echo " />\n";
 echo "</td></tr>\n";
 echo "</table>\n";
-# allow_gestionnaire_modify_delete=0 : un gestionnaire d'une ressource ne peut pas supprimer ou modifier les réservation effectuées sur la ressource, sauf celles dont il est l'auteur.
-# allow_gestionnaire_modify_delete=1 : un gestionnaire d'une ressource peut supprimer ou modifier n'importe quelle réservation effectuées sur la ressource
+# allow_gestionnaire_modify_delete=0 : un gestionnaire d'une ressource ne peut pas supprimer ou modifier les rÃ©servation effectuÃ©es sur la ressource, sauf celles dont il est l'auteur.
+# allow_gestionnaire_modify_delete=1 : un gestionnaire d'une ressource peut supprimer ou modifier n'importe quelle rÃ©servation effectuÃ©es sur la ressource
 echo "<hr />\n";
 echo "<table cellspacing=\"5\">\n";
 echo "<tr><td>".get_vocab("allow_gestionnaire_modify_del0")."</td><td>\n";
@@ -319,7 +319,7 @@ if (getSettingValue("allow_gestionnaire_modify_del") == '1')
 echo " />\n";
 echo "</td></tr>\n";
 echo "</table>\n";
-// Nombre max de réservations (toutes ressources)
+// Nombre max de rÃ©servations (toutes ressources)
 echo "<hr />\n";
 echo "<table cellspacing=\"5\">\n";
 echo "<tr><td>".get_vocab("max_booking")." ";

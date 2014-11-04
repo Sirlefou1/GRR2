@@ -1,9 +1,9 @@
 <?php
 /**
  * admin_col_gauche.php
- * colonne de gauche des écrans d'administration
+ * colonne de gauche des Ã©crans d'administration
  * des sites, des domaines et des ressources de l'application GRR
- * Dernière modification : $Date: 2010-04-07 15:38:13 $
+ * DerniÃ¨re modification : $Date: 2010-04-07 15:38:13 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @author    Marc-Henri PAMISEUX <marcori@users.sourceforge.net>
  * @copyright Copyright 2003-2008 Laurent Delineau
@@ -125,7 +125,7 @@ echo "<table class=\"table_adm4\">";
 					$liste[] = 'admin_corresp_statut.php';
 			}
 			affichetableau($liste,get_vocab("admin_menu_various"));
-		// Possibilité de bloquer l'affichage de la rubrique "Authentification et ldap"
+		// PossibilitÃ© de bloquer l'affichage de la rubrique "Authentification et ldap"
 			if ((!isset($sso_restrictions)) || ($sso_restrictions == false))
 			{
 				$liste = array();
@@ -138,7 +138,7 @@ echo "<table class=\"table_adm4\">";
 					$liste[] = 'admin_config_imap.php';
 				affichetableau($liste,get_vocab("admin_menu_auth"));
 			}
-		// début affichage de la colonne de gauche
+		// dÃ©but affichage de la colonne de gauche
 			echo "</div>\n";
 			?>
 		</td>

@@ -1,9 +1,9 @@
  <?php
 /**
  * edit_entry_champs_add.php
- * Page "Ajax" utilisée pour générer les champs additionnels dans la page de réservation
+ * Page "Ajax" utilisÃ©e pour gÃ©nÃ©rer les champs additionnels dans la page de rÃ©servation
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2009-09-29 18:02:56 $
+ * DerniÃ¨re modification : $Date: 2009-09-29 18:02:56 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
@@ -41,8 +41,8 @@
  *
  */
 include "include/admin.inc.php";
-/* Ce script a besoin de trois arguments passés par la méthode GET :
-$id : l'identifiant de la réservation (0 si nouvelle réservation)
+/* Ce script a besoin de trois arguments passÃ©s par la mÃ©thode GET :
+$id : l'identifiant de la rÃ©servation (0 si nouvelle rÃ©servation)
 $areas : l'identifiant du domaine
 $room : l'identifiant de la ressource
 */
@@ -79,7 +79,7 @@ if (authUserAccesArea(getUserName(), $areas) == 0)
 	showAccessDenied("");
 	exit();
 }
-// Champs additionneles : on récupère les données de la réservation si il y en a
+// Champs additionneles : on rÃ©cupÃ¨re les donnÃ©es de la rÃ©servation si il y en a
 if ($id != 0)
 	$overload_data = mrbsEntryGetOverloadDesc($id);
 if ($unicode_encoding)

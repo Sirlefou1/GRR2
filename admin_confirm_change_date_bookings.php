@@ -2,9 +2,9 @@
 <?php
 /**
  * admin_confirm_change_date_bookings.php
- * interface de confirmation des changements de date de début et de fin de réservation
+ * interface de confirmation des changements de date de dÃ©but et de fin de rÃ©servation
  * Ce script fait partie de l'application GRR
- * Dernière modification : $Date: 2009-06-04 15:30:17 $
+ * DerniÃ¨re modification : $Date: 2009-06-04 15:30:17 $
  * @author    Laurent Delineau <laurent.delineau@ac-poitiers.fr>
  * @copyright Copyright 2003-2008 Laurent Delineau
  * @link      http://www.gnu.org/licenses/licenses.html
