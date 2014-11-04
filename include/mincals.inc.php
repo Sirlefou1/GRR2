@@ -198,7 +198,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 			$daysInMonth = getDaysInMonth($this->month, $this->year);
 			$date = mktime(12, 0, 0, $this->month, 1, $this->year);
 			$first = (strftime("%w",$date) + 7 - $weekstarts) % 7;
-			$monthName = ucfirst(utf8_encode(strftime("%B", $date)));
+			$monthName = ucfirst(utf8_strftime(strftime("%B", $date)));
 			$s .= "\n<table class=\"calendar\">\n";
 			$s .= "<caption>";
 			$week = numero_semaine($date);
