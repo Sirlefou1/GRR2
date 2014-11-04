@@ -126,7 +126,6 @@ function utf8_convert($string)
  */
 function utf8_strftime($format, $time)
 {
-	setlocale(LC_ALL, 'fr_FR.UTF-8');
 	$result = strftime($format, $time);
 	return utf8_encode($result);
 }
