@@ -33,16 +33,16 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 	get_planning_area_values($area);
 	class Calendar
 	{
-		var $month;
-		var $year;
-		var $day;
-		var $h;
-		var $area;
-		var $room;
-		var $dmy;
-		var $week;
-		var $mois_precedent;
-		var $mois_suivant;
+		private $month;
+		private $year;
+		private $day;
+		private $h;
+		private $area;
+		private $room;
+		private $dmy;
+		private $week;
+		private $mois_precedent;
+		private $mois_suivant;
 
 		/**
 		 * @param string $day
@@ -52,7 +52,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 		 * @param integer $mois_precedent
 		 * @param integer $mois_suivant
 		 */
-		function Calendar($day, $month, $year, $h, $area, $room, $dmy, $mois_precedent, $mois_suivant)
+		public function Calendar($day, $month, $year, $h, $area, $room, $dmy, $mois_precedent, $mois_suivant)
 		{
 			$this->day   = $day;
 			$this->month = $month;
@@ -69,7 +69,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 		 * @param double $month
 		 * @param string $year
 		 */
-		function getDateLink($day, $month, $year)
+		private function getDateLink($day, $month, $year)
 		{
 			global $vocab;
 			if ($this->dmy != 'day')
@@ -94,7 +94,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 		 * @param string $text
 		 * @param string $glyph
 		 */
-		function createlink($m, $y, $month, $year, $dmy, $room, $area, $text, $glyph)
+		private function createlink($m, $y, $month, $year, $dmy, $room, $area, $text, $glyph)
 		{
 			global $vocab, $type_month_all;
 			$tmp = mktime(0, 0, 0, ($month) + $m, 1, ($year) + $y);
@@ -106,7 +106,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 				return "<button type=\"button\" title=\"".htmlspecialchars(get_vocab($text))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='".$type_month_all.".php?year=$lastyear&amp;month=$lastmonth&amp;day=1&amp;area=$area';\"><span class=\"glyphicon glyphicon-$glyph\"></span></button>\n";
 		}
 
-		function getNumber($weekstarts, $d, $daysInMonth)
+		private function getNumber($weekstarts, $d, $daysInMonth)
 		{
 			global $display_day;
 			$s = '';
@@ -146,7 +146,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 		 * @param integer $temp
 		 * @return string $s
 		 */
-		function DayOfMonth($d, $daysInMonth, $week_today, $week, $temp)
+		private function DayOfMonth($d, $daysInMonth, $week_today, $week, $temp)
 		{
 			global $weekstarts;
 			$s = '';
@@ -174,7 +174,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 			return $s;
 		}
 
-		function GetAction()
+		private function GetAction()
 		{
 			$action = $_SERVER['PHP_SELF']."?year=".date('Y',time())."&amp;month=".date('m',time())."&amp;day=".date('d',time());
 			if (isset($_GET['area']) && $_GET['area'] != null)
@@ -186,7 +186,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 			return $action;
 		}
 
-		function getDaysInMonth($month, $year)
+		private function getDaysInMonth($month, $year)
 		{
 			if ($month < 1 || $month > 12)
 				return 0;
@@ -208,7 +208,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 			}
 			return $d;
 		}
-		function getFirstDays()
+		private function getFirstDays()
 		{
 			global $weekstarts, $display_day;
 			$basetime = mktime(12, 0, 0, 6, 11 + $weekstarts, 2000);
@@ -224,7 +224,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 			}
 			return $s;
 		}
-		function numero_semaine($date)
+		private function numero_semaine($date)
 		{
 		// Définition du Jeudi de la semaine
 			if (date("w", $date) == 0)
@@ -258,7 +258,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 			return sprintf("%02d", $numeroSemaine);
 		}
 
-		function getHTML()
+		public function getHTML()
 		{
 			global $weekstarts, $vocab, $type_month_all, $display_day, $nb_display_day;
 			$date_today = mktime(12, 0, 0, $this->month, $this->day, $this->year);
