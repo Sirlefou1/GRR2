@@ -190,6 +190,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 		function getHTML()
 		{
 			global $weekstarts, $vocab, $type_month_all, $display_day, $nb_display_day;
+			setlocale(LC_TIME, "fr_FR");
 			$date_today = mktime(12, 0, 0, $this->month, $this->day, $this->year);
 			$week_today = numero_semaine($date_today);
 			if (!isset($weekstarts))
@@ -198,7 +199,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 			$daysInMonth = getDaysInMonth($this->month, $this->year);
 			$date = mktime(12, 0, 0, $this->month, 1, $this->year);
 			$first = (strftime("%w",$date) + 7 - $weekstarts) % 7;
-			$monthName = utf8_encode(strftime("%B", $date));
+			$monthName = ucfirst(utf8_strftime("%B", $date));
 			$s .= "\n<table class=\"calendar\">\n";
 			$s .= "<caption>";
 			$week = numero_semaine($date);
