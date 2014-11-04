@@ -313,7 +313,8 @@ if ($locale != 'fr')
 		}
 		if ($unicode_encoding)
 		{
-			$locale_utf8 = $locale.".utf-8";
+			$locale_utf8 = $locale.".UTF8";
+			var_dump($locale_utf8);
 			if (setlocale(LC_ALL, $locale_utf8) == TRUE)
 				$ok = 'yes';
 			else
