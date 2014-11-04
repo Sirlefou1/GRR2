@@ -188,26 +188,9 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 
 		private function getDaysInMonth($month, $year)
 		{
-			if ($month < 1 || $month > 12)
-				return 0;
-			$days = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
-			$d = $days[$month - 1];
-			if ($month == 2)
-			{
-								#Vérification de l'année bissextile.
-				if ($year%4 == 0)
-				{
-					if ($year%100 == 0)
-					{
-						if ($year%400 == 0)
-							$d = 29;
-					}
-					else
-						$d = 29;
-				}
-			}
-			return $d;
+			return date('t', mktime(0, 0, 0, $month, 1, $year));
 		}
+
 		private function getFirstDays()
 		{
 			global $weekstarts, $display_day;
@@ -226,6 +209,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 		}
 		private function numero_semaine($date)
 		{
+			/*
 		// Définition du Jeudi de la semaine
 			if (date("w", $date) == 0)
 				$jeudiSemaine = $date - 3 * 24 * 60 * 60;
@@ -256,6 +240,9 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 					$numeroSemaine = 1;
 			}
 			return sprintf("%02d", $numeroSemaine);
+*/
+			return date('W', $date);
+
 		}
 
 		public function getHTML()
