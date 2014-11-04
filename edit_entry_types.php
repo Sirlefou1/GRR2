@@ -62,7 +62,8 @@ if (authUserAccesArea(getUserName(), $areas) == 0)
 	showAccessDenied("");
 	exit();
 }
-
+header("Content-Type: text/html;charset=utf-8");
+header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 // Type de réservation
 $qui_peut_reserver_pour = grr_sql_query1("SELECT qui_peut_reserver_pour FROM grr_room WHERE id='".$room."'");
 $aff_default = ((authGetUserLevel(getUserName(),-1,"room") >= $qui_peut_reserver_pour) || (authGetUserLevel(getUserName(),$areas,"area") >= $qui_peut_reserver_pour));
@@ -116,21 +117,15 @@ for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 			if ((!$cookie && ($id_type_par_defaut == $row[2])) || ($cookie && $cookie == $row[0]))
 				$display_type .=  ' selected="selected"';
 		}
-		$display_type .=  ' >'.htmlentities(removeMailUnicode($row[0])).'</option>'.PHP_EOL;
+		$display_type .=  ' >'.htmlentities($row[0]).'</option>'.PHP_EOL;
 	}
 }
 $display_type .=  '</select>'.PHP_EOL.'</div>'.PHP_EOL;
 if ($aff_default)
 	$display_type .= ' <input type="button" class="btn btn-primary" value="'.get_vocab("definir par defaut").'" onclick="setdefault(\'type_default\',document.getElementById(\'main\').type.options[document.getElementById(\'main\').type.options.selectedIndex].text)" />'.PHP_EOL;
 $display_type .= '</td></tr></table>'.PHP_EOL;
-if ($unicode_encoding)
-	header("Content-Type: text/html;charset=utf-8");
-else
-	header("Content-Type: text/html;charset=".$charset_html);
-
-header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 if ($nb_type > 1)
 	echo $display_type;
 else
-	echo '<table width="100%"><tr><td class="E"><b>'.get_vocab("type").get_vocab("deux_points").htmlentities(removeMailUnicode($type_nom_unique)).'</b>'.PHP_EOL.'<input name="type" type="hidden" value="'.$type_id_unique.'" /></td></tr></table>'.PHP_EOL;
+	echo '<table width="100%"><tr><td class="E"><b>'.get_vocab("type").get_vocab("deux_points").htmlentities($type_nom_unique).'</b>'.PHP_EOL.'<input name="type" type="hidden" value="'.$type_id_unique.'" /></td></tr></table>'.PHP_EOL;
 ?>
