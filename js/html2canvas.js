@@ -722,15 +722,15 @@ function createWindowClone(ownerDocument, containerDocument, width, height, opti
         var y = ownerDocument.defaultView.pageYOffset;
 
         documentClone.open();
-        documentClone.write("<!DOCTYPE html>");
-        documentClone.close();
+        documentClone.write("<!DOCTYPE html><html></html>");
 
         // Chrome scrolls the parent document for some reason after the write to the cloned window???
         if (x !== ownerDocument.defaultView.pageXOffset || y !== ownerDocument.defaultView.pageYOffset) {
             ownerDocument.defaultView.scrollTo(x, y);
         }
-
         documentClone.replaceChild(options.javascriptEnabled === true ? documentClone.adoptNode(documentElement) : removeScriptNodes(documentClone.adoptNode(documentElement)), documentClone.documentElement);
+        documentClone.close();
+
     });
 }
 
@@ -1029,7 +1029,7 @@ ImageLoader.prototype.loadImage = function(imageData) {
 };
 
 ImageLoader.prototype.isSVG = function(src) {
-    return (/(.+).svg$/i.test(src)) || SVGContainer.prototype.isInline(src);
+    return src.substring(src.length - 3).toLowerCase() === "svg" || SVGContainer.prototype.isInline(src);
 };
 
 ImageLoader.prototype.imageExists = function(images, src) {
@@ -1677,7 +1677,8 @@ NodeParser.prototype.createPseudoHideStyles = function(document) {
 };
 
 NodeParser.prototype.disableAnimations = function(document) {
-    this.createStyles(document, '* { -webkit-animation: none !important; -moz-animation: none !important; -o-animation: none !important; animation: none !important; }');
+    this.createStyles(document, '* { -webkit-animation: none !important; -moz-animation: none !important; -o-animation: none !important; animation: none !important; ' +
+        '-webkit-transition: none !important; -moz-transition: none !important; -o-transition: none !important; transition: none !important;}');
 };
 
 NodeParser.prototype.createStyles = function(document, styles) {
@@ -1926,7 +1927,7 @@ NodeParser.prototype.paintFormValue = function(container) {
             }
         });
         var bounds = container.parseBounds();
-        wrapper.style.position = "absolute";
+        wrapper.style.position = "fixed";
         wrapper.style.left = bounds.left + "px";
         wrapper.style.top = bounds.top + "px";
         wrapper.textContent = container.getValue();
@@ -2873,7 +2874,7 @@ CanvasRenderer.prototype.shape = function(shape) {
 };
 
 CanvasRenderer.prototype.font = function(color, style, variant, weight, size, family) {
-    this.setFillStyle(color).font = [style, variant, weight, size, family].join(" ");
+    this.setFillStyle(color).font = [style, variant, weight, size, family].join(" ").split(",")[0];
 };
 
 CanvasRenderer.prototype.fontShadow = function(color, offsetX, offsetY, blur) {

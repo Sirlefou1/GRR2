@@ -358,26 +358,9 @@ function cacherMoisSemaine(a)
 	document.getElementById('cacherBoutonSelection'+Nb).style.display = "none";
 	document.getElementById('boutonSelection'+Nb).style.display = "none";
 }
-/*-----MAJ Loïs THOMAS  -->Barre de Chargement-----*/
+
 function charger(){
 	var test = document.getElementById("chargement");
 	test.style.display = 'Block';
 }
-/*-----MAJ David VOUE  -->Vérification du mail---22/01/2014-----
-function VerifierAdresseMail($adresse)
-{
-	 $Syntaxe='#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,6}$#';
-	 if (preg_match($Syntaxe,$adresse))
-			return true;
-	 else
-		 return false;
-}
-jQuery(document).ready(function() {
-	 jQuery("#formStep").validate({
-			rules: {
-				 "mail_destinataire": {
-						"email": true,
-						"maxlength": 250
-				 },
-	})
-});*/
+

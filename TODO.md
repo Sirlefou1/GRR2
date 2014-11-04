@@ -18,6 +18,6 @@
 
 
 # Future Ajout
-* Mise en place de la generation de pdf avancé
-* Envois d'une lettre en pdf avec le mail de confirmation
-* Sauvegarde de la lettre sur le serveur
+* Mise en place de la generation de pdf avancé - Partiel
+* Envois d'une lettre en pdf avec le mail de confirmation - 0%
+* Sauvegarde de la lettre sur le serveur - 0%
