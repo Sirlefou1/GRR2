@@ -252,34 +252,34 @@ if ($locale == 'fr')
 	}
 	else
 	{
-		if (!setlocale(LC_TIME,$locale))
+		if (!setlocale(LC_ALL,$locale))
 		{
 			if ($unicode_encoding)
 			{
-				if (setlocale(LC_TIME,'fr_FR.utf-8') == TRUE)
+				if (setlocale(LC_ALL,'fr_FR.UTF8') == TRUE)
 					$ok = 'yes';
-				else if (setlocale(LC_TIME,'fr_FR.utf8') == TRUE)
+				else if (setlocale(LC_ALL,'fr_FR.UTF8') == TRUE)
 					$ok = 'yes';
-				else if (setlocale(LC_TIME,'fr-utf-8') == TRUE)
+				else if (setlocale(LC_ALL,'fr-UTF8') == TRUE)
 					$ok = 'yes';
 			}
 			else
 			{
-				if (setlocale(LC_TIME,'fr_FR.ISO8859-1') == TRUE)
+				if (setlocale(LC_ALL,'fr_FR.ISO8859-1') == TRUE)
 					$ok = 'yes';
-				else if (setlocale(LC_TIME,'French') == TRUE)
+				else if (setlocale(LC_ALL,'French') == TRUE)
 					$ok = 'yes';
-				else if (setlocale(LC_TIME,'france') == TRUE)
+				else if (setlocale(LC_ALL,'france') == TRUE)
 					$ok = 'yes';
-				else if (setlocale(LC_TIME,'fra') == TRUE)
+				else if (setlocale(LC_ALL,'fra') == TRUE)
 					$ok = 'yes';
-				else if (setlocale(LC_TIME,'french') == TRUE)
+				else if (setlocale(LC_ALL,'french') == TRUE)
 					$ok = 'yes';
-				else if (setlocale(LC_TIME,'FR') == TRUE)
+				else if (setlocale(LC_ALL,'FR') == TRUE)
 					$ok = 'yes';
-				else if (setlocale(LC_TIME,'fr_FR') == TRUE)
+				else if (setlocale(LC_ALL,'fr_FR') == TRUE)
 					$ok = 'yes';
-				else if (setlocale(LC_TIME,'fr_FR@euro') == TRUE)
+				else if (setlocale(LC_ALL,'fr_FR@euro') == TRUE)
 					$ok = 'yes';
 			}
 		}
@@ -308,13 +308,12 @@ if ($locale != 'fr')
 				// Autre cas :
 		if (strlen($locale) == 2)
 		{
-					 # Convertit locale=xx en xx_XX, ce qui est approprié à certains système
+			# Convertit locale=xx en xx_XX, ce qui est approprié à certains système
 			$locale = strtolower($locale)."_".strtoupper($locale);
 		}
 		if ($unicode_encoding)
 		{
 			$locale_utf8 = $locale.".UTF8";
-			var_dump($locale_utf8);
 			if (setlocale(LC_ALL, $locale_utf8) == TRUE)
 				$ok = 'yes';
 			else
