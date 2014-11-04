@@ -207,42 +207,10 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 			}
 			return $s;
 		}
+
 		private function numero_semaine($date)
 		{
-			/*
-		// Définition du Jeudi de la semaine
-			if (date("w", $date) == 0)
-				$jeudiSemaine = $date - 3 * 24 * 60 * 60;
-			else if (date("w", $date) < 4)
-				$jeudiSemaine = $date + (4 - date("w", $date)) * 24 * 60 * 60;
-			else if (date("w", $date) > 4)
-				$jeudiSemaine = $date - (date("w", $date) - 4) * 24 * 60 * 60;
-			else
-				$jeudiSemaine = $date;
-			// Définition du premier Jeudi de l'année
-			if (date("w",mktime(12, 0, 0, 1, 1, date("Y", $jeudiSemaine))) == 0)
-				$premierJeudiAnnee = mktime(12, 0, 0, 1, 1, date("Y", $jeudiSemaine)) + 4 * 24 * 60 * 60;
-			else if (date("w", mktime(12, 0, 0, 1, 1, date("Y", $jeudiSemaine))) < 4)
-				$premierJeudiAnnee = mktime(12, 0, 0, 1, 1, date("Y", $jeudiSemaine)) + (4 - date("w", mktime(12, 0, 0, 1, 1, date("Y", $jeudiSemaine)))) * 24 * 60 * 60;
-			else if (date("w", mktime(12, 0, 0, 1, 1, date("Y", $jeudiSemaine))) > 4)
-				$premierJeudiAnnee = mktime(12, 0, 0, 1, 1, date("Y", $jeudiSemaine)) + (7 - (date("w", mktime(12, 0, 0, 1, 1, date("Y", $jeudiSemaine))) - 4)) * 24 * 60 * 60;
-			else
-				$premierJeudiAnnee = mktime(12, 0, 0, 1, 1, date("Y", $jeudiSemaine));
-			// Définition du numéro de semaine: nb de jours entre "premier Jeudi de l'année" et "Jeudi de la semaine";
-			$numeroSemaine = ((date("z", mktime(12, 0, 0, date("m", $jeudiSemaine), date("d", $jeudiSemaine), date("Y", $jeudiSemaine))) - date("z", mktime(12, 0, 0, date("m", $premierJeudiAnnee), date("d", $premierJeudiAnnee), date("Y", $premierJeudiAnnee)))) / 7) + 1;
-			// Cas particulier de la semaine 53
-			if ($numeroSemaine == 53)
-			{
-			// Les années qui commence un Jeudi et les années bissextiles commençant un Mercredi en possède 53
-				if (date("w", mktime(12,0,0,1,1,date("Y",$jeudiSemaine))) == 4 || (date("w", mktime(12, 0, 0, 1, 1, date("Y", $jeudiSemaine))) == 3 && date("z", mktime(12, 0, 0, 12, 31, date("Y", $jeudiSemaine))) == 365))
-					$numeroSemaine = 53;
-				else
-					$numeroSemaine = 1;
-			}
-			return sprintf("%02d", $numeroSemaine);
-*/
 			return date('W', $date);
-
 		}
 
 		public function getHTML()
