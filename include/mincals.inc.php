@@ -164,7 +164,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 				while ((!checkdate($this->month, $temp, $this->year)) && ($temp > 0))
 					$temp--;
 				$date = mktime(12, 0, 0, $this->month, $temp, $this->year);
-				$week = $this->numero_semaine($date);
+				$week = $this->getWeekNumber($date);
 				$s .= "</td>\n";
 				$ret = $this->getNumber($weekstarts, $d, $daysInMonth);
 				$d = $ret[0];
@@ -208,7 +208,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 			return $s;
 		}
 
-		private function numero_semaine($date)
+		private function getWeekNumber($date)
 		{
 			return date('W', $date);
 		}
@@ -217,7 +217,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 		{
 			global $weekstarts, $vocab, $type_month_all, $display_day, $nb_display_day;
 			$date_today = mktime(12, 0, 0, $this->month, $this->day, $this->year);
-			$week_today = $this->numero_semaine($date_today);
+			$week_today = $this->getWeekNumber($date_today);
 			if (!isset($weekstarts))
 				$weekstarts = 0;
 			$s = "";
@@ -227,7 +227,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 			$monthName = ucfirst(utf8_strftime("%B", $date));
 			$s .= "\n<table class=\"calendar\">\n";
 			$s .= "<caption>";
-			$week = $this->numero_semaine($date);
+			$week = $this->getWeekNumber($date);
 			$weekd = $week;
 			$s .= "<div class=\"btn-group\">";
 			$s .= $this->createlink(0, -1, $this->month, $this->year, $this->dmy, $this->room, $this->area, "previous_year", "backward");
