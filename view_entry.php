@@ -295,6 +295,7 @@ if (strstr ($back, 'view_entry.php'))
 }
 if (getSettingValue("display_level_view_entry") == '1')
 {
+	print_header($day, $month, $year, $type_session);
 	if ($back != "")
 		echo "<div><a href=\"".$back."\">".get_vocab("returnprev")."</a></div>\n";
 }
