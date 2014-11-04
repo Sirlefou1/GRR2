@@ -117,7 +117,7 @@ for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 			if ((!$cookie && ($id_type_par_defaut == $row[2])) || ($cookie && $cookie == $row[0]))
 				$display_type .=  ' selected="selected"';
 		}
-		$display_type .=  ' >'.htmlentities($row[0]).'</option>'.PHP_EOL;
+		$display_type .=  ' >'.$row[0].'</option>'.PHP_EOL;
 	}
 }
 $display_type .=  '</select>'.PHP_EOL.'</div>'.PHP_EOL;
