@@ -314,13 +314,13 @@ if ($locale != 'fr')
 		if ($unicode_encoding)
 		{
 			$locale_utf8 = $locale.".utf-8";
-			if (setlocale(LC_TIME, $locale_utf8) == TRUE)
+			if (setlocale(LC_ALL, $locale_utf8) == TRUE)
 				$ok = 'yes';
 			else
-				setlocale(LC_TIME,$locale);
+				setlocale(LC_ALL,$locale);
 		}
 		else
-			setlocale(LC_TIME,$locale);
+			setlocale(LC_ALL,$locale);
 	}
 }
 function get_server_os()
