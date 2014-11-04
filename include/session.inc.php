@@ -371,11 +371,6 @@ else
 			$login_search = preg_replace("/[^\-@._[:space:]a-zA-Z0-9]/", "", $_login);
 			if ($login_search != $_login)
 				return "6";
-			// Convertir depuis UTF-8 (jeu de caracteres par defaut)
-			if ((function_exists("utf8_decode")) && (getSettingValue("ConvertLdapUtf8toIso")=="y"))
-			{
-				$_password=utf8_encode($_password);
-			}
 			$user_dn = grr_verif_ldap($_login, $_password);
 			if ($user_dn=="error_1")
 				return "7";
