@@ -20,6 +20,15 @@ Dans le cas contraire, vous devez impérativement renseigner ce fichier :
 -  $dbUser : le nom de l'utilisateur mysql qui a les droits sur la base.
 -  $dbPass : le mot de passe de l'utilisateur mysql ci-dessus.
 
+***********
+Pré-requis
+***********
+
+Pour installer et faire fonctionner GRR, vous avez besoin de :
+-> Un serveur web/php et un serveur mysql (éventuellement sur la même
+machine)
+-> Nécessité de disposer d'une version de php version supérieure ou égale à 5.4.0 (gestion des variables de type $_SESSION, fonction mysql_real_escape_string(),  ...)
+
 ************************************************
 Installation - Etape 1 : Configuration de GRR
 ************************************************
@@ -95,12 +104,3 @@ Une fois le système installé, vous pouvez vous connecter à GRR :
 compte" dans le bandeau en haut !
 -  allez dans la partie "gestion" (lien dans le bandeau en haut)
 
-
-***********
-Pré-requis
-***********
-
-Pour installer et faire fonctionner GRR, vous avez besoin de :
--> Un serveur web/php et un serveur mysql (éventuellement sur la même
-machine)
--> Nécessité de disposer d'une version de php version supérieure ou égale à  4.3.0 (gestion des variables de type $_SESSION, fonction mysql_real_escape_string(),  ...)
