@@ -164,7 +164,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 				while ((!checkdate($this->month, $temp, $this->year)) && ($temp > 0))
 					$temp--;
 				$date = mktime(12, 0, 0, $this->month, $temp, $this->year);
-				$week = numero_semaine($date);
+				$week = $this->numero_semaine($date);
 				$s .= "</td>\n";
 				$ret = $this->getNumber($weekstarts, $d, $daysInMonth);
 				$d = $ret[0];
@@ -186,22 +186,93 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 			return $action;
 		}
 
+		function getDaysInMonth($month, $year)
+		{
+			if ($month < 1 || $month > 12)
+				return 0;
+			$days = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+			$d = $days[$month - 1];
+			if ($month == 2)
+			{
+								#Vérification de l'année bissextile.
+				if ($year%4 == 0)
+				{
+					if ($year%100 == 0)
+					{
+						if ($year%400 == 0)
+							$d = 29;
+					}
+					else
+						$d = 29;
+				}
+			}
+			return $d;
+		}
+		function getFirstDays()
+		{
+			global $weekstarts, $display_day;
+			$basetime = mktime(12, 0, 0, 6, 11 + $weekstarts, 2000);
+			for ($i = 0, $s = ""; $i < 7; $i++)
+			{
+				$j = ($i + 7 + $weekstarts) % 7;
+				$show = $basetime + ($i * 24 * 60 * 60);
+				$fl = ucfirst(utf8_strftime('%a',$show));
+				if ($display_day[$j] == 1)
+					$s .= "<td class=\"calendarcol1\">$fl</td>\n";
+				else
+					$s .= "";
+			}
+			return $s;
+		}
+		function numero_semaine($date)
+		{
+		// Définition du Jeudi de la semaine
+			if (date("w", $date) == 0)
+				$jeudiSemaine = $date - 3 * 24 * 60 * 60;
+			else if (date("w", $date) < 4)
+				$jeudiSemaine = $date + (4 - date("w", $date)) * 24 * 60 * 60;
+			else if (date("w", $date) > 4)
+				$jeudiSemaine = $date - (date("w", $date) - 4) * 24 * 60 * 60;
+			else
+				$jeudiSemaine = $date;
+			// Définition du premier Jeudi de l'année
+			if (date("w",mktime(12, 0, 0, 1, 1, date("Y", $jeudiSemaine))) == 0)
+				$premierJeudiAnnee = mktime(12, 0, 0, 1, 1, date("Y", $jeudiSemaine)) + 4 * 24 * 60 * 60;
+			else if (date("w", mktime(12, 0, 0, 1, 1, date("Y", $jeudiSemaine))) < 4)
+				$premierJeudiAnnee = mktime(12, 0, 0, 1, 1, date("Y", $jeudiSemaine)) + (4 - date("w", mktime(12, 0, 0, 1, 1, date("Y", $jeudiSemaine)))) * 24 * 60 * 60;
+			else if (date("w", mktime(12, 0, 0, 1, 1, date("Y", $jeudiSemaine))) > 4)
+				$premierJeudiAnnee = mktime(12, 0, 0, 1, 1, date("Y", $jeudiSemaine)) + (7 - (date("w", mktime(12, 0, 0, 1, 1, date("Y", $jeudiSemaine))) - 4)) * 24 * 60 * 60;
+			else
+				$premierJeudiAnnee = mktime(12, 0, 0, 1, 1, date("Y", $jeudiSemaine));
+			// Définition du numéro de semaine: nb de jours entre "premier Jeudi de l'année" et "Jeudi de la semaine";
+			$numeroSemaine = ((date("z", mktime(12, 0, 0, date("m", $jeudiSemaine), date("d", $jeudiSemaine), date("Y", $jeudiSemaine))) - date("z", mktime(12, 0, 0, date("m", $premierJeudiAnnee), date("d", $premierJeudiAnnee), date("Y", $premierJeudiAnnee)))) / 7) + 1;
+			// Cas particulier de la semaine 53
+			if ($numeroSemaine == 53)
+			{
+			// Les années qui commence un Jeudi et les années bissextiles commençant un Mercredi en possède 53
+				if (date("w", mktime(12,0,0,1,1,date("Y",$jeudiSemaine))) == 4 || (date("w", mktime(12, 0, 0, 1, 1, date("Y", $jeudiSemaine))) == 3 && date("z", mktime(12, 0, 0, 12, 31, date("Y", $jeudiSemaine))) == 365))
+					$numeroSemaine = 53;
+				else
+					$numeroSemaine = 1;
+			}
+			return sprintf("%02d", $numeroSemaine);
+		}
 
 		function getHTML()
 		{
 			global $weekstarts, $vocab, $type_month_all, $display_day, $nb_display_day;
 			$date_today = mktime(12, 0, 0, $this->month, $this->day, $this->year);
-			$week_today = numero_semaine($date_today);
+			$week_today = $this->numero_semaine($date_today);
 			if (!isset($weekstarts))
 				$weekstarts = 0;
 			$s = "";
-			$daysInMonth = getDaysInMonth($this->month, $this->year);
+			$daysInMonth = $this->getDaysInMonth($this->month, $this->year);
 			$date = mktime(12, 0, 0, $this->month, 1, $this->year);
 			$first = (strftime("%w",$date) + 7 - $weekstarts) % 7;
 			$monthName = ucfirst(utf8_strftime("%B", $date));
 			$s .= "\n<table class=\"calendar\">\n";
 			$s .= "<caption>";
-			$week = numero_semaine($date);
+			$week = $this->numero_semaine($date);
 			$weekd = $week;
 			$s .= "<div class=\"btn-group\">";
 			$s .= $this->createlink(0, -1, $this->month, $this->year, $this->dmy, $this->room, $this->area, "previous_year", "backward");
@@ -217,7 +288,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 			$s .= "<br/><button type=\"button\" title=\"".htmlspecialchars(get_vocab("gototoday"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='".$action."';\">".get_vocab("gototoday")."</button>";
 			$s .= "</caption>";
 			$s .= "<tr><td class=\"calendarcol1\">".get_vocab("semaine")."</td>\n";
-			$s .= getFirstDays();
+			$s .= $this->getFirstDays();
 			$s .= "</tr>\n";
 			$d = 1 - $first;
 			$temp = 1;
