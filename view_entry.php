@@ -568,7 +568,7 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 				{
 					$message_confirmation = str_replace("'", "\\'", get_vocab("confirmdel").get_vocab("deleteentry"));
 					?>
-						<a class="btn btn-danger" type="button" href="del_entry.php?id=<?php echo $id ?>&amp;series=0&amp;page=<?php echo $page; ?>" onclick="return confirm('<?php echo $message_confirmation ?>');"><?php echo get_vocab("deleteentry") ?></a></td>
+					<a class="btn btn-danger" type="button" href="del_entry.php?id=<?php echo $id ?>&amp;series=0&amp;page=<?php echo $page; ?>" onclick="return confirm('<?php echo $message_confirmation ?>');"><?php echo get_vocab("deleteentry") ?></a></td>
 					<?php
 				}
 				echo "</tr>";
@@ -738,11 +738,14 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 					if ($keys == 1)
 						echo " checked ";
 					echo " /> ".get_vocab("msg_clef");
-					echo "<br /><span class=\"larger\">".get_vocab("status_courrier").get_vocab("deux_points")."</span>";
-					echo "<br /><input type=\"checkbox\" name=\"courrier\" value=\"y\" ";
-					if ($courrier == 1)
-						echo " checked ";
-					echo " /> ".get_vocab("msg_courrier");
+					if (Settings::get('show_courrier') == 'y')
+					{
+						echo "<br /><span class=\"larger\">".get_vocab("status_courrier").get_vocab("deux_points")."</span>";
+						echo "<br /><input type=\"checkbox\" name=\"courrier\" value=\"y\" ";
+						if ($courrier == 1)
+							echo " checked ";
+						echo " /> ".get_vocab("msg_courrier");
+					}
 					echo "<br /><br /><div style=\"text-align:center;\"><input class=\"btn btn-primary\" type=\"submit\" name=\"ok\" value=\"".get_vocab("save")."\" /></div></fieldset>\n";
 					echo "<div><input type=\"hidden\" name=\"day\" value=\"".$day."\" />";
 					echo "<input type=\"hidden\" name=\"month\" value=\"".$month."\" />";

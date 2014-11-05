@@ -462,10 +462,13 @@ else
 							echo '<br>'.PHP_EOL;
 							if ($clef == 1)
 								echo '<img src="img_grr/skey.png" alt="clef">'.PHP_EOL;
-							if ($courrier == 1)
-								echo '<img src="img_grr/scourrier.png" alt="courrier">'.PHP_EOL;
-							else
-								echo '<img src="img_grr/buzy.png" alt="buzy">'.PHP_EOL;
+							if (Settings::get('show_courrier') == 'y')
+							{
+								if ($courrier == 1)
+									echo '<img src="img_grr/scourrier.png" alt="courrier">'.PHP_EOL;
+								else
+									echo '<img src="img_grr/hourglass.svg" alt="buzy">'.PHP_EOL;
+							}
 						}
 						if ($today[$room][$t]["description"]!= "")
 						{

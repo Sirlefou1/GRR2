@@ -35,6 +35,14 @@ if (isset($_POST['title_home_page']))
 		die();
 	}
 }
+if (isset($_POST['show_courrier']))
+{
+	if (!Settings::set("show_courrier", $_POST['show_courrier']))
+	{
+		echo "Erreur lors de l'enregistrement de show_courrier !<br />";
+		die();
+	}
+}
 if (isset($_POST['show_holidays']))
 {
 	if (!Settings::set("show_holidays", $_POST['show_holidays']))
@@ -1212,6 +1220,29 @@ echo " />".PHP_EOL;
 echo "</td>".PHP_EOL;
 echo "</tr>".PHP_EOL;
 echo "</table>".PHP_EOL;
+# Afficher courrier de validation
+echo "<hr />".PHP_EOL;
+echo "<h3>".get_vocab("courrier_msg")."</h3>".PHP_EOL;
+echo "<table>".PHP_EOL;
+echo "<tr>".PHP_EOL;
+echo "<td>".get_vocab("legend0")."</td>".PHP_EOL;
+echo "<td>".PHP_EOL;
+echo "<input type='radio' name='show_courrier' value='y' ";
+if (Settings::get("show_courrier") == 'y')
+	echo "checked=\"checked\"";
+echo " />".PHP_EOL;
+echo "</td>".PHP_EOL;
+echo "</tr>".PHP_EOL;
+echo "<tr>".PHP_EOL;
+echo "<td>".get_vocab("legend1")."</td>".PHP_EOL;
+echo "<td>".PHP_EOL;
+echo "<input type='radio' name='show_courrier' value='n' ";
+if (Settings::get("show_courrier") == 'n')
+	echo "checked=\"checked\"";
+echo " />".PHP_EOL;
+echo "</td>".PHP_EOL;
+echo "</tr>".PHP_EOL;
+echo "</table>".PHP_EOL;
 # Afficher vacance et jour ferie
 echo "<hr />".PHP_EOL;
 echo "<h3>".get_vocab("holidays_msg")."</h3>".PHP_EOL;
@@ -1235,6 +1266,7 @@ echo " />".PHP_EOL;
 echo "</td>".PHP_EOL;
 echo "</tr>".PHP_EOL;
 echo "</table>".PHP_EOL;
+
 # Choix de la zone de vacance
 echo "<hr />".PHP_EOL;
 echo "<h3>".get_vocab("holidays_zone_msg")."</h3>".PHP_EOL;
