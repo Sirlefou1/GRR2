@@ -115,7 +115,7 @@ if ((!isset($_GET['pview'])) or ($_GET['pview'] != 1))
 {
 	echo "\n
 	<tr>
-		<td align=\"left\">
+		<td class=\"left\">
 			<input type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='month_all2.php?year=$yy&amp;month=$ym&amp;area=$area';\" value=\"&lt;&lt; ".get_vocab("monthbefore")." \"/>
 		</td>";
 
@@ -123,7 +123,7 @@ if ((!isset($_GET['pview'])) or ($_GET['pview'] != 1))
 		include "include/trailer.inc.php";
 		echo "</td>
 
-		<td align=\"right\">
+		<td class=\"right\">
 			<input type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='month_all2.php?year=$ty&amp;month=$tm&amp;area=$area';\" value=\" ".get_vocab('monthafter')."  &gt;&gt;\"/>
 		</td>
 	</tr>
@@ -133,7 +133,7 @@ if ((!isset($_GET['pview'])) or ($_GET['pview'] != 1))
 if ((!isset($_GET['pview'])) or ($_GET['pview'] != 1))
 {
 	echo "<tr>";
-	echo "<td align=\"left\"> ";
+	echo "<td class=\"left\"> ";
 	$month_all2 = 1;
 	echo "<input type=\"button\" class=\"btn btn-default btn-xs\" id=\"voir\" value=\"Afficher le menu à gauche.\" onClick=\"divaffiche($month_all2)\" style=\"display:inline;\" /> ";
 	echo "</td>";

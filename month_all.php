@@ -148,31 +148,28 @@ else
 		echo "<div id=\"planning\">";
 	else
 		echo "<div id=\"print_planning\">";
-	echo "<div class=\"titre_planning\"><table width=\"100%\">";
+	echo "<div class=\"titre_planning\"><table class=\"table-header\">";
 	//Test si le format est imprimable
 	if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
 	{
 		#Show Go to week before and after links
 		echo '<tr>'.PHP_EOL;
-		echo '<td align="left">'.PHP_EOL;
+		echo '<td class="left">'.PHP_EOL;
 		echo '<button  type="button" class="btn btn-default btn-xs" onclick="charger();javascript: location.href=\'month_all.php?year='.$yy.'&amp;month='.$ym.'&amp;area='.$area.'\';"><span class="glyphicon glyphicon-backward"></span>'.get_vocab("monthbefore").'</button>'.PHP_EOL;
 		echo '</td>'.PHP_EOL;
 		echo '<td>'.PHP_EOL;
 		include "include/trailer.inc.php";
 		echo '</td>'.PHP_EOL;
-		echo '<td align="right">'.PHP_EOL;
+		echo '<td class="right">'.PHP_EOL;
 		echo '<button type="button" class="btn btn-default btn-xs" onclick="charger();javascript: location.href=\'month_all.php?year='.$ty.'&amp;month='.$tm.'&amp;area='.$area.'\';">'.get_vocab('monthafter').'  <span class="glyphicon glyphicon-forward"></span></button>'.PHP_EOL;
 		echo '</td>'.PHP_EOL;
 		echo '</tr>'.PHP_EOL;
 		echo '</table>'.PHP_EOL;
 	}
-	echo '<td>'.PHP_EOL;
+
 	echo '<h4 class="titre">'.ucfirst(utf8_strftime("%B %Y", $month_start)).' '.ucfirst($this_area_name).' - '.get_vocab("all_areas").'</h4>'.PHP_EOL;
 	if ($_GET['pview'] != 1)
 		echo ' <a href="month_all2.php?year='.$year.'&amp;month='.$month.'&amp;area='.$area.'"><img src="img_grr/change_view.png" alt="'.get_vocab("change_view").'" title="'.get_vocab("change_view").'" class="image" /></a>'.PHP_EOL;
-	echo '</td>'.PHP_EOL;
-	echo '</tr>'.PHP_EOL;
-	echo '</table>'.PHP_EOL;
 	echo '</div>'.PHP_EOL;
 	if (isset($_GET['precedent']))
 	{
@@ -353,7 +350,7 @@ else
 		if ($display_day[$num_week_day] == 1)
 		{
 			// début condition "on n'affiche pas tous les jours de la semaine"
-			echo "<td valign=\"top\" class=\"cell_month\">";
+			echo "<td class=\"cell_month\">";
 			// On affiche les jours du mois dans le coin supérieur gauche de chaque cellule
 			$ferie_true = 0;
 			$class = "";
@@ -409,7 +406,7 @@ else
 								echo " ...\n";
 								break;
 							}
-							echo "\n<table width='100%' border='0'><tr>\n";
+							echo "\n<table class='table-noborder'><tr>\n";
 							tdcell($d[$cday]["color"][$i]);
 							echo "<span class=\"small_planning\">";
 							if ($acces_fiche_reservation[$d[$cday]["id_room"][$i]])
@@ -461,7 +458,7 @@ else
 				echo "<td class=\"cell_month_o\" > </td>\n";
 		}
 	}
-	echo "</tr></table>";
+	echo "</table>";
 		//Fermeture du div contenu_Planning
 	echo "</div>";
 	if ($_GET['pview'] != 1)
