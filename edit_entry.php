@@ -664,6 +664,7 @@ echo '<form id="main" action="edit_entry_handler.php" method="get">'.PHP_EOL;
 </script>
 
 <?php
+
 echo '<table class="table-bordered EditEntryTable"><tr>'.PHP_EOL;
 echo '<td style="width:50%; vertical-align:top; padding-left:15px; padding-top:5px; padding-bottom:5px;">'.PHP_EOL;
 echo '<table class="table-header">'.PHP_EOL;
@@ -677,8 +678,8 @@ if (((authGetUserLevel(getUserName(), -1, "room") >= $qui_peut_reserver_pour) ||
 	echo '</tr>'.PHP_EOL;
 	echo '<tr>'.PHP_EOL;
 	echo '<td class="CL">'.PHP_EOL;
-	echo '<div class="col-xs-3">'.PHP_EOL;
-	echo '<select size="1" class="form-control" name="beneficiaire" id="beneficiaire" onchange="setdefault(\'beneficiaire_default\',\'\');check_4();insertProfilBeneficiaire();">'.PHP_EOL;
+	echo '<div class="col-xs-6">'.PHP_EOL;
+	echo '<select size="1" id="select2" class="form-control" name="beneficiaire" id="beneficiaire" onchange="setdefault(\'beneficiaire_default\',\'\');check_4();insertProfilBeneficiaire();">'.PHP_EOL;
 	echo '<option value="" >'.get_vocab("personne exterieure").'</option>'.PHP_EOL;
 	$sql = "SELECT DISTINCT login, nom, prenom FROM ".TABLE_PREFIX."_utilisateurs WHERE (etat!='inactif' and statut!='visiteur' ) OR (login='".$beneficiaire."') ORDER BY nom, prenom";
 	$res = grr_sql_query($sql);
@@ -1235,6 +1236,7 @@ else
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('.multiselect').multiselect();
+			$("#select2").select2();
 		});
 	</script>
 	<script type="text/javascript" >

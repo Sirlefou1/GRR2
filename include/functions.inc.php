@@ -843,8 +843,10 @@ function begin_page($title, $page="with_session")
 	$a .= '<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css" />'.PHP_EOL;
 	$a .= '<link rel="stylesheet" href="themes/default/css/mod_bootstrap.css" type="text/css" />'.PHP_EOL;
 	$a .= '<link rel="stylesheet" type="text/css" href="include/admin_grr.css" />'.PHP_EOL;
+	$a .= '<link rel="stylesheet" href="themes/default/css/select2.css" type="text/css" />'.PHP_EOL;
+	$a .= '<link rel="stylesheet" href="themes/default/css/select2-bootstrap.css" type="text/css" />'.PHP_EOL;
 	if ((isset($_GET['pview'])) && ($_GET['pview'] == 1))
-		$a .=  '<link rel="stylesheet" href="themes/print/css/style.css" type="text/css" />'.PHP_EOL;
+		$a .= '<link rel="stylesheet" href="themes/print/css/style.css" type="text/css" />'.PHP_EOL;
 	$a .= '<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />'.PHP_EOL;
 	$a .= '<link rel="stylesheet" type="text/css" href="themes/default/css/jquery-ui-timepicker-addon.css" >'.PHP_EOL;
 	$a .= '<link rel="stylesheet" type="text/css" href="themes/default/css/bootstrap-multiselect.css">'.PHP_EOL;
@@ -862,6 +864,8 @@ function begin_page($title, $page="with_session")
 	$a .= '<script type="text/javascript" src="js/pdf.js" ></script>'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="js/popup.js" charset="utf-8"></script>'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="js/functions.js" ></script>'.PHP_EOL;
+	$a .= '<script type="text/javascript" src="js/select2.js"></script>'.PHP_EOL;
+	$a .= '<script type="text/javascript" src="js/select2_locale_fr.js"></script>'.PHP_EOL;
 	if (isset($use_tooltip_js))
 		echo '<script type="text/javascript" src="./include/tooltip.js"></script>'.PHP_EOL;
 	if (!isset($_SESSION['selection']))
