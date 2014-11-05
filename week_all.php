@@ -484,7 +484,7 @@ else
 										if ($courrier == 1)
 											echo '<img src="img_grr/scourrier.png" alt="courrier">'.PHP_EOL;
 										else
-											echo '<br /><img src="img_grr/hourglass.svg" alt="buzy">'.PHP_EOL;
+											echo '<br /><img src="img_grr/hourglass.png" alt="buzy">'.PHP_EOL;
 									}
 									echo '</span>'.PHP_EOL;
 								}

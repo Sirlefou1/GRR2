@@ -467,7 +467,7 @@ else
 								if ($courrier == 1)
 									echo '<img src="img_grr/scourrier.png" alt="courrier">'.PHP_EOL;
 								else
-									echo '<img src="img_grr/hourglass.svg" alt="buzy">'.PHP_EOL;
+									echo '<img src="img_grr/hourglass.png" alt="buzy">'.PHP_EOL;
 							}
 						}
 						if ($today[$room][$t]["description"]!= "")
