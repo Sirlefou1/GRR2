@@ -33,8 +33,8 @@
 # Les "locales" sont un système permettant de gérer le plus proprement possible les différences de langue et de style
 # des utilisateurs. Vous pouvez connaître les locales installées sur votre système linux avec la commande "locale -a"
 # (les noms semblent peu standardisés, vous aurez des chaînes du genre "fr_FR" ou "fr_FR.ISO8859-1")
-if (function_exists("getSettingValue"))
-	$defaultlanguage = getSettingValue("default_language");
+if (function_exists("Settings::get"))
+	$defaultlanguage = Settings::get("default_language");
 else
 	$defaultlanguage = false;
 if (isset($_SESSION['default_language']))

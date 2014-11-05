@@ -36,9 +36,9 @@ include "include/mincals.inc.php";
 include "include/mrbs_sql.inc.php";
 $grr_script_name = "year.php";
 // Settings
-require_once("./include/settings.inc.php");
+require_once("./include/settings.class.php");
 //Chargement des valeurs de la table settingS
-if (!loadSettings())
+if (!Settings::load())
 	die("Erreur chargement settings");
 // Session related functions
 require_once("./include/session.inc.php");
@@ -71,10 +71,10 @@ if (empty($debug_flag))
 	$debug_flag = 0;
 if (empty($from_month) || empty($from_year) || !checkdate($from_month, 1, $from_year))
 {
-	if ($date_now < getSettingValue('begin_bookings'))
-		$date_ = getSettingValue('begin_bookings');
-	else if ($date_now > getSettingValue('end_bookings'))
-		$date_ = getSettingValue('end_bookings');
+	if ($date_now < Settings::get('begin_bookings'))
+		$date_ = Settings::get('begin_bookings');
+	else if ($date_now > Settings::get('end_bookings'))
+		$date_ = Settings::get('end_bookings');
 	else
 		$date_ = $date_now;
 	$day   = date('d',$date_);
@@ -84,10 +84,10 @@ if (empty($from_month) || empty($from_year) || !checkdate($from_month, 1, $from_
 else
 {
 	$date_ = mktime(0, 0, 0, $from_month, $day, $from_year);
-	if ($date_ < getSettingValue('begin_bookings'))
-		$date_ = getSettingValue('begin_bookings');
-	else if ($date_ > getSettingValue('end_bookings'))
-		$date_ = getSettingValue('end_bookings');
+	if ($date_ < Settings::get('begin_bookings'))
+		$date_ = Settings::get('begin_bookings');
+	else if ($date_ > Settings::get('end_bookings'))
+		$date_ = Settings::get('end_bookings');
 	$day   = date('d',$date_);
 	$from_month = date('m',$date_);
 	$from_year  = date('Y',$date_);
@@ -100,14 +100,14 @@ if (empty($to_month) || empty($to_year) || !checkdate($to_month, 1, $to_year))
 else
 {
 	$date_ = mktime(0, 0, 0, $to_month, 1, $to_year);
-	if ($date_ < getSettingValue('begin_bookings'))
-		$date_ = getSettingValue('begin_bookings');
-	else if ($date_ > getSettingValue('end_bookings'))
-		$date_ = getSettingValue('end_bookings');
+	if ($date_ < Settings::get('begin_bookings'))
+		$date_ = Settings::get('begin_bookings');
+	else if ($date_ > Settings::get('end_bookings'))
+		$date_ = Settings::get('end_bookings');
 	$to_month = date('m',$date_);
 	$to_year  = date('Y',$date_);
 }
-if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))
+if ((Settings::get("authentification_obli") == 0) && (getUserName() == ''))
 	$type_session = "no_session";
 else
 	$type_session = "with_session";
@@ -119,7 +119,7 @@ if (check_begin_end_bookings($day, $from_month, $from_year))
 	showNoBookings($day, $from_month, $from_year, $back);
 	exit();
 }
-if (((authGetUserLevel(getUserName(),-1) < 1) && (getSettingValue("authentification_obli") == 1)) || authUserAccesArea(getUserName(), $area) == 0)
+if (((authGetUserLevel(getUserName(),-1) < 1) && (Settings::get("authentification_obli") == 1)) || authUserAccesArea(getUserName(), $area) == 0)
 {
 	showAccessDenied($back);
 	exit();
@@ -129,7 +129,7 @@ if (((authGetUserLevel(getUserName(),-1) < 1) && (getSettingValue("authentificat
 // Si oui, les réservations concernées sont supprimées et un mail automatique est envoyé.
 // On vérifie une fois par jour que les ressources ont été rendue en fin de réservation
 // Si non, une notification email est envoyée
-if (getSettingValue("verif_reservation_auto") == 0)
+if (Settings::get("verif_reservation_auto") == 0)
 {
 	verify_confirm_reservation();
 	verify_retard_reservation();
@@ -155,10 +155,10 @@ if ($enable_periods == 'y')
 if ($_GET['pview'] != 1)
 {
 	echo "<table width=\"100%\" cellspacing=\"15\" border=\"0\"><tr>";
-	if (isset($_SESSION['default_list_type']) || (getSettingValue("authentification_obli") == 1))
+	if (isset($_SESSION['default_list_type']) || (Settings::get("authentification_obli") == 1))
 		$area_list_format = $_SESSION['default_list_type'];
 	else
-		$area_list_format = getSettingValue("area_list_format");
+		$area_list_format = Settings::get("area_list_format");
 	//show either a select box or the normal html list
 	if ($area_list_format != "list")
 	{
@@ -237,9 +237,9 @@ else
 			$d[$day_num][$month_num][$year_num]["id"][] = $row[2];
 			// Info-bulle
 			$temp = "";
-			if (getSettingValue("display_info_bulle") == 1)
+			if (Settings::get("display_info_bulle") == 1)
 				$temp = get_vocab("reservee au nom de").affiche_nom_prenom_email($row[4],$row[12],"nomail");
-			else if (getSettingValue("display_info_bulle") == 2)
+			else if (Settings::get("display_info_bulle") == 2)
 				$temp = $row[7];
 			if ($temp != "")
 				$temp = " - ".$temp;
@@ -374,7 +374,7 @@ while ($month_indice < $month_end)
 		{
 			echo tdcell("cell_hours");
 			echo "<div><a title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day"))."\"   href=\"day.php?year=$year_num&amp;month=$month_num&amp;day=$cday&amp;area=$area\">$name_day</a>";
-			if (getSettingValue("jours_cycles_actif") == "Oui" && intval($jour_cycle)>-1)
+			if (Settings::get("jours_cycles_actif") == "Oui" && intval($jour_cycle)>-1)
 			{
 				if (intval($jour_cycle) > 0)
 					echo "<br /><b><i>".ucfirst(substr(get_vocab("rep_type_6"),0,1)).$jour_cycle."</i></b>";

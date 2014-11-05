@@ -10,10 +10,10 @@ if ($_GET['pview'] != 1)
 	$pageActuel = str_replace(".php","",basename($_SERVER['PHP_SELF']));
 	minicals($year, $month, $day, $area, $room, $pageActuel);
 	$this_area_name = "";
-	if (isset($_SESSION['default_list_type']) || (getSettingValue("authentification_obli") == 1))
+	if (isset($_SESSION['default_list_type']) || (Settings::get("authentification_obli") == 1))
 		$area_list_format = $_SESSION['default_list_type'];
 	else
-		$area_list_format = getSettingValue("area_list_format");
+		$area_list_format = Settings::get("area_list_format");
 	if ($area_list_format != "list")
 	{
 		if ($area_list_format == "select")
@@ -36,7 +36,7 @@ if ($_GET['pview'] != 1)
 		echo make_room_list_html('week.php', $area, $room, $year, $month, $day);
 
 	}
-	if (getSettingValue("legend") == '0')
+	if (Settings::get("legend") == '0')
 		show_colour_key($area);
 	echo '</div>';
 }

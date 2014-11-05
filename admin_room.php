@@ -81,7 +81,7 @@ else
 ?>
 <h2><?php echo get_vocab("admin_room.php"); ?></h2>
 <?php
-if (getSettingValue("module_multisite") == "Oui")
+if (Settings::get("module_multisite") == "Oui")
 {
 	if (authGetUserLevel(getUserName(),-1,'area') >= 6)
 		$sql = "SELECT id,sitecode,sitename FROM ".TABLE_PREFIX."_site ORDER BY sitename ASC";
@@ -176,14 +176,14 @@ $id_site = $row[0];
 		// Seul l'administrateur a le droit d'ajouter des domaines
 		if (authGetUserLevel(getUserName(),-1,'area') >= 5)
 		{
-			if ((getSettingValue("module_multisite") == "Oui") && ($id_site <= 0))
+			if ((Settings::get("module_multisite") == "Oui") && ($id_site <= 0))
 				echo "<tr><td>".get_vocab('choose_a_site')."</td>"."\n";
 			else
 				echo "<tr><td><a href=\"admin_edit_room.php?id_site=".$id_site."&amp;add_area='yes'\">".get_vocab('addarea')."</a></td>";
 		}
 		else
 		{
-			if ((getSettingValue("module_multisite") == "Oui") && ($id_site <= 0))
+			if ((Settings::get("module_multisite") == "Oui") && ($id_site <= 0))
 				echo "<tr><td>".get_vocab('choose_a_site')."</td>"."\n";
 			else
 				echo "<tr><td> </td>";
@@ -193,7 +193,7 @@ $id_site = $row[0];
 		else
 			echo "<td> </td></tr>";
 		// Pas de site selectionn? donc pas de domaine, et encore moins de ressources.
-		if ((getSettingValue("module_multisite") == "Oui") && ($id_site <= 0))
+		if ((Settings::get("module_multisite") == "Oui") && ($id_site <= 0))
 		{
 			echo "</table>\n";
 		// fin de l'affichage de la colonne de droite et fin de la page
@@ -201,7 +201,7 @@ $id_site = $row[0];
 			die();
 		}
 		// A partir de ce niveau, on sait qu'il existe un site
-		if ((getSettingValue("module_multisite") == "Oui") && ($id_site > 0))
+		if ((Settings::get("module_multisite") == "Oui") && ($id_site > 0))
 			$sql="SELECT ".TABLE_PREFIX."_area.id,".TABLE_PREFIX."_area.area_name,".TABLE_PREFIX."_area.access
 		FROM ".TABLE_PREFIX."_j_site_area,".TABLE_PREFIX."_area
 		WHERE ".TABLE_PREFIX."_j_site_area.id_site='".$id_site."'

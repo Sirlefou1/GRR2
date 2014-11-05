@@ -35,8 +35,8 @@ include_once('include/'.$dbsys.'.inc.php');
 include_once('include/misc.inc.php');
 include_once('include/mrbs_sql.inc.php');
 $grr_script_name = 'view_entry.php';
-require_once('include/settings.inc.php');
-if (!loadSettings())
+require_once('include/settings.class.php');
+if (!Settings::load())
 	die("Erreur chargement settings");
 require_once("./include/session.inc.php");
 // Resume session
@@ -51,12 +51,12 @@ include "include/language.inc.php";
 $fin_session = 'n';
 if (!grr_resumeSession())
 	$fin_session = 'y';
-if (($fin_session == 'y') && (getSettingValue("authentification_obli") == 1))
+if (($fin_session == 'y') && (Settings::get("authentification_obli") == 1))
 {
 	header("Location: ./logout.php?auto=1&url=$url");
 	die();
 }
-if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))
+if ((Settings::get("authentification_obli") == 0) && (getUserName() == ''))
 	$type_session = "no_session";
 else
 	$type_session = "with_session";
@@ -211,7 +211,7 @@ if (($fin_session == 'n') && (getUserName()!='') && (authGetUserLevel(getUserNam
 			if (grr_sql_command($upd) < 0)
 				fatal_error(0, grr_sql_error());
 		}
-		if ((isset($_GET["envoyer_mail"])) && (getSettingValue("automatic_mail") == 'yes'))
+		if ((isset($_GET["envoyer_mail"])) && (Settings::get("automatic_mail") == 'yes'))
 		{
 			$_SESSION['session_message_error'] = send_mail($id, 7, $dformat);
 			if ($_SESSION['session_message_error'] == "")
@@ -237,7 +237,7 @@ if (!verif_acces_fiche_reservation(getUserName(), $room_id))
 }
 if (@file_exists("language/lang_subst_".$area.".".$locale))
 	include "language/lang_subst_".$area.".".$locale;
-if ((authGetUserLevel(getUserName(), -1) < 1) and (getSettingValue("authentification_obli") == 1))
+if ((authGetUserLevel(getUserName(), -1) < 1) and (Settings::get("authentification_obli") == 1))
 {
 	showAccessDenied($back);
 	exit();
@@ -293,7 +293,7 @@ if (strstr ($back, 'view_entry.php'))
 	else
 		$back = "";
 }
-if (getSettingValue("display_level_view_entry") == '1')
+if (Settings::get("display_level_view_entry") == '1')
 {
 	print_header($day, $month, $year, $type_session);
 	if ($back != "")
@@ -635,7 +635,7 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 						}
 						if ($rep_type == 6)
 						{
-							if (getSettingValue("jours_cycles_actif") == "Oui" && intval($jour_cycle) >- 1)
+							if (Settings::get("jours_cycles_actif") == "Oui" && intval($jour_cycle) >- 1)
 								echo "<tr><td><b>".get_vocab("rep_rep_day")."</b></td><td>".get_vocab('jour_cycle').' '.$jour_cycle."</td></tr>\n";
 						}
 						echo '<tr><td><b>'.get_vocab("date").get_vocab("deux_points").'</b></td><td>'.$start_date.'</td></tr>';
@@ -704,12 +704,12 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 						echo "<br /><br /><input type=\"radio\" name=\"statut_id\" value=\"e\" ";
 						if ($statut_id == 'e')
 							echo " checked=\"checked\" ";
-						if ((!(getSettingValue("automatic_mail") == 'yes')) || ($mail_exist == ""))
+						if ((!(Settings::get("automatic_mail") == 'yes')) || ($mail_exist == ""))
 							echo " disabled ";
 						echo " />".get_vocab("signaler_reservation_en_cours_option_2");
-						if ((!(getSettingValue("automatic_mail") == 'yes')) || ($mail_exist == ""))
+						if ((!(Settings::get("automatic_mail") == 'yes')) || ($mail_exist == ""))
 							echo "<br /><i>(".get_vocab("necessite fonction mail automatique").")</i>";
-						if (getSettingValue("automatic_mail") == 'yes')
+						if (Settings::get("automatic_mail") == 'yes')
 						{
 							echo "<br /><br /><input type=\"checkbox\" name=\"envoyer_mail\" value=\"y\" ";
 							if ($mail_exist == "")
@@ -717,7 +717,7 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 							echo " />".get_vocab("envoyer maintenant mail retard");
 							echo "<input type=\"hidden\" name=\"mail_exist\" value=\"".$mail_exist."\" />";
 						}
-						if ((!(getSettingValue("automatic_mail") == 'yes')) || ($mail_exist == ""))
+						if ((!(Settings::get("automatic_mail") == 'yes')) || ($mail_exist == ""))
 							echo "<br /><i>(".get_vocab("necessite fonction mail automatique").")</i>";
 						echo "<br /><div style=\"text-align:center;\"><input class=\"btn btn-primary\" type=\"submit\" name=\"ok\" value=\"".get_vocab("save")."\" /></div></fieldset>\n";
 						echo "<div><input type=\"hidden\" name=\"day\" value=\"".$day."\" />";

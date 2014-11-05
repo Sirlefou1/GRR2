@@ -23,7 +23,7 @@ include "./include/connect.inc.php";
 include "./include/misc.inc.php";
 require_once("./include/$dbsys.inc.php");
 require_once("./include/session.inc.php");
-require_once("./include/settings.inc.php");
+require_once("./include/settings.class.php");
 grr_resumeSession();
 require_once(SPKITLASSO.'/lassospkit_public_api.inc.php');
 require_once('./lasso/delete_user.php');
@@ -47,7 +47,7 @@ if (lassospkit_nameid() != NULL && (getUserName()!=''))
 require_once("./include/language.inc.php");
 require_once("./include/functions.inc.php");
 
-echo begin_page(getSettingValue("company").get_vocab("deux_points").get_vocab("mrbs"),"no_session");
+echo begin_page(Settings::get("company").get_vocab("deux_points").get_vocab("mrbs"),"no_session");
 
 if ((getUserName()=='') && !$defederated) {
   echo get_vocab('lasso_please_connect');

@@ -35,7 +35,7 @@ if (isset($_SERVER['HTTP_REFERER']))
 $display = isset($_GET["display"]) ? $_GET["display"] : NULL;
 $order_by = isset($_GET["order_by"]) ? $_GET["order_by"] : NULL;
 $msg = '';
-if (((getSettingValue("ldap_statut") == "") && (getSettingValue("sso_statut") == "") && (getSettingValue("imap_statut") == "")) || (authGetUserLevel(getUserName(), -1) < 6) && (authGetUserLevel(getUserName(), -1,'user') !=  1))
+if (((Settings::get("ldap_statut") == "") && (Settings::get("sso_statut") == "") && (Settings::get("imap_statut") == "")) || (authGetUserLevel(getUserName(), -1) < 6) && (authGetUserLevel(getUserName(), -1,'user') !=  1))
 {
 	showAccessDenied($back);
 	exit();

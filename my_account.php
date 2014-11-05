@@ -34,9 +34,9 @@ include_once('include/misc.inc.php');
 include_once('include/functions.inc.php');
 require_once('include/'.$dbsys.'.inc.php');
 require_once('include/session.inc.php');
-include_once('include/settings.inc.php');
+include_once('include/settings.class.php');
 $grr_script_name = 'my_account.php';
-if (!loadSettings())
+if (!Settings::load())
 	die('Erreur chargement settings');
 $desactive_VerifNomPrenomUser='y';
 if (!grr_resumeSession())
@@ -171,33 +171,33 @@ if (($valid == 'yes') || ($valid=='reset'))
 		if (($default_site != '') && ($default_site !='0'))
 			$_SESSION['default_site'] = $default_site;
 		else
-			$_SESSION['default_site'] = getSettingValue('default_site');
+			$_SESSION['default_site'] = Settings::get('default_site');
 		if (($default_area != '') && ($default_area !='0'))
 			$_SESSION['default_area'] = $default_area;
 		else
-			$_SESSION['default_area'] = getSettingValue('default_area');
+			$_SESSION['default_area'] = Settings::get('default_area');
 		if (($default_room != '') && ($default_room !='0'))
 			$_SESSION['default_room'] = $default_room;
 		else
-			$_SESSION['default_room'] = getSettingValue('default_room');
+			$_SESSION['default_room'] = Settings::get('default_room');
 		if ($default_style != '')
 			$_SESSION['default_style'] = $default_style;
 		else
-			$_SESSION['default_style'] = getSettingValue('default_css');
+			$_SESSION['default_style'] = Settings::get('default_css');
 		if ($default_list_type != '')
 			$_SESSION['default_list_type'] = $default_list_type;
 		else
-			$_SESSION['default_list_type'] = getSettingValue('area_list_format');
+			$_SESSION['default_list_type'] = Settings::get('area_list_format');
 		if ($default_language != '')
 			$_SESSION['default_language'] = $default_language;
 		else
-			$_SESSION['default_language'] = getSettingValue('default_language');
+			$_SESSION['default_language'] = Settings::get('default_language');
 	}
 }
 $use_prototype = 'y';
 print_header($day, $month, $year, $type="with_session");
 echo "\n    <!-- Repere ".$grr_script_name." -->\n";
-if (getSettingValue("module_multisite") == "Oui")
+if (Settings::get("module_multisite") == "Oui")
 	$use_site = 'y';
 else
 	$use_site = 'n';
@@ -214,27 +214,27 @@ if ($res)
 		if (($row[4] != '') && ($row[4] !='0'))
 			$default_site = $row[4];
 		else
-			$default_site = getSettingValue('default_site');
+			$default_site = Settings::get('default_site');
 		if (($row[5] != '') && ($row[5] !='0'))
 			$default_area = $row[5];
 		else
-			$default_area = getSettingValue('default_area');
+			$default_area = Settings::get('default_area');
 		if (($row[6] != '') && ($row[6] !='0'))
 			$default_room = $row[6];
 		else
-			$default_room = getSettingValue('default_room');
+			$default_room = Settings::get('default_room');
 		if ($row[7] != '')
 			$default_css = $row[7];
 		else
-			$default_css = getSettingValue('default_css');
+			$default_css = Settings::get('default_css');
 		if ($row[8] != '')
 			$default_list_type = $row[8];
 		else
-			$default_list_type = getSettingValue('area_list_format');
+			$default_list_type = Settings::get('area_list_format');
 		if ($row[9] != '')
 			$default_language = $row[9];
 		else
-			$default_language = getSettingValue('default_language');
+			$default_language = Settings::get('default_language');
 		$user_source = $row[10];
 	}
 }
@@ -247,7 +247,7 @@ if ($res)
 			dataType: "html",
 			data: {
 				id_site: $('id_site').serialize(true),
-				default_area : '<?php echo getSettingValue("default_area"); ?>',
+				default_area : '<?php echo Settings::get("default_area"); ?>',
 				session_login:'<?php echo getUserName(); ?>',
 				use_site:'<?php echo $use_site; ?>',
 				type:'domaine',
@@ -267,7 +267,7 @@ if ($res)
 			dataType: "html",
 			data: {
 				id_area:$('id_area').serialize(true),
-				default_room : '<?php echo getSettingValue("default_room"); ?>',
+				default_room : '<?php echo Settings::get("default_room"); ?>',
 				type:'ressource',
 				action:+action,
 				},
@@ -413,13 +413,13 @@ echo ('
 				</td>
 			</tr>
 		</table>';
-		if (getSettingValue("module_multisite") == "Oui")
+		if (Settings::get("module_multisite") == "Oui")
 			echo '
 		<h4>'.get_vocab('explain_default_area_and_room_and_site').'</h4>';
 		else
 			echo '
 		<h4>'.get_vocab('explain_default_area_and_room').'</h4>';
-		if (getSettingValue("module_multisite") == "Oui")
+		if (Settings::get("module_multisite") == "Oui")
 		{
 			$sql = "SELECT id,sitecode,sitename
 			FROM ".TABLE_PREFIX."_site

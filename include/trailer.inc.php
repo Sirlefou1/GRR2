@@ -44,7 +44,7 @@
 //Appel d'une methode en fonction du paramétrage pour le lien imprimable
 if ((!isset($_GET['pview']) || ($_GET['pview'] != 1)) && (isset($affiche_pview)))
 {
-	if (getSettingValue("pview_new_windows") == 1)
+	if (Settings::get("pview_new_windows") == 1)
 	{
 		$s = "<button type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"";
 		$s .= "javascript:window.open(";
@@ -66,7 +66,7 @@ if ((!isset($_GET['pview']) || ($_GET['pview'] != 1)) && (isset($affiche_pview))
 	echo $s;
 }
 // Affichage du message d'erreur en cas d'échec de l'envoi de mails automatiques
-if (!(getSettingValue("javascript_info_disabled")))
+if (!(Settings::get("javascript_info_disabled")))
 {
 	if ((isset($_SESSION['session_message_error'])) && ($_SESSION['session_message_error'] != ''))
 	{

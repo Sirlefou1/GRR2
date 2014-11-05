@@ -35,8 +35,8 @@ include "include/$dbsys.inc.php";
 include "include/mincals.inc.php";
 include "include/mrbs_sql.inc.php";
 $grr_script_name = "week.php";
-require_once("./include/settings.inc.php");
-if (!loadSettings())
+require_once("./include/settings.class.php");
+if (!Settings::load())
 	die("Erreur chargement settings");
 require_once("./include/session.inc.php");
 include "include/resume_session.php";
@@ -55,7 +55,7 @@ else
 if (empty($debug_flag))
 	$debug_flag = 0;
 include "include/setdate.php";
-if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))
+if ((Settings::get("authentification_obli") == 0) && (getUserName() == ''))
 	$type_session = "no_session";
 else
 	$type_session = "with_session";
@@ -73,7 +73,7 @@ if (check_begin_end_bookings($day, $month, $year))
 	showNoBookings($day, $month, $year, $back);
 	exit();
 }
-if (((authGetUserLevel(getUserName(),-1) < 1) && (getSettingValue("authentification_obli") == 1)) || !$verif_acces_ressource || authUserAccesArea(getUserName(), $area) == 0)
+if (((authGetUserLevel(getUserName(),-1) < 1) && (Settings::get("authentification_obli") == 1)) || !$verif_acces_ressource || authUserAccesArea(getUserName(), $area) == 0)
 {
 	showAccessDenied($back);
 	exit();
@@ -90,7 +90,7 @@ if (!isset($correct_heure_ete_hiver) or ($correct_heure_ete_hiver == 1))
 		$decal = 0;
 	$time += $decal;
 }
-if (getSettingValue("verif_reservation_auto") == 0)
+if (Settings::get("verif_reservation_auto") == 0)
 {
 	verify_confirm_reservation();
 	verify_retard_reservation();
@@ -182,7 +182,7 @@ if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
 		</tr>
 	</table>";
 }
-$setting = getSettingValue("menu_gauche");
+$setting = Settings::get("menu_gauche");
 echo "<h4 class=\"titre\">".get_vocab("week").get_vocab("deux_points").utf8_strftime($dformat, $week_start)." - ". utf8_strftime($dformat, $week_end);
 echo " ".ucfirst($this_area_name)." - $this_room_name $this_room_name_des</h4>";
 echo "</div>\n";
@@ -245,9 +245,9 @@ else
 					$prev_weekday = $weekday;
 					$d[$weekday][$slot]["data"] = affichage_lien_resa_planning($row[3],$row[4]);
 					$d[$weekday][$slot]["id"] = $row[4];
-					if (getSettingValue("display_info_bulle") == 1)
+					if (Settings::get("display_info_bulle") == 1)
 						$d[$weekday][$slot]["who"] = get_vocab("reservee au nom de").affiche_nom_prenom_email($row[5],$row[10],"nomail");
-					else if (getSettingValue("display_info_bulle") == 2)
+					else if (Settings::get("display_info_bulle") == 2)
 						$d[$weekday][$slot]["who"] = $row[7];
 					else
 						$d[$weekday][$slot]["who"] = "";
@@ -308,7 +308,7 @@ for ($t = $week_start; $t <= $week_end; $t += 86400)
 	{
 		$class = "";
 		$title = "";
-		if (getSettingValue("show_holidays") == "Oui")
+		if (Settings::get("show_holidays") == "Oui")
 		{
 			$ferie_true = 0;
 			foreach ($ferie as $key => $value)
@@ -329,7 +329,7 @@ for ($t = $week_start; $t <= $week_end; $t += 86400)
 				$class .= "ferie ";
 		}
 		echo "<th style=\"width:14%;\"><a onclick=\"charger()\" class=\"lienPlanning ".$class."\" title=\"".$title.htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day"))."\" href=\"day.php?year=$year_actuel&amp;month=$month_actuel&amp;day=$num_day&amp;area=$area\">". utf8_strftime($dformat, $t)."</a>";
-		if (getSettingValue("jours_cycles_actif") == "Oui" && intval($jour_cycle) >- 1)
+		if (Settings::get("jours_cycles_actif") == "Oui" && intval($jour_cycle) >- 1)
 			if (intval($jour_cycle) > 0)
 				echo "<br />".get_vocab("rep_type_6")." ".$jour_cycle;
 			else
@@ -488,7 +488,7 @@ for ($t = $week_start; $t <= $week_end; $t += 86400)
 							tdcell_rowspan($d[$weekday][$slot - $decale_slot * $nb_case]["color"],$nbrow);
 							if ($acces_fiche_reservation)
 							{
-								if (getSettingValue("display_level_view_entry") == 0)
+								if (Settings::get("display_level_view_entry") == 0)
 								{
 									$currentPage = 'week';
 									$id =  $d[$weekday][$slot - $decale_slot * $nb_case]["id"];

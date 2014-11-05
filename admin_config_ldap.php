@@ -34,13 +34,13 @@ include "include/functions.inc.php";
 include "include/$dbsys.inc.php";
 $grr_script_name = "admin_config_ldap.php";
 // Settings
-require_once("./include/settings.inc.php");
+require_once("./include/settings.class.php");
 // Session related functions
 require_once("./include/session.inc.php");
 // Paramètres langage
 include "include/language.inc.php";
 //Chargement des valeurs de la table settingS
-if (!loadSettings())
+if (!Settings::load())
 	die("Erreur chargement settings");
 $valid = isset($_POST["valid"]) ? $_POST["valid"] : 'no';
 $etape = isset($_POST["etape"]) ? $_POST["etape"] : '0';
@@ -70,7 +70,7 @@ if (isset($_POST['reg_ldap_statut']))
 	}
 	else
 	{
-		if (!saveSetting("ldap_statut", $_POST['ldap_statut']))
+		if (!Settings::set("ldap_statut", $_POST['ldap_statut']))
 			echo encode_message_utf8("Erreur lors de l'enregistrement de ldap_statut !<br />");
 		$grrSettings['ldap_statut'] = $_POST['ldap_statut'];
 	}
@@ -80,41 +80,41 @@ if (isset($_POST['reg_ldap_statut']))
 			$ConvertLdapUtf8toIso = "n";
 		else
 			$ConvertLdapUtf8toIso = "y";
-		if (!saveSetting("ConvertLdapUtf8toIso", $ConvertLdapUtf8toIso))
+		if (!Settings::set("ConvertLdapUtf8toIso", $ConvertLdapUtf8toIso))
 			echo "Erreur lors de l'enregistrement de ConvertLdapUtf8toIso !<br />";
 		$grrSettings['ConvertLdapUtf8toIso'] = $ConvertLdapUtf8toIso;
 		if (!isset($_POST['ActiveModeDiagnostic']))
 			$ActiveModeDiagnostic = "n";
 		else
 			$ActiveModeDiagnostic = "y";
-		if (!saveSetting("ActiveModeDiagnostic", $ActiveModeDiagnostic))
+		if (!Settings::set("ActiveModeDiagnostic", $ActiveModeDiagnostic))
 			echo "Erreur lors de l'enregistrement de ActiveModeDiagnostic !<br />";
 		$grrSettings['ActiveModeDiagnostic'] = $ActiveModeDiagnostic;
-		if (!saveSetting("ldap_champ_recherche", $_POST['ldap_champ_recherche']))
+		if (!Settings::set("ldap_champ_recherche", $_POST['ldap_champ_recherche']))
 			echo "Erreur lors de l'enregistrement de ldap_champ_recherche !<br />";
 		$grrSettings['ldap_champ_recherche'] = $_POST['ldap_champ_recherche'];
 		if ($_POST['ldap_champ_nom'] == '')
 			$_POST['ldap_champ_nom'] = "sn";
-		if (!saveSetting("ldap_champ_nom", $_POST['ldap_champ_nom']))
+		if (!Settings::set("ldap_champ_nom", $_POST['ldap_champ_nom']))
 			echo "Erreur lors de l'enregistrement de ldap_champ_nom !<br />";
 		$grrSettings['ldap_champ_nom'] = $_POST['ldap_champ_nom'];
 		if ($_POST['ldap_champ_prenom'] == '')
 			$_POST['ldap_champ_prenom'] = "sn";
-		if (!saveSetting("ldap_champ_prenom", $_POST['ldap_champ_prenom']))
+		if (!Settings::set("ldap_champ_prenom", $_POST['ldap_champ_prenom']))
 			echo "Erreur lors de l'enregistrement de ldap_champ_prenom !<br />";
 		$grrSettings['ldap_champ_prenom'] = $_POST['ldap_champ_prenom'];
 		if ($_POST['ldap_champ_email'] == '')
 			$_POST['ldap_champ_email'] = "sn";
-		if (!saveSetting("ldap_champ_email", $_POST['ldap_champ_email']))
+		if (!Settings::set("ldap_champ_email", $_POST['ldap_champ_email']))
 			echo "Erreur lors de l'enregistrement de ldap_champ_email !<br />";
 		$grrSettings['ldap_champ_email'] = $_POST['ldap_champ_email'];
-		if (!saveSetting("se3_liste_groupes_autorises", $_POST['se3_liste_groupes_autorises']))
+		if (!Settings::set("se3_liste_groupes_autorises", $_POST['se3_liste_groupes_autorises']))
 			echo "Erreur lors de l'enregistrement de se3_liste_groupes_autorises !<br />";
 		$grrSettings['se3_liste_groupes_autorises'] = $_POST['se3_liste_groupes_autorises'];
 	}
 }
 //Chargement des valeurs de la table settingS
-if (!loadSettings())
+if (!Settings::load())
 	die("Erreur chargement settings");
 if (isset($_POST['submit']))
 {
@@ -453,39 +453,39 @@ if ((!grr_resumeSession()) && $valid != 'yes')
 						echo "<div>\n<input type=\"hidden\" name=\"etape\" value=\"0\" />\n";
 						echo "<input type=\"hidden\" name=\"valid\" value=\"$valid\" />\n";
 						echo "<input type=\"hidden\" name=\"reg_ldap_statut\" value=\"yes\" /></div>\n";
-						if (getSettingValue("ldap_statut") != '')
+						if (Settings::get("ldap_statut") != '')
 						{
 							echo encode_message_utf8("<h3>L'authentification LDAP est activée.</h3>\n");
 							echo encode_message_utf8("<h3>Statut par défaut des utilisateurs importés</h3>\n");
 							echo "<div>".encode_message_utf8("Choisissez le statut qui sera attribué aux personnes présentes dans l'annuaire LDAP lorsqu'elles se connectent pour la première fois.	Vous pourrez par la suite modifier cette valeur pour chaque utilisateur.<br />");
 							echo "<input type=\"radio\" name=\"ldap_statut\" value=\"visiteur\" ";
-							if (getSettingValue("ldap_statut") == 'visiteur')
+							if (Settings::get("ldap_statut") == 'visiteur')
 								echo " checked=\"checked\" ";
 							echo "/>Visiteur<br />";
 							echo "<input type=\"radio\" name=\"ldap_statut\" value=\"utilisateur\" ";
-							if (getSettingValue("ldap_statut") == 'utilisateur')
+							if (Settings::get("ldap_statut") == 'utilisateur')
 								echo " checked=\"checked\" ";
 							echo "/>Usager<br />";
 							echo "Ou bien <br />";
 							echo "<input type=\"radio\" name=\"ldap_statut\" value=\"no_ldap\" />".encode_message_utf8("Désactiver l'authentification LDAP")."<br />";
 							echo "<br />";
 							echo "<input type=\"checkbox\" name=\"ConvertLdapUtf8toIso\" value=\"y\" ";
-							if (getSettingValue("ConvertLdapUtf8toIso") == "y")
+							if (Settings::get("ConvertLdapUtf8toIso") == "y")
 								echo " checked=\"checked\"";
 							echo " />";
 							echo encode_message_utf8("Les données (noms, prénom...) sont stockées en UTF-8 dans l'annuaire (configuration par défaut)");
 							echo "<br />";
 							echo "<input type=\"checkbox\" name=\"ActiveModeDiagnostic\" value=\"y\" ";
-							if (getSettingValue("ActiveModeDiagnostic") == "y")
+							if (Settings::get("ActiveModeDiagnostic") == "y")
 								echo " checked=\"checked\"";
 							echo " />";
 							echo encode_message_utf8("Activer le mode \"diagnostic\" en cas d'erreur de connexion, les messages renvoyés par GRR sont plus explicites. De cette façon, il peut être plus facile de déterminer la cause du problème.");
 							echo "<br /><br />";
-							if (getSettingValue("ldap_champ_recherche") == '')
+							if (Settings::get("ldap_champ_recherche") == '')
 								echo "<span class=\"avertissement\">";
 							echo encode_message_utf8("<b>Attribut utilisé pour la recherche dans l'annuaire</b> :");
-							echo "<input type=\"text\" name=\"ldap_champ_recherche\" value=\"".htmlentities( getSettingValue("ldap_champ_recherche"))."\" size=\"50\" />";
-							if (getSettingValue("ldap_champ_recherche") == '')
+							echo "<input type=\"text\" name=\"ldap_champ_recherche\" value=\"".htmlentities( Settings::get("ldap_champ_recherche"))."\" size=\"50\" />";
+							if (Settings::get("ldap_champ_recherche") == '')
 								echo "<br />Le champ ci-dessous ne doit pas être vide.</span>";
 							echo "<br />";
 							echo encode_message_utf8("La valeur à indiquer ci-dessus varie selon le type d'annuaire utilisé et selon sa configuration
@@ -496,18 +496,18 @@ if ((!grr_resumeSession()) && $valid != 'yes')
 							echo "<br /><br /><b>Liaisons GRR/LDAP</b>";
 							echo "<table><tr>";
 							echo "<td>Nom de famille : </td>";
-							echo "<td><input type=\"text\" name=\"ldap_champ_nom\" value=\"".htmlentities( getSettingValue("ldap_champ_nom"))."\" size=\"20\" /></td>";
+							echo "<td><input type=\"text\" name=\"ldap_champ_nom\" value=\"".htmlentities( Settings::get("ldap_champ_nom"))."\" size=\"20\" /></td>";
 							echo "<td>".encode_message_utf8("Prénom")." : </td>";
-							echo "<td><input type=\"text\" name=\"ldap_champ_prenom\" value=\"".htmlentities( getSettingValue("ldap_champ_prenom"))."\" size=\"20\" /></td>";
+							echo "<td><input type=\"text\" name=\"ldap_champ_prenom\" value=\"".htmlentities( Settings::get("ldap_champ_prenom"))."\" size=\"20\" /></td>";
 							echo "<td>Email : </td>";
-							echo "<td><input type=\"text\" name=\"ldap_champ_email\" value=\"".htmlentities( getSettingValue("ldap_champ_email"))."\" size=\"20\" /></td>";
+							echo "<td><input type=\"text\" name=\"ldap_champ_email\" value=\"".htmlentities( Settings::get("ldap_champ_email"))."\" size=\"20\" /></td>";
 							echo "</tr></table>";
 							echo encode_message_utf8("<br /><br /><b>Cas particulier des serveur SE3</b> : <span class=\"small\">dans le champs ci-dessous, vous pouvez préciser la liste des groupes SE3 autorisés à accéder à GRR.
 								Si le champ est laissé vide, il n'y a pas de restrictions.
 								Dans le cas contraire, seuls les utilisateurs appartenant à au moins l'un des groupes listés seront autorisés à accéder à GRR.
 								Ecrivez les groupes en les séparant par un point-vigule, par exemple : \"Profs;Administratifs\".
 								Seuls les groupes de type \"posixGroup\" sont supportés (les groupes de type \"groupOfNames\" ne sont pas supportés).</span>");
-							echo "<br />\n<input type=\"text\" name=\"se3_liste_groupes_autorises\" value=\"".htmlentities( getSettingValue("se3_liste_groupes_autorises"))."\" size=\"50\" />\n";
+							echo "<br />\n<input type=\"text\" name=\"se3_liste_groupes_autorises\" value=\"".htmlentities( Settings::get("se3_liste_groupes_autorises"))."\" size=\"50\" />\n";
 							echo "</div>\n";
 							echo "<div style=\"text-align:center;\">\n<input type=\"submit\" name=\"Valider1\" value=\"Valider\" />\n</div>\n";
 						}

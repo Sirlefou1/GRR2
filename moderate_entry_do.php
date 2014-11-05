@@ -33,9 +33,9 @@ include "include/$dbsys.inc.php";
 include "include/misc.inc.php";
 include "include/mrbs_sql.inc.php";
 // Settings
-require_once("./include/settings.inc.php");
+require_once("./include/settings.class.php");
 //Chargement des valeurs de la table settingS
-if (!loadSettings())
+if (!Settings::load())
 	die("Erreur chargement settings");
 // Session related functions
 require_once("./include/session.inc.php");
@@ -45,12 +45,12 @@ include "include/language.inc.php";
 $fin_session = 'n';
 if (!grr_resumeSession())
 	$fin_session = 'y';
-if (($fin_session == 'y') && (getSettingValue("authentification_obli") == 1))
+if (($fin_session == 'y') && (Settings::get("authentification_obli") == 1))
 {
 	header("Location: ./logout.php?auto=1&url=$url");
 	die();
 }
-if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))
+if ((Settings::get("authentification_obli") == 0) && (getUserName() == ''))
 	$type_session = "no_session";
 else
 	$type_session = "with_session";

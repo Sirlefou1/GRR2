@@ -35,8 +35,9 @@ include "include/$dbsys.inc.php";
 include "include/mincals.inc.php";
 include "include/mrbs_sql.inc.php";
 $grr_script_name = "day.php";
-require_once("./include/settings.inc.php");
-if (!loadSettings())
+require_once("./include/settings.class.php");
+$settings = new Settings();
+if (!$settings)
 	die("Erreur chargement settings");
 require_once("./include/session.inc.php");
 include "include/resume_session.php";
@@ -55,7 +56,7 @@ else
 $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
-if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))
+if (($settings->get("authentification_obli") == 0) && (getUserName() == ''))
 	$type_session = "no_session";
 else
 	$type_session = "with_session";
@@ -68,7 +69,7 @@ if ($area <= 0)
 	exit();
 }
 print_header($day, $month, $year, $type_session);
-if ((authGetUserLevel(getUserName(), -1) < 1) && (getSettingValue("authentification_obli") == 1))
+if ((authGetUserLevel(getUserName(), -1) < 1) && ($settings->get("authentification_obli") == 1))
 {
 	showAccessDenied($back);
 	exit();
@@ -83,7 +84,7 @@ if (check_begin_end_bookings($day, $month, $year))
 	showNoBookings($day, $month, $year, $back);
 	exit();
 }
-if (getSettingValue("verif_reservation_auto") == 0)
+if ($settings->get("verif_reservation_auto") == 0)
 {
 	verify_confirm_reservation();
 	verify_retard_reservation();
@@ -146,9 +147,9 @@ else
 		if ($row[1] < $am7)
 		{
 			$today[$row[0]][$am7]["data"] = affichage_lien_resa_planning($row[3], $row[4]);
-			if (getSettingValue("display_info_bulle") == 1)
+			if ($settings->get("display_info_bulle") == 1)
 				$today[$row[0]][$am7]["who"] = get_vocab("reservation au nom de").affiche_nom_prenom_email($row[6], $row[11], "nomail");
-			else if (getSettingValue("display_info_bulle") == 2)
+			else if ($settings->get("display_info_bulle") == 2)
 				$today[$row[0]][$am7]["who"] = $row[8];
 			else
 				$today[$row[0]][$am7]["who"] = "";
@@ -156,9 +157,9 @@ else
 		else
 		{
 			$today[$row[0]][$start_t]["data"] = affichage_lien_resa_planning($row[3], $row[4]);
-			if (getSettingValue("display_info_bulle") == 1)
+			if ($settings->get("display_info_bulle") == 1)
 				$today[$row[0]][$start_t]["who"] = get_vocab("reservation au nom de").affiche_nom_prenom_email($row[6], $row[11]);
-			else if (getSettingValue("display_info_bulle") == 2)
+			else if ($settings->get("display_info_bulle") == 2)
 				$today[$row[0]][$start_t]["who"] = $row[8];
 			else
 				$today[$row[0]][$start_t]["who"] = "";
@@ -186,7 +187,7 @@ else
 	$ferie_true = 0;
 	$class = "";
 	$title = "";
-	if (getSettingValue("show_holidays") == "Oui")
+	if ($settings->get("show_holidays") == "Oui")
 	{
 		$ferie = getHolidays($year);
 		$tt = mktime(0, 0, 0, $month, $day,$year);
@@ -215,7 +216,7 @@ else
 		echo "</td><td class=\"right\"><button type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='day.php?year=$ty&amp;month=$tm&amp;day=$td&amp;area=$area';\"> ".get_vocab('dayafter')."  <span class=\"glyphicon glyphicon-forward\"></span></button></td></tr></table>";
 	}
 	echo "<h4 class=\"titre\">" . ucfirst(utf8_strftime($dformat, $am7));
-	if (getSettingValue("jours_cycles_actif") == "Oui" && intval($jour_cycle) >- 1)
+	if ($settings->get("jours_cycles_actif") == "Oui" && intval($jour_cycle) >- 1)
 	{
 		if (intval($jour_cycle) > 0)
 			echo " - ".get_vocab("rep_type_6")." ".$jour_cycle;
@@ -430,7 +431,7 @@ else
 					{
 						if ($acces_fiche_reservation)
 						{
-							if (getSettingValue("display_level_view_entry") == 0)
+							if ($settings->get("display_level_view_entry") == 0)
 							{
 								$currentPage = 'day';
 								echo "<a title=\"".htmlspecialchars($today[$room][$t]["who"])."\" data-width=\"675\" onclick=\"request($id,$day,$month,$year,'$currentPage',readData);\" data-rel=\"popup_name\" class=\"poplight\">$descr";

@@ -72,14 +72,14 @@ echo "<table class=\"table_adm4\">";
 			$liste[] = 'admin_type.php';
 		if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
 			$liste[] = 'admin_calend_ignore.php';
-		if (getSettingValue("jours_cycles_actif") == "Oui")
+		if (Settings::get("jours_cycles_actif") == "Oui")
 		{
 			if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
 				$liste[] = 'admin_calend_jour_cycle.php';
 		}
 		affichetableau($liste,get_vocab("admin_menu_general"));
 		$liste = array();
-		if (getSettingValue("module_multisite") == "Oui")
+		if (Settings::get("module_multisite") == "Oui")
 		{
 			if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
 				$liste[] = 'admin_site.php';
@@ -88,7 +88,7 @@ echo "<table class=\"table_adm4\">";
 			$liste[] = 'admin_room.php';
 		if (authGetUserLevel(getUserName(), -1, 'area') >= 4)
 			$liste[] = 'admin_overload.php';
-		if (getSettingValue("module_multisite") == "Oui")
+		if (Settings::get("module_multisite") == "Oui")
 			affichetableau($liste,get_vocab("admin_menu_site_area_room"));
 		else
 			affichetableau($liste,get_vocab("admin_menu_arearoom"));
@@ -96,7 +96,7 @@ echo "<table class=\"table_adm4\">";
 		$liste = array();
 		if ((authGetUserLevel(getUserName(), -1, 'area') >= 6) || (authGetUserLevel(getUserName(), -1, 'user') == 1))
 			$liste[] = 'admin_user.php';
-		if (getSettingValue("module_multisite") == "Oui")
+		if (Settings::get("module_multisite") == "Oui")
 			if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
 				$liste[] = 'admin_admin_site.php';
 			if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
@@ -105,7 +105,7 @@ echo "<table class=\"table_adm4\">";
 				$liste[] = 'admin_access_area.php';
 			if (authGetUserLevel(getUserName(), -1, 'area') >= 4)
 				$liste[] = 'admin_right.php' ;
-			if ((getSettingValue("ldap_statut") != "") || (getSettingValue("sso_statut") != "") || (getSettingValue("imap_statut") != ""))
+			if ((Settings::get("ldap_statut") != "") || (Settings::get("sso_statut") != "") || (Settings::get("imap_statut") != ""))
 			{
 				if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
 					$liste[] = 'admin_purge_accounts.php';
@@ -120,7 +120,7 @@ echo "<table class=\"table_adm4\">";
 				$liste[] = 'admin_calend.php';
 			if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
 				$liste[] = 'admin_maj.php';
-			if (getSettingValue("sso_ac_corr_profil_statut") == 'y') {
+			if (Settings::get("sso_ac_corr_profil_statut") == 'y') {
 				if (authGetUserLevel(getUserName(), -1, 'area') >= 5)
 					$liste[] = 'admin_corresp_statut.php';
 			}

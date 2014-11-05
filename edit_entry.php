@@ -97,12 +97,12 @@ $qui_peut_reserver_pour  = grr_sql_query1("SELECT qui_peut_reserver_pour FROM ".
 $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars( $_SERVER['HTTP_REFERER']);
-$longueur_liste_ressources_max = getSettingValue("longueur_liste_ressources_max");
+$longueur_liste_ressources_max = Settings::get("longueur_liste_ressources_max");
 if ($longueur_liste_ressources_max == '')
 	$longueur_liste_ressources_max = 20;
 if (check_begin_end_bookings($day, $month, $year))
 {
-	if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))
+	if ((Settings::get("authentification_obli") == 0) && (getUserName() == ''))
 		$type_session = "no_session";
 	else
 		$type_session = "with_session";
@@ -244,7 +244,7 @@ else
 		$duration = $duree_par_defaut_reservation_area ;
 	}
 	$edit_type   = "series";
-	if (getSettingValue("remplissage_description_breve") == '2')
+	if (Settings::get("remplissage_description_breve") == '2')
 		$breve_description = $_SESSION['prenom']." ".$_SESSION['nom'];
 	else
 		$breve_description = "";
@@ -389,7 +389,7 @@ print_header($day, $month, $year, $type="with_session");
 			}
 		}
 		<?php
-		if (getSettingValue("jours_cycles_actif") == "Oui") {
+		if (Settings::get("jours_cycles_actif") == "Oui") {
 			?>
 			menu = document.getElementById('menuP');
 			if (menu)
@@ -425,7 +425,7 @@ print_header($day, $month, $year, $type="with_session");
 			{
 				menu.style.display = "none";
 				<?php
-				if (getSettingValue("remplissage_description_breve") == '2')
+				if (Settings::get("remplissage_description_breve") == '2')
 				{
 					?>
 					document.forms["main"].name.value=document.forms["main"].beneficiaire.options[document.forms["main"].beneficiaire.options.selectedIndex].text;
@@ -437,7 +437,7 @@ print_header($day, $month, $year, $type="with_session");
 			{
 				menu.style.display = "";
 				<?php
-				if (getSettingValue("remplissage_description_breve") == '2')
+				if (Settings::get("remplissage_description_breve") == '2')
 				{
 					?>
 					document.forms["main"].name.value="";
@@ -496,7 +496,7 @@ print_header($day, $month, $year, $type="with_session");
 				return false;
 			}
 		}
-		<?php if (getSettingValue("remplissage_description_breve") == '1')
+		<?php if (Settings::get("remplissage_description_breve") == '1')
 		{
 			?>
 			if (document.forms["main"].name.value == "")
@@ -578,7 +578,7 @@ else
 	}
 }
 $B = get_vocab("namebooker");
-if (getSettingValue("remplissage_description_breve") == '1')
+if (Settings::get("remplissage_description_breve") == '1')
 {
 	$B .= " *";
 	$affiche_mess_asterisque=true;
@@ -724,7 +724,7 @@ echo '      <input class="form-control" type="text" name="benef_ext_nom" value="
 echo '    </div>'.PHP_EOL;
 echo '  </div>'.PHP_EOL;
 $affiche_mess_asterisque = true;
-if (getSettingValue("automatic_mail") == 'yes')
+if (Settings::get("automatic_mail") == 'yes')
 {
 	echo '<div class="form-group">'.PHP_EOL;
 	echo '    <div class="input-group">'.PHP_EOL;
@@ -1054,13 +1054,13 @@ if (($edit_type == "series") || (isset($flag_periodicite)))
 	echo "<tr><td><table id=\"menu1\" style=\"display:none;\">\n ";
 	echo "<tr><td class=\"F\"><b>".get_vocab("rep_type")."</b></td></tr><tr><td class=\"CL\">\n";
 	echo "<table border=\"0\"  width=\"100%\" >\n";
-	if (getSettingValue("jours_cycles_actif") == "Oui")
+	if (Settings::get("jours_cycles_actif") == "Oui")
 		$max = 8;
 	else
 		$max = 7;
 	for ($i = 0; $i < $max ; $i++)
 	{
-		if ($i == 6 && getSettingValue("jours_cycles_actif") == "Non")
+		if ($i == 6 && Settings::get("jours_cycles_actif") == "Non")
 			$i++;
 		if ($i != 5)
 		{
@@ -1146,7 +1146,7 @@ if (($edit_type == "series") || (isset($flag_periodicite)))
 	echo "<table style=\"display:none\" id=\"menuP\" width=\"100%\">\n";
 	echo "<tr><td class=\"F\"><b>Jours/Cycle</b></td></tr>\n";
 	echo "<tr><td class=\"CL\">";
-	for ($i = 1; $i < (getSettingValue("nombre_jours_Jours/Cycles") + 1); $i++)
+	for ($i = 1; $i < (Settings::get("nombre_jours_Jours/Cycles") + 1); $i++)
 	{
 		$wday = $i;
 		echo "<input type=\"radio\" name=\"rep_jour_\" value=\"$wday\"";

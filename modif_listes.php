@@ -36,7 +36,7 @@
 //$action : 1-> on actualise la liste des ressources
 //					2-> on vide la liste des ressouces
 include "include/admin.inc.php";
-if ((authGetUserLevel(getUserName(), -1) < 1) && (getSettingValue("authentification_obli") == 1))
+if ((authGetUserLevel(getUserName(), -1) < 1) && (Settings::get("authentification_obli") == 1))
 {
 	showAccessDenied("");
 	exit();
@@ -65,7 +65,7 @@ if ($_GET['type'] == "domaine")
 	}
 	else
 		die();
-	if (getSettingValue("module_multisite") == "Oui")
+	if (Settings::get("module_multisite") == "Oui")
 	{
  	// on a activé les sites
 		if ($id_site != -1)
@@ -82,10 +82,10 @@ if ($_GET['type'] == "domaine")
 		FROM ".TABLE_PREFIX."_area
 		ORDER BY order_display, area_name";
 	}
-	if (($id_site!=-1) || (getSettingValue("module_multisite") == "Oui"))
+	if (($id_site!=-1) || (Settings::get("module_multisite") == "Oui"))
 		$resultat = grr_sql_query($sql);
 	$display_liste = '<table border="0"><tr><td><b><i>'.get_vocab('areas').'</i></b></td><tr></tr><td><select id="id_area" name="id_area"  onchange="modifier_liste_ressources(1)">'."\n";
-	if (($id_site!=-1) || (getSettingValue("module_multisite") == "Oui"))
+	if (($id_site!=-1) || (Settings::get("module_multisite") == "Oui"))
 	{
 		for ($enr = 0; ($row = grr_sql_row($resultat, $enr)); $enr++)
 		{

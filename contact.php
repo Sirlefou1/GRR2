@@ -35,9 +35,9 @@ include_once('include/misc.inc.php');
 include_once('include/mrbs_sql.inc.php');
 $grr_script_name = 'contact.php';
 // Settings
-require_once('include/settings.inc.php');
+require_once('include/settings.class.php');
 //Chargement des valeurs de la table settingS
-if (!loadSettings())
+if (!Settings::load())
 	die("Erreur chargement settings");
 // Session related functions
 require_once('include/session.inc.php');
@@ -47,17 +47,17 @@ include_once('include/language.inc.php');
 $fin_session = 'n';
 if (!grr_resumeSession())
 	$fin_session = 'y';
-if (($fin_session == 'y') && (getSettingValue("authentification_obli") == 1))
+if (($fin_session == 'y') && (Settings::get("authentification_obli") == 1))
 {
 	header("Location: ./logout.php?auto=1&url=$url");
 	die();
 }
-if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))
+if ((Settings::get("authentification_obli") == 0) && (getUserName() == ''))
 	$type_session = "no_session";
 else
 	$type_session = "with_session";
 header('Content-Type: text/html; charset=utf-8');
-echo begin_page(getSettingValue("company"));
+echo begin_page(Settings::get("company"));
 echo "<div class=\"page_sans_col_gauche\">";
 $cible = isset($_POST["cible"]) ? $_POST["cible"] : (isset($_GET["cible"]) ? $_GET["cible"] : '');
 $cible = htmlentities($cible);
@@ -86,9 +86,9 @@ switch ($action)
 	if ($type_cible == "identifiant:non")
 	{
 		if ($cible == "contact_administrateur")
-			$destinataire = getSettingValue("webmaster_email");
+			$destinataire = Settings::get("webmaster_email");
 		else if ($cible == "contact_support")
-			$destinataire = getSettingValue("technical_support_email");
+			$destinataire = Settings::get("technical_support_email");
 	}
 	else
 	{
@@ -112,19 +112,19 @@ switch ($action)
 			$message .= "Email du demandeur : ".$user_email."\n";
 		$message .= $vocab["statut"].preg_replace("/ /", " ",$vocab["deux_points"]).$_SESSION['statut']."\n";
 	}
-	$message .= $vocab["company"].preg_replace("/ /", " ",$vocab["deux_points"]).removeMailUnicode(getSettingValue("company"))."\n";
+	$message .= $vocab["company"].preg_replace("/ /", " ",$vocab["deux_points"]).removeMailUnicode(Settings::get("company"))."\n";
 	$message .= $vocab["email"].preg_replace("/ /", " ",$vocab["deux_points"]).$email_reponse."\n";
 	$message.="\n".$corps_message."\n";
 	$sujet = $vocab["subject_mail1"]." - ".$objet_message;
 	error_reporting (E_ALL ^ E_NOTICE ^ E_WARNING);
 	require 'phpmailer/PHPMailerAutoload.php';
-	define("GRR_FROM",getSettingValue("grr_mail_from"));
-	define("GRR_FROMNAME",getSettingValue("grr_mail_fromname"));
+	define("GRR_FROM",Settings::get("grr_mail_from"));
+	define("GRR_FROMNAME",Settings::get("grr_mail_fromname"));
 	$mail = new PHPMailer();
 	$mail->isSMTP();
 	$mail->SMTPDebug = 0;
 	$mail->Debugoutput = 'html';
-	$mail->Host = getSettingValue("grr_mail_smtp");
+	$mail->Host = Settings::get("grr_mail_smtp");
 	$mail->Port = 25;
 	$mail->SMTPAuth = false;
 	$mail->CharSet = 'UTF-8';
@@ -149,8 +149,8 @@ switch ($action)
 	echo "<table cellpadding='5'>";
 	if (($fin_session == 'n') && (getUserName() != ''))
 		echo "<tr><td>".get_vocab("Message poste par").get_vocab("deux_points")."</td><td><b>".affiche_nom_prenom_email(getUserName(), "", $type = "nomail")."</b></td></tr>\n";
-	echo "<tr><td>".get_vocab("webmaster_name").get_vocab("deux_points")."</td><td><b>".getSettingValue("webmaster_name")."</b></td></tr>\n";
-	echo "<tr><td>".get_vocab("company").get_vocab("deux_points")."</td><td><b>".getSettingValue("company")."</b></td></tr>\n";
+	echo "<tr><td>".get_vocab("webmaster_name").get_vocab("deux_points")."</td><td><b>".Settings::get("webmaster_name")."</b></td></tr>\n";
+	echo "<tr><td>".get_vocab("company").get_vocab("deux_points")."</td><td><b>".Settings::get("company")."</b></td></tr>\n";
 	echo "<tr><td colspan=\"2\">".get_vocab("Redigez votre message ci-dessous").get_vocab("deux_points")."</td></tr>\n";
 	echo "</table>\n";
 	echo "<form action=\"contact.php\" method=\"post\" id=\"doc\">\n";

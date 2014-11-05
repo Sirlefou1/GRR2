@@ -35,9 +35,9 @@ include "include/$dbsys.inc.php";
 include "include/mrbs_sql.inc.php";
 $grr_script_name = "view_rights_room.php";
 //Paramètres de connection
-require_once("./include/settings.inc.php");
+require_once("./include/settings.class.php");
 //Chargement des valeurs de la table settings
-if (!loadSettings())
+if (!Settings::load())
 	die("Erreur chargement settings");
 //Fonction relative à la session
 require_once("./include/session.inc.php");
@@ -63,7 +63,7 @@ if (!verif_access_search(getUserName()))
 }
 // Construction des identifiants de la ressource $room, du domaine $area, du site $id_site
 Definition_ressource_domaine_site();
-if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))
+if ((Settings::get("authentification_obli") == 0) && (getUserName() == ''))
 	$type_session = "no_session";
 else
 	$type_session = "with_session";
@@ -378,7 +378,7 @@ if (isset($champ[0]))
 }
 else
 {
-	$to_time = mktime(0, 0, 0, $month, $day + getSettingValue("default_report_days"), $year);
+	$to_time = mktime(0, 0, 0, $month, $day + Settings::get("default_report_days"), $year);
 	if (!isset($From_day))
 		$From_day = $day;
 	if (!isset($From_month))
@@ -571,7 +571,7 @@ if (($summarize != 4) && ($summarize != 5))
 						{
 							echo '<p style="text-align:center;">
 							<a href="' . traite_grr_url("","y")."report.php" . '?' . htmlspecialchars($_SERVER['QUERY_STRING']) . '&amp;pview=1" ';
-							if (getSettingValue("pview_new_windows") == 1)
+							if (Settings::get("pview_new_windows") == 1)
 								echo ' target="_blank"';
 							echo '><span class="glyphicon glyphicon-print"></span></a>
 						</p>';

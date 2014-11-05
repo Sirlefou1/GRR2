@@ -35,8 +35,8 @@ include "include/$dbsys.inc.php";
 include "include/mincals.inc.php";
 include "include/mrbs_sql.inc.php";
 $grr_script_name = "month_all2.php";
-require_once("./include/settings.inc.php");
-if (!loadSettings())
+require_once("./include/settings.class.php");
+if (!Settings::load())
 	die("Erreur chargement settings");
 require_once("./include/session.inc.php");
 include "include/resume_session.php";
@@ -61,7 +61,7 @@ if (empty($month) || empty($year) || !checkdate($month, 1, $year))
 }
 if (!isset($day))
 	$day = 1;
-if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))
+if ((Settings::get("authentification_obli") == 0) && (getUserName() == ''))
 	$type_session = "no_session";
 else
 	$type_session = "with_session";
@@ -77,12 +77,12 @@ if (check_begin_end_bookings($day, $month, $year))
 	showNoBookings($day, $month, $year,$back);
 	exit();
 }
-if (((authGetUserLevel(getUserName(),-1) < 1) && (getSettingValue("authentification_obli") == 1)) || authUserAccesArea(getUserName(), $area) == 0)
+if (((authGetUserLevel(getUserName(),-1) < 1) && (Settings::get("authentification_obli") == 1)) || authUserAccesArea(getUserName(), $area) == 0)
 {
 	showAccessDenied($back);
 	exit();
 }
-if (getSettingValue("verif_reservation_auto") == 0)
+if (Settings::get("verif_reservation_auto") == 0)
 {
 	verify_confirm_reservation();
 	verify_retard_reservation();
@@ -184,9 +184,9 @@ else
 				echo "<br />DEBUG: Entry $row[2] day $day_num\n";
 			$d[$day_num]["id"][] = $row[2];
 			$temp = "";
-			if (getSettingValue("display_info_bulle") == 1)
+			if (Settings::get("display_info_bulle") == 1)
 				$temp = get_vocab("reservee au nom de").$row_user[0]." ".$row_user[1];
-			else if (getSettingValue("display_info_bulle") == 2)
+			else if (Settings::get("display_info_bulle") == 2)
 				$temp = $row[7];
 			if ($temp != "")
 				$temp = " - ".$temp;
@@ -307,7 +307,7 @@ for ($k = 0; $k < $days_in_month; $k++)
 	if ($display_day[$cweek] == 1)
 	{
 		echo "<th class=\"tableau_month_all2\">$name_day";
-		if (getSettingValue("jours_cycles_actif") == "Oui" && intval($jour_cycle) > -1)
+		if (Settings::get("jours_cycles_actif") == "Oui" && intval($jour_cycle) > -1)
 		{
 			if (intval($jour_cycle) > 0)
 				echo "<br /></><i> ".ucfirst(substr(get_vocab("rep_type_6"), 0, 1)).$jour_cycle."</i>";
@@ -372,7 +372,7 @@ for ($ir = 0; ($row = grr_sql_row($res, $ir)); $ir++)
 									echo "<span class=\"small_planning\">";
 									if ($acces_fiche_reservation)
 									{
-										if (getSettingValue("display_level_view_entry") == 0)
+										if (Settings::get("display_level_view_entry") == 0)
 										{
 											$currentPage = 'month_all2';
 											$id =   $d[$cday]["id"][$i];

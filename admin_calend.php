@@ -64,7 +64,7 @@ $result = 0;
 if (isset($_POST['record']) && ($_POST['record'] == 'yes'))
 {
 	$etape = 4;
-	$end_bookings = getSettingValue("end_bookings");
+	$end_bookings = Settings::get("end_bookings");
 	// On reconstitue le tableau des ressources
 	$sql = "SELECT id FROM ".TABLE_PREFIX."_room";
 	$res = grr_sql_query($sql);
@@ -84,9 +84,9 @@ if (isset($_POST['record']) && ($_POST['record'] == 'yes'))
 				if (1)
 				{
 					get_planning_area_values($area_id);
-					$n = getSettingValue("begin_bookings");
-					$month = strftime("%m", getSettingValue("begin_bookings"));
-					$year = strftime("%Y", getSettingValue("begin_bookings"));
+					$n = Settings::get("begin_bookings");
+					$month = strftime("%m", Settings::get("begin_bookings"));
+					$year = strftime("%Y", Settings::get("begin_bookings"));
 					$day = 1;
 					while ($n <= $end_bookings)
 					{
@@ -277,11 +277,11 @@ if ($etape == 3)
 	echo "<td> </td></tr>\n";
 	echo "</table>\n";
 	echo "<table cellspacing=\"20\">\n";
-	$n = getSettingValue("begin_bookings");
-	$end_bookings = getSettingValue("end_bookings");
+	$n = Settings::get("begin_bookings");
+	$end_bookings = Settings::get("end_bookings");
 	$debligne = 1;
-	$month = strftime("%m", getSettingValue("begin_bookings"));
-	$year = strftime("%Y", getSettingValue("begin_bookings"));
+	$month = strftime("%m", Settings::get("begin_bookings"));
+	$year = strftime("%Y", Settings::get("begin_bookings"));
 	$inc = 0;
 	while ($n <= $end_bookings)
 	{

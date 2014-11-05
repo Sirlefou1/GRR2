@@ -127,9 +127,9 @@ if ($type == "area")
 			grr_sql_command("DELETE FROM ".TABLE_PREFIX."_setting WHERE NAME='default_area'");
 			grr_sql_command("DELETE FROM ".TABLE_PREFIX."_setting WHERE NAME='default_room'");
 			// Settings
-			require_once("./include/settings.inc.php");
+			require_once("./include/settings.class.php");
 			//Chargement des valeurs de la table settingS
-			if (!loadSettings())
+			if (!Settings::load())
 				die("Erreur chargement settings");
 		}
 		//Redirect back to the admin page

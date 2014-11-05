@@ -46,13 +46,13 @@ if (isset($_POST['record']) && ($_POST['record'] == 'yes'))
 	if (grr_sql_command($sql) < 0)
 		fatal_error(1, "<p>" . grr_sql_error());
 	$result = 0;
-	$end_bookings = getSettingValue("end_bookings");
-	$n = getSettingValue("begin_bookings");
-	$month = strftime("%m", getSettingValue("begin_bookings"));
-	$year = strftime("%Y", getSettingValue("begin_bookings"));
+	$end_bookings = Settings::get("end_bookings");
+	$n = Settings::get("begin_bookings");
+	$month = strftime("%m", Settings::get("begin_bookings"));
+	$year = strftime("%Y", Settings::get("begin_bookings"));
 	$day = 1;
 	// Pour aller chercher le Jour cycle qui débutera le premier cycle de jours
-	$m = getSettingValue("jour_debut_Jours/Cycles");
+	$m = Settings::get("jour_debut_Jours/Cycles");
 	while ($n <= $end_bookings)
 	{
 		$daysInMonth = getDaysInMonth($month, $year);
@@ -87,8 +87,8 @@ if (isset($_POST['record']) && ($_POST['record'] == 'yes'))
 	}
 }
 echo "<p>".get_vocab("les_journees_cochees_sont_valides").get_vocab("deux_points");
-echo "<br />* ".get_vocab("nombre_jours_Jours/Cycles").get_vocab("deux_points").getSettingValue("nombre_jours_Jours/Cycles");
-echo "<br />* ".get_vocab("debut_Jours/Cycles").get_vocab("deux_points").getSettingValue("jour_debut_Jours/Cycles");
+echo "<br />* ".get_vocab("nombre_jours_Jours/Cycles").get_vocab("deux_points").Settings::get("nombre_jours_Jours/Cycles");
+echo "<br />* ".get_vocab("debut_Jours/Cycles").get_vocab("deux_points").Settings::get("jour_debut_Jours/Cycles");
 echo "<br /><br />".get_vocab("explication_Jours_Cycles2")."</p>";
 echo "<table cellpadding=\"3\">\n";
 $basetime = mktime(12, 0, 0, 6, 11 + $weekstarts, 2000);
@@ -106,11 +106,11 @@ echo "<td></td></tr>\n";
 echo "</table>\n";
 echo "<form action=\"admin_calend_jour_cycle.php?page_calend=2\" method=\"post\" id=\"formulaire\">\n";
 echo "<table cellspacing=\"20\">\n";
-$n = getSettingValue("begin_bookings");
-$end_bookings = getSettingValue("end_bookings");
+$n = Settings::get("begin_bookings");
+$end_bookings = Settings::get("end_bookings");
 $debligne = 1;
-$month = strftime("%m", getSettingValue("begin_bookings"));
-$year = strftime("%Y", getSettingValue("begin_bookings"));
+$month = strftime("%m", Settings::get("begin_bookings"));
+$year = strftime("%Y", Settings::get("begin_bookings"));
 $inc = 0;
 while ($n <= $end_bookings)
 {

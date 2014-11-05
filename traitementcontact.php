@@ -7,7 +7,7 @@ include "include/$dbsys.inc.php";
 include "include/mrbs_sql.inc.php";
 $grr_script_name = "week_all.php";
 // Settings
-require_once("./include/settings.inc.php");
+require_once("./include/settings.class.php");
 $msg_erreur = "Erreur. Les champs suivants doivent être obligatoirement
 remplis :<br/><br/>";
 $msg_ok = "Votre demande a bien été prise en compte.";

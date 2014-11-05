@@ -42,23 +42,23 @@ $year  = date("Y");
 check_access(6, $back);
 if (isset($_GET['valid']) && ($_GET['valid'] == "yes"))
 {
-	if (!saveSetting("begin_bookings", $_GET['begin_bookings']))
+	if (!Settings::set("begin_bookings", $_GET['begin_bookings']))
 		echo "Erreur lors de l'enregistrement de begin_bookings !<br />";
 	else
 	{
-		$del = grr_sql_query("DELETE FROM ".TABLE_PREFIX."_entry WHERE (end_time < ".getSettingValue('begin_bookings').")");
-		$del = grr_sql_query("DELETE FROM ".TABLE_PREFIX."_repeat WHERE end_date < ".getSettingValue("begin_bookings"));
-		$del = grr_sql_query("DELETE FROM ".TABLE_PREFIX."_entry_moderate WHERE (end_time < ".getSettingValue('begin_bookings').")");
-		$del = grr_sql_query("DELETE FROM ".TABLE_PREFIX."_calendar WHERE DAY < ".getSettingValue("begin_bookings"));
+		$del = grr_sql_query("DELETE FROM ".TABLE_PREFIX."_entry WHERE (end_time < ".Settings::get('begin_bookings').")");
+		$del = grr_sql_query("DELETE FROM ".TABLE_PREFIX."_repeat WHERE end_date < ".Settings::get("begin_bookings"));
+		$del = grr_sql_query("DELETE FROM ".TABLE_PREFIX."_entry_moderate WHERE (end_time < ".Settings::get('begin_bookings').")");
+		$del = grr_sql_query("DELETE FROM ".TABLE_PREFIX."_calendar WHERE DAY < ".Settings::get("begin_bookings"));
 	}
-	if (!saveSetting("end_bookings", $_GET['end_bookings']))
+	if (!Settings::set("end_bookings", $_GET['end_bookings']))
 		echo "Erreur lors de l'enregistrement de end_bookings !<br />";
 	else
 	{
-		$del = grr_sql_query("DELETE FROM ".TABLE_PREFIX."_entry WHERE start_time > ".getSettingValue("end_bookings"));
-		$del = grr_sql_query("DELETE FROM ".TABLE_PREFIX."_repeat WHERE start_time > ".getSettingValue("end_bookings"));
-		$del = grr_sql_query("DELETE FROM ".TABLE_PREFIX."_entry_moderate WHERE (start_time > ".getSettingValue('end_bookings').")");
-		$del = grr_sql_query("DELETE FROM ".TABLE_PREFIX."_calendar WHERE DAY > ".getSettingValue("end_bookings"));
+		$del = grr_sql_query("DELETE FROM ".TABLE_PREFIX."_entry WHERE start_time > ".Settings::get("end_bookings"));
+		$del = grr_sql_query("DELETE FROM ".TABLE_PREFIX."_repeat WHERE start_time > ".Settings::get("end_bookings"));
+		$del = grr_sql_query("DELETE FROM ".TABLE_PREFIX."_entry_moderate WHERE (start_time > ".Settings::get('end_bookings').")");
+		$del = grr_sql_query("DELETE FROM ".TABLE_PREFIX."_calendar WHERE DAY > ".Settings::get("end_bookings"));
 	}
 	header("Location: ./admin_config.php");
 

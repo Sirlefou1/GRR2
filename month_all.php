@@ -35,8 +35,8 @@ include "include/$dbsys.inc.php";
 include "include/mincals.inc.php";
 include "include/mrbs_sql.inc.php";
 $grr_script_name = "month_all.php";
-require_once("./include/settings.inc.php");
-if (!loadSettings())
+require_once("./include/settings.class.php");
+if (!Settings::load())
 	die("Erreur chargement settings");
 require_once("./include/session.inc.php");
 include "include/resume_session.php";
@@ -62,7 +62,7 @@ if (empty($month) || empty($year) || !checkdate($month, 1, $year))
 }
 if (!isset($day))
 	$day = 1;
-if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))
+if ((Settings::get("authentification_obli") == 0) && (getUserName() == ''))
 	$type_session = "no_session";
 else
 	$type_session = "with_session";
@@ -78,12 +78,12 @@ if (check_begin_end_bookings($day, $month, $year))
 	showNoBookings($day, $month, $year, $back);
 	exit();
 }
-if (((authGetUserLevel(getUserName(),-1) < 1) && (getSettingValue("authentification_obli") == 1)) || authUserAccesArea(getUserName(), $area) == 0)
+if (((authGetUserLevel(getUserName(),-1) < 1) && (Settings::get("authentification_obli") == 1)) || authUserAccesArea(getUserName(), $area) == 0)
 {
 	showAccessDenied($back);
 	exit();
 }
-if (getSettingValue("verif_reservation_auto") == 0)
+if (Settings::get("verif_reservation_auto") == 0)
 {
 	verify_confirm_reservation();
 	verify_retard_reservation();
@@ -195,9 +195,9 @@ else
 				echo "<br />DEBUG: Entry $row[2] day $day_num\n";
 			$d[$day_num]["id"][] = $row[2];
 			$d[$day_num]["id_room"][] = $row[10];
-			if (getSettingValue("display_info_bulle") == 1)
+			if (Settings::get("display_info_bulle") == 1)
 				$d[$day_num]["who"][] = get_vocab("reservee au nom de").affiche_nom_prenom_email($row[4], $row[9], "nomail");
-			else if (getSettingValue("display_info_bulle") == 2)
+			else if (Settings::get("display_info_bulle") == 2)
 				$d[$day_num]["who"][] = $row[6];
 			else
 				$d[$day_num]["who"][] = "";
@@ -350,7 +350,7 @@ else
 			$ferie_true = 0;
 			$class = "";
 			$title = "";
-			if (getSettingValue("show_holidays") == "Oui")
+			if (Settings::get("show_holidays") == "Oui")
 			{
 				foreach ($ferie as $key => $value)
 				{
@@ -370,7 +370,7 @@ else
 					$class .= "ferie ";
 			}
 			echo "<div class=\"monthday ".$class."\"><a title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day")).$title."\" href=\"day.php?year=$year&amp;month=$month&amp;day=$cday&amp;area=$area\">".$name_day;
-			if (getSettingValue("jours_cycles_actif") == "Oui" && intval($jour_cycle) > -1)
+			if (Settings::get("jours_cycles_actif") == "Oui" && intval($jour_cycle) > -1)
 			{
 				if (intval($jour_cycle) > 0)
 					echo " - ".get_vocab("rep_type_6")." ".$jour_cycle;
@@ -406,7 +406,7 @@ else
 							echo "<span class=\"small_planning\">";
 							if ($acces_fiche_reservation[$d[$cday]["id_room"][$i]])
 							{
-								if (getSettingValue("display_level_view_entry") == 0)
+								if (Settings::get("display_level_view_entry") == 0)
 								{
 									$currentPage = 'month_all';
 									$id =   $d[$cday]["id"][$i];

@@ -54,10 +54,10 @@ if (isset($_POST['record']) && ($_POST['record'] == 'yes'))
 	if (grr_sql_command($sql) < 0)
 		fatal_error(0, "<p>" . grr_sql_error());
 	$result = 0;
-	$end_bookings = getSettingValue("end_bookings");
-	$n = getSettingValue("begin_bookings");
-	$month = strftime("%m", getSettingValue("begin_bookings"));
-	$year = strftime("%Y", getSettingValue("begin_bookings"));
+	$end_bookings = Settings::get("end_bookings");
+	$n = Settings::get("begin_bookings");
+	$month = strftime("%m", Settings::get("begin_bookings"));
+	$year = strftime("%Y", Settings::get("begin_bookings"));
 	$day = 1;
 	while ($n <= $end_bookings)
 	{
@@ -113,11 +113,11 @@ echo "<td> </td></tr>\n";
 echo "</table>\n";
 echo "<form action=\"admin_calend_ignore.php\" method=\"post\" id=\"formulaire\">\n";
 echo "<table cellspacing=\"20\">\n";
-$n = getSettingValue("begin_bookings");
-$end_bookings = getSettingValue("end_bookings");
+$n = Settings::get("begin_bookings");
+$end_bookings = Settings::get("end_bookings");
 $debligne = 1;
-$month = utf8_encode(strftime("%m", getSettingValue("begin_bookings")));
-$year = strftime("%Y", getSettingValue("begin_bookings"));
+$month = utf8_encode(strftime("%m", Settings::get("begin_bookings")));
+$year = strftime("%Y", Settings::get("begin_bookings"));
 $inc = 0;
 while ($n <= $end_bookings)
 {

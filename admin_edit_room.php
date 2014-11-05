@@ -32,7 +32,7 @@
 include "include/admin.inc.php";
 $grr_script_name = "admin_edit_room.php";
 $ok = NULL;
-if (getSettingValue("module_multisite") == "Oui")
+if (Settings::get("module_multisite") == "Oui")
 	$id_site = isset($_POST["id_site"]) ? $_POST["id_site"] : (isset($_GET["id_site"]) ? $_GET["id_site"] : -1);
 $action = isset($_POST["action"]) ? $_POST["action"] : (isset($_GET["action"]) ? $_GET["action"] : NULL);
 $add_area = isset($_POST["add_area"]) ? $_POST["add_area"] : (isset($_GET["add_area"]) ? $_GET["add_area"] : NULL);
@@ -416,7 +416,7 @@ if ((!empty($room)) || (isset($area_id)))
 		echo "</div>";
 		$nom_picture = '';
 		if ($row['picture_room'] != '') $nom_picture = "./images/".$row['picture_room'];
-		if (getSettingValue("use_fckeditor") == 1)
+		if (Settings::get("use_fckeditor") == 1)
 			echo "<script type=\"text/javascript\" src=\"js/ckeditor/ckeditor.js\"></script>\n";
 		echo "<table border=\"1\" cellspacing=\"1\" cellpadding=\"6\">\n";
 		echo "<tr><td>".get_vocab("name").get_vocab("deux_points")."</td><td style=\"width:30%;\">\n";
@@ -503,7 +503,7 @@ if ((!empty($room)) || (isset($area_id)))
 		if ($row["who_can_see"] == 4)
 			echo " selected=\"selected\" ";
 		echo ">".get_vocab("visu_fiche_description4")."</option>\n";
-		if (getSettingValue("module_multisite") != "Oui")
+		if (Settings::get("module_multisite") != "Oui")
 		{
 			echo "<option value=\"5\" ";
 			if ($row["who_can_see"] == 5)
@@ -538,12 +538,12 @@ if ((!empty($room)) || (isset($area_id)))
 			echo "/></td></tr>\n";
 			// Description complete
 			echo "<tr><td colspan=\"2\">".get_vocab("description complete");
-			if (getSettingValue("use_fckeditor") != 1)
+			if (Settings::get("use_fckeditor") != 1)
 				echo " ".get_vocab("description complete2");
 			echo get_vocab("deux_points")."<br />";
-			if (getSettingValue("use_fckeditor") == 1)
+			if (Settings::get("use_fckeditor") == 1)
 			{
-				echo "<textarea class=\"ckeditor\" id=\"editor1\" name=\"message_accueil\" rows=\"8\" cols=\"120\">\n";
+				echo "<textarea class=\"ckeditor\" id=\"editor1\" name=\"comment_room\" rows=\"8\" cols=\"120\">\n";
 				echo htmlspecialchars($row['comment_room']);
 				echo "</textarea>\n";
 				?>
@@ -664,7 +664,7 @@ if ((!empty($id_area)) || (isset($add_area)))
 	if (isset($change_area))
 	{
 	// Affectation e un site : si aucun site n'a ete affecte
-		if ((getSettingValue("module_multisite") == "Oui") && ($id_site == -1))
+		if ((Settings::get("module_multisite") == "Oui") && ($id_site == -1))
 		{
 	  		// On affiche un message d'avertissement
 			?>
@@ -783,7 +783,7 @@ if ((!empty($id_area)) || (isset($add_area)))
 				$id_area = grr_sql_insert_id();
 			}
 	  		// Affectation e un site
-			if (getSettingValue("module_multisite") == "Oui")
+			if (Settings::get("module_multisite") == "Oui")
 			{
 				$sql = "delete from ".TABLE_PREFIX."_j_site_area where id_area='".$id_area."'";
 				if (grr_sql_command($sql) < 0)
@@ -926,7 +926,7 @@ if ((!empty($id_area)) || (isset($add_area)))
 		}
 		if ($row["enable_periods"] != 'y')
 			$row["enable_periods"] = 'n';
-		if (getSettingValue("module_multisite") == "Oui")
+		if (Settings::get("module_multisite") == "Oui")
 			$id_site=grr_sql_query1("select id_site from ".TABLE_PREFIX."_j_site_area where id_area='".$id_area."'");
 	}
 	else
@@ -979,7 +979,7 @@ if ((!empty($id_area)) || (isset($add_area)))
 		echo " /></td>\n";
 		echo "</tr>";
 		// Site
-		if (getSettingValue("module_multisite") == "Oui")
+		if (Settings::get("module_multisite") == "Oui")
 		{
 	  	// Affiche une liste deroulante des sites;
 			if (authGetUserLevel(getUserName(), -1, 'area') >= 6)

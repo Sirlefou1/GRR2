@@ -43,8 +43,8 @@ function getWeekNumber($date)
 function getSchoolHolidays($now, $year)
 {
 	$zone = 'A';
-	if (getSettingValue("holidays_zone") != NULL)
-		$zone = getSettingValue("holidays_zone");
+	if (Settings::get("holidays_zone") != NULL)
+		$zone = Settings::get("holidays_zone");
 	$sh = array(false, "");
 	$vacances = simplexml_load_file('vacances.xml');
 	$libelle = $vacances->libelles->children();
@@ -190,13 +190,13 @@ function get_request_uri()
 	{
 		if (!isset($_SERVER['QUERY_STRING']))
 			$_SERVER['QUERY_STRING'] = "";
-		if ((getSettingValue("use_grr_url") == "y") && (getSettingValue("grr_url") != ""))
+		if ((Settings::get("use_grr_url") == "y") && (Settings::get("grr_url") != ""))
 		{
-			if (substr(getSettingValue("grr_url"), -1) != "/")
+			if (substr(Settings::get("grr_url"), -1) != "/")
 				$ad_signe = "/";
 			else
 				$ad_signe = "";
-			$RequestUri = getSettingValue("grr_url").$ad_signe.$grr_script_name.$_SERVER['QUERY_STRING'];
+			$RequestUri = Settings::get("grr_url").$ad_signe.$grr_script_name.$_SERVER['QUERY_STRING'];
 		}
 		else
 		{
@@ -219,12 +219,12 @@ function affiche_lien_contact($_cible, $_type_cible, $option_affichage)
 	{
 		if ($_cible == "contact_administrateur")
 		{
-			$_email = getSettingValue("webmaster_email");
+			$_email = Settings::get("webmaster_email");
 			$_identite = get_vocab('administrator_contact');
 		}
 		else if ($_cible == "contact_support")
 		{
-			$_email = getSettingValue("technical_support_email");
+			$_email = Settings::get("technical_support_email");
 			$_identite = get_vocab('technical_contact');
 		}
 		else
@@ -250,7 +250,7 @@ function affiche_lien_contact($_cible, $_type_cible, $option_affichage)
 			$_identite = "";
 		}
 	}
-	if (getSettingValue("envoyer_email_avec_formulaire") == "yes")
+	if (Settings::get("envoyer_email_avec_formulaire") == "yes")
 	{
 		if ($_email == "")
 		{
@@ -654,8 +654,8 @@ function verif_version()
 	global $version_grr, $version_grr_RC;
 	$_version_grr = $version_grr;
 	$_version_grr_RC = $version_grr_RC;
-	$version_old = getSettingValue("version");
-	$versionRC_old = getSettingValue("versionRC");
+	$version_old = Settings::get("version");
+	$versionRC_old = Settings::get("versionRC");
 	if ($versionRC_old == "")
 		$versionRC_old = 9;
 	if ($_version_grr_RC == "")
@@ -668,7 +668,7 @@ function verif_version()
 function affiche_version()
 {
 	global $version_grr, $version_grr_RC, $sous_version_grr;
-	return "GRR ".getSettingValue("version");
+	return "GRR ".Settings::get("version");
 }
 function affiche_date($x)
 {
@@ -749,19 +749,19 @@ function page_accueil($param = 'no')
 	if (isset($_SESSION['default_room']) && ($_SESSION['default_room'] > 0))
 		$defaultroom = $_SESSION['default_room'];
 	else
-		$defaultroom = getSettingValue("default_room");
+		$defaultroom = Settings::get("default_room");
 	// Definition de $defaultsite
 	if (isset($_SESSION['default_site']) && ($_SESSION['default_site'] > 0))
 		$defaultsite = $_SESSION['default_site'];
-	else if (getSettingValue("default_site") > 0)
-		$defaultsite = getSettingValue("default_site");
+	else if (Settings::get("default_site") > 0)
+		$defaultsite = Settings::get("default_site");
 	else
 		$defaultsite = get_default_site();
 	// Definition de $defaultarea
 	if (isset($_SESSION['default_area']) && ($_SESSION['default_area'] > 0))
 		$defaultarea = $_SESSION['default_area'];
-	else if (getSettingValue("default_area") > 0)
-		$defaultarea = getSettingValue("default_area");
+	else if (Settings::get("default_area") > 0)
+		$defaultarea = Settings::get("default_area");
 	else
 		$defaultarea = get_default_area($defaultsite);
 	// Calcul de $page_accueil
@@ -778,7 +778,7 @@ function page_accueil($param = 'no')
 		$page_accueil = "month_all2.php?area=$defaultarea";
 	else
 		$page_accueil = "week.php?area=$defaultarea&amp;room=$defaultroom";
-	if ((getSettingValue("module_multisite") == "Oui") && ($defaultsite > 0))
+	if ((Settings::get("module_multisite") == "Oui") && ($defaultsite > 0))
 		$page_accueil .= "&amp;id_site=".$defaultsite;
 	if ($param == 'yes')
 		$page_accueil .= "&amp;";
@@ -804,8 +804,8 @@ function begin_page($title, $page="with_session")
 	}
 	else
 	{
-		if (getSettingValue("default_css"))
-			$sheetcss = 'themes/'.getSettingValue("default_css").'/css/style.css';
+		if (Settings::get("default_css"))
+			$sheetcss = 'themes/'.Settings::get("default_css").'/css/style.css';
 		else
 			$sheetcss = 'themes/default/css/style.css';
 		if (isset($_GET['default_language']))
@@ -887,9 +887,9 @@ function print_header($day = '', $month = '', $year = '', $type_session = 'with_
 	// On vérifie que les noms et prénoms ne sont pas vides
 	VerifNomPrenomUser($type_session);
 	if ($type_session == "with_session")
-		echo begin_page(getSettingValue("company"),"with_session");
+		echo begin_page(Settings::get("company"),"with_session");
 	else
-		echo begin_page(getSettingValue("company"),"no_session");
+		echo begin_page(Settings::get("company"),"no_session");
 	// Si nous ne sommes pas dans un format imprimable
 	if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
 	{
@@ -897,10 +897,10 @@ function print_header($day = '', $month = '', $year = '', $type_session = 'with_
 		if (!isset($day) || !isset($month) || !isset($year) || ($day == '') || ($month == '') || ($year == ''))
 		{
 			$date_now = time();
-			if ($date_now < getSettingValue("begin_bookings"))
-				$date_ = getSettingValue("begin_bookings");
-			else if ($date_now > getSettingValue("end_bookings"))
-				$date_ = getSettingValue("end_bookings");
+			if ($date_now < Settings::get("begin_bookings"))
+				$date_ = Settings::get("begin_bookings");
+			else if ($date_now > Settings::get("end_bookings"))
+				$date_ = Settings::get("end_bookings");
 			else
 				$date_ = $date_now;
 			$day   = date("d",$date_);
@@ -915,25 +915,25 @@ function print_header($day = '', $month = '', $year = '', $type_session = 'with_
 		{
 			// On fabrique une date valide pour la réservation si ce n'est pas le cas
 			$date_ = mktime(0, 0, 0, $month, $day, $year);
-			if ($date_ < getSettingValue("begin_bookings"))
-				$date_ = getSettingValue("begin_bookings");
-			else if ($date_ > getSettingValue("end_bookings"))
-				$date_ = getSettingValue("end_bookings");
+			if ($date_ < Settings::get("begin_bookings"))
+				$date_ = Settings::get("begin_bookings");
+			else if ($date_ > Settings::get("end_bookings"))
+				$date_ = Settings::get("end_bookings");
 			$day   = date("d",$date_);
 			$month = date("m",$date_);
 			$year  = date("Y",$date_);
 			echo '<div id="toppanel"><div id="panel"><div class="content"><table id="header">'.PHP_EOL;
 			echo '<tr>'.PHP_EOL;
 			//Logo
-			$nom_picture = "./images/".getSettingValue("logo");
-			if ((getSettingValue("logo") != '') && (@file_exists($nom_picture)))
+			$nom_picture = "./images/".Settings::get("logo");
+			if ((Settings::get("logo") != '') && (@file_exists($nom_picture)))
 				echo '<td class="logo">'.PHP_EOL.'<a href="'.page_accueil('yes').'day='.$day.'&amp;year='.$year.'&amp;month='.$month.'"><img src="'.$nom_picture.'" alt="logo"/></a>'.PHP_EOL.'</td>'.PHP_EOL;
 			//Accueil
 			echo '<td class="accueil">'.PHP_EOL;
 			echo '<h2>'.PHP_EOL.'<a href="'.page_accueil('yes').'day='.$day.'&amp;year='.$year.'&amp;month='.$month.'">'.get_vocab("welcome");
-			echo ' - <b>'.getSettingValue("company").'</b></a>'.PHP_EOL.'</h2>'.PHP_EOL;
+			echo ' - <b>'.Settings::get("company").'</b></a>'.PHP_EOL.'</h2>'.PHP_EOL;
 			//Mail réservartion
-			echo getSettingValue('message_accueil');
+			echo Settings::get('message_accueil');
 			$sql = "SELECT value FROM ".TABLE_PREFIX."_setting WHERE name='mail_etat_destinataire'";
 			$res = grr_sql_query1($sql);
 			//Libère le résultat de la mémoire
@@ -995,7 +995,7 @@ function print_header($day = '', $month = '', $year = '', $type_session = 'with_
 			}
 			if ($type_session == 'no_session')
 			{
-				if ((getSettingValue('sso_statut') == 'cas_visiteur') || (getSettingValue('sso_statut') == 'cas_utilisateur'))
+				if ((Settings::get('sso_statut') == 'cas_visiteur') || (Settings::get('sso_statut') == 'cas_utilisateur'))
 				{
 					echo '<br /> <a href="index.php?force_authentification=y">'.get_vocab("authentification").'</a>'.PHP_EOL;
 					echo '<br /> <small><i><a href="login.php">'.get_vocab("connect_local").'</a></i></small>'.PHP_EOL;
@@ -1010,23 +1010,23 @@ function print_header($day = '', $month = '', $year = '', $type_session = 'with_
 				if (verif_access_search(getUserName()))
 					echo '<br/><a href="report.php">'.get_vocab("report").'</a>'.PHP_EOL;
 				$disconnect_link = false;
-				if (!((getSettingValue("cacher_lien_deconnecter") == 'y') && (isset($_SESSION['est_authentifie_sso']))))
+				if (!((Settings::get("cacher_lien_deconnecter") == 'y') && (isset($_SESSION['est_authentifie_sso']))))
 				{
 					$disconnect_link = true;
-					if (getSettingValue("authentification_obli") == 1)
+					if (Settings::get("authentification_obli") == 1)
 						echo '<br /> <a href="./logout.php?auto=0" >'.get_vocab('disconnect').'</a>'.PHP_EOL;
 					else
 						echo '<br /> <a href="./logout.php?auto=0&amp;redirect_page_accueil=yes" >'.get_vocab('disconnect').'</a>'.PHP_EOL;
 				}
-				if ((getSettingValue("Url_portail_sso") != '') && (isset($_SESSION['est_authentifie_sso'])))
+				if ((Settings::get("Url_portail_sso") != '') && (isset($_SESSION['est_authentifie_sso'])))
 				{
 					if ($disconnect_link)
 						echo ' - '.PHP_EOL;
 					else
 						echo '<br />'.PHP_EOL;
-					echo '<a href="'.getSettingValue("Url_portail_sso").'">'.get_vocab("Portail_accueil").'</a>'.PHP_EOL;
+					echo '<a href="'.Settings::get("Url_portail_sso").'">'.get_vocab("Portail_accueil").'</a>'.PHP_EOL;
 				}
-				if ((getSettingValue('sso_statut') == 'lasso_visiteur') || (getSettingValue('sso_statut') == 'lasso_utilisateur'))
+				if ((Settings::get('sso_statut') == 'lasso_visiteur') || (Settings::get('sso_statut') == 'lasso_utilisateur'))
 				{
 					echo '<br />';
 					if ($_SESSION['lasso_nameid'] == NULL)
@@ -1073,7 +1073,7 @@ function VerifNomPrenomUser($type)
 //Renvoie true (peut changer ses noms et prénoms et email) ou false (ne peut pas)
 function sso_IsAllowedModify()
 {
-	if (getSettingValue("sso_IsNotAllowedModify")=="y")
+	if (Settings::get("sso_IsNotAllowedModify")=="y")
 	{
 		$source = grr_sql_query1("SELECT source FROM grr_utilisateurs WHERE login = '".getUserName()."'");
 		if ($source == "ext")
@@ -1091,7 +1091,7 @@ function IsAllowedToModifyProfil()
 	if (!(sso_IsAllowedModify()))
 		return false;
 		// l'utilisateur connecté n'a pas le niveau suffisant pour modifier son compte
-	if (authGetUserLevel(getUserName(),-1) < getSettingValue("allow_users_modify_profil"))
+	if (authGetUserLevel(getUserName(),-1) < Settings::get("allow_users_modify_profil"))
 		return false;
 	else
 		return true;
@@ -1103,7 +1103,7 @@ function IsAllowedToModifyEmail()
 	if (!(sso_IsAllowedModify()))
 		return false;
 		// l'utilisateur connecté n'a pas le niveau suffisant pour modifier son compte
-	if (authGetUserLevel(getUserName(),-1) < getSettingValue("allow_users_modify_email"))
+	if (authGetUserLevel(getUserName(),-1) < Settings::get("allow_users_modify_email"))
 		return false;
 	else
 		return true;
@@ -1112,9 +1112,9 @@ function IsAllowedToModifyEmail()
 //Renvoie true (peut changer) ou false (ne peut pas)
 function IsAllowedToModifyMdp() {
 		// l'utilisateur connecté n'a pas le niveau suffisant pour modifier son compte
-	if (authGetUserLevel(getUserName(), -1) < getSettingValue("allow_users_modify_mdp"))
+	if (authGetUserLevel(getUserName(), -1) < Settings::get("allow_users_modify_mdp"))
 		return false;
-	else if ((getSettingValue("sso_statut") != "") or (getSettingValue("ldap_statut") != '') or (getSettingValue("imap_statut") != ''))
+	else if ((Settings::get("sso_statut") != "") or (Settings::get("ldap_statut") != '') or (Settings::get("imap_statut") != ''))
 	{
 			// ou bien on est dans un environnement SSO ou ldap et l'utilisateur n'est pas un utilisateur local
 		$source = grr_sql_query1("SELECT source FROM ".TABLE_PREFIX."_utilisateurs WHERE login = '".getUserName()."'");
@@ -1348,10 +1348,10 @@ function genDateSelectorForm($prefix, $day, $month, $year,$option)
 	}
 	$selector_data .=  "</select>";
 	$selector_data .=  "<select name=\"${prefix}year\" id=\"${prefix}year\">\n";
-	$min = strftime("%Y", getSettingValue("begin_bookings"));
+	$min = strftime("%Y", Settings::get("begin_bookings"));
 	if ($option == "more_years")
 		$min = date("Y") - $nb_year_calendar;
-	$max = strftime("%Y", getSettingValue("end_bookings"));
+	$max = strftime("%Y", Settings::get("end_bookings"));
 	if ($option == "more_years")
 		$max = date("Y") + $nb_year_calendar;
 	for($i = $min; $i <= $max; $i++)
@@ -1447,7 +1447,7 @@ function compare_ip_adr($ip1, $ip2)
 //Retourne le domaine par défaut; Utilisé si aucun domaine n'a été défini.
 function get_default_area($id_site = -1)
 {
-	if (getSettingValue("module_multisite") == "Oui")
+	if (Settings::get("module_multisite") == "Oui")
 		$use_multisite = true;
 	else
 		$use_multisite = false;
@@ -1793,7 +1793,7 @@ function make_site_select_html($link, $current_site, $year, $month, $day, $user)
 function make_area_select_html( $link, $current_site, $current_area, $year, $month, $day, $user)
 {
 	global $vocab;
-	if (getSettingValue("module_multisite") == "Oui")
+	if (Settings::get("module_multisite") == "Oui")
 		$use_multi_site = 'y';
 	else
 		$use_multi_site = 'n';
@@ -1881,7 +1881,7 @@ function make_site_list_html($link, $current_site, $year, $month, $day,$user)
 {
 	global $vocab;
 	// On affiche le site
-	if (getSettingValue("module_multisite") == "Oui")
+	if (Settings::get("module_multisite") == "Oui")
 	{
 		$out_html = '
 		<b><i><span class="bground">'.get_vocab('sites').get_vocab('deux_points').'</span></i></b>
@@ -1956,7 +1956,7 @@ function make_site_list_html($link, $current_site, $year, $month, $day,$user)
 function make_area_list_html($link, $current_site, $current_area, $year, $month, $day, $user)
 {
 	global $vocab;
-	if (getSettingValue("module_multisite") == "Oui")
+	if (Settings::get("module_multisite") == "Oui")
 		$use_multi_site = 'y';
 	else
 		$use_multi_site = 'n';
@@ -2112,7 +2112,7 @@ function make_site_item_html($link, $current_site, $year, $month, $day, $user)
 function make_area_item_html( $link, $current_site, $current_area, $year, $month, $day, $user)
 {
 	global $vocab;
-	if (getSettingValue("module_multisite") == "Oui")
+	if (Settings::get("module_multisite") == "Oui")
 		$use_multi_site = 'y';
 	else
 		$use_multi_site = 'n';
@@ -2217,13 +2217,13 @@ function send_mail($id_entry, $action, $dformat, $tab_id_moderes = array())
 	$message_erreur = "";
 	global $vocab, $grrSettings, $locale, $weekstarts, $enable_periods, $periods_name;
 	require_once 'phpmailer/PHPMailerAutoload.php';
-	define("GRR_FROM", getSettingValue("grr_mail_from"));
-	define("GRR_FROMNAME", getSettingValue("grr_mail_fromname"));
+	define("GRR_FROM", Settings::get("grr_mail_from"));
+	define("GRR_FROMNAME", Settings::get("grr_mail_fromname"));
 	$mail = new PHPMailer();
 	$mail->isSMTP();
 	$mail->SMTPDebug = 0;
 	$mail->Debugoutput = 'html';
-	$mail->Host = getSettingValue("grr_mail_smtp");
+	$mail->Host = Settings::get("grr_mail_smtp");
 	$mail->Port = 25;
 	$mail->SMTPAuth = false;
 	$mail->CharSet = 'UTF-8';
@@ -2322,7 +2322,7 @@ function send_mail($id_entry, $action, $dformat, $tab_id_moderes = array())
 		$beneficiaire_actif = "inactif";
 	$user_login = getUserName();
 	$user_email = grr_sql_query1("SELECT email FROM ".TABLE_PREFIX."_utilisateurs WHERE login='$user_login'");
-	$message = removeMailUnicode(getSettingValue("company"))." - ".$vocab["title_mail"];
+	$message = removeMailUnicode(Settings::get("company"))." - ".$vocab["title_mail"];
 	$message = $message.traite_grr_url("","y")."\n\n";
 	$sujet = $vocab["subject_mail1"].$room_name." - ".$date_avis;
 	if ($action == 1)
@@ -2416,7 +2416,7 @@ function send_mail($id_entry, $action, $dformat, $tab_id_moderes = array())
 		$message = $message.$vocab["the_user"].affiche_nom_prenom_email($beneficiaire,$beneficiaire_ext,"formail")." \n";
 	}
 	if (($action == 5) || ($action == 7))
-		$repondre = getSettingValue("webmaster_email");
+		$repondre = Settings::get("webmaster_email");
 	else
 		$repondre = $user_email;
 	$reservation = '';
@@ -2453,7 +2453,7 @@ function send_mail($id_entry, $action, $dformat, $tab_id_moderes = array())
 		}
 		if ($rep_type == 6)
 		{
-			if (getSettingValue("jours_cycles_actif") == "Oui")
+			if (Settings::get("jours_cycles_actif") == "Oui")
 				$reservation = $reservation.$vocab["rep_type_6"].preg_replace("/ /", " ",$vocab["deux_points"]).ucfirst(substr($vocab["rep_type_6"],0,1)).$jours_cycle."\n";
 		}
 		$reservation = $reservation.$vocab["rep_end_date"]." ".$rep_end_date."\n";
@@ -2462,7 +2462,7 @@ function send_mail($id_entry, $action, $dformat, $tab_id_moderes = array())
 		$reservation = $reservation."*** ".$vocab["reservation_a_confirmer_au_plus_tard_le"]." ".time_date_string_jma($option_reservation,$dformat)." ***\n";
 	$reservation = $reservation."-----\n";
 	$message = $message.$reservation;
-	$message = $message.$vocab["msg_no_email"].getSettingValue("webmaster_email");;
+	$message = $message.$vocab["msg_no_email"].Settings::get("webmaster_email");;
 	$message = html_entity_decode($message);
 	$sql = "SELECT u.email FROM ".TABLE_PREFIX."_utilisateurs u, ".TABLE_PREFIX."_j_mailuser_room j WHERE (j.id_room='".protect_data_sql($room_id)."' AND u.login=j.login and u.etat='actif') ORDER BY u.nom, u.prenom";
 	$res = grr_sql_query($sql);
@@ -2477,7 +2477,7 @@ function send_mail($id_entry, $action, $dformat, $tab_id_moderes = array())
 		}
 		foreach ($tab_destinataire as $value)
 		{
-			if (getSettingValue("grr_mail_Bcc") == "y")
+			if (Settings::get("grr_mail_Bcc") == "y")
 				$mail->AddBCC( $value );
 			else
 				$mail->AddAddress( $value );
@@ -2498,7 +2498,7 @@ function send_mail($id_entry, $action, $dformat, $tab_id_moderes = array())
 		{
 			foreach ($mail_admin as $value)
 			{
-				if (getSettingValue("grr_mail_Bcc") == "y")
+				if (Settings::get("grr_mail_Bcc") == "y")
 					$mail->AddBCC( $value );
 				else
 					$mail->AddAddress( $value );
@@ -2517,14 +2517,14 @@ function send_mail($id_entry, $action, $dformat, $tab_id_moderes = array())
 	{
 		$sujet7 = $vocab["subject_mail1"].$room_name." - ".$date_avis;
 		$sujet7 .= $vocab["subject_mail_retard"];
-		$message7 = removeMailUnicode(getSettingValue("company"))." - ".$vocab["title_mail"];
+		$message7 = removeMailUnicode(Settings::get("company"))." - ".$vocab["title_mail"];
 		$message7 .= traite_grr_url("","y")."\n\n";
 		$message7 .= $vocab["ressource empruntee non restituée"]."\n";
 		$message7 .= $room_name." (".$area_name.")";
 		$message7 .= "\n".$reservation;
 		$message7 = html_entity_decode($message7);
 		$destinataire7 = $beneficiaire_email;
-		$repondre7 = getSettingValue("webmaster_email");
+		$repondre7 = Settings::get("webmaster_email");
 		$mail->AddAddress( $destinataire7 );
 		$mail->Subject = $sujet7;
 		$mail->Body = $message7;
@@ -2537,7 +2537,7 @@ function send_mail($id_entry, $action, $dformat, $tab_id_moderes = array())
 	if ($action == 4)
 	{
 		$destinataire4 = $beneficiaire_email;
-		$repondre4 = getSettingValue("webmaster_email");
+		$repondre4 = Settings::get("webmaster_email");
 		$mail->AddAddress( $destinataire4 );
 		$mail->Subject = $sujet;
 		$mail->Body = $message;
@@ -2554,21 +2554,21 @@ function send_mail($id_entry, $action, $dformat, $tab_id_moderes = array())
 		{
 			foreach ($mail_admin as $value)
 			{
-				if (getSettingValue("grr_mail_Bcc") == "y")
+				if (Settings::get("grr_mail_Bcc") == "y")
 					$mail->AddBCC( $value );
 				else
 					$mail->AddAddress( $value );
 			}
 			$sujet5 = $vocab["subject_mail1"].$room_name." - ".$date_avis;
 			$sujet5 .= $vocab["subject_mail_moderation"];
-			$message5 = removeMailUnicode(getSettingValue("company"))." - ".$vocab["title_mail"];
+			$message5 = removeMailUnicode(Settings::get("company"))." - ".$vocab["title_mail"];
 			$message5 .= traite_grr_url("","y")."\n\n";
 			$message5 .= $vocab["subject_a_moderer"];
 			$message5 .= "\n".traite_grr_url("","y")."view_entry.php?id=".$id_entry;
 			$message5 .= "\n\n".$vocab['created_by'].affiche_nom_prenom_email($user_login,"","formail");
 			$message5 .= "\n".$vocab['room'].$vocab['deux_points'].$room_name." (".$area_name.") \n";
 			$message5 = html_entity_decode($message5);
-			$repondre5 = getSettingValue("webmaster_email");
+			$repondre5 = Settings::get("webmaster_email");
 			$mail->Subject = $sujet5;
 			$mail->Body = $message5;
 			$mail->AddReplyTo( $repondre5 );
@@ -2583,7 +2583,7 @@ function send_mail($id_entry, $action, $dformat, $tab_id_moderes = array())
 	{
 		$sujet5 = $vocab["subject_mail1"].$room_name." - ".$date_avis;
 		$sujet5 .= $vocab["subject_mail_moderation"];
-		$message5 = removeMailUnicode(getSettingValue("company"))." - ".$vocab["title_mail"];
+		$message5 = removeMailUnicode(Settings::get("company"))." - ".$vocab["title_mail"];
 		$message5 .= traite_grr_url("","y")."\n\n";
 		$message5 .= $vocab["texte_en_attente_de_moderation"];
 		$message5 .= "\n".$vocab["rappel_de_la_demande"].$vocab["deux_points"];
@@ -2591,7 +2591,7 @@ function send_mail($id_entry, $action, $dformat, $tab_id_moderes = array())
 		$message5 .= "\n".$reservation;
 		$message5 = html_entity_decode($message5);
 		$destinataire5 = $beneficiaire_email;
-		$repondre5 = getSettingValue("webmaster_email");
+		$repondre5 = Settings::get("webmaster_email");
 		$mail->AddAddress( $destinataire5 );
 		$mail->Subject = $sujet5;
 		$mail->Body = $message5;
@@ -2617,10 +2617,10 @@ function send_mail($id_entry, $action, $dformat, $tab_id_moderes = array())
 		$mail->ClearAddresses();
 		$mail->ClearReplyTos();
 	}
-	if ((($action == 1) || ($action == 2) || ($action == 3)) && ((strtolower($user_login) != strtolower($beneficiaire)) || (getSettingValue('send_always_mail_to_creator') == '1')) && ($beneficiaire_email != '') && ($beneficiaire_actif == 'actif'))
+	if ((($action == 1) || ($action == 2) || ($action == 3)) && ((strtolower($user_login) != strtolower($beneficiaire)) || (Settings::get('send_always_mail_to_creator') == '1')) && ($beneficiaire_email != '') && ($beneficiaire_actif == 'actif'))
 	{
 		$sujet2 = $vocab["subject_mail1"].$room_name." - ".$date_avis;
-		$message2 = removeMailUnicode(getSettingValue("company"))." - ".$vocab["title_mail"];
+		$message2 = removeMailUnicode(Settings::get("company"))." - ".$vocab["title_mail"];
 		$message2 = $message2.traite_grr_url("","y")."\n\n";
 		$message2 = $message2.$vocab["the_user"].affiche_nom_prenom_email($user_login,"","formail");
 		if ($action == 1)
@@ -2669,7 +2669,7 @@ function getWritable($beneficiaire, $user, $id)
 {
 	$id_room = grr_sql_query1("SELECT room_id FROM ".TABLE_PREFIX."_entry WHERE id='".protect_data_sql($id)."'");
 		// Modifications permises si l'utilisateur a les droits suffisants
-	if (getSettingValue("allow_gestionnaire_modify_del") == 0)
+	if (Settings::get("allow_gestionnaire_modify_del") == 0)
 		$temp = 3;
 	else
 		$temp = 2;
@@ -2789,7 +2789,7 @@ function authGetUserLevel($user, $id, $type = 'room')
 			$id_area = grr_sql_query1("SELECT area_id FROM ".TABLE_PREFIX."_room WHERE id='".protect_data_sql($id)."'");
 			// calcul de l'id du site
 			$id_site = grr_sql_query1("SELECT id_site FROM ".TABLE_PREFIX."_j_site_area  WHERE id_area='".protect_data_sql($id_area)."'");
-			if (getSettingValue("module_multisite") == "Oui")
+			if (Settings::get("module_multisite") == "Oui")
 			{
 				$res3 = grr_sql_query("SELECT login FROM ".TABLE_PREFIX."_j_useradmin_site j WHERE j.id_site='".protect_data_sql($id_site)."' AND j.login='".protect_data_sql($user)."'");
 				if (grr_sql_count($res3) > 0)
@@ -2821,7 +2821,7 @@ function authGetUserLevel($user, $id, $type = 'room')
 		{
 			if ($id == '-1')
 			{
-				if (getSettingValue("module_multisite") == "Oui")
+				if (Settings::get("module_multisite") == "Oui")
 				{
 				//On regarde si l'utilisateur est administrateur d'un site quelconque
 					$res2 = grr_sql_query("SELECT u.login
@@ -2839,7 +2839,7 @@ function authGetUserLevel($user, $id, $type = 'room')
 			}
 			else
 			{
-				if (getSettingValue("module_multisite") == "Oui")
+				if (Settings::get("module_multisite") == "Oui")
 				{
 				// On regarde si l'utilisateur est administrateur du site auquel le domaine $id appartient
 					$id_site = grr_sql_query1("SELECT id_site FROM ".TABLE_PREFIX."_j_site_area  WHERE id_area='".protect_data_sql($id)."'");
@@ -2858,7 +2858,7 @@ function authGetUserLevel($user, $id, $type = 'room')
 			return 2;
 		}
 		// On regarde si l'utilisateur est administrateur d'un site
-		if (($type == 'site') and (getSettingValue("module_multisite") == "Oui"))
+		if (($type == 'site') and (Settings::get("module_multisite") == "Oui"))
 		{
 			if ($id == '-1')
 			{
@@ -2899,7 +2899,7 @@ function authUserAccesArea($user,$id)
 	$res = grr_sql_query($sql);
 	if (grr_sql_count($res) != "0")
 		return 1;
-	if (getSettingValue("module_multisite") == "Oui")
+	if (Settings::get("module_multisite") == "Oui")
 	{
 		$id_site = mrbsGetAreaSite($id);
 		$sql = "SELECT login FROM ".TABLE_PREFIX."_j_useradmin_site j WHERE j.id_site='".$id_site."' AND j.login='".protect_data_sql($user)."'";
@@ -2947,7 +2947,7 @@ function UserRoomMaxBooking($user, $id_room, $number)
 	// On regarde si le nombre de réservation du domaine est limité
 	$max_booking_per_area = grr_sql_query1("SELECT max_booking FROM ".TABLE_PREFIX."_area WHERE id = '".protect_data_sql($id_area)."'");
 	// On regarde si le nombre de réservation pour l'ensemble des ressources est limité
-	$max_booking = getSettingValue("UserAllRoomsMaxBooking");
+	$max_booking = Settings::get("UserAllRoomsMaxBooking");
 	// Si aucune limitation
 	if (($max_booking_per_room < 0) && ($max_booking_per_area < 0) && ($max_booking < 0))
 		return 1;
@@ -3038,7 +3038,7 @@ function UserRoomMaxBooking($user, $id_room, $number)
 		// il s'agit de l'edition d'une réservation existante
  		if (($endtime != '') && ($endtime < $date_now))
  			return false;
- 		if ((getSettingValue("allow_user_delete_after_begin") == 1) || (getSettingValue("allow_user_delete_after_begin") == 2))
+ 		if ((Settings::get("allow_user_delete_after_begin") == 1) || (Settings::get("allow_user_delete_after_begin") == 2))
  			$sql = "SELECT end_time FROM ".TABLE_PREFIX."_entry WHERE id = '".protect_data_sql($id)."'";
  		else
  			$sql = "SELECT start_time FROM ".TABLE_PREFIX."_entry WHERE id = '".protect_data_sql($id)."'";
@@ -3049,7 +3049,7 @@ function UserRoomMaxBooking($user, $id_room, $number)
  		{
 			// dans le cas où le créneau est entamé, on teste si l'utilisateur a le droit de supprimer la réservation
 			// Si oui, on transmet la variable $only_modify = true avant que la fonction de retourne true.
- 			if (getSettingValue("allow_user_delete_after_begin") == 2)
+ 			if (Settings::get("allow_user_delete_after_begin") == 2)
  			{
  				$date_debut = grr_sql_query1("SELECT start_time FROM ".TABLE_PREFIX."_entry WHERE id = '".protect_data_sql($id)."'");
  				if ($date_debut < $date_now)
@@ -3062,7 +3062,7 @@ function UserRoomMaxBooking($user, $id_room, $number)
  	}
  	else
  	{
- 		if (getSettingValue("allow_user_delete_after_begin") == 1)
+ 		if (Settings::get("allow_user_delete_after_begin") == 1)
  		{
  			$id_area = grr_sql_query1("select area_id from ".TABLE_PREFIX."_room WHERE id = '".protect_data_sql($id_room)."'");
  			$resolution_area = grr_sql_query1("select resolution_area from ".TABLE_PREFIX."_area WHERE id = '".$id_area."'");
@@ -3123,7 +3123,7 @@ function UserRoomMaxBooking($user, $id_room, $number)
 // $id_room : l'id de la ressource.
  function verif_access_search($user)
  {
- 	if (authGetUserLevel($user,-1) >= getSettingValue("allow_search_level"))
+ 	if (authGetUserLevel($user,-1) >= Settings::get("allow_search_level"))
  		return true;
  	return false;
  }
@@ -3135,7 +3135,7 @@ function UserRoomMaxBooking($user, $id_room, $number)
  	$show_fic_room = grr_sql_query1("SELECT show_fic_room FROM ".TABLE_PREFIX."_room WHERE id='".$id_room."'");
  	if ($show_fic_room == "y")
  	{
- 		if (authGetUserLevel($user,$id_room) >= getSettingValue("visu_fiche_description"))
+ 		if (authGetUserLevel($user,$id_room) >= Settings::get("visu_fiche_description"))
  			return true;
  		return false;
  	}
@@ -3146,7 +3146,7 @@ function UserRoomMaxBooking($user, $id_room, $number)
 // $id_room : l'id de la ressource.
  function verif_acces_fiche_reservation($user, $id_room)
  {
- 	if (authGetUserLevel($user,$id_room) >= getSettingValue("acces_fiche_reservation"))
+ 	if (authGetUserLevel($user,$id_room) >= Settings::get("acces_fiche_reservation"))
  		return true;
  	return false;
  }
@@ -3156,7 +3156,7 @@ function UserRoomMaxBooking($user, $id_room, $number)
  */
 function verif_display_email($user, $id_room)
 {
-	if (authGetUserLevel($user,$id_room) >= getSettingValue("display_level_email"))
+	if (authGetUserLevel($user,$id_room) >= Settings::get("display_level_email"))
 		return true;
 	else
 		return false;
@@ -3278,7 +3278,7 @@ function verif_heure_debut_fin($start_time,$end_time,$area)
  * Returns: Nothing
  */
 function VerifyModeDemo() {
-	if (getSettingValue("ActiveModeDemo") == 'y')
+	if (Settings::get("ActiveModeDemo") == 'y')
 	{
 		print_header("", "", "", "");
 		?>
@@ -3298,10 +3298,10 @@ function VerifyModeDemo() {
 function MajMysqlModeDemo() {
 		// Nom du fichier sql à exécuter
 	$fic_sql = "grr_maj_quotidienne.sql";
-	if ((getSettingValue("ActiveModeDemo") == 'y') && (file_exists($fic_sql)))
+	if ((Settings::get("ActiveModeDemo") == 'y') && (file_exists($fic_sql)))
 	{
 		$date_now = mktime(0,0,0,date("m"),date("d"),date("Y"));
-		if ((getSettingValue("date_verify_demo") == "") || (getSettingValue("date_verify_demo") < $date_now))
+		if ((Settings::get("date_verify_demo") == "") || (Settings::get("date_verify_demo") < $date_now))
 		{
 			$fd = fopen($fic_sql, "r");
 			while (!feof($fd))
@@ -3312,7 +3312,7 @@ function MajMysqlModeDemo() {
 					mysqli_query($GLOBALS['db_c'], $query);
 			}
 			fclose($fd);
-			if (!saveSetting("date_verify_demo", $date_now))
+			if (!Settings::set("date_verify_demo", $date_now))
 			{
 				echo "Erreur lors de l'enregistrement de date_verify_demo !<br />";
 				die();
@@ -3330,7 +3330,7 @@ function showAccessDenied($back)
 {
 	global $vocab;
 	/*
-	if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))
+	if ((Settings::get("authentification_obli") == 0) && (getUserName() == ''))
 		$type_session = "no_session";
 	else
 		$type_session = "with_session";
@@ -3356,7 +3356,7 @@ function showAccessDenied($back)
 function showNoReservation($day, $month, $year, $back)
 {
 	global $vocab;
-	if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))
+	if ((Settings::get("authentification_obli") == 0) && (getUserName() == ''))
 		$type_session = "no_session";
 	else
 		$type_session = "with_session";
@@ -3398,7 +3398,7 @@ function showAccessDeniedMaxBookings($day, $month, $year, $id_room, $back)
 		if ($max_booking_per_area >= 0)
 			echo get_vocab("msg_max_booking_area").get_vocab("deux_points").$max_booking_per_area."<br />";
 		// Limitation sur l'ensemble des ressources
-		$max_booking_all = getSettingValue("UserAllRoomsMaxBooking");
+		$max_booking_all = Settings::get("UserAllRoomsMaxBooking");
 		if ($max_booking_all >= 0)
 			echo get_vocab("msg_max_booking_all").get_vocab("deux_points").$max_booking_all."<br />";
 		echo "<br />".get_vocab("accessdeniedtoomanybooking");
@@ -3414,7 +3414,7 @@ function showAccessDeniedMaxBookings($day, $month, $year, $id_room, $back)
 function check_begin_end_bookings($day, $month, $year)
 {
 	$date = mktime(0,0,0,$month,$day,$year);
-	if (($date < getSettingValue("begin_bookings")) || ($date > getSettingValue("end_bookings")))
+	if (($date < Settings::get("begin_bookings")) || ($date > Settings::get("end_bookings")))
 		return -1;
 }
 function showNoBookings($day, $month, $year, $back)
@@ -3422,8 +3422,8 @@ function showNoBookings($day, $month, $year, $back)
 	global $vocab;
 	$date = mktime(0, 0, 0, $month, $day,$year);
 	echo '<h2>'.get_vocab("nobookings").' '.affiche_date($date).'</h2>';
-	echo '<p>'.get_vocab("begin_bookings").'<b>'.affiche_date(getSettingValue("begin_bookings")).'</b></p>';
-	echo '<p>'.get_vocab("end_bookings").'<b>'.affiche_date(getSettingValue("end_bookings")).'</b></p>';
+	echo '<p>'.get_vocab("begin_bookings").'<b>'.affiche_date(Settings::get("begin_bookings")).'</b></p>';
+	echo '<p>'.get_vocab("end_bookings").'<b>'.affiche_date(Settings::get("end_bookings")).'</b></p>';
 	?>
 	<p>
 		<?php
@@ -3580,7 +3580,7 @@ function verify_confirm_reservation()
 	$month = date("m");
 	$year  = date("Y");
 	$date_now = mktime(0,0,0,$month,$day,$year);
-	if ((getSettingValue("date_verify_reservation") == "") || (getSettingValue("date_verify_reservation") < $date_now ))
+	if ((Settings::get("date_verify_reservation") == "") || (Settings::get("date_verify_reservation") < $date_now ))
 	{
 		$res = grr_sql_query("select id from ".TABLE_PREFIX."_room where delais_option_reservation > 0");
 		if (!$res)
@@ -3604,7 +3604,7 @@ function verify_confirm_reservation()
 				{
 					for ($j = 0; ($row2 = grr_sql_row($res2, $j)); $j++)
 					{
-						if (getSettingValue("automatic_mail") == 'yes')
+						if (Settings::get("automatic_mail") == 'yes')
 							$_SESSION['session_message_error'] = send_mail($row2[0],4,$dformat);
 						// On efface la réservation
 						grr_sql_command("DELETE FROM ".TABLE_PREFIX."_entry WHERE id=" . $row2[0]);
@@ -3614,7 +3614,7 @@ function verify_confirm_reservation()
 				}
 			}
 		}
-		if (!saveSetting("date_verify_reservation", $date_now))
+		if (!Settings::set("date_verify_reservation", $date_now))
 		{
 			echo "Erreur lors de l'enregistrement de date_verify_reservation !<br />";
 			die();
@@ -3631,7 +3631,7 @@ function verify_retard_reservation()
 	$month = date("m");
 	$year  = date("Y");
 	$date_now = mktime(0, 0, 0, $month, $day, $year);
-	if (((getSettingValue("date_verify_reservation2") == "") || (getSettingValue("date_verify_reservation2") < $date_now )) && (getSettingValue("automatic_mail") == 'yes'))
+	if (((Settings::get("date_verify_reservation2") == "") || (Settings::get("date_verify_reservation2") < $date_now )) && (Settings::get("automatic_mail") == 'yes'))
 	{
 		//$res = grr_sql_query("SELECT r.id FROM ".TABLE_PREFIX."_room r, ".TABLE_PREFIX."_area a WHERE a.retour_resa_obli = 1 AND r.area_id = a.id");
 		$res = grr_sql_query("SELECT id FROM ".TABLE_PREFIX."_room");
@@ -3659,7 +3659,7 @@ function verify_retard_reservation()
 				}
 			}
 		}
-		if (!saveSetting("date_verify_reservation2", $date_now))
+		if (!Settings::set("date_verify_reservation2", $date_now))
 		{
 			echo "Erreur lors de l'enregistrement de date_verify_reservation2 !<br />";
 			die();
@@ -3739,7 +3739,7 @@ function find_user_room ($id_room)
 		}
 	}
 	// Si la table des emails des administrateurs du domaines est vide, on avertit les administrateurs des sites
-	if (getSettingValue("module_multisite") == "Oui")
+	if (Settings::get("module_multisite") == "Oui")
 	{
 		if (count($emails) == 0)
 		{
@@ -3843,13 +3843,13 @@ function traite_grr_url($grr_script_name = "", $force_use_grr_url = "n")
 {
 	// Dans certaines configuration (reverse proxy, ...) les variables $_SERVER["SCRIPT_NAME"] ou $_SERVER['PHP_SELF']
 	// sont mal interprétées entraînant des liens erronés sur certaines pages.
-	if (((getSettingValue("use_grr_url") == "y") && (getSettingValue("grr_url") != "")) || ($force_use_grr_url == "y"))
+	if (((Settings::get("use_grr_url") == "y") && (Settings::get("grr_url") != "")) || ($force_use_grr_url == "y"))
 	{
-		if (substr(getSettingValue("grr_url"), -1) != "/")
+		if (substr(Settings::get("grr_url"), -1) != "/")
 			$ad_signe = "/";
 		else
 			$ad_signe = "";
-		return getSettingValue("grr_url").$ad_signe.$grr_script_name;
+		return Settings::get("grr_url").$ad_signe.$grr_script_name;
 	}
 	else
 		return $_SERVER['PHP_SELF'];
@@ -3858,7 +3858,7 @@ function traite_grr_url($grr_script_name = "", $force_use_grr_url = "n")
 //Crée le calendrier Jours/Cycles
 function cree_calendrier_date_valide($n, $i)
 {
-	if ($i <= getSettingValue("nombre_jours_Jours/Cycles"))
+	if ($i <= Settings::get("nombre_jours_Jours/Cycles"))
 	{
 		$sql = "INSERT INTO ".TABLE_PREFIX."_calendrier_jours_cycle SET DAY='".$n."', Jours = $i";
 		if (grr_sql_command($sql) < 0)
@@ -3880,7 +3880,7 @@ Construit les informations à afficher sur les plannings
 */
 function affichage_lien_resa_planning($breve_description, $id_resa)
 {
-	if ((getSettingValue("display_short_description") == 1) && ($breve_description != ""))
+	if ((Settings::get("display_short_description") == 1) && ($breve_description != ""))
 		$affichage = $breve_description;
 	else
 		$affichage = get_vocab("entryid").$id_resa;
@@ -3892,7 +3892,7 @@ Construit les informations à afficher sur les plannings
 function affichage_resa_planning($_description, $id_resa)
 {
 	$affichage = "";
-	if (getSettingValue("display_full_description") == 1)
+	if (Settings::get("display_full_description") == 1)
 		$affichage = htmlspecialchars($_description,ENT_NOQUOTES);
 	// Les champs add :
 	$overload_data = mrbsEntryGetOverloadDesc($id_resa);
@@ -3938,7 +3938,7 @@ function affiche_pop_up($msg = "",$type_affichage = "user")
 	{
 		if ($type_affichage == "user")
 		{
-			if (!(getSettingValue("javascript_info_disabled")))
+			if (!(Settings::get("javascript_info_disabled")))
 			{
 				echo "<script type=\"text/javascript\">";
 				if ((isset($_SESSION['displ_msg'])) && ($_SESSION['displ_msg'] == 'yes'))
@@ -3948,7 +3948,7 @@ function affiche_pop_up($msg = "",$type_affichage = "user")
 		}
 		else if ($type_affichage == "admin")
 		{
-			if (!(getSettingValue("javascript_info_admin_disabled")))
+			if (!(Settings::get("javascript_info_admin_disabled")))
 			{
 				echo "<script type=\"text/javascript\">";
 				echo "<!--\n";
@@ -4092,7 +4092,7 @@ function affiche_nom_prenom_email($_beneficiaire, $_beneficiaire_ext, $type = "n
 */
  function effectuer_correspondance_profil_statut($codefonction, $libellefonction) {
 		# On récupère le statut par défaut des utilisateurs CAS
- 	$sso = getSettingValue("sso_statut");
+ 	$sso = Settings::get("sso_statut");
  	if ($sso == "cas_visiteur")
  		$_statut = "visiteur";
  	else if ($sso == "cas_utilisateur")

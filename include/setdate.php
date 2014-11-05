@@ -2,10 +2,10 @@
 $date_now = time();
 if (!isset($day) || !isset($month) || !isset($year))
 {
-	if ($date_now < getSettingValue("begin_bookings"))
-		$date_ = getSettingValue("begin_bookings");
-	else if ($date_now > getSettingValue("end_bookings"))
-		$date_ = getSettingValue("end_bookings");
+	if ($date_now < Settings::get("begin_bookings"))
+		$date_ = Settings::get("begin_bookings");
+	else if ($date_now > Settings::get("end_bookings"))
+		$date_ = Settings::get("end_bookings");
 	else
 		$date_ = $date_now;
 	$day   = date("d",$date_);
@@ -17,8 +17,8 @@ else
 	settype($month, "integer");
 	settype($day, "integer");
 	settype($year, "integer");
-	$minyear = strftime("%Y", getSettingValue("begin_bookings"));
-	$maxyear = strftime("%Y", getSettingValue("end_bookings"));
+	$minyear = strftime("%Y", Settings::get("begin_bookings"));
+	$maxyear = strftime("%Y", Settings::get("end_bookings"));
 	if ($day < 1)
 		$day = 1;
 	if ($day > 31)

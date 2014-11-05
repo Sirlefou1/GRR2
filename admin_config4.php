@@ -30,7 +30,7 @@
  */
 if (isset($_GET['motdepasse_backup']))
 {
-	if (!saveSetting("motdepasse_backup", $_GET['motdepasse_backup']))
+	if (!Settings::set("motdepasse_backup", $_GET['motdepasse_backup']))
 	{
 		echo "Erreur lors de l'enregistrement de motdepasse_backup !<br />";
 		die();
@@ -38,7 +38,7 @@ if (isset($_GET['motdepasse_backup']))
 }
 if (isset($_GET['disable_login']))
 {
-	if (!saveSetting("disable_login", $_GET['disable_login']))
+	if (!Settings::set("disable_login", $_GET['disable_login']))
 	{
 		echo "Erreur lors de l'enregistrement de disable_login !<br />";
 		die();
@@ -46,7 +46,7 @@ if (isset($_GET['disable_login']))
 }
 if (isset($_GET['url_disconnect']))
 {
-	if (!saveSetting("url_disconnect", $_GET['url_disconnect']))
+	if (!Settings::set("url_disconnect", $_GET['url_disconnect']))
 		echo "Erreur lors de l'enregistrement de url_disconnect ! <br />";
 }
 // Max session length
@@ -55,7 +55,7 @@ if (isset($_GET['sessionMaxLength']))
 	settype($_GET['sessionMaxLength'], "integer");
 	if ($_GET['sessionMaxLength'] < 1)
 		$_GET['sessionMaxLength'] = 30;
-	if (!saveSetting("sessionMaxLength", $_GET['sessionMaxLength']))
+	if (!Settings::set("sessionMaxLength", $_GET['sessionMaxLength']))
 		echo "Erreur lors de l'enregistrement de sessionMaxLength !<br />";
 }
 // pass_leng
@@ -64,10 +64,10 @@ if (isset($_GET['pass_leng']))
 	settype($_GET['pass_leng'], "integer");
 	if ($_GET['pass_leng'] < 1)
 		$_GET['pass_leng'] = 1;
-	if (!saveSetting("pass_leng", $_GET['pass_leng']))
+	if (!Settings::set("pass_leng", $_GET['pass_leng']))
 		echo "Erreur lors de l'enregistrement de pass_leng !<br />";
 }
-if (!loadSettings())
+if (!Settings::load())
 	die("Erreur chargement settings");
 # print the page header
 print_header("", "", "", $type="with_session");
@@ -122,7 +122,7 @@ if ($dbsys == "mysql")
 	echo "\n<hr /><h3>".get_vocab("execution automatique backup")."</h3>";
 	echo "<p>".get_vocab("execution automatique backup explications")."</p>";
 	echo "\n<p>".get_vocab("execution automatique backup mdp").get_vocab("deux_points");
-	echo "\n<input class=\"form-control\" type=\"password\" name=\"motdepasse_backup\" value=\"".getSettingValue("motdepasse_backup")."\" size=\"20\" /></p>";
+	echo "\n<input class=\"form-control\" type=\"password\" name=\"motdepasse_backup\" value=\"".Settings::get("motdepasse_backup")."\" size=\"20\" /></p>";
 	//
 	// Suspendre les connexions
 	//*************************
@@ -131,10 +131,10 @@ if ($dbsys == "mysql")
 	echo "\n<p>".get_vocab("explain_disable_login");
 	?>
 	<br />
-	<input type='radio' name='disable_login' value='yes' id='label_1' <?php if (getSettingValue("disable_login")=='yes') echo "checked=\"checked\""; ?> />
+	<input type='radio' name='disable_login' value='yes' id='label_1' <?php if (Settings::get("disable_login")=='yes') echo "checked=\"checked\""; ?> />
 	<label for='label_1'><?php echo get_vocab("disable_login_on"); ?></label>
 	<br />
-	<input type='radio' name='disable_login' value='no' id='label_2' <?php if (getSettingValue("disable_login")=='no') echo "checked=\"checked\""; ?> />
+	<input type='radio' name='disable_login' value='no' id='label_2' <?php if (Settings::get("disable_login")=='no') echo "checked=\"checked\""; ?> />
 	<label for='label_2'><?php echo get_vocab("disable_login_off"); ?></label>
 </p>
 <?php
@@ -151,7 +151,7 @@ echo "<h3>".get_vocab("title_session_max_length")."</h3>";
 			<?php echo get_vocab("session_max_length"); ?>
 		</td>
 		<td>
-			<input class="form-control" type="text" name="sessionMaxLength" size="16" value="<?php echo(getSettingValue("sessionMaxLength")); ?>" />
+			<input class="form-control" type="text" name="sessionMaxLength" size="16" value="<?php echo(Settings::get("sessionMaxLength")); ?>" />
 		</td>
 	</tr>
 </table>
@@ -159,7 +159,7 @@ echo "<h3>".get_vocab("title_session_max_length")."</h3>";
 //Longueur minimale du mot de passe exigé
 echo "<hr /><h3>".get_vocab("pwd")."</h3>";
 echo "\n<p>".get_vocab("pass_leng_explain").get_vocab("deux_points")."
-<input class=\"form-control\" type=\"text\" name=\"pass_leng\" value=\"".htmlentities(getSettingValue("pass_leng"))."\" size=\"20\" /></p>";
+<input class=\"form-control\" type=\"text\" name=\"pass_leng\" value=\"".htmlentities(Settings::get("pass_leng"))."\" size=\"20\" /></p>";
 //
 // Url de déconnexion
 //*******************
@@ -168,7 +168,7 @@ echo "<hr /><h3>".get_vocab("Url_de_deconnexion")."</h3>\n";
 echo "<p>".get_vocab("Url_de_deconnexion_explain")."</p>\n";
 echo "<p><i>".get_vocab("Url_de_deconnexion_explain2")."</i>";
 echo "<br />".get_vocab("Url_de_deconnexion").get_vocab("deux_points")."\n";
-$value_url = getSettingValue("url_disconnect");
+$value_url = Settings::get("url_disconnect");
 echo "<input class=\"form-control\" type=\"text\" name=\"url_disconnect\" size=\"40\" value =\"$value_url\"/>\n<br /><br /></p>";
 echo "\n<hr />";
 echo "\n<p><input type=\"hidden\" name=\"page_config\" value=\"4\" />";

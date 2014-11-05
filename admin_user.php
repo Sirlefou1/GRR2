@@ -49,7 +49,7 @@ include "admin_col_gauche.php";
 // Un gestionnaire d'utilisateurs ne peut pas Autoriser ou non la modification par un utilisateur de ses informations personnelles
 if ((isset($_GET['action'])) && ($_GET['action'] == "modif_profil") && (authGetUserLevel(getUserName(), -1, 'user') !=  1))
 {
-	if (!saveSetting("allow_users_modify_profil", $_GET['allow_users_modify_profil']))
+	if (!Settings::set("allow_users_modify_profil", $_GET['allow_users_modify_profil']))
 		$msg = get_vocab("message_records_error");
 	else
 		$msg = get_vocab("message_records");
@@ -58,7 +58,7 @@ if ((isset($_GET['action'])) && ($_GET['action'] == "modif_profil") && (authGetU
 // Un gestionnaire d'utilisateurs ne peut pas Autoriser ou non la modification par un utilisateur de ses informations personnelles
 if ((isset($_GET['action'])) && ($_GET['action'] == "modif_email") && (authGetUserLevel(getUserName(), -1, 'user') !=  1))
 {
-	if (!saveSetting("allow_users_modify_email", $_GET['allow_users_modify_email']))
+	if (!Settings::set("allow_users_modify_email", $_GET['allow_users_modify_email']))
 		$msg = get_vocab("message_records_error");
 	else
 		$msg = get_vocab("message_records");
@@ -67,14 +67,14 @@ if ((isset($_GET['action'])) && ($_GET['action'] == "modif_email") && (authGetUs
 // Un gestionnaire d'utilisateurs ne peut pas Autoriser ou non la modification par un utilisateur de son mot de passe
 if ((isset($_GET['action'])) && ($_GET['action'] == "modif_mdp") && (authGetUserLevel(getUserName(), -1, 'user') !=  1))
 {
-	if (!saveSetting("allow_users_modify_mdp", $_GET['allow_users_modify_mdp']))
+	if (!Settings::set("allow_users_modify_mdp", $_GET['allow_users_modify_mdp']))
 		$msg = get_vocab("message_records_error");
 	else
 		$msg = get_vocab("message_records");
 }
 // Nettoyage de la base locale
 // On propose de supprimer les utilisateurs ext de GRR qui ne sont plus présents dans la base LCS
-if ((isset($_GET['action'])) && ($_GET['action'] == "nettoyage") && (getSettingValue("sso_statut") == "lcs"))
+if ((isset($_GET['action'])) && ($_GET['action'] == "nettoyage") && (Settings::get("sso_statut") == "lcs"))
 {
 	// Sélection des utilisateurs non locaux
 	$sql = "SELECT login, etat, source FROM ".TABLE_PREFIX."_utilisateurs where source='ext'";
@@ -122,10 +122,10 @@ if ((isset($_GET['action'])) && ($_GET['action'] == "nettoyage") && (getSettingV
 }
 // Nettoyage de la base locale
 // On propose de supprimer les utilisateurs ext de GRR qui ne sont plus présents dans la base LCS
-if ((isset($_GET['action'])) && ($_GET['action'] == "synchro") && (getSettingValue("sso_statut") == "lcs"))
+if ((isset($_GET['action'])) && ($_GET['action'] == "synchro") && (Settings::get("sso_statut") == "lcs"))
 {
-	$statut_eleve = getSettingValue("lcs_statut_eleve");
-	$statut_non_eleve = getSettingValue("lcs_statut_prof");
+	$statut_eleve = Settings::get("lcs_statut_eleve");
+	$statut_non_eleve = Settings::get("lcs_statut_prof");
 	include LCS_PAGE_AUTH_INC_PHP;
 	include LCS_PAGE_LDAP_INC_PHP;
 	$users = search_people("(cn=*)");
@@ -257,7 +257,7 @@ if (empty($order_by))
 <a href="admin_import_users_csv.php"><?php echo get_vocab("display_add_user_list_csv"); ?></a> |
 <?php
 // On propose de supprimer les utilisateurs ext de GRR qui ne sont plus présents dans la base LCS
-if (getSettingValue("sso_statut") == "lcs")
+if (Settings::get("sso_statut") == "lcs")
 {
 	echo "<br />Opérations LCS : | <a href=\"admin_user.php?action=nettoyage\" onclick=\"return confirmlink(this, '".AddSlashes(get_vocab("mess_maj_base_locale"))."', '".get_vocab("maj_base_locale")."')\">".get_vocab("maj_base_locale")."</a> |";
 	echo " <a href=\"admin_user.php?action=synchro\" onclick=\"return confirmlink(this, '".AddSlashes(get_vocab("mess_synchro_base_locale"))."', '".get_vocab("synchro_base_locale")."')\">".get_vocab("synchro_base_locale")."</a> |";
@@ -271,15 +271,15 @@ if (authGetUserLevel(getUserName(),-1,'user') !=  1)
 	echo "<tr>\n";
 	echo "<td>".get_vocab("modification_parametres_personnels").get_vocab("deux_points")."<select name=\"allow_users_modify_profil\" size=\"1\">\n";
 	echo "<option value = '1' ";
-	if (getSettingValue("allow_users_modify_profil") == '1')
+	if (Settings::get("allow_users_modify_profil") == '1')
 		echo " selected=\"selected\"";
 	echo ">".get_vocab("all")."</option>\n";
 	echo "<option value = '2' ";
-	if (getSettingValue("allow_users_modify_profil") == '2')
+	if (Settings::get("allow_users_modify_profil") == '2')
 		echo " selected=\"selected\"";
 	echo ">".get_vocab("all_but_visitors")."</option>\n";
 	echo "<option value = '5' ";
-	if (getSettingValue("allow_users_modify_profil") == '5')
+	if (Settings::get("allow_users_modify_profil") == '5')
 		echo " selected=\"selected\"";
 	echo ">".get_vocab("only_administrators")."</option>\n";
 	echo "</select>";
@@ -297,15 +297,15 @@ if (authGetUserLevel(getUserName(), -1, 'user') != 1)
 	echo "<tr>\n";
 	echo "<td>".get_vocab("modification_parametre_email").get_vocab("deux_points")."<select name=\"allow_users_modify_email\" size=\"1\">\n";
 	echo "<option value = '1' ";
-	if (getSettingValue("allow_users_modify_email") == '1')
+	if (Settings::get("allow_users_modify_email") == '1')
 		echo " selected=\"selected\"";
 	echo ">".get_vocab("all")."</option>\n";
 	echo "<option value = '2' ";
-	if (getSettingValue("allow_users_modify_email") == '2')
+	if (Settings::get("allow_users_modify_email") == '2')
 		echo " selected=\"selected\"";
 	echo ">".get_vocab("all_but_visitors")."</option>\n";
 	echo "<option value = '5' ";
-	if (getSettingValue("allow_users_modify_email") == '5')
+	if (Settings::get("allow_users_modify_email") == '5')
 		echo " selected=\"selected\"";
 	echo ">".get_vocab("only_administrators")."</option>\n";
 	echo "</select>";
@@ -323,15 +323,15 @@ if (authGetUserLevel(getUserName(), -1, 'user') != 1)
 	echo "<tr>\n";
 	echo "<td>".get_vocab("modification_mdp").get_vocab("deux_points")."<select name=\"allow_users_modify_mdp\" size=\"1\">\n";
 	echo "<option value = '1' ";
-	if (getSettingValue("allow_users_modify_mdp") == '1')
+	if (Settings::get("allow_users_modify_mdp") == '1')
 		echo " selected=\"selected\"";
 	echo ">".get_vocab("all")."</option>\n";
 	echo "<option value = '2' ";
-	if (getSettingValue("allow_users_modify_mdp") == '2')
+	if (Settings::get("allow_users_modify_mdp") == '2')
 		echo " selected=\"selected\"";
 	echo ">".get_vocab("all_but_visitors")."</option>\n";
 	echo "<option value = '5' ";
-	if (getSettingValue("allow_users_modify_mdp") == '5')
+	if (Settings::get("allow_users_modify_mdp") == '5')
 		echo " selected=\"selected\"";
 	echo ">".get_vocab("only_administrators")."</option>\n";
 	echo "</select>";
@@ -392,7 +392,7 @@ if ($res)
 			$col[$i][2] = "$user_nom $user_prenom";
 		// Affichage des ressources gérées
 			$col[$i][3] = "";
-			if (getSettingValue("module_multisite") == "Oui")
+			if (Settings::get("module_multisite") == "Oui")
 			{
 			// On teste si l'utilisateur administre un site
 				$test_admin_site = grr_sql_query1("SELECT count(s.id) FROM ".TABLE_PREFIX."_site s

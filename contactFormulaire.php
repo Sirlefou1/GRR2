@@ -7,14 +7,14 @@ include "include/$dbsys.inc.php";
 include "include/mincals.inc.php";
 include "include/mrbs_sql.inc.php";
 $grr_script_name = "contactFormulaire.php";
-require_once("./include/settings.inc.php");
-if (!loadSettings())
+require_once("./include/settings.class.php");
+if (!Settings::load())
 	die("Erreur chargement settings");
 require_once("./include/session.inc.php");
 include "include/language.inc.php";
 ?>
 <?php
-if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))
+if ((Settings::get("authentification_obli") == 0) && (getUserName() == ''))
 	$type_session = "no_session";
 print_header("", "", "", $type="with_session");
 ?>

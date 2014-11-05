@@ -35,9 +35,9 @@ include_once('include/misc.inc.php');
 include "include/mrbs_sql.inc.php";
 $grr_script_name = "view_rights_room.php";
 // Settings
-require_once("./include/settings.inc.php");
+require_once("./include/settings.class.php");
 //Chargement des valeurs de la table settingS
-if (!loadSettings())
+if (!Settings::load())
 	die("Erreur chargement settings");
 // Session related functions
 require_once("./include/session.inc.php");
@@ -45,7 +45,7 @@ require_once("./include/session.inc.php");
 include "include/resume_session.php";
 // Paramètres langage
 include "include/language.inc.php";
-if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))
+if ((Settings::get("authentification_obli") == 0) && (getUserName() == ''))
 	$type_session = "no_session";
 else
 	$type_session = "with_session";
@@ -57,7 +57,7 @@ if ((authGetUserLevel(getUserName(),$id_room) < 4) || (!verif_acces_ressource(ge
 	showAccessDenied('');
 	exit();
 }
-echo begin_page(getSettingValue("company").get_vocab("deux_points").get_vocab("mrbs"));
+echo begin_page(Settings::get("company").get_vocab("deux_points").get_vocab("mrbs"));
 $res = grr_sql_query("SELECT * FROM ".TABLE_PREFIX."_room WHERE id=$id_room");
 if (!$res)
 	fatal_error(0, get_vocab('error_room') . $id_room . get_vocab('not_found'));

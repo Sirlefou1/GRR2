@@ -47,7 +47,7 @@ if (isset($_POST['mail1']))
 		$temp = '1';
 	else
 		$temp = '0';
-	if (!saveSetting("send_always_mail_to_creator", $temp))
+	if (!Settings::set("send_always_mail_to_creator", $temp))
 	{
 		echo "Erreur lors de l'enregistrement de send_always_mail_to_creator !<br />";
 		die();
@@ -118,12 +118,12 @@ affiche_pop_up($msg,"admin");
 if (empty($room))
 	$room = -1;
 echo "<h2>".get_vocab('admin_email_manager.php')."</h2>\n";
-if (getSettingValue("automatic_mail") != 'yes')
+if (Settings::get("automatic_mail") != 'yes')
 	echo "<h3 class=\"avertissement\">".get_vocab("attention_mail_automatique_désactive")."</h3>";
 echo get_vocab("explain_automatic_mail3")."<br /><br /><hr />\n";
 echo "<form action=\"admin_email_manager.php\" method=\"post\">\n";
 echo "<div><input type=\"checkbox\" name=\"send_always_mail_to_creator\" value=\"y\" ";
-if (getSettingValue('send_always_mail_to_creator')=='1')
+if (Settings::get('send_always_mail_to_creator')=='1')
 	echo ' checked="checked" ';
 echo ' />'."\n";
 echo get_vocab("explain_automatic_mail1");

@@ -36,14 +36,14 @@ include "include/mincals.inc.php";
 include "include/mrbs_sql.inc.php";
 $grr_script_name = "month.php";
 //Settings
-require_once("./include/settings.inc.php");
+require_once("./include/settings.class.php");
 //Chargement des valeurs de la table settings
-if (!loadSettings())
+if (!Settings::load())
 	die("Erreur chargement settings");
 //Fonction relative à la session
 require_once("./include/session.inc.php");
 //Si il n'y a pas de session crée et que l'identification est requise, on déconnecte l'utilisateur.
-if ((!grr_resumeSession()) && (getSettingValue("authentification_obli") == 1))
+if ((!grr_resumeSession()) && (Settings::get("authentification_obli") == 1))
 {
 	header("Location: ./logout.php?auto=1&url=$url");
 	die();
@@ -86,7 +86,7 @@ if (empty($month) || empty($year) || !checkdate($month, 1, $year))
 if (!isset($day))
 	$day = 1;
 //Renseigne la session de l'utilisateur, sans identification ou avec identification.
-if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))
+if ((Settings::get("authentification_obli") == 0) && (getUserName() == ''))
 	$type_session = "no_session";
 else
 	$type_session = "with_session";
@@ -102,7 +102,7 @@ if (check_begin_end_bookings($day, $month, $year))
 	showNoBookings($day, $month, $year, $back);
 	exit();
 }
-if (((authGetUserLevel(getUserName(), -1) < 1) && (getSettingValue("authentification_obli") == 1)) || !$verif_acces_ressource || authUserAccesArea(getUserName(), $area)==0)
+if (((authGetUserLevel(getUserName(), -1) < 1) && (Settings::get("authentification_obli") == 1)) || !$verif_acces_ressource || authUserAccesArea(getUserName(), $area)==0)
 {
 	showAccessDenied($back);
 	exit();
@@ -111,7 +111,7 @@ if (((authGetUserLevel(getUserName(), -1) < 1) && (getSettingValue("authentifica
 // Si oui, les réservations concernées sont supprimées et un mail automatique est envoyé.
 // On vérifie une fois par jour que les ressources ont été rendue en fin de réservation
 // Si non, une notification email est envoyée
-if (getSettingValue("verif_reservation_auto") == 0)
+if (Settings::get("verif_reservation_auto") == 0)
 {
 	verify_confirm_reservation();
 	verify_retard_reservation();
@@ -233,9 +233,9 @@ else
 		{
 			if ($debug_flag) echo "<br />DEBUG: Entry $row[2] day $day_num\n";
 			$d[$day_num]["id"][] = $row[2];
-			if (getSettingValue("display_info_bulle") == 1)
+			if (Settings::get("display_info_bulle") == 1)
 				$d[$day_num]["who"][] = get_vocab("reservee au nom de").affiche_nom_prenom_email($row[4],$row[8],"nomail");
-			else if (getSettingValue("display_info_bulle") == 2)
+			else if (Settings::get("display_info_bulle") == 2)
 				$d[$day_num]["who"][] = $row[5];
 			else
 				$d[$day_num]["who"][] = "";
@@ -366,7 +366,7 @@ else
 			echo "<tr>\n";
 		if ($display_day[$num_week_day] == 1)
 		{
-			if (getSettingValue("show_holidays") == "Oui")
+			if (Settings::get("show_holidays") == "Oui")
 			{
 				$ferie_true = 0;
 				foreach ($ferie as $key => $value)
@@ -387,7 +387,7 @@ else
 					$class .= "ferie ";
 			}
 			echo "<td valign=\"top\" class=\"cell_month\">\n<div class=\"monthday ".$class."\"><a title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day")).$title."\" href=\"day.php?year=$year&amp;month=$month&amp;day=$cday&amp;area=$area\">".$name_day;
-			if (getSettingValue("jours_cycles_actif") == "Oui" && intval($jour_cycle) >- 1)
+			if (Settings::get("jours_cycles_actif") == "Oui" && intval($jour_cycle) >- 1)
 			{
 				if (intval($jour_cycle) > 0)
 					echo " - ".get_vocab("rep_type_6")." ".$jour_cycle;
@@ -418,7 +418,7 @@ else
 						echo "<span class=\"small_planning\">";
 						if ($acces_fiche_reservation)
 						{
-							if (getSettingValue("display_level_view_entry") == 0)
+							if (Settings::get("display_level_view_entry") == 0)
 							{
 								$currentPage ='month_all2';
 								$id = $d[$cday]["id"][$i];

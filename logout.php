@@ -33,14 +33,14 @@ include "include/misc.inc.php";
 include "include/functions.inc.php";
 require_once("include/$dbsys.inc.php");
 // Settings
-require_once("./include/settings.inc.php");
+require_once("./include/settings.class.php");
 //Chargement des valeurs de la table settingS
-if (!loadSettings())
+if (!Settings::load())
 	die("Erreur chargement settings");
 // Paramètres langage
 include "include/language.inc.php";
 require_once("./include/session.inc.php");
-if ((getSettingValue('sso_statut') == 'lasso_visiteur') || (getSettingValue('sso_statut') == 'lasso_utilisateur'))
+if ((Settings::get('sso_statut') == 'lasso_visiteur') || (Settings::get('sso_statut') == 'lasso_utilisateur'))
 {
 	require_once(SPKITLASSO.'/lassospkit_public_api.inc.php');
 	session_name(SESSION_NAME);
@@ -62,7 +62,7 @@ if (isset($_GET['url']))
 	exit;
 }
 //redirection vers l'url de déconnexion
-$url = getSettingValue("url_disconnect");
+$url = Settings::get("url_disconnect");
 if ($url != '')
 {
 	header("Location: $url");

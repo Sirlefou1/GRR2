@@ -28,18 +28,18 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-if (!loadSettings())
+if (!Settings::load())
 	die("Erreur chargement settings");
 // Met à jour dans la BD le champ qui détermine si les fonctionnalités Jours/Cycles sont activées ou désactivées
 if (isset($_GET['jours_cycles']))
 {
-	if (!saveSetting("jours_cycles_actif", $_GET['jours_cycles']))
+	if (!Settings::set("jours_cycles_actif", $_GET['jours_cycles']))
 		echo "Erreur lors de l'enregistrement de jours_cycles_actif ! <br />";
 }
 // Met à jour dans la BD du champ qui détermine si la fonctionnalité "multisite" est activée ou non
 if (isset($_GET['module_multisite']))
 {
-	if (!saveSetting("module_multisite", $_GET['module_multisite']))
+	if (!Settings::set("module_multisite", $_GET['module_multisite']))
 		echo "Erreur lors de l'enregistrement de module_multisite ! <br />";
 	else
 	{
@@ -77,7 +77,7 @@ if (isset($_GET['module_multisite']))
 }
 if (isset($_GET['use_fckeditor']))
 {
-	if (!saveSetting("use_fckeditor", $_GET['use_fckeditor']))
+	if (!Settings::set("use_fckeditor", $_GET['use_fckeditor']))
 	{
 		echo "Erreur lors de l'enregistrement de use_fckeditor !<br />";
 		die();
@@ -96,7 +96,7 @@ echo "<h3>".get_vocab("Activer_module_jours_cycles")."</h3>\n";
 echo "<table border='0'>\n<tr>\n<td>\n";
 echo get_vocab("Activer_module_jours_cycles").get_vocab("deux_points");
 echo "<select name='jours_cycles'>\n";
-if (getSettingValue("jours_cycles_actif") == "Oui")
+if (Settings::get("jours_cycles_actif") == "Oui")
 {
 	echo "<option value=\"Oui\" selected=\"selected\">".get_vocab('YES')."</option>\n";
 	echo "<option value=\"Non\">".get_vocab('NO')."</option>\n";
@@ -111,7 +111,7 @@ echo "<h3>".get_vocab("Activer_module_multisite")."</h3>\n";
 echo "<table border='0'>\n<tr>\n<td>\n";
 echo get_vocab("Activer_module_multisite").get_vocab("deux_points");
 echo "<select name='module_multisite'>\n";
-if (getSettingValue("module_multisite") == "Oui")
+if (Settings::get("module_multisite") == "Oui")
 {
 	echo "<option value=\"Oui\" selected=\"selected\">".get_vocab('YES')."</option>\n";
 	echo "<option value=\"Non\">".get_vocab('NO')."</option>\n";
@@ -127,13 +127,13 @@ echo "\n<p>".get_vocab("use_fckeditor_explain")."</p>";
 echo "\n<table>";
 echo "\n<tr><td>".get_vocab("use_fckeditor0")."</td><td>";
 echo "\n<input type='radio' name='use_fckeditor' value='0' ";
-if (getSettingValue("use_fckeditor") == '0')
+if (Settings::get("use_fckeditor") == '0')
 	echo "checked=\"checked\"";
 echo " />";
 echo "\n</td></tr>";
 echo "\n<tr><td>".get_vocab("use_fckeditor1")."</td><td>";
 echo "\n<input type='radio' name='use_fckeditor' value='1' ";
-if (getSettingValue("use_fckeditor") == '1')
+if (Settings::get("use_fckeditor") == '1')
 	echo "checked=\"checked\"";
 echo " />";
 echo "\n</td></tr>";

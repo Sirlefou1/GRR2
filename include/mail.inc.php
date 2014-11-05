@@ -39,8 +39,8 @@
     // Appel de la classe phpmailer
     require "./phpmailer/class.phpmailer.php";
 
-    define("GRR_FROM",getSettingValue("grr_mail_from"));
-    define("GRR_FROMNAME",getSettingValue("grr_mail_fromname"));
+    define("GRR_FROM",Settings::get("grr_mail_from"));
+    define("GRR_FROMNAME",Settings::get("grr_mail_fromname"));
     class my_phpmailer extends phpmailer {
         var $From = GRR_FROM;
         var $FromName = GRR_FROMNAME;
@@ -52,13 +52,13 @@
         var $IsHTML= false;
         var $WordWrap = 75;
         function my_phpmailer() {
-            if (getSettingValue("grr_mail_method")  == "smtp") {
-                $this->Host = getSettingValue("grr_mail_smtp");
+            if (Settings::get("grr_mail_method")  == "smtp") {
+                $this->Host = Settings::get("grr_mail_smtp");
                 $this->isSMTP();
-                if (getSettingValue("grr_mail_Username")!="") {
+                if (Settings::get("grr_mail_Username")!="") {
                     $this->SMTPAuth  = true;
-                    $this->Username = getSettingValue("grr_mail_Username");
-                    $this->Password = getSettingValue("grr_mail_Password");
+                    $this->Username = Settings::get("grr_mail_Username");
+                    $this->Password = Settings::get("grr_mail_Password");
                 } else {
                     $this->SMTPAuth  = false;
                 }

@@ -32,7 +32,7 @@ $grr_script_name = "admin_config_sso.php";
 $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
-if (getSettingValue("sso_ac_corr_profil_statut") != 'y')
+if (Settings::get("sso_ac_corr_profil_statut") != 'y')
 {
 	showAccessDenied($back);
 	exit();

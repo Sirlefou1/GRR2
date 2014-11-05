@@ -34,8 +34,8 @@ include "include/$dbsys.inc.php";
 include_once('include/misc.inc.php');
 include "include/mrbs_sql.inc.php";
 $grr_script_name = "del_entry.php";
-require_once("./include/settings.inc.php");
-if (!loadSettings())
+require_once("./include/settings.class.php");
+if (!Settings::load())
 	die("Erreur chargement settings");
 require_once("./include/session.inc.php");
 if (!grr_resumeSession())
@@ -79,7 +79,7 @@ if ($info = mrbsGetEntryInfo($id))
 		showAccessDenied($back);
 		exit();
 	}
-	if (getSettingValue("automatic_mail") == 'yes')
+	if (Settings::get("automatic_mail") == 'yes')
 		$_SESSION['session_message_error'] = send_mail($id,3,$dformat);
 	$room_id = grr_sql_query1("SELECT ".TABLE_PREFIX."_entry.room_id FROM ".TABLE_PREFIX."_entry, ".TABLE_PREFIX."_room WHERE ".TABLE_PREFIX."_entry.room_id = ".TABLE_PREFIX."_room.id AND ".TABLE_PREFIX."_entry.id='".$id."'");
 	$date_now = time();

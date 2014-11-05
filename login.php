@@ -35,9 +35,9 @@ include "include/misc.inc.php";
 include "include/functions.inc.php";
 include "include/$dbsys.inc.php";
 // Settings
-require_once("./include/settings.inc.php");
+require_once("./include/settings.class.php");
 //Chargement des valeurs de la table settingS
-if (!loadSettings())
+if (!Settings::load())
 	die("Erreur chargement settings");
 // Paramètres langage
 include "include/language.inc.php";
@@ -131,59 +131,59 @@ if (isset($_POST['login']) && isset($_POST['password']))
 // Dans le cas d'une démo, on met à jour la base une fois par jour.
 MajMysqlModeDemo();
 //si on a interdit l'acces a la page login
-if ((getSettingValue("Url_cacher_page_login") != "") && ((!isset($sso_super_admin)) || ($sso_super_admin == false)) && (!isset($_GET["local"])))
+if ((Settings::get("Url_cacher_page_login") != "") && ((!isset($sso_super_admin)) || ($sso_super_admin == false)) && (!isset($_GET["local"])))
 	header("Location: ./index.php");
-echo begin_page(get_vocab("mrbs").get_vocab("deux_points").getSettingValue("company"),"no_session");
+echo begin_page(get_vocab("mrbs").get_vocab("deux_points").Settings::get("company"),"no_session");
 ?>
 <script type="text/javascript" src="./functions.js" ></script>
 <div class="center">
 	<?php
-	$nom_picture = "./images/".getSettingValue("logo");
-	if ((getSettingValue("logo") != '') && (@file_exists($nom_picture)))
+	$nom_picture = "./images/".Settings::get("logo");
+	if ((Settings::get("logo") != '') && (@file_exists($nom_picture)))
 		echo "<a href=\"javascript:history.back()\"><img src=\"".$nom_picture."\" alt=\"logo\" /></a>\n";"";
 	?>
 	<h1>
 		<?php
-		echo getSettingValue("title_home_page");
+		echo Settings::get("title_home_page");
 		?>
 	</h1>
 	<h2>
 		<?php
-		echo getSettingValue("company");
+		echo Settings::get("company");
 		?>
 	</h2>
 	<br />
 	<p>
-		<?php echo getSettingValue("message_home_page");
-		if ((getSettingValue("disable_login")) == 'yes')
+		<?php echo Settings::get("message_home_page");
+		if ((Settings::get("disable_login")) == 'yes')
 			echo "<br /><br /><span class='avertissement'>".get_vocab("msg_login3")."</span>";
 		?>
 	</p>
 	<form action="login.php" method='post' style="width: 100%; margin-top: 24px; margin-bottom: 48px;">
 		<?php
-		if ((isset($message)) && (getSettingValue("disable_login")) != 'yes')
+		if ((isset($message)) && (Settings::get("disable_login")) != 'yes')
 			echo("<p><span class='avertissement'>" . $message . "</span></p>");
-		if ((getSettingValue('sso_statut') == 'cas_visiteur') || (getSettingValue('sso_statut') == 'cas_utilisateur'))
+		if ((Settings::get('sso_statut') == 'cas_visiteur') || (Settings::get('sso_statut') == 'cas_utilisateur'))
 		{
 			echo "<p><span style=\"font-size:1.4em\"><a href=\"./index.php\">".get_vocab("authentification_CAS")."</a></span></p>";
 			echo "<p><b>".get_vocab("authentification_locale")."</b></p>";
 		}
-		if ((getSettingValue('sso_statut') == 'lemon_visiteur') || (getSettingValue('sso_statut') == 'lemon_utilisateur'))
+		if ((Settings::get('sso_statut') == 'lemon_visiteur') || (Settings::get('sso_statut') == 'lemon_utilisateur'))
 		{
 			echo "<p><span style=\"font-size:1.4em\"><a href=\"./index.php\">".get_vocab("authentification_lemon")."</a></span></p>";
 			echo "<p><b>".get_vocab("authentification_locale")."</b></p>";
 		}
-		if (getSettingValue('sso_statut') == 'lcs')
+		if (Settings::get('sso_statut') == 'lcs')
 		{
 			echo "<p><span style=\"font-size:1.4em\"><a href=\"".LCS_PAGE_AUTHENTIF."\">".get_vocab("authentification_lcs")."</a></span></p>";
 			echo "<p><b>".get_vocab("authentification_locale")."</b></p>";
 		}
-		if ((getSettingValue('sso_statut') == 'lasso_visiteur') || (getSettingValue('sso_statut') == 'lasso_utilisateur'))
+		if ((Settings::get('sso_statut') == 'lasso_visiteur') || (Settings::get('sso_statut') == 'lasso_utilisateur'))
 		{
 			echo "<p><span style=\"font-size:1.4em\"><a href=\"./index.php\">".get_vocab("authentification_lasso")."</a></span></p>";
 			echo "<p><b>".get_vocab("authentification_locale")."</b></p>";
 		}
-		if ((getSettingValue('sso_statut') == 'http_visiteur') || (getSettingValue('sso_statut') == 'http_utilisateur'))
+		if ((Settings::get('sso_statut') == 'http_visiteur') || (Settings::get('sso_statut') == 'http_utilisateur'))
 		{
 			echo "<p><span style=\"font-size:1.4em\"><a href=\"./index.php\">".get_vocab("authentification_http")."</a></span></p>";
 			echo "<p><b>".get_vocab("authentification_locale")."</b></p>";
@@ -215,14 +215,14 @@ echo begin_page(get_vocab("mrbs").get_vocab("deux_points").getSettingValue("comp
 		document.getElementById('login').focus();
 	</script>
 	<?php
-	if (getSettingValue("webmaster_email") != "")
+	if (Settings::get("webmaster_email") != "")
 	{
 		$lien = affiche_lien_contact("contact_administrateur","identifiant:non","seulement_si_email");
 		if ($lien != "")
 			echo "<p>[".$lien."]</p>";
 	}
 	echo "<a href=\"javascript:history.back()\">Précedent";
-	echo " - <b>".getSettingValue("company")."</b></a>";
+	echo " - <b>".Settings::get("company")."</b></a>";
 	?>
 	<br />
 	<br />

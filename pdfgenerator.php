@@ -7,8 +7,8 @@ include "include/$dbsys.inc.php";
 include "include/mincals.inc.php";
 include "include/mrbs_sql.inc.php";
 $grr_script_name = "pdfgenerator.php";
-require_once("./include/settings.inc.php");
-if (!loadSettings())
+require_once("./include/settings.class.php");
+if (!Settings::load())
 	die("Erreur chargement settings");
 require_once("./include/session.inc.php");
 include "include/resume_session.php";
@@ -134,7 +134,7 @@ else
 	if (isset($_GET['id']))
 		$id = $_GET['id'];
 	else
-		header('Location: '.getSettingValue("grr_url"));
+		header('Location: '.Settings::get("grr_url"));
 	$sql = "SELECT * FROM ".TABLE_PREFIX."_entry WHERE id='".$id."'";
 	$res = grr_sql_query($sql);
 	if (!$res)
@@ -180,7 +180,7 @@ else
 			</div>
 			<div class="input-group">
 				<span class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></span>
-				<input class="form-control" placeholder="Etablissement" name="etat" type="text" value="<?php echo getSettingValue("company"); ?>" required>
+				<input class="form-control" placeholder="Etablissement" name="etat" type="text" value="<?php echo Settings::get("company"); ?>" required>
 			</div>
 			<div class="input-group">
 				<span class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></span>
@@ -224,7 +224,7 @@ else
 			</div>
 			<div class="input-group">
 				<span class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></span>
-				<input class="form-control" placeholder="Logo" name="logo" type="text" value="images/<?php echo getSettingValue("logo"); ?>" required>
+				<input class="form-control" placeholder="Logo" name="logo" type="text" value="images/<?php echo Settings::get("logo"); ?>" required>
 			</div>
 
 			<div class="control-group">

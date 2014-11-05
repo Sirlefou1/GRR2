@@ -42,11 +42,11 @@ if (isset($_GET['mdp']))
 	include "include/misc.inc.php";
 	include "include/functions.inc.php";
 	include "include/$dbsys.inc.php";
-	include("include/settings.inc.php");
-	if (!loadSettings())
+	include("include/settings.class.php");
+	if (!Settings::load())
 		die("Erreur chargement settings");
 
-	if ((($_GET['mdp'] != getSettingValue("motdepasse_backup")) || (getSettingValue("motdepasse_backup")== '' )))
+	if ((($_GET['mdp'] != Settings::get("motdepasse_backup")) || (Settings::get("motdepasse_backup")== '' )))
 	{
 		if (!isset($argv[1]))
 			echo begin_page("backup", $page = "no_session")."<p>";

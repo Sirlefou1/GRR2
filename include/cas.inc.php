@@ -65,7 +65,7 @@ if (phpCAS::checkAuthentication())
 else
 {
 	// L'utilisateur n'est pas authentifié. Que fait-on ?
-	if (getSettingValue("sso_redirection_accueil_grr") == 'y')
+	if (Settings::get("sso_redirection_accueil_grr") == 'y')
 	{
 		if (isset($_GET['force_authentification']))
 			phpCAS::forceAuthentication();

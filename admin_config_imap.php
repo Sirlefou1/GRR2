@@ -30,7 +30,7 @@
  */
 include "include/admin.inc.php";
 $grr_script_name = "admin_config_imap.php";
-require_once("./include/settings.inc.php");
+require_once("./include/settings.class.php");
 $valid = isset($_POST["valid"]) ? $_POST["valid"] : 'no';
 $etape = isset($_POST["etape"]) ? $_POST["etape"] : '0';
 $imap_domaine=isset($_POST["imap_domaine"]) ? $_POST["imap_domaine"] : "";
@@ -53,7 +53,7 @@ if (isset($_POST['imap_statut']))
 	}
 	else
 	{
-		if (!saveSetting("imap_statut", $_POST['imap_statut']))
+		if (!Settings::set("imap_statut", $_POST['imap_statut']))
 			echo encode_message_utf8("Erreur lors de l'enregistrement de imap_statut !<br />");
 		$grrSettings['imap_statut'] = $_POST['imap_statut'];
 	}
@@ -226,18 +226,18 @@ else if ($etape ==0)
 		echo encode_message_utf8("<p class=\"avertissement\"><b>Attention </b> : les fonctions liées à l'authentification <b>IMAP/POP</b> ne sont pas activées sur votre serveur PHP.<br />La configuration IMAP/POP est donc actuellement impossible.</p></td></tr></table></body></html>");
 		die();
 	}
-	if (getSettingValue("imap_statut") != '')
+	if (Settings::get("imap_statut") != '')
 	{
 		echo "<form action=\"admin_config_imap.php\" method=\"post\"><div>";
 		echo "<input type=\"hidden\" name=\"valid\" value=\"$valid\" />";
 		echo encode_message_utf8("<h3>L'authentification IMAP/POP est activée.</h3>");
 		echo encode_message_utf8("<h3>Statut par défaut des utilisateurs importés: </h3>");
 		echo "<input type=\"radio\" name=\"imap_statut\" value=\"visiteur\" ";
-		if (getSettingValue("imap_statut") == 'visiteur')
+		if (Settings::get("imap_statut") == 'visiteur')
 			echo "checked=\"checked\" ";
 		echo "/>Visiteur<br />";
 		echo "<input type=\"radio\" name=\"imap_statut\" value=\"utilisateur\" ";
-		if (getSettingValue("imap_statut") == 'utilisateur')
+		if (Settings::get("imap_statut") == 'utilisateur')
 			echo "checked=\"checked\" ";
 		echo "/>Usager<br />";
 		echo "Ou bien <br />";

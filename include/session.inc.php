@@ -29,6 +29,11 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+
+require_once("settings.class.php");
+$settings = new Settings();
+if (!$settings)
+	die("Erreur chargement settings");
 /**
  * Open a new session
  *
@@ -55,7 +60,7 @@ function grr_opensession($_login, $_password, $_user_ext_authentifie = '', $tab_
 		$est_authentifie_sso = TRUE;
 		// Statut par défaut
 		$_statut = "";
-		$sso = getSettingValue("sso_statut");
+		$sso = Settings::get("sso_statut");
 		if ($sso == "cas_visiteur")
 			$_statut = "visiteur";
 		// cette ligne n'est pas vraiment utile quand le statut est recalculé plus bas par effectuer_correspondance_profil_statut
@@ -77,15 +82,15 @@ function grr_opensession($_login, $_password, $_user_ext_authentifie = '', $tab_
 		else if ($sso == "lcs")
 		{
 			if ($_user_ext_authentifie == "lcs_eleve")
-				$_statut = getSettingValue("lcs_statut_eleve");
+				$_statut = Settings::get("lcs_statut_eleve");
 			if ($_user_ext_authentifie == "lcs_non_eleve")
-				$_statut = getSettingValue("lcs_statut_prof");
+				$_statut = Settings::get("lcs_statut_prof");
 			$temoin_grp_ok = "non";
-			if (trim(getSettingValue("lcs_liste_groupes_autorises")) == "")
+			if (trim(Settings::get("lcs_liste_groupes_autorises")) == "")
 				$temoin_grp_ok = "oui";
 			else
 			{
-				$tab_grp_autorise = explode(";",getSettingValue("lcs_liste_groupes_autorises"));
+				$tab_grp_autorise = explode(";",Settings::get("lcs_liste_groupes_autorises"));
 				$tot =  count($tab_grp_autorise);
 				for ($i = 0; $i < $tot; $i++)
 				{
@@ -209,12 +214,12 @@ function grr_opensession($_login, $_password, $_user_ext_authentifie = '', $tab_
 					$libelle_fonction_user = $tab_login["user_libelle_fonction"];
 					$language_user = $tab_login["user_language"];
 					$default_style_user = $tab_login["user_default_style"];
-					if (getSettingValue("sso_ac_corr_profil_statut")=='y')
+					if (Settings::get("sso_ac_corr_profil_statut")=='y')
 						$_statut = effectuer_correspondance_profil_statut($code_fonction_user, $libelle_fonction_user);
 				//CAS d'un LDAP avec SSO CAS ou avec SSO Lemonldap
 				//on tente de récupérer des infos dans l'annuaire avant d'importer le profil dans GRR
 				}
-				else if ((getSettingValue("ldap_statut") != '') && (@function_exists("ldap_connect")) && (@file_exists("include/config_ldap.inc.php")) && ($_user_ext_authentifie == 'cas'))
+				else if ((Settings::get("ldap_statut") != '') && (@function_exists("ldap_connect")) && (@file_exists("include/config_ldap.inc.php")) && ($_user_ext_authentifie == 'cas'))
 				{
 				// On initialise au cas où on ne réussisse pas à récupérer les infos dans l'annuaire.
 					$l_nom = $_login;
@@ -223,12 +228,12 @@ function grr_opensession($_login, $_password, $_user_ext_authentifie = '', $tab_
 					include "config_ldap.inc.php";
 				// Connexion à l'annuaire
 					$ds = grr_connect_ldap($ldap_adresse,$ldap_port,$ldap_login,$ldap_pwd,$use_tls);
-					$user_dn = grr_ldap_search_user($ds, $ldap_base,getSettingValue("ldap_champ_recherche"), $_login, $ldap_filter, "no");
+					$user_dn = grr_ldap_search_user($ds, $ldap_base,Settings::get("ldap_champ_recherche"), $_login, $ldap_filter, "no");
 				// Test with login and password of the user
 					if (!$ds)
 						$ds = grr_connect_ldap($ldap_adresse,$ldap_port,$_login,$_password,$use_tls);
 					if ($ds)
-						$result = @ldap_read($ds, $user_dn, "objectClass=*", array(getSettingValue("ldap_champ_nom"),getSettingValue("ldap_champ_prenom"),getSettingValue("ldap_champ_email")));
+						$result = @ldap_read($ds, $user_dn, "objectClass=*", array(Settings::get("ldap_champ_nom"),Settings::get("ldap_champ_prenom"),Settings::get("ldap_champ_email")));
 					if ($result)
 					{
 					// Recuperer les donnees de l'utilisateur
@@ -240,23 +245,23 @@ function grr_opensession($_login, $_password, $_user_ext_authentifie = '', $tab_
 								$val = $info[$i];
 								if (is_array($val))
 								{
-									if (isset($val[getSettingValue("ldap_champ_nom")][0]))
-										$l_nom = ucfirst($val[getSettingValue("ldap_champ_nom")][0]);
+									if (isset($val[Settings::get("ldap_champ_nom")][0]))
+										$l_nom = ucfirst($val[Settings::get("ldap_champ_nom")][0]);
 									else
 										$l_nom = iconv("ISO-8859-1","utf-8","Nom à préciser");
-									if (isset($val[getSettingValue("ldap_champ_prenom")][0]))
-										$l_prenom = ucfirst($val[getSettingValue("ldap_champ_prenom")][0]);
+									if (isset($val[Settings::get("ldap_champ_prenom")][0]))
+										$l_prenom = ucfirst($val[Settings::get("ldap_champ_prenom")][0]);
 									else
 										$l_prenom = iconv("ISO-8859-1","utf-8","Prénom à préciser");
-									if (isset($val[getSettingValue("ldap_champ_email")][0]))
-										$l_email = $val[getSettingValue("ldap_champ_email")][0];
+									if (isset($val[Settings::get("ldap_champ_email")][0]))
+										$l_email = $val[Settings::get("ldap_champ_email")][0];
 									else
 										$l_email='';
 								}
 							}
 						}
 					// Convertir depuis UTF-8 (jeu de caracteres par defaut)
-						if ((function_exists("utf8_decode")) && (getSettingValue("ConvertLdapUtf8toIso") == "y"))
+						if ((function_exists("utf8_decode")) && (Settings::get("ConvertLdapUtf8toIso") == "y"))
 						{
 							$l_email = utf8_decode($l_email);
 							$l_nom = utf8_decode($l_nom);
@@ -275,9 +280,9 @@ function grr_opensession($_login, $_password, $_user_ext_authentifie = '', $tab_
 				{
 				//definition du nom
 					$nom_user = "";
-					if (getSettingValue("http_champ_nom") != "")
+					if (Settings::get("http_champ_nom") != "")
 					{
-						$_nom_user = getSettingValue("http_champ_nom");
+						$_nom_user = Settings::get("http_champ_nom");
 						if (isset($_SERVER["$_nom_user"]))
 							$nom_user = $_SERVER["$_nom_user"];
 					}
@@ -285,24 +290,24 @@ function grr_opensession($_login, $_password, $_user_ext_authentifie = '', $tab_
 						$nom_user = $_login;
 				//definition email :
 					$email_user = "";
-					if (getSettingValue("http_champ_email"))
+					if (Settings::get("http_champ_email"))
 					{
-						$_email_user = getSettingValue("http_champ_email");
+						$_email_user = Settings::get("http_champ_email");
 						if (isset($_SERVER["$_email_user"]))
 							$email_user = $_SERVER["$_email_user"];
 					//on verifie le statut si domain statut est actif :
 						if ($email_user != "")
 						{
-							if ((getSettingValue("http_sso_domain")) && (getSettingValue("http_sso_domain") != ""))
+							if ((Settings::get("http_sso_domain")) && (Settings::get("http_sso_domain") != ""))
 							{
 							//explode du mail :
 								$domaine = explode("@",$email_user);
 								if (isset($domaine[1]))
 								{
-									if ($domaine[1] == getSettingValue("http_sso_domain"))
+									if ($domaine[1] == Settings::get("http_sso_domain"))
 									{
-										if (getSettingValue("http_sso_statut_domaine") != "")
-											$_statut = getSettingValue("http_sso_statut_domaine");
+										if (Settings::get("http_sso_statut_domaine") != "")
+											$_statut = Settings::get("http_sso_statut_domaine");
 									}
 								}
 							}
@@ -310,9 +315,9 @@ function grr_opensession($_login, $_password, $_user_ext_authentifie = '', $tab_
 					}
 				//definition du prenom :
 					$prenom_user = "";
-					if (getSettingValue("http_champ_prenom"))
+					if (Settings::get("http_champ_prenom"))
 					{
-						$_prenom_user = getSettingValue("http_champ_prenom");
+						$_prenom_user = Settings::get("http_champ_prenom");
 						if (isset($_SERVER["$_prenom_user"]))
 							$prenom_user = $_SERVER["$_prenom_user"];
 					}
@@ -365,7 +370,7 @@ else
 	//On est toujours dans le cas NON SSO - L'utilisateur n'est pas présent dans la base locale
 	if ($num_row != 1)
 	{
-		if ((getSettingValue("ldap_statut") != '') && (@function_exists("ldap_connect")) && (@file_exists("include/config_ldap.inc.php")))
+		if ((Settings::get("ldap_statut") != '') && (@function_exists("ldap_connect")) && (@file_exists("include/config_ldap.inc.php")))
 		{
 			//$login_search = ereg_replace("[^-@._[:space:][:alnum:]]", "", $_login);
 			$login_search = preg_replace("/[^\-@._[:space:]a-zA-Z0-9]/", "", $_login);
@@ -383,7 +388,7 @@ else
 			else
 				return "4";
 		}
-		elseif ((getSettingValue("imap_statut") != '') and (@function_exists("imap_open")) and (@file_exists("include/config_imap.inc.php")))
+		elseif ((Settings::get("imap_statut") != '') and (@function_exists("imap_open")) and (@file_exists("include/config_imap.inc.php")))
 		{
 			//  $login_search = ereg_replace("[^-@._[:space:][:alnum:]]", "", $_login);
 			$login_search = preg_replace("/[^\-@._[:space:]a-zA-Z0-9]/", "", $_login);
@@ -416,7 +421,7 @@ if ($auth_ldap == 'yes')
 {
 	// Cas particulier des serveur SE3
 	// se3_liste_groupes_autorises est vide -> pas de restriction
-	if (trim(getSettingValue("se3_liste_groupes_autorises")) == "")
+	if (trim(Settings::get("se3_liste_groupes_autorises")) == "")
 	{
 		$temoin_grp_ok = "oui";
 	}
@@ -424,7 +429,7 @@ if ($auth_ldap == 'yes')
 	{
 		// se3_liste_groupes_autorises n'est pas vide -> on teste si le $_login appartient à un des groupes
 		$temoin_grp_ok = "non";
-		$tab_grp_autorise = explode(";", getSettingValue("se3_liste_groupes_autorises"));
+		$tab_grp_autorise = explode(";", Settings::get("se3_liste_groupes_autorises"));
 		$total =  count($tab_grp_autorise);
 		for ($i = 0; $i < $total; $i++)
 		{
@@ -485,7 +490,7 @@ if ($auth_ldap == 'yes')
 			prenom='".protect_data_sql($user_info[1])."',
 			login='".protect_data_sql($_login)."',
 			password='',
-			statut='".getSettingValue("ldap_statut")."',
+			statut='".Settings::get("ldap_statut")."',
 			email='".protect_data_sql($user_info[2])."',
 			etat='actif',
 			source='ext'";
@@ -551,7 +556,7 @@ if ($auth_imap == 'yes')
 			prenom='".protect_data_sql($l_prenom)."',
 			login='".protect_data_sql($_login)."',
 			password='',
-			statut='".getSettingValue("imap_statut")."',
+			statut='".Settings::get("imap_statut")."',
 			email='".protect_data_sql($l_email)."',
 			etat='actif',
 			source='ext'";
@@ -575,7 +580,7 @@ if ($auth_imap == 'yes')
 	}
 }
 		// On teste si la connexion est active ou non
-if ((getSettingValue("disable_login")=='yes') and ($row[4] != "administrateur"))
+if ((Settings::get("disable_login")=='yes') and ($row[4] != "administrateur"))
 	return "2";
 		//
 		// A ce stade, on dispose dans tous les cas d'un tableau $row contenant les informations nécessaires à l'établissment d'une session
@@ -589,8 +594,8 @@ $res = grr_sql_query($sql);
 $num_row = grr_sql_count($res);
 if (($num_row > 0) and isset($_SESSION['start']))
 {
-	$sql = "UPDATE ".TABLE_PREFIX."_log set END = now() + interval " . getSettingValue("sessionMaxLength") . " minute where SESSION_ID = '" . session_id() . "' and START = '" . $_SESSION['start'] . "'";
-		//  $sql = "update ".TABLE_PREFIX."_log set END = now() + interval " . getSettingValue("sessionMaxLength") . " minute where SESSION_ID = '" . session_id() . "'";
+	$sql = "UPDATE ".TABLE_PREFIX."_log set END = now() + interval " . Settings::get("sessionMaxLength") . " minute where SESSION_ID = '" . session_id() . "' and START = '" . $_SESSION['start'] . "'";
+		//  $sql = "update ".TABLE_PREFIX."_log set END = now() + interval " . Settings::get("sessionMaxLength") . " minute where SESSION_ID = '" . session_id() . "'";
 	$res = grr_sql_query($sql);
 	if (!$res)
 		fatal_error(0, 'erreur mysql' . grr_sql_error());
@@ -609,31 +614,31 @@ $_SESSION['prenom'] = $row[2];
 $_SESSION['nom'] = $row[3];
 $_SESSION['statut'] = $row[4];
 $_SESSION['start'] = $row[5];
-$_SESSION['maxLength'] = getSettingValue("sessionMaxLength");
+$_SESSION['maxLength'] = Settings::get("sessionMaxLength");
 if ($row[6] > 0)
 	$_SESSION['default_area'] = $row[6];
 else
-	$_SESSION['default_area'] = getSettingValue("default_area");
+	$_SESSION['default_area'] = Settings::get("default_area");
 if ($row[7] > 0)
 	$_SESSION['default_room'] = $row[7];
 else
-	$_SESSION['default_room'] = getSettingValue("default_room");
+	$_SESSION['default_room'] = Settings::get("default_room");
 if ($row[8] !='')
 	$_SESSION['default_style'] = $row[8];
 else
-	$_SESSION['default_style'] = getSettingValue("default_css");
+	$_SESSION['default_style'] = Settings::get("default_css");
 if ($row[9] !='')
 	$_SESSION['default_list_type'] = $row[9];
 else
-	$_SESSION['default_list_type'] = getSettingValue("area_list_format");
+	$_SESSION['default_list_type'] = Settings::get("area_list_format");
 if ($row[10] !='')
 	$_SESSION['default_language'] = $row[10];
 else
-	$_SESSION['default_language'] = getSettingValue("default_language");
+	$_SESSION['default_language'] = Settings::get("default_language");
 if ($row[13] > 0)
 	$_SESSION['default_site'] = $row[13];
 else
-	$_SESSION['default_site'] = getSettingValue("default_site");
+	$_SESSION['default_site'] = Settings::get("default_site");
 $_SESSION['source_login'] = $row[11];
 if ($est_authentifie_sso)
 {
@@ -653,7 +658,7 @@ $sql = "INSERT INTO ".TABLE_PREFIX."_log (LOGIN, START, SESSION_ID, REMOTE_ADDR,
 	'" . substr($_SERVER['HTTP_USER_AGENT'],0,254) . "',
 	'" . $httpreferer . "',
 	'1',
-	'" . $_SESSION['start'] . "' + interval " . getSettingValue("sessionMaxLength") . " minute
+	'" . $_SESSION['start'] . "' + interval " . Settings::get("sessionMaxLength") . " minute
 	)
 ;";
 grr_sql_query($sql);
@@ -734,7 +739,7 @@ function grr_resumeSession()
 		// Resuming session
 	session_name(SESSION_NAME);
 	@session_start();
-	if ((getSettingValue('sso_statut') == 'lcs') and (!isset($_SESSION['est_authentifie_sso'])) and ($_SESSION['source_login'] == "ext"))
+	if ((Settings::get('sso_statut') == 'lcs') and (!isset($_SESSION['est_authentifie_sso'])) and ($_SESSION['source_login'] == "ext"))
 		return (false);
 		// La session est-elle expirée
 	if (isset($_SESSION['login']))
@@ -745,7 +750,7 @@ function grr_resumeSession()
 	}
 	if ((!isset($_SESSION)) or (!isset($_SESSION['login'])))
 		return (false);
-	if ((getSettingValue("disable_login")=='yes') and ($_SESSION['statut'] != "administrateur"))
+	if ((Settings::get("disable_login")=='yes') and ($_SESSION['statut'] != "administrateur"))
 		return (false);
 		// To be removed
 		// Validating session data
@@ -761,7 +766,7 @@ function grr_resumeSession()
 	{
 		// Le temps d'inactivité est supérieur à la limite fixée.
 				// cas d'une authentification LCS
-		if (getSettingValue('sso_statut') == 'lcs')
+		if (Settings::get('sso_statut') == 'lcs')
 		{
 		// l'utilisateur est authentifié par LCS, on renouvelle la session
 			if ($is_authentified_lcs == 'yes')
@@ -830,7 +835,7 @@ function grr_verif_ldap($_login, $_password)
 	if ($ds)
 	{
 				// Attributs testés pour egalite avec le login
-		$atts = explode("|",getSettingValue("ldap_champ_recherche"));
+		$atts = explode("|",Settings::get("ldap_champ_recherche"));
 				//$atts = array('uid', 'login', 'userid', 'cn', 'sn', 'samaccountname', 'userprincipalname');
 			//$login_search = ereg_replace("[^-@._[:space:][:alnum:]]", "", $_login);
 		$login_search = preg_replace("/[^\-@._[:space:]a-zA-Z0-9]/", "", $_login);
@@ -937,7 +942,7 @@ $diagnostic="no" :
 */
 function grr_ldap_search_user($ds, $basedn, $login_attr, $login, $filtre_sup = "", $diagnostic = "no")
 {
-	if (getSettingValue("ActiveModeDiagnostic") == "y")
+	if (Settings::get("ActiveModeDiagnostic") == "y")
 		$diagnostic = "yes";
 	// Construction du filtre
 	$filter = "(".$login_attr."=".$login.")";
@@ -1076,7 +1081,7 @@ function grr_getinfo_ldap($_dn, $_login, $_password)
 	}
 	if ($ds)
 	{
-		$result = @ldap_read($ds, $_dn, "objectClass=*", array(getSettingValue("ldap_champ_nom"),getSettingValue("ldap_champ_prenom"),getSettingValue("ldap_champ_email")));
+		$result = @ldap_read($ds, $_dn, "objectClass=*", array(Settings::get("ldap_champ_nom"),Settings::get("ldap_champ_prenom"),Settings::get("ldap_champ_email")));
 	}
 	if (!$result)
 		return "2";
@@ -1089,22 +1094,22 @@ function grr_getinfo_ldap($_dn, $_login, $_password)
 		$val = $info[$i];
 		if (is_array($val))
 		{
-			if (isset($val[getSettingValue("ldap_champ_nom")][0]))
-				$l_nom = ucfirst($val[getSettingValue("ldap_champ_nom")][0]);
+			if (isset($val[Settings::get("ldap_champ_nom")][0]))
+				$l_nom = ucfirst($val[Settings::get("ldap_champ_nom")][0]);
 			else
 				$l_nom = iconv("ISO-8859-1","utf-8","Nom à préciser");
-			if (isset($val[getSettingValue("ldap_champ_prenom")][0]))
-				$l_prenom = ucfirst($val[getSettingValue("ldap_champ_prenom")][0]);
+			if (isset($val[Settings::get("ldap_champ_prenom")][0]))
+				$l_prenom = ucfirst($val[Settings::get("ldap_champ_prenom")][0]);
 			else
 				$l_prenom = iconv("ISO-8859-1","utf-8","Prénom à préciser");
-			if (isset($val[getSettingValue("ldap_champ_email")][0]))
-				$l_email = $val[getSettingValue("ldap_champ_email")][0];
+			if (isset($val[Settings::get("ldap_champ_email")][0]))
+				$l_email = $val[Settings::get("ldap_champ_email")][0];
 			else
 				$l_email = '';
 		}
 	}
 	// Convertir depuis UTF-8 (jeu de caracteres par defaut)
-	if ((function_exists("utf8_decode")) and (getSettingValue("ConvertLdapUtf8toIso") == "y"))
+	if ((function_exists("utf8_decode")) and (Settings::get("ConvertLdapUtf8toIso") == "y"))
 	{
 		$l_email = utf8_decode($l_email);
 		$l_nom = utf8_decode($l_nom);

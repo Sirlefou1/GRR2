@@ -65,7 +65,7 @@ if (isset($_SERVER['HTTP_REFERER']))
 			echo " checked=\"checked\"";
 		echo " />\n".get_vocab("nouveau_jour_cycle");
 		echo "<select name=\"newDay\" size=\"1\" onclick=\"check(1)\">";
-		for ($i = 1; $i < (getSettingValue("nombre_jours_Jours/Cycles") + 1); $i++)
+		for ($i = 1; $i < (Settings::get("nombre_jours_Jours/Cycles") + 1); $i++)
 		{
 			echo "<option value=\"".$i."\" ";
 			if ($jour_cycle == $i)
@@ -106,11 +106,11 @@ if (isset($_SERVER['HTTP_REFERER']))
 	}
 	$basetime = mktime(12, 0, 0, 6, 11 + $weekstarts, 2000);
 	echo "<table cellspacing=\"20\" border=\"0\">\n";
-	$n = getSettingValue("begin_bookings");
-	$end_bookings = getSettingValue("end_bookings");
+	$n = Settings::get("begin_bookings");
+	$end_bookings = Settings::get("end_bookings");
 	$debligne = 1;
-	$month = strftime("%m", getSettingValue("begin_bookings"));
-	$year = strftime("%Y", getSettingValue("begin_bookings"));
+	$month = strftime("%m", Settings::get("begin_bookings"));
+	$year = strftime("%Y", Settings::get("begin_bookings"));
 	$inc = 0;
 	while ($n <= $end_bookings)
 	{

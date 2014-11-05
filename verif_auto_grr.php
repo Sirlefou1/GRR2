@@ -35,8 +35,8 @@ include "include/functions.inc.php";
 include "include/$dbsys.inc.php";
 include "include/mrbs_sql.inc.php";
 $grr_script_name = "verif_auto_grr.php";
-include("include/settings.inc.php");
-if (!loadSettings())
+include("include/settings.class.php");
+if (!Settings::load())
 	die("Erreur chargement settings");
 if ((!isset($_GET['mdp'])) && (!isset($argv[1])))
 {
@@ -46,13 +46,13 @@ if ((!isset($_GET['mdp'])) && (!isset($argv[1])))
 // Début du script
 if (isset($argv[1]))
 {
-	DEFINE("CHEMIN_COMPLET_GRR",getSettingValue("chemin_complet_grr"));
+	DEFINE("CHEMIN_COMPLET_GRR",Settings::get("chemin_complet_grr"));
 	chdir(CHEMIN_COMPLET_GRR);
 }
 include "include/language.inc.php";
 if (!isset($_GET['mdp']))
 	$_GET['mdp'] = $argv[1];
-if ((!isset($_GET['mdp'])) || ($_GET['mdp'] != getSettingValue("motdepasse_verif_auto_grr")) || (getSettingValue("motdepasse_verif_auto_grr") == ''))
+if ((!isset($_GET['mdp'])) || ($_GET['mdp'] != Settings::get("motdepasse_verif_auto_grr")) || (Settings::get("motdepasse_verif_auto_grr") == ''))
 {
 	if (!isset($argv[1]))
 		echo begin_page($titre, $page = "no_session")."<p>";

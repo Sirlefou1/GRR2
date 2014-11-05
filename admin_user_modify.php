@@ -320,7 +320,7 @@ if ($user_source=="local")
 	$statut_div = "visible";
 else
 	$statut_div = "hidden";
-if ((authGetUserLevel(getUserName(), -1) < 1) && (getSettingValue("authentification_obli") == 1))
+if ((authGetUserLevel(getUserName(), -1) < 1) && (Settings::get("authentification_obli") == 1))
 {
 	showAccessDenied($back);
 	exit();
@@ -369,7 +369,7 @@ else
 </p>
 <form action="admin_user_modify.php?display=<?php echo $display; ?>" method='get'><div>
 	<?php
-	if ((getSettingValue("sso_statut") != "") || (getSettingValue("ldap_statut") != '') || (getSettingValue("imap_statut") != ''))
+	if ((Settings::get("sso_statut") != "") || (Settings::get("ldap_statut") != '') || (Settings::get("imap_statut") != ''))
 	{
 		echo get_vocab("authentification").get_vocab("deux_points");
 		echo "<select id=\"select_auth_mode\" name='type_authentification' onchange=\"display_password_fields(this.id);\">\n";
@@ -475,7 +475,7 @@ else
 	{
 		echo "<h2>".get_vocab('liste_privileges').$user_prenom." ".$user_nom." :</h2>";
 		$a_privileges = 'n';
-		if (getSettingValue("module_multisite") == "Oui")
+		if (Settings::get("module_multisite") == "Oui")
 		{
 			$req_site = "SELECT id, sitename FROM ".TABLE_PREFIX."_site ORDER BY sitename";
 			$res_site = grr_sql_query($req_site);

@@ -29,7 +29,7 @@
  */
 if (isset($_POST['title_home_page']))
 {
-	if (!saveSetting("title_home_page", $_POST['title_home_page']))
+	if (!Settings::set("title_home_page", $_POST['title_home_page']))
 	{
 		echo "Erreur lors de l'enregistrement de title_home_page !<br />";
 		die();
@@ -37,7 +37,7 @@ if (isset($_POST['title_home_page']))
 }
 if (isset($_POST['show_holidays']))
 {
-	if (!saveSetting("show_holidays", $_POST['show_holidays']))
+	if (!Settings::set("show_holidays", $_POST['show_holidays']))
 	{
 		echo "Erreur lors de l'enregistrement de show_holidays !<br />";
 		die();
@@ -45,7 +45,7 @@ if (isset($_POST['show_holidays']))
 }
 if (isset($_POST['holidays_zone']))
 {
-	if (!saveSetting("holidays_zone", $_POST['holidays_zone']))
+	if (!Settings::set("holidays_zone", $_POST['holidays_zone']))
 	{
 		echo "Erreur lors de l'enregistrement de holidays_zone !<br />";
 		die();
@@ -53,7 +53,7 @@ if (isset($_POST['holidays_zone']))
 }
 if (isset($_POST['message_home_page']))
 {
-	if (!saveSetting("message_home_page", $_POST['message_home_page']))
+	if (!Settings::set("message_home_page", $_POST['message_home_page']))
 	{
 		echo "Erreur lors de l'enregistrement de message_home_page !<br />";
 		die();
@@ -61,7 +61,7 @@ if (isset($_POST['message_home_page']))
 }
 if (isset($_POST['company']))
 {
-	if (!saveSetting("company", $_POST['company']))
+	if (!Settings::set("company", $_POST['company']))
 	{
 		echo "Erreur lors de l'enregistrement de company !<br />";
 		die();
@@ -69,7 +69,7 @@ if (isset($_POST['company']))
 }
 if (isset($_POST['webmaster_name']))
 {
-	if (!saveSetting("webmaster_name", $_POST['webmaster_name']))
+	if (!Settings::set("webmaster_name", $_POST['webmaster_name']))
 	{
 		echo "Erreur lors de l'enregistrement de webmaster_name !<br />";
 		die();
@@ -77,7 +77,7 @@ if (isset($_POST['webmaster_name']))
 }
 if (isset($_POST['webmaster_email']))
 {
-	if (!saveSetting("webmaster_email", $_POST['webmaster_email']))
+	if (!Settings::set("webmaster_email", $_POST['webmaster_email']))
 	{
 		echo "Erreur lors de l'enregistrement de webmaster_email !<br />";
 		die();
@@ -85,7 +85,7 @@ if (isset($_POST['webmaster_email']))
 }
 if (isset($_POST['technical_support_email']))
 {
-	if (!saveSetting("technical_support_email", $_POST['technical_support_email']))
+	if (!Settings::set("technical_support_email", $_POST['technical_support_email']))
 	{
 		echo "Erreur lors de l'enregistrement de technical_support_email !<br />";
 		die();
@@ -93,7 +93,7 @@ if (isset($_POST['technical_support_email']))
 }
 if (isset($_POST['message_accueil']))
 {
-	if (!saveSetting("message_accueil", $_POST['message_accueil']))
+	if (!Settings::set("message_accueil", $_POST['message_accueil']))
 	{
 		echo "Erreur lors de l'enregistrement de message_accueil !<br />";
 		die();
@@ -101,7 +101,7 @@ if (isset($_POST['message_accueil']))
 }
 if (isset($_POST['grr_url']))
 {
-	if (!saveSetting("grr_url", $_POST['grr_url']))
+	if (!Settings::set("grr_url", $_POST['grr_url']))
 	{
 		echo "Erreur lors de l'enregistrement de grr_url !<br />";
 		die();
@@ -113,7 +113,7 @@ if (isset($_POST["ok"]))
 		$use_grr_url = "y";
 	else
 		$use_grr_url = "n";
-	if (!saveSetting("use_grr_url", $use_grr_url))
+	if (!Settings::set("use_grr_url", $use_grr_url))
 	{
 		echo "Erreur lors de l'enregistrement de use_grr_url !<br />";
 		die();
@@ -122,7 +122,7 @@ if (isset($_POST["ok"]))
 // Style/thème
 if (isset($_POST['default_css']))
 {
-	if (!saveSetting("default_css", $_POST['default_css']))
+	if (!Settings::set("default_css", $_POST['default_css']))
 	{
 		echo "Erreur lors de l'enregistrement de default_css !<br />";
 		die();
@@ -131,7 +131,7 @@ if (isset($_POST['default_css']))
 // langage
 if (isset($_POST['default_language']))
 {
-	if (!saveSetting("default_language", $_POST['default_language']))
+	if (!Settings::set("default_language", $_POST['default_language']))
 	{
 		echo "Erreur lors de l'enregistrement de default_language !<br />";
 		die();
@@ -141,7 +141,7 @@ if (isset($_POST['default_language']))
 // Type d'affichage des listes des domaines et des ressources
 if (isset($_POST['area_list_format']))
 {
-	if (!saveSetting("area_list_format", $_POST['area_list_format']))
+	if (!Settings::set("area_list_format", $_POST['area_list_format']))
 	{
 		echo "Erreur lors de l'enregistrement de area_list_format !<br />";
 		die();
@@ -150,7 +150,7 @@ if (isset($_POST['area_list_format']))
 // site par défaut
 if (isset($_POST['id_site']))
 {
-	if (!saveSetting("default_site", $_POST['id_site']))
+	if (!Settings::set("default_site", $_POST['id_site']))
 	{
 		echo "Erreur lors de l'enregistrement de default_site !<br />";
 		die();
@@ -159,7 +159,7 @@ if (isset($_POST['id_site']))
 // domaine par défaut
 if (isset($_POST['id_area']))
 {
-	if (!saveSetting("default_area", $_POST['id_area']))
+	if (!Settings::set("default_area", $_POST['id_area']))
 	{
 		echo "Erreur lors de l'enregistrement de default_area !<br />";
 		die();
@@ -167,7 +167,7 @@ if (isset($_POST['id_area']))
 }
 if (isset($_POST['id_room']))
 {
-	if (!saveSetting("default_room", $_POST['id_room']))
+	if (!Settings::set("default_room", $_POST['id_room']))
 	{
 		echo "Erreur lors de l'enregistrement de default_room !<br />";
 		die();
@@ -176,7 +176,7 @@ if (isset($_POST['id_room']))
 // Affichage de l'adresse email
 if (isset($_POST['display_level_email']))
 {
-	if (!saveSetting("display_level_email", $_POST['display_level_email']))
+	if (!Settings::set("display_level_email", $_POST['display_level_email']))
 	{
 		echo "Erreur lors de l'enregistrement de display_level_email !<br />";
 		die();
@@ -185,7 +185,7 @@ if (isset($_POST['display_level_email']))
 /*-----MAJ Loïs THOMAS  --> Affichage de la page view_entry pour les réservations  -----*/
 if (isset($_POST['display_level_view_entry']))
 {
-	if (!saveSetting("display_level_view_entry", $_POST['display_level_view_entry']))
+	if (!Settings::set("display_level_view_entry", $_POST['display_level_view_entry']))
 	{
 		echo "Erreur lors de l'enregistrement de display_level_view_entry !<br />";
 		die();
@@ -194,7 +194,7 @@ if (isset($_POST['display_level_view_entry']))
 // display_info_bulle
 if (isset($_POST['display_info_bulle']))
 {
-	if (!saveSetting("display_info_bulle", $_POST['display_info_bulle']))
+	if (!Settings::set("display_info_bulle", $_POST['display_info_bulle']))
 	{
 		echo "Erreur lors de l'enregistrement de display_info_bulle !<br />";
 		die();
@@ -203,7 +203,7 @@ if (isset($_POST['display_info_bulle']))
 // menu_gauche
 if (isset($_POST['menu_gauche']))
 {
-	if (!saveSetting("menu_gauche", $_POST['menu_gauche']))
+	if (!Settings::set("menu_gauche", $_POST['menu_gauche']))
 	{
 		echo "Erreur lors de l'enregistrement de menu_gauche !<br />";
 		die();
@@ -212,7 +212,7 @@ if (isset($_POST['menu_gauche']))
 // display_full_description
 if (isset($_POST['display_full_description']))
 {
-	if (!saveSetting("display_full_description", $_POST['display_full_description']))
+	if (!Settings::set("display_full_description", $_POST['display_full_description']))
 	{
 		echo "Erreur lors de l'enregistrement de display_full_description !<br />";
 		die();
@@ -221,7 +221,7 @@ if (isset($_POST['display_full_description']))
 // display_short_description
 if (isset($_POST['display_short_description']))
 {
-	if (!saveSetting("display_short_description", $_POST['display_short_description']))
+	if (!Settings::set("display_short_description", $_POST['display_short_description']))
 	{
 		echo "Erreur lors de l'enregistrement de display_short_description !<br />";
 		die();
@@ -230,7 +230,7 @@ if (isset($_POST['display_short_description']))
 // remplissage de la description brève
 if (isset($_POST['remplissage_description_breve']))
 {
-	if (!saveSetting("remplissage_description_breve", $_POST['remplissage_description_breve']))
+	if (!Settings::set("remplissage_description_breve", $_POST['remplissage_description_breve']))
 	{
 		echo "Erreur lors de l'enregistrement de remplissage_description_breve !<br />";
 		die();
@@ -239,7 +239,7 @@ if (isset($_POST['remplissage_description_breve']))
 // pview_new_windows
 if (isset($_POST['pview_new_windows']))
 {
-	if (!saveSetting("pview_new_windows", $_POST['pview_new_windows']))
+	if (!Settings::set("pview_new_windows", $_POST['pview_new_windows']))
 	{
 		echo "Erreur lors de l'enregistrement de pview_new_windows !<br />";
 		die();
@@ -248,7 +248,7 @@ if (isset($_POST['pview_new_windows']))
 /*-----MAJ Loïs THOMAS  -->Affichage ou non de la legende -----*/
 if (isset($_POST['legend']))
 {
-	if (!saveSetting("legend", $_POST['legend']))
+	if (!Settings::set("legend", $_POST['legend']))
 	{
 		echo "Erreur lors de l'enregistrement de legend !<br />";
 		die();
@@ -257,7 +257,7 @@ if (isset($_POST['legend']))
 /*-----MAJ David VOUE 22/01/2014-->Affichage ou non du formulaire de contact et adresse mail du destinataire -----*/
 if (isset($_POST['mail_destinataire']))
 {
-	if (!saveSetting("mail_destinataire", $_POST['mail_destinataire']))
+	if (!Settings::set("mail_destinataire", $_POST['mail_destinataire']))
 	{
 		echo "Erreur lors de l'enregistrement de mail_destinataire !<br />";
 		die();
@@ -265,7 +265,7 @@ if (isset($_POST['mail_destinataire']))
 }
 if (isset($_POST['mail_etat_destinataire']))
 {
-	if (!saveSetting("mail_etat_destinataire", $_POST['mail_etat_destinataire']))
+	if (!Settings::set("mail_etat_destinataire", $_POST['mail_etat_destinataire']))
 	{
 		echo "Erreur lors de l'enregistrement de mail_etat_destinataire !<br />";
 		die();
@@ -278,12 +278,12 @@ if (isset($_POST['gestion_lien_aide']))
 		$_POST['gestion_lien_aide'] = "ext";
 	else if ($_POST['gestion_lien_aide'] != "perso")
 		$_POST['lien_aide']="";
-	if (!saveSetting("lien_aide", $_POST['lien_aide']))
+	if (!Settings::set("lien_aide", $_POST['lien_aide']))
 	{
 		echo "Erreur lors de l'enregistrement de lien_aide !<br />";
 		die();
 	}
-	if (!saveSetting("gestion_lien_aide", $_POST['gestion_lien_aide']))
+	if (!Settings::set("gestion_lien_aide", $_POST['gestion_lien_aide']))
 	{
 		echo "Erreur lors de l'enregistrement de gestion_lien_aide !<br />";
 		die();
@@ -296,7 +296,7 @@ if (isset($_POST['default_report_days']))
 	settype($_POST['default_report_days'],"integer");
 	if ($_POST['default_report_days'] <= 0)
 		$_POST['default_report_days'] = 0;
-	if (!saveSetting("default_report_days", $_POST['default_report_days']))
+	if (!Settings::set("default_report_days", $_POST['default_report_days']))
 	{
 		echo "Erreur lors de l'enregistrement de default_report_days !<br />";
 		die();
@@ -307,7 +307,7 @@ if (isset($_POST['longueur_liste_ressources_max']))
 	settype($_POST['longueur_liste_ressources_max'],"integer");
 	if ($_POST['longueur_liste_ressources_max'] <= 0)
 		$_POST['longueur_liste_ressources_max'] = 1;
-	if (!saveSetting("longueur_liste_ressources_max", $_POST['longueur_liste_ressources_max']))
+	if (!Settings::set("longueur_liste_ressources_max", $_POST['longueur_liste_ressources_max']))
 	{
 		echo "Erreur lors de l'enregistrement de longueur_liste_ressources_max !<br />";
 		die();
@@ -334,10 +334,10 @@ if (isset($_POST["ok"]))
 		}
 		else
 		{
-			$nom_picture = "./images/".getSettingValue("logo");
+			$nom_picture = "./images/".Settings::get("logo");
 			if (@file_exists($nom_picture))
 				unlink($nom_picture);
-			if (!saveSetting("logo", ""))
+			if (!Settings::set("logo", ""))
 			{
 				$msg .= "Erreur lors de l'enregistrement du logo !\\n";
 				$ok = 'no';
@@ -391,7 +391,7 @@ if (isset($_POST["ok"]))
 					}
 					@chmod($dest."logo.".$ext, 0666);
 					$picture_room = "logo.".$ext;
-					if (!saveSetting("logo", $picture_room))
+					if (!Settings::set("logo", $picture_room))
 					{
 						$msg .= "Erreur lors de l'enregistrement du logo !\\n";
 						$ok = 'no';
@@ -410,7 +410,7 @@ if (isset($_POST["ok"]))
 if (isset($_POST['nb_calendar']))
 {
 	settype($_POST['nb_calendar'],"integer");
-	if (!saveSetting("nb_calendar", $_POST['nb_calendar']))
+	if (!Settings::set("nb_calendar", $_POST['nb_calendar']))
 	{
 		echo "Erreur lors de l'enregistrement de nb_calendar !<br />";
 		die();
@@ -428,7 +428,7 @@ if (isset($_POST['begin_day']) && isset($_POST['begin_month']) && isset($_POST['
 		$demande_confirmation = 'yes';
 	else
 	{
-		if (!saveSetting("begin_bookings", $begin_bookings))
+		if (!Settings::set("begin_bookings", $begin_bookings))
 			echo "Erreur lors de l'enregistrement de begin_bookings !<br />";
 	}
 
@@ -445,7 +445,7 @@ if (isset($_POST['begin_day']) && isset($_POST['begin_month']) && isset($_POST['
 			$demande_confirmation = 'yes';
 		else
 		{
-			if (!saveSetting("end_bookings", $end_bookings))
+			if (!Settings::set("end_bookings", $end_bookings))
 				echo "Erreur lors de l'enregistrement de end_bookings !<br />";
 		}
 	}
@@ -456,7 +456,7 @@ if (isset($_POST['begin_day']) && isset($_POST['begin_month']) && isset($_POST['
 		die();
 	}
 }
-if (!loadSettings())
+if (!Settings::load())
 	die("Erreur chargement settings");
 // Si pas de problème, message de confirmation
 if (isset($_POST['ok']))
@@ -498,7 +498,7 @@ echo "<h3>".get_vocab("miscellaneous")."</h3>".PHP_EOL;
 			<?php echo get_vocab("title_home_page"); ?>
 		</td>
 		<td>
-			<input class="form-control" type="text" name="title_home_page" id="title_home_page" size="40" value="<?php echo(getSettingValue("title_home_page")); ?>" />
+			<input class="form-control" type="text" name="title_home_page" id="title_home_page" size="40" value="<?php echo(Settings::get("title_home_page")); ?>" />
 		</td>
 	</tr>
 	<tr>
@@ -506,7 +506,7 @@ echo "<h3>".get_vocab("miscellaneous")."</h3>".PHP_EOL;
 			<?php echo get_vocab("message_home_page"); ?>
 		</td>
 		<td>
-			<textarea class="form-control" name="message_home_page" rows="3" cols="40"><?php echo(getSettingValue("message_home_page")); ?>
+			<textarea class="form-control" name="message_home_page" rows="3" cols="40"><?php echo(Settings::get("message_home_page")); ?>
 			</textarea>
 		</td>
 	</tr>
@@ -515,7 +515,7 @@ echo "<h3>".get_vocab("miscellaneous")."</h3>".PHP_EOL;
 			<?php echo get_vocab("company"); ?>
 		</td>
 		<td>
-			<input class="form-control" type="text" name="company" size="40" value="<?php echo(getSettingValue("company")); ?>" />
+			<input class="form-control" type="text" name="company" size="40" value="<?php echo(Settings::get("company")); ?>" />
 		</td>
 	</tr>
 	<tr>
@@ -523,12 +523,12 @@ echo "<h3>".get_vocab("miscellaneous")."</h3>".PHP_EOL;
 			<?php echo get_vocab("grr_url"); ?>
 		</td>
 		<td>
-			<input class="form-control" type="text" name="grr_url" size="40" value="<?php echo(getSettingValue("grr_url")); ?>" />
+			<input class="form-control" type="text" name="grr_url" size="40" value="<?php echo(Settings::get("grr_url")); ?>" />
 		</td>
 	</tr>
 	<tr>
 		<td colspan="2">
-			<input type="checkbox" name="use_grr_url" value="y" <?php if (getSettingValue("use_grr_url") == 'y') echo " checked=\"checked\" "; ?> />
+			<input type="checkbox" name="use_grr_url" value="y" <?php if (Settings::get("use_grr_url") == 'y') echo " checked=\"checked\" "; ?> />
 			<i><?php echo get_vocab("grr_url_explain"); ?></i>
 		</td>
 	</tr>
@@ -537,7 +537,7 @@ echo "<h3>".get_vocab("miscellaneous")."</h3>".PHP_EOL;
 			<?php echo get_vocab("webmaster_name"); ?>
 		</td>
 		<td>
-			<input class="form-control" type="text" name="webmaster_name" size="40" value="<?php echo(getSettingValue("webmaster_name")); ?>" />
+			<input class="form-control" type="text" name="webmaster_name" size="40" value="<?php echo(Settings::get("webmaster_name")); ?>" />
 		</td>
 	</tr>
 	<tr>
@@ -545,7 +545,7 @@ echo "<h3>".get_vocab("miscellaneous")."</h3>".PHP_EOL;
 			<?php echo get_vocab("webmaster_email")."<br /><i>".get_vocab("plusieurs_adresses_separees_points_virgules")."</i>"; ?>
 		</td>
 		<td>
-			<input class="form-control" type="text" id="webmaster_email" name="webmaster_email" size="40" value="<?php echo(getSettingValue("webmaster_email")); ?>" />
+			<input class="form-control" type="text" id="webmaster_email" name="webmaster_email" size="40" value="<?php echo(Settings::get("webmaster_email")); ?>" />
 		</td>
 	</tr>
 	<tr>
@@ -553,7 +553,7 @@ echo "<h3>".get_vocab("miscellaneous")."</h3>".PHP_EOL;
 			<?php echo get_vocab("technical_support_email")."<br /><i>".get_vocab("plusieurs_adresses_separees_points_virgules")."</i>"; ?>
 		</td>
 		<td>
-			<input class="form-control" type="text" id="technical_support_email" name="technical_support_email" size="40" value="<?php echo(getSettingValue("technical_support_email")); ?>" />
+			<input class="form-control" type="text" id="technical_support_email" name="technical_support_email" size="40" value="<?php echo(Settings::get("technical_support_email")); ?>" />
 		</td>
 	</tr>
 </table>
@@ -564,8 +564,8 @@ echo '<tr>'.PHP_EOL;
 echo '<td>'.get_vocab("choisir_image_logo").'</td>'.PHP_EOL;
 echo '<td><input type="file" name="doc_file" /></td>'.PHP_EOL;
 echo '</tr>'.PHP_EOL;
-$nom_picture = "./images/".getSettingValue("logo");
-if ((getSettingValue("logo") != '') && (@file_exists($nom_picture)))
+$nom_picture = "./images/".Settings::get("logo");
+if ((Settings::get("logo") != '') && (@file_exists($nom_picture)))
 {
 	echo '<tr>'.PHP_EOL;
 	echo '<td>'.get_vocab("supprimer_logo").get_vocab("deux_points").PHP_EOL;
@@ -581,22 +581,22 @@ echo '<select class="form-control" name="nb_calendar" >'.PHP_EOL;
 for ($k = 0; $k < 6; $k++)
 {
 	echo '<option value="'.$k.'" ';
-	if (getSettingValue("nb_calendar") == $k)
+	if (Settings::get("nb_calendar") == $k)
 		echo ' selected="selected" ';
 	echo '>'.$k.'</option>'.PHP_EOL;
 }
 echo '</select>'.PHP_EOL;
 echo '</p>'.PHP_EOL;
-if (getSettingValue("use_fckeditor") == 1)
+if (Settings::get("use_fckeditor") == 1)
 	echo '<script type="text/javascript" src="js/ckeditor/ckeditor.js"></script>'.PHP_EOL;
 echo '<h3>'.get_vocab("message perso").'</h3>'.PHP_EOL;
 echo '<p>'.get_vocab("message perso explain").PHP_EOL;
-if (getSettingValue("use_fckeditor") != 1)
+if (Settings::get("use_fckeditor") != 1)
 	echo ' '.get_vocab("description complete2");
-if (getSettingValue("use_fckeditor") == 1)
+if (Settings::get("use_fckeditor") == 1)
 {
 	echo '<textarea class="ckeditor" id="editor1" name="message_accueil" rows="8" cols="120">'.PHP_EOL;
-	echo htmlspecialchars(getSettingValue('message_accueil'));
+	echo htmlspecialchars(Settings::get('message_accueil'));
 	echo "</textarea>\n";
 	?>
 	<script type="text/javascript">
@@ -620,7 +620,7 @@ if (getSettingValue("use_fckeditor") == 1)
 	<?php
 }
 else
-	echo "\n<textarea name=\"message_accueil\" rows=\"8\" cols=\"120\">".htmlspecialchars(getSettingValue('message_accueil'))."</textarea>".PHP_EOL;
+	echo "\n<textarea name=\"message_accueil\" rows=\"8\" cols=\"120\">".htmlspecialchars(Settings::get('message_accueil'))."</textarea>".PHP_EOL;
 echo "</p>".PHP_EOL;
 //
 // Début et fin des réservations
@@ -636,9 +636,9 @@ echo "<hr /><h3>".get_vocab("title_begin_end_bookings")."</h3>\n";
 		<td>
 			<?php
 			$typeDate = "begin_";
-			$bday = strftime("%d", getSettingValue("begin_bookings"));
-			$bmonth = strftime("%m", getSettingValue("begin_bookings"));
-			$byear = strftime("%Y", getSettingValue("begin_bookings"));
+			$bday = strftime("%d", Settings::get("begin_bookings"));
+			$bmonth = strftime("%m", Settings::get("begin_bookings"));
+			$byear = strftime("%Y", Settings::get("begin_bookings"));
 			genDateSelector("begin_", $bday, $bmonth, $byear,"more_years");
 			echo '<input type="hidden" disabled="disabled" id="mydate_' .$typeDate. '">'.PHP_EOL;
 			echo '<script>'.PHP_EOL;
@@ -677,9 +677,9 @@ echo "<hr /><h3>".get_vocab("title_begin_end_bookings")."</h3>\n";
 <td>
 	<?php
 	$typeDate = "end_";
-	$eday = strftime("%d", getSettingValue("end_bookings"));
-	$emonth = strftime("%m", getSettingValue("end_bookings"));
-	$eyear= strftime("%Y", getSettingValue("end_bookings"));
+	$eday = strftime("%d", Settings::get("end_bookings"));
+	$emonth = strftime("%m", Settings::get("end_bookings"));
+	$eyear= strftime("%Y", Settings::get("end_bookings"));
 	genDateSelector("end_",$eday,$emonth,$eyear,"more_years");
 	echo '<input type="hidden" disabled="disabled" id="mydate_' .$typeDate. '">'.PHP_EOL;
 	echo '<script>'.PHP_EOL;
@@ -721,24 +721,24 @@ echo "<p>".get_vocab("explain_default_parameter")."</p>".PHP_EOL;
 echo "<h4>".get_vocab("explain_area_list_format")."</h4>".PHP_EOL;
 echo "<table><tr><td>".get_vocab("liste_area_list_format")."</td><td>".PHP_EOL;
 echo "<input type='radio' name='area_list_format' value='list' ";
-if (getSettingValue("area_list_format") == 'list')
+if (Settings::get("area_list_format") == 'list')
 	echo "checked=\"checked\"";
 echo " />".PHP_EOL;
 echo "</td></tr>".PHP_EOL;
 echo "<tr><td>".get_vocab("select_area_list_format")."</td><td>".PHP_EOL;
 echo "<input type='radio' name='area_list_format' value='select' ";
-if (getSettingValue("area_list_format") == 'select')
+if (Settings::get("area_list_format") == 'select')
 	echo "checked=\"checked\"";
 echo " />".PHP_EOL;
 echo "<tr><td>".get_vocab("item_area_list_format")."</td><td>".PHP_EOL;
 echo "<input type='radio' name='area_list_format' value='item' ";
-if (getSettingValue("area_list_format") == 'item')
+if (Settings::get("area_list_format") == 'item')
 	echo "checked=\"checked\"";
 echo " />".PHP_EOL;
 echo "</td>".PHP_EOL;
 echo "</tr>".PHP_EOL;
 echo "</table>".PHP_EOL;
-if (getSettingValue("module_multisite") == "Oui")
+if (Settings::get("module_multisite") == "Oui")
 	$use_site='y';
 else
 	$use_site='n';
@@ -751,7 +751,7 @@ else
 			dataType: "html",
 			data: {
 				id_site: $('id_site').serialize(true),
-				default_area : '<?php echo getSettingValue("default_area"); ?>',
+				default_area : '<?php echo Settings::get("default_area"); ?>',
 				session_login:'<?php echo getUserName(); ?>',
 				use_site:'<?php echo $use_site; ?>',
 				type:'domaine',
@@ -771,7 +771,7 @@ else
 			dataType: "html",
 			data: {
 				id_area:$('id_area').serialize(true),
-				default_room : '<?php echo getSettingValue("default_room"); ?>',
+				default_room : '<?php echo Settings::get("default_room"); ?>',
 				type:'ressource',
 				action:+action,
 			},
@@ -785,14 +785,14 @@ else
 	}
 </script>
 <?php
-if (getSettingValue("module_multisite") == "Oui")
+if (Settings::get("module_multisite") == "Oui")
 	echo ('<h4>'.get_vocab('explain_default_area_and_room_and_site').'</h4>');
 else
 	echo ('<h4>'.get_vocab('explain_default_area_and_room').'</h4>');
 /**
  * Liste des sites
  */
-if (getSettingValue("module_multisite") == "Oui")
+if (Settings::get("module_multisite") == "Oui")
 {
 	$sql = "SELECT id,sitecode,sitename
 	FROM ".TABLE_PREFIX."_site
@@ -808,7 +808,7 @@ if (getSettingValue("module_multisite") == "Oui")
 	for ($enr = 0; ($row = grr_sql_row($resultat, $enr)); $enr++)
 	{
 		echo '<option value="'.$row[0].'"';
-		if (getSettingValue("default_site") == $row[0])
+		if (Settings::get("default_site") == $row[0])
 			echo ' selected="selected" ';
 		echo '>'.htmlspecialchars($row[2]);
 		echo '</option>'."\n";
@@ -838,7 +838,7 @@ echo '</tr>'.PHP_EOL;
 echo '<tr>'.PHP_EOL;
 echo '<td>'.PHP_EOL;
 echo '<div id="div_liste_ressources">'.PHP_EOL;
-echo '<input class="form-control" type="hidden" id="id_area" name="id_area" value="'.getSettingValue("default_area").'" />'.PHP_EOL;
+echo '<input class="form-control" type="hidden" id="id_area" name="id_area" value="'.Settings::get("default_area").'" />'.PHP_EOL;
 // Ici, on insère la liste des ressouces avec de l'ajax !
 echo '</div>'.PHP_EOL;
 echo '</td>'.PHP_EOL;
@@ -856,7 +856,7 @@ $i = 0;
 while ($i < count($liste_themes))
 {
 	echo "<option value='".$liste_themes[$i]."'";
-	if (getSettingValue("default_css") == $liste_themes[$i])
+	if (Settings::get("default_css") == $liste_themes[$i])
 		echo " selected=\"selected\"";
 	echo " >".encode_message_utf8($liste_name_themes[$i])."</option>";
 	$i++;
@@ -875,7 +875,7 @@ $i = 0;
 while ($i < count($liste_language))
 {
 	echo "<option value='".$liste_language[$i]."'";
-	if (getSettingValue("default_language") == $liste_language[$i])
+	if (Settings::get("default_language") == $liste_language[$i])
 		echo " selected=\"selected\"";
 	echo ' >'.encode_message_utf8($liste_name_language[$i]).'</option>'.PHP_EOL;
 	$i++;
@@ -896,7 +896,7 @@ echo '<tr>'.PHP_EOL;
 echo '<td>'.get_vocab("info-bulle0").'</td>'.PHP_EOL;
 echo '<td>'.PHP_EOL;
 echo '<input type="radio" name="display_info_bulle" value="0" ';
-if (getSettingValue("display_info_bulle") == '0')
+if (Settings::get("display_info_bulle") == '0')
 	echo "checked=\"checked\"";
 echo ' />'.PHP_EOL;;
 echo '</td>'.PHP_EOL;
@@ -905,7 +905,7 @@ echo '<tr>'.PHP_EOL;
 echo '<td>'.get_vocab("info-bulle1").'</td>'.PHP_EOL;
 echo '<td>'.PHP_EOL;
 echo '<input type="radio" name="display_info_bulle" value="1" ';
-if (getSettingValue("display_info_bulle") == '1')
+if (Settings::get("display_info_bulle") == '1')
 	echo "checked=\"checked\"";
 echo ' />'.PHP_EOL;
 echo '</td>'.PHP_EOL;
@@ -914,7 +914,7 @@ echo '<tr>'.PHP_EOL;
 echo '<td>'.get_vocab("info-bulle2").'</td>'.PHP_EOL;
 echo '<td>'.PHP_EOL;
 echo '<input type="radio" name="display_info_bulle" value="2" ';
-if (getSettingValue("display_info_bulle") == '2')
+if (Settings::get("display_info_bulle") == '2')
 	echo 'checked="checked"';
 echo ' />'.PHP_EOL;
 echo '</td>'.PHP_EOL;
@@ -923,7 +923,7 @@ echo '</table>'.PHP_EOL;
 #MAJ Hugo FORESTIER - Choix  de l'affichage du bouton "afficher le menu de gauche ou non"
 #SQL : menu_gauche==1  //le bouton s'affiche par default
 # menu_gauche==0 //le bouton ne s'affiche pas par default
-#Test pour savoir la valeur présente dans la base de données : echo getSettingValue("menu_gauche");
+#Test pour savoir la valeur présente dans la base de données : echo Settings::get("menu_gauche");
 echo '<hr />'.PHP_EOL;
 echo '<h3>'.get_vocab("display_menu").'</h3>'.PHP_EOL;
 echo '<p>'.get_vocab("display_menu_1").'</p>'.PHP_EOL;
@@ -932,7 +932,7 @@ echo '<tr>'.PHP_EOL;
 echo '<td>'.get_vocab("display_menu_2").'</td>'.PHP_EOL;
 echo '<td>'.PHP_EOL;
 echo '<input type="radio" name="menu_gauche" value="0" ';
-if (getSettingValue("menu_gauche") == '0')
+if (Settings::get("menu_gauche") == '0')
 	echo 'checked="checked"';
 echo ' />'.PHP_EOL;
 echo '</td>'.PHP_EOL;
@@ -941,7 +941,7 @@ echo '<tr>'.PHP_EOL;
 echo '<td>'.get_vocab("display_menu_3").'</td>'.PHP_EOL;
 echo '<td>'.PHP_EOL;
 echo '<input type="radio" name="menu_gauche" value="1" ';
-if (getSettingValue("menu_gauche") == '1')
+if (Settings::get("menu_gauche") == '1')
 	echo ' checked="checked"';
 echo ' />'.PHP_EOL;
 echo '</td>'.PHP_EOL;
@@ -957,7 +957,7 @@ echo '<tr>'.PHP_EOL;
 echo '<td>'.get_vocab("display_mail_etat_destinataire_2").'</td>'.PHP_EOL;
 echo '<td>'.PHP_EOL;
 echo '<input type="radio" name="mail_etat_destinataire" value="0" ';
-if (getSettingValue("mail_etat_destinataire") == '0')
+if (Settings::get("mail_etat_destinataire") == '0')
 	echo ' checked="checked" ';
 echo ' />'.PHP_EOL;
 echo '</td>'.PHP_EOL;
@@ -966,7 +966,7 @@ echo '<tr>'.PHP_EOL;
 echo '<td>'.get_vocab("display_mail_etat_destinataire_3").'</td>'.PHP_EOL;
 echo '<td>'.PHP_EOL;
 echo '<input type="radio" name="mail_etat_destinataire" value="1" ';
-if (getSettingValue("mail_etat_destinataire") == '1')
+if (Settings::get("mail_etat_destinataire") == '1')
 	echo "checked=\"checked\"";
 echo ' />'.PHP_EOL;
 echo '</td>'.PHP_EOL;
@@ -975,7 +975,7 @@ echo "<tr><td>".get_vocab("display_mail_destinataire")."</td><td>".PHP_EOL;
 echo "</tr>".PHP_EOL;
 echo "<tr>".PHP_EOL;
 echo "<td>".PHP_EOL;
-echo "<input class=\"form-control\" type=\"text\" id=\"mail_destinataire\" name=\"mail_destinataire\" value=\"".getSettingValue("mail_destinataire")."\" size=\"30\">".PHP_EOL;
+echo "<input class=\"form-control\" type=\"text\" id=\"mail_destinataire\" name=\"mail_destinataire\" value=\"".Settings::get("mail_destinataire")."\" size=\"30\">".PHP_EOL;
 echo "</td>".PHP_EOL;
 echo "</tr>".PHP_EOL;
 echo "</table>".PHP_EOL;
@@ -989,7 +989,7 @@ echo "<tr>".PHP_EOL;
 echo "<td>".get_vocab("display_full_description0")."</td>".PHP_EOL;
 echo "<td>".PHP_EOL;
 echo "<input type='radio' name='display_full_description' value='0' ";
-if (getSettingValue("display_full_description") == '0')
+if (Settings::get("display_full_description") == '0')
 	echo "checked=\"checked\"";
 echo " />".PHP_EOL;
 echo "</td>".PHP_EOL;
@@ -998,7 +998,7 @@ echo "<tr>".PHP_EOL;
 echo "<td>".get_vocab("display_full_description1")."</td>".PHP_EOL;
 echo "<td>".PHP_EOL;
 echo "<input type='radio' name='display_full_description' value='1' ";
-if (getSettingValue("display_full_description") == '1')
+if (Settings::get("display_full_description") == '1')
 	echo "checked=\"checked\"";
 echo " />".PHP_EOL;
 echo "</td>".PHP_EOL;
@@ -1014,7 +1014,7 @@ echo "<tr>".PHP_EOL;
 echo "<td>".get_vocab("display_short_description0")."</td>".PHP_EOL;
 echo "<td>".PHP_EOL;
 echo "<input type='radio' name='display_short_description' value='0' ";
-if (getSettingValue("display_short_description") == '0')
+if (Settings::get("display_short_description") == '0')
 	echo "checked=\"checked\"";
 echo " />".PHP_EOL;
 echo "</td>".PHP_EOL;
@@ -1023,7 +1023,7 @@ echo "<tr>".PHP_EOL;
 echo "<td>".get_vocab("display_short_description1")."</td>".PHP_EOL;
 echo "<td>";
 echo "<input type='radio' name='display_short_description' value='1' ";
-if (getSettingValue("display_short_description") == '1')
+if (Settings::get("display_short_description") == '1')
 	echo "checked=\"checked\"";
 echo " />".PHP_EOL;
 echo "</td>".PHP_EOL;
@@ -1048,7 +1048,7 @@ echo "<tr>".PHP_EOL;
 echo "<td>".get_vocab("visu_fiche_description0")."</td>".PHP_EOL;
 echo "<td>".PHP_EOL;
 echo "<input type='radio' name='display_level_email' value='0' ";
-if (getSettingValue("display_level_email") == '0')
+if (Settings::get("display_level_email") == '0')
 	echo "checked=\"checked\"";
 echo " />".PHP_EOL;
 echo "</td>".PHP_EOL;
@@ -1057,7 +1057,7 @@ echo "<tr>".PHP_EOL;
 echo "<td>".get_vocab("visu_fiche_description1")."</td>".PHP_EOL;
 echo "<td>".PHP_EOL;
 echo "<input type='radio' name='display_level_email' value='1' ";
-if (getSettingValue("display_level_email") == '1')
+if (Settings::get("display_level_email") == '1')
 	echo "checked=\"checked\"";
 echo " />".PHP_EOL;
 echo "</td>".PHP_EOL;
@@ -1066,7 +1066,7 @@ echo "<tr>".PHP_EOL;
 echo "<td>".get_vocab("visu_fiche_description2")."</td>".PHP_EOL;
 echo "<td>".PHP_EOL;
 echo "<input type='radio' name='display_level_email' value='2' ";
-if (getSettingValue("display_level_email") == '2')
+if (Settings::get("display_level_email") == '2')
 	echo "checked=\"checked\"";
 echo " />".PHP_EOL;
 echo "</td>".PHP_EOL;
@@ -1075,7 +1075,7 @@ echo "<tr>".PHP_EOL;
 echo "<td>".get_vocab("visu_fiche_description3")."</td>".PHP_EOL;
 echo "<td>".PHP_EOL;
 echo "<input type='radio' name='display_level_email' value='3' ";
-if (getSettingValue("display_level_email") == '3')
+if (Settings::get("display_level_email") == '3')
 	echo "checked=\"checked\"";
 echo " />".PHP_EOL;
 echo "</td>".PHP_EOL;
@@ -1084,18 +1084,18 @@ echo "<tr>".PHP_EOL;
 echo "<td>".get_vocab("visu_fiche_description4")."</td>".PHP_EOL;
 echo "<td>".PHP_EOL;
 echo "<input type='radio' name='display_level_email' value='4' ";
-if (getSettingValue("display_level_email") == '4')
+if (Settings::get("display_level_email") == '4')
 	echo "checked=\"checked\"";
 echo " />".PHP_EOL;
 echo "</td>".PHP_EOL;
 echo "</tr>".PHP_EOL;
-if (getSettingValue("module_multisite") == "Oui")
+if (Settings::get("module_multisite") == "Oui")
 {
 	echo "<tr>".PHP_EOL;
 	echo "<td>".get_vocab("visu_fiche_description5")."</td>".PHP_EOL;
 	echo "<td>".PHP_EOL;
 	echo "<input type='radio' name='display_level_email' value='5' ";
-	if (getSettingValue("display_level_email") == '5')
+	if (Settings::get("display_level_email") == '5')
 		echo "checked=\"checked\"";
 	echo " />".PHP_EOL;
 	echo "</td>".PHP_EOL;
@@ -1105,7 +1105,7 @@ echo "<tr>".PHP_EOL;
 echo "<td>".get_vocab("visu_fiche_description6")."</td>".PHP_EOL;
 echo "<td>".PHP_EOL;
 echo "<input type='radio' name='display_level_email' value='6' ";
-if (getSettingValue("display_level_email") == '6')
+if (Settings::get("display_level_email") == '6')
 	echo "checked=\"checked\"";
 echo " />".PHP_EOL;
 echo "</td>".PHP_EOL;
@@ -1119,7 +1119,7 @@ echo "<tr>".PHP_EOL;
 echo "<td>".get_vocab("display_level_view_entry_0")."</td>".PHP_EOL;
 echo "<td>".PHP_EOL;
 echo "<input type='radio' name='display_level_view_entry' value='0' ";
-if (getSettingValue("display_level_view_entry") == '0')
+if (Settings::get("display_level_view_entry") == '0')
 	echo "checked=\"checked\"";
 echo " />".PHP_EOL;
 echo "</td>".PHP_EOL;
@@ -1128,7 +1128,7 @@ echo "<tr>".PHP_EOL;
 echo "<td>".get_vocab("display_level_view_entry_1")."</td>".PHP_EOL;
 echo "<td>".PHP_EOL;
 echo "<input type='radio' name='display_level_view_entry' value='1' ";
-if (getSettingValue("display_level_view_entry") == '1')
+if (Settings::get("display_level_view_entry") == '1')
 	echo "checked=\"checked\"";
 echo " />".PHP_EOL;
 echo "</td>".PHP_EOL;
@@ -1142,7 +1142,7 @@ echo "<tr>".PHP_EOL;
 echo "<td>".get_vocab("remplissage_description_breve0")."</td>".PHP_EOL;
 echo "<td>".PHP_EOL;
 echo "<input type='radio' name='remplissage_description_breve' value='0' ";
-if (getSettingValue("remplissage_description_breve") == '0')
+if (Settings::get("remplissage_description_breve") == '0')
 	echo "checked=\"checked\"";
 echo " />".PHP_EOL;
 echo "</td>".PHP_EOL;
@@ -1151,7 +1151,7 @@ echo "<tr>".PHP_EOL;
 echo "<td>".get_vocab("remplissage_description_breve1")."</td>".PHP_EOL;
 echo "<td>".PHP_EOL;
 echo "<input type='radio' name='remplissage_description_breve' value='1' ";
-if (getSettingValue("remplissage_description_breve") == '1')
+if (Settings::get("remplissage_description_breve") == '1')
 	echo "checked=\"checked\"";
 echo " />".PHP_EOL;
 echo "</td>".PHP_EOL;
@@ -1160,7 +1160,7 @@ echo "<tr>".PHP_EOL;
 echo "<td>".get_vocab("remplissage_description_breve2")."</td>".PHP_EOL;
 echo "<td>".PHP_EOL;
 echo "<input type='radio' name='remplissage_description_breve' value='2' ";
-if (getSettingValue("remplissage_description_breve") == '2')
+if (Settings::get("remplissage_description_breve") == '2')
 	echo "checked=\"checked\"";
 echo " />".PHP_EOL;
 echo "</td>".PHP_EOL;
@@ -1174,7 +1174,7 @@ echo "<tr>".PHP_EOL;
 echo "<td>".get_vocab("pview_new_windows0")."</td>".PHP_EOL;
 echo "<td>".PHP_EOL;
 echo "<input type='radio' name='pview_new_windows' value='0' ";
-if (getSettingValue("pview_new_windows") == '0')
+if (Settings::get("pview_new_windows") == '0')
 	echo "checked=\"checked\"";
 echo " />";
 echo "</td>".PHP_EOL;
@@ -1183,7 +1183,7 @@ echo "<tr>".PHP_EOL;
 echo "<td>".get_vocab("pview_new_windows1")."</td>".PHP_EOL;
 echo "<td>".PHP_EOL;
 echo "<input type='radio' name='pview_new_windows' value='1' ";
-if (getSettingValue("pview_new_windows") == '1')
+if (Settings::get("pview_new_windows") == '1')
 	echo "checked=\"checked\"";
 echo " />".PHP_EOL;
 echo "</td>".PHP_EOL;
@@ -1197,7 +1197,7 @@ echo "<tr>".PHP_EOL;
 echo "<td>".get_vocab("legend0")."</td>".PHP_EOL;
 echo "<td>".PHP_EOL;
 echo "<input type='radio' name='legend' value='0' ";
-if (getSettingValue("legend") == '0')
+if (Settings::get("legend") == '0')
 	echo "checked=\"checked\"";
 echo " />".PHP_EOL;
 echo "</td>".PHP_EOL;
@@ -1206,7 +1206,7 @@ echo "<tr>".PHP_EOL;
 echo "<td>".get_vocab("legend1")."</td>".PHP_EOL;
 echo "<td>".PHP_EOL;
 echo "<input type='radio' name='legend' value='1' ";
-if (getSettingValue("legend") == '1')
+if (Settings::get("legend") == '1')
 	echo "checked=\"checked\"";
 echo " />".PHP_EOL;
 echo "</td>".PHP_EOL;
@@ -1220,7 +1220,7 @@ echo "<tr>".PHP_EOL;
 echo "<td>".get_vocab("legend0")."</td>".PHP_EOL;
 echo "<td>".PHP_EOL;
 echo "<input type='radio' name='show_holidays' value='Oui' ";
-if (getSettingValue("show_holidays") == 'Oui')
+if (Settings::get("show_holidays") == 'Oui')
 	echo "checked=\"checked\"";
 echo " />".PHP_EOL;
 echo "</td>".PHP_EOL;
@@ -1229,7 +1229,7 @@ echo "<tr>".PHP_EOL;
 echo "<td>".get_vocab("legend1")."</td>".PHP_EOL;
 echo "<td>".PHP_EOL;
 echo "<input type='radio' name='show_holidays' value='Non' ";
-if (getSettingValue("show_holidays") == 'Non')
+if (Settings::get("show_holidays") == 'Non')
 	echo "checked=\"checked\"";
 echo " />".PHP_EOL;
 echo "</td>".PHP_EOL;
@@ -1255,7 +1255,7 @@ echo '<select class="form-control" name="holidays_zone">'.PHP_EOL;
 foreach ($acad as $key => $value)
 {
 	echo '<option value="'.$value.'"';
-	if (getSettingValue("holidays_zone") == $value)
+	if (Settings::get("holidays_zone") == $value)
 		echo ' selected="selected"';
 	echo '>'.$value.'</option>'.PHP_EOL;
 }
@@ -1269,13 +1269,13 @@ echo "</table>".PHP_EOL;
 echo "<hr />".PHP_EOL;
 echo "<h3>".get_vocab("default_report_days_msg")."</h3>\n";
 echo "<p>".get_vocab("default_report_days_explain").get_vocab("deux_points").PHP_EOL;
-echo "<input class=\"form-control\" type=\"text\" name=\"default_report_days\" value=\"".getSettingValue("default_report_days")."\" size=\"5\" />".PHP_EOL;
+echo "<input class=\"form-control\" type=\"text\" name=\"default_report_days\" value=\"".Settings::get("default_report_days")."\" size=\"5\" />".PHP_EOL;
 # Formulaire de réservation
 echo "</p>".PHP_EOL;
 echo "<hr />".PHP_EOL;
 echo "<h3>".get_vocab("formulaire_reservation")."</h3>".PHP_EOL;
 echo "<p>".get_vocab("longueur_liste_ressources").get_vocab("deux_points").PHP_EOL;
-echo "<input class=\"form-control\" type=\"text\" name=\"longueur_liste_ressources_max\" value=\"".getSettingValue("longueur_liste_ressources_max")."\" size=\"5\" />".PHP_EOL;
+echo "<input class=\"form-control\" type=\"text\" name=\"longueur_liste_ressources_max\" value=\"".Settings::get("longueur_liste_ressources_max")."\" size=\"5\" />".PHP_EOL;
 /*
 # nb_year_calendar permet de fixer la plage de choix de l'année dans le choix des dates de début et fin des réservations
 # La plage s'étend de année_en_cours - $nb_year_calendar à année_en_cours + $nb_year_calendar
@@ -1286,7 +1286,7 @@ echo "<select name=\"nb_year_calendar\" size=\"1\">\n";
 $i = 1;
 while ($i < 101) {
 	echo "<option value=\".$i.\"";
-	if (getSettingValue("nb_year_calendar") == $i)
+	if (Settings::get("nb_year_calendar") == $i)
 		echo " selected=\"selected\" ";
 	echo ">".(date("Y") - $i)." - ".(date("Y") + $i)."</option>\n";
 	$i++;

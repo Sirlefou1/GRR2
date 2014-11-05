@@ -34,9 +34,9 @@ include "./include/misc.inc.php";
 include "./include/functions.inc.php";
 include "./include/$dbsys.inc.php";
 // Settings
-require_once("./include/settings.inc.php");
+require_once("./include/settings.class.php");
 //Chargement des valeurs de la table settingS
-if (!loadSettings())
+if (!Settings::load())
 	die("Erreur chargement settings");
 // Session related functions
 require_once("./include/session.inc.php");

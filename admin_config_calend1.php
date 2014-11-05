@@ -27,7 +27,7 @@
  * along with GRR; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-if (!loadSettings())
+if (!Settings::load())
 	die("Erreur chargement settings");
 # print the page header
 print_header("", "", "", $type="with_session");
@@ -39,13 +39,13 @@ include "include/admin_calend_jour_cycle.inc.php";
 // Met à jour dans la BD le nombre de jours par cycle
 if (isset($_GET['nombreJours']))
 {
-	if (!saveSetting("nombre_jours_Jours/Cycles", $_GET['nombreJours']))
+	if (!Settings::set("nombre_jours_Jours/Cycles", $_GET['nombreJours']))
 		echo "Erreur lors de l'enregistrement de nombre_jours_Jours/Cycles ! <br />";
 }
 // Met à jour dans la BD le premier jour du premier cycle
 if (isset($_GET['jourDebut']))
 {
-	if (!saveSetting("jour_debut_Jours/Cycles", $_GET['jourDebut']))
+	if (!Settings::set("jour_debut_Jours/Cycles", $_GET['jourDebut']))
 		echo "Erreur lors de l'enregistrement de jour_debut_Jours/Cycles ! <br />";
 }
 //
@@ -70,7 +70,7 @@ echo "<br />".get_vocab("explication_Jours_Cycles2");
 			echo "<select name='nombreJours' id='nombreJours'>\n";
 			for($i = 1; $i < 21; $i++)
 			{
-				if ($i == getSettingValue("nombre_jours_Jours/Cycles"))
+				if ($i == Settings::get("nombre_jours_Jours/Cycles"))
 					echo "<option selected=\"selected\">".$i."</option>\n";
 				else
 					echo "<option>".$i."</option>\n";
@@ -91,7 +91,7 @@ echo "<br />".get_vocab("explication_Jours_Cycles2");
 			echo "<select name='jourDebut' id='jourDebut'>";
 			for($i = 1; $i < 21; $i++)
 			{
-				if ($i == getSettingValue("jour_debut_Jours/Cycles"))
+				if ($i == Settings::get("jour_debut_Jours/Cycles"))
 					echo "<option selected=\"selected\">".$i."</option>\n";
 				else
 					echo "<option>".$i."</option>\n";

@@ -39,7 +39,7 @@ $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
 check_access(6, $back);
-if (getSettingValue("module_multisite") != "Oui")
+if (Settings::get("module_multisite") != "Oui")
 {
 	showAccessDenied($back);
 	exit();

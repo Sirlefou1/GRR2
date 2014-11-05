@@ -246,7 +246,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 		}
 	}
 
-	$nb_calendar = getSettingValue("nb_calendar");
+	$nb_calendar = Settings::get("nb_calendar");
 	if ($nb_calendar >= 1)
 	{
 		$month_ = array();

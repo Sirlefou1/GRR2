@@ -35,7 +35,7 @@ if (file_exists("include/connect.inc.php"))
 	include "include/connect.inc.php";
 require_once("include/misc.inc.php");
 require_once("include/functions.inc.php");
-require_once("include/settings.inc.php");
+require_once("include/settings.class.php");
 // Paramètres langage
 include "include/language.inc.php";
 // Dans le cas d'une base mysql, on teste la bonne installation de la base et on propose une installation automatisée.
@@ -103,13 +103,13 @@ if ($dbsys == "mysql")
 require_once("include/$dbsys.inc.php");
 require_once("./include/session.inc.php");
 //Settings
-require_once("./include/settings.inc.php");
+require_once("./include/settings.class.php");
 //Chargement des valeurs de la table settingS
-if (!loadSettings())
+if (!Settings::load())
 	die("Erreur chargement settings");
 $cook = session_get_cookie_params();
 // Cas d'une authentification CAS
-if ((getSettingValue('sso_statut') == 'cas_visiteur') || (getSettingValue('sso_statut') == 'cas_utilisateur'))
+if ((Settings::get('sso_statut') == 'cas_visiteur') || (Settings::get('sso_statut') == 'cas_utilisateur'))
 {
 	require_once("./include/cas.inc.php");
 	// A ce stade, l'utilisateur est authentifié par CAS
@@ -172,7 +172,7 @@ if ((getSettingValue('sso_statut') == 'cas_visiteur') || (getSettingValue('sso_s
 		header("Location: ".htmlspecialchars_decode(page_accueil())."");
 // Cas d'une authentification Lemonldap
 }
-else if ((getSettingValue('sso_statut') == 'lemon_visiteur') || (getSettingValue('sso_statut') == 'lemon_utilisateur'))
+else if ((Settings::get('sso_statut') == 'lemon_visiteur') || (Settings::get('sso_statut') == 'lemon_utilisateur'))
 {
 	if (isset($_GET['login']))
 		$login = $_GET['login'];
@@ -184,8 +184,8 @@ else if ((getSettingValue('sso_statut') == 'lemon_visiteur') || (getSettingValue
 		$cookie_user = "";
 	if (empty($cookie_user) || $cookie_user != $login)
 	{
-		if ((getSettingValue("Url_cacher_page_login") != "") && ((!isset($sso_super_admin)) || ($sso_super_admin == false)))
-			header("Location: ".getSettingValue("Url_cacher_page_login"));
+		if ((Settings::get("Url_cacher_page_login") != "") && ((!isset($sso_super_admin)) || ($sso_super_admin == false)))
+			header("Location: ".Settings::get("Url_cacher_page_login"));
 		else
 			header("Location: ".htmlspecialchars_decode(page_accueil())."");
 		//header("Location: ./login.php");
@@ -224,7 +224,7 @@ else if ((getSettingValue('sso_statut') == 'lemon_visiteur') || (getSettingValue
 		header("Location: ".htmlspecialchars_decode(page_accueil())."");
 // Cas d'une authentification LCS
 }
-else if (getSettingValue('sso_statut') == 'lcs')
+else if (Settings::get('sso_statut') == 'lcs')
 {
 	include LCS_PAGE_AUTH_INC_PHP;
 	include LCS_PAGE_LDAP_INC_PHP;
@@ -291,7 +291,7 @@ else if (getSettingValue('sso_statut') == 'lcs')
 	else
 	{
 		// L'utilisateur n'a pas été identifié'
-		if (getSettingValue("authentification_obli") == 1)
+		if (Settings::get("authentification_obli") == 1)
 		{
 			// authentification obligatoire, l'utilisateur est renvoyé vers une page de connexion
 			require_once("include/session.inc.php");
@@ -304,7 +304,7 @@ else if (getSettingValue('sso_statut') == 'lcs')
 	}
 }
 // Cas d'une authentification Lasso
-if ((getSettingValue('sso_statut') == 'lasso_visiteur') || (getSettingValue('sso_statut') == 'lasso_utilisateur'))
+if ((Settings::get('sso_statut') == 'lasso_visiteur') || (Settings::get('sso_statut') == 'lasso_utilisateur'))
 {
 	require_once(SPKITLASSO.'/lassospkit_public_api.inc.php');
 	if (lassospkit_nameid() == NULL)
@@ -405,7 +405,7 @@ if ((getSettingValue('sso_statut') == 'lasso_visiteur') || (getSettingValue('sso
 		header("Location: ".htmlspecialchars_decode(page_accueil())."");
 	// Cas d'une authentification apache
 }
-else if ((getSettingValue('sso_statut') == 'http_visiteur') || (getSettingValue('sso_statut') == 'http_utilisateur'))
+else if ((Settings::get('sso_statut') == 'http_visiteur') || (Settings::get('sso_statut') == 'http_utilisateur'))
 {
 	// Nous utilisons les fonction d'authentification par PHP (plutôt que par Apache) à l'aide des lignes :
 	// header('WWW-Authenticate: Basic realm="..."'); et header('HTTP/1.0 401 Unauthorized');
@@ -514,7 +514,7 @@ else if ((getSettingValue('sso_statut') == 'http_visiteur') || (getSettingValue(
 }
 else
 {
-	if (getSettingValue("authentification_obli") == 1)
+	if (Settings::get("authentification_obli") == 1)
 	{
 		if ($cook["path"] != '')
 		{
@@ -522,16 +522,16 @@ else
 				header("Location: ".htmlspecialchars_decode(page_accueil())."");
 			else
 			{
-				if ((getSettingValue("Url_cacher_page_login") != "") && ((!isset($sso_super_admin)) || ($sso_super_admin == false)))
-					header("Location: ".getSettingValue("Url_cacher_page_login"));
+				if ((Settings::get("Url_cacher_page_login") != "") && ((!isset($sso_super_admin)) || ($sso_super_admin == false)))
+					header("Location: ".Settings::get("Url_cacher_page_login"));
 				else
 					header("Location: ./login.php");
 			}
 		}
 		else
 		{
-			if ((getSettingValue("Url_cacher_page_login") != "") && ((!isset($sso_super_admin)) || ($sso_super_admin == false)))
-				header("Location: ".getSettingValue("Url_cacher_page_login"));
+			if ((Settings::get("Url_cacher_page_login") != "") && ((!isset($sso_super_admin)) || ($sso_super_admin == false)))
+				header("Location: ".Settings::get("Url_cacher_page_login"));
 			else
 				header("Location: ./login.php");
 		}

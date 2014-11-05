@@ -34,9 +34,9 @@ include "include/functions.inc.php";
 include "include/$dbsys.inc.php";
 $grr_script_name = "admin_maj.php";
 // Settings
-require_once("./include/settings.inc.php");
+require_once("./include/settings.class.php");
 //Chargement des valeurs de la table settingS
-if (!loadSettings())
+if (!Settings::load())
 	die("Erreur chargement settings");
 // Session related functions
 require_once("./include/session.inc.php");
@@ -101,7 +101,7 @@ if (isset($_POST['submit']))
 			$message = get_vocab("wrong_pwd");
 	}
 }
-if (getSettingValue('sso_statut') == 'lcs')
+if (Settings::get('sso_statut') == 'lcs')
 {
 	include LCS_PAGE_AUTH_INC_PHP;
 	include LCS_PAGE_LDAP_INC_PHP;
@@ -630,7 +630,7 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 							$result .= "<b>Mise à jour jusqu'à la version 1.9.5 :</b><br />";
 	  						// GRR1.9.5
 							$result_inter .= traite_requete("ALTER TABLE ".TABLE_PREFIX."_calendrier_jours_cycle CHANGE Jours Jours VARCHAR(20);");
-							if (getSettingValue("maj195_champ_rep_type_grr_repeat") != 1)
+							if (Settings::get("maj195_champ_rep_type_grr_repeat") != 1)
 							{
 		  						// Avant la version 195, la valeur 6 était utilisée pour le type "une semaine sur n"
 		 						 // et la valeur 7 pour la périodicité jour cycle
@@ -733,7 +733,7 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 						// Vérification du format des champs additionnels
 						// Avant version 1.9.4, les champs add étaient stockés sous la forme <id_champ>champ_encode_en_base_64</id_champ>
 						// A partir de la version 1.9.4, les champs add. sont stockés sous la forme @id_champ@url_encode(champ)@/id_champ@
-						if (($version_old < "1.9.4") && (getSettingValue("maj194_champs_additionnels") != 1) && isset($_POST['maj']))
+						if (($version_old < "1.9.4") && (Settings::get("maj194_champs_additionnels") != 1) && isset($_POST['maj']))
 						{
 	  					// On constuite un tableau des id des ".TABLE_PREFIX."_overload:
 							$sql_overload = grr_sql_query("SELECT id FROM ".TABLE_PREFIX."_overload");
@@ -769,7 +769,7 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 						}
 						// Mise à jour du champ "qui_peut_reserver_pour
 						// La version 1.9.6 a introduit un niveau supplémentaire pour le champ qui_peut_reserver_pour, ce qui oblige à un décalage : les niveaux 5 deviennent des niveaux 6
-						if (($version_old < "1.9.6") && (getSettingValue("maj196_qui_peut_reserver_pour") != 1) && (isset($_POST['maj']) ))
+						if (($version_old < "1.9.6") && (Settings::get("maj196_qui_peut_reserver_pour") != 1) && (isset($_POST['maj']) ))
 						{
 	   						// On met à jour le champ
 							$up = grr_sql_query("UPDATE ".TABLE_PREFIX."_room set qui_peut_reserver_pour='6' where qui_peut_reserver_pour='5'");
@@ -787,16 +787,16 @@ if ((!@grr_resumeSession()) && $valid!='yes')
 						$req = grr_sql_command("DELETE FROM ".TABLE_PREFIX."_setting WHERE NAME='versionRC'");
 						$result_inter .= traite_requete("INSERT INTO ".TABLE_PREFIX."_setting VALUES ('versionRC', '".$version_grr_RC."');");
 						//Re-Chargement des valeurs de la table settingS
-						if (!loadSettings())
+						if (!Settings::load())
 							die("Erreur chargement settings");
 						affiche_pop_up(get_vocab("maj_good"),"force");
 					}
 					// Numéro de version effective
-					$version_old = getSettingValue("version");
+					$version_old = Settings::get("version");
 					if ($version_old == "")
 						$version_old = "1.3";
 					// Numéro de RC
-					$version_old_RC = getSettingValue("versionRC");
+					$version_old_RC = Settings::get("versionRC");
 					// Calcul du numéro de version actuel de la base qui sert aux test de comparaison et de la chaine à afficher
 					if ($version_old_RC == "")
 					{

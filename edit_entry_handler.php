@@ -35,9 +35,9 @@ include "include/mrbs_sql.inc.php";
 include "include/misc.inc.php";
 $grr_script_name = "edit_entry_handler.php";
 // Settings
-require_once("./include/settings.inc.php");
+require_once("./include/settings.class.php");
 //Chargement des valeurs de la table settingS
-if (!loadSettings())
+if (!Settings::load())
 	die("Erreur chargement settings");
 // Session related functions
 require_once("./include/session.inc.php");
@@ -59,7 +59,7 @@ if (isset($_GET["id"]))
 else
 	$id = NULL;
 $name = isset($_GET["name"]) ? $_GET["name"] : NULL;
-if ((!isset($name) or (trim($name) == "")) && (getSettingValue("remplissage_description_breve") == '1'))
+if ((!isset($name) or (trim($name) == "")) && (Settings::get("remplissage_description_breve") == '1'))
 {
 	print_header();
 	echo "<h2>".get_vocab("required")."</h2>";
@@ -217,7 +217,7 @@ if (authGetUserLevel(getUserName(), -1) < 1)
 }
 if (check_begin_end_bookings($day, $month, $year))
 {
-	if ((getSettingValue("authentification_obli") == 0) && (getUserName() == ''))
+	if ((Settings::get("authentification_obli") == 0) && (getUserName() == ''))
 		$type_session = "no_session";
 	else
 		$type_session = "with_session";
@@ -318,8 +318,8 @@ else
 		settype($end_year, "integer");
 		settype($end_minute, "integer");
 		settype($end_hour, "integer");
-		$minyear = strftime("%Y", getSettingValue("begin_bookings"));
-		$maxyear = strftime("%Y", getSettingValue("end_bookings"));
+		$minyear = strftime("%Y", Settings::get("begin_bookings"));
+		$maxyear = strftime("%Y", Settings::get("end_bookings"));
 		if ($end_day < 1)
 			$end_day = 1;
 		if ($end_day > 31)
@@ -356,8 +356,8 @@ if ($erreur == 'y')
 if (isset($rep_type) && isset($rep_end_month) && isset($rep_end_day) && isset($rep_end_year))
 {
 	$rep_enddate = mktime($hour, $minute, 0, $rep_end_month, $rep_end_day, $rep_end_year);
-	if ($rep_enddate > getSettingValue("end_bookings"))
-		$rep_enddate = getSettingValue("end_bookings");
+	if ($rep_enddate > Settings::get("end_bookings"))
+		$rep_enddate = Settings::get("end_bookings");
 }
 else
 	$rep_type = 0;
@@ -588,7 +588,7 @@ if (empty($err) && ($error_booking_in_past == 'no') && ($error_duree_max_resa_ar
 		if ($rep_type != 0)
 		{
 			mrbsCreateRepeatingEntrys($starttime, $endtime, $rep_type, $rep_enddate, $rep_opt, $room_id, $create_by, $beneficiaire, $beneficiaire_ext, $name, $type, $description, $rep_num_weeks, $option_reservation, $overload_data, $entry_moderate, $rep_jour_c, $courrier, $rep_month_abs1, $rep_month_abs2);
-			if (getSettingValue("automatic_mail") == 'yes')
+			if (Settings::get("automatic_mail") == 'yes')
 			{
 				if (isset($id) && ($id != 0))
 				{
@@ -614,7 +614,7 @@ if (empty($err) && ($error_booking_in_past == 'no') && ($error_duree_max_resa_ar
 				$entry_type = 0;
 			mrbsCreateSingleEntry($starttime, $endtime, $entry_type, $repeat_id, $room_id, $create_by, $beneficiaire, $beneficiaire_ext, $name, $type, $description, $option_reservation, $overload_data, $entry_moderate, $rep_jour_c, $statut_entry, $keys, $courrier);
 			$new_id = grr_sql_insert_id();
-			if (getSettingValue("automatic_mail") == 'yes')
+			if (Settings::get("automatic_mail") == 'yes')
 			{
 				if (isset($id) && ($id != 0))
 				{

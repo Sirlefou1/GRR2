@@ -23,7 +23,7 @@ require_once("./include/config.inc.php");
 include "./include/connect.inc.php";
 require_once("./include/$dbsys.inc.php");
 require_once("./include/session.inc.php");
-require_once("./include/settings.inc.php");
+require_once("./include/settings.class.php");
 grr_resumeSession();
 require_once("./include/language.inc.php");
 
@@ -41,7 +41,7 @@ if (lassospkit_nameid() == NULL)
 //Chargement des valeurs de la table settingS
 require_once("./include/language.inc.php");
 require_once("./include/functions.inc.php");
-echo begin_page(getSettingValue("company").get_vocab("deux_points").get_vocab("mrbs"),"no_session");
+echo begin_page(Settings::get("company").get_vocab("deux_points").get_vocab("mrbs"),"no_session");
 
 if (lassospkit_userid() == NULL)
 {
