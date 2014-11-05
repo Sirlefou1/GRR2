@@ -30,6 +30,16 @@
  */
 header("Cache-Control:no-cache");
 
+function getDaysInMonth($month, $year)
+{
+	return date('t', mktime(0, 0, 0, $month, 1, $year));
+}
+
+function getWeekNumber($date)
+{
+	return date('W', $date);
+}
+
 function getSchoolHolidays($now, $year)
 {
 	$zone = 'A';
@@ -115,7 +125,7 @@ function cal($month, $year)
 			$nameday = utf8_strftime('%A',$show);
 			$temp = mktime(0, 0, 0, $month, $d,$year);
 			if ($i == 0)
-				$s .= "<td class=\"calendar2\" style=\"vertical-align:bottom;\"><b>S".numero_semaine($temp)."</b></td>\n";
+				$s .= "<td class=\"calendar2\" style=\"vertical-align:bottom;\"><b>S".getWeekNumber($temp)."</b></td>\n";
 			$s .= "<td class=\"calendar2\" align=\"center\" valign=\"top\">";
 			if ($is_ligne1 == 'y')
 				$s .=  '<b>'.ucfirst(substr($nameday,0,1)).'</b><br />';
@@ -352,20 +362,20 @@ function bouton_retour_haut()
 {
 	echo '<script type="text/javascript">'.PHP_EOL;
 	echo '$(function()'.PHP_EOL;
-	echo '{'.PHP_EOL;
-	echo '$(window).scroll(function()'.PHP_EOL;
-	echo '{'.PHP_EOL;
-	echo 'if ($(this).scrollTop() != 0)'.PHP_EOL;
-	echo '$("#toTop").fadeIn();'.PHP_EOL;
-	echo 'else'.PHP_EOL;
-	echo '$("#toTop").fadeOut();'.PHP_EOL;
-	echo '});'.PHP_EOL;
-	echo '$("#toTop").click(function()'.PHP_EOL;
+		echo '{'.PHP_EOL;
+		echo '$(window).scroll(function()'.PHP_EOL;
+			echo '{'.PHP_EOL;
+			echo 'if ($(this).scrollTop() != 0)'.PHP_EOL;
+			echo '$("#toTop").fadeIn();'.PHP_EOL;
+			echo 'else'.PHP_EOL;
+			echo '$("#toTop").fadeOut();'.PHP_EOL;
+			echo '});'.PHP_EOL;
+echo '$("#toTop").click(function()'.PHP_EOL;
 	echo '{'.PHP_EOL;
 	echo '$("body,html").animate({scrollTop:0},800);'.PHP_EOL;
 	echo '});'.PHP_EOL;
-	echo '});'.PHP_EOL;
-	echo '</script>'.PHP_EOL;
+echo '});'.PHP_EOL;
+echo '</script>'.PHP_EOL;
 }
 /**
  *function affiche_ressource_empruntee
@@ -819,7 +829,7 @@ function begin_page($title, $page="with_session")
 	$a .= '<head>'.PHP_EOL;
 	$a .= '<meta charset="utf-8">'.PHP_EOL;
 	$a .= '<meta http-equiv="X-UA-Compatible" content="IE=edge">'.PHP_EOL;
-    $a .= '<meta name="viewport" content="width=device-width, initial-scale=1">'.PHP_EOL;
+	$a .= '<meta name="viewport" content="width=device-width, initial-scale=1">'.PHP_EOL;
 	$a .= '<link rel="SHORTCUT ICON" href="./favicon.ico" />'.PHP_EOL;
 	$a .= '<title>'.$title.'</title>'.PHP_EOL;
 	$a .= '<meta http-equiv="Content-Type" content="text/html; charset=';

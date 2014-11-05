@@ -511,7 +511,9 @@ for ($t = $week_start; $t <= $week_end; $t += 86400)
 								echo '<img src="img_grr/skey.png" alt="clef">';
 							$courrier = grr_sql_query1("SELECT courrier FROM ".TABLE_PREFIX."_entry WHERE  ".TABLE_PREFIX."_entry.id= ". $d[$weekday][$slot - $decale_slot * $nb_case]['id']."");
 							if ($courrier == 1)
-								echo '<img src="img_grr/scourrier.png" alt="courrier">';
+								echo '<img src="img_grr/scourrier.png" alt="courrier">'.PHP_EOL;
+							else
+								echo '<img src="img_grr/buzy.png" alt="buzy">'.PHP_EOL;
 							if ($acces_fiche_reservation)
 								echo"</a>";
 						}

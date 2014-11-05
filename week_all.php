@@ -474,11 +474,15 @@ else
 									if ($d[$cday]["description"][$i] != "")
 										echo '<i>'.$d[$cday]["description"][$i].'</i>'.PHP_EOL;
 									$clef = grr_sql_query1("SELECT clef FROM ".TABLE_PREFIX."_entry WHERE ".TABLE_PREFIX."_entry.id = '".$d[$cday]["id"][$i]."'");
+									$courrier = grr_sql_query1("SELECT courrier FROM ".TABLE_PREFIX."_entry WHERE ".TABLE_PREFIX."_entry.id = '".$d[$cday]["id"][$i]."'");
+									if ($clef == 1 || $courrier == 1)
+										echo '<br />'.PHP_EOL;
 									if ($clef == 1)
 										echo '<img src="img_grr/skey.png" alt="clef">'.PHP_EOL;
-									$courrier = grr_sql_query1("SELECT courrier FROM ".TABLE_PREFIX."_entry WHERE ".TABLE_PREFIX."_entry.id = '".$d[$cday]["id"][$i]."'");
 									if ($courrier == 1)
 										echo '<img src="img_grr/scourrier.png" alt="courrier">'.PHP_EOL;
+									else
+										echo '<br /><img src="img_grr/buzy.png" alt="buzy">'.PHP_EOL;
 									echo '</span>'.PHP_EOL;
 								}
 								else

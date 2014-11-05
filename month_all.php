@@ -136,11 +136,6 @@ if (!$res)
 	echo grr_sql_error();
 else
 {
-//Permet d'afficher aucune réservation
-//if (grr_sql_count($res) == 0) {
-//		echo "<div class=\"titre_planning\"><h3>".get_vocab("nothing_found")."</h3></div></body></html>";
-//		die();
-//	}
 //insertion du menu_gauche.php
 	include("menu_gauche.php");
 	include "chargement.php";

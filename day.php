@@ -458,11 +458,13 @@ else
 							echo "<br/>".date('H:i', $start_time).get_vocab("to").date('H:i', $end_time)."<br/>";
 							if ($type_name != -1)
 								echo  $type_name;
-							echo '<br>';
+							echo '<br>'.PHP_EOL;
 							if ($clef == 1)
-								echo '<img src="img_grr/skey.png" alt="clef">';
+								echo '<img src="img_grr/skey.png" alt="clef">'.PHP_EOL;
 							if ($courrier == 1)
-								echo '<img src="img_grr/scourrier.png" alt="courrier">';
+								echo '<img src="img_grr/scourrier.png" alt="courrier">'.PHP_EOL;
+							else
+								echo '<img src="img_grr/buzy.png" alt="buzy">'.PHP_EOL;
 						}
 						if ($today[$room][$t]["description"]!= "")
 						{
@@ -476,28 +478,29 @@ else
 						$tab[$tab_ligne][] = " $descr";
 					}
 					if ($acces_fiche_reservation)
-						echo "</a>";
-					echo "</td>\n";
+						echo "</a>".PHP_EOL;
+					echo "</td>".PHP_EOL;
 				}
 			}
 		}
-		echo "</tr>\n";
+		echo "</tr>".PHP_EOL;
 		reset($rooms);
 		$tab_ligne++;
 	}
-	echo "</table>";
+	echo "</table>".PHP_EOL;
 }
 grr_sql_free($res);
 if ($_GET['pview'] != 1)
 {
-	echo "<div id=\"toTop\">\n<b>".get_vocab("top_of_page")."</b>\n";
+	echo "<div id=\"toTop\">".PHP_EOL;
+	echo "<b>".get_vocab("top_of_page")."</b>".PHP_EOL;
 	bouton_retour_haut ();
-	echo "\n</div>";
+	echo "</div>".PHP_EOL;
 }
-echo "\n</div>";
-echo "\n</div>";
+echo "</div>".PHP_EOL;
+echo "</div>".PHP_EOL;
 affiche_pop_up(get_vocab("message_records"), "user");
-echo "\n<div id=\"popup_name\" class=\"popup_block\" ></div>";
+echo "<div id=\"popup_name\" class=\"popup_block\" ></div>".PHP_EOL;
 ?>
 <script type="text/javascript">
 	$(document).ready(function(){
