@@ -5,7 +5,7 @@ class Settings {
 
 	public function __construct()
 	{
-		return Self::load();
+		return self::load();
 	}
 
 
@@ -24,20 +24,20 @@ class Settings {
 		else
 		{
 			for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
-				Self::$grrSettings[$row[0]] = $row[1];
+				self::$grrSettings[$row[0]] = $row[1];
 			return true;
 		}
 	}
 
 	static function get($_name)
 	{
-		if (isset(Self::$grrSettings[$_name]))
-			return Self::$grrSettings[$_name];
+		if (isset(self::$grrSettings[$_name]))
+			return self::$grrSettings[$_name];
 	}
 
 	static function set($_name, $_value)
 	{
-		if (isset(Self::$grrSettings[$_name]))
+		if (isset(self::$grrSettings[$_name]))
 		{
 			$sql = "UPDATE ".TABLE_PREFIX."_setting set VALUE = '" . protect_data_sql($_value) . "' where NAME = '" . protect_data_sql($_name) . "'";
 			$res = grr_sql_query($sql);
@@ -51,7 +51,7 @@ class Settings {
 			if (!$res)
 				return (false);
 		}
-		Self::$grrSettings[$_name] = $_value;
+		self::$grrSettings[$_name] = $_value;
 		return true;
 	}
 }
