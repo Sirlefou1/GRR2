@@ -72,9 +72,18 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 		private function getDateLink($day, $month, $year)
 		{
 			global $vocab;
-			if (isset($this->room))
-				return "<a onclick=\"charger();\" class=\"calendar\" title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day"))."\" href=\"day.php?year=$year&amp;month=$month&amp;day=$day&amp;room=".$this->room."\"";
-			return "<a onclick=\"charger();\" class=\"calendar\" title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day"))."\" href=\"day.php?year=$year&amp;month=$month&amp;day=$day&amp;area=".$this->area."\"";
+			if ($this->dmy != 'day')
+			{
+				if (isset($this->room))
+					return "<a onclick=\"charger();\" class=\"calendar\" title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day"))."\" href=\"".$this->dmy.".php?year=$year&amp;month=$month&amp;day=$day&amp;room=".$this->room."\"";
+				return "<a onclick=\"charger();\" class=\"calendar\" title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day"))."\" href=\"".$this->dmy.".php?year=$year&amp;month=$month&amp;day=$day&amp;area=".$this->area."\"";
+			}
+			if ($this->dmy == 'day')
+			{
+				if (isset($this->room))
+					return "<a onclick=\"charger();\" class=\"calendar\" title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day"))."\" href=\"day.php?year=$year&amp;month=$month&amp;day=$day&amp;room=".$this->room."\"";
+				return "<a onclick=\"charger();\" class=\"calendar\" title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day"))."\" href=\"day.php?year=$year&amp;month=$month&amp;day=$day&amp;area=".$this->area."\"";
+			}
 		}
 
 		/**
@@ -167,7 +176,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 
 		private function GetAction()
 		{
-			$action = $_SERVER['PHP_SELF']."?year=".date('Y',time())."&amp;month=".date('m',time())."&amp;day=".date('d',time());
+			$action = "day.php?year=".date('Y',time())."&amp;month=".date('m',time())."&amp;day=".date('d',time());
 			if (isset($_GET['area']) && $_GET['area'] != null)
 				$action .= "&amp;area=".$_GET['area'] ;
 			if (isset($_GET['room']) && $_GET['room'] != null)
