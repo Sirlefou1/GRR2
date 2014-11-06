@@ -156,7 +156,7 @@ if (isset($id))
 	$end_hour = strftime('%H', $row[4]);
 	$end_min  = strftime('%M', $row[4]);
 	$duration = $row[4]-$row[3];
-	$type = $row[5];
+	$etype = $row[5];
 	$room_id = $row[6];
 	$entry_type = $row[7];
 	$rep_id = $row[8];
@@ -317,6 +317,7 @@ if ($res)
 }
 $use_prototype = 'y';
 print_header($day, $month, $year, $type="with_session");
+
 ?>
 <script type="text/javascript" >
 	jQuery.ajax({
@@ -341,7 +342,7 @@ print_header($day, $month, $year, $type="with_session");
 		url: 'edit_entry_types.php',
 		data: {
 			areas:'<?php echo $area; ?>',
-			type: '<?php echo $type; ?>',
+			type: '<?php echo $etype; ?>',
 			room:'<?php echo $room; ?>',
 		},
 		success: function(returnData){
