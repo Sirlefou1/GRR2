@@ -1720,7 +1720,7 @@ function make_site_select_html($link, $current_site, $year, $month, $day, $user)
 {
 	global $vocab;
 	$nb_sites_a_afficher = 0;
-	$out_html = '<b><i>'.get_vocab('sites').get_vocab('deux_points').'</i></b><form id="site_001" action="'.$_SERVER['PHP_SELF'].'"><div><select name="site" onchange="site_go()">';
+	$out_html = '<b><i>'.get_vocab('sites').get_vocab('deux_points').'</i></b><form id="site_001" action="'.$_SERVER['PHP_SELF'].'"><div><select class="form-control" name="site" onchange="site_go()">';
 	if (strncmp("4.1", grr_sql_version(), 3) < 0)
 	{
 		$sql = "SELECT id,sitename
@@ -1778,9 +1778,19 @@ function make_site_select_html($link, $current_site, $year, $month, $day, $user)
 	if ($nb_sites_a_afficher > 1)
 	{
 		// s'il y a au moins deux sites à afficher, on met une liste déroulante, sinon, on affiche rien.
-		$out_html .= '</select></div><script type="text/javascript"></script><noscript><div><input type="submit" value="change" /></div></noscript></form>';
-		return $out_html;
-	}
+		$out_html .= '</select></div><script type="text/javascript">
+		<!--
+		function site_go()
+		{
+			box = document.getElementById("site_001").site;
+			destination = box.options[box.selectedIndex].value;
+			if (destination) location.href = destination;
+		}
+         // -->
+
+	</script><noscript><div><input type="submit" value="change" /></div></noscript></form>';
+	return $out_html;
+}
 }
 /**
  * Menu gauche affichage des area via select
@@ -1813,7 +1823,7 @@ function make_area_select_html( $link, $current_site, $current_area, $year, $mon
 		$sql = "SELECT id, area_name,access FROM ".TABLE_PREFIX."_area ORDER BY order_display, area_name";
 	$out_html = "<b><i>".get_vocab("areas")."</i></b>\n";
 	$out_html .= "<form id=\"area_001\" action=\"".$_SERVER['PHP_SELF']."\">\n";
-	$out_html .= "<div><select name=\"area\" ";
+	$out_html .= "<div><select class=\"form-control\" name=\"area\" ";
 	$out_html .= " onchange=\"area_go()\" ";
 	$out_html .= ">\n";
 	$res = grr_sql_query($sql);
@@ -1829,8 +1839,22 @@ function make_area_select_html( $link, $current_site, $current_area, $year, $mon
 			}
 		}
 	}
-	$out_html .= "</select></div><script type=\"text/javascript\"></script><noscript><div><input type=\"submit\" value=\"Change\" /></div></noscript>";
-	$out_html .= "</form>";
+	$out_html .= "</select>".PHP_EOL;
+	$out_html .= "</div>".PHP_EOL;
+	$out_html .= "<script type=\"text/javascript\">".PHP_EOL;
+	$out_html .= "function area_go()".PHP_EOL;
+	$out_html .= "{".PHP_EOL;
+	$out_html .= "box = document.getElementById(\"area_001\").area;".PHP_EOL;
+	$out_html .= "destination = box.options[box.selectedIndex].value;".PHP_EOL;
+	$out_html .= "if (destination) location.href = destination;".PHP_EOL;
+	$out_html .= "}".PHP_EOL;
+	$out_html .= "</script>".PHP_EOL;
+	$out_html .= "<noscript>".PHP_EOL;
+	$out_html .= "<div>".PHP_EOL;
+	$out_html .= "<input type=\"submit\" value=\"Change\" />".PHP_EOL;
+	$out_html .= "</div>".PHP_EOL;
+	$out_html .= "</noscript>".PHP_EOL;
+	$out_html .= "</form>".PHP_EOL;
 	return $out_html;
 }
 /**
@@ -1847,7 +1871,7 @@ function make_area_select_html( $link, $current_site, $current_area, $year, $mon
 function make_room_select_html($link, $current_area, $current_room, $year, $month, $day)
 {
 	global $vocab;
-	$out_html = "<b><i>".get_vocab('rooms').get_vocab("deux_points")."</i></b><br /><form id=\"room_001\" action=\"".$_SERVER['PHP_SELF']."\"><div><select name=\"room\" onchange=\"room_go()\">";
+	$out_html = "<b><i>".get_vocab('rooms').get_vocab("deux_points")."</i></b><br /><form id=\"room_001\" action=\"".$_SERVER['PHP_SELF']."\"><div><select class=\"form-control\" name=\"room\" onchange=\"room_go()\">";
 	$out_html .= "<option value=\"".$link."_all.php?year=$year&amp;month=$month&amp;day=$day&amp;area=$current_area\">".get_vocab("all_rooms")."</option>";
 	$sql = "select id, room_name, description from ".TABLE_PREFIX."_room WHERE area_id='".protect_data_sql($current_area)."' order by order_display,room_name";
 	$res = grr_sql_query($sql);
@@ -1863,11 +1887,26 @@ function make_room_select_html($link, $current_area, $current_room, $year, $mont
 					$temp = "";
 				$selected = ($row[0] == $current_room) ? "selected=\"selected\"" : "";
 				$link2 = "$link.php?year=$year&amp;month=$month&amp;day=$day&amp;room=$row[0]";
-				$out_html .= "<option $selected value=\"$link2\">" . htmlspecialchars($row[1].$temp)."</option>";
+				$out_html .= "<option $selected value=\"$link2\">" . htmlspecialchars($row[1].$temp)."</option>".PHP_EOL;
 			}
 		}
 	}
-	$out_html .= "</select></div><script type=\"text/javascript\"></script><noscript><div><input type=\"submit\" value=\"Change\" /></div></noscript></form>";
+	$out_html .= "</select>".PHP_EOL;
+	$out_html .= "</div>".PHP_EOL;
+	$out_html .= "<script type=\"text/javascript\">".PHP_EOL;
+	$out_html .= "function room_go()".PHP_EOL;
+	$out_html .= " {".PHP_EOL;
+	$out_html .= "box = document.getElementById(\"room_001\").room;".PHP_EOL;
+	$out_html .= "destination = box.options[box.selectedIndex].value;".PHP_EOL;
+	$out_html .= "if (destination) location.href = destination;".PHP_EOL;
+	$out_html .= "}".PHP_EOL;
+	$out_html .= "</script>".PHP_EOL;
+	$out_html .= "<noscript>".PHP_EOL;
+	$out_html .= "<div>".PHP_EOL;
+	$out_html .= "<input type=\"submit\" value=\"Change\" />".PHP_EOL;
+	$out_html .= "</div>".PHP_EOL;
+	$out_html .= "</noscript>".PHP_EOL;
+	$out_html .= "</form>".PHP_EOL;
 	return $out_html;
 }
 /**
