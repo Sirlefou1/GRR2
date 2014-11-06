@@ -10,12 +10,15 @@ class Form {
 
 	private function input($type, $name, $label)
 	{
+		$value = "";
+		if (isset($this->_data[$name]))
+			$value = $this->_data[$name];
 		$input = "";
 		if ($type == "textarea")
-			$input = '<textarea class="form-control" rows="3" id="input'.$name.'">'.$this->_data[$name].'</textarea>'.PHP_EOL;
+			$input = '<textarea class="form-control" rows="3" id="'.$name.'">'.$value.'</textarea>'.PHP_EOL;
 		else
-			$input = '<input type="'.$type.'" class="form-control" id="input'.$name.'" placeholder="'.$label.'" value="'.$this->_data[$name].'">'.PHP_EOL;
-		return '<div class="form-group">'.PHP_EOL.'<label for="input'.$name.'">'.$label.'</label>'.PHP_EOL.$input.'</div>'.PHP_EOL;
+			$input = '<input type="'.$type.'" class="form-control" id="'.$name.'" placeholder="'.$label.'" value="'.$value.'">'.PHP_EOL;
+		return '<div class="form-group">'.PHP_EOL.'<label for="'.$name.'">'.$label.'</label>'.PHP_EOL.$input.'</div>'.PHP_EOL;
 
 	}
 
@@ -24,9 +27,9 @@ class Form {
 		return $this->input('text', $name, $label);
 	}
 
-	public function email($name, $label)
+	public function mail($name, $label)
 	{
-		return $this->input('email', $name, $label);
+		return $this->input('mail', $name, $label);
 	}
 
 	public function textarea($name, $label)
@@ -45,12 +48,15 @@ class Form {
 		foreach ($options as $k => $v)
 		{
 			$select = '';
-			if ($k == $this->_data[$name])
-				$select = ' selected';
+			if (isset($this->_data[$name]))
+			{
+				if ($k == $this->_data[$name])
+					$select = ' selected';
+			}
 			$option .= '<option value="'.$k.'" '.$select.'>'.$v.'</option>'.PHP_EOL;
 		}
-		$input = '<select class="form-control" '.$type.'>'.PHP_EOL.$option.'</select>'.PHP_EOL;
-		return '<div class="form-group">'.PHP_EOL.'<label for="input'.$name.'">'.$label.'</label>'.PHP_EOL.$input.'</div>'.PHP_EOL;
+		$input = '<select id="'.$name.'" class="form-control" '.$type.'>'.PHP_EOL.$option.'</select>'.PHP_EOL;
+		return '<div class="form-group">'.PHP_EOL.'<label for="'.$name.'">'.$label.'</label>'.PHP_EOL.$input.'</div>'.PHP_EOL;
 	}
 }
 ?>

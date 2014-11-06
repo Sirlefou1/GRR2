@@ -23,6 +23,8 @@
 [correction] session/traduction sur certaines pages
 [correction] affichage du menu sur certaine page de l'admin
 [correction] Balise php courte dans contactFormulaire.php
+[correction] Affichage reservation sur 2 jours
+[correction] boutton aujourd'hui de mincals
 [ajout] gestion des droit dans contactFormulaire.php
 [ajout] bootstrap twitter pour l'apparence
 [ajout] fonction cle donne/rendu
@@ -31,9 +33,9 @@
 [ajout] Jour férié
 [ajout] Vacance scolaire francaise
 [ajout] Settings pour les jours feries et vacances
+[ajout] Champs de recherche dans le select des beneficiare de edit_entry.php
 [maj] lib Jquery 2.1.1
 [maj] script popup.js compatibilité jquery
-[maj] script appeldelete.js compatibilité jquery
 [maj] fontion bouton_retour_haut() compatibilité jquery
 [maj] lib jquery.validate.js
 [maj] lib ckeditor 4.4.5
@@ -56,6 +58,7 @@
 [change] Generation de pdf avancé
 [change] optimisation du mincals
 [change] suppression des variable inutile dans showaccessdenied
+[change] Gestion des settings via une class settings
 [suppression] Fichiers inutile
 [suppression] fonction html_entity_decode_all_version
 [suppression] des fragments de code pour l'upload des fichiers
