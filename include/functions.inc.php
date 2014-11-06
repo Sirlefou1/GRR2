@@ -1771,26 +1771,30 @@ function make_site_select_html($link, $current_site, $year, $month, $day, $user)
 				$nb_sites_a_afficher++;
 				$selected = ($row[0] == $current_site) ? 'selected="selected"' : '';
 				$link2 = $link.'?year='.$year.'&amp;month='.$month.'&amp;day='.$day.'&amp;area='.$default_area;
-				$out_html.="\n".'           <option '.$selected.' value="'.$link2.'">'.htmlspecialchars($row[1]).'</option>';
+				$out_html.="\n".'           <option '.$selected.' value="'.$link2.'">'.htmlspecialchars($row[1]).'</option>'.PHP_EOL;
 			}
 		}
 	}
 	if ($nb_sites_a_afficher > 1)
 	{
-		// s'il y a au moins deux sites à afficher, on met une liste déroulante, sinon, on affiche rien.
-		$out_html .= '</select></div><script type="text/javascript">
-		<!--
-		function site_go()
-		{
-			box = document.getElementById("site_001").site;
-			destination = box.options[box.selectedIndex].value;
-			if (destination) location.href = destination;
-		}
-         // -->
-
-	</script><noscript><div><input type="submit" value="change" /></div></noscript></form>';
-	return $out_html;
-}
+		$out_html .= "</select>".PHP_EOL;
+		$out_html .= "</div>".PHP_EOL;
+		$out_html .= "<script type=\"text/javascript\">".PHP_EOL;
+		$out_html .= "function site_go()".PHP_EOL;
+		$out_html .= "{".PHP_EOL;
+		$out_html .= "box = document.getElementById(\"site_001\").area;".PHP_EOL;
+		$out_html .= "destination = box.options[box.selectedIndex].value;".PHP_EOL;
+		$out_html .= "if (destination) location.href = destination;".PHP_EOL;
+		$out_html .= "}".PHP_EOL;
+		$out_html .= "</script>".PHP_EOL;
+		$out_html .= "<noscript>".PHP_EOL;
+		$out_html .= "<div>".PHP_EOL;
+		$out_html .= "<input type=\"submit\" value=\"Change\" />".PHP_EOL;
+		$out_html .= "</div>".PHP_EOL;
+		$out_html .= "</noscript>".PHP_EOL;
+		$out_html .= "</form>".PHP_EOL;
+		return $out_html;
+	}
 }
 /**
  * Menu gauche affichage des area via select
@@ -2126,18 +2130,33 @@ function make_site_item_html($link, $current_site, $year, $month, $day, $user)
 			if ($current_site != null)
 			{
 				if ($current_site == $row[0])
-					$out_html .= "<input id=\"item_select\" type=\"button\" class=\"btn btn-primary btn-xs\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])."\" onclick=\"location.href='$link2';charger();\" /><br />";
+					$out_html .= "<input id=\"item_select\" type=\"button\" class=\"btn btn-primary btn-xs\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])."\" onclick=\"location.href='$link2';charger();\" /><br />".PHP_EOL;
 				else
-					$out_html .= "<input type=\"button\" class=\"btn btn-default btn-xs item\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])." \" onclick=\"location.href='$link2';charger();\" /><br />";
+					$out_html .= "<input type=\"button\" class=\"btn btn-default btn-xs item\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])." \" onclick=\"location.href='$link2';charger();\" /><br />".PHP_EOL;
 			}
 			else
-				$out_html .= "<input type=\"button\" class=\"btn btn-default btn-xs item\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])." \" onclick=\"location.href='$link2';charger();\" /><br />";
+				$out_html .= "<input type=\"button\" class=\"btn btn-default btn-xs item\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])." \" onclick=\"location.href='$link2';charger();\" /><br />".PHP_EOL;
 		}
 	}
 	if ($nb_sites_a_afficher > 1)
 	{
 		// s'il y a au moins deux sites à afficher, on met une liste déroulante, sinon, on affiche rien.
-		$out_html .= '</form></div><script type="text/javascript"></script><noscript><div><input type="submit" value="change" /></div></noscript></form>';
+		$out_html .= '</form>'.PHP_EOL;
+		$out_html .= '</div>'.PHP_EOL;
+		$out_html .= '<script type="text/javascript">'.PHP_EOL;
+		$out_html .= 'function site_go()'.PHP_EOL;
+		$out_html .= '{'.PHP_EOL;
+		$out_html .= 'box = document.getElementById("site_001").site;'.PHP_EOL;
+		$out_html .= 'destination = box.options[box.selectedIndex].value;'.PHP_EOL;
+		$out_html .= 'if (destination) location.href = destination;'.PHP_EOL;
+		$out_html .= '}'.PHP_EOL;
+		$out_html .= '</script>'.PHP_EOL;
+		$out_html .= '<noscript>'.PHP_EOL;
+		$out_html .= '<div>'.PHP_EOL;
+		$out_html .= '<input type="submit" value="change" />'.PHP_EOL;
+		$out_html .= '</div>'.PHP_EOL;
+		$out_html .= '</noscript>'.PHP_EOL;
+		$out_html .= '</form>'.PHP_EOL;
 		return $out_html;
 	}
 }
