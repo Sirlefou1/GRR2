@@ -126,8 +126,7 @@ if ((!isset($_GET['pview'])) or ($_GET['pview'] != 1))
 		<td class=\"right\">
 			<input type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='month_all2.php?year=$ty&amp;month=$tm&amp;area=$area';\" value=\" ".get_vocab('monthafter')."  &gt;&gt;\"/>
 		</td>
-	</tr>
-</table>";
+	</tr>";
 }
 
 if ((!isset($_GET['pview'])) or ($_GET['pview'] != 1))
@@ -339,7 +338,7 @@ for ($ir = 0; ($row = grr_sql_row($res, $ir)); $ir++)
 			$t2 += 86400;
 			if ($display_day[$cweek] == 1)
 			{
-				echo "<td valign=\"top\" class=\"cell_month\"> ";
+				echo "<td class=\"cell_month\"> ";
 				if (est_hors_reservation(mktime(0, 0, 0, $month, $cday, $year), $area))
 				{
 					echo "<div class=\"empty_cell\">";
@@ -361,7 +360,7 @@ for ($ir = 0; ($row = grr_sql_row($res, $ir)); $ir++)
 							{
 								if ($d[$cday]["room"][$i] == $row[0])
 								{
-									echo "\n<br /><table width='100%'><tr>";
+									echo "\n<br /><table class='table-header'><tr>";
 									tdcell($d[$cday]["color"][$i]);
 									if ($d[$cday]["res"][$i] != '-')
 										echo " <img src=\"img_grr/buzy.png\" alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("ressource actuellement empruntee")."\" width=\"20\" height=\"20\" class=\"image\" /> \n";
@@ -377,7 +376,6 @@ for ($ir = 0; ($row = grr_sql_row($res, $ir)); $ir++)
 											$currentPage = 'month_all2';
 											$id =   $d[$cday]["id"][$i];
 											echo "<a title=\"".htmlspecialchars($d[$cday]["who1"][$i])."\" data-width=\"675\" onclick=\"request($id,$cday,$month,$year,'$currentPage',readData);\" data-rel=\"popup_name\" class=\"poplight\">" .$d[$cday]["who1"][$i]."</a>";
-											echo  "<div id=\"popup_name\" class=\"popup_block\" ></div>";
 										}
 										else
 										{
@@ -401,6 +399,7 @@ for ($ir = 0; ($row = grr_sql_row($res, $ir)); $ir++)
 	}
 }
 echo "</table>";
+echo  "<div id=\"popup_name\" class=\"popup_block\" ></div>";
 if ($_GET['pview'] != 1)
 	echo "<div id=\"toTop\"> ^ Haut de la page";
 bouton_retour_haut ();
