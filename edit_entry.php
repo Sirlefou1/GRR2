@@ -128,6 +128,7 @@ if (UserRoomMaxBooking(getUserName(), $room, $compt) == 0)
 	showAccessDeniedMaxBookings($day, $month, $year, $room, $back);
 	exit();
 }
+$etype = 0;
 if (isset($id))
 {
 	$sql = "SELECT name, beneficiaire, description, start_time, end_time, type, room_id, entry_type, repeat_id, option_reservation, jours, create_by, beneficiaire_ext, statut_entry, clef, courrier FROM ".TABLE_PREFIX."_entry WHERE id=$id";
