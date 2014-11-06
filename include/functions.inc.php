@@ -1643,6 +1643,8 @@ function tdcell_rowspan($colclass, $step)
 {
 	global $tab_couleur;
 	static $ecolors;
+	if ($step < 1)
+		$step = 1;
 	if (($colclass >= "A") && ($colclass <= "Z"))
 	{
 		$num_couleur = grr_sql_query1("SELECT couleur FROM ".TABLE_PREFIX."_type_area WHERE type_letter='".$colclass."'");
@@ -2491,7 +2493,7 @@ function send_mail($id_entry, $action, $dformat, $tab_id_moderes = array())
 	if ($description !='')
 		$reservation = $reservation.$vocab["description"]." ".$description."\n";
 	$reservation .= affichage_champ_add_mails($id_entry);
-	$temp = grr_sql_query1("select type_name from ".TABLE_PREFIX."_type_area WHERE type_letter='".$row[5]."'");
+	$temp = grr_sql_query1("SELECT type_name FROM ".TABLE_PREFIX."_type_area WHERE type_letter='".$row[5]."'");
 	if ($temp == -1)
 		$temp = "?".$row[5]."?";
 	else

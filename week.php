@@ -241,15 +241,15 @@ else
 				{
 					if (date("d", $row[1]) == date("d", $t))
 					{
-						$d[$weekday][$slot]["horaireDebut"] = mktime(0, 0, 0, date('m',$row[1]), date('d',$row[1]), date('Y',$row[1]));
+						$d[$weekday][$slot]["horaireDebut"] = mktime($morningstarts, 0, 0, date('m',$row[1]), date('d',$row[1]), date('Y',$row[1]));
 						$d[$weekday][$slot]["horaireFin"] = $row[1];
-						$d[$weekday][$slot]["duree"] = ($row[1]- mktime(0, 0, 0, date('m',$row[1]), date('d',$row[1]), date('Y',$row[1]))) / $this_area_resolution;
+						$d[$weekday][$slot]["duree"] = ($row[1]- mktime($morningstarts, 0, 0, date('m',$row[1]), date('d',$row[1]), date('Y',$row[1]))) / $this_area_resolution;
 					}
 					else
 					{
 						$d[$weekday][$slot]["horaireDebut"] = $row[0];
-						$d[$weekday][$slot]["horaireFin"] = mktime(24, 0, 0, date('m',$row[0]), date('d',$row[0]), date('Y',$row[0]));
-						$d[$weekday][$slot]["duree"] = (mktime(24, 0, 0, date('m',$row[0]), date('d',$row[0]), date('Y',$row[0])) - $row[0]) / $this_area_resolution;
+						$d[$weekday][$slot]["horaireFin"] = mktime($eveningends + 1, 0, 0, date('m',$row[0]), date('d',$row[0]), date('Y',$row[0]));
+						$d[$weekday][$slot]["duree"] = (mktime($eveningends + 1, 0, 0, date('m',$row[0]), date('d',$row[0]), date('Y',$row[0])) - $row[0]) / $this_area_resolution;
 					}
 				}
 				else
@@ -313,7 +313,6 @@ echo "</th>\n";
 $num_week_day = $weekstarts;
 $k = $day_week;
 $i = $time;
-$num_week_day = $weekstarts;
 $ferie = getHolidays($year);
 for ($t = $week_start; $t <= $week_end; $t += 86400)
 {
@@ -546,7 +545,6 @@ for ($t = $week_start; $t <= $week_end; $t += 86400)
 							echo '<img src="img_grr/flag_moderation.png" alt="'.get_vocab("en_attente_moderation").'" title="'.get_vocab("en_attente_moderation").'" class="image" />'.PHP_EOL;
 					}
 				}
-				//echo "</td>\n";
 			}
 			$wt += 86400;
 			$num_week_day++;
