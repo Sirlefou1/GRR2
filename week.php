@@ -237,9 +237,27 @@ else
 			if ($slot <= $last_slot)
 			{
 				$d[$weekday][$slot]["color"] = $row[2];
-				$d[$weekday][$slot]["horaireDebut"] = $row[0];
-				$d[$weekday][$slot]["horaireFin"] = $row[1] ;
-				$d[$weekday][$slot]["duree"] = ($row[1]- $row[0])/$this_area_resolution;
+				if (($row[1]) > mktime(24, 0, 0, date('m',$row[0]), date('d',$row[0]), date('Y',$row[0])))
+				{
+					if (date("d", $row[1]) == date("d", $t))
+					{
+						$d[$weekday][$slot]["horaireDebut"] = mktime(0, 0, 0, date('m',$row[1]), date('d',$row[1]), date('Y',$row[1]));
+						$d[$weekday][$slot]["horaireFin"] = $row[1];
+						$d[$weekday][$slot]["duree"] = ($row[1]- mktime(0, 0, 0, date('m',$row[1]), date('d',$row[1]), date('Y',$row[1]))) / $this_area_resolution;
+					}
+					else
+					{
+						$d[$weekday][$slot]["horaireDebut"] = $row[0];
+						$d[$weekday][$slot]["horaireFin"] = mktime(24, 0, 0, date('m',$row[0]), date('d',$row[0]), date('Y',$row[0]));
+						$d[$weekday][$slot]["duree"] = (mktime(24, 0, 0, date('m',$row[0]), date('d',$row[0]), date('Y',$row[0])) - $row[0]) / $this_area_resolution;
+					}
+				}
+				else
+				{
+					$d[$weekday][$slot]["horaireDebut"] = $row[0];
+					$d[$weekday][$slot]["horaireFin"] = $row[1];
+					$d[$weekday][$slot]["duree"] = ($row[1]- $row[0]) / $this_area_resolution;
+				}
 				if ($prev_weekday != $weekday)
 				{
 					$prev_weekday = $weekday;
@@ -485,7 +503,7 @@ for ($t = $week_start; $t <= $week_end; $t += 86400)
 						if (isset($d[$weekday][$slot - $decale_slot * $nb_case]["id"]))
 						{
 							$nbrow =  $d[$weekday][$slot - $decale_slot * $nb_case]["duree"];
-							tdcell_rowspan($d[$weekday][$slot - $decale_slot * $nb_case]["color"],$nbrow);
+							tdcell_rowspan($d[$weekday][$slot - $decale_slot * $nb_case]["color"], $nbrow);
 							if ($acces_fiche_reservation)
 							{
 								if (Settings::get("display_level_view_entry") == 0)
