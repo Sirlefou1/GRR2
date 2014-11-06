@@ -13,6 +13,7 @@ jQuery(function($)
 		});
 		$('body').append('<div id="fade"></div>');
 		$('#fade').css({'filter' : 'alpha(opacity=80)'}).fadeIn();
+		$("body,html").animate({scrollTop:0},800);
 		return false;
 	});
 	$('body').on('click', 'a.closepop, #fade', function()
