@@ -802,7 +802,6 @@ if ($enable_periods == 'y')
 }
 else
 {
-	//jQuery_TimePicker($typeDate, $typeTime, $start_hour, $start_min, $end_hour, $end_min)
 	echo "<td class=\"E\"><b>".get_vocab("time")."</b><td class=\"CL\">";
 	if (isset ($_GET['id']))
 	{

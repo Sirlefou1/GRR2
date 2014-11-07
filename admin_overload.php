@@ -47,7 +47,7 @@ if (isset($_POST["action"]))
 	$action = $_POST["action"];
 else
 	$action = "default";
-$res = grr_sql_query("select id, area_name, access from ".TABLE_PREFIX."_area order by order_display");
+$res = grr_sql_query("SELECT id, area_name, access FROM ".TABLE_PREFIX."_area ORDER BY order_display");
 if (!$res)
 	fatal_error(0, grr_sql_error());
 $userdomain = array();
@@ -61,7 +61,7 @@ if (grr_sql_count($res) != 0)
 }
 if ($action == "add")
 {
-	$arearight = False;
+	$arearight = false;
 	if (isset($_POST["id_area"]))
 		$id_area = $_POST["id_area"];
 	else
@@ -100,23 +100,23 @@ if ($action == "add")
 	foreach ($userdomain as $key=>$value)
 	{
 		if ($key == $id_area)
-			$arearight = True;
+			$arearight = true;
 	}
-	if ($arearight == True)
+	if ($arearight == true)
 	{
-		$sql = "insert into ".TABLE_PREFIX."_overload (id_area, fieldname, fieldtype, obligatoire, confidentiel, fieldlist, affichage, overload_mail) values ($id_area, '".protect_data_sql($fieldname)."', '".protect_data_sql($fieldtype)."', '".$obligatoire."', '".$confidentiel."', '".protect_data_sql($fieldlist)."', '".$affichage."', '".$overload_mail."');";
+		$sql = "INSERT INTO ".TABLE_PREFIX."_overload (id_area, fieldname, fieldtype, obligatoire, confidentiel, fieldlist, affichage, overload_mail) VALUES ($id_area, '".protect_data_sql($fieldname)."', '".protect_data_sql($fieldtype)."', '".$obligatoire."', '".$confidentiel."', '".protect_data_sql($fieldlist)."', '".$affichage."', '".$overload_mail."');";
 		if (grr_sql_command($sql) < 0)
 			fatal_error(0, "$sql \n\n" . grr_sql_error());
 	}
 }
 if ($action == "delete")
 {
-	$arearight = False ;
+	$arearight = false ;
 	if (isset($_POST["id_overload"]))
 		$id_overload = $_POST["id_overload"];
 	else
 		$id_overload = "";
-	$sql = "select id_area from ".TABLE_PREFIX."_overload where id=$id_overload;";
+	$sql = "SELECT id_area FROM ".TABLE_PREFIX."_overload WHERE id=$id_overload;";
 	$resquery = grr_sql_query($sql);
 	if (!$resquery)
 		fatal_error(0, grr_sql_error());
@@ -126,20 +126,20 @@ if ($action == "delete")
 			foreach ($userdomain as $key=>$value)
 			{
 				if ($key == $row[0])
-					$arearight = True;
+					$arearight = true;
 			}
 		}
-		if ($arearight == True)
+		if ($arearight == true)
 		{
 			grrDelOverloadFromEntries($id_overload);
-			$sql = "delete from ".TABLE_PREFIX."_overload where id=$id_overload;";
+			$sql = "DELETE FROM ".TABLE_PREFIX."_overload WHERE id=$id_overload;";
 			if (grr_sql_command($sql) < 0)
 				fatal_error(0, "$sql \n\n" . grr_sql_error());
 		}
 	}
 	if ($action == "change")
 	{
-		$arearight = False ;
+		$arearight = false ;
 		if (isset($_POST["id_overload"]))
 			$id_overload = $_POST["id_overload"];
 		else
@@ -180,7 +180,7 @@ if ($action == "delete")
 			$affichage = "n";
 			$overload_mail = "n";
 		}
-		$sql = "select id_area from ".TABLE_PREFIX."_overload where id=$id_overload;";
+		$sql = "SELECT id_area FROM ".TABLE_PREFIX."_overload WHERE id=$id_overload;";
 		$resquery = grr_sql_query($sql);
 		if (!$resquery)
 			fatal_error(0, grr_sql_error());
@@ -190,12 +190,12 @@ if ($action == "delete")
 				foreach ($userdomain as $key=>$value)
 				{
 					if ($key == $row[0] )
-						$arearight = True;
+						$arearight = true;
 				}
 			}
-			if ($arearight == True)
+			if ($arearight == true)
 			{
-				$sql = "update ".TABLE_PREFIX."_overload set
+				$sql = "UPDATE ".TABLE_PREFIX."_overload SET
 				fieldname='".protect_data_sql($fieldname)."',
 				fieldtype='".protect_data_sql($fieldtype)."',
 				obligatoire='".$obligatoire."',
@@ -203,7 +203,7 @@ if ($action == "delete")
 				affichage='".$affichage."',
 				overload_mail='".$overload_mail."',
 				fieldlist='".protect_data_sql($fieldlist)."'
-				where id=$id_overload;";
+				WHERE id=$id_overload;";
 				if (grr_sql_command($sql) < 0)
 					fatal_error(0, "$sql \n\n" . grr_sql_error());
 			}
@@ -250,7 +250,7 @@ if ($action == "delete")
 	$ind_div = 0;
 	foreach ($userdomain as $key=>$value)
 	{
-		$res = grr_sql_query("select id, fieldname, fieldtype, obligatoire, fieldlist, affichage, overload_mail, confidentiel from ".TABLE_PREFIX."_overload where id_area=$key order by fieldname;");
+		$res = grr_sql_query("SELECT id, fieldname, fieldtype, obligatoire, fieldlist, affichage, overload_mail, confidentiel FROM ".TABLE_PREFIX."_overload WHERE id_area=$key ORDER BY fieldname;");
 		if (!$res)
 			fatal_error(0, grr_sql_error());
 		if (($key != $breakkey) && (grr_sql_count($res) != 0))
