@@ -830,15 +830,9 @@ function begin_page($title, $page="with_session")
 	$a .= '<meta charset="utf-8">'.PHP_EOL;
 	$a .= '<meta http-equiv="X-UA-Compatible" content="IE=edge">'.PHP_EOL;
 	$a .= '<meta name="viewport" content="width=device-width, initial-scale=1">'.PHP_EOL;
-	$a .= '<link rel="SHORTCUT ICON" href="./favicon.ico" />'.PHP_EOL;
-	$a .= '<title>'.$title.'</title>'.PHP_EOL;
-	$a .= '<meta http-equiv="Content-Type" content="text/html; charset=';
-	if ($unicode_encoding)
-		$a .= 'utf-8';
-	else
-		$a .= $charset_html;
-	$a .=  '" />'.PHP_EOL;
 	$a .= '<meta name="Robots" content="noindex" />'.PHP_EOL;
+	$a .= '<title>'.$title.'</title>'.PHP_EOL;
+	$a .= '<link rel="shortcut icon" href="./favicon.ico" />'.PHP_EOL;
 	$a .= '<link rel="stylesheet" type="text/css" href="'.$sheetcss.'" />'.PHP_EOL;
 	$a .= '<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />'.PHP_EOL;
 	$a .= '<link rel="stylesheet" type="text/css" href="themes/default/css/mod_bootstrap.css" />'.PHP_EOL;
@@ -926,7 +920,10 @@ function print_header($day = '', $month = '', $year = '', $type_session = 'with_
 			$day   = date("d",$date_);
 			$month = date("m",$date_);
 			$year  = date("Y",$date_);
-			echo '<div id="toppanel"><div id="panel"><div class="content"><table id="header">'.PHP_EOL;
+			echo '<div id="toppanel">'.PHP_EOL;
+			echo '<div id="panel">'.PHP_EOL;
+			echo '<div class="content">'.PHP_EOL;
+			echo '<table id="header">'.PHP_EOL;
 			echo '<tr>'.PHP_EOL;
 			//Logo
 			$nom_picture = "./images/".Settings::get("logo");
