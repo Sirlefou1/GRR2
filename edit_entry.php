@@ -491,6 +491,7 @@ print_header($day, $month, $year, $type="with_session");
 	function validate_and_submit ()
 	{
 		var err;
+		$("#error").html("");
 		if (document.forms["main"].benef_ext_nom)
 		{
 			if ((document.forms["main"].beneficiaire.options[0].selected) &&(document.forms["main"].benef_ext_nom.value == ""))
