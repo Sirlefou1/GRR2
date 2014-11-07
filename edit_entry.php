@@ -490,12 +490,13 @@ print_header($day, $month, $year, $type="with_session");
 	}
 	function validate_and_submit ()
 	{
+		var err;
 		if (document.forms["main"].benef_ext_nom)
 		{
 			if ((document.forms["main"].beneficiaire.options[0].selected) &&(document.forms["main"].benef_ext_nom.value == ""))
 			{
-				$("#error").html('<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><?php echo get_vocab("you_have_not_entered").get_vocab("deux_points").strtolower(get_vocab("nom beneficiaire")) ?></div>');
-				return false;
+				$("#error").append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><?php echo get_vocab("you_have_not_entered").get_vocab("deux_points").strtolower(get_vocab("nom beneficiaire")) ?></div>');
+				err = 1;
 			}
 		}
 		<?php if (Settings::get("remplissage_description_breve") == '1' || Settings::get("remplissage_description_breve") == '2')
@@ -503,8 +504,8 @@ print_header($day, $month, $year, $type="with_session");
 			?>
 			if (document.forms["main"].name.value == "")
 			{
-				$("#error").html('<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><?php echo get_vocab("you_have_not_entered").get_vocab("deux_points").get_vocab("brief_description") ?></div>');
-				return false;
+				$("#error").append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><?php echo get_vocab("you_have_not_entered").get_vocab("deux_points").get_vocab("brief_description") ?></div>');
+				err = 1;
 			}
 			<?php
 		}
@@ -523,22 +524,28 @@ print_header($day, $month, $year, $type="with_session");
 					{
 						echo "if ((document.getElementById('id_".$idtmp."_".$overload_fields[$fieldname]["id"]."')) && (document.forms[\"main\"].addon_".$overload_fields[$fieldname]["id"].".options[0].selected == true)) {\n";
 					}
-					echo "alert (\"".$vocab["required"]."\");\n";
-					echo "return false\n}\n";
+					?>
+					$("#error").append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><?php echo get_vocab("required"); ?></div>');
+					err = 1;
+				}
+					<?php
 				}
 				if ($overload_fields[$fieldname]["type"] == "numeric")
 				{
 					echo "if (isNaN((document.getElementById('id_".$idtmp."_".$overload_fields[$fieldname]["id"]."')) && (document.forms[\"main\"].addon_".$overload_fields[$fieldname]["id"].".value))) {\n";
-					echo "alert (\"".preg_replace('/"/', '\"',$overload_fields[$fieldname]["name"]).preg_replace("/ /", " ",$vocab["deux_points"]).$vocab["is_not_numeric"]."\");\n";
-					echo "return false\n}\n";
+					?>
+					$("#error").append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><?php echo $overload_fields[$fieldname]["name"].get_vocab("deux_points"). get_vocab("is_not_numeric") ?></div>');
+					err = 1;
+				}
+					<?php
 				}
 			}
 		}
 		?>
 		if  (document.forms["main"].type.value=='0')
 		{
-			$("#error").html('<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><?php echo get_vocab("choose_a_type"); ?></div>');
-			return false;
+			$("#error").append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><?php echo get_vocab("choose_a_type"); ?></div>');
+			err = 1;
 		}
 		<?php
 		if ($edit_type == "series")
@@ -549,17 +556,19 @@ print_header($day, $month, $year, $type="with_session");
 			n = parseInt(document.forms["main"].rep_num_weeks.value);
 			if ((document.forms["main"].elements['rep_day[0]'].checked || document.forms["main"].elements['rep_day[1]'].checked || document.forms["main"].elements['rep_day[2]'].checked || document.forms["main"].elements['rep_day[3]'].checked || document.forms["main"].elements['rep_day[4]'].checked || document.forms["main"].elements['rep_day[5]'].checked || document.forms["main"].elements['rep_day[6]'].checked) && (!document.forms["main"].rep_type[2].checked))
 			{
-				$("#error").html('<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><?php echo get_vocab("no_compatibility_with_repeat_type"); ?></div>');
-				return false;
+				$("#error").append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><?php echo get_vocab("no_compatibility_with_repeat_type"); ?></div>');
+				err = 1;
 			}
 			if ((!document.forms["main"].elements['rep_day[0]'].checked && !document.forms["main"].elements['rep_day[1]'].checked && !document.forms["main"].elements['rep_day[2]'].checked && !document.forms["main"].elements['rep_day[3]'].checked && !document.forms["main"].elements['rep_day[4]'].checked && !document.forms["main"].elements['rep_day[5]'].checked && !document.forms["main"].elements['rep_day[6]'].checked) && (document.forms["main"].rep_type[2].checked))
 			{
-				$("#error").html('<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><?php echo get_vocab("choose_a_day"); ?></div>');
-				return false;
+				$("#error").append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><?php echo get_vocab("choose_a_day"); ?></div>');
+				err = 1;
 			}
 			<?php
 		}
 		?>
+		if (err == 1)
+			return false;
 		document.forms["main"].submit();
 		return true;
 	}
