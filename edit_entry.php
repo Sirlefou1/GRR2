@@ -494,16 +494,16 @@ print_header($day, $month, $year, $type="with_session");
 		{
 			if ((document.forms["main"].beneficiaire.options[0].selected) &&(document.forms["main"].benef_ext_nom.value == ""))
 			{
-				alert("<?php echo get_vocab('you_have_not_entered').":" . '\n' . strtolower(get_vocab('nom beneficiaire')) ?>");
+				$("#error").html('<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><?php echo get_vocab("you_have_not_entered").get_vocab("deux_points").strtolower(get_vocab("nom beneficiaire")) ?></div>');
 				return false;
 			}
 		}
-		<?php if (Settings::get("remplissage_description_breve") == '1')
+		<?php if (Settings::get("remplissage_description_breve") == '1' || Settings::get("remplissage_description_breve") == '2')
 		{
 			?>
 			if (document.forms["main"].name.value == "")
 			{
-				alert("<?php echo get_vocab('you_have_not_entered') . '\n' . get_vocab('brief_description') . '\n' ?>");
+				$("#error").html('<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><?php echo get_vocab("you_have_not_entered").get_vocab("deux_points").get_vocab("brief_description") ?></div>');
 				return false;
 			}
 			<?php
@@ -537,7 +537,7 @@ print_header($day, $month, $year, $type="with_session");
 		?>
 		if  (document.forms["main"].type.value=='0')
 		{
-			alert("<?php echo get_vocab("choose_a_type"); ?>");
+			$("#error").html('<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><?php echo get_vocab("choose_a_type"); ?></div>');
 			return false;
 		}
 		<?php
@@ -549,12 +549,12 @@ print_header($day, $month, $year, $type="with_session");
 			n = parseInt(document.forms["main"].rep_num_weeks.value);
 			if ((document.forms["main"].elements['rep_day[0]'].checked || document.forms["main"].elements['rep_day[1]'].checked || document.forms["main"].elements['rep_day[2]'].checked || document.forms["main"].elements['rep_day[3]'].checked || document.forms["main"].elements['rep_day[4]'].checked || document.forms["main"].elements['rep_day[5]'].checked || document.forms["main"].elements['rep_day[6]'].checked) && (!document.forms["main"].rep_type[2].checked))
 			{
-				alert("<?php echo get_vocab('no_compatibility_with_repeat_type'); ?>");
+				$("#error").html('<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><?php echo get_vocab("no_compatibility_with_repeat_type"); ?></div>');
 				return false;
 			}
 			if ((!document.forms["main"].elements['rep_day[0]'].checked && !document.forms["main"].elements['rep_day[1]'].checked && !document.forms["main"].elements['rep_day[2]'].checked && !document.forms["main"].elements['rep_day[3]'].checked && !document.forms["main"].elements['rep_day[4]'].checked && !document.forms["main"].elements['rep_day[5]'].checked && !document.forms["main"].elements['rep_day[6]'].checked) && (document.forms["main"].rep_type[2].checked))
 			{
-				alert("<?php echo get_vocab('choose_a_day'); ?>");
+				$("#error").html('<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><?php echo get_vocab("choose_a_day"); ?></div>');
 				return false;
 			}
 			<?php
@@ -666,7 +666,7 @@ echo '<form id="main" action="edit_entry_handler.php" method="get">'.PHP_EOL;
 </script>
 
 <?php
-
+echo '<div id="error"></div>';
 echo '<table class="table-bordered EditEntryTable"><tr>'.PHP_EOL;
 echo '<td style="width:50%; vertical-align:top; padding-left:15px; padding-top:5px; padding-bottom:5px;">'.PHP_EOL;
 echo '<table class="table-header">'.PHP_EOL;
