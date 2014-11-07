@@ -484,7 +484,7 @@ if ((!grr_resumeSession()) && $valid != 'yes')
 							if (Settings::get("ldap_champ_recherche") == '')
 								echo "<span class=\"avertissement\">";
 							echo encode_message_utf8("<b>Attribut utilisé pour la recherche dans l'annuaire</b> :");
-							echo "<input type=\"text\" name=\"ldap_champ_recherche\" value=\"".htmlentities( Settings::get("ldap_champ_recherche"))."\" size=\"50\" />";
+							echo "<input class=\"form-control\" type=\"text\" name=\"ldap_champ_recherche\" value=\"".htmlentities( Settings::get("ldap_champ_recherche"))."\" size=\"50\" />";
 							if (Settings::get("ldap_champ_recherche") == '')
 								echo "<br />Le champ ci-dessous ne doit pas être vide.</span>";
 							echo "<br />";
@@ -496,20 +496,20 @@ if ((!grr_resumeSession()) && $valid != 'yes')
 							echo "<br /><br /><b>Liaisons GRR/LDAP</b>";
 							echo "<table><tr>";
 							echo "<td>Nom de famille : </td>";
-							echo "<td><input type=\"text\" name=\"ldap_champ_nom\" value=\"".htmlentities( Settings::get("ldap_champ_nom"))."\" size=\"20\" /></td>";
+							echo "<td><input class=\"form-control\" type=\"text\" name=\"ldap_champ_nom\" value=\"".htmlentities( Settings::get("ldap_champ_nom"))."\" size=\"20\" /></td>";
 							echo "<td>".encode_message_utf8("Prénom")." : </td>";
-							echo "<td><input type=\"text\" name=\"ldap_champ_prenom\" value=\"".htmlentities( Settings::get("ldap_champ_prenom"))."\" size=\"20\" /></td>";
+							echo "<td><input class=\"form-control\" type=\"text\" name=\"ldap_champ_prenom\" value=\"".htmlentities( Settings::get("ldap_champ_prenom"))."\" size=\"20\" /></td>";
 							echo "<td>Email : </td>";
-							echo "<td><input type=\"text\" name=\"ldap_champ_email\" value=\"".htmlentities( Settings::get("ldap_champ_email"))."\" size=\"20\" /></td>";
+							echo "<td><input class=\"form-control\" type=\"text\" name=\"ldap_champ_email\" value=\"".htmlentities( Settings::get("ldap_champ_email"))."\" size=\"20\" /></td>";
 							echo "</tr></table>";
 							echo encode_message_utf8("<br /><br /><b>Cas particulier des serveur SE3</b> : <span class=\"small\">dans le champs ci-dessous, vous pouvez préciser la liste des groupes SE3 autorisés à accéder à GRR.
 								Si le champ est laissé vide, il n'y a pas de restrictions.
 								Dans le cas contraire, seuls les utilisateurs appartenant à au moins l'un des groupes listés seront autorisés à accéder à GRR.
 								Ecrivez les groupes en les séparant par un point-vigule, par exemple : \"Profs;Administratifs\".
 								Seuls les groupes de type \"posixGroup\" sont supportés (les groupes de type \"groupOfNames\" ne sont pas supportés).</span>");
-							echo "<br />\n<input type=\"text\" name=\"se3_liste_groupes_autorises\" value=\"".htmlentities( Settings::get("se3_liste_groupes_autorises"))."\" size=\"50\" />\n";
+							echo "<br />\n<input class=\"form-control\" type=\"text\" name=\"se3_liste_groupes_autorises\" value=\"".htmlentities( Settings::get("se3_liste_groupes_autorises"))."\" size=\"50\" />\n";
 							echo "</div>\n";
-							echo "<div style=\"text-align:center;\">\n<input type=\"submit\" name=\"Valider1\" value=\"Valider\" />\n</div>\n";
+							echo "<div style=\"text-align:center;\">\n<input class=\"btn btn-primary\" type=\"submit\" name=\"Valider1\" value=\"Valider\" />\n</div>\n";
 						}
 						else
 						{
@@ -534,60 +534,54 @@ if ((!grr_resumeSession()) && $valid != 'yes')
 							include("include/config_ldap.inc.php");
 							if (($ldap_adresse != '') && ($ldap_port != ''))
 							{
-								$ok = "<span style=\"color:green; font-weight:bold;\">OK</span>";
-								$failed = "<span style=\"color:red; font-weight:bold;\">Echec</span>";
+								$ok = "OK";
+								$failed = "Echec";
 								echo "<hr />\n";
-								echo encode_message_utf8("<h3>Test de connexion à l'annuaire : ");
 								$ds = grr_connect_ldap($ldap_adresse,$ldap_port,$ldap_login,$ldap_pwd,$use_tls,'y');
 								if ($ds == "error_1")
 								{
-									echo encode_message_utf8($failed)."</h3>\n";
-									echo encode_message_utf8("(<span style=\"color:red;\">Impossible d'utiliser la norme LDAP V3</span>)<br />\n");
+									returnmsg('danger','Test de connexion à l\'annuaire : ', $failed, 'Impossible d\'utiliser la norme LDAP V3');
 								}
 								else if ($ds == "error_2")
 								{
-									echo encode_message_utf8($failed)."</h3>";
-									echo encode_message_utf8("(<span style=\"color:red;\">Impossible d'utiliser TLS</span>)<br />\n");
+									returnmsg('danger' ,'Test de connexion à l\'annuaire : ', $failed, 'Impossible d\'utiliser TLS');
 								}
 								else if ($ds == "error_3")
 								{
-									echo encode_message_utf8($failed)."</h3>";
-									echo encode_message_utf8("(<span style=\"color:red;\">Connexion établie mais l'identification auprès du serveur a échoué</span>)<br />\n");
+									returnmsg('danger' ,'Test de connexion à l\'annuaire : ', $failed, 'Connexion établie mais l\'identification auprès du serveur a échoué');
 								}
 								else if ($ds == "error_4")
 								{
-									echo encode_message_utf8($failed)."</h3>";
-									echo encode_message_utf8("(<span style=\"color:red;\">Impossible d'établir la connexion</span>)<br />\n");
+									returnmsg('danger' ,'Test de connexion à l\'annuaire : ', $failed, 'Impossible d\'établir la connexion');
 								}
 								else if (!$ds)
-									echo encode_message_utf8($failed)."</h3>";
+									echo encode_message_utf8($failed)."</h3></div>";
 								else
 								{
-									echo encode_message_utf8($ok)."</h3>";;
-									echo encode_message_utf8("<h3>Test de recherche sur l'annuaire avec le chemin spécifié : ");
+									returnmsg('success','Test de connexion à l\'annuaire : ', $ok, '');
+									//echo encode_message_utf8("<h3>Test de recherche sur l'annuaire avec le chemin spécifié : ");
 									$result = "";
 									$result = grr_ldap_search_user($ds, $ldap_base, "objectClass", "*",$ldap_filter,"y");
 									if ($result == "error_1")
 									{
+
 										$test_chemin = 'failed';
-										echo encode_message_utf8($failed)."</h3>";
 										if ($ldap_filter == "")
-											echo encode_message_utf8("(<span style=\"color:red;\"><b>Problème</b> : Le chemin que vous avez choisi <b>ne semble pas valide</b>.</span>)<br /><br />");
+											returnmsg('danger','Test de recherche sur l\'annuaire avec le chemin spécifié : ', $failed, '<b>Problème</b> : Le chemin que vous avez choisi <b>ne semble pas valide</b>.');
 										else
-											echo encode_message_utf8("(<span style=\"color:red;\"><b>Problème</b> : Le chemin et/ou le filtre additionnel que vous avez choisi <b>ne semblent pas valides</b>.</span>)<br /><br />");
+											returnmsg('danger','Test de recherche sur l\'annuaire avec le chemin spécifié : ', $failed, '<b>Problème</b> : Le chemin et/ou le filtre additionnel que vous avez choisi <b>ne semblent pas valides</b>.');
 									}
 									else if ($result == "error_2")
 									{
 										$test_chemin = 'failed';
-										echo encode_message_utf8($failed)."</h3>";
 										if ($ldap_filter == "")
-											echo encode_message_utf8("(<span style=\"color:red;\"><b>Problème</b> : Le chemin que vous avez choisi semble valide mais la recherche sur ce chemin ne renvoie aucun résultat.</span>)<br /><br />");
+											returnmsg('danger','Test de recherche sur l\'annuaire avec le chemin spécifié : ', $failed, '<b>Problème</b> : Le chemin que vous avez choisi semble valide mais la recherche sur ce chemin ne renvoie aucun résultat.');
 										else
-											echo encode_message_utf8("(<span style=\"color:red;\"><b>Problème</b> : Le chemin et le filtre additionnel que vous avez choisi semblent valides  mais la recherche sur ce chemin ne renvoie aucun résultat.</span>)<br /><br />");
+											returnmsg('danger','Test de recherche sur l\'annuaire avec le chemin spécifié : ', $failed, '<b>Problème</b> : Le chemin et le filtre additionnel que vous avez choisi semblent valides  mais la recherche sur ce chemin ne renvoie aucun résultat.');
 									}
 									else
-										echo encode_message_utf8($ok)."</h3>";;
-								}
+										returnmsg('success','Test de recherche sur l\'annuaire avec le chemin spécifié : ', $ok, '');
+									}
 							}
 						}
 						echo "<hr />";
@@ -597,7 +591,7 @@ if ((!grr_resumeSession()) && $valid != 'yes')
 							echo encode_message_utf8("<li>Adresse de l'annuaire LDAP <b>: ".$ldap_adresse."</b></li>");
 							echo encode_message_utf8("<li>Port utilisé : <b>".$ldap_port."</b></li>");
 							if ($test_chemin == 'failed')
-								echo encode_message_utf8("<li><span style=\"color:red;\">Chemin d'accès dans l'annuaire : <b> ".$ldap_base."</b></span></li>");
+								echo encode_message_utf8("<li><div class=\"alert alert-danger\" role=\"alert\">Chemin d'accès dans l'annuaire : <b> ".$ldap_base."</b></div></li>");
 							else
 								echo encode_message_utf8("<li>Chemin d'accès dans l'annuaire : <b> ".$ldap_base."</b></li>");
 							if ($ldap_filter!="")
@@ -605,7 +599,7 @@ if ((!grr_resumeSession()) && $valid != 'yes')
 							else
 								$ldap_filter_text = "non";
 							if (($test_chemin == 'failed') && ($ldap_filter!=""))
-								echo encode_message_utf8("<li><span style=\"color:red;\">Filtre LDAP supplémentaire : <b> ".$ldap_filter_text."</b></span></li>");
+								echo encode_message_utf8("<li><div class=\"alert alert-danger\" role=\"alert\">Filtre LDAP supplémentaire : <b> ".$ldap_filter_text."</b></div></li>");
 							else
 								echo encode_message_utf8("<li>Filtre LDAP supplémentaire : <b> ".$ldap_filter_text."</b></li>");
 							if ($ldap_login) {
@@ -630,11 +624,9 @@ if ((!grr_resumeSession()) && $valid != 'yes')
 						echo "<form action=\"admin_config_ldap.php\" method=\"post\">\n";
 						echo "<div><input type=\"hidden\" name=\"etape\" value=\"1\" />\n";
 						echo "<input type=\"hidden\" name=\"valid\" value=\"$valid\" /></div>\n";
-						echo "<div style=\"text-align:center;\"><input type=\"submit\" value=\"Configurer LDAP\" /></div></form>\n";
+						echo "<div style=\"text-align:center;\"><input class=\"btn btn-primary\" type=\"submit\" value=\"Configurer LDAP\" /></div></form>\n";
 					}
-					// fin de l'affichage de la colonne de droite
 					if ($valid == 'no') echo "</td></tr></table>";
 					?>
 				</body>
 				</html>
-				

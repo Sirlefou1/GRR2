@@ -901,12 +901,12 @@ function grr_connect_ldap($l_adresse,$l_port,$l_login,$l_pwd, $use_tls, $msg_err
 		if ($l_login != '')
 		{
 					// On tente un bind
-			$b = ldap_bind($ds, $l_login, $l_pwd);
+			$b = @ldap_bind($ds, $l_login, $l_pwd);
 		}
 		else
 		{
 					// Accès anonyme
-			$b = ldap_bind($ds);
+			$b = @ldap_bind($ds);
 		}
 		if ($b)
 		{

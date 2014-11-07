@@ -30,6 +30,17 @@
  */
 header("Cache-Control:no-cache");
 
+function returnmsg($type,$test, $status, $msg = '')
+{
+	echo encode_message_utf8("<div class=\"alert alert-$type\" role=\"alert\"><h3>$test");
+	echo encode_message_utf8($status)."</h3>";
+	if ($msg != '')
+		echo encode_message_utf8("($msg)\n");
+	echo '</div>'.PHP_EOL;
+}
+
+
+
 function getDaysInMonth($month, $year)
 {
 	return date('t', mktime(0, 0, 0, $month, 1, $year));
