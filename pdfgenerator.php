@@ -98,7 +98,7 @@ if (isset($_POST['civ']))
 			</div>
 			<div class="row">
 				<div class="col-md-8 col-md-offset-1">
-					Vous pourrez retirer les clés auprès du service '.$cle.'. Eles devront être remises immédiatement après dans la boîte aux letres de la '.$etablisement.'.<br><br>
+					Vous pourrez retirer les clés auprès du service '.$cle.'. Elles devront être remises immédiatement après dans la boîte aux letres de la '.$etablisement.'.<br><br>
 					Restant à votre disposition pour tous renseignements complémentaires,<br>
 					Je vous prie de croire, '.$civ.', à l\'assurance des mes sentiments les meilleurs.
 				</div>

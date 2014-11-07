@@ -40,7 +40,7 @@ echo "<tbody>\n";
 echo "<tr>";
 for ($k = 1; $k < 6; $k++)
 {
-	echo "<td style=\"width:20%;\">";
+	echo "<td style=\"width:170px;\">";
 	if ($page_config == $k)
 	{
 		echo "<div style=\"position: relative;\"><div class=\"onglet_off\" style=\"position: relative; top: 0px; padding-left: 20px; padding-right: 20px; min-height: 2.5em;\">".
