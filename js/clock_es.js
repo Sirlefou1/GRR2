@@ -3,12 +3,7 @@ var monthNames = [ "Enero", "Febrero", "Marzo", "abril", "mayo", "Junio", "Julio
 var dayNames= ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
 var newDate = new Date();
 newDate.setDate(newDate.getDate());
-$('#Date').html(dayNames[newDate.getDay()] + " " + newDate.getDate() + ' ' + monthNames[newDate.getMonth()] + ' ' + newDate.getFullYear());
-setInterval( function()
-{
-	var seconds = new Date().getSeconds();
-	$("#sec").html(( seconds < 10 ? "0" : "" ) + seconds);
-},1000);
+$('#Date').prepend(dayNames[newDate.getDay()] + " " + newDate.getDate() + ' ' + monthNames[newDate.getMonth()] + ' ' + newDate.getFullYear());
 setInterval( function()
 {
 	var minutes = new Date().getMinutes();
