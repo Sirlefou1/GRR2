@@ -1008,7 +1008,7 @@ $sql .= " ORDER BY order_display,room_name";
 $res = grr_sql_query($sql);
 $len = grr_sql_count($res);
 
-echo "<tr><td class=\"CL\" style=\"vertical-align:top;\"><table border=\"0\"><tr><td><div class=\"col-xs-12\"><select name=\"rooms[]\" size=\"".min($longueur_liste_ressources_max,$len)."\" multiple=\"multiple\" class=\"form-control\">";
+echo "<tr><td class=\"CL\" style=\"vertical-align:top;\"><table border=\"0\"><tr><td><div class=\"col-xs-12\"><select name=\"rooms[]\" size=\"".min($longueur_liste_ressources_max,$len)."\" multiple=\"multiple\" class=\"multiselect\">";
 //Sélection de la "room" dans l'"area"
 if ($res) for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 {
@@ -1237,7 +1237,12 @@ else
 	insertTypes()
 	</script>
 	<script type="text/javascript">
+		$('#areas').on('change', function(){
+			$('.multiselect').multiselect('destroy');
+			$('.multiselect').multiselect();
+		});
 		$(document).ready(function() {
+			$('.multiselect').multiselect();
 			$("#select2").select2();
 		});
 	</script>
