@@ -114,6 +114,7 @@ if (isset($_POST['civ']))
 				</div>
 			</div>
 		</div>
+		<div style="height:400px"></div>
 		<script src="js/html2canvas.js"></script>
 		<script type="text/javascript" src="js/jspdf.min.js"></script>
 		<script type="text/javascript">
