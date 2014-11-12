@@ -500,9 +500,9 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 	}
 	if (($delais_option_reservation > 0) && ($option_reservation != -1))
 	{
-		echo "<tr bgcolor=\"#FF6955\"><td><b>".get_vocab("reservation_a_confirmer_au_plus_tard_le")."<b></td>\n";
-		echo "<td><b>".time_date_string_jma($option_reservation,$dformat)."</b>\n";
-		echo "</td></tr>\n";
+		echo '<tr><td colspan="2"><div class="alert alert-danger" role="alert"><b>'.get_vocab("reservation_a_confirmer_au_plus_tard_le").PHP_EOL;
+		echo time_date_string_jma($option_reservation, $dformat).'</b></div>'.PHP_EOL;
+		echo '</td></tr>'.PHP_EOL;
 	}
 	if ($moderate == 1)
 	{

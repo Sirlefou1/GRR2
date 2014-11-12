@@ -985,9 +985,9 @@ function print_header($day = '', $month = '', $year = '', $type_session = 'with_
 			{
 				echo '<div class="clock">'.PHP_EOL;
 				echo '<div id="Date">'.PHP_EOL;
-				echo '&nbsp;<span id="hours"> </span>'.PHP_EOL;
+				echo '&nbsp;<span id="hours"></span>'.PHP_EOL;
 				echo 'h'.PHP_EOL;
-				echo '<span id="min"> </span>'.PHP_EOL;
+				echo '<span id="min"></span>'.PHP_EOL;
 				echo '</div></div>'.PHP_EOL;
 			}
 			$_SESSION['chemin_retour'] = '';
