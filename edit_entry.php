@@ -617,20 +617,6 @@ if ($moderate)
 echo '<form id="main" action="edit_entry_handler.php" method="get">'.PHP_EOL;
 ?>
 <script type="text/javascript" >
-function dump(obj) {
-    var out = '';
-    for (var i in obj) {
-        out += i + ": " + obj[i] + "\n";
-    }
-
-    alert(out);
-
-    // or, if you wanted to avoid alerts...
-
-    var pre = document.createElement('pre');
-    pre.innerHTML = out;
-    document.body.appendChild(pre)
-}
 	function changeRooms( formObj )
 	{
 		areasObj = eval( "formObj.areas" );
