@@ -36,31 +36,45 @@ class Form {
 		return $this->input('textarea', $name, $label);
 	}
 
-	public function submit($label)
+	public function date($name, $label)
 	{
-		return '<button type="submit" class="btn btn-primary">'.$label.'</button>'.PHP_EOL;
-	}
+		return '<div class="form-group">
+		<h4 for="'.$name.'">'.$label.'</h4>
+		<div class="input-group date datepicker">
+			<input type="text" id="'.$name.'" class="form-control" data-date-format="DD/MM/YYYY"/>
+			<span class="input-group-addon">
+				<span class="glyphicon glyphicon-calendar"></span>
+			</span>
+		</div>
+	</div>'.PHP_EOL;
+}
 
-	public function select($type, $name, $label, $options)
+
+public function submit($label)
+{
+	return '<button type="submit" class="btn btn-primary">'.$label.'</button>'.PHP_EOL;
+}
+
+public function select($type, $name, $label, $options)
+{
+	$option = "";
+	foreach ($options as $k => $v)
 	{
-		$option = "";
-		foreach ($options as $k => $v)
+		$select = '';
+		if (isset($this->_data[$name]))
 		{
-			$select = '';
-			if (isset($this->_data[$name]))
-			{
-				if ($k == $this->_data[$name])
-					$select = ' selected';
-			}
-			$option .= '<option value="'.$k.'" '.$select.'>'.$v.'</option>'.PHP_EOL;
+			if ($k == $this->_data[$name])
+				$select = ' selected';
 		}
-		$input = '<select id="'.$name.'" class="form-control" '.$type.'>'.PHP_EOL.$option.'</select>'.PHP_EOL;
-		return '<div class="form-group">'.PHP_EOL.'<label for="'.$name.'">'.$label.'</label>'.PHP_EOL.$input.'</div>'.PHP_EOL;
+		$option .= '<option value="'.$k.'" '.$select.'>'.$v.'</option>'.PHP_EOL;
 	}
+	$input = '<select id="'.$name.'" class="form-control" '.$type.'>'.PHP_EOL.$option.'</select>'.PHP_EOL;
+	return '<div class="form-group">'.PHP_EOL.'<label for="'.$name.'">'.$label.'</label>'.PHP_EOL.$input.'</div>'.PHP_EOL;
+}
 
-	public function checkbox($name, $value, $label, $msg)
-	{
-		return '<div class="checkbox">'.PHP_EOL.'<h4>'.$label.'</h4><label for="'.$name.'">'.PHP_EOL.'<input type="checkbox" id="'.$name.'" value="'.$value.'">'.PHP_EOL.$msg.'</label><br>'.PHP_EOL;
-	}
+public function checkbox($name, $value, $label, $msg)
+{
+	return '<div class="checkbox">'.PHP_EOL.'<h4>'.$label.'</h4><label for="'.$name.'">'.PHP_EOL.'<input type="checkbox" id="'.$name.'" value="'.$value.'">'.PHP_EOL.$msg.'</label><br>'.PHP_EOL;
+}
 }
 ?>
