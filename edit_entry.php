@@ -774,7 +774,7 @@ echo '</div>'.PHP_EOL;
 echo '</td></tr>'.PHP_EOL;
 
 
-echo '<tr><td class="E">'.PHP_EOL;
+echo '<tr><td class="E"><br><div class="col-xs-12">'.PHP_EOL;
 echo '<b>'.get_vocab("status_clef").get_vocab("deux_points").'</b>'.PHP_EOL;
 echo '</td></tr>'.PHP_EOL;
 echo '<tr><td class="CL">'.PHP_EOL;
@@ -782,20 +782,20 @@ echo '<input name="keys" type="checkbox" value="y" ';
 if (isset($clef) && $clef == 1)
 	echo 'checked';
 echo ' > '.get_vocab("msg_clef");
-echo '</td></tr>'.PHP_EOL;
+echo '</div></td></tr>'.PHP_EOL;
 
 
-echo '<tr><td class="E">'.PHP_EOL;
-echo '<b>'.get_vocab("status_courrier").get_vocab("deux_points").'</b>'.PHP_EOL;
+echo '<tr><td class="E"><br>'.PHP_EOL;
+echo '<div class="col-xs-12"><b>'.get_vocab("status_courrier").get_vocab("deux_points").'</b>'.PHP_EOL;
 echo '</td></tr>'.PHP_EOL;
 echo '<tr><td class="CL">'.PHP_EOL;
 echo '<input name="courrier" type="checkbox" value="y" ';
 if (isset($courrier) && $courrier == 1)
 	echo 'checked';
 echo ' > '.get_vocab("msg_courrier");
-echo '</td></tr>'.PHP_EOL;
+echo '</div></td></tr>'.PHP_EOL;
 
-echo '<tr><td class="E">'.PHP_EOL;
+echo '<tr><td class="E"><br>'.PHP_EOL;
 echo '<b>'.$F.'</b>'.PHP_EOL;
 echo '</td></tr>'.PHP_EOL;
 echo '<tr><td class="CL">'.PHP_EOL;
@@ -943,7 +943,7 @@ if (($delais_option_reservation > 0) && (($modif_option_reservation == 'y') || (
 	$day   = date("d");
 	$month = date("m");
 	$year  = date("Y");
-	echo '<tr><td class="E"><br><div class="alert alert-danger" role="alert"><b>'.get_vocab("reservation_a_confirmer_au_plus_tard_le").'</div>'.PHP_EOL;
+	echo '<tr><td class="E"><br><div class="col-xs-12"><div class="alert alert-danger" role="alert"><b>'.get_vocab("reservation_a_confirmer_au_plus_tard_le").'</div>'.PHP_EOL;
 	if ($modif_option_reservation == 'y')
 	{
 		echo '<select class="form-control" name="option_reservation" size="1">'.PHP_EOL;
@@ -979,7 +979,7 @@ if (($delais_option_reservation > 0) && (($modif_option_reservation == 'y') || (
 		echo "<br /><input type=\"checkbox\" name=\"confirm_reservation\" value=\"y\" />".get_vocab("confirmer reservation")."\n";
 	}
 	echo '<br /><div class="alert alert-danger" role="alert">'.get_vocab("avertissement_reservation_a_confirmer").'</b></div>'.PHP_EOL;
-	echo "</td></tr>\n";
+	echo "</div></td></tr>\n";
 }
 echo "<tr ";
 if ($nb_areas == 1)
@@ -1022,7 +1022,7 @@ $sql .= " ORDER BY order_display,room_name";
 $res = grr_sql_query($sql);
 $len = grr_sql_count($res);
 
-echo "<tr><td class=\"CL\" style=\"vertical-align:top;\"><table border=\"0\"><tr><td><select name=\"rooms[]\" size=\"".min($longueur_liste_ressources_max,$len)."\" multiple=\"multiple\" class=\"form-control\">";
+echo "<tr><td class=\"CL\" style=\"vertical-align:top;\"><table border=\"0\"><tr><td><div class=\"col-xs-12\"><select name=\"rooms[]\" size=\"".min($longueur_liste_ressources_max,$len)."\" multiple=\"multiple\" class=\"form-control\">";
 //Sélection de la "room" dans l'"area"
 if ($res) for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 {
@@ -1030,22 +1030,8 @@ if ($res) for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
   if ($row[0] == $room_id) $selected = "selected=\"selected\"";
   echo "<option $selected value=\"".$row[0]."\">".$row[1]."</option>\n";
 }
-echo "</select></td><td>".get_vocab("ctrl_click")."</td></tr></table>\n";
-echo "</td></tr>\n";
-/*
-echo "<tr><td class=\"CL\" style=\"vertical-align:top;\"><table border=\"0\"><tr><td><div class=\"col-xs-3\"><select name=\"rooms[]\" size=\"".min($longueur_liste_ressources_max,$len)."\" class=\"multiselect\" multiple=\"multiple\">";
-if ($res)
-{
-	for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
-	{
-		$selected = "";
-		if ($row[0] == $room_id) $selected = "selected=\"selected\"";
-		echo "<option $selected value=\"".$row[0]."\">".$row[1]."</option>\n";
-	}
-}
 echo "</select></div></td><td>".get_vocab("ctrl_click")."</td></tr></table>\n";
 echo "</td></tr>\n";
-*/
 echo "<tr><td><div id=\"div_types\">";
 echo "</div></td></tr>";
 echo "<tr><td class=\"E\">";
