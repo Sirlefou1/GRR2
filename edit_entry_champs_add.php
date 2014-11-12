@@ -102,14 +102,14 @@ foreach ($overload_fields as $fieldname=>$fieldtype)
 	else
 		$data = "";
 	if ($overload_fields[$fieldname]["type"] == "textarea" )
-		echo "<tr><td><textarea cols=\"80\" rows=\"2\" name=\"addon_".$overload_fields[$fieldname]["id"]."\">".htmlspecialchars($data)."</textarea></td></tr>\n";
+		echo "<tr><td><textarea class=\"form-control\" cols=\"80\" rows=\"2\" name=\"addon_".$overload_fields[$fieldname]["id"]."\">".htmlspecialchars($data)."</textarea></td></tr>\n";
 	else if ($overload_fields[$fieldname]["type"] == "text" )
-		echo "<tr><td><input size=\"80\" type=\"text\" name=\"addon_".$overload_fields[$fieldname]["id"]."\" value=\"".htmlspecialchars($data)."\" /></td></tr>\n";
+		echo "<tr><td><input class=\"form-control\" size=\"80\" type=\"text\" name=\"addon_".$overload_fields[$fieldname]["id"]."\" value=\"".htmlspecialchars($data)."\" /></td></tr>\n";
 	else if ($overload_fields[$fieldname]["type"] == "numeric" )
-		echo "<tr><td><input size=\"20\" type=\"text\" name=\"addon_".$overload_fields[$fieldname]["id"]."\" value=\"".htmlspecialchars($data)."\" /></td></tr>\n";
+		echo "<tr><td><input class=\"form-control\" size=\"20\" type=\"text\" name=\"addon_".$overload_fields[$fieldname]["id"]."\" value=\"".htmlspecialchars($data)."\" /></td></tr>\n";
 	else
 	{
-		echo "<tr><td><select name=\"addon_".$overload_fields[$fieldname]["id"]."\" size=\"1\">\n";
+		echo "<tr><td><select class=\"form-control\" name=\"addon_".$overload_fields[$fieldname]["id"]."\" size=\"1\">\n";
 		if ($overload_fields[$fieldname]["obligatoire"] == 'y')
 			echo '<option value="">'.get_vocab('choose').'</option>';
 		foreach ($overload_fields[$fieldname]["list"] as $value)

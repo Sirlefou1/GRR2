@@ -321,6 +321,7 @@ print_header($day, $month, $year, $type="with_session");
 
 ?>
 <script type="text/javascript" >
+function insertChampsAdd(){
 	jQuery.ajax({
 		type: 'GET',
 		url: 'edit_entry_champs_add.php',
@@ -338,6 +339,8 @@ print_header($day, $month, $year, $type="with_session");
 			alert('Erreur lors de l execution de la commande AJAX pour le edit_entry_champs_add.php ');
 		}
 	});
+}
+function insertTypes(){
 	jQuery.ajax({
 		type: 'GET',
 		url: 'edit_entry_types.php',
@@ -353,6 +356,8 @@ print_header($day, $month, $year, $type="with_session");
 			alert('Erreur lors de l execution de la commande AJAX pour le edit_entry_types.php ');
 		}
 	});
+}
+function insertProfilBeneficiaire(){
 	jQuery.ajax({
 		type: 'GET',
 		url: 'edit_entry_beneficiaire.php',
@@ -369,6 +374,7 @@ print_header($day, $month, $year, $type="with_session");
 			alert('Erreur lors de l execution de la commande AJAX pour le edit_entry_beneficiaire.php ');
 		}
 	});
+}
 	function check_1 ()
 	{
 		menu = document.getElementById('menu2');
@@ -611,20 +617,20 @@ if ($moderate)
 echo '<form id="main" action="edit_entry_handler.php" method="get">'.PHP_EOL;
 ?>
 <script type="text/javascript" >
-	function changeResolution( formObj)
-	{
-		areasObj = eval( "formObj.areas" );
-		area = areasObj[areasObj.selectedIndex].value
-		resolutionsObj = eval( "formObj.elements['resolutions']" )
-		resolutionsObj.options[i] = null
-		return (changeResolution)
-	}
-	<?php
-	$sql2 = "SELECT resolution_area FROM ".TABLE_PREFIX."_area WHERE resolution_area = ".$resolution."'";
-	$res2 = grr_sql_query($sql2);
-	?>
-</script>
-<script type="text/javascript" >
+function dump(obj) {
+    var out = '';
+    for (var i in obj) {
+        out += i + ": " + obj[i] + "\n";
+    }
+
+    alert(out);
+
+    // or, if you wanted to avoid alerts...
+
+    var pre = document.createElement('pre');
+    pre.innerHTML = out;
+    document.body.appendChild(pre)
+}
 	function changeRooms( formObj )
 	{
 		areasObj = eval( "formObj.areas" );
@@ -937,10 +943,10 @@ if (($delais_option_reservation > 0) && (($modif_option_reservation == 'y') || (
 	$day   = date("d");
 	$month = date("m");
 	$year  = date("Y");
-	echo "<tr bgcolor=\"#FF6955\"><td class=\"E\"><b>".get_vocab("reservation_a_confirmer_au_plus_tard_le");
+	echo '<tr><td class="E"><br><div class="alert alert-danger" role="alert"><b>'.get_vocab("reservation_a_confirmer_au_plus_tard_le").'</div>'.PHP_EOL;
 	if ($modif_option_reservation == 'y')
 	{
-		echo "<select name=\"option_reservation\" size=\"1\">\n";
+		echo '<select class="form-control" name="option_reservation" size="1">'.PHP_EOL;
 		$k = 0;
 		$selected = 'n';
 		$aff_options = "";
@@ -972,7 +978,7 @@ if (($delais_option_reservation > 0) && (($modif_option_reservation == 'y') || (
 		time_date_string_jma($option_reservation,$dformat)."</b>\n";
 		echo "<br /><input type=\"checkbox\" name=\"confirm_reservation\" value=\"y\" />".get_vocab("confirmer reservation")."\n";
 	}
-	echo "<br />".get_vocab("avertissement_reservation_a_confirmer")."</b>\n";
+	echo '<br /><div class="alert alert-danger" role="alert">'.get_vocab("avertissement_reservation_a_confirmer").'</b></div>'.PHP_EOL;
 	echo "</td></tr>\n";
 }
 echo "<tr ";
@@ -983,7 +989,7 @@ echo "<tr ";
 if ($nb_areas == 1)
 	echo "style=\"display:none\" ";
 echo "><td class=\"CL\" style=\"vertical-align:top;\" >\n";
-echo "<div class=\"col-xs-3\"><select class=\"form-control\" id=\"areas\" name=\"areas\" onchange=\"changeRooms(this.form);changeResolution(this.form);insertChampsAdd();insertTypes()\" >";
+echo "<div class=\"col-xs-3\"><select class=\"form-control\" id=\"areas\" name=\"areas\" onchange=\"changeRooms(this.form);insertChampsAdd();insertTypes()\" >";
 if ($enable_periods == 'y')
 	$sql = "SELECT id, area_name FROM ".TABLE_PREFIX."_area WHERE id='".$area."' ORDER BY area_name";
 else
@@ -1012,9 +1018,21 @@ foreach ($tab_rooms_noaccess as $key)
 {
 	$sql .= " and id != $key ";
 }
-$sql .= " order by order_display,room_name";
+$sql .= " ORDER BY order_display,room_name";
 $res = grr_sql_query($sql);
 $len = grr_sql_count($res);
+
+echo "<tr><td class=\"CL\" style=\"vertical-align:top;\"><table border=\"0\"><tr><td><select name=\"rooms[]\" size=\"".min($longueur_liste_ressources_max,$len)."\" multiple=\"multiple\" class=\"form-control\">";
+//Sélection de la "room" dans l'"area"
+if ($res) for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
+{
+  $selected = "";
+  if ($row[0] == $room_id) $selected = "selected=\"selected\"";
+  echo "<option $selected value=\"".$row[0]."\">".$row[1]."</option>\n";
+}
+echo "</select></td><td>".get_vocab("ctrl_click")."</td></tr></table>\n";
+echo "</td></tr>\n";
+/*
 echo "<tr><td class=\"CL\" style=\"vertical-align:top;\"><table border=\"0\"><tr><td><div class=\"col-xs-3\"><select name=\"rooms[]\" size=\"".min($longueur_liste_ressources_max,$len)."\" class=\"multiselect\" multiple=\"multiple\">";
 if ($res)
 {
@@ -1027,6 +1045,7 @@ if ($res)
 }
 echo "</select></div></td><td>".get_vocab("ctrl_click")."</td></tr></table>\n";
 echo "</td></tr>\n";
+*/
 echo "<tr><td><div id=\"div_types\">";
 echo "</div></td></tr>";
 echo "<tr><td class=\"E\">";
@@ -1117,8 +1136,6 @@ if (($edit_type == "series") || (isset($flag_periodicite)))
 				for ($weekit = 0; $weekit < 6; $weekit++)
 				{
 					echo "<option value=\"".$weekit."\"";
-					/*if ($rep_month_abs1 == $weekit)
-					echo " selected=\"selected\"";*/
 					echo ">".get_vocab($monthlist[$weekit])."</option>\n";
 				}
 				echo "</select>\n";
@@ -1126,8 +1143,6 @@ if (($edit_type == "series") || (isset($flag_periodicite)))
 				for ($weekit = 1; $weekit < 8; $weekit++)
 				{
 					echo "<option value=\"".$weekit."\"";
-					/*if ($rep_month_abs2 == $weekit)
-					echo " selected=\"selected\"";*/
 					echo ">".day_name($weekit)."</option>\n";
 				}
 				echo "</select>\n";
@@ -1245,8 +1260,12 @@ else
 		</div>
 	</form>
 	<script type="text/javascript">
+	insertProfilBeneficiaire();
+	insertChampsAdd();
+	insertTypes()
+	</script>
+	<script type="text/javascript">
 		$(document).ready(function() {
-			$('.multiselect').multiselect();
 			$("#select2").select2();
 		});
 	</script>
