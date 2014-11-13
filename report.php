@@ -445,9 +445,12 @@ if (($summarize != 4) && ($summarize != 5))
 							else
 								$nb_ligne = 5;
 							$k = 0;
+
 							while ($k < $nb_ligne)
 							{
-								echo "<tr><td align=\"right\"><select name=\"champ[]\" size=\"1\">\n";
+								echo '<tr><td></td><td><div class="col-xs-12">'.PHP_EOL;
+								echo '<div class="form-inline">'.PHP_EOL;
+								echo "<div class=\"form-group\"><select class=\"form-control\" name=\"champ[]\" size=\"1\">\n";
 								echo "<option value=''>".get_vocab("choose")."</option>\n";
 								echo "<option value='area' ";
 								if (isset($champ[$k]) && ($champ[$k] == "area"))
@@ -486,9 +489,8 @@ if (($summarize != 4) && ($summarize != 5))
 										echo ">".$fieldname."</option>\n";
 									}
 								}
-								echo "</select></td>";
-								echo "<td>\n";
-								echo "<select name=\"type_recherche[]\" size=\"1\">\n";
+								echo "</select></div>";
+								echo "<div class=\"form-group\"><select class=\"form-control\" name=\"type_recherche[]\" size=\"1\">\n";
 								echo "<option value=\"1\" ";
 								if (isset($type_recherche[$k]) && ($type_recherche[$k] == "1"))
 									echo " selected=\"selected\" ";
@@ -497,9 +499,9 @@ if (($summarize != 4) && ($summarize != 5))
 								if (isset($type_recherche[$k]) && ($type_recherche[$k] == "0"))
 									echo " selected=\"selected\" ";
 								echo ">".get_vocab("ne contient pas").get_vocab("deux_points")."</option>\n";
-								echo "</select>";
+								echo "</select></div>";
 								if (!isset($texte_default[$k])) $texte_default[$k] ="";
-								echo "<input type=\"text\" name=\"texte[]\" value=\"".$texte_default[$k]."\" size=\"20\" /><br /></td></tr>";
+								echo "<div class=\"form-group\"><input class=\"form-control\" type=\"text\" name=\"texte[]\" value=\"".$texte_default[$k]."\" size=\"20\" /></div></div></div></td></tr>";
 								$k++;
 							}
 							?>
