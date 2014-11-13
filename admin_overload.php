@@ -38,9 +38,7 @@ $day   = date("d");
 $month = date("m");
 $year  = date("Y");
 check_access(4, $back);
-$use_prototype = 'y';
-$use_tooltip_js = 'y';
-print_header("", "", "", $type="with_session");
+print_header("", "", "", $type = "with_session");
 include "admin_col_gauche.php";
 echo "<h2>".get_vocab("admin_overload.php")."</h2>\n";
 if (isset($_POST["action"]))
@@ -292,19 +290,19 @@ if ($action == "delete")
 				$html .= " >".get_vocab("type_numeric")."</option>\n";
 				$html .= "</select>\n";
 				$ind_div++;
-				$html .= "<input type=\"checkbox\" id=\"obligatoire_".$ind_div."\" name=\"obligatoire\" title=\"".get_vocab("champ_obligatoire")."\" value=\"y\" ";
+				$html .= "<input type=\"checkbox\" data-toggle=\"tooltip\" data-placement=\"bottom\" id=\"obligatoire_".$ind_div."\" name=\"obligatoire\" title=\"".get_vocab("champ_obligatoire")."\" value=\"y\" ";
 				if ($row[3] =="y")
 					$html .= " checked=\"checked\" ";
 				$html .= "/>\n";
-				$html .= "<input type=\"checkbox\" id=\"affichage_".$ind_div."\" name=\"affichage\" title=\"".get_vocab("affiche_dans_les vues")."\" value=\"y\" ";
+				$html .= "<input type=\"checkbox\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"".get_vocab("affiche_dans_les vues")."\" id=\"affichage_".$ind_div."\" name=\"affichage\" value=\"y\" ";
 				if ($row[5] =="y")
 					$html .= " checked=\"checked\" ";
 				$html .= "/>\n";
-				$html .= "<input type=\"checkbox\" id=\"overload_mail_".$ind_div."\" name=\"overload_mail\" title=\"".get_vocab("affiche_dans_les mails")."\" value=\"y\" ";
+				$html .= "<input type=\"checkbox\" data-toggle=\"tooltip\" data-placement=\"bottom\" id=\"overload_mail_".$ind_div."\" name=\"overload_mail\" title=\"".get_vocab("affiche_dans_les mails")."\" value=\"y\" ";
 				if ($row[6] =="y")
 					$html .= " checked=\"checked\" ";
 				$html .= "/>\n";
-				$html .= "<input type=\"checkbox\" id=\"confidentiel_".$ind_div."\" name=\"confidentiel\" title=\"".get_vocab("champ_obligatoire")."\" value=\"y\" ";
+				$html .= "<input type=\"checkbox\" data-toggle=\"tooltip\" data-placement=\"bottom\" id=\"confidentiel_".$ind_div."\" name=\"confidentiel\" title=\"".get_vocab("champ_obligatoire")."\" value=\"y\" ";
 				if ($row[7] =="y")
 					$html .= " checked=\"checked\" ";
 				$html .= "/>\n";
@@ -324,31 +322,6 @@ if ($action == "delete")
 		echo $html;
 		if ($ferme_table)
 			echo "</table>";
-		echo "<div class='tooltip' id='tooltip_affichage' style=\"display:none;\">\n";
-		echo get_vocab("affiche_dans_les vues");
-		echo "</div>\n";
-		echo "<div class='tooltip' id='tooltip_overload_mail' style=\"display:none;\">\n";
-		echo get_vocab("affiche_dans_les mails");
-		echo "</div>\n";
-		echo "<div class='tooltip' id='tooltip_obligatoire' style=\"display:none;\">\n";
-		echo get_vocab("champ_obligatoire");
-		echo "</div>\n";
-		echo "<div class='tooltip' id='tooltip_confidentiel' style=\"display:none;\">\n";
-		echo get_vocab("champ_confidentiel");
-		echo "</div>\n";
-		echo "<script type=\"text/javascript\">\n";
-		echo "var my_tooltip_aff = new Tooltip('affichage', 'tooltip_affichage');\n";
-		echo "var my_tooltip_aff = new Tooltip('overload_mail', 'tooltip_overload_mail');\n";
-		echo "var my_tooltip_obli = new Tooltip('obligatoire', 'tooltip_obligatoire');\n";
-		echo "var my_tooltip_obli = new Tooltip('confidentiel', 'tooltip_confidentiel');\n";
-		for ($i = 1; $i <= $ind_div; $i++)
-		{
-			echo "var my_tooltip_aff = new Tooltip('affichage_".$i."', 'tooltip_affichage');\n";
-			echo "var my_tooltip_aff = new Tooltip('overload_mail_".$i."', 'tooltip_overload_mail');\n";
-			echo "var my_tooltip_obli = new Tooltip('obligatoire_".$i."', 'tooltip_obligatoire');\n";
-			echo "var my_tooltip_obli = new Tooltip('confidentiel_".$i."', 'tooltip_confidentiel');\n";
-		}
-		echo "</script>\n";
 		echo "</td></tr></table>\n";
 		?>
 	</body>

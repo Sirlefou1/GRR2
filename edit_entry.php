@@ -316,7 +316,7 @@ if ($res)
 		}
 	}
 }
-$use_prototype = 'y';
+$use_select2 = 'y';
 print_header($day, $month, $year, $type="with_session");
 
 ?>

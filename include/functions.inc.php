@@ -829,7 +829,7 @@ function begin_page($title, $page="with_session")
 			die();
 		}
 	}
-	global $vocab, $charset_html, $unicode_encoding, $clock_file;
+	global $vocab, $charset_html, $unicode_encoding, $clock_file, $use_select2;
 	header('Content-Type: text/html; charset=utf-8');
 	if (!isset($_COOKIE['open']))
 	{
@@ -848,31 +848,36 @@ function begin_page($title, $page="with_session")
 	$a .= '<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />'.PHP_EOL;
 	$a .= '<link rel="stylesheet" type="text/css" href="themes/default/css/mod_bootstrap.css" />'.PHP_EOL;
 	$a .= '<link rel="stylesheet" type="text/css" href="include/admin_grr.css" />'.PHP_EOL;
-	$a .= '<link rel="stylesheet" type="text/css" href="themes/default/css/select2.css" />'.PHP_EOL;
-	$a .= '<link rel="stylesheet" type="text/css" href="themes/default/css/select2-bootstrap.css" />'.PHP_EOL;
+	if (isset($use_select2))
+	{
+		$a .= '<link rel="stylesheet" type="text/css" href="themes/default/css/select2.css" />'.PHP_EOL;
+		$a .= '<link rel="stylesheet" type="text/css" href="themes/default/css/select2-bootstrap.css" />'.PHP_EOL;
+		$a .= '<link rel="stylesheet" type="text/css" href="themes/default/css/bootstrap-multiselect.css">'.PHP_EOL;
+		$a .= '<link rel="stylesheet" type="text/css" href="themes/default/css/bootstrap-clockpicker.min.css">'.PHP_EOL;
+	}
 	if ((isset($_GET['pview'])) && ($_GET['pview'] == 1))
 		$a .= '<link rel="stylesheet" type="text/css" href="themes/print/css/style.css" />'.PHP_EOL;
 	$a .= '<link rel="stylesheet" type="text/css" href="themes/default/css/jquery-ui.css" />'.PHP_EOL;
 	$a .= '<link rel="stylesheet" type="text/css" href="themes/default/css/jquery-ui-timepicker-addon.css" >'.PHP_EOL;
-	$a .= '<link rel="stylesheet" type="text/css" href="themes/default/css/bootstrap-multiselect.css">'.PHP_EOL;
-	$a .= '<link rel="stylesheet" type="text/css" href="themes/default/css/bootstrap-clockpicker.min.css">'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="js/jquery-ui.min.js"></script>'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="js/jquery.validate.js"></script>'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="js/jquery-ui-timepicker-addon.js"></script>'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>'.PHP_EOL;
-	$a .= '<script type="text/javascript" src="js/bootstrap-clockpicker.js"></script>'.PHP_EOL;
-	$a .= '<script type="text/javascript" src="js/bootstrap-multiselect.js"></script>'.PHP_EOL;
+
 	$a .= '<script type="text/javascript" src="js/html2canvas.js"></script>'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="js/menu.js"></script>'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="js/jspdf.min.js"></script>'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="js/pdf.js" ></script>'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="js/popup.js" charset="utf-8"></script>'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="js/functions.js" ></script>'.PHP_EOL;
-	$a .= '<script type="text/javascript" src="js/select2.js"></script>'.PHP_EOL;
-	$a .= '<script type="text/javascript" src="js/select2_locale_fr.js"></script>'.PHP_EOL;
-	if (isset($use_tooltip_js))
-		echo '<script type="text/javascript" src="./include/tooltip.js"></script>'.PHP_EOL;
+	if (isset($use_select2))
+	{
+		$a .= '<script type="text/javascript" src="js/bootstrap-clockpicker.js"></script>'.PHP_EOL;
+		$a .= '<script type="text/javascript" src="js/bootstrap-multiselect.js"></script>'.PHP_EOL;
+		$a .= '<script type="text/javascript" src="js/select2.js"></script>'.PHP_EOL;
+		$a .= '<script type="text/javascript" src="js/select2_locale_fr.js"></script>'.PHP_EOL;
+	}
 	if (!isset($_SESSION['selection']))
 		$a .= '<script type="text/javascript" src="js/selection.js" ></script>'.PHP_EOL;
 	if (@file_exists('js/'.$clock_file))
@@ -890,7 +895,7 @@ function begin_page($title, $page="with_session")
 function print_header($day = '', $month = '', $year = '', $type_session = 'with_session')
 {
 	global $vocab, $search_str, $grrSettings, $clock_file, $desactive_VerifNomPrenomUser, $grr_script_name;
-	global $use_prototype, $use_tooltip_js, $desactive_bandeau_sup, $id_site;
+	global $use_select2, $desactive_bandeau_sup, $id_site;
 	if (!($desactive_VerifNomPrenomUser))
 		$desactive_VerifNomPrenomUser = 'n';
 	// On vérifie que les noms et prénoms ne sont pas vides
