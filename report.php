@@ -128,7 +128,7 @@ function reporton(&$row, $dformat)
 	}
 	else
 	{
-		echo describe_span($row[1], $row[2],$dformat);
+		echo describe_span($row[1], $row[2], $dformat);
 		if (date("d\/m\/Y",$row[1]) == date("d\/m\/Y",$row[2]))
 			echo "<br />".   date("H\:i",$row[1])." ==> ".date("H\:i",$row[2])."</td>\n";
 		else
@@ -281,9 +281,9 @@ function do_summary(&$count, &$hours, &$room_hash, &$breve_description_hash, $en
 		else
 			$premiere_cellule = grr_sql_query1("SELECT fieldname FROM ".TABLE_PREFIX."_overload WHERE id='".$_GET["sumby"]."'");
 		if ($enable_periods == 'y')
-			echo "<hr /><h1>".get_vocab("summary_header_per")."</h1><table border=\"2\" cellspacing=\"4\">\n";
+			echo "<hr /><h1>".get_vocab("summary_header_per")."</h1><table class=\"table table-bordered table-striped\">\n";
 		else
-			echo "<hr /><h1>".get_vocab("summary_header")."</h1><table border=\"2\" cellspacing=\"4\">\n";
+			echo "<hr /><h1>".get_vocab("summary_header")."</h1><table class=\"table table-bordered table-striped\">\n";
 		echo "<tr><td class=\"BL\" align=\"left\"><b>".$premiere_cellule." \ ".get_vocab("room")."</b></td>\n";
 	}
 	$col_count_total = array();
@@ -413,11 +413,19 @@ if (($summarize != 4) && ($summarize != 5))
 				<table border="0">
 					<tr><td class="CR"><?php echo get_vocab("report_start").get_vocab("deux_points");?></td>
 						<td class="CL">
-							<?php genDateSelector("From_", $From_day, $From_month, $From_year,""); ?>
+							<div class="col-xs-12">
+								<div class="form-inline">
+									<?php jQuery_DatePicker("From_", $From_day, $From_month, $From_year,""); ?>
+								</div>
+							</div>
 						</td></tr>
 						<tr><td class="CR"><?php echo get_vocab("report_end").get_vocab("deux_points");?></td>
 							<td class="CL">
-								<?php genDateSelector("To_", $To_day, $To_month, $To_year,""); ?>
+								<div class="col-xs-12">
+									<div class="form-inline">
+										<?php jQuery_DatePicker("To_", $To_day, $To_month, $To_year,""); ?>
+									</div>
+								</div>
 							</td></tr>
 							<?php
 							if (!isset($_GET["condition_et_ou"]) || ($_GET["condition_et_ou"] != "OR"))

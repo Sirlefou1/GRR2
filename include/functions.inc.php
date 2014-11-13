@@ -744,9 +744,10 @@ function protect_data_sql($_value)
 // Traite les données envoyées par la methode GET de la variable $_GET["page"]
 function verif_page()
 {
+	$page = array("day", "week", "month", "week_all", "month_all");
 	if (isset($_GET["page"]))
 	{
-		if (($_GET["page"] == "day") || ($_GET["page"] == "week") || ($_GET["page"] == "month") || ($_GET["page"] == "week_all") || ($_GET["page"] == "month_all"))
+		if (in_array($_GET["page"], $page))
 			return $_GET["page"];
 		else
 			return "day";
@@ -1142,7 +1143,7 @@ function IsAllowedToModifyMdp() {
 // Transforme $dur en une durée exprimée en années, semaines, jours, heures, minutes et secondes
 // OU en durée numérique exprimée dans l'une des unités de façon fixe, pour l'édition des
 // réservations par durée.
-// $dur : durée sous forme d'une chaine de caractère quandd $edition=false, sinon, durée en valeur numérique.
+// $dur : durée sous forme d'une chaine de caractère quand $edition=false, sinon, durée en valeur numérique.
 // $units : variable conservée uniquement pour compatibilité avec la fonction toTimeString originale
 //          si $edition=false, sinon, contient l'unité utilisée pour $dur
 // $edition : Valeur par défaut : false. Indique si le retour est pour affichage ou pour modifier la durée.
@@ -1391,7 +1392,6 @@ function fatal_error($need_header, $message, $show_form_data = true)
 	if ($need_header)
 		print_header(0, 0, 0, 0);
 	error_log("GRR: ".$message);
-
 	if ($show_form_data)
 	{
 		if (!empty($_GET))
@@ -1701,13 +1701,12 @@ function show_colour_key($area_id)
 //Round time down to the nearest resolution
 function round_t_down($t, $resolution, $am7)
 {
-	return (int)$t - (int)abs(((int)$t-(int)$am7)
-		% $resolution);
+	return (int)$t - (int)abs(((int)$t-(int)$am7) % $resolution);
 }
 //Round time up to the nearest resolution
 function round_t_up($t, $resolution, $am7)
 {
-	if (($t-$am7) % $resolution != 0)
+	if (($t - $am7) % $resolution != 0)
 	{
 		return $t + $resolution - abs(((int)$t - (int)$am7) % $resolution);
 	}
@@ -1754,7 +1753,7 @@ function make_site_select_html($link, $current_site, $year, $month, $day, $user)
 	{
 		for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 		{
-							// Pour chaque site, on détermine le premier domaine disponible
+			// Pour chaque site, on détermine le premier domaine disponible
 			$sql = "SELECT id_area
 			FROM ".TABLE_PREFIX."_j_site_area
 			WHERE ".TABLE_PREFIX."_j_site_area.id_site='".$row[0]."'";
