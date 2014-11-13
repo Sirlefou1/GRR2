@@ -480,7 +480,6 @@ if ((isset($_GET['msg'])) && isset($_SESSION['displ_msg']) && ($_SESSION['displ_
 else
 	$msg = '';
 // Utilisation de la bibliothèqye prototype dans ce script
-$use_prototype = 'y';
 # print the page header
 print_header("", "", "", $type="with_session");
 affiche_pop_up($msg,"admin");
@@ -647,6 +646,8 @@ echo "<hr /><h3>".get_vocab("title_begin_end_bookings")."</h3>\n";
 			$bday = strftime("%d", Settings::get("begin_bookings"));
 			$bmonth = strftime("%m", Settings::get("begin_bookings"));
 			$byear = strftime("%Y", Settings::get("begin_bookings"));
+			echo '<div class="col-xs-12">'.PHP_EOL;
+			echo '<div class="form-inline">'.PHP_EOL;
 			genDateSelector("begin_", $bday, $bmonth, $byear,"more_years");
 			echo '<input type="hidden" disabled="disabled" id="mydate_' .$typeDate. '">'.PHP_EOL;
 			echo '<script>'.PHP_EOL;
@@ -669,6 +670,8 @@ echo "<hr /><h3>".get_vocab("title_begin_end_bookings")."</h3>\n";
 			echo '}'.PHP_EOL;
 			echo '});'.PHP_EOL;
 			echo '</script>'.PHP_EOL;
+			echo '</div>'.PHP_EOL;
+			echo '</div>'.PHP_EOL;
 ?>
 </td>
 <td> </td>
@@ -688,6 +691,8 @@ echo "<hr /><h3>".get_vocab("title_begin_end_bookings")."</h3>\n";
 	$eday = strftime("%d", Settings::get("end_bookings"));
 	$emonth = strftime("%m", Settings::get("end_bookings"));
 	$eyear= strftime("%Y", Settings::get("end_bookings"));
+	echo '<div class="col-xs-12">'.PHP_EOL;
+	echo '<div class="form-inline">'.PHP_EOL;
 	genDateSelector("end_",$eday,$emonth,$eyear,"more_years");
 	echo '<input type="hidden" disabled="disabled" id="mydate_' .$typeDate. '">'.PHP_EOL;
 	echo '<script>'.PHP_EOL;
@@ -710,6 +715,8 @@ echo "<hr /><h3>".get_vocab("title_begin_end_bookings")."</h3>\n";
 	echo '}'.PHP_EOL;
 	echo '});'.PHP_EOL;
 	echo '</script>'.PHP_EOL;
+	echo '</div>'.PHP_EOL;
+	echo '</div>'.PHP_EOL;
 ?>
 </td>
 </tr>

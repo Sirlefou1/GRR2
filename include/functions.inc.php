@@ -829,7 +829,7 @@ function begin_page($title, $page="with_session")
 			die();
 		}
 	}
-	global $vocab, $charset_html, $unicode_encoding, $clock_file, $use_select2;
+	global $vocab, $charset_html, $unicode_encoding, $clock_file, $use_select2, $use_admin;
 	header('Content-Type: text/html; charset=utf-8');
 	if (!isset($_COOKIE['open']))
 	{
@@ -847,7 +847,8 @@ function begin_page($title, $page="with_session")
 	$a .= '<link rel="stylesheet" type="text/css" href="'.$sheetcss.'" />'.PHP_EOL;
 	$a .= '<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />'.PHP_EOL;
 	$a .= '<link rel="stylesheet" type="text/css" href="themes/default/css/mod_bootstrap.css" />'.PHP_EOL;
-	$a .= '<link rel="stylesheet" type="text/css" href="include/admin_grr.css" />'.PHP_EOL;
+	if (isset($use_admin))
+		$a .= '<link rel="stylesheet" type="text/css" href="include/admin_grr.css" />'.PHP_EOL;
 	if (isset($use_select2))
 	{
 		$a .= '<link rel="stylesheet" type="text/css" href="themes/default/css/select2.css" />'.PHP_EOL;
@@ -864,7 +865,6 @@ function begin_page($title, $page="with_session")
 	$a .= '<script type="text/javascript" src="js/jquery.validate.js"></script>'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="js/jquery-ui-timepicker-addon.js"></script>'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>'.PHP_EOL;
-
 	$a .= '<script type="text/javascript" src="js/html2canvas.js"></script>'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="js/menu.js"></script>'.PHP_EOL;
 	$a .= '<script type="text/javascript" src="js/jspdf.min.js"></script>'.PHP_EOL;
@@ -895,7 +895,7 @@ function begin_page($title, $page="with_session")
 function print_header($day = '', $month = '', $year = '', $type_session = 'with_session')
 {
 	global $vocab, $search_str, $grrSettings, $clock_file, $desactive_VerifNomPrenomUser, $grr_script_name;
-	global $use_select2, $desactive_bandeau_sup, $id_site;
+	global $use_select2, $desactive_bandeau_sup, $id_site, $use_admin;
 	if (!($desactive_VerifNomPrenomUser))
 		$desactive_VerifNomPrenomUser = 'n';
 	// On vérifie que les noms et prénoms ne sont pas vides
@@ -1336,7 +1336,7 @@ function genDateSelectorForm($prefix, $day, $month, $year,$option)
 		$year = date("y");
 	if ($day != "")
 	{
-		$selector_data .= "<select name=\"${prefix}day\" id=\"${prefix}day\">\n";
+		$selector_data .= "<div class=\"form-group\"><select class=\"form-control\" name=\"${prefix}day\" id=\"${prefix}day\">\n";
 		for ($i = 1; $i <= 31; $i++)
 		{
 			if ($i < 10)
@@ -1344,9 +1344,9 @@ function genDateSelectorForm($prefix, $day, $month, $year,$option)
 			else
 				$selector_data .= "<option" . ($i == $day ? " selected=\"selected\"" : "") . ">$i</option>\n";
 		}
-		$selector_data .= "</select>";
+		$selector_data .= "</select></div>";
 	}
-	$selector_data .= "<select name=\"${prefix}month\" id=\"${prefix}month\">\n";
+	$selector_data .= "<div class=\"form-group\"><select class=\"form-control\" name=\"${prefix}month\" id=\"${prefix}month\">\n";
 	for ($i = 1; $i <= 12; $i++)
 	{
 		$m = utf8_strftime("%b", mktime(0, 0, 0, $i, 1, $year));
@@ -1359,8 +1359,8 @@ function genDateSelectorForm($prefix, $day, $month, $year,$option)
 			$selector_data .=  "<option value=\"$i\"" . ($i == $month ? " selected=\"selected\"" : "") . ">$m</option>\n";
 		}
 	}
-	$selector_data .=  "</select>";
-	$selector_data .=  "<select name=\"${prefix}year\" id=\"${prefix}year\">\n";
+	$selector_data .=  "</select></div>";
+	$selector_data .=  "<div class=\"form-group\"><select class=\"form-control\" name=\"${prefix}year\" id=\"${prefix}year\">\n";
 	$min = strftime("%Y", Settings::get("begin_bookings"));
 	if ($option == "more_years")
 		$min = date("Y") - $nb_year_calendar;
@@ -1369,7 +1369,7 @@ function genDateSelectorForm($prefix, $day, $month, $year,$option)
 		$max = date("Y") + $nb_year_calendar;
 	for($i = $min; $i <= $max; $i++)
 		$selector_data .= "<option value=\"$i\" " . ($i == $year ? " selected=\"selected\"" : "") . ">$i</option>\n";
-	$selector_data .= "</select> \n\n";
+	$selector_data .= "</select>\n</div>\n";
 	return $selector_data;
 }
 
@@ -4242,6 +4242,7 @@ function affiche_nom_prenom_email($_beneficiaire, $_beneficiaire_ext, $type = "n
  		else
  			$year = date("Y");
  	}
+ 	echo '<div class="form-inline">'.PHP_EOL;
  	genDateSelector("".$typeDate."_", "$day", "$month", "$year","");
  	echo '<input type="hidden" disabled="disabled" id="mydate_' .$typeDate. '">'.PHP_EOL;
  	echo '<script>'.PHP_EOL;
@@ -4264,6 +4265,7 @@ echo '			$(\'#' .$typeDate. '_year\').val(date.substring(6, 10));'.PHP_EOL;
 echo '		}'.PHP_EOL;
 echo '	});'.PHP_EOL;
 echo '</script>'.PHP_EOL;
+echo '</div>'.PHP_EOL;
 }
 
 function jQuery_TimePicker($typeTime, $start_hour, $start_min)

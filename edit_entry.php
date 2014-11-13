@@ -321,60 +321,60 @@ print_header($day, $month, $year, $type="with_session");
 
 ?>
 <script type="text/javascript" >
-function insertChampsAdd(){
-	jQuery.ajax({
-		type: 'GET',
-		url: 'edit_entry_champs_add.php',
-		data: {
-			areas:'<?php echo $area; ?>',
-			id: '<?php echo $id; ?>',
-			room: '<?php echo $room; ?>',
-		},
-		success: function(returnData)
-		{
-			$("#div_champs_add").html(returnData);
-		},
-		error: function(data)
-		{
-			alert('Erreur lors de l execution de la commande AJAX pour le edit_entry_champs_add.php ');
-		}
-	});
-}
-function insertTypes(){
-	jQuery.ajax({
-		type: 'GET',
-		url: 'edit_entry_types.php',
-		data: {
-			areas:'<?php echo $area; ?>',
-			type: '<?php echo $etype; ?>',
-			room:'<?php echo $room; ?>',
-		},
-		success: function(returnData){
-			$('#div_types').html(returnData);
-		},
-		error: function(data){
-			alert('Erreur lors de l execution de la commande AJAX pour le edit_entry_types.php ');
-		}
-	});
-}
-function insertProfilBeneficiaire(){
-	jQuery.ajax({
-		type: 'GET',
-		url: 'edit_entry_beneficiaire.php',
-		data: {
-			beneficiaire:'ADMINISTRATEUR',
-			identifiant_beneficiaire: '<?php echo $beneficiaire; ?>'
-		},
-		success: function(returnData)
-		{
-			$("#div_profilBeneficiaire").html(returnData);
-		},
-		error: function(data)
-		{
-			alert('Erreur lors de l execution de la commande AJAX pour le edit_entry_beneficiaire.php ');
-		}
-	});
-}
+	function insertChampsAdd(){
+		jQuery.ajax({
+			type: 'GET',
+			url: 'edit_entry_champs_add.php',
+			data: {
+				areas:'<?php echo $area; ?>',
+				id: '<?php echo $id; ?>',
+				room: '<?php echo $room; ?>',
+			},
+			success: function(returnData)
+			{
+				$("#div_champs_add").html(returnData);
+			},
+			error: function(data)
+			{
+				alert('Erreur lors de l execution de la commande AJAX pour le edit_entry_champs_add.php ');
+			}
+		});
+	}
+	function insertTypes(){
+		jQuery.ajax({
+			type: 'GET',
+			url: 'edit_entry_types.php',
+			data: {
+				areas:'<?php echo $area; ?>',
+				type: '<?php echo $etype; ?>',
+				room:'<?php echo $room; ?>',
+			},
+			success: function(returnData){
+				$('#div_types').html(returnData);
+			},
+			error: function(data){
+				alert('Erreur lors de l execution de la commande AJAX pour le edit_entry_types.php ');
+			}
+		});
+	}
+	function insertProfilBeneficiaire(){
+		jQuery.ajax({
+			type: 'GET',
+			url: 'edit_entry_beneficiaire.php',
+			data: {
+				beneficiaire:'ADMINISTRATEUR',
+				identifiant_beneficiaire: '<?php echo $beneficiaire; ?>'
+			},
+			success: function(returnData)
+			{
+				$("#div_profilBeneficiaire").html(returnData);
+			},
+			error: function(data)
+			{
+				alert('Erreur lors de l execution de la commande AJAX pour le edit_entry_beneficiaire.php ');
+			}
+		});
+	}
 	function check_1 ()
 	{
 		menu = document.getElementById('menu2');
@@ -535,50 +535,50 @@ function insertProfilBeneficiaire(){
 					$("#error").append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><?php echo get_vocab("required"); ?></div>');
 					err = 1;
 				}
-					<?php
-				}
-				if ($overload_fields[$fieldname]["type"] == "numeric")
-				{
-					echo "if (isNaN((document.getElementById('id_".$idtmp."_".$overload_fields[$fieldname]["id"]."')) && (document.forms[\"main\"].addon_".$overload_fields[$fieldname]["id"].".value))) {\n";
-					?>
-					$("#error").append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><?php echo $overload_fields[$fieldname]["name"].get_vocab("deux_points"). get_vocab("is_not_numeric") ?></div>');
-					err = 1;
-				}
-					<?php
-				}
+				<?php
 			}
-		}
-		?>
-		if  (document.forms["main"].type.value=='0')
-		{
-			$("#error").append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><?php echo get_vocab("choose_a_type"); ?></div>');
-			err = 1;
-		}
-		<?php
-		if ($edit_type == "series")
-		{
-			?>
-			i1 = parseInt(document.forms["main"].id.value);
-			i2 = parseInt(document.forms["main"].rep_id.value);
-			n = parseInt(document.forms["main"].rep_num_weeks.value);
-			if ((document.forms["main"].elements['rep_day[0]'].checked || document.forms["main"].elements['rep_day[1]'].checked || document.forms["main"].elements['rep_day[2]'].checked || document.forms["main"].elements['rep_day[3]'].checked || document.forms["main"].elements['rep_day[4]'].checked || document.forms["main"].elements['rep_day[5]'].checked || document.forms["main"].elements['rep_day[6]'].checked) && (!document.forms["main"].rep_type[2].checked))
+			if ($overload_fields[$fieldname]["type"] == "numeric")
 			{
-				$("#error").append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><?php echo get_vocab("no_compatibility_with_repeat_type"); ?></div>');
-				err = 1;
-			}
-			if ((!document.forms["main"].elements['rep_day[0]'].checked && !document.forms["main"].elements['rep_day[1]'].checked && !document.forms["main"].elements['rep_day[2]'].checked && !document.forms["main"].elements['rep_day[3]'].checked && !document.forms["main"].elements['rep_day[4]'].checked && !document.forms["main"].elements['rep_day[5]'].checked && !document.forms["main"].elements['rep_day[6]'].checked) && (document.forms["main"].rep_type[2].checked))
-			{
-				$("#error").append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><?php echo get_vocab("choose_a_day"); ?></div>');
+				echo "if (isNaN((document.getElementById('id_".$idtmp."_".$overload_fields[$fieldname]["id"]."')) && (document.forms[\"main\"].addon_".$overload_fields[$fieldname]["id"].".value))) {\n";
+				?>
+				$("#error").append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><?php echo $overload_fields[$fieldname]["name"].get_vocab("deux_points"). get_vocab("is_not_numeric") ?></div>');
 				err = 1;
 			}
 			<?php
 		}
-		?>
-		if (err == 1)
-			return false;
-		document.forms["main"].submit();
-		return true;
 	}
+}
+?>
+if  (document.forms["main"].type.value=='0')
+{
+	$("#error").append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><?php echo get_vocab("choose_a_type"); ?></div>');
+	err = 1;
+}
+<?php
+if ($edit_type == "series")
+{
+	?>
+	i1 = parseInt(document.forms["main"].id.value);
+	i2 = parseInt(document.forms["main"].rep_id.value);
+	n = parseInt(document.forms["main"].rep_num_weeks.value);
+	if ((document.forms["main"].elements['rep_day[0]'].checked || document.forms["main"].elements['rep_day[1]'].checked || document.forms["main"].elements['rep_day[2]'].checked || document.forms["main"].elements['rep_day[3]'].checked || document.forms["main"].elements['rep_day[4]'].checked || document.forms["main"].elements['rep_day[5]'].checked || document.forms["main"].elements['rep_day[6]'].checked) && (!document.forms["main"].rep_type[2].checked))
+	{
+		$("#error").append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><?php echo get_vocab("no_compatibility_with_repeat_type"); ?></div>');
+		err = 1;
+	}
+	if ((!document.forms["main"].elements['rep_day[0]'].checked && !document.forms["main"].elements['rep_day[1]'].checked && !document.forms["main"].elements['rep_day[2]'].checked && !document.forms["main"].elements['rep_day[3]'].checked && !document.forms["main"].elements['rep_day[4]'].checked && !document.forms["main"].elements['rep_day[5]'].checked && !document.forms["main"].elements['rep_day[6]'].checked) && (document.forms["main"].rep_type[2].checked))
+	{
+		$("#error").append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><?php echo get_vocab("choose_a_day"); ?></div>');
+		err = 1;
+	}
+	<?php
+}
+?>
+if (err == 1)
+	return false;
+document.forms["main"].submit();
+return true;
+}
 </script>
 <?php
 if ($id == 0)
@@ -781,18 +781,23 @@ if (isset($courrier) && $courrier == 1)
 echo ' > '.get_vocab("msg_courrier");
 echo '</div></td></tr>'.PHP_EOL;
 
-echo '<tr><td class="E"><br>'.PHP_EOL;
+echo '<tr><td class="E">'.PHP_EOL;
 echo '<b>'.$F.'</b>'.PHP_EOL;
 echo '</td></tr>'.PHP_EOL;
 echo '<tr><td class="CL">'.PHP_EOL;
 echo '<table border="0">'.PHP_EOL;
-echo '<tr><td>'.PHP_EOL;
+echo '<tr>'.PHP_EOL;
+echo '<td>'.PHP_EOL;
+echo '<div class="col-xs-12">'.PHP_EOL;
 jQuery_DatePicker('start');
-echo '</td><td class="E">'.PHP_EOL;
+echo '</div">'.PHP_EOL;
+echo '</td></tr>'.PHP_EOL;
 if ($enable_periods == 'y')
 {
-	echo '<b>'.get_vocab("period").'</b>'.PHP_EOL;
-	echo '<select class="form-control" name="period">'.PHP_EOL;
+	echo '<tr><td class="E">'.PHP_EOL;
+	echo '<b>'.get_vocab("period").'</b></td>'.PHP_EOL;
+	echo '<td class="CL">'.PHP_EOL;
+	echo '<select name="period">'.PHP_EOL;
 	foreach ($periods_name as $p_num => $p_val)
 	{
 		echo '<option value="'.$p_num.'"';
@@ -800,11 +805,12 @@ if ($enable_periods == 'y')
 			echo ' selected="selected"';
 		echo '>'.$p_val.'</option>'.PHP_EOL;
 	}
-	echo '</select></td>'.PHP_EOL;
+	echo '</select></td></tr>'.PHP_EOL;
 }
 else
 {
-	echo "<td class=\"E\"><b>".get_vocab("time")."</b><td class=\"CL\">";
+	echo "<tr><td class=\"E\"><b>".get_vocab("time")."</b></td></tr><tr><td class=\"CL\">";
+	echo '<div class="col-xs-2">'.PHP_EOL;
 	if (isset ($_GET['id']))
 	{
 		jQuery_TimePicker('start_', $start_hour, $start_min);
@@ -820,9 +826,10 @@ else
 		$checked = ($start_hour >= 12) ? 'checked="checked"' : "";
 		echo '<input name="ampm" type="radio" value="pm" '.$checked.' />'.date("a",mktime(13,0,0,1,1,1970));
 	}
-	echo "</td>";
+	echo '</div>'.PHP_EOL;
+	echo "</td></tr>".PHP_EOL;
 }
-echo '</td></tr></table>'.PHP_EOL;
+echo '</table>'.PHP_EOL;
 echo '</td></tr>';
 if ($type_affichage_reser == 0)
 {
@@ -883,16 +890,20 @@ if ($type_affichage_reser == 0)
 }
 else
 {
-	echo "<tr><td class=\"E\"><b>".get_vocab("fin_reservation").get_vocab("deux_points")."</b></td></tr>\n";
-	echo "<tr><td class=\"CL\" >";
-	echo "<table border=\"0\"><tr><td>\n";
+	echo '<tr><td class="E"><b>'.get_vocab("fin_reservation").get_vocab("deux_points").'</b></td></tr>'.PHP_EOL;
+	echo '<tr><td class="CL" >'.PHP_EOL;
+	echo '<table border="0">'.PHP_EOL;
+	echo '<tr>'.PHP_EOL;
+	echo '<td>'.PHP_EOL;
+	echo '<div class="col-xs-12">'.PHP_EOL;
 	jQuery_DatePicker('end');
-	echo "</td>";
+	echo '</div>'.PHP_EOL;
+	echo '</td></tr>'.PHP_EOL;
 	if ($enable_periods=='y')
 	{
-		echo "<td class=\"E\"><b>".get_vocab("period")."</b></td>\n";
+		echo "<tr><td class=\"E\"><b>".get_vocab("period")."</b></td>\n";
 		echo "<td class=\"CL\">\n";
-		echo "<select name=\"end_period\">";
+		echo "<select class=\"form-control\" name=\"end_period\">";
 		foreach ($periods_name as $p_num => $p_val)
 		{
 			echo "<option value=\"".$p_num."\"";
@@ -900,11 +911,12 @@ else
 				echo " selected=\"selected\"";
 			echo ">$p_val</option>\n";
 		}
-		echo "</select>\n</td>\n";
+		echo "</select>\n</td>\n</tr>";
 	}
 	else
 	{
-		echo "<td class=\"E\"><b>".get_vocab("time")."</b><td class=\"CL\">";
+		echo "<tr><td class=\"E\"><b>".get_vocab("time")."</b></td></tr><tr><td class=\"CL\">";
+		echo '<div class="col-xs-2">'.PHP_EOL;
 		if (isset ($_GET['id']))
 		{
 			jQuery_TimePicker ('end_', $end_hour, $end_min);
@@ -920,9 +932,10 @@ else
 			$checked = ($end_hour >= 12) ? "checked=\"checked\"" : "";
 			echo "<input name=\"ampm\" type=\"radio\" value=\"pm\" $checked />".date("a",mktime(13,0,0,1,1,1970));
 		}
-		echo "</td>";
+		echo '</div>'.PHP_EOL;
+		echo "</td></tr>";
 	}
-	echo "</tr></table>\n</td></tr>";
+	echo "</table>\n</td></tr>";
 }
 if (($delais_option_reservation > 0) && (($modif_option_reservation == 'y') || ((($modif_option_reservation == 'n') && ($option_reservation != -1)))))
 {
@@ -1012,9 +1025,9 @@ echo "<tr><td class=\"CL\" style=\"vertical-align:top;\"><table border=\"0\"><tr
 //Sélection de la "room" dans l'"area"
 if ($res) for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 {
-  $selected = "";
-  if ($row[0] == $room_id) $selected = "selected=\"selected\"";
-  echo "<option $selected value=\"".$row[0]."\">".$row[1]."</option>\n";
+	$selected = "";
+	if ($row[0] == $room_id) $selected = "selected=\"selected\"";
+	echo "<option $selected value=\"".$row[0]."\">".$row[1]."</option>\n";
 }
 echo "</select></div></td><td>".get_vocab("ctrl_click")."</td></tr></table>\n";
 echo "</td></tr>\n";
@@ -1229,13 +1242,13 @@ else
 			else
 				echo '<input type="hidden" name="id" value="'.$id.'" />'.PHP_EOL;
 			echo '<input type="hidden" name="type_affichage_reser" value="'.$type_affichage_reser.'" />'.PHP_EOL;
-			 ?>
+			?>
 		</div>
 	</form>
 	<script type="text/javascript">
-	insertProfilBeneficiaire();
-	insertChampsAdd();
-	insertTypes()
+		insertProfilBeneficiaire();
+		insertChampsAdd();
+		insertTypes()
 	</script>
 	<script type="text/javascript">
 		$('#areas').on('change', function(){
@@ -1260,5 +1273,5 @@ else
 	</script>
 	<?php include "include/trailer.inc.php" ?>
 	<?php
-include "footer.php";
-?>
+	include "footer.php";
+	?>

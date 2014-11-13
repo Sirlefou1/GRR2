@@ -46,5 +46,6 @@ if (!grr_resumeSession()) {
 	die();
 };
 // Paramètres langage
+$use_admin = 'y';
 include "./include/language.inc.php";
 ?>
