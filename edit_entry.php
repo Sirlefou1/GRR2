@@ -1058,12 +1058,12 @@ if (($edit_type == "series") || (isset($flag_periodicite)))
 	echo "
 	<tr>
 		<td id=\"ouvrir\" style=\"cursor: inherit\" align=\"center\" class=\"fontcolor4\">
-			<span class=\"bground\"><b><a href='javascript:clicMenu(1);check_5()'>".get_vocab("click_here_for_series_open")."</a></b></span>
+			<span class=\"fontcolor1 btn btn-primary\"><b><a href='javascript:clicMenu(1);check_5()'>".get_vocab("click_here_for_series_open")."</a></b></span>
 		</td>
 	</tr>
 	<tr>
-		<td style=\"display:none; cursor: inherit\" id=\"fermer\" align=\"center\" class=\"fontcolor4\">
-			<span class=\"bground\"><b><a href='javascript:clicMenu(1);check_5()'>".get_vocab("click_here_for_series_close")."</a></b></span>
+		<td style=\"display:none; cursor: inherit white\" id=\"fermer\" align=\"center\" class=\"fontcolor4\">
+			<span class=\"btn btn-primary fontcolor1 white\"><b><a href='javascript:clicMenu(1);check_5()'>".get_vocab("click_here_for_series_close")."</a></b></span>
 		</td>
 	</tr>
 	";

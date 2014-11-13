@@ -52,7 +52,8 @@ a.calendar{display:block;color:#FFF;height:100%;width:100%;vertical-align:middle
 .cellcalendar{background:#5c2862;vertical-align:middle;text-align:center;height:30px;width:40px;line-height:30px}
 .cellcalendar a:hover{background-color:#fff}
 a.lienPlanning:link,a.lienPlanning:visited{color:#fff;display:block}
-a.lienPlanning:hover{display:block}
+a.lienPlanning:hover{display:block !important}
+span a{color:#FFF !important}
 .left{float:left}
 .right{float:right}
 #chargement{left:35%;top:322px;position:absolute;display:none;z-index:10}
