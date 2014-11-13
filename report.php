@@ -415,7 +415,7 @@ if (($summarize != 4) && ($summarize != 5))
 						<td class="CL">
 							<div class="col-xs-12">
 								<div class="form-inline">
-									<?php jQuery_DatePicker("From_", $From_day, $From_month, $From_year,""); ?>
+									<?php genDateSelector("From_", $From_day, $From_month, $From_year,""); ?>
 								</div>
 							</div>
 						</td></tr>
@@ -423,7 +423,7 @@ if (($summarize != 4) && ($summarize != 5))
 							<td class="CL">
 								<div class="col-xs-12">
 									<div class="form-inline">
-										<?php jQuery_DatePicker("To_", $To_day, $To_month, $To_year,""); ?>
+										<?php genDateSelector("To_", $To_day, $To_month, $To_year,""); ?>
 									</div>
 								</div>
 							</td></tr>
