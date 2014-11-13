@@ -1217,18 +1217,19 @@ else
 		<?php
 		if ($flag_qui_peut_reserver_pour == "no")
 		{
-			echo "<input type=\"hidden\" name=\"beneficiaire\" value=\"$beneficiaire\" />\n";
+			echo '<input type="hidden" name="beneficiaire" value="'.$beneficiaire.'" />'.PHP_EOL;
 		}
 		if (!isset($statut_entry))
 			$statut_entry = "-";
-		echo "<input type=\"hidden\" name=\"statut_entry\" value=\"$statut_entry\" />\n";
-		echo "<input type=\"hidden\" name=\"create_by\" value=\"".$create_by."\" />";
+		echo '<input type="hidden" name="statut_entry" value="'.$statut_entry.'" />'.PHP_EOL;
+		echo '<input type="hidden" name="create_by" value="'.$create_by.'" />'.PHP_EOL;
 		if ($id!=0)
 			if (isset($_GET["copy"]))
 				$id = NULL;
 			else
-				echo "<input type=\"hidden\" name=\"id\" value=\"$id\" />\n";
-			echo "<input type=\"hidden\" name=\"type_affichage_reser\" value=\"$type_affichage_reser\" />\n"; ?>
+				echo '<input type="hidden" name="id" value="'.$id.'" />'.PHP_EOL;
+			echo '<input type="hidden" name="type_affichage_reser" value="'.$type_affichage_reser.'" />'.PHP_EOL;
+			 ?>
 		</div>
 	</form>
 	<script type="text/javascript">

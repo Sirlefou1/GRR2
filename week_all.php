@@ -332,7 +332,7 @@ else
 	{
 		$num_day = strftime("%d", $t);
 		$temp_month = utf8_encode(strftime("%m", $t));
-		$temp_month2 = utf8_encode(strftime("%b", $t));
+		$temp_month2 = utf8_strftime("%b", $t);
 		$temp_year = strftime("%Y", $t);
 		$tt = mktime(0, 0, 0, $temp_month, $num_day, $temp_year);
 		$jour_cycle = grr_sql_query1("SELECT Jours FROM ".TABLE_PREFIX."_calendrier_jours_cycle WHERE day='$t'");
