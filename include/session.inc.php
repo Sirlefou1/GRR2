@@ -883,7 +883,8 @@ function grr_connect_ldap($l_adresse,$l_port,$l_login,$l_pwd, $use_tls, $msg_err
 			 // On dit qu'on utilise LDAP V3, sinon la V2 par défaut est utilisé et le bind ne passe pas.
 		if (!(ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3)))
 		{
-			if ($msg_error != "no") return "error_1";
+			if ($msg_error != "no")
+				return "error_1";
 			die();
 		}
 			 // Option LDAP_OPT_REFERRALS à désactiver dans le cas d'active directory

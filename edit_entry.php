@@ -760,7 +760,7 @@ echo '</div>'.PHP_EOL;
 echo '</td></tr>'.PHP_EOL;
 
 
-echo '<tr><td class="E"><br><div class="col-xs-12">'.PHP_EOL;
+echo '<tr><td class="E"><br>'.PHP_EOL;
 echo '<b>'.get_vocab("status_clef").get_vocab("deux_points").'</b>'.PHP_EOL;
 echo '</td></tr>'.PHP_EOL;
 echo '<tr><td class="CL">'.PHP_EOL;
@@ -768,18 +768,18 @@ echo '<input name="keys" type="checkbox" value="y" ';
 if (isset($clef) && $clef == 1)
 	echo 'checked';
 echo ' > '.get_vocab("msg_clef");
-echo '</div></td></tr>'.PHP_EOL;
+echo '</td></tr>'.PHP_EOL;
 
 
 echo '<tr><td class="E"><br>'.PHP_EOL;
-echo '<div class="col-xs-12"><b>'.get_vocab("status_courrier").get_vocab("deux_points").'</b>'.PHP_EOL;
+echo '<b>'.get_vocab("status_courrier").get_vocab("deux_points").'</b>'.PHP_EOL;
 echo '</td></tr>'.PHP_EOL;
 echo '<tr><td class="CL">'.PHP_EOL;
 echo '<input name="courrier" type="checkbox" value="y" ';
 if (isset($courrier) && $courrier == 1)
 	echo 'checked';
 echo ' > '.get_vocab("msg_courrier");
-echo '</div></td></tr>'.PHP_EOL;
+echo '</td></tr>'.PHP_EOL;
 
 echo '<tr><td class="E">'.PHP_EOL;
 echo '<b>'.$F.'</b>'.PHP_EOL;
@@ -790,7 +790,7 @@ echo '<tr>'.PHP_EOL;
 echo '<td>'.PHP_EOL;
 echo '<div class="col-xs-12">'.PHP_EOL;
 jQuery_DatePicker('start');
-echo '</div">'.PHP_EOL;
+echo '</div>'.PHP_EOL;
 echo '</td></tr>'.PHP_EOL;
 if ($enable_periods == 'y')
 {
@@ -810,7 +810,6 @@ if ($enable_periods == 'y')
 else
 {
 	echo "<tr><td class=\"E\"><b>".get_vocab("time")."</b></td></tr><tr><td class=\"CL\">";
-	echo '<div class="col-xs-2">'.PHP_EOL;
 	if (isset ($_GET['id']))
 	{
 		jQuery_TimePicker('start_', $start_hour, $start_min);
@@ -826,7 +825,6 @@ else
 		$checked = ($start_hour >= 12) ? 'checked="checked"' : "";
 		echo '<input name="ampm" type="radio" value="pm" '.$checked.' />'.date("a",mktime(13,0,0,1,1,1970));
 	}
-	echo '</div>'.PHP_EOL;
 	echo "</td></tr>".PHP_EOL;
 }
 echo '</table>'.PHP_EOL;
@@ -916,7 +914,6 @@ else
 	else
 	{
 		echo "<tr><td class=\"E\"><b>".get_vocab("time")."</b></td></tr><tr><td class=\"CL\">";
-		echo '<div class="col-xs-2">'.PHP_EOL;
 		if (isset ($_GET['id']))
 		{
 			jQuery_TimePicker ('end_', $end_hour, $end_min);
@@ -932,7 +929,6 @@ else
 			$checked = ($end_hour >= 12) ? "checked=\"checked\"" : "";
 			echo "<input name=\"ampm\" type=\"radio\" value=\"pm\" $checked />".date("a",mktime(13,0,0,1,1,1970));
 		}
-		echo '</div>'.PHP_EOL;
 		echo "</td></tr>";
 	}
 	echo "</table>\n</td></tr>";
