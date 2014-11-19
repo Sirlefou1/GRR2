@@ -135,7 +135,7 @@ if ((Settings::get("Url_cacher_page_login") != "") && ((!isset($sso_super_admin)
 	header("Location: ./index.php");
 echo begin_page(get_vocab("mrbs").get_vocab("deux_points").Settings::get("company"),"no_session");
 ?>
-<script type="text/javascript" src="./functions.js" ></script>
+<script type="text/javascript" src="js/functions.js" ></script>
 <div class="center">
 	<?php
 	$nom_picture = "./images/".Settings::get("logo");
