@@ -589,7 +589,7 @@ else
 		$A = get_vocab("editseries");
 	else
 	{
-		if (isset($_GET["copy"]))
+		if (isset($_GET["copier"]))
 			$A = get_vocab("copyentry");
 		else
 			$A = get_vocab("editentry");
@@ -1233,7 +1233,7 @@ else
 		echo '<input type="hidden" name="statut_entry" value="'.$statut_entry.'" />'.PHP_EOL;
 		echo '<input type="hidden" name="create_by" value="'.$create_by.'" />'.PHP_EOL;
 		if ($id!=0)
-			if (isset($_GET["copy"]))
+			if (isset($_GET["copier"]))
 				$id = NULL;
 			else
 				echo '<input type="hidden" name="id" value="'.$id.'" />'.PHP_EOL;
