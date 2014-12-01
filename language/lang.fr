@@ -137,7 +137,7 @@ $vocab['all_day'] = "Toute la journée";
 $vocab['all_day2'] = "==========";
 $vocab['all_rooms'] = "Toutes les ressources";
 $vocab['all_rooms_of_area'] = "Pour toutes les ressources du domaine";
-$vocab['areas'] = "Sites :";
+$vocab['areas'] = "Domaines :";
 $vocab['attention_mail_automatique_désactive'] = "ATTENTION : l'envoi de mails automatiques est actuellement désactivé. Pour l'activer, rendez-vous dans le panneau de configuration générale.";
 $vocab['aucun autilisateur'] = "Aucun utilisateur ne dispose de privilèges";
 $vocab['aucune_correspondance'] = "Aucune correspondance profil / statut GRR actuellement enregistrée";
@@ -712,7 +712,7 @@ $vocab['signaler_reservation_en_cours'] = "Signaler que la ressource est emprunt
 $vocab['signaler_reservation_en_cours_option_0'] = "La ressource a été restituée. <br /><i><b>(Sélectionner également cette option si vous n'utilisez pas cette fonctionnalité)</b></i>";
 $vocab['signaler_reservation_en_cours_option_1'] = "Signaler que la ressource est empruntée dans le cadre de cette réservation.";
 $vocab['signaler_reservation_en_cours_option_2'] = "Signaler que la ressource est empruntée dans le cadre de cette réservation et envoyer quotidiennement un mail notifiant le retard.";
-$vocab['site'] = "Domaine";
+$vocab['site'] = "Site";
 $vocab['sites'] = "Sites";
 $vocab['site_adresse_ligne1'] = "Adresse";
 $vocab['site_adresse_ligne2'] = "Adresse";

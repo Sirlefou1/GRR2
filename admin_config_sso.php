@@ -88,7 +88,7 @@ if (isset($_POST['valid']))
 	$grrSettings['http_champ_prenom'] = $_POST['http_champ_prenom'];
 	if ($_POST['http_sso_domain'] == "")
 		$_POST['http_sso_statut_domain'] = "";
-	else 
+	else
 	{
 		if ((!isset($_POST['http_sso_statut_domain'])) || ($_POST['http_sso_statut_domain'] == ""))
 			$_POST['http_sso_statut_domain'] = "visiteur";
@@ -121,7 +121,7 @@ if (isset($_POST['valid']))
 			$sso_active_correspondance_profil_statut = "n";
 		else
 			$sso_active_correspondance_profil_statut = "y";
-	}	
+	}
 	if (!Settings::set("sso_ac_corr_profil_statut", $sso_active_correspondance_profil_statut))
 		echo "Erreur lors de l'enregistrement de sso_active_correspondance_profil_statut !<br />";
 	if (($_POST['sso_statut'] != "cas_visiteur") && ($_POST['sso_statut'] != "cas_utilisateur"))

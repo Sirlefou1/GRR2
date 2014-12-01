@@ -4301,10 +4301,10 @@ function jQuery_TimePicker($typeTime, $start_hour, $start_min)
 		<span class="glyphicon glyphicon-time"></span>
 	</span>
 </div>';
-	//<input type="text" id="hour_' .$typeDate. '" value="' .$hour. '" name="' .$typeTime. 'hour" size="2" /> : <input type="text" id="minute_' .$typeDate. '" value="' .$minute. '" name="' .$typeTime. 'minute" size="2" />
 echo '<script type="text/javascript">
 $(\'.clockpicker\').clockpicker({
 	align: \'left\',
+	placement: \'top\',
 	donetext: \'Valider\'
 });
 </script>';
