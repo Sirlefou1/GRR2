@@ -29,10 +29,88 @@
  */
 $grr_script_name = "admin_calend_jour_cycle.php";
 $back = '';
+function cal3($month, $year)
+{
+    global $weekstarts;
+    if (!isset($weekstarts)) $weekstarts = 0;
+    $s = "";
+    $daysInMonth = getDaysInMonth($month, $year);
+    $date = mktime(12, 0, 0, $month, 1, $year);
+    $first = (strftime("%w",$date) + 7 - $weekstarts) % 7;
+    $monthName = utf8_strftime("%B",$date);
+    $s .= "<table class=\"calendar2\" border=\"1\" cellspacing=\"2\">\n";
+    $s .= "<tr>\n";
+    $s .= "<td class=\"calendarHeader2\" colspan=\"8\">$monthName&nbsp;$year</td>\n";
+    $s .= "</tr>\n";
+    $d = 1 - $first;
+    $is_ligne1 = 'y';
+    while ($d <= $daysInMonth)
+    {
+        $s .= "<tr>\n";
+        for ($i = 0; $i < 7; $i++)
+        {
+            $basetime = mktime(12,0,0,6,11+$weekstarts,2000);
+            $show = $basetime + ($i * 24 * 60 * 60);
+            $nameday = utf8_strftime('%A',$show);
+            $temp = mktime(0,0,0,$month,$d,$year);
+            if ($i==0) $s .= "<td class=\"calendar2\" style=\"vertical-align:bottom;\"><b>S".getWeekNumber($temp)."</b></td>\n";
+            if ($d > 0 && $d <= $daysInMonth)
+            {
+                $temp = mktime(0,0,0,$month,$d,$year);
+                $day = grr_sql_query1("SELECT day FROM ".TABLE_PREFIX."_calendrier_jours_cycle WHERE day='$temp'");
+                $jour = grr_sql_query1("SELECT Jours FROM ".TABLE_PREFIX."_calendrier_jours_cycle WHERE DAY='$temp'");
+				        if (intval($jour)>0) {
+                  $alt=get_vocab('jour_cycle')." ".$jour;
+                  $jour=ucfirst(substr(get_vocab("rep_type_6"),0,1)).$jour;
+                } else {
+                  $alt=get_vocab('jour_cycle').' '.$jour;
+                  if (strlen($jour)>5)
+                    $jour = substr($jour,0,3)."..";
+                }
+                if (!isset($_GET["pview"]))
+                    if (($day < 0))
+                        $s .= "<td class=\"calendar2\" valign=\"top\" style=\"background-color:#FF8585\">";
+                    else
+                        $s .= "<td class=\"calendar2\" valign=\"top\" style=\"background-color:#C0FF82\">";
+                else
+                    $s .= "<td style=\"text-align:center;\" valign=\"top\">";
+                if ($is_ligne1 == 'y') $s .=  '<b>'.ucfirst(substr($nameday,0,1)).'</b><br />';
+                $s .= "<b>".$d."</b>";
+                // Pour aller checher la date ainsi que son Jour cycle
+                $s .= "<br />";
+                if (isset($_GET["pview"])) {
+                    if (($day < 0))
+                        $s .= "<img src=\"img_grr/stop.png\" class=\"image\" width=\"16\" height=\"16\" alt=\"no\"/>";
+                    else
+                        $s .= "<span class=\"jour-cycle\">".$jour."</span>";
+                } else {
+                    if (($day < 0))
+                        $s .= "<a href=\"admin_calend_jour_cycle.php?page_calend=3&amp;date=".$temp."\"><img src=\"img_grr/stop.png\" class=\"image\" alt=\"(aucun)\"  width=\"16\" height=\"16\" /></a>";
+                    else
+                        $s .= "<a class=\"jour-cycle\" href=\"admin_calend_jour_cycle.php?page_calend=3&amp;date=".$temp."\" title=\"".$alt."\" >".$jour."</a>";
+                }
+
+            } else {
+                if (!isset($_GET["pview"]))
+                    $s .= "<td class=\"calendar2\" valign=\"top\">";
+                else
+                    $s .= "<td style=\"text-align:center;\" valign=\"top\">";
+                if ($is_ligne1 == 'y') $s .=  '<b>'.ucfirst(substr($nameday,0,1)).'</b><br />';
+                $s .= "&nbsp;";
+            }
+            $s .= "</td>\n";
+            $d++;
+        }
+        $s .= "</tr>\n";
+        $is_ligne1 = 'n';
+    }
+    $s .= "</table>\n";
+    return $s;
+}
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
 	check_access(6, $back);
-	print_header("", "", "", $type="with_session");
+	print_header("", "", "", $type = "with_session");
 	// Affichage de la colonne de gauche
 	if (!isset($_GET['pview']))
 		include "admin_col_gauche.php";
@@ -122,7 +200,7 @@ if (isset($_SERVER['HTTP_REFERER']))
 		}
 		$inc++;
 		echo "<td>\n";
-		echo cal($month, $year);
+		echo cal3($month, $year);
 		echo "</td>";
 		if ($inc == 3)
 		{
