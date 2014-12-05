@@ -543,7 +543,7 @@ else
 							if ($enable_periods == 'y')
 								echo "<a href=\"edit_entry.php?room=".$row[2]."&amp;period=&amp;year=$cyear&amp;month=$cmonth&amp;day=$cday&amp;page=week_all\" title=\"".get_vocab("cliquer_pour_effectuer_une_reservation")."\"><span class=\"glyphicon glyphicon-plus\"></span></a>";
 							else
-								echo "<a href=\"edit_entry.php?room=".$row[2]."&amp;hour=$hour&amp;minute=0&amp;year=$cyear&amp;month=$cmonth&amp;day=$cday&amp;page=week_all\" title=\"".get_vocab("cliquez_pour_effectuer_une_reservation")."\"><span class=\"glyphicon glyphicon-plus\"></span></a>";
+								echo "<a href=\"edit_entry.php?room=".$row[2]."&amp;hour=$hour&amp;minute=0&amp;year=$cyear&amp;month=$cmonth&amp;day=$cday&amp;page=week_all\" title=\"".get_vocab("cliquer_pour_effectuer_une_reservation")."\"><span class=\"glyphicon glyphicon-plus\"></span></a>";
 						}
 						else
 							echo ' '.PHP_EOL;
