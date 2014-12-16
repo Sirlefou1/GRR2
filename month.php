@@ -461,17 +461,17 @@ else
 						echo "<a href=\"edit_entry.php?room=".$room."&amp;period=&amp;year=$year&amp;month=$month&amp;day=$cday&amp;page=month\" title=\"".get_vocab("cliquez_pour_effectuer_une_reservation")."\"><span class=\"glyphicon glyphicon-plus\"></span></a>";
 					else
 						echo "<a href=\"edit_entry.php?room=".$room."&amp;hour=$hour&amp;minute=0&amp;year=$year&amp;month=$month&amp;day=$cday&amp;page=month\" title=\"".get_vocab("cliquez_pour_effectuer_une_reservation")."\"><span class=\"glyphicon glyphicon-plus\"></span></a>";
-					echo "</div>";
+					echo '</div>'.PHP_EOL;
 				}
 				else
-					echo " ";
+					echo ' ';
 			}
-			echo "</td>\n";
+			echo '</td>'.PHP_EOL;
 		}
 		if (++$weekcol == 7)
 		{
 			$weekcol = 0;
-			echo "</tr>";
+			echo '</tr>'.PHP_EOL;
 		}
 	}
 	if ($weekcol > 0)
@@ -480,17 +480,19 @@ else
 		{
 			$num_week_day = ($weekcol + $weekstarts)%7;
 			if ($display_day[$num_week_day] == 1)
-				echo "<td class=\"cell_month_o\" > </td>\n";
+				echo '<td class="cell_month_o" > </td>'.PHP_EOL;
 		}
 	}
-	echo "</tr></table>";
+	echo '</tr>'.PHP_EOL.'</table>'.PHP_EOL;
 	if ($_GET['pview'] != 1)
-		echo "<div id=\"toTop\"><b>".get_vocab("top_of_page")."</b>";
+		echo '<div id="toTop"><b>'.get_vocab("top_of_page").'</b>'.PHP_EOL;
 	bouton_retour_haut ();
-	echo " </div>";
-	echo " </div>";
-	echo " </div>";
-	echo  "<div id=\"popup_name\" class=\"popup_block\" ></div>";
-	affiche_pop_up(get_vocab("message_records"),"user");
-	include "footer.php";
 	?>
+</div>
+</div>
+</div>
+<div id="popup_name" class="popup_block" ></div>
+<?php
+affiche_pop_up(get_vocab("message_records"),"user");
+include "footer.php";
+?>
