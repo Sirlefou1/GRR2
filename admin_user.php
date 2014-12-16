@@ -212,12 +212,12 @@ if ((isset($_GET['action'])) && ($_GET['action'] == "synchro") && (Settings::get
 //
 // Supression d'un utilisateur
 //
-if ((isset($_GET['action_del'])) and ($_GET['js_confirmed'] == 1))
+if ((isset($_GET['action_del'])) && ($_GET['js_confirmed'] == 1))
 {
 	$temp = $_GET['user_del'];
 	// un gestionnaire d'utilisateurs ne peut pas supprimer un administrateur général ou un gestionnaire d'utilisateurs
 	$can_delete = "yes";
-	if (authGetUserLevel(getUserName(), -1,'user') ==  1)
+	if (authGetUserLevel(getUserName(), -1, 'user') == 1)
 	{
 		$test_statut = grr_sql_query1("SELECT statut FROM ".TABLE_PREFIX."_utilisateurs WHERE login='".$_GET['user_del']."'");
 		if (($test_statut == "gestionnaire_utilisateur") || ($test_statut == "administrateur"))
@@ -225,11 +225,10 @@ if ((isset($_GET['action_del'])) and ($_GET['js_confirmed'] == 1))
 	}
 	if (($temp != getUserName()) && ($can_delete == "yes"))
 	{
+		$temp = str_replace('\\', '\\\\', $temp);
 		$sql = "DELETE FROM ".TABLE_PREFIX."_utilisateurs WHERE login='$temp'";
 		if (grr_sql_command($sql) < 0)
-		{
 			fatal_error(1, "<p>" . grr_sql_error());
-		}
 		else
 		{
 			grr_sql_command("DELETE FROM ".TABLE_PREFIX."_j_mailuser_room WHERE login='$temp'");
@@ -237,11 +236,11 @@ if ((isset($_GET['action_del'])) and ($_GET['js_confirmed'] == 1))
 			grr_sql_command("DELETE FROM ".TABLE_PREFIX."_j_user_room WHERE login='$temp'");
 			grr_sql_command("DELETE FROM ".TABLE_PREFIX."_j_useradmin_area WHERE login='$temp'");
 			grr_sql_command("DELETE FROM ".TABLE_PREFIX."_j_useradmin_site WHERE login='$temp'");
-			$msg=get_vocab("del_user_succeed");
+			$msg = get_vocab("del_user_succeed");
 		}
 	}
 }
-if (isset($mess) and ($mess != ""))
+if (isset($mess) && ($mess != ""))
 	echo "<p>".$mess."</p>";
 echo "<h2>".get_vocab('admin_user.php')."</h2>";
 if (empty($display))
