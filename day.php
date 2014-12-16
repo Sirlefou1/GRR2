@@ -211,9 +211,9 @@ else
 	echo '<div class="titre_planning '.$class.'">'.PHP_EOL;
 	if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
 	{
-		echo "<table class=\"table-header\"><tr><td class=\"left\"><button type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='day.php?year=$yy&amp;month=$ym&amp;day=$yd&amp;area=$area';\"> <span class=\"glyphicon glyphicon-backward\"></span> ".get_vocab('daybefore')."</button></td><td>";
+		echo '<table class="table-header">',PHP_EOL,'<tr>',PHP_EOL,'<td class="left">',PHP_EOL,'<button class="btn btn-default btn-xs" onclick="charger();javascript: location.href=\'day.php?year='.$yy.'&amp;month='.$ym.'&amp;day='.$yd.'&amp;area='.$area.'\';"> <span class="glyphicon glyphicon-backward"></span> ',get_vocab("daybefore"),'</button>',PHP_EOL,'</td>',PHP_EOL,'<td>',PHP_EOL;
 		include "include/trailer.inc.php";
-		echo "</td><td class=\"right\"><button type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='day.php?year=$ty&amp;month=$tm&amp;day=$td&amp;area=$area';\"> ".get_vocab('dayafter')."  <span class=\"glyphicon glyphicon-forward\"></span></button></td></tr></table>";
+		echo '</td>',PHP_EOL,'<td class="right">',PHP_EOL,'<button class="btn btn-default btn-xs" onclick="charger();javascript: location.href=\'day.php?year='.$ty.'&amp;month='.$tm.'&amp;day='.$td.'&amp;area='.$area.'\';">  '.get_vocab('dayafter').'  <span class="glyphicon glyphicon-forward"></span></button>',PHP_EOL,'</td>',PHP_EOL,'</tr>',PHP_EOL,'</table>',PHP_EOL;
 	}
 	echo '<h4 class="titre">' . ucfirst(utf8_strftime($dformat, $am7));
 	if ($settings->get("jours_cycles_actif") == "Oui" && intval($jour_cycle) >- 1)
@@ -228,7 +228,7 @@ else
 	if (isset($_GET['precedent']))
 	{
 		if ($_GET['pview'] == 1 && $_GET['precedent'] == 1)
-			echo '<span id="lienPrecedent"><button type="button" class="btn btn-default btn-xs" onclick="charger();javascript:history.back();">Précedent</button></span>'.PHP_EOL;
+			echo '<span id="lienPrecedent"><button class="btn btn-default btn-xs" onclick="charger();javascript:history.back();">Précedent</button></span>'.PHP_EOL;
 	}
 	echo '<div class="contenu_planning">'.PHP_EOL;
 	echo '<table class="table-bordered table-striped">'.PHP_EOL;
