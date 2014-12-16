@@ -438,14 +438,14 @@ else
 							}
 							else
 							{
-								echo "<a class=\"lienCellule\" title=\"".htmlspecialchars($today[$room][$t]["who"])."\" href=\"view_entry.php?id=$id&amp;day=$day&amp;month=$month&amp;year=$year&amp;page=day\">$descr";
-								$tab[$tab_ligne][] = "<a title=\"".htmlspecialchars($today[$room][$t]["who"])."\" href=\"view_entry.php?id=$id&amp;day=$day&amp;month=$month&amp;year=$year&amp;page=day\">$descr</a>";
+								echo '<a class="lienCellule" title="',htmlspecialchars($today[$room][$t]["who"]),'" href="view_entry.php?id=',$id,'&amp;day=',$day,'&amp;month=',$month,'&amp;year=',$year,'&amp;page=day\>',$descr;
+								$tab[$tab_ligne][] = '<a title="'.htmlspecialchars($today[$room][$t]["who"]).'" href="view_entry.php?id='.$id.'&amp;day='.$day.'&amp;month='.$month.'&amp;year='.$year.'&amp;page=day">'.$descr.'</a>';
 							}
 						}
 						else
 						{
-							echo " $descr";
-							$tab[$tab_ligne][] = " $descr";
+							echo ' '.$descr;
+							$tab[$tab_ligne][] = ' '.$descr;
 						}
 						$sql = "SELECT type_name,start_time,end_time,clef,courrier FROM ".TABLE_PREFIX."_type_area ,".TABLE_PREFIX."_entry  WHERE  ".TABLE_PREFIX."_entry.id= ".$today[$room][$t]["id"]." AND ".TABLE_PREFIX."_entry.type= ".TABLE_PREFIX."_type_area.type_letter";
 						$res = grr_sql_query($sql);
@@ -456,7 +456,7 @@ else
 							$end_time   = $row[2];
 							$clef 		= $row[3];
 							$courrier	= $row[4];
-							echo "<br/>".date('H:i', $start_time).get_vocab("to").date('H:i', $end_time)."<br/>";
+							echo '<br/>',date('H:i', $start_time),get_vocab("to"),date('H:i', $end_time),'<br/>';
 							if ($type_name != -1)
 								echo  $type_name;
 							echo '<br>'.PHP_EOL;
@@ -478,33 +478,33 @@ else
 					}
 					else
 					{
-						echo " $descr";
-						$tab[$tab_ligne][] = " $descr";
+						echo ' '.$descr;
+						$tab[$tab_ligne][] = ' '.$descr;
 					}
 					if ($acces_fiche_reservation)
-						echo "</a>".PHP_EOL;
-					echo "</td>".PHP_EOL;
+						echo '</a>'.PHP_EOL;
+					echo '</td>'.PHP_EOL;
 				}
 			}
 		}
-		echo "</tr>".PHP_EOL;
+		echo '</tr>'.PHP_EOL;
 		reset($rooms);
 		$tab_ligne++;
 	}
-	echo "</table>".PHP_EOL;
+	echo '</table>'.PHP_EOL;
 }
 grr_sql_free($res);
 if ($_GET['pview'] != 1)
 {
-	echo "<div id=\"toTop\">".PHP_EOL;
-	echo "<b>".get_vocab("top_of_page")."</b>".PHP_EOL;
+	echo '<div id="toTop">'.PHP_EOL;
+	echo '<b>'.get_vocab('top_of_page').'</b>'.PHP_EOL;
 	bouton_retour_haut ();
-	echo "</div>".PHP_EOL;
+	echo '</div>'.PHP_EOL;
 }
-echo "</div>".PHP_EOL;
-echo "</div>".PHP_EOL;
-affiche_pop_up(get_vocab("message_records"), "user");
-echo "<div id=\"popup_name\" class=\"popup_block\" ></div>".PHP_EOL;
+echo '</div>'.PHP_EOL;
+echo '</div>'.PHP_EOL;
+affiche_pop_up(get_vocab('message_records'), 'user');
+echo '<div id="popup_name" class="popup_block"></div>'.PHP_EOL;
 ?>
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -519,5 +519,6 @@ echo "<div id=\"popup_name\" class=\"popup_block\" ></div>".PHP_EOL;
 	});
 </script>
 <?php
+unset($row);
 include "footer.php";
 ?>
