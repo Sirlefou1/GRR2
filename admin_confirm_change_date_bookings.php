@@ -61,10 +61,13 @@ if (isset($_GET['valid']) && ($_GET['valid'] == "yes"))
 		$del = grr_sql_query("DELETE FROM ".TABLE_PREFIX."_calendar WHERE DAY > ".Settings::get("end_bookings"));
 	}
 	header("Location: ./admin_config.php");
-
+	die();
 }
 else if (isset($_GET['valid']) && ($_GET['valid'] == "no"))
+{
 	header("Location: ./admin_config.php");
+	die();
+}
 # print the page header
 print_header("", "", "", $type="with_session");
 echo "<h2>".get_vocab('admin_confirm_change_date_bookings.php')."</h2>";

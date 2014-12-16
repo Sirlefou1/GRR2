@@ -60,7 +60,8 @@ if ($type == "room")
 		//Now take out the room itself
 		grr_sql_command("DELETE FROM ".TABLE_PREFIX."_room WHERE id=$room");
 		//Go back to the admin page
-		Header("Location: admin_room.php?id_area=$id_area&id_site=$id_site");
+		header("Location: admin_room.php?id_area=$id_area&id_site=$id_site");
+		die();
 	}
 	else
 	{
@@ -134,6 +135,7 @@ if ($type == "area")
 		}
 		//Redirect back to the admin page
 		header("Location: admin_room.php?id_site=$id_site");
+		die();
 	}
 	else
 	{

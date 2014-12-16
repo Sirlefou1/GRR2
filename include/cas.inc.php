@@ -70,7 +70,10 @@ else
 		if (isset($_GET['force_authentification']))
 			phpCAS::forceAuthentication();
 		else
+		{
 			header("Location: ".htmlspecialchars_decode(page_accueil())."");
+			die();
+		}
 	}
 	else
 	{
