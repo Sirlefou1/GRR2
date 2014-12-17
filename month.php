@@ -485,10 +485,12 @@ else
 	}
 	echo '</tr>'.PHP_EOL.'</table>'.PHP_EOL;
 	if ($_GET['pview'] != 1)
-		echo '<div id="toTop"><b>'.get_vocab("top_of_page").'</b>'.PHP_EOL;
-	bouton_retour_haut ();
+	{
+		echo '<div id="toTop">',PHP_EOL,'<b>',get_vocab("top_of_page"),'</b>',PHP_EOL;
+		bouton_retour_haut ();
+		echo '</div>',PHP_EOL;
+	}
 	?>
-</div>
 </div>
 </div>
 <div id="popup_name" class="popup_block" ></div>

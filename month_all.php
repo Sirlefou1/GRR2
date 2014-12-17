@@ -447,22 +447,24 @@ else
 	{
 		for (; $weekcol < 7; $weekcol++)
 		{
-			$num_week_day = ($weekcol + $weekstarts)%7;
+			$num_week_day = ($weekcol + $weekstarts) % 7;
 				// on n'affiche pas tous les jours de la semaine
 			if ($display_day[$num_week_day] == 1)
-				echo "<td class=\"cell_month_o\" > </td>\n";
+				echo '<td class="cell_month_o" ></td>',PHP_EOL;
 		}
 	}
-	echo "</table>";
-		//Fermeture du div contenu_Planning
-	echo "</div>";
+	echo '</table>',PHP_EOL;
+	//Fermeture du div contenu_Planning
+	echo '</div>',PHP_EOL;
 	if ($_GET['pview'] != 1)
-		echo "<div id=\"toTop\"> ^ Haut de la page";
-	bouton_retour_haut ();
+	{
+		echo '<div id="toTop">',PHP_EOL,'<b>',get_vocab("top_of_page"),'</b>',PHP_EOL;
+		bouton_retour_haut ();
+		echo '</div>',PHP_EOL;
+	}
+	//Fermeture DIV Panning
 	echo " </div>";
-		//Fermeture DIV Panning
-	echo " </div>";
-		// Affichage d'un message pop-up
+	// Affichage d'un message pop-up
 	echo  "<div id=\"popup_name\" class=\"popup_block\" ></div>";
 	affiche_pop_up(get_vocab("message_records"),"user");
 	include "footer.php";
