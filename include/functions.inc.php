@@ -1323,7 +1323,7 @@ function toPeriodString($start_period, &$dur, &$units)
 * @param string $prefix
 * @param string $option
 */
-function genDateSelectorForm($prefix, $day, $month, $year,$option)
+function genDateSelectorForm($prefix, $day, $month, $year, $option)
 {
 	global $nb_year_calendar;
 	$selector_data = "";
@@ -1337,31 +1337,31 @@ function genDateSelectorForm($prefix, $day, $month, $year,$option)
 		$year = date("y");
 	if ($day != "")
 	{
-		$selector_data .= "<div class=\"form-group\"><select class=\"form-control\" name=\"${prefix}day\" id=\"${prefix}day\">\n";
+		$selector_data .= '<div class="form-group">'.PHP_EOL.'<select class="form-control" name="'.$prefix.'day" id="'.$prefix.'day">'.PHP_EOL;
 		for ($i = 1; $i <= 31; $i++)
 		{
 			if ($i < 10)
-				$selector_data .= "<option" . ($i == $day ? " selected=\"selected\"" : "") . ">0$i</option>\n";
+				$selector_data .= '<option' . ($i == $day ? ' selected="selected"' : "") . '>0'.$i.'</option>'.PHP_EOL;
 			else
-				$selector_data .= "<option" . ($i == $day ? " selected=\"selected\"" : "") . ">$i</option>\n";
+				$selector_data .= '<option' . ($i == $day ? ' selected="selected"' : "") . '>'.$i.'</option>'.PHP_EOL;
 		}
-		$selector_data .= "</select></div>";
+		$selector_data .= '</select>'.PHP_EOL.'</div>'.PHP_EOL;
 	}
-	$selector_data .= "<div class=\"form-group\"><select class=\"form-control\" name=\"${prefix}month\" id=\"${prefix}month\">\n";
+	$selector_data .= '<div class="form-group">'.PHP_EOL.'<select class="form-control" name="'.$prefix.'month" id="'.$prefix.'month">'.PHP_EOL;
 	for ($i = 1; $i <= 12; $i++)
 	{
 		$m = utf8_strftime("%b", mktime(0, 0, 0, $i, 1, $year));
 		if ($i < 10)
 		{
-			$selector_data .=  "<option value=\"0$i\"" . ($i == $month ? " selected=\"selected\"" : "") . ">$m</option>\n";
+			$selector_data .=  '<option value="0'.$i.'"' . ($i == $month ? ' selected="selected"' : "") . '>'.$m.'</option>'.PHP_EOL;
 		}
 		else
 		{
-			$selector_data .=  "<option value=\"$i\"" . ($i == $month ? " selected=\"selected\"" : "") . ">$m</option>\n";
+			$selector_data .=  '<option value="'.$i.'"' . ($i == $month ? ' selected="selected"' : "") . '>'.$m.'</option>'.PHP_EOL;
 		}
 	}
-	$selector_data .=  "</select></div>";
-	$selector_data .=  "<div class=\"form-group\"><select class=\"form-control\" name=\"${prefix}year\" id=\"${prefix}year\">\n";
+	$selector_data .=  '</select>'.PHP_EOL.'</div>'.PHP_EOL;
+	$selector_data .=  '<div class="form-group">'.PHP_EOL.'<select class="form-control" name="'.$prefix.'year" id="'.$prefix.'year">'.PHP_EOL;
 	$min = strftime("%Y", Settings::get("begin_bookings"));
 	if ($option == "more_years")
 		$min = date("Y") - $nb_year_calendar;
@@ -1369,8 +1369,8 @@ function genDateSelectorForm($prefix, $day, $month, $year,$option)
 	if ($option == "more_years")
 		$max = date("Y") + $nb_year_calendar;
 	for($i = $min; $i <= $max; $i++)
-		$selector_data .= "<option value=\"$i\" " . ($i == $year ? " selected=\"selected\"" : "") . ">$i</option>\n";
-	$selector_data .= "</select>\n</div>\n";
+		$selector_data .= '<option value="'.$i.'" '.($i == $year ? ' selected="selected"' : "") . '>'.$i.'</option>'.PHP_EOL;
+	$selector_data .= '</select>'.PHP_EOL.'</div>'.PHP_EOL;
 	return $selector_data;
 }
 
@@ -1407,11 +1407,14 @@ function fatal_error($need_header, $message, $show_form_data = true)
 	{
 		error_log("GRR SESSION: ".print_r($_SESSION, true));
 	}
-	echo "<p>$message</p>";
+	echo '<p>',$message,'</p>'.PHP_EOL;
 	include "trailer.inc.php";
 	exit;
 }
-
+/**
+ * Fonction à revoir fonction ip2long à utiliser surement
+ *
+ */
 function compare_ip_adr($ip1, $ip2)
 {
 	if ($ip2 == "")
@@ -1438,14 +1441,14 @@ function compare_ip_adr($ip1, $ip2)
 		else if (strlen($tab_ip2[$i]) == 1)
 		{
 			if ($tab_ip2[$i] == "*")
-				$ip2.="**".$tab_ip2[$i];
+				$ip2 .= "**".$tab_ip2[$i];
 			else
-				$ip2.="00".$tab_ip2[$i];
+				$ip2 .= "00".$tab_ip2[$i];
 		}
 		else if (strlen($tab_ip2[$i])==2)
-			$ip2.="0".$tab_ip2[$i];
+			$ip2 .= "0".$tab_ip2[$i];
 		else
-			$ip2.=$tab_ip2[$i];
+			$ip2 .= $tab_ip2[$i];
 		$i++;
 	}
 	$i = 0;
@@ -1665,7 +1668,7 @@ function tdcell_rowspan($colclass, $step)
 //Display the entry-type color key. This has up to 2 rows, up to 10 columns.
 function show_colour_key($area_id)
 {
-	echo "<table class=\"legende\"><caption class=\"titre\">Légendes des réservations</caption>\n";
+	echo '<table class="legende"><caption class="titre">Légendes des réservations</caption>'.PHP_EOL;
 	$sql = "SELECT DISTINCT t.id, t.type_name, t.type_letter FROM ".TABLE_PREFIX."_type_area t
 	LEFT JOIN ".TABLE_PREFIX."_j_type_area j on j.id_type=t.id
 	WHERE (j.id_area  IS NULL or j.id_area != '".$area_id."')
@@ -1683,19 +1686,19 @@ function show_colour_key($area_id)
 				$type_name   = $row[1];
 				$type_letter = $row[2];
 				if ($nct == -1)
-					echo "<tr>";
+					echo '<tr>'.PHP_EOL;
 				if (++$nct == 2)
 				{
 					$nct = 0;
-					echo "</tr><tr>";
+					echo '</tr>'.PHP_EOL, '<tr>'.PHP_EOL;
 				}
 				tdcell($type_letter);
-				echo "$type_name</td>\n";
+				echo $type_name, '</td>'.PHP_EOL;
 			}
 		}
 		if ($i % 2 == 1)
-			echo '<td></td></tr>';
-		echo "</table>\n";
+			echo '<td></td>',PHP_EOL,'</tr>'.PHP_EOL;
+		echo '</table>'.PHP_EOL;
 	}
 }
 //Round time down to the nearest resolution
@@ -1781,28 +1784,28 @@ function make_site_select_html($link, $current_site, $year, $month, $day, $user)
 				$nb_sites_a_afficher++;
 				$selected = ($row[0] == $current_site) ? 'selected="selected"' : '';
 				$link2 = $link.'?year='.$year.'&amp;month='.$month.'&amp;day='.$day.'&amp;area='.$default_area;
-				$out_html.="\n".'           <option '.$selected.' value="'.$link2.'">'.htmlspecialchars($row[1]).'</option>'.PHP_EOL;
+				$out_html .= '<option '.$selected.' value="'.$link2.'">'.htmlspecialchars($row[1]).'</option>'.PHP_EOL;
 			}
 		}
 	}
 	if ($nb_sites_a_afficher > 1)
 	{
-		$out_html .= "</select>".PHP_EOL;
-		$out_html .= "</div>".PHP_EOL;
-		$out_html .= "<script type=\"text/javascript\">".PHP_EOL;
-		$out_html .= "function site_go()".PHP_EOL;
-		$out_html .= "{".PHP_EOL;
-		$out_html .= "box = document.getElementById(\"site_001\").area;".PHP_EOL;
-		$out_html .= "destination = box.options[box.selectedIndex].value;".PHP_EOL;
-		$out_html .= "if (destination) location.href = destination;".PHP_EOL;
-		$out_html .= "}".PHP_EOL;
-		$out_html .= "</script>".PHP_EOL;
-		$out_html .= "<noscript>".PHP_EOL;
-		$out_html .= "<div>".PHP_EOL;
-		$out_html .= "<input type=\"submit\" value=\"Change\" />".PHP_EOL;
-		$out_html .= "</div>".PHP_EOL;
-		$out_html .= "</noscript>".PHP_EOL;
-		$out_html .= "</form>".PHP_EOL;
+		$out_html .= '</select>'.PHP_EOL;
+		$out_html .= '</div>'.PHP_EOL;
+		$out_html .= '<script type="text/javascript">'.PHP_EOL;
+		$out_html .= 'function site_go()'.PHP_EOL;
+		$out_html .= '{'.PHP_EOL;
+		$out_html .= 'box = document.getElementById("site_001").area;'.PHP_EOL;
+		$out_html .= 'destination = box.options[box.selectedIndex].value;'.PHP_EOL;
+		$out_html .= 'if (destination) location.href = destination;'.PHP_EOL;
+		$out_html .= '}'.PHP_EOL;
+		$out_html .= '</script>'.PHP_EOL;
+		$out_html .= '<noscript>'.PHP_EOL;
+		$out_html .= '<div>'.PHP_EOL;
+		$out_html .= '<input type="submit" value="Change" />'.PHP_EOL;
+		$out_html .= '</div>'.PHP_EOL;
+		$out_html .= '</noscript>'.PHP_EOL;
+		$out_html .= '</form>'.PHP_EOL;
 		return $out_html;
 	}
 }
@@ -1839,7 +1842,7 @@ function make_area_select_html( $link, $current_site, $current_area, $year, $mon
 	$out_html .= "<form id=\"area_001\" action=\"".$_SERVER['PHP_SELF']."\">\n";
 	$out_html .= "<div><select class=\"form-control\" name=\"area\" ";
 	$out_html .= " onchange=\"area_go()\" ";
-	$out_html .= ">\n";
+	$out_html .= '>'.PHP_EOL;
 	$res = grr_sql_query($sql);
 	if ($res)
 	{
@@ -4397,7 +4400,7 @@ function supprimerReservationsUtilisateursEXT($avec_resa,$avec_privileges)
 	foreach ($logins as $log)
 	{
 		// Table grr_j_mailuser_room
-		$test = grr_sql_query1("select count(login) from ".TABLE_PREFIX."_j_mailuser_room WHERE login='".$log."'");
+		$test = grr_sql_query1("SELECT count(login) FROM ".TABLE_PREFIX."_j_mailuser_room WHERE login='".$log."'");
 		if ($test >=1)
 		{
 			if ($avec_privileges == "y")
@@ -4411,7 +4414,7 @@ function supprimerReservationsUtilisateursEXT($avec_resa,$avec_privileges)
 				$logins_liaison[] = strtolower($log);
 		}
 		// Table grr_j_user_area
-		$test = grr_sql_query1("select count(login) from ".TABLE_PREFIX."_j_user_area WHERE login='".$log."'");
+		$test = grr_sql_query1("SELECT count(login) FROM ".TABLE_PREFIX."_j_user_area WHERE login='".$log."'");
 		if ($test >=1)
 		{
 			if ($avec_privileges == "y")
@@ -4425,7 +4428,7 @@ function supprimerReservationsUtilisateursEXT($avec_resa,$avec_privileges)
 				$logins_liaison[] = strtolower($log);
 		}
 		// Table grr_j_user_room
-		$test = grr_sql_query1("select count(login) from ".TABLE_PREFIX."_j_user_room WHERE login='".$log."'");
+		$test = grr_sql_query1("SELECT count(login) FROM ".TABLE_PREFIX."_j_user_room WHERE login='".$log."'");
 		if ($test >= 1)
 		{
 			if ($avec_privileges == "y")
