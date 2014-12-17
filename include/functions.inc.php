@@ -976,7 +976,7 @@ function print_header($day = '', $month = '', $year = '', $type_session = 'with_
 			echo '<td class="configuration" >',PHP_EOL;
 			if (@file_exists('js/'.$clock_file))
 			{
-				echo '<div class="clock">'.PHP_EOL,'<div id="Date">'.PHP_EOL,'&nbsp;<span id="hours"></span>h<span id="min"></span>'.PHP_EOL,'</div></div>'.PHP_EOL;
+				echo '<div class="clock">',PHP_EOL,'<div id="Date">',PHP_EOL,'&nbsp;<span id="hours"></span>h<span id="min"></span>',PHP_EOL,'</div>',PHP_EOL,'</div>',PHP_EOL;
 			}
 			$_SESSION['chemin_retour'] = '';
 			if (isset($_SERVER['QUERY_STRING']) && ($_SERVER['QUERY_STRING'] != ''))
@@ -993,57 +993,46 @@ function print_header($day = '', $month = '', $year = '', $type_session = 'with_
 			{
 				if ((Settings::get('sso_statut') == 'cas_visiteur') || (Settings::get('sso_statut') == 'cas_utilisateur'))
 				{
-					echo '<br /> <a href="index.php?force_authentification=y">'.get_vocab("authentification").'</a>'.PHP_EOL;
-					echo '<br /> <small><i><a href="login.php">'.get_vocab("connect_local").'</a></i></small>'.PHP_EOL;
+					echo '<br><a href="index.php?force_authentification=y">'.get_vocab("authentification").'</a>'.PHP_EOL;
+					echo '<br><small><i><a href="login.php">'.get_vocab("connect_local").'</a></i></small>'.PHP_EOL;
 				}
 				else
-					echo '<br /> <a href="login.php">'.get_vocab("connect").'</a>'.PHP_EOL;
+					echo '<br><a href="login.php">'.get_vocab("connect").'</a>'.PHP_EOL;
 			}
 			else
 			{
-				echo '<br /> <b>'.get_vocab("welcome_to").htmlspecialchars($_SESSION['prenom']).' '.htmlspecialchars($_SESSION['nom']).'</b>'.PHP_EOL;
-				echo '<br /> <a href="my_account.php?day='.$day.'&amp;year='.$year.'&amp;month='.$month.'">'.get_vocab("manage_my_account").'</a>'.PHP_EOL;
+				echo '<br><b>'.get_vocab("welcome_to").htmlspecialchars($_SESSION['prenom']).' '.htmlspecialchars($_SESSION['nom']).'</b>'.PHP_EOL;
+				echo '<br><a href="my_account.php?day='.$day.'&amp;year='.$year.'&amp;month='.$month.'">'.get_vocab("manage_my_account").'</a>'.PHP_EOL;
 				if (verif_access_search(getUserName()))
-					echo '<br/><a href="report.php">'.get_vocab("report").'</a>'.PHP_EOL;
+					echo '<br><a href="report.php">'.get_vocab("report").'</a>'.PHP_EOL;
 				$disconnect_link = false;
 				if (!((Settings::get("cacher_lien_deconnecter") == 'y') && (isset($_SESSION['est_authentifie_sso']))))
 				{
 					$disconnect_link = true;
 					if (Settings::get("authentification_obli") == 1)
-						echo '<br /> <a href="./logout.php?auto=0" >'.get_vocab('disconnect').'</a>'.PHP_EOL;
+						echo '<br><a href="./logout.php?auto=0" >'.get_vocab('disconnect').'</a>'.PHP_EOL;
 					else
-						echo '<br /> <a href="./logout.php?auto=0&amp;redirect_page_accueil=yes" >'.get_vocab('disconnect').'</a>'.PHP_EOL;
+						echo '<br><a href="./logout.php?auto=0&amp;redirect_page_accueil=yes" >'.get_vocab('disconnect').'</a>'.PHP_EOL;
 				}
 				if ((Settings::get("Url_portail_sso") != '') && (isset($_SESSION['est_authentifie_sso'])))
 				{
 					if ($disconnect_link)
 						echo ' - '.PHP_EOL;
 					else
-						echo '<br />'.PHP_EOL;
+						echo '<br>'.PHP_EOL;
 					echo '<a href="'.Settings::get("Url_portail_sso").'">'.get_vocab("Portail_accueil").'</a>'.PHP_EOL;
 				}
 				if ((Settings::get('sso_statut') == 'lasso_visiteur') || (Settings::get('sso_statut') == 'lasso_utilisateur'))
 				{
-					echo '<br />';
+					echo '<br>';
 					if ($_SESSION['lasso_nameid'] == NULL)
 						echo '<a href="lasso/federate.php">'.get_vocab('lasso_federate_this_account').'</a>'.PHP_EOL;
 					else
 						echo '<a href="lasso/defederate.php">'.get_vocab('lasso_defederate_this_account').'</a>'.PHP_EOL;
 				}
 			}
-			echo '</td>'.PHP_EOL;
-			echo '</tr>'.PHP_EOL;
-			echo '</table>'.PHP_EOL;
-			echo '</div>'.PHP_EOL;
-			echo '</div>'.PHP_EOL;
-			echo '<div class="tab">'.PHP_EOL;
-			echo '<ul class="login">'.PHP_EOL;
-			echo '<li>'.PHP_EOL;
-			echo '<a id="open" class="open" href="#">Menu</a>'.PHP_EOL;
-			echo '</li>'.PHP_EOL;
-			echo '</ul>'.PHP_EOL;
-			echo '</div>'.PHP_EOL;
-			echo '</div>'.PHP_EOL;
+			echo '</td>',PHP_EOL,'</tr>',PHP_EOL,'</table>',PHP_EOL,'</div>',PHP_EOL,'</div>',PHP_EOL,'<div class="tab">',PHP_EOL,'<ul class="login">',PHP_EOL;
+			echo '<li>',PHP_EOL,'<a id="open" class="open" href="#">Menu</a>',PHP_EOL,'</li>',PHP_EOL,'</ul>',PHP_EOL,'</div>',PHP_EOL,'</div>',PHP_EOL;
 		}
 	}
 }
