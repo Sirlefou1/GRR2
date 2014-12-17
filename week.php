@@ -161,14 +161,22 @@ if (verif_display_fiche_ressource(getUserName(), $room) && $_GET['pview'] != 1)
 	get_vocab("fiche_ressource"),'"><span class="glyphcolor glyphalign glyphicon glyphicon-search"></span></a>',PHP_EOL;
 }
 if (authGetUserLevel(getUserName(),$room) > 2 && $_GET['pview'] != 1)
+{
 	echo '<a href="admin_edit_room.php?room=',$room,'"><span class="glyphcolor glyphalign glyphicon glyphicon-cog"></span></a>',PHP_EOL;
+}
 affiche_ressource_empruntee($room);
 if ($this_statut_room == "0" && $_GET['pview'] != 1)
+{
 	echo '<br><span class="texte_ress_tempo_indispo">',get_vocab("ressource_temporairement_indisponible"),'</span>',PHP_EOL;
+}
 if ($this_moderate_room == "1" && $_GET['pview'] != 1)
+{
 	echo '<br><span class="texte_ress_moderee">',get_vocab("reservations_moderees"),'</span>',PHP_EOL;
+}
 if ($this_area_show_comment == "y" && $_GET['pview'] != 1 && ($this_area_comment != "") && ($this_area_comment != -1))
+{
 	echo '<span style="text-align:center;">',$this_area_comment,'</span>',PHP_EOL;
+}
 if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
 {
 	echo '<table class="table-header">',PHP_EOL,'<tr>',PHP_EOL,'<td class="left">',PHP_EOL,
@@ -185,14 +193,14 @@ echo '<br>'.get_vocab("week").get_vocab("deux_points").utf8_strftime($dformat, $
 echo '</div>'.PHP_EOL;
 if (isset($_GET['precedent']))
 {
-	if ($_GET['pview'] == 1 AND $_GET['precedent'] == 1)
+	if ($_GET['pview'] == 1 && $_GET['precedent'] == 1)
 		echo '<span id="lienPrecedent">',PHP_EOL,'<button class="btn btn-default btn-xs" onclick="charger();javascript:history.back();">Précedent</button>',PHP_EOL,'</span>',PHP_EOL;
 }
 echo '<div class="contenu_planning">';
 $sql = "SELECT start_time, end_time, type, name, id, beneficiaire, statut_entry, description, option_reservation, moderate, beneficiaire_ext
 FROM ".TABLE_PREFIX."_entry
 WHERE room_id=$room
-AND start_time < ".($week_end+$resolution)." AND end_time > $week_start ORDER BY start_time";
+AND start_time < ".($week_end + $resolution)." AND end_time > $week_start ORDER BY start_time";
 $first_slot = $morningstarts * 3600 / $resolution;
 $last_slot = ($eveningends * 3600 + $eveningends_minutes * 60) / $resolution;
 if ($debug_flag)
