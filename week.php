@@ -129,16 +129,17 @@ if ($room <= 0)
 }
 include("menu_gauche.php");
 if ($_GET['pview'] != 1)
-	echo "<div id=\"planning\">";
+	echo '<div id="planning">'.PHP_EOL;
 else
-	echo "<div id=\"print_planning\">";
+	echo '<div id="print_planning">'.PHP_EOL;
 include "chargement.php";
-echo "<div class=\"titre_planning_week\">";
+echo '<div class="titre_planning_week">'.PHP_EOL;
 if (($this_room_name_des) && ($this_room_name_des != "-1"))
 	$this_room_name_des = " (".$this_room_name_des.")";
 else
 	$this_room_name_des = "";
-switch ($dateformat) {
+switch ($dateformat)
+{
 	case "en":
 	$dformat = "%A, %b %d";
 	break;
@@ -146,14 +147,14 @@ switch ($dateformat) {
 	$dformat = "%A %d %b";
 	break;
 }
-$i = mktime(0,0,0,$month_week,$day_week-7,$year_week);
-$yy = date("Y",$i);
-$ym = date("m",$i);
-$yd = date("d",$i);
-$i = mktime(0,0,0,$month_week,$day_week+7,$year_week);
-$ty = date("Y",$i);
-$tm = date("m",$i);
-$td = date("d",$i);
+$i = mktime(0, 0, 0, $month_week,$day_week - 7, $year_week);
+$yy = date("Y", $i);
+$ym = date("m", $i);
+$yd = date("d", $i);
+$i = mktime(0, 0, 0, $month_week, $day_week + 7, $year_week);
+$ty = date("Y", $i);
+$tm = date("m", $i);
+$td = date("d", $i);
 if (verif_display_fiche_ressource(getUserName(), $room) && $_GET['pview'] != 1)
 	echo "<a href='javascript:centrerpopup(\"view_room.php?id_room=$room\",600,480,\"scrollbars=yes,statusbar=no,resizable=yes\")' title=\"".get_vocab("fiche_ressource")."\">
 <span class=\"glyphcolor glyphalign glyphicon glyphicon-search\"></span></a>";
@@ -183,9 +184,9 @@ if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
 	</table>";
 }
 $setting = Settings::get("menu_gauche");
-echo "<h4 class=\"titre\">".get_vocab("week").get_vocab("deux_points").utf8_strftime($dformat, $week_start)." - ". utf8_strftime($dformat, $week_end);
-echo " ".ucfirst($this_area_name)." - $this_room_name $this_room_name_des</h4>";
-echo "</div>\n";
+echo '<h4 class="titre">'.ucfirst($this_area_name).' - '.$this_room_name.' '.$this_room_name_des;
+echo '<br>'.get_vocab("week").get_vocab("deux_points").utf8_strftime($dformat, $week_start).' - '.utf8_strftime($dformat, $week_end).'</h4>'.PHP_EOL;
+echo '</div>'.PHP_EOL;
 if (isset($_GET['precedent']))
 {
 	if ($_GET['pview'] == 1 AND $_GET['precedent'] == 1)

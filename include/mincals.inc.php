@@ -201,7 +201,7 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 				$show = $basetime + ($i * 24 * 60 * 60);
 				$fl = ucfirst(utf8_strftime('%a',$show));
 				if ($display_day[$j] == 1)
-					$s .= "<td class=\"calendarcol1\">$fl</td>\n";
+					$s .= '<td class="calendarcol1">'.$fl.'</td>'.PHP_EOL;
 				else
 					$s .= "";
 			}
@@ -225,32 +225,32 @@ function minicals($year, $month, $day, $area, $room, $dmy)
 			$date = mktime(12, 0, 0, $this->month, 1, $this->year);
 			$first = (strftime("%w",$date) + 7 - $weekstarts) % 7;
 			$monthName = ucfirst(utf8_strftime("%B", $date));
-			$s .= "\n<table class=\"calendar\">\n";
-			$s .= "<caption>";
+			$s .= PHP_EOL.'<table class="calendar">'.PHP_EOL;
+			$s .= '<caption>'.PHP_EOL;
 			$week = $this->getWeekNumber($date);
 			$weekd = $week;
-			$s .= "<div class=\"btn-group\">";
+			$s .= '<div class="btn-group">'.PHP_EOL;
 			$s .= $this->createlink(0, -1, $this->month, $this->year, $this->dmy, $this->room, $this->area, "previous_year", "backward");
 			$s .= $this->createlink(-1, 0, $this->month, $this->year, $this->dmy, $this->room, $this->area, "see_month_for_this_room", "chevron-left");
 			if (($this->dmy != 'day') && ($this->dmy != 'week_all') && ($this->dmy != 'month_all') && ($this->dmy != 'month_all2'))
-				$s .= "<button type=\"button\" title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_month"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='month.php?year=$this->year&amp;month=$this->month&amp;day=1&amp;area=$this->area&amp;room=$this->room';\">$monthName $this->year</button>\n";
+				$s .= '<button title="'.htmlspecialchars(get_vocab("see_all_the_rooms_for_the_month")).'" class="btn btn-default btn-xs" onclick="charger();javascript: location.href=\'month.php?year='.$this->year.'&amp;month='.$this->month.'&amp;day=1&amp;area='.$this->area.'&amp;room='.$this->room.'\';">'.$monthName.' '.$this->year.'</button>'.PHP_EOL;
 			else
-				$s .= "<button type=\"button\" title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_month"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='".$type_month_all.".php?year=$this->year&amp;month=$this->month&amp;day=1&amp;area=$this->area';\">$monthName $this->year</button>\n";
+				$s .= '<button title="'.htmlspecialchars(get_vocab("see_all_the_rooms_for_the_month")).'" class="btn btn-default btn-xs" onclick="charger();javascript: location.href=\''.$type_month_all.'.php?year='.$this->year.'&amp;month='.$this->month.'&amp;day=1&amp;area='.$this->area.'\';">'.$monthName.' '.$this->year.'</button>'.PHP_EOL;
 			$s .= $this->createlink(1, 0, $this->month, $this->year, $this->dmy, $this->room, $this->area, "see_month_for_this_room", "chevron-right");
 			$s .= $this->createlink(0, 1, $this->month, $this->year, $this->dmy, $this->room, $this->area, "following_year", "forward");
-			$s .= "</div>";
+			$s .= '</div>'.PHP_EOL;
 			$action = $this->GetAction();
-			$s .= "<br/><button type=\"button\" title=\"".htmlspecialchars(get_vocab("gototoday"))."\" class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='".$action."';\">".get_vocab("gototoday")."</button>";
-			$s .= "</caption>";
-			$s .= "<tr><td class=\"calendarcol1\">".get_vocab("semaine")."</td>\n";
+			$s .= '<br/><button title="'.htmlspecialchars(get_vocab("gototoday")).'" class="btn btn-default btn-xs" onclick="charger();javascript: location.href=\''.$action.'\';">'.get_vocab("gototoday").'</button>'.PHP_EOL;
+			$s .= '</caption>'.PHP_EOL;
+			$s .= '<tr>'.PHP_EOL.'<td class="calendarcol1">'.get_vocab("semaine").'</td>'.PHP_EOL;
 			$s .= $this->getFirstDays();
-			$s .= "</tr>\n";
+			$s .= '</tr>'.PHP_EOL;
 			$d = 1 - $first;
 			$temp = 1;
 			$s .= $this->DayOfMonth($d, $daysInMonth, $week_today, $week, $temp);
 			if ($week - $weekd < 6)
 				$s .= "";
-			$s .= "</table>\n";
+			$s .= '</table>'.PHP_EOL;
 			return $s;
 		}
 	}

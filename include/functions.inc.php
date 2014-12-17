@@ -2208,30 +2208,30 @@ function make_area_item_html( $link, $current_site, $current_area, $year, $month
 		FROM ".TABLE_PREFIX."_area
 		ORDER BY order_display, area_name";
 	}
-	$out_html = "<br /><div class=\"panel panel-default\"><div class=\"panel-heading\">".get_vocab("areas")."</div>\n<div class=\"panel-body\">\n";
-	$out_html .= "<form class=\"ressource\" id=\"area_001\" action=\"".$_SERVER['PHP_SELF']."\">\n";
+	$out_html = '<br />'.PHP_EOL.'<div class="panel panel-default">'.PHP_EOL.'<div class="panel-heading">'.get_vocab("areas").'</div>'.PHP_EOL.'<div class="panel-body">'.PHP_EOL;
+	$out_html .= '<form class="ressource" id="area_001" action="'.$_SERVER['PHP_SELF'].'">'.PHP_EOL;
 	$res = grr_sql_query($sql);
 	if ($res)
 	{
 		for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 		{
-			$link2 = "$link?year=$year&amp;month=$month&amp;day=$day&amp;area=$row[0]";
+			$link2 = $link.'?year='.$year.'&amp;month='.$month.'&amp;day='.$day.'&amp;area='.$row[0];
 			if (authUserAccesArea($user, $row[0]) == 1)
 			{
 				/* Couleur du domaine selectionné*/
 				if ($current_area != null)
 				{
 					if ($current_area == $row[0])
-						$out_html .= "<input type=\"button\" class=\"btn btn-primary btn-lg btn-block item_select\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])."\" onclick=\"location.href='$link2' ;charger();\"/>\n";
+						$out_html .= '<input class="btn btn-primary btn-lg btn-block item_select" name="'.$row[0].'" value="'.htmlspecialchars($row[1]).'" onclick="location.href=\''.$link2.'\' ;charger();"/>'.PHP_EOL;
 					else
-						$out_html .= "<input type=\"button\" class=\"btn btn-default btn-lg btn-block item\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])."\" onclick=\"location.href='$link2' ;charger();\"/>\n";
+						$out_html .= '<input class="btn btn-default btn-lg btn-block item" name="'.$row[0].'" value="'.htmlspecialchars($row[1]).'" onclick="location.href=\''.$link2.'\' ;charger();"/>'.PHP_EOL;
 				}
 				else
-					$out_html .= "<input type=\"button\" class=\"btn btn-default btn-lg btn-block item\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])." \" onclick=\"location.href='$link2' ;charger();\"/>\n";
+					$out_html .= '<input class="btn btn-default btn-lg btn-block item" name="'.$row[0].'" value="'.htmlspecialchars($row[1]).'" onclick="location.href=\''.$link2.'\' ;charger();"/>'.PHP_EOL;
 			}
 		}
 	}
-	$out_html .= "</form></div></div>";
+	$out_html .= '</form>'.PHP_EOL.'</div>'.PHP_EOL.'</div>'.PHP_EOL;
 	return $out_html;
 }
 //end make_area_select_html
@@ -2249,7 +2249,7 @@ function make_area_item_html( $link, $current_site, $current_area, $year, $month
 function make_room_item_html($link, $current_area, $current_room, $year, $month, $day)
 {
 	global $vocab;
-	$out_html = "<br /><div class=\"panel panel-default\"><div class=\"panel-heading\">".get_vocab('rooms').get_vocab("deux_points")."</div><div class=\"panel-body\"><form class=\"ressource\" id=\"room_001\" action=\"".$_SERVER['PHP_SELF']."\">\n";
+	$out_html = '<br />'.PHP_EOL.'<div class="panel panel-default">'.PHP_EOL.'<div class="panel-heading">'.get_vocab("rooms").get_vocab("deux_points").'</div>'.PHP_EOL.'<div class="panel-body">'.PHP_EOL.'<form class="ressource" id="room_001" action="'.$_SERVER['PHP_SELF'].'">'.PHP_EOL;
 	$sql = "SELECT id, room_name, description FROM ".TABLE_PREFIX."_room WHERE area_id='".protect_data_sql($current_area)."' ORDER BY order_display,room_name";
 	$res = grr_sql_query($sql);
 	if ($res)
@@ -2258,29 +2258,29 @@ function make_room_item_html($link, $current_area, $current_room, $year, $month,
 		{
 			if (verif_acces_ressource(getUserName(),$row[0]))
 			{
-				$link2 = "$link.php?year=$year&amp;month=$month&amp;day=$day&amp;room=$row[0]";
-				$link_all_room = "week_all.php?year=$year&amp;month=$month&amp;day=$day&amp;area=$current_area";
+				$link2 = $link.'.php?year='.$year.'&amp;month='.$month.'&amp;day='.$day.'&amp;room='.$row[0];
+				$link_all_room = 'week_all.php?year='.$year.'&amp;month='.$month.'&amp;day='.$day.'&amp;area='.$current_area;
 				if (!isset($_GET['room']))
 				{
 					if (isset($all_ressource) && $all_ressource == 0)
-						$out_html .= "<div class=\"panel-body\"><input id=\"item_select\" type=\"button\" class=\"btn btn-primary btn-lg btn-block\" name=\"all_room\" value=\"Toutes les ressources \" onclick=\"location.href='$link_all_room' ;charger();\"/>\n";
-					$out_html .= "<input type=\"button\" class=\"btn btn-default btn-lg btn-block item\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])." \" onclick=\"location.href='$link2' ;charger();\"/>\n";
+						$out_html .= '<div class="panel-body">'.PHP_EOL.'<input id="item_select" class="btn btn-primary btn-lg btn-block" name="all_room" value="Toutes les ressources" onclick="location.href=\''.$link_all_room.'\' ;charger();"/>'.PHP_EOL;
+					$out_html .= '<input class="btn btn-default btn-lg btn-block item" name="'.$row[0].'" value="'.htmlspecialchars($row[1]).'" onclick="location.href=\''.$link2.'\' ;charger();"/>'.PHP_EOL;
 					$all_ressource = 1;
 				}
 				else
 				{
 					if (isset($all_ressource) && $all_ressource == 0)
-						$out_html .= "<input type=\"button\" class=\"btn btn-primary btn-lg btn-block item\" name=\"all_room\" value=\"Toutes les ressources \" onclick=\"location.href='$link_all_room' ;charger();\"/>\n";
+						$out_html .= '<input class="btn btn-primary btn-lg btn-block item" name="all_room" value="Toutes les ressources" onclick="location.href=\''.$link_all_room.'\' ;charger();"/>'.PHP_EOL;
 					$all_ressource = 1;
 					if ($current_room == $row[0])
-						$out_html .= "<input type=\"button\" class=\"btn btn-primary btn-lg btn-block item_select\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])."\" onclick=\"location.href=' $link2';charger();\"/>\n";
+						$out_html .= '<input class="btn btn-primary btn-lg btn-block item_select" name="'.$row[0].'" value="'.htmlspecialchars($row[1]).'" onclick="location.href=\''.$link2.'\';charger();"/>'.PHP_EOL;
 					else
-						$out_html .= "<input type=\"button\" class=\"btn btn-default btn-lg btn-block item\" name=\"$row[0]\" value=\"".htmlspecialchars($row[1])." \" onclick=\"location.href=' $link2' ;charger();\" />\n";
+						$out_html .= '<input class="btn btn-default btn-lg btn-block item" name="'.$row[0].'" value="'.htmlspecialchars($row[1]).'" onclick="location.href=\''.$link2.'\' ;charger();"/>'.PHP_EOL;
 				}
 			}
 		}
 	}
-	$out_html .= "</form></div></div>";
+	$out_html .= '</form>'.PHP_EOL.'</div>'.PHP_EOL.'</div>'.PHP_EOL;
 	return $out_html;
 }
 # end make_room_item_html
