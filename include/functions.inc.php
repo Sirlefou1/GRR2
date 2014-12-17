@@ -90,7 +90,7 @@ function getHolidays($year = null)
 	$easterDate  = easter_date($year);
 	$easterDay   = date('j', $easterDate);
 	$easterMonth = date('n', $easterDate);
-	$easterYear   = date('Y', $easterDate);
+	$easterYear  = date('Y', $easterDate);
 	$holidays = array(
 	// Dates fixes
 	mktime(0, 0, 0, 1,  1,  $year),  // 1er janvier

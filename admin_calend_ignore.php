@@ -51,7 +51,7 @@ if (isset($_POST['record']) && ($_POST['record'] == 'yes'))
 			$day_old[$i] = $row_old[0];
 	}
 	// On vide la table ".TABLE_PREFIX."_calendar
-	$sql = "truncate table ".TABLE_PREFIX."_calendar";
+	$sql = "TRUNCATE table ".TABLE_PREFIX."_calendar";
 	if (grr_sql_command($sql) < 0)
 		fatal_error(0, "<p>" . grr_sql_error());
 	$result = 0;
@@ -91,29 +91,30 @@ if (isset($_POST['record']) && ($_POST['record'] == 'yes'))
 			$day++;
 		}
 		$month++;
-		if ($month == 13) {
+		if ($month == 13)
+		{
 			$year++;
 			$month = 1;
 		}
 	}
 }
-echo "\n<p>".get_vocab("les_journees_cochees_sont_ignorees")."</p>";
-echo "\n<table cellpadding=\"3\">\n";
+echo '<p>',get_vocab("les_journees_cochees_sont_ignorees"),'</p>',PHP_EOL;
+echo '<table cellpadding="3">',PHP_EOL;
 $basetime = mktime(12, 0, 0, 6, 11 + $weekstarts, 2000);
 for ($i = 0; $i < 7; $i++)
 {
 	$show = $basetime + ($i * 24 * 60 * 60);
 	$lday = utf8_strftime('%A',$show);
-	echo "<tr>\n";
-	echo "<td><span class='small'><a href='admin_calend_ignore.php' onclick=\"setCheckboxesGrr(document.getElementById('formulaire'), true, '$lday' ); return false;\">".get_vocab("check_all_the").$lday."s</a></span></td>\n";
-	echo "<td><span class='small'><a href='admin_calend_ignore.php' onclick=\"setCheckboxesGrr(document.getElementById('formulaire'), false, '$lday' ); return false;\">".get_vocab("uncheck_all_the").$lday."s</a></span></td>\n";
-	echo "</tr>\n";
+	echo '<tr>',PHP_EOL;
+	echo '<td>',PHP_EOL,'<span class="small"><a href="admin_calend_ignore.php" onclick="setCheckboxesGrr(document.getElementById("formulaire"), true, ',$lday,' ); return false;">',get_vocab("check_all_the"),$lday,'s</a></span>',PHP_EOL,'</td>',PHP_EOL;
+	echo '<td>',PHP_EOL,'<span class="small"><a href="admin_calend_ignore.php" onclick="setCheckboxesGrr(document.getElementById("formulaire"), false, ',$lday,' ); return false;">',get_vocab("uncheck_all_the"),$lday,'s</a></span>',PHP_EOL,'</td>',PHP_EOL;
+	echo '</tr>',PHP_EOL;
 }
-echo "<tr>\n<td><span class='small'><a href='admin_calend_ignore.php' onclick=\"setCheckboxesGrr(document.getElementById('formulaire'), false, 'all'); return false;\">".get_vocab("uncheck_all_")."</a></span></td>\n";
-echo "<td> </td></tr>\n";
-echo "</table>\n";
-echo "<form action=\"admin_calend_ignore.php\" method=\"post\" id=\"formulaire\">\n";
-echo "<table cellspacing=\"20\">\n";
+echo '<tr>',PHP_EOL,'<td>',PHP_EOL,'<span class="small"><a href="admin_calend_ignore.php" onclick="setCheckboxesGrr(document.getElementById("formulaire"), false, "all"); return false;">',get_vocab("uncheck_all_"),'</a></span>',PHP_EOL,'</td>',PHP_EOL;
+echo '<td>',PHP_EOL,'</td>',PHP_EOL,'</tr>',PHP_EOL;
+echo '</table>',PHP_EOL;
+echo '<form action="admin_calend_ignore.php" method="post" id="formulaire">',PHP_EOL;
+echo '<table cellspacing="20">',PHP_EOL;
 $n = Settings::get("begin_bookings");
 $end_bookings = Settings::get("end_bookings");
 $debligne = 1;
@@ -124,17 +125,17 @@ while ($n <= $end_bookings)
 {
 	if ($debligne == 1)
 	{
-		echo "<tr>\n";
+		echo '<tr>',PHP_EOL;
 		$inc = 0;
 		$debligne = 0;
 	}
 	$inc++;
-	echo "<td>\n";
+	echo '<td>',PHP_EOL;
 	echo cal($month, $year);
-	echo "</td>";
+	echo '</td>',PHP_EOL;
 	if ($inc == 3)
 	{
-		echo "</tr>";
+		echo '</tr>',PHP_EOL;
 		$debligne = 1;
 	}
 	$month++;
@@ -143,26 +144,26 @@ while ($n <= $end_bookings)
 		$year++;
 		$month = 1;
 	}
-	$n = mktime(0,0,0,$month,1,$year);
+	$n = mktime(0, 0, 0, $month, 1, $year);
 }
 if ($inc < 3)
 {
 	$k=$inc;
 	while ($k < 3)
 	{
-		echo "<td> </td>\n";
+		echo '<td>',PHP_EOL,'</td>',PHP_EOL;
 		$k++;
 	}
 	// while
-	echo "</tr>";
+	echo '</tr>',PHP_EOL;
 }
-echo "</table>";
-echo "<div id=\"fixe\" style=\"text-align:center;\"><input class=\"btn btn-primary\" type=\"submit\" name=\"".get_vocab('save')."\" value=\"".get_vocab("save")."\" />\n";
-echo "<input class=\"btn btn-primary\" type=\"hidden\" name=\"record\" value=\"yes\" />\n";
-echo "</div>";
-echo "</form>";
+echo '</table>',PHP_EOL;
+echo '<div id="fixe" style="text-align:center;">',PHP_EOL,'<input class="btn btn-primary" type="submit" name="',get_vocab('save'),'" value="',get_vocab("save"),'" />',PHP_EOL;
+echo '<input class="btn btn-primary" type="hidden" name="record" value="yes" />',PHP_EOL;
+echo '</div>',PHP_EOL;
+echo '</form>',PHP_EOL;
 // fin de l'affichage de la colonne de droite
-echo "</td></tr></table>\n";
+echo '</td>',PHP_EOL,'</tr>',PHP_EOL,'</table>',PHP_EOL;
 ?>
 </body>
 </html>
