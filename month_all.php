@@ -108,8 +108,6 @@ $ym = date("n",$i);
 $i = mktime(0,0,0,$month + 1, 1, $year);
 $ty = date("Y",$i);
 $tm = date("n",$i);
-if ($debug_flag)
-	echo "<p>DEBUG: month=$month year=$year start=$weekday_start range=$month_start:$month_end\n";
 $all_day = preg_replace("/ /", " ", get_vocab("all_day2"));
 //Get all meetings for this month in the room that we care about
 //row[0] = Start time
@@ -180,8 +178,6 @@ else
 	{
 		$verif_acces_ressource[$row[10]] = verif_acces_ressource(getUserName(), $row[10]);
 		$acces_fiche_reservation[$row[10]] = verif_acces_fiche_reservation(getUserName(), $row[10]);
-		if ($debug_flag)
-			echo "<br />DEBUG: result $i, id $row[2], starts $row[0], ends $row[1]\n";
 		$t = max((int)$row[0], $month_start);
 		$end_t = min((int)$row[1], $month_end);
 		$day_num = date("j", $t);
@@ -191,8 +187,6 @@ else
 			$midnight = mktime(0, 0, 0, $month, $day_num, $year);
 		while ($t < $end_t)
 		{
-			if ($debug_flag)
-				echo "<br />DEBUG: Entry $row[2] day $day_num\n";
 			$d[$day_num]["id"][] = $row[2];
 			$d[$day_num]["id_room"][] = $row[10];
 			if (Settings::get("display_info_bulle") == 1)
@@ -290,46 +284,30 @@ else
 			}
 		}
 	}
-	if ($debug_flag)
-	{
-		echo "<p>DEBUG: Array of month day data:<p><pre>\n";
-		for ($i = 1; $i <= $days_in_month; $i++)
-		{
-			if (isset($d[$i]["id"]))
-			{
-				$n = count($d[$i]["id"]);
-				echo "Day $i has $n entries:\n";
-				for ($j = 0; $j < $n; $j++)
-					echo "  ID: " . $d[$i]["id"][$j] .
-				" Data: " . $d[$i]["data"][$j] . "\n";
-			}
-		}
-		echo "</pre>\n";
-	}
 	// Début du tableau affichant le planning
-	echo "<table class=\"table-bordered table-striped\">\n";
+	echo '<table class="table-bordered table-striped">',PHP_EOL;
 	// Début affichage première ligne (intitulé des jours)
-	echo "<tr>";
+	echo '<tr>',PHP_EOL;
 	for ($weekcol = 0; $weekcol < 7; $weekcol++)
 	{
 		$num_week_day = ($weekcol + $weekstarts) % 7;
 		// on n'affiche pas tous les jours de la semaine
 		if ($display_day[$num_week_day] == 1)
-			echo "<th style=\"width:14%;\">" . day_name($num_week_day) . "</th>\n";
+			echo '<th style="width:14%;">',day_name($num_week_day),'</th>',PHP_EOL;
 	}
-	echo "</tr>\n";
+	echo '</tr>',PHP_EOL;
 	// Fin affichage première ligne (intitulé des jours)
 	// Début affichage des lignes affichant les réservations
 	// On grise les cellules appartenant au mois précédent
 	$weekcol = 0;
 	if ($weekcol != $weekday_start)
 	{
-		echo "<tr>";
+		echo '<tr>',PHP_EOL;
 		for ($weekcol = 0; $weekcol < $weekday_start; $weekcol++)
 		{
 			$num_week_day = ($weekcol + $weekstarts)%7;
 			if ($display_day[$num_week_day] == 1)
-				echo "<td class=\"cell_month_o\" > </td>\n";
+				echo '<td class="cell_month_o"></td>',PHP_EOL;
 		}
 	}
 	// Début Première boucle sur les jours du mois
@@ -341,11 +319,11 @@ else
 		$name_day = ucfirst(utf8_strftime("%d", $t));
 		$jour_cycle = grr_sql_query1("SELECT Jours FROM ".TABLE_PREFIX."_calendrier_jours_cycle WHERE DAY='$t'");
 		if ($weekcol == 0)
-			echo "<tr>\n";
+			echo '<tr>',PHP_EOL;
 		if ($display_day[$num_week_day] == 1)
 		{
 			// début condition "on n'affiche pas tous les jours de la semaine"
-			echo "<td class=\"cell_month\">";
+			echo '<td class="cell_month">',PHP_EOL;
 			// On affiche les jours du mois dans le coin supérieur gauche de chaque cellule
 			$ferie_true = 0;
 			$class = "";
@@ -369,7 +347,7 @@ else
 				if ($ferie_true)
 					$class .= "ferie ";
 			}
-			echo "<div class=\"monthday ".$class."\"><a title=\"".htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day")).$title."\" href=\"day.php?year=$year&amp;month=$month&amp;day=$cday&amp;area=$area\">".$name_day;
+			echo '<div class="monthday ',$class,'">',PHP_EOL,'<a title="',htmlspecialchars(get_vocab("see_all_the_rooms_for_the_day")),$title,'" href="day.php?year=',$year,'&amp;month=',$month,'&amp;day=',$cday,'&amp;area=',$area,'">',$name_day;
 			if (Settings::get("jours_cycles_actif") == "Oui" && intval($jour_cycle) > -1)
 			{
 				if (intval($jour_cycle) > 0)
@@ -377,68 +355,67 @@ else
 				else
 					echo " - ".$jour_cycle;
 			}
-			echo "</a></div>\n";
+			echo '</a>',PHP_EOL,'</div>',PHP_EOL;
 			if (est_hors_reservation(mktime(0,0,0,$month,$cday,$year),$area))
 			{
-				echo "<div class=\"empty_cell\">";
-				echo "<img src=\"img_grr/stop.png\" alt=\"".get_vocab("reservation_impossible")."\" title=\"".get_vocab("reservation_impossible")."\" width=\"16\" height=\"16\" class=\"".$class_image."\"  /></div>\n";
+				echo '<div class="empty_cell">',PHP_EOL;
+				echo '<img src="img_grr/stop.png" alt="',get_vocab("reservation_impossible"),'" title="',get_vocab("reservation_impossible"),'" width="16" height="16" class="',$class_image,'" />',PHP_EOL,'</div>',PHP_EOL;
 			}
 			else
 			{
-					// Des réservation à afficher pour ce jour ?
+				// Des réservation à afficher pour ce jour ?
 				if (isset($d[$cday]["id"][0]))
 				{
 					$n = count($d[$cday]["id"]);
-						//Show the start/stop times, 2 per line, linked to view_entry.
-						//If there are 12 or fewer, show them, else show 11 and "...".
+					//Show the start/stop times, 2 per line, linked to view_entry.
+					//If there are 12 or fewer, show them, else show 11 and "...".
 					for ($i = 0; $i < $n; $i++)
 					{
 						if ($verif_acces_ressource[$d[$cday]["id_room"][$i]])
 						{
-								// On n'affiche pas les réservation des ressources non visibles pour l'utilisateur.
+							// On n'affiche pas les réservation des ressources non visibles pour l'utilisateur.
 							if ($i == 11 && $n > 12)
 							{
 								echo " ...\n";
 								break;
 							}
-							echo "\n<table class='table-noborder'><tr>\n";
+							echo '<table class="table-noborder">',PHP_EOL,'<tr>',PHP_EOL;
 							tdcell($d[$cday]["color"][$i]);
-							echo "<span class=\"small_planning\">";
+							echo '<span class="small_planning">',PHP_EOL;
 							if ($acces_fiche_reservation[$d[$cday]["id_room"][$i]])
 							{
 								if (Settings::get("display_level_view_entry") == 0)
 								{
 									$currentPage = 'month_all';
 									$id =   $d[$cday]["id"][$i];
-									echo "<a title=\"".htmlspecialchars($d[$cday]["who"][$i])."\" data-width=\"675\" onclick=\"request($id,$cday,$month,$year,'$currentPage',readData);\" data-rel=\"popup_name\" class=\"poplight\">";
+									echo '<a title="',htmlspecialchars($d[$cday]["who"][$i]),'" data-width="675" onclick="request(',$id,',',$cday,',',$month,',',$year,',\'',$currentPage,'\',readData);" data-rel="popup_name" class="poplight">',PHP_EOL;
 								}
 								else
 								{
-									echo "<a class=\"lienCellule\" title=\"".htmlspecialchars($d[$cday]["who"][$i])."\" href=\"view_entry.php?id=" . $d[$cday]["id"][$i]
-									. "&amp;day=$cday&amp;month=$month&amp;year=$year&amp;page=month_all\">";
+									echo '<a class="lienCellule" title="',htmlspecialchars($d[$cday]["who"][$i]),'" href="view_entry.php?id=',$d[$cday]["id"][$i],'&amp;day=',$cday,'&amp;month=',$month,'&amp;year=',$year,'&amp;page=month_all">',PHP_EOL;
 								}
 							}
-							echo $d[$cday]["data"][$i]. "<br />". htmlspecialchars($d[$cday]["room"][$i]). "<br />".$d[$cday]["who1"][$i]." <br/>" ;
+							echo $d[$cday]["data"][$i],'<br>',htmlspecialchars($d[$cday]["room"][$i]),'<br>',$d[$cday]["who1"][$i],'<br/>',PHP_EOL;
 							$Son_GenreRepeat = grr_sql_query1("SELECT type_name FROM ".TABLE_PREFIX."_type_area ,".TABLE_PREFIX."_entry  WHERE  ".TABLE_PREFIX."_entry.id= ".$d[$cday]["id"][$i]." AND ".TABLE_PREFIX."_entry.type= ".TABLE_PREFIX."_type_area.type_letter");
 							echo $Son_GenreRepeat."<br/>";
 							if ($d[$cday]["description"][$i] != "")
 								echo $d[$cday]["description"][$i]."<br/>";
 							if ((isset($d[$cday]["moderation"][$i])) && ($d[$cday]["moderation"][$i] == 1))
-								echo " <img src=\"img_grr/flag_moderation.png\" alt=\"".get_vocab("en_attente_moderation")."\" title=\"".get_vocab("en_attente_moderation")."\" class=\"image\" /> \n";
+								echo '<img src="img_grr/flag_moderation.png" alt="',get_vocab("en_attente_moderation"),'" title="',get_vocab("en_attente_moderation"),'" class="image" />',PHP_EOL;
 							if ($acces_fiche_reservation[$d[$cday]["id_room"][$i]])
-								echo "</a>";
-							echo "</span></td></tr></table>\n";
+								echo '</a>',PHP_EOL;
+							echo '</span>',PHP_EOL,'</td>',PHP_EOL,'</tr>',PHP_EOL,'</table>',PHP_EOL;
 						}
 					}
 				}
 			}
-			echo "</td>\n";
+			echo '</td>',PHP_EOL;
 		}
 			// fin condition "on n'affiche pas tous les jours de la semaine"
 		if (++$weekcol == 7)
 		{
 			$weekcol = 0;
-			echo "</tr>";
+			echo '</tr>',PHP_EOL;
 		}
 	}
 		// Fin Première boucle sur les jours du mois !
