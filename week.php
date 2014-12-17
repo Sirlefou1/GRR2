@@ -156,32 +156,28 @@ $ty = date("Y", $i);
 $tm = date("m", $i);
 $td = date("d", $i);
 if (verif_display_fiche_ressource(getUserName(), $room) && $_GET['pview'] != 1)
-	echo "<a href='javascript:centrerpopup(\"view_room.php?id_room=$room\",600,480,\"scrollbars=yes,statusbar=no,resizable=yes\")' title=\"".get_vocab("fiche_ressource")."\">
-<span class=\"glyphcolor glyphalign glyphicon glyphicon-search\"></span></a>";
+{
+	echo '<a href="javascript:centrerpopup(\'view_room.php?id_room=',$room,'\',600,480,\'scrollbars=yes,statusbar=no,resizable=yes\')" title="',
+	get_vocab("fiche_ressource"),'"><span class="glyphcolor glyphalign glyphicon glyphicon-search"></span></a>',PHP_EOL;
+}
 if (authGetUserLevel(getUserName(),$room) > 2 && $_GET['pview'] != 1)
-	echo "<a href='admin_edit_room.php?room=$room'><span class=\"glyphcolor glyphalign glyphicon glyphicon-cog\"></span></a>";
+	echo '<a href="admin_edit_room.php?room=',$room,'"><span class="glyphcolor glyphalign glyphicon glyphicon-cog"></span></a>',PHP_EOL;
 affiche_ressource_empruntee($room);
 if ($this_statut_room == "0" && $_GET['pview'] != 1)
-	echo "<br /><span class=\"texte_ress_tempo_indispo\">".get_vocab("ressource_temporairement_indisponible")."</span>";
+	echo '<br><span class="texte_ress_tempo_indispo">',get_vocab("ressource_temporairement_indisponible"),'</span>',PHP_EOL;
 if ($this_moderate_room == "1" && $_GET['pview'] != 1)
-	echo "<br /><span class=\"texte_ress_moderee\">".get_vocab("reservations_moderees")."</span>";
+	echo '<br><span class="texte_ress_moderee">',get_vocab("reservations_moderees"),'</span>',PHP_EOL;
 if ($this_area_show_comment == "y" && $_GET['pview'] != 1 && ($this_area_comment != "") && ($this_area_comment != -1))
-	echo "<span style=\"text-align:center;\">".$this_area_comment."</span>";
+	echo '<span style="text-align:center;">',$this_area_comment,'</span>',PHP_EOL;
 if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
 {
-	echo "<table class=\"table-header\">
-	<tr>
-		<td class=\"left\">
-			<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='week.php?year=$yy&amp;month=$ym&amp;day=$yd&amp;room=$room';\"><span class=\"glyphicon glyphicon-backward\"></span>".get_vocab("weekbefore")."</button>
-		</td>
-		<td>";
-			include "include/trailer.inc.php";
-			echo "</td>
-			<td class=\"right\">
-				<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript: location.href='week.php?year=$ty&amp;month=$tm&amp;day=$td&amp;room=$room';\">".get_vocab('weekafter')."<span class=\"glyphicon glyphicon-forward\"></span></button>
-			</td>
-		</tr>
-	</table>";
+	echo '<table class="table-header">',PHP_EOL,'<tr>',PHP_EOL,'<td class="left">',PHP_EOL,
+	'<button class="btn btn-default btn-xs" onclick="charger();javascript: location.href=\'week.php?year=',$yy,'&amp;month=',$ym,'&amp;day=',$yd,'&amp;room=',$room,
+	'\';"><span class="glyphicon glyphicon-backward"></span>',get_vocab("weekbefore"),'</button>',PHP_EOL,'</td>',PHP_EOL,'<td>',PHP_EOL;
+	include "include/trailer.inc.php";
+	echo '</td>',PHP_EOL,'<td class="right">',PHP_EOL,'<button class="btn btn-default btn-xs" onclick="charger();javascript: location.href=\'week.php?year=',$ty,
+	'&amp;month=',$tm,'&amp;day=',$td,'&amp;room=',$room,'\';">',get_vocab('weekafter'),'<span class="glyphicon glyphicon-forward"></span></button>',PHP_EOL,
+	'</td>',PHP_EOL,'</tr>',PHP_EOL,'</table>',PHP_EOL;
 }
 $setting = Settings::get("menu_gauche");
 echo '<h4 class="titre">'.ucfirst($this_area_name).' - '.$this_room_name.' '.$this_room_name_des;
@@ -190,13 +186,9 @@ echo '</div>'.PHP_EOL;
 if (isset($_GET['precedent']))
 {
 	if ($_GET['pview'] == 1 AND $_GET['precedent'] == 1)
-	{
-		echo "<span id=\"lienPrecedent\">
-		<button class=\"btn btn-default btn-xs\" onclick=\"charger();javascript:history.back();\">Précedent</button>
-	</span>";
+		echo '<span id="lienPrecedent">',PHP_EOL,'<button class="btn btn-default btn-xs" onclick="charger();javascript:history.back();">Précedent</button>',PHP_EOL,'</span>',PHP_EOL;
 }
-}
-echo " <div class=\"contenu_planning\">" ;
+echo '<div class="contenu_planning">';
 $sql = "SELECT start_time, end_time, type, name, id, beneficiaire, statut_entry, description, option_reservation, moderate, beneficiaire_ext
 FROM ".TABLE_PREFIX."_entry
 WHERE room_id=$room

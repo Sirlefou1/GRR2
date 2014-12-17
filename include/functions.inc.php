@@ -1609,7 +1609,7 @@ function span_bgground($colclass)
 function tdcell($colclass, $width = '')
 {
 	if ($width != "")
-		$temp = " style=\"width:".$width."%;\" ";
+		$temp = ' style="width:'.$width.'%;" ';
 	else
 		$temp = "";
 	global $tab_couleur;
@@ -3157,7 +3157,7 @@ function UserRoomMaxBooking($user, $id_room, $number)
  	$datenow = mktime(0, 0, 0, $month, $day, $year);
  	if (authGetUserLevel($user,$id_room) >= 3)
  		return true;
- 	$delais_max_resa_room = grr_sql_query1("select delais_max_resa_room from ".TABLE_PREFIX."_room where id='".protect_data_sql($id_room)."'");
+ 	$delais_max_resa_room = grr_sql_query1("SELECT delais_max_resa_room FROM ".TABLE_PREFIX."_room WHERE id='".protect_data_sql($id_room)."'");
  	if ($delais_max_resa_room == -1)
  		return true;
  	else if ($datenow + $delais_max_resa_room * 24 * 3600 + 1 < $date_booking)
@@ -3631,7 +3631,6 @@ function verify_confirm_reservation()
 		$res = grr_sql_query("select id from ".TABLE_PREFIX."_room where delais_option_reservation > 0");
 		if (!$res)
 		{
-			//fatal_error(0, grr_sql_error());
 			include "trailer.inc.php";
 			exit;
 		}
@@ -3642,7 +3641,6 @@ function verify_confirm_reservation()
 				$res2 = grr_sql_query("select id from ".TABLE_PREFIX."_entry where option_reservation < '".$date_now."' and option_reservation != '-1' and room_id='".$row[0]."'");
 				if (!$res2)
 				{
-					//fatal_error(0, grr_sql_error());
 					include "trailer.inc.php";
 					exit;
 				}
@@ -3679,11 +3677,9 @@ function verify_retard_reservation()
 	$date_now = mktime(0, 0, 0, $month, $day, $year);
 	if (((Settings::get("date_verify_reservation2") == "") || (Settings::get("date_verify_reservation2") < $date_now )) && (Settings::get("automatic_mail") == 'yes'))
 	{
-		//$res = grr_sql_query("SELECT r.id FROM ".TABLE_PREFIX."_room r, ".TABLE_PREFIX."_area a WHERE a.retour_resa_obli = 1 AND r.area_id = a.id");
 		$res = grr_sql_query("SELECT id FROM ".TABLE_PREFIX."_room");
 		if (! $res)
 		{
-			// fatal_error(0, grr_sql_error());
 			include "trailer.inc.php";
 			exit;
 		}
@@ -3694,14 +3690,13 @@ function verify_retard_reservation()
 				$res2 = grr_sql_query("SELECT id from ".TABLE_PREFIX."_entry WHERE statut_entry='e' AND end_time < '".$date_now."' AND room_id='".$row[0]."'");
 				if (!$res2)
 				{
-					// fatal_error(0, grr_sql_error());
 					include "trailer.inc.php";
 					exit;
 				}
 				else
 				{
 					for ($j = 0; ($row2 = grr_sql_row($res2, $j)); $j++)
-						$_SESSION['session_message_error'] = send_mail($row2[0],7,$dformat);
+						$_SESSION['session_message_error'] = send_mail($row2[0], 7, $dformat);
 				}
 			}
 		}
