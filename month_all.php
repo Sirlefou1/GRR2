@@ -140,23 +140,23 @@ else
 	include("menu_gauche.php");
 	include "chargement.php";
 	if ($_GET['pview'] != 1)
-		echo "<div id=\"planning\">";
+		echo '<div id="planning">'.PHP_EOL;
 	else
-		echo "<div id=\"print_planning\">";
-	echo "<div class=\"titre_planning\"><table class=\"table-header\">";
+		echo '<div id="print_planning">'.PHP_EOL;
+	echo '<div class="titre_planning">'.PHP_EOL.'<table class="table-header">'.PHP_EOL;
 	//Test si le format est imprimable
 	if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
 	{
 		#Show Go to week before and after links
 		echo '<tr>'.PHP_EOL;
 		echo '<td class="left">'.PHP_EOL;
-		echo '<button  type="button" class="btn btn-default btn-xs" onclick="charger();javascript: location.href=\'month_all.php?year='.$yy.'&amp;month='.$ym.'&amp;area='.$area.'\';"><span class="glyphicon glyphicon-backward"></span>'.get_vocab("monthbefore").'</button>'.PHP_EOL;
+		echo '<button class="btn btn-default btn-xs" onclick="charger();javascript: location.href=\'month_all.php?year='.$yy.'&amp;month='.$ym.'&amp;area='.$area.'\';"><span class="glyphicon glyphicon-backward"></span>'.get_vocab("monthbefore").'</button>'.PHP_EOL;
 		echo '</td>'.PHP_EOL;
 		echo '<td>'.PHP_EOL;
 		include "include/trailer.inc.php";
 		echo '</td>'.PHP_EOL;
 		echo '<td class="right">'.PHP_EOL;
-		echo '<button type="button" class="btn btn-default btn-xs" onclick="charger();javascript: location.href=\'month_all.php?year='.$ty.'&amp;month='.$tm.'&amp;area='.$area.'\';">'.get_vocab('monthafter').'  <span class="glyphicon glyphicon-forward"></span></button>'.PHP_EOL;
+		echo '<button class="btn btn-default btn-xs" onclick="charger();javascript: location.href=\'month_all.php?year='.$ty.'&amp;month='.$tm.'&amp;area='.$area.'\';">'.get_vocab('monthafter').'  <span class="glyphicon glyphicon-forward"></span></button>'.PHP_EOL;
 		echo '</td>'.PHP_EOL;
 		echo '</tr>'.PHP_EOL;
 		echo '</table>'.PHP_EOL;

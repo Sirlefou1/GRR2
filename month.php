@@ -165,13 +165,13 @@ if ((!isset($_GET['pview'])) || ($_GET['pview'] != 1))
 {
 	echo '<tr>'.PHP_EOL;
 	echo '<td align="left">'.PHP_EOL;
-	echo '<button type="button" class="btn btn-default btn-xs" onclick="charger();javascript: location.href=\'month.php?year='.$yy.'&amp;month='.$ym.'&amp;room='.$room.'\';"><span class="glyphicon glyphicon-backward"></span> '.get_vocab("monthbefore").'</button>'.PHP_EOL;
+	echo '<button class="btn btn-default btn-xs" onclick="charger();javascript: location.href=\'month.php?year='.$yy.'&amp;month='.$ym.'&amp;room='.$room.'\';"><span class="glyphicon glyphicon-backward"></span> '.get_vocab("monthbefore").'</button>'.PHP_EOL;
 	echo '</td>'.PHP_EOL;
 	echo '<td>'.PHP_EOL;
 	include "include/trailer.inc.php";
 	echo '</td>'.PHP_EOL;
 	echo '<td align="right">'.PHP_EOL;
-	echo '<button type="button" class="btn btn-default btn-xs" onclick="charger();javascript: location.href=\'month.php?year='.$ty.'&amp;month='.$tm.'&amp;room='.$room.'\';"> '.get_vocab('monthafter').'  <span class=\"glyphicon glyphicon-forward\"></span></button>'.PHP_EOL;
+	echo '<button class="btn btn-default btn-xs" onclick="charger();javascript: location.href=\'month.php?year='.$ty.'&amp;month='.$tm.'&amp;room='.$room.'\';"> '.get_vocab('monthafter').'  <span class=\"glyphicon glyphicon-forward\"></span></button>'.PHP_EOL;
 	echo '</td>'.PHP_EOL;
 	echo '</tr>'.PHP_EOL;
 	echo '</table>'.PHP_EOL;

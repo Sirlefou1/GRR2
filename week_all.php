@@ -282,7 +282,7 @@ if (isset($_GET['precedent']))
 	if ($_GET['pview'] == 1 && $_GET['precedent'] == 1)
 	{
 		echo '<span id="lienPrecedent">'.PHP_EOL;
-		echo '<button type=\"button\" class="btn btn-default btn-xs" onclick="charger();javascript:history.back();">Précedent</button>'.PHP_EOL;
+		echo '<button class="btn btn-default btn-xs" onclick="charger();javascript:history.back();">Précedent</button>'.PHP_EOL;
 		echo '</span>'.PHP_EOL;
 	}
 }
@@ -307,13 +307,13 @@ else
 	{
 		echo '<tr>'.PHP_EOL;
 		echo '<td class="left">'.PHP_EOL;
-		echo '<button type="button" class="btn btn-default btn-xs" onclick="charger();javascript: location.href=\'week_all.php?year='.$yy.'&amp;month='.$ym.'&amp;day='.$yd.'&amp;area='.$area.'\';"><span class="glyphicon glyphicon-backward"></span> '.get_vocab("weekbefore").' </button>'.PHP_EOL;
+		echo '<button class="btn btn-default btn-xs" onclick="charger();javascript: location.href=\'week_all.php?year='.$yy.'&amp;month='.$ym.'&amp;day='.$yd.'&amp;area='.$area.'\';"><span class="glyphicon glyphicon-backward"></span> '.get_vocab("weekbefore").' </button>'.PHP_EOL;
 		echo '</td>'.PHP_EOL;
 		echo '<td>'.PHP_EOL;
 		include "include/trailer.inc.php";
 		echo '</td>'.PHP_EOL;
 		echo '<td class="right">'.PHP_EOL;
-		echo '<button type="button" class="btn btn-default btn-xs" onclick="charger();javascript: location.href=\'week_all.php?year='.$ty.'&amp;month='.$tm.'&amp;day='.$td.'&amp;area='.$area.'\';"> '.get_vocab('weekafter').'  <span class="glyphicon glyphicon-forward"></span></button>'.PHP_EOL;
+		echo '<button class="btn btn-default btn-xs" onclick="charger();javascript: location.href=\'week_all.php?year='.$ty.'&amp;month='.$tm.'&amp;day='.$td.'&amp;area='.$area.'\';"> '.get_vocab('weekafter').'  <span class="glyphicon glyphicon-forward"></span></button>'.PHP_EOL;
 		echo '</td>'.PHP_EOL;
 		echo '</tr>'.PHP_EOL;
 		echo '</table>'.PHP_EOL;
