@@ -29,6 +29,7 @@
  */
 
 include "include/admin.inc.php";
+
 $grr_script_name = "admin_calend_ignore.php";
 $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
