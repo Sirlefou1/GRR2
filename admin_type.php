@@ -60,13 +60,13 @@ if ((isset($_GET['action_del'])) && ($_GET['js_confirmed'] == 1) && ($_GET['acti
 	}
 }
 affiche_pop_up($msg,"admin");
-echo "<h2>".get_vocab('admin_type.php')."</h2>";
+echo '<h2>',get_vocab('admin_type.php'),'</h2>',PHP_EOL;
 echo get_vocab('admin_type_explications');
-echo "<br />\n";
-echo "<br />\n";
-echo "| <a href=\"admin_type_modify.php?id=0\">".get_vocab("display_add_type")."</a> |\n";
-echo "<br />\n";
-echo "<br />\n";
+echo '<br />',PHP_EOL;
+echo '<br />',PHP_EOL;
+echo '| <a href="admin_type_modify.php?id=0">',get_vocab("display_add_type"),'</a> |',PHP_EOL;
+echo '<br />',PHP_EOL;
+echo '<br />',PHP_EOL;
 $sql = "SELECT id, type_name, order_display, couleur, type_letter, disponible FROM ".TABLE_PREFIX."_type_area
 ORDER BY order_display,type_letter";
 $res = grr_sql_query($sql);
@@ -74,20 +74,20 @@ $nb_lignes = grr_sql_count($res);
 if ($nb_lignes == 0)
 {
 	// fin de l'affichage de la colonne de droite
-	echo "</td></tr></table>";
-	echo "</body></html>";
+	echo '</td>',PHP_EOL,'</tr>',PHP_EOL,'</table>',PHP_EOL;
+	echo '</body>',PHP_EOL,'</html>',PHP_EOL;
 	die();
 }
 // Affichage du tableau
-echo "<table border=\"1\" cellpadding=\"3\"><tr>\n";
+echo '<table class="table table-bordered">',PHP_EOL,'<tr>',PHP_EOL;
 // echo "<tr><td><b>".get_vocab("type_num")."</a></b></td>\n";
-echo "<td><b>".get_vocab("type_num")."</b></td>\n";
-echo "<td><b>".get_vocab("type_name")."</b></td>\n";
-echo "<td><b>".get_vocab("type_color")."</b></td>\n";
-echo "<td><b>".get_vocab("type_order")."</b></td>\n";
-echo "<td><b>".get_vocab("disponible_pour")."</b></td>\n";
-echo "<td><b>".get_vocab("delete")."</b></td>";
-echo "</tr>";
+echo '<td><b>',get_vocab("type_num"),'</b></td>',PHP_EOL;
+echo '<td><b>',get_vocab("type_name"),'</b></td>',PHP_EOL;
+echo '<td><b>',get_vocab("type_color"),'</b></td>',PHP_EOL;
+echo '<td><b>',get_vocab("type_order"),'</b></td>',PHP_EOL;
+echo '<td><b>',get_vocab("disponible_pour"),'</b></td>',PHP_EOL;
+echo '<td><b>',get_vocab("delete"),'</b></td>',PHP_EOL;
+echo '</tr>',PHP_EOL;
 if ($res)
 {
 	for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
@@ -105,23 +105,23 @@ if ($res)
 	// Affichage de l'ordre
 		$col[$i][4] = $order_display;
 		$col[$i][5] = $couleur;
-		echo "<tr>\n";
-		echo "<td>{$col[$i][1]}</td>\n";
-		echo "<td><a href='admin_type_modify.php?id_type={$col[$i][2]}'>{$col[$i][3]}</a></td>\n";
-		echo "<td style=\"background-color:".$tab_couleur[$col[$i][5]]."\"></td>\n";
-		echo "<td>{$col[$i][4]}</td>\n";
-		echo "<td>\n";
+		echo '<tr>',PHP_EOL;
+		echo '<td>',$col[$i][1],'</td>',PHP_EOL;
+		echo '<td><a href="admin_type_modify.php?id_type=',$col[$i][2],'">',$col[$i][3],'</a></td>',PHP_EOL;
+		echo '<td style="background-color:',$tab_couleur[$col[$i][5]],'"></td>',PHP_EOL;
+		echo '<td>',$col[$i][4],'</td>',PHP_EOL;
+		echo '<td>',PHP_EOL;
 		if ($disponible == '2')
 			echo get_vocab("all");
 		if ($disponible == '3')
 			echo get_vocab("gestionnaires_et_administrateurs");
 		if ($disponible == '5')
 			echo get_vocab("only_administrators");
-		echo "</td>\n";
+		echo '</td>',PHP_EOL;
 		$themessage = get_vocab("confirm_del");
-		echo "<td><a href='admin_type.php?&amp;type_del={$col[$i][2]}&amp;action_del=yes' onclick='return confirmlink(this, \"{$col[$i][1]}\", \"$themessage\")'>".get_vocab("delete")."</a></td>";
+		echo '<td><a href="admin_type.php?&amp;type_del=',$col[$i][2],'&amp;action_del=yes" onclick="return confirmlink(this, \'',$col[$i][1],'\', \'',$themessage,'\')">',get_vocab("delete"),'</a></td>',PHP_EOL;
 	// Fin de la ligne courante
-		echo "</tr>";
+		echo '</tr>',PHP_EOL;
 	}
 }
 echo "</table>";

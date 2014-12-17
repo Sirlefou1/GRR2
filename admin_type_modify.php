@@ -156,7 +156,7 @@ echo get_vocab('admin_type_explications')."<br /><br />";
 	<?php
 	echo "<div><input type=\"hidden\" name=\"id_type\" value=\"".$id_type."\" /></div>\n";
 
-	echo "<table border=\"1\">\n";
+	echo '<table class="table table-bordered">',PHP_EOL;
 	echo "<tr>";
 	echo "<td>".get_vocab("type_name").get_vocab("deux_points")."</td>\n";
 	echo "<td><input type=\"text\" name=\"type_name\" value=\"".htmlspecialchars($row["type_name"])."\" size=\"20\" /></td>\n";
@@ -206,7 +206,8 @@ echo get_vocab('admin_type_explications')."<br /><br />";
 	}
 	echo "</table>\n";
 	echo "<p>".get_vocab("type_color").get_vocab("deux_points")."</p>";
-	echo "<table border=\"2\"><tr>\n";
+	echo '<table class="table table-bordered">',PHP_EOL;
+	echo '<tr>',PHP_EOL;
 	$nct = 0;
 	foreach ($tab_couleur as $key=>$value)
 	{
