@@ -27,7 +27,7 @@
  * along with GRR;if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-echo"<div>";
+echo '<div>';
 include_once('include/connect.inc.php');
 include_once('include/config.inc.php');
 include_once('include/functions.inc.php');

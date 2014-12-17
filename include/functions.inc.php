@@ -937,19 +937,13 @@ function print_header($day = '', $month = '', $year = '', $type_session = 'with_
 			$day   = date("d",$date_);
 			$month = date("m",$date_);
 			$year  = date("Y",$date_);
-			echo '<div id="toppanel">'.PHP_EOL;
-			echo '<div id="panel">'.PHP_EOL;
-			echo '<div class="content">'.PHP_EOL;
-			echo '<table id="header">'.PHP_EOL;
-			echo '<tr>'.PHP_EOL;
+			echo '<div id="toppanel">',PHP_EOL,'<div id="panel">',PHP_EOL,'<div class="content">',PHP_EOL,'<table id="header">',PHP_EOL,'<tr>',PHP_EOL;
 			//Logo
 			$nom_picture = "./images/".Settings::get("logo");
 			if ((Settings::get("logo") != '') && (@file_exists($nom_picture)))
-				echo '<td class="logo">'.PHP_EOL.'<a href="'.page_accueil('yes').'day='.$day.'&amp;year='.$year.'&amp;month='.$month.'"><img src="'.$nom_picture.'" alt="logo"/></a>'.PHP_EOL.'</td>'.PHP_EOL;
+				echo '<td class="logo">',PHP_EOL,'<a href="',page_accueil('yes'),'day=',$day,'&amp;year=',$year,'&amp;month=',$month,'"><img src="',$nom_picture,'" alt="logo"/></a>',PHP_EOL,'</td>',PHP_EOL;
 			//Accueil
-			echo '<td class="accueil">'.PHP_EOL;
-			echo '<h2>'.PHP_EOL.'<a href="'.page_accueil('yes').'day='.$day.'&amp;year='.$year.'&amp;month='.$month.'">'.get_vocab("welcome");
-			echo ' - <b>'.Settings::get("company").'</b></a>'.PHP_EOL.'</h2>'.PHP_EOL;
+			echo '<td class="accueil">',PHP_EOL,'<h2>',PHP_EOL,'<a href="',page_accueil('yes'),'day=',$day,'&amp;year=',$year,'&amp;month=',$month,'">',get_vocab("welcome"),' - <b>',Settings::get("company"),'</b></a>',PHP_EOL,'</h2>',PHP_EOL;
 			//Mail réservartion
 			echo Settings::get('message_accueil');
 			$sql = "SELECT value FROM ".TABLE_PREFIX."_setting WHERE name='mail_etat_destinataire'";
@@ -960,9 +954,7 @@ function print_header($day = '', $month = '', $year = '', $type_session = 'with_
 			{
 				if ($type_session == "no_session")
 				{
-					echo '<td class="contactformulaire">'.PHP_EOL;
-					echo '<input class="btn btn-default" type="submit" rel="popup_name" value="Réserver" onClick="javascript:location.href=\'contactFormulaire.php?day='.$day.'&amp;month='.$month.'&amp;year='.$year.'\'" >'.PHP_EOL;
-					echo '</td>'.PHP_EOL;
+					echo '<td class="contactformulaire">',PHP_EOL,'<input class="btn btn-default" type="submit" rel="popup_name" value="Réserver" onClick="javascript:location.href=\'contactFormulaire.php?day=',$day,'&amp;month=',$month,'&amp;year=',$year,'\'" >',PHP_EOL,'</td>',PHP_EOL;
 				}
 			}
 			// Administration div Sauvegarde
@@ -970,31 +962,21 @@ function print_header($day = '', $month = '', $year = '', $type_session = 'with_
 			{
 				if ((authGetUserLevel(getUserName(), -1, 'area') >= 4) || (authGetUserLevel(getUserName(), -1, 'user') == 1))
 				{
-					echo '<td class="administration">'.PHP_EOL;
-					echo '<a href="admin_accueil.php?day='.$day.'&amp;month='.$month.'&amp;year='.$year.'">'.get_vocab("admin").'</a>'.PHP_EOL;
+					echo '<td class="administration">',PHP_EOL,'<a href="admin_accueil.php?day=',$day,'&amp;month=',$month,'&amp;year=',$year,'">',get_vocab("admin"),'</a>',PHP_EOL;
 					if (authGetUserLevel(getUserName(), -1, 'area') >= 6)
 					{
-						echo '<br />'.PHP_EOL;
-						echo '<form action="admin_save_mysql.php" method="get"><div>'.PHP_EOL;
-						echo '<input type="hidden" name="flag_connect" value="yes" />'.PHP_EOL;
-						echo '<input type="submit" class="btn btn-default" value="'.get_vocab("submit_backup").'" /></div>'.PHP_EOL;
-						echo '</form>'.PHP_EOL;
+						echo '<br />',PHP_EOL,'<form action="admin_save_mysql.php" method="get"><div>',PHP_EOL,'<input type="hidden" name="flag_connect" value="yes" />',PHP_EOL,'<input type="submit" class="btn btn-default" value="',get_vocab("submit_backup"),'" /></div>',PHP_EOL,'</form>',PHP_EOL;
 						how_many_connected();
 					}
-					echo '</td>'.PHP_EOL;
+					echo '</td>',PHP_EOL;
 				}
 			}
 			if ($type_session != "with_session")
-				echo '<script>selection()</script>'.PHP_EOL;
-			echo '<td class="configuration" >'.PHP_EOL;
+				echo '<script>selection()</script>',PHP_EOL;
+			echo '<td class="configuration" >',PHP_EOL;
 			if (@file_exists('js/'.$clock_file))
 			{
-				echo '<div class="clock">'.PHP_EOL;
-				echo '<div id="Date">'.PHP_EOL;
-				echo '&nbsp;<span id="hours"></span>'.PHP_EOL;
-				echo 'h'.PHP_EOL;
-				echo '<span id="min"></span>'.PHP_EOL;
-				echo '</div></div>'.PHP_EOL;
+				echo '<div class="clock">'.PHP_EOL,'<div id="Date">'.PHP_EOL,'&nbsp;<span id="hours"></span>h<span id="min"></span>'.PHP_EOL,'</div></div>'.PHP_EOL;
 			}
 			$_SESSION['chemin_retour'] = '';
 			if (isset($_SERVER['QUERY_STRING']) && ($_SERVER['QUERY_STRING'] != ''))
