@@ -296,7 +296,7 @@ else
 		echo '</tr>'.PHP_EOL;
 		echo '</table>'.PHP_EOL;
 	}
-	echo '<h4 class="titre">'.utf8_strftime($dformat, $date_start).' au '. utf8_strftime($dformat, $date_end). ' '.$this_area_name.' - '.get_vocab("all_rooms").'</h4>'.PHP_EOL;
+	echo '<h4 class="titre">'.$this_area_name.' - '.get_vocab("all_rooms").'<br> Du '.utf8_strftime($dformat, $date_start).' au '. utf8_strftime($dformat, $date_end). '</h4>'.PHP_EOL;
 	echo '</div>'.PHP_EOL;
 	echo '<div class="contenu_planning">'.PHP_EOL;
 	echo '<table class="table-bordered table-striped">'.PHP_EOL;
