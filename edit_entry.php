@@ -252,7 +252,7 @@ else
 	$beneficiaire   = getUserName();
 	$tab_benef["nom"] = "";
 	$tab_benef["email"] = "";
-	$create_by    = getUserName();
+	$create_by   = getUserName();
 	$description = "";
 	$start_day   = $day;
 	$start_month = $month;
@@ -275,7 +275,7 @@ else
 		$end_month = date("m",$fin);
 		$end_year  = date("Y",$fin);
 		$end_hour  = date("H",$fin);
-		$end_min = date("i",$fin);
+		$end_min   = date("i",$fin);
 	}
 	$type        	= "";
 	$room_id     	= $room;
@@ -317,8 +317,7 @@ if ($res)
 	}
 }
 $use_select2 = 'y';
-print_header($day, $month, $year, $type="with_session");
-
+print_header($day, $month, $year, $type = "with_session");
 ?>
 <script type="text/javascript" >
 	function insertChampsAdd(){
@@ -1003,9 +1002,8 @@ if ($res)
 		}
 	}
 }
-echo "</select></div\n";
-echo "</td></tr>\n";
-echo "\n<!-- ************* Ressources edition ***************** -->\n";
+echo '</select>',PHP_EOL,'</div>',PHP_EOL,'</td>',PHP_EOL,'</tr>',PHP_EOL;
+echo '<!-- ************* Ressources edition ***************** -->',PHP_EOL;
 echo "<tr><td class=\"E\"><b>".get_vocab("rooms").get_vocab("deux_points")."</b></td></tr>\n";
 $sql = "SELECT id, room_name, description FROM ".TABLE_PREFIX."_room WHERE area_id=$area_id ";
 $tab_rooms_noaccess = verif_acces_ressource(getUserName(), 'all');
@@ -1016,20 +1014,24 @@ foreach ($tab_rooms_noaccess as $key)
 $sql .= " ORDER BY order_display,room_name";
 $res = grr_sql_query($sql);
 $len = grr_sql_count($res);
-
-echo "<tr><td class=\"CL\" style=\"vertical-align:top;\"><table border=\"0\"><tr><td><div class=\"col-xs-12\"><select name=\"rooms[]\" size=\"".min($longueur_liste_ressources_max,$len)."\" multiple=\"multiple\" class=\"multiselect\">";
+echo '<tr>',PHP_EOL,'<td class="CL" style="vertical-align:top;">',PHP_EOL,'<table border="0">',PHP_EOL,'<tr>',PHP_EOL,'<td>',PHP_EOL,
+'<div class="col-xs-12">',PHP_EOL,'<select name="rooms[]" size="',min($longueur_liste_ressources_max, $len),'" multiple="multiple" class="multiselect">',PHP_EOL;
 //Sélection de la "room" dans l'"area"
-if ($res) for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
+if ($res)
 {
-	$selected = "";
-	if ($row[0] == $room_id) $selected = "selected=\"selected\"";
-	echo "<option $selected value=\"".$row[0]."\">".$row[1]."</option>\n";
+	for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
+	{
+		$selected = "";
+		if ($row[0] == $room_id)
+			$selected = 'selected="selected"';
+		echo '<option ',$selected,' value="',$row[0],'">',$row[1],'</option>',PHP_EOL;
+	}
 }
-echo "</select></div></td><td>".get_vocab("ctrl_click")."</td></tr></table>\n";
-echo "</td></tr>\n";
-echo "<tr><td><div id=\"div_types\">";
-echo "</div></td></tr>";
-echo "<tr><td class=\"E\">";
+echo '</select>',PHP_EOL,'</div>',PHP_EOL,'</td>',PHP_EOL,'<td>',get_vocab("ctrl_click"),'</td>',PHP_EOL,'</tr>',PHP_EOL,'</table>',PHP_EOL;
+echo '</td>',PHP_EOL,'</tr>',PHP_EOL;
+echo '<tr>',PHP_EOL,'<td>',PHP_EOL,'<div id="div_types">',PHP_EOL;
+echo '</div>',PHP_EOL,'</td>',PHP_EOL,'</tr>',PHP_EOL;
+echo '<tr>',PHP_EOL,'<td class="E">',PHP_EOL;
 ?>
 <script type="text/javascript" >
 	insertChampsAdd();
@@ -1039,33 +1041,26 @@ echo "<tr><td class=\"E\">";
 <?php
 if ($affiche_mess_asterisque)
 	get_vocab("required");
-echo " </td></tr>\n";
-echo "</table>\n";
-echo "</td>\n";
-echo "<td style=\"vertical-align:top;\">\n";
-echo "<table width=\"100%\" border=\"0\">";
+echo '</td></tr>',PHP_EOL;
+echo '</table>',PHP_EOL;
+echo '</td>',PHP_EOL;
+echo '<td style="vertical-align:top;">',PHP_EOL;
+echo '<table class="table-header">',PHP_EOL;
 $sql = "SELECT id FROM ".TABLE_PREFIX."_area;";
 $res = grr_sql_query($sql);
-echo "\n<!-- ************* Periodic edition ***************** -->\n";
+echo '<!-- ************* Periodic edition ***************** -->',PHP_EOL;
 $weeklist = array("unused","every week","week 1/2","week 1/3","week 1/4","week 1/5");
 $monthlist = array("firstofmonth","secondofmonth","thirdofmonth","fouthofmonth","fiveofmonth","lastofmonth");
 if (($edit_type == "series") || (isset($flag_periodicite)))
 {
-	echo "
-	<tr>
-		<td id=\"ouvrir\" style=\"cursor: inherit\" align=\"center\" class=\"fontcolor4\">
-			<span class=\"fontcolor1 btn btn-primary\"><b><a href='javascript:clicMenu(1);check_5()'>".get_vocab("click_here_for_series_open")."</a></b></span>
-		</td>
-	</tr>
-	<tr>
-		<td style=\"display:none; cursor: inherit white\" id=\"fermer\" align=\"center\" class=\"fontcolor4\">
-			<span class=\"btn btn-primary fontcolor1 white\"><b><a href='javascript:clicMenu(1);check_5()'>".get_vocab("click_here_for_series_close")."</a></b></span>
-		</td>
-	</tr>
-	";
-	echo "<tr><td><table id=\"menu1\" style=\"display:none;\">\n ";
-	echo "<tr><td class=\"F\"><b>".get_vocab("rep_type")."</b></td></tr><tr><td class=\"CL\">\n";
-	echo "<table border=\"0\"  width=\"100%\" >\n";
+	echo '<tr>',PHP_EOL,'<td id="ouvrir" style="cursor: inherit" align="center" class="fontcolor4">',PHP_EOL,
+	'<span class="fontcolor1 btn btn-primary"><b><a href="javascript:clicMenu(1);check_5()">',get_vocab("click_here_for_series_open"),'</a></b></span>',PHP_EOL,
+	'</td>',PHP_EOL,'</tr>',PHP_EOL,'<tr>',PHP_EOL,'<td style="display:none; cursor: inherit white" id="fermer" align="center" class="fontcolor4">',PHP_EOL,
+	'<span class="btn btn-primary fontcolor1 white"><b><a href="javascript:clicMenu(1);check_5()">',get_vocab("click_here_for_series_close"),'</a></b></span>',PHP_EOL,
+	'</td>',PHP_EOL,'</tr>',PHP_EOL;
+	echo '<tr>',PHP_EOL,'<td>',PHP_EOL,'<table id="menu1" style="display:none;">',PHP_EOL,'<tr>',PHP_EOL,
+	'<td class="F"><b>',get_vocab("rep_type"),'</b></td>',PHP_EOL,'</tr>',PHP_EOL,'<tr>',PHP_EOL,'<td class="CL">',PHP_EOL;
+	echo '<table class="table-header" >',PHP_EOL;
 	if (Settings::get("jours_cycles_actif") == "Oui")
 		$max = 8;
 	else
@@ -1076,27 +1071,27 @@ if (($edit_type == "series") || (isset($flag_periodicite)))
 			$i++;
 		if ($i != 5)
 		{
-			echo "<tr><td><input name=\"rep_type\" type=\"radio\" value=\"" . $i . "\"";
+			echo '<tr>',PHP_EOL,'<td>',PHP_EOL,'<input name="rep_type" type="radio" value="',$i,'"';
 			if ($i == $rep_type)
-				echo " checked=\"checked\"";
+				echo ' checked="checked"';
 			if (($i == 3) && ($rep_type == 5))
-				echo " checked=\"checked\"";
-			echo " onclick=\"check_1()\" /></td><td>";
+				echo ' checked="checked"';
+			echo ' onclick="check_1()" />',PHP_EOL,'</td>',PHP_EOL,'<td>',PHP_EOL;
 			if (($i != 2) && ($i != 3))
 				echo get_vocab("rep_type_$i");
-			echo "\n";
+			echo PHP_EOL;
 			if ($i == '2')
 			{
-				echo "<select name=\"rep_num_weeks\" size=\"1\" onfocus=\"check_2()\" onclick=\"check_2()\">\n";
-				echo "<option value=\"1\" >".get_vocab("every week")."</option>\n";
+				echo '<select name="rep_num_weeks" size="1" onfocus="check_2()" onclick="check_2()">',PHP_EOL;
+				echo '<option value="1" >',get_vocab("every week"),'</option>',PHP_EOL;
 				for ($weekit = 2; $weekit < 6; $weekit++)
 				{
-					echo "<option value=\"".$weekit."\"";
+					echo '<option value="',$weekit,'"';
 					if ($rep_num_weeks == $weekit)
-						echo " selected=\"selected\"";
-					echo ">".get_vocab($weeklist[$weekit])."</option>\n";
+						echo ' selected="selected"';
+					echo '>',get_vocab($weeklist[$weekit]),'</option>',PHP_EOL;
 				}
-				echo "</select>\n";
+				echo '</select>',PHP_EOL;
 			}
 			if ($i == '3')
 			{
@@ -1161,11 +1156,11 @@ if (($edit_type == "series") || (isset($flag_periodicite)))
 		if (isset($jours_c))
 		{
 			if ($i == $jours_c)
-				echo " checked=\"checked\"";
+				echo ' checked="checked"';
 		}
-		echo " onclick=\"check_1()\" />".get_vocab("rep_type_6")." ".$wday. "\n";
+		echo ' onclick="check_1()" />',get_vocab("rep_type_6"),' ',$wday,PHP_EOL;
 	}
-	echo "</td></tr>\n</table></td></tr>\n";
+	echo '</td>',PHP_EOL,'</tr>',PHP_EOL,'</table>',PHP_EOL,'</td>',PHP_EOL,'</tr>',PHP_EOL;
 }
 else
 {
@@ -1213,8 +1208,8 @@ else
 			echo '<tr><td class="E"><b>'.get_vocab('rep_end_date').'</b> '.$rep_end_date.'</td></tr>'."\n";
 		}
 	}
-	echo "\n</table>\n";
-	echo "</td></tr></table>\n";
+	echo '</table>',PHP_EOL;
+	echo '</td>',PHP_EOL,'</tr>',PHP_EOL,'</table>',PHP_EOL;
 	?>
 	<div id="fixe">
 		<input type="button" class="btn btn-primary" value="<?php echo get_vocab("cancel")?>" onclick="window.location.href='<?php echo $page.".php?year=".$year."&amp;month=".$month."&amp;day=".$day."&amp;area=".$area."&amp;room=".$room; ?>'" />
@@ -1267,7 +1262,7 @@ else
 			echo "timeoutID = window.setTimeout(\"Load_entry();check_5();\",500);\n";
 		?>
 	</script>
-	<?php include "include/trailer.inc.php" ?>
 	<?php
+	include "include/trailer.inc.php";
 	include "footer.php";
 	?>
