@@ -335,7 +335,7 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 						$affiche_champ = 'n';
 					if ($affiche_champ == 'y')
 					{
-						echo '<tr>',PHP_EOL,'<td><b>',bbcode(htmlspecialchars($fieldname),get_vocab("deux_points"), ''),'</b></td>',PHP_EOL;
+						echo '<tr>',PHP_EOL,'<td><b>',bbcode(htmlspecialchars($fieldname).get_vocab("deux_points"), ''),'</b></td>',PHP_EOL;
 						echo '<td>',bbcode(htmlspecialchars($fielddata["valeur"]), ''),'</td>',PHP_EOL,'</tr>',PHP_EOL;
 					}
 				}
