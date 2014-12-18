@@ -32,14 +32,12 @@ header("Cache-Control:no-cache");
 
 function returnmsg($type,$test, $status, $msg = '')
 {
-	echo encode_message_utf8("<div class=\"alert alert-$type\" role=\"alert\"><h3>$test");
+	echo encode_message_utf8('<div class="alert alert-'.$type.'" role="alert"><h3>'.$test);
 	echo encode_message_utf8($status)."</h3>";
 	if ($msg != '')
-		echo encode_message_utf8("($msg)\n");
-	echo '</div>'.PHP_EOL;
+		echo encode_message_utf8('($msg)'),PHP_EOL;
+	echo '</div>',PHP_EOL;
 }
-
-
 
 function getDaysInMonth($month, $year)
 {
@@ -83,6 +81,7 @@ function getSchoolHolidays($now, $year)
 	}
 	return $sh;
 }
+
 function getHolidays($year = null)
 {
 	if ($year === null)
@@ -173,6 +172,7 @@ function check_access($level, $back)
 		exit();
 	}
 }
+
 /**
  * Fonction qui compare 2 valeur
  * @param string $a
@@ -187,6 +187,7 @@ function cmp3($a, $b)
 		return "= ";
 	return "> ";
 }
+
 function get_request_uri()
 {
 	global $grr_script_name;
@@ -217,6 +218,7 @@ function get_request_uri()
 	}
 	return $RequestUri;
 }
+
 /**
  * Affiche un lien email
  * @param string $_cible
@@ -271,7 +273,7 @@ function affiche_lien_contact($_cible, $_type_cible, $option_affichage)
 				$affichage = "";
 		}
 		else
-			$affichage = "<a href=\"javascript:centrerpopup('contact.php?cible=".$_cible."&amp;type_cible=".$_type_cible."',600,480,'scrollbars=yes,statusbar=no,resizable=yes')\" title=\"".$_identite."\">".$_identite."</a>".PHP_EOL;
+			$affichage = '<a href="javascript:centrerpopup(\'contact.php?cible='.$_cible.'&amp;type_cible='.$_type_cible.'\',600,480,\'scrollbars=yes,statusbar=no,resizable=yes\')" title="'.$_identite.'\">'.$_identite.'</a>'.PHP_EOL;
 	}
 	else
 	{
@@ -329,6 +331,7 @@ function affiche_lien_contact($_cible, $_type_cible, $option_affichage)
 	}
 	return $affichage;
 }
+
 /**
  *Fonction qui calcule $room, $area et $id_site à partir de $_GET['room'], $_GET['area'], $_GET['id_site']
  */
@@ -371,23 +374,12 @@ function Definition_ressource_domaine_site()
 
 function bouton_retour_haut()
 {
-	echo '<script type="text/javascript">'.PHP_EOL;
-	echo '$(function()'.PHP_EOL;
-		echo '{'.PHP_EOL;
-		echo '$(window).scroll(function()'.PHP_EOL;
-			echo '{'.PHP_EOL;
-			echo 'if ($(this).scrollTop() != 0)'.PHP_EOL;
-			echo '$("#toTop").fadeIn();'.PHP_EOL;
-			echo 'else'.PHP_EOL;
-			echo '$("#toTop").fadeOut();'.PHP_EOL;
-			echo '});'.PHP_EOL;
-echo '$("#toTop").click(function()'.PHP_EOL;
-	echo '{'.PHP_EOL;
-	echo '$("body,html").animate({scrollTop:0},800);'.PHP_EOL;
-	echo '});'.PHP_EOL;
-echo '});'.PHP_EOL;
-echo '</script>'.PHP_EOL;
+	echo '<script type="text/javascript">',PHP_EOL,'$(function()',PHP_EOL,'{',PHP_EOL,'$(window).scroll(function()',PHP_EOL,'{',PHP_EOL,
+		'if ($(this).scrollTop() != 0)',PHP_EOL,'$("#toTop").fadeIn();',PHP_EOL,'else',PHP_EOL,'$("#toTop").fadeOut();',PHP_EOL,
+		'});',PHP_EOL,'$("#toTop").click(function()',PHP_EOL,'{',PHP_EOL,'$("body,html").animate({scrollTop:0},800);',PHP_EOL,
+		'});',PHP_EOL,'});',PHP_EOL,'</script>',PHP_EOL;
 }
+
 /**
  *function affiche_ressource_empruntee
  *- $id_room : identifiant de la ressource
@@ -419,6 +411,7 @@ function affiche_ressource_empruntee($id_room, $type = "logo")
 		}
 	}
 }
+
 /**
  * @param string $type
  * @param string $t
@@ -510,6 +503,7 @@ function bbCode($t,$type)
 	$t = preg_replace($regCouleur, "<span style=\"font-size: \\1px\">", $t);
 	return $t;
 }
+
 /**
  * FUNCTION: how_many_connected()
  * DESCRIPTION: Si c'est un admin qui est connecté, affiche le nombre de personnes actuellement connectées.
@@ -530,15 +524,9 @@ function how_many_connected()
 			affiche_pop_up(get_vocab("maj_bdd_not_update").get_vocab("please_go_to_admin_maj.php"),"force");
 	}
 }
+
 /*
 Teste s'il reste ou non des plages libres sur une journée donnée pour un domaine donné.
-Arguments :
-$id_room : identifiant de la ressource
-$month_week : mois
-$day_week : jour
-$year_week : année
-Renvoie vraie s'il reste des plages non réservées sur la journée
-Renvoie faux dans le cas contraire
 */
 /**
  * @param integer $id_room
@@ -566,6 +554,7 @@ function plages_libre_semaine_ressource($id_room, $month_week, $day_week, $year_
 	}
 	return $plage_libre ;
 }
+
 /* Fonction spéciale SE3
  $grp : le nom du groupe
  $uid : l'uid de l'utilisateur
@@ -614,6 +603,7 @@ function plages_libre_semaine_ressource($id_room, $month_week, $day_week, $year_
  		return false;
  	return $est_membre;
  }
+
 /*
 Arguments :
 $id_entry : identifiant de la réservation
@@ -660,6 +650,7 @@ function  grr_backup($id_entry, $login_moderateur, $motivation_moderation)
 		return true;
 	}
 }
+
 function verif_version()
 {
 	global $version_grr, $version_grr_RC;
@@ -676,19 +667,22 @@ function verif_version()
 	else
 		return false;
 }
+
 function affiche_version()
 {
 	global $version_grr, $version_grr_RC, $sous_version_grr;
 	return "GRR ".Settings::get("version");
 }
+
 function affiche_date($x)
 {
-	$j = date("d",$x);
-	$m = date("m",$x);
-	$a = date("Y",$x);
+	$j = date("d", $x);
+	$m = date("m", $x);
+	$a = date("Y", $x);
 	$result = $j."/".$m."/".$a;
 	return $result;
 }
+
 //L'heure d'été commence le dernier dimanche de mars * et se termine le dernier dimanche d'octobre
 //Passage à l'heure d'hiver : -1h, le changement s'effectue à 3h
 //Passage à l'heure d'été : +1h, le changement s'effectue à 2h
@@ -707,6 +701,7 @@ function heure_ete_hiver($type, $annee, $heure)
 	//On retire 1 jour par rapport à la date examinée
 	return $debut;
 }
+
 # Remove backslash-escape quoting if PHP is configured to do it with
 # magic_quotes_gpc. Use this whenever you need the actual value of a GET/POST
 # form parameter (which might have special characters) regardless of PHP's
@@ -718,6 +713,7 @@ function unslashes($s)
 	else
 		return $s;
 }
+
 // Corrige les caracteres degoutants utilises par les Windozeries
 function corriger_caracteres($texte)
 {
@@ -725,6 +721,7 @@ function corriger_caracteres($texte)
 	$texte = strtr($texte, chr(145).chr(146).chr(180).chr(147).chr(148).chr(150).chr(151), "'''".'""--');
 	return $texte;
 }
+
 // Traite les données avant insertion dans une requête SQL
 function protect_data_sql($_value)
 {
@@ -741,6 +738,7 @@ function protect_data_sql($_value)
 	}
 	return $_value;
 }
+
 // Traite les données envoyées par la methode GET de la variable $_GET["page"]
 function verif_page()
 {
@@ -755,6 +753,7 @@ function verif_page()
 	else
 		return "day";
 }
+
 function page_accueil($param = 'no')
 {
 	// Definition de $defaultroom
@@ -778,32 +777,32 @@ function page_accueil($param = 'no')
 		$defaultarea = get_default_area($defaultsite);
 	// Calcul de $page_accueil
 	if ($defaultarea == - 1)
-		$page_accueil = "day.php?noarea=";
+		$page_accueil = 'day.php?noarea=';
 	// le paramètre noarea ne sert à rien, il est juste là pour éviter un cas particulier à traiter avec &amp;id_site= et $param
 	else if ($defaultroom == - 1)
-		$page_accueil = "day.php?area=$defaultarea";
+		$page_accueil = 'day.php?area='.$defaultarea;
 	else if ($defaultroom == - 2)
-		$page_accueil = "week_all.php?area=$defaultarea";
+		$page_accueil = 'week_all.php?area='.$defaultarea;
 	else if ($defaultroom == - 3)
-		$page_accueil="month_all.php?area=$defaultarea";
+		$page_accueil = 'month_all.php?area='.$defaultarea;
 	else if ($defaultroom == -4)
-		$page_accueil = "month_all2.php?area=$defaultarea";
+		$page_accueil = 'month_all2.php?area='.$defaultarea;
 	else
-		$page_accueil = "week.php?area=$defaultarea&amp;room=$defaultroom";
+		$page_accueil = 'week.php?area='.$defaultarea.'&amp;room='.$defaultroom;
 	if ((Settings::get("module_multisite") == "Oui") && ($defaultsite > 0))
-		$page_accueil .= "&amp;id_site=".$defaultsite;
+		$page_accueil .= '&amp;id_site='.$defaultsite;
 	if ($param == 'yes')
-		$page_accueil .= "&amp;";
+		$page_accueil .= '&amp;';
 	return $page_accueil ;
 }
-function begin_page($title, $page="with_session")
+function begin_page($title, $page = "with_session")
 {
 	if ($page == "with_session")
 	{
 		if (isset($_SESSION['default_style']))
-			$sheetcss = "themes/".$_SESSION['default_style']."/css/style.css";
+			$sheetcss = 'themes/'.$_SESSION['default_style'].'/css/style.css';
 		else
-			$sheetcss="themes/default/css/style.css";
+			$sheetcss = 'themes/default/css/style.css';
 		if (isset($_GET['default_language']))
 		{
 			$_SESSION['default_language'] = $_GET['default_language'];
@@ -1054,6 +1053,7 @@ function VerifNomPrenomUser($type)
 		}
 	}
 }
+
 //Vérifie si utilisateur autorisé à changer ses noms et prénoms et mail
 //Renvoie true (peut changer ses noms et prénoms et email) ou false (ne peut pas)
 function sso_IsAllowedModify()
@@ -1069,6 +1069,7 @@ function sso_IsAllowedModify()
 	else
 		return true;
 }
+
 //Vérifie que l'utilisateur est autorisé à changer ses noms et prénoms
 //Renvoie true (peut changer ses noms et prénoms) ou false (ne peut pas)
 function IsAllowedToModifyProfil()
@@ -1081,6 +1082,7 @@ function IsAllowedToModifyProfil()
 	else
 		return true;
 }
+
 //Vérifie que l'utilisateur est autorisé à changer son emai
 //Renvoie true (peut changer son email) ou false (ne peut pas)
 function IsAllowedToModifyEmail()
@@ -1093,13 +1095,15 @@ function IsAllowedToModifyEmail()
 	else
 		return true;
 }
+
 //Vérifie que l'utilisateur est autorisé à changer son mot de passe
 //Renvoie true (peut changer) ou false (ne peut pas)
-function IsAllowedToModifyMdp() {
-		// l'utilisateur connecté n'a pas le niveau suffisant pour modifier son compte
+function IsAllowedToModifyMdp()
+{
+	// l'utilisateur connecté n'a pas le niveau suffisant pour modifier son compte
 	if (authGetUserLevel(getUserName(), -1) < Settings::get("allow_users_modify_mdp"))
 		return false;
-	else if ((Settings::get("sso_statut") != "") or (Settings::get("ldap_statut") != '') or (Settings::get("imap_statut") != ''))
+	else if ((Settings::get("sso_statut") != "") || (Settings::get("ldap_statut") != '') || (Settings::get("imap_statut") != ''))
 	{
 			// ou bien on est dans un environnement SSO ou ldap et l'utilisateur n'est pas un utilisateur local
 		$source = grr_sql_query1("SELECT source FROM ".TABLE_PREFIX."_utilisateurs WHERE login = '".getUserName()."'");
@@ -1111,6 +1115,7 @@ function IsAllowedToModifyMdp() {
 	else
 		return true;
 }
+
 // Transforme $dur en une durée exprimée en années, semaines, jours, heures, minutes et secondes
 // OU en durée numérique exprimée dans l'une des unités de façon fixe, pour l'édition des
 // réservations par durée.
@@ -1250,6 +1255,7 @@ function toTimeString(&$dur, &$units, $edition = false)
 		$units = "";
 	}
 }
+
 // Transforme $dur en un nombre entier
 // $dur : durée
 // $units : unité
@@ -1382,6 +1388,7 @@ function fatal_error($need_header, $message, $show_form_data = true)
 	include "trailer.inc.php";
 	exit;
 }
+
 /**
  * Fonction à revoir fonction ip2long à utiliser surement
  *
@@ -1431,6 +1438,7 @@ function compare_ip_adr($ip1, $ip2)
 	}
 	return true;
 }
+
 //Retourne le domaine par défaut; Utilisé si aucun domaine n'a été défini.
 function get_default_area($id_site = -1)
 {
@@ -1501,6 +1509,7 @@ function get_default_area($id_site = -1)
 			return -1;
 	}
 }
+
 # Retourne le site par défaut;
 /**
  * @return integer
@@ -1510,6 +1519,7 @@ function get_default_site()
 	$res = grr_sql_query1("SELECT min(id) FROM ".TABLE_PREFIX."_site");
 	return $res;
 }
+
 # Get the local day name based on language. Note 2000-01-02 is a Sunday.
 /**
  * @param integer $daynumber
@@ -1518,6 +1528,7 @@ function day_name($daynumber)
 {
 	return utf8_encode(strftime("%A", mktime(0, 0, 0, 1, 2 + $daynumber, 2000)));
 }
+
 function affiche_heure_creneau($t,$resolution)
 {
 	global $twentyfourhour_format;
@@ -1527,6 +1538,7 @@ function affiche_heure_creneau($t,$resolution)
 		$hour_min_format = "h:ia";
 	return date($hour_min_format,$t) ." - ".date($hour_min_format, $t + $resolution);
 }
+
 function hour_min_format()
 {
 	global $twentyfourhour_format;
@@ -1539,6 +1551,7 @@ function hour_min_format()
 		return "h:ia";
 	}
 }
+
 /*
 Fonction utilisée dans le cas où les créneaux de réservation sont basés sur des intitulés pré-définis :
 Formatage de la date de début ou de fin de réservation.
@@ -1560,6 +1573,7 @@ function period_date_string($t, $mod_time = 0)
 		$p_num = count($periods_name) - 1;
 	return array($p_num, $periods_name[$p_num] . utf8_strftime(", ".$dformat, $t));
 }
+
 /*
 Fonction utilisée dans le cas où les créneaux de réservation sont basés sur des intitulés pré-définis :
 Formatage des périodes de début ou de fin de réservation.
@@ -1577,6 +1591,7 @@ function period_time_string($t, $mod_time = 0)
 		$p_num = count($periods_name) - 1;
 	return $periods_name[$p_num];
 }
+
 function time_date_string($t, $dformat)
 {
 	global $twentyfourhour_format;
@@ -1587,6 +1602,7 @@ function time_date_string($t, $dformat)
 	else
 		return utf8_strftime("%I:%M".date("a", $t)." - ".$dformat,$t);
 }
+
 function time_date_string_jma($t,$dformat)
 {
 	global $twentyfourhour_format;
@@ -1597,6 +1613,7 @@ function time_date_string_jma($t,$dformat)
 	else
 		return utf8_strftime($dformat, $t);
 }
+
 // Renvoie une balise span avec un style backgrounf-color correspondant au type de  la réservation
 function span_bgground($colclass)
 {
@@ -1605,6 +1622,7 @@ function span_bgground($colclass)
 	$num_couleur = grr_sql_query1("SELECT couleur FROM ".TABLE_PREFIX."_type_area WHERE type_letter='".$colclass."'");
 	echo '<span style="background-color: '.$tab_couleur[$num_couleur].'; background-image: none; background-repeat: repeat; background-attachment: scroll;">'.PHP_EOL;
 }
+
 //Output a start table cell tag <td> with color class and fallback color.
 function tdcell($colclass, $width = '')
 {
@@ -1622,6 +1640,7 @@ function tdcell($colclass, $width = '')
 	else
 		echo '<td class="'.$colclass.' '.$temp.'">'.PHP_EOL;
 }
+
 function tdcell_rowspan($colclass, $step)
 {
 	global $tab_couleur;
@@ -1636,6 +1655,7 @@ function tdcell_rowspan($colclass, $step)
 	else
 		echo '<td rowspan="'.$step.'" td class="'.$colclass.'">'.PHP_EOL;
 }
+
 //Display the entry-type color key. This has up to 2 rows, up to 10 columns.
 function show_colour_key($area_id)
 {
@@ -1672,11 +1692,13 @@ function show_colour_key($area_id)
 		echo '</table>'.PHP_EOL;
 	}
 }
+
 //Round time down to the nearest resolution
 function round_t_down($t, $resolution, $am7)
 {
 	return (int)$t - (int)abs(((int)$t-(int)$am7) % $resolution);
 }
+
 //Round time up to the nearest resolution
 function round_t_up($t, $resolution, $am7)
 {
@@ -1689,6 +1711,7 @@ function round_t_up($t, $resolution, $am7)
 		return $t;
 	}
 }
+
 /**
  * Menu gauche affichage des sites via select
  *
@@ -1780,6 +1803,7 @@ function make_site_select_html($link, $current_site, $year, $month, $day, $user)
 		return $out_html;
 	}
 }
+
 /**
  * Menu gauche affichage des area via select
  *
