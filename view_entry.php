@@ -297,7 +297,7 @@ if (Settings::get("display_level_view_entry") == '1')
 {
 	print_header($day, $month, $year, $type_session);
 	if ($back != "")
-		echo "<div><a href=\"".$back."\">".get_vocab("returnprev")."</a></div>\n";
+		echo '<div><a href="',$back,'">',get_vocab("returnprev"),'</a></div>',PHP_EOL;
 }
 echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('entry').get_vocab('deux_points').affichage_lien_resa_planning($breve_description, $id).'</legend>'."\n"; ?>
 <table border="0">
@@ -335,8 +335,8 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 						$affiche_champ = 'n';
 					if ($affiche_champ == 'y')
 					{
-						echo "<tr><td><b>".bbcode(htmlspecialchars($fieldname).get_vocab("deux_points"), '')."</b></td>\n";
-						echo "<td>".bbcode(htmlspecialchars($fielddata["valeur"]), '')."</td></tr>\n";
+						echo '<tr>',PHP_EOL,'<td><b>',bbcode(htmlspecialchars($fieldname),get_vocab("deux_points"), ''),'</b></td>',PHP_EOL;
+						echo '<td>',bbcode(htmlspecialchars($fielddata["valeur"]), ''),'</td>',PHP_EOL,'</tr>',PHP_EOL;
 					}
 				}
 			}
@@ -347,7 +347,7 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 		<td>
 			<b>
 				<?php
-				echo get_vocab("room").get_vocab("deux_points");
+				echo get_vocab("room"),get_vocab("deux_points");
 				?>
 			</b>
 		</td>
@@ -361,7 +361,7 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 		<td>
 			<b>
 				<?php
-				echo get_vocab("start_date").get_vocab("deux_points");
+				echo get_vocab("start_date"),get_vocab("deux_points");
 				?>
 			</b>
 		</td>
@@ -381,7 +381,7 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 		</td>
 		<td>
 			<?php
-			echo $duration . " " . $dur_units;
+			echo $duration ,' ',$dur_units;
 			?>
 		</td>
 	</tr>
@@ -400,11 +400,11 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 		</td>
 	</tr>
 	<?php
-	echo "<tr><td><b>".get_vocab("type").get_vocab("deux_points")."</b></td>\n";
+	echo '<tr>',PHP_EOL,'<td><b>',get_vocab("type"),get_vocab("deux_points"),'</b></td>',PHP_EOL;
 	$type_name = grr_sql_query1("SELECT type_name from ".TABLE_PREFIX."_type_area where type_letter='".$type."'");
 	if ($type_name == -1)
 		$type_name = "?$type?";
-	echo "<td>".$type_name."</td></tr>";
+	echo '<td>',$type_name,'</td>',PHP_EOL,'</tr>',PHP_EOL;
 	if ($beneficiaire != $create_by)
 	{
 		?>
@@ -412,7 +412,7 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 			<td>
 				<b>
 					<?php
-					echo get_vocab("reservation au nom de").get_vocab("deux_points")
+					echo get_vocab("reservation au nom de"),get_vocab("deux_points")
 					?>
 				</b>
 			</td>
@@ -429,7 +429,7 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 		<td>
 			<b>
 				<?php
-				echo get_vocab("created_by").get_vocab("deux_points")
+				echo get_vocab("created_by"),get_vocab("deux_points")
 				?>
 			</b>
 		</td>
@@ -440,7 +440,7 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 			{
 				$id_resa = grr_sql_query1("SELECT id from ".TABLE_PREFIX."_entry where room_id = '".$room_id."' and statut_entry='y'");
 				if ($id_resa ==$id)
-					echo " <span class='avertissement'>(".get_vocab("reservation_en_cours").") <img src=\"img_grr/buzy_big.png\" align=middle alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("ressource actuellement empruntee")."\" border=\"0\" width=\"30\" height=\"30\" class=\"print_image\"  /></span>";
+					echo '<span class="avertissement">(',get_vocab("reservation_en_cours"),') <img src="img_grr/buzy_big.png" align=middle alt="',get_vocab("ressource actuellement empruntee"),'" title="',get_vocab("ressource actuellement empruntee"),'" border="0" width="30" height="30" class="print_image" /></span>',PHP_EOL;
 			}
 			?>
 		</td>
@@ -449,7 +449,7 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 		<td>
 			<b>
 				<?php
-				echo get_vocab("lastupdate").get_vocab("deux_points");
+				echo get_vocab("lastupdate"),get_vocab("deux_points");
 				?>
 			</b>
 		</td>
@@ -467,7 +467,7 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 			<td>
 				<b>
 					<?php
-					echo get_vocab("clef").get_vocab("deux_points");
+					echo get_vocab("clef"),get_vocab("deux_points");
 					?>
 				</b>
 			</td>
@@ -486,7 +486,7 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 			<td>
 				<b>
 					<?php
-					echo get_vocab("courrier").get_vocab("deux_points");
+					echo get_vocab("courrier"),get_vocab("deux_points");
 					?>
 				</b>
 			</td>
@@ -500,15 +500,15 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 	}
 	if (($delais_option_reservation > 0) && ($option_reservation != -1))
 	{
-		echo '<tr><td colspan="2"><div class="alert alert-danger" role="alert"><b>'.get_vocab("reservation_a_confirmer_au_plus_tard_le").PHP_EOL;
-		echo time_date_string_jma($option_reservation, $dformat).'</b></div>'.PHP_EOL;
-		echo '</td></tr>'.PHP_EOL;
+		echo '<tr>',PHP_EOL,'<td colspan="2">',PHP_EOL,'<div class="alert alert-danger" role="alert"><b>',get_vocab("reservation_a_confirmer_au_plus_tard_le"),PHP_EOL;
+		echo time_date_string_jma($option_reservation, $dformat),'</b></div>',PHP_EOL;
+		echo '</td>',PHP_EOL,'</tr>',PHP_EOL;
 	}
 	if ($moderate == 1)
 	{
-		echo "<tr><td><b>".get_vocab("moderation").get_vocab("deux_points")."</b></td>";
+		echo '<tr>',PHP_EOL,'<td><b>',get_vocab("moderation"),get_vocab("deux_points"),'</b></td>',PHP_EOL;
 		tdcell("avertissement");
-		echo "<strong>".get_vocab("en_attente_moderation")."</strong></td></tr>";
+		echo '<strong>',get_vocab("en_attente_moderation"),'</strong></td>',PHP_EOL,'</tr>',PHP_EOL;
 	}
 	else if ($moderate == 2)
 	{
@@ -526,10 +526,10 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 		$nom_modo = $row3[1]. ' '. $row3[0];
 		if (authGetUserLevel(getUserName(), -1) > 1)
 		{
-			echo '<tr><td><b>'.get_vocab("moderation").get_vocab("deux_points").'</b></td><td><strong>'.get_vocab("moderation_acceptee_par").' '.$nom_modo.'</strong>';
+			echo '<tr>',PHP_EOL,'<td><b>'.get_vocab("moderation").get_vocab("deux_points").'</b></td><td><strong>'.get_vocab("moderation_acceptee_par").' '.$nom_modo.'</strong>';
 			if ($description != "")
 				echo ' : <br />('.$description.')';
-			echo "</td></tr>";
+			echo '</td>',PHP_EOL,'</tr>',PHP_EOL;
 		}
 	}
 	elseif ($moderate == 3)
@@ -553,7 +553,7 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 			echo '<strong>'.get_vocab("moderation_refusee").'</strong> par '.$nom_modo;
 			if ($description != "")
 				echo ' : <br />('.$description.')';
-			echo "</td></tr>";
+			echo '</td>',PHP_EOL,'</tr>',PHP_EOL;;
 		}
 	}
 	if ((getWritable($beneficiaire, getUserName(), $id)) && verif_booking_date(getUserName(), $id, $room_id, -1, $date_now, $enable_periods) && verif_delais_min_resa_room(getUserName(), $room_id, $row[10]) && (!$was_del))
@@ -571,10 +571,10 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 					<a class="btn btn-danger" type="button" href="del_entry.php?id=<?php echo $id ?>&amp;series=0&amp;page=<?php echo $page; ?>" onclick="return confirm('<?php echo $message_confirmation ?>');"><?php echo get_vocab("deleteentry") ?></a></td>
 					<?php
 				}
-				echo "</tr>";
+				echo '</tr>',PHP_EOL;
 			}
-			echo "</table>";
-			echo "</fieldset>\n";
+			echo '</table>',PHP_EOL;
+			echo '</fieldset>',PHP_EOL;
 			if ($repeat_id != 0)
 			{
 				$res = grr_sql_query("SELECT rep_type, end_date, rep_opt, rep_num_weeks, start_time, end_time FROM ".TABLE_PREFIX."_repeat WHERE id=$repeat_id");
@@ -629,14 +629,14 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 						}
 						if ($opt)
 							if ($nb == 1)
-								echo "<tr><td><b>".get_vocab("rep_rep_day")."</b></td><td>$opt</td></tr>\n";
+								echo '<tr>',PHP_EOL,'<td><b>',get_vocab("rep_rep_day"),'</b></td>',PHP_EOL,'<td>',$opt,'</td>',PHP_EOL,'</tr>',PHP_EOL;
 							else
-								echo "<tr><td><b>".get_vocab("rep_rep_days")."</b></td><td>$opt</td></tr>\n";
+								echo '<tr>',PHP_EOL,'<td><b>',get_vocab("rep_rep_days"),'</b></td>',PHP_EOL,'<td>',$opt,'</td>',PHP_EOL,'</tr>',PHP_EOL;
 						}
 						if ($rep_type == 6)
 						{
 							if (Settings::get("jours_cycles_actif") == "Oui" && intval($jour_cycle) >- 1)
-								echo "<tr><td><b>".get_vocab("rep_rep_day")."</b></td><td>".get_vocab('jour_cycle').' '.$jour_cycle."</td></tr>\n";
+								echo '<tr>',PHP_EOL,'<td><b>',get_vocab("rep_rep_day"),'</b></td>',PHP_EOL,'<td>',get_vocab('jour_cycle'),' ',$jour_cycle,'</td>',PHP_EOL,'</tr>',PHP_EOL;
 						}
 						echo '<tr><td><b>'.get_vocab("date").get_vocab("deux_points").'</b></td><td>'.$start_date.'</td></tr>';
 						echo '<tr><td><b>'.get_vocab("duration").'</b></td><td>'.$duration .' '. $dur_units.'</td></tr>';
@@ -645,19 +645,17 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 					if ((getWritable($beneficiaire, getUserName(), $id)) && verif_booking_date(getUserName(), $id, $room_id, -1, $date_now, $enable_periods) && verif_delais_min_resa_room(getUserName(), $room_id, $row[10]) && (!$was_del))
 					{
 						$message_confirmation = str_replace ( "'"  , "\\'"  , get_vocab("confirmdel").get_vocab("deleteseries"));
-						echo "<tr><td colspan = \"2\"><input class=\"btn btn-primary\" type=\"button\" onclick=\"location.href='edit_entry.php?id=$id&amp;edit_type=series&amp;day=$day&amp;month=$month&amp;year=$year&amp;page=$page'\" value=\"".get_vocab("editseries")."\"></td></tr>";
-						echo "<tr><td colspan = \"2\"><a class=\"btn btn-danger\" type=\"button\" href=\"del_entry.php?id=$id&amp;series=1&amp;day=$day&amp;month=$month&amp;year=$year&amp;page=$page\" onclick=\"return confirm('".$message_confirmation."');\">".get_vocab("deleteseries")."</a></td></tr>";
+						echo '<tr>',PHP_EOL,'<td colspan="2">',PHP_EOL,'<input class="btn btn-primary" type="button" onclick="location.href=\'edit_entry.php?id=',$id,'&amp;edit_type=series&amp;day=',$day,'&amp;month=',$month,'&amp;year=',$year,'&amp;page=',$page,'\'" value="',get_vocab("editseries"),'"></td>',PHP_EOL,'</tr>',PHP_EOL;
+						echo '<tr>',PHP_EOL,'<td colspan="2">',PHP_EOL,'<a class="btn btn-danger" type="button" href="del_entry.php?id=',$id,'&amp;series=1&amp;day=',$day,'&amp;month=',$month,'&amp;year=',$year,'&amp;page=',$page,'" onclick="return confirm(\'',$message_confirmation,'\');">',get_vocab("deleteseries"),'</a></td>',PHP_EOL,'</tr>',PHP_EOL;
 					}
-					echo "</table></fieldset>";
+					echo '</table>',PHP_EOL,'</fieldset>',PHP_EOL;
 				}
 				if (!isset($area_id))
 					$area_id = 1;
 				if (!isset($room))
 					$room = 1;
 				if ((authGetUserLevel(getUserName(), $area_id, "area") > 1) || (authGetUserLevel(getUserName(), $room) >= 4))
-					echo "<br /><input class=\"btn btn-primary\" type=\"button\" onclick=\"myFunction($id)\" value=\"".get_vocab("Generer_pdf")."\" >";
-					//echo "<br /><a class=\"poplight\" href=\"#?w=960\" onclick=\"request2($id, readData);\" rel=\"pop_name\">".get_vocab("Generer_pdf")."</a>";
-					//echo "<br /><input class=\"btn btn-primary\" type=\"button\" onclick=\"javascript:generationpdf()\" value=\"".get_vocab("Generer_pdf")."\" >";
+					echo '<br><input class="btn btn-primary" onclick="myFunction(',$id,')" value="',get_vocab("Generer_pdf"),'" >',PHP_EOL;
 				if ((getUserName() != '') && (authGetUserLevel(getUserName(), $room_id) >= 3) && ($moderate == 1))
 				{
 					echo "<form action=\"view_entry.php\" method=\"get\">\n";
@@ -731,30 +729,30 @@ echo '<fieldset><legend style="font-size:12pt;font-weight:bold">'.get_vocab('ent
 				}
 				if (isset($keys) && isset($courrier))
 				{
-					echo "<form action=\"view_entry.php\" method=\"get\">";
-					echo "<fieldset><legend style=\"font-weight:bold\">".get_vocab("reservation_en_cours")."</legend>\n";
-					echo "<span class=\"larger\">".get_vocab("status_clef").get_vocab("deux_points")."</span>";
-					echo "<br /><input type=\"checkbox\" name=\"clef\" value=\"y\" ";
+					echo '<form action="view_entry.php" method="get">',PHP_EOL;
+					echo '<fieldset>',PHP_EOL,'<legend style="font-weight:bold">',get_vocab("reservation_en_cours"),'</legend>',PHP_EOL;
+					echo '<span class="larger">',get_vocab("status_clef"),get_vocab("deux_points"),'</span>';
+					echo '<br><input type="checkbox" name="clef" value="y" ';
 					if ($keys == 1)
-						echo " checked ";
-					echo " /> ".get_vocab("msg_clef");
+						echo ' checked ';
+					echo ' /> ',get_vocab("msg_clef");
 					if (Settings::get('show_courrier') == 'y')
 					{
-						echo "<br /><span class=\"larger\">".get_vocab("status_courrier").get_vocab("deux_points")."</span>";
-						echo "<br /><input type=\"checkbox\" name=\"courrier\" value=\"y\" ";
+						echo '<br><span class="larger">',get_vocab("status_courrier"),get_vocab("deux_points"),'</span>';
+						echo '<br><input type="checkbox" name="courrier" value="y" ';
 						if ($courrier == 1)
-							echo " checked ";
-						echo " /> ".get_vocab("msg_courrier");
+							echo ' checked ';
+						echo ' /> ',get_vocab("msg_courrier");
 					}
-					echo "<br /><br /><div style=\"text-align:center;\"><input class=\"btn btn-primary\" type=\"submit\" name=\"ok\" value=\"".get_vocab("save")."\" /></div></fieldset>\n";
-					echo "<div><input type=\"hidden\" name=\"day\" value=\"".$day."\" />";
-					echo "<input type=\"hidden\" name=\"month\" value=\"".$month."\" />";
-					echo "<input type=\"hidden\" name=\"year\" value=\"".$year."\" />";
-					echo "<input type=\"hidden\" name=\"page\" value=\"".$page."\" />";
-					echo "<input type=\"hidden\" name=\"id\" value=\"".$id."\" />";
-					echo "<input type=\"hidden\" name=\"back\" value=\"".$back."\" /></div>";
-					echo "</form>";
+					echo '<br><br>',PHP_EOL,'<div style="text-align:center;">',PHP_EOL,'<input class="btn btn-primary" type="submit" name="ok" value="',get_vocab("save"),'" /></div>',PHP_EOL,'</fieldset>',PHP_EOL;
+					echo '<div><input type="hidden" name="day" value="',$day,'" />',PHP_EOL;
+					echo '<input type="hidden" name="month" value="',$month,'" />',PHP_EOL;
+					echo '<input type="hidden" name="year" value="',$year,'" />',PHP_EOL;
+					echo '<input type="hidden" name="page" value="',$page,'" />',PHP_EOL;
+					echo '<input type="hidden" name="id" value="',$id,'" />',PHP_EOL;
+					echo '<input type="hidden" name="back" value="',$back,'" /></div>',PHP_EOL;
+					echo '</form>',PHP_EOL;
 				}
 				include_once('include/trailer.inc.php');
-				echo"</div>";
+				echo '</div>',PHP_EOL;
 				?>

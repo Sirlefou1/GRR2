@@ -433,7 +433,7 @@ else
 							$end_time   = $row['2'];
 							$clef 		= $row['3'];
 							$courrier	= $row['4'];
-							echo '<br/>',date('H:i', $start_time),get_vocab("to"),date('H:i', $end_time),'<br/>';
+							echo '<br>',date('H:i', $start_time),get_vocab("to"),date('H:i', $end_time),'<br/>';
 							if ($type_name != -1)
 								echo  $type_name;
 							echo '<br>'.PHP_EOL;
@@ -449,7 +449,7 @@ else
 						}
 						if ($today[$room][$t]["description"]!= "")
 						{
-							echo "<br /><i>".$today[$room][$t]["description"]."</i>";
+							echo '<br /><i>',$today[$room][$t]["description"],'</i>';
 						}
 					}
 					else
