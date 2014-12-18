@@ -215,7 +215,7 @@ else
 		include "include/trailer.inc.php";
 		echo '</td>',PHP_EOL,'<td class="right">',PHP_EOL,'<button class="btn btn-default btn-xs" onclick="charger();javascript: location.href=\'day.php?year='.$ty.'&amp;month='.$tm.'&amp;day='.$td.'&amp;area='.$area.'\';">  '.get_vocab('dayafter').'  <span class="glyphicon glyphicon-forward"></span></button>',PHP_EOL,'</td>',PHP_EOL,'</tr>',PHP_EOL,'</table>',PHP_EOL;
 	}
-	echo '<h4 class="titre">' . ucfirst(utf8_strftime($dformat, $am7));
+	echo '<h4 class="titre">' . ucfirst($this_area_name).' - '.get_vocab("all_areas");
 	if ($settings->get("jours_cycles_actif") == "Oui" && intval($jour_cycle) >- 1)
 	{
 		if (intval($jour_cycle) > 0)
@@ -223,7 +223,7 @@ else
 		else
 			echo ' - '.$jour_cycle;
 	}
-	echo ' '.ucfirst($this_area_name).' - '.get_vocab("all_areas").'</h4>'.PHP_EOL;
+	echo '<br>'.ucfirst(utf8_strftime($dformat, $am7)).'</h4>'.PHP_EOL;
 	echo '</div>'.PHP_EOL;
 	if (isset($_GET['precedent']))
 	{
