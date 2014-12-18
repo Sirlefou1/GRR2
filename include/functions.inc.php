@@ -1844,7 +1844,7 @@ function make_area_select_html( $link, $current_site, $current_area, $year, $mon
 		for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 		{
 			$selected = ($row[0] == $current_area) ? 'selected="selected"' : "";
-			$link2 = $link'.?year='.$year.'&amp;month='.$month.'&amp;day='.$day.'&amp;area='.$row[0];
+			$link2 = $link.'?year='.$year.'&amp;month='.$month.'&amp;day='.$day.'&amp;area='.$row[0];
 			if (authUserAccesArea($user,$row[0]) == 1)
 			{
 				$out_html .= '<option '.$selected.' value="'.$link2.'">'.htmlspecialchars($row[1]).'</option>'.PHP_EOL;
