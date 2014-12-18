@@ -1,4 +1,4 @@
-body{font-size:14px;font-family:arial,verdana,sans-serif;background-color:#5c2862;width:100%;margin:0 auto}
+body{font-size:14px;font-family:arial,verdana,sans-serif;background-color:#47b061;width:100%;margin:0 auto}
 a:after{content:"" !important}
 .ferie{background-color:#c0392b !important}
 .vacance{background-color:rgba(46,204,113,.5) !important}
@@ -34,22 +34,22 @@ table.table-striped th{background-color:gray !important; border:0px !important;}
 .accueil{background-color:#fff;width:32%}
 .administration{background-color:#fff;width:20%;text-align:center;margin:0 auto}
 .configuration,.contactformulaire{background-color:#fff;width:20%;vertical-align:middle;text-align:center}
-#menuGauche{background-color:#5c2862;float:left;height:100%;min-width:200px;width:300px;padding-bottom:10px}
-#menuGaucheMonthAll2{display:none;background-color:#5c2862;float:left;height:100%;min-width:200px;width:300px;padding-bottom:10px}
+#menuGauche{background-color:#47b061;float:left;height:100%;min-width:200px;width:300px;padding-bottom:10px}
+#menuGaucheMonthAll2{display:none;background-color:#47b061;float:left;height:100%;min-width:200px;width:300px;padding-bottom:10px}
 .cal_current_day{color:#000;vertical-align:middle;text-align:center;line-height:30px}
 .week td a{background-color:#8b8b8b;vertical-align:middle;text-align:center;height:100%;width:100%}
 .table-header{width:100%}
 .table-noborder{width:100%;border:0px}
 .table-bordered{border-collapse:collapse;border-spacing:0;width:100%}
 table.calendar{text-align:center;width:99%;padding:1px;margin:auto;background-color:#fff}
-.calendar caption{background-color:#5c2862}
+.calendar caption{background-color:#47b061}
 .dayBouton{width:80px}
 .dayBoutonJourApres{width:125px}
 a.calendar{display:block;color:#FFF;height:100%;width:100%;vertical-align:middle;text-align:center}
 .calendarcol1{padding:0;font-weight:700;background-color:#fff;text-align:center;height:30px;width:40px;line-height:30px}
 .lienSemaine a{height:100%;width:100%;display:block;vertical-align:middle;text-align:center;color:#000}
 .titre{color:#fff;text-align:center}
-.cellcalendar{background:#5c2862;vertical-align:middle;text-align:center;height:30px;width:40px;line-height:30px}
+.cellcalendar{background:#47b061;vertical-align:middle;text-align:center;height:30px;width:40px;line-height:30px}
 .cellcalendar a:hover{background-color:#fff}
 a.lienPlanning:link,a.lienPlanning:visited{color:#fff;display:block}
 a.lienPlanning:hover{display:block !important}
@@ -62,12 +62,12 @@ span a{color:#FFF !important}
 .ressource{text-align:center}
 .item:hover{cursor:pointer}
 b,strong{color:#000;text-align:center}
-#liste_select{color:#5c2862;font-weight:700}
+#liste_select{color:#47b061;font-weight:700}
 #liste{color:#CCF}
 table.legende{margin-left:25px;width:250px}
 table.legende td{width:125px;text-align:center}
-.pied_menuGauche{border-top:3px solid #5c2862}
-th{color:#eee;font-size:10pt;font-family:verdana,sans-serif;background-color:#5c2862 !important;vertical-align:top;text-align:center !important;border:none !important}
+.pied_menuGauche{border-top:3px solid #47b061}
+th{color:#eee;font-size:10pt;font-family:verdana,sans-serif;background-color:#47b061 !important;vertical-align:top;text-align:center !important;border:none !important}
 td.cell_hours{color:#fff;background-color:gray !important;text-align:center;font-size:13px;height:20px;line-height:20px;border: none !important}
 td.cell_hours2{color:#000;background-color:#ccc !important;text-align:center;font-size:13px;height:20px;line-height:20px;border: none !important}
 td.cell_hours a{color:#fff}
@@ -90,13 +90,13 @@ td.calendarHeader2{text-align:center;border:0;font-size:10pt;width:200px}
 #colgauche fieldset ul li{list-style-type:disc}
 td.colgauche_admin{width:25%}
 div.tooltip{color:#000;background:#ffb200;margin:5px;padding:5px}
-#planning{position:relative;background-color:#5c2862;margin-left:300px;height:100%;width:auto}
-#print_planning{position:relative;background-color:#5c2862;height:100%;width:auto}
+#planning{position:relative;background-color:#47b061;margin-left:300px;height:100%;width:auto}
+#print_planning{position:relative;background-color:#47b061;height:100%;width:auto}
 #planningMonthAll2{margin-left:0}
-.titre_planning{position:relative;background-color:#5c2862;height:100%;color:#000;text-align:center;font-size:1.2em}
+.titre_planning{position:relative;background-color:#47b061;height:100%;color:#000;text-align:center;font-size:1.2em}
 .titre_planning table{border:0}
-.titre_planning_week{background-color:#5c2862;height:100%;color:#000;text-align:center;font-size:1.2em}
-.contenu_planning{position:relative;background-color:#5c2862;height:100%;max-width:100%}
+.titre_planning_week{background-color:#47b061;height:100%;color:#000;text-align:center;font-size:1.2em}
+.contenu_planning{position:relative;background-color:#47b061;height:100%;max-width:100%}
 .contenu_planning a{display:block}
 a.lienCellule{color:#000;font-weight:400;display:block}
 a:hover.lienCellule{color:#000;font-weight:700;display:block}
@@ -119,17 +119,17 @@ a.buttonsReservation{cursor:pointer}
 .btn-group-lg>.btn,.btn-lg,form.ressource div.panel-body{padding:0 !important}
 .jour_sem{width:10% !important}
 .ui-spinner-input{margin:0 !important}
-.glyphicon-plus{color:#5c2862}
+.glyphicon-plus{color:#47b061}
 .clock{margin:0 auto}
 #Date{font-size:1em;text-align:center;font-weight:700}
 .clock ul{margin:0 auto;padding:0;list-style:none;text-align:center;font-weight:700}
 .clock ul li{display:inline;font-size:1em;text-align:center;font-weight:700}
 .tab{background-color:#FFF;position:relative;top:0;z-index:999}
-.tab ul.login{background-color:#FFF;border-radius:0 0 10px 10px;border-bottom:1px solid #5c2862;border-left:1px solid #5c2862;border-right:1px solid #5c2862;display:block;position:absolute;float:right !important;clear:right !important;height:42px;width:auto;font-weight:700;right:250px;text-align:center}
+.tab ul.login{background-color:#FFF;border-radius:0 0 10px 10px;border-bottom:1px solid #47b061;border-left:1px solid #47b061;border-right:1px solid #47b061;display:block;position:absolute;float:right !important;clear:right !important;height:42px;width:auto;font-weight:700;right:250px;text-align:center}
 .tab ul.login li{padding:0 6px;display:block;height:42px}
 .closepop{float:right;cursor:pointer}
 .tab a.close1,.tab a.open{height:20px;cursor:pointer;display:block;width:50px;position:relative;top:11px;right:17px;text-align:center}
-#toppanel{position:relative;top:0;width:100%;z-index:999;text-align:center;border-bottom:1px solid #5c2862}
+#toppanel{position:relative;top:0;width:100%;z-index:999;text-align:center;border-bottom:1px solid #47b061}
 #panel{width:100%;height:150px;overflow:hidden;position:relative;z-index:3}
 #panel a{text-decoration:none}
 .pad-15,.pad-15 tboby{padding-left:15px !important}

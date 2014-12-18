@@ -1,7 +1,7 @@
-a{color:#5c2862;text-decoration:none}
-.text-primary{color:#5c2862}
-.bg-primary{color:#fff;background-color:#5c2862}
-.btn-primary{color:#fff;background-color:#5c2862;border-color:#5c2862}
+a{color:#47b061;text-decoration:none}
+.text-primary{color:#47b061}
+.bg-primary{color:#fff;background-color:#47b061}
+.btn-primary{color:#fff;background-color:#47b061;border-color:#47b061}
 .btn-primary.disabled,
 .btn-primary[disabled],
 fieldset[disabled] .btn-primary,
@@ -19,9 +19,9 @@ fieldset[disabled] .btn-primary.focus,
 fieldset[disabled] .btn-primary:active,
 .btn-primary.disabled.active,
 .btn-primary[disabled].active,
-fieldset[disabled] .btn-primary.active{background-color:#5c2862;border-color:#5c2862}
-.btn-primary .badge{color:#5c2862;background-color:#fff}
-.btn-link{color:#5c2862;font-weight:normal;border-radius:0}
-.panel-primary>.panel-heading .badge{color:#5c2862;background-color:#fff}
-.panel-primary>.panel-footer+.panel-collapse>.panel-body{border-bottom-color:#5c2862}
+fieldset[disabled] .btn-primary.active{background-color:#47b061;border-color:#47b061}
+.btn-primary .badge{color:#47b061;background-color:#fff}
+.btn-link{color:#47b061;font-weight:normal;border-radius:0}
+.panel-primary>.panel-heading .badge{color:#47b061;background-color:#fff}
+.panel-primary>.panel-footer+.panel-collapse>.panel-body{border-bottom-color:#47b061}
 caption{text-align: center}
