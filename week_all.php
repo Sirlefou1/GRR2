@@ -107,8 +107,6 @@ $month_week = date("m", $time);
 $year_week  = date("Y", $time);
 $date_start = mktime($morningstarts, 0, 0, $month_week, $day_week, $year_week);
 $days_in_month = date("t", $date_start);
-if ($debug_flag)
-	echo "$month_week $day_week ";
 $date_end = mktime($eveningends, $eveningends_minutes, 0, $month_week, $day_week + 6, $year_week);
 $this_area_name = grr_sql_query1("SELECT area_name FROM ".TABLE_PREFIX."_area WHERE id=$area");
 switch ($dateformat)
@@ -154,12 +152,8 @@ else
 			$midnight = mktime(12, 0, 0, $month_num, $day_num, $year_num);
 		else
 			$midnight = mktime(0, 0, 0, $month_num, $day_num, $year_num);
-		if ($debug_flag)
-			echo "<br />DEBUG: result $i, id $row[2], starts $row[0], ends $row[1], temps en heures : ".($row['1']- $row['0']) / (60 * 60).", midnight : $midnight \n";
 		while ($t <= $end_t)
 		{
-			if ($debug_flag)
-				echo "<br />DEBUG: Entry $row[2] day $day_num\n";
 			$d[$day_num]["id"][] = $row['2'];
 			if (Settings::get("display_info_bulle") == 1)
 				$d[$day_num]["who"][] = get_vocab("reservee au nom de").affiche_nom_prenom_email($row['4'], $row['12'], "nomail");
@@ -259,22 +253,6 @@ else
 		}
 	}
 }
-if ($debug_flag)
-{
-	echo "<p>DEBUG: Array of month day data:<p><pre>\n";
-	for ($i = 1; $i <= $days_in_month; $i++)
-	{
-		if (isset($d[$i]["id"]))
-		{
-			$n = count($d[$i]["id"]);
-			echo "Day $i has $n entries:\n";
-			for ($j = 0; $j < $n; $j++)
-				echo "  ID: " . $d[$i]["id"][$j] .
-			" Data: " . $d[$i]["data"][$j] . "\n";
-		}
-	}
-	echo "</pre>\n";
-}
 $sql = "SELECT room_name, capacity, id, description, statut_room FROM ".TABLE_PREFIX."_room WHERE area_id='".$area."' ORDER BY order_display, room_name";
 $res = grr_sql_query($sql);
 if (isset($_GET['precedent']))
@@ -290,7 +268,7 @@ if (!$res)
 	fatal_error(0, grr_sql_error());
 if (grr_sql_count($res) == 0)
 {
-	echo "<h1>".get_vocab("no_rooms_for_area")."</h1>";
+	echo '<h1>',get_vocab("no_rooms_for_area"),'</h1>';
 	grr_sql_free($res);
 }
 else
@@ -462,14 +440,14 @@ else
 									if ($d[$cday]["res"][$i] !='-')
 										echo '<img src="img_grr/buzy.png" alt="'.get_vocab("ressource actuellement empruntee").'" title="'.get_vocab("ressource actuellement empruntee").'" width="20" height="20" class="image" />'.PHP_EOL;
 									if ((isset($d[$cday]["option_reser"][$i])) && ($d[$cday]["option_reser"][$i] != -1))
-										echo "<img src=\"img_grr/small_flag.png\" alt=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."\" title=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")." ".time_date_string_jma($d[$cday]["option_reser"][$i],$dformat)."\" width=\"20\" height=\"20\" class=\"image\" /> \n";
+										echo '<img src="img_grr/small_flag.png" alt="',get_vocab("reservation_a_confirmer_au_plus_tard_le"),'" title="',get_vocab("reservation_a_confirmer_au_plus_tard_le"),' ',time_date_string_jma($d[$cday]["option_reser"][$i],$dformat),'" width="20" height="20" class="image" />',PHP_EOL;
 									if ((isset($d[$cday]["moderation"][$i])) && ($d[$cday]["moderation"][$i] == 1))
-										echo "<img src=\"img_grr/flag_moderation.png\" alt=\"".get_vocab("en_attente_moderation")."\" title=\"".get_vocab("en_attente_moderation")."\" class=\"image\" /> \n";
+										echo '<img src="img_grr/flag_moderation.png" alt="',get_vocab("en_attente_moderation"),'" title="',get_vocab("en_attente_moderation"),'" class="image" />',PHP_EOL;
 									$Son_GenreRepeat = grr_sql_query1("SELECT ".TABLE_PREFIX."_type_area.type_name FROM ".TABLE_PREFIX."_type_area,".TABLE_PREFIX."_entry  WHERE  ".TABLE_PREFIX."_entry.type=".TABLE_PREFIX."_type_area.type_letter  AND ".TABLE_PREFIX."_entry.id = '".$d[$cday]["id"][$i]."';");
 									if ($Son_GenreRepeat == -1)
-										echo "<span class=\"small_planning\">".$d[$cday]["data"][$i]."";
+										echo '<span class="small_planning">',$d[$cday]["data"][$i];
 									else
-										echo "<span class=\"small_planning\">".$d[$cday]["data"][$i]."<br>". $Son_GenreRepeat."<br>";
+										echo '<span class="small_planning">',$d[$cday]["data"][$i],'<br>',$Son_GenreRepeat,'<br>';
 									echo $d[$cday]["who1"][$i]. '<br/>'.PHP_EOL;
 									if ($d[$cday]["description"][$i] != "")
 										echo '<i>'.$d[$cday]["description"][$i].'</i>'.PHP_EOL;
@@ -493,16 +471,15 @@ else
 									echo PHP_EOL.'<table class="table-header"><tr>';
 									tdcell($d[$cday]["color"][$i]);
 									if ($d[$cday]["res"][$i] != '-')
-										echo " <img src=\"img_grr/buzy.png\" alt=\"".get_vocab("ressource actuellement empruntee")."\" title=\"".get_vocab("ressource actuellement empruntee")."\" width=\"20\" height=\"20\" class=\"image\" /> \n";
+										echo '<img src="img_grr/buzy.png" alt="',get_vocab("ressource actuellement empruntee"),'" title="',get_vocab("ressource actuellement empruntee"),'" width="20" height="20" class="image" />',PHP_EOL;
 									if ((isset($d[$cday]["option_reser"][$i])) && ($d[$cday]["option_reser"][$i] != -1))
-										echo " <img src=\"img_grr/small_flag.png\" alt=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")."\" title=\"".get_vocab("reservation_a_confirmer_au_plus_tard_le")." ".time_date_string_jma($d[$cday]["option_reser"][$i],$dformat)."\" width=\"20\" height=\"20\" class=\"image\" /> \n";
+										echo '<img src="img_grr/small_flag.png" alt="',get_vocab("reservation_a_confirmer_au_plus_tard_le"),'" title="',get_vocab("reservation_a_confirmer_au_plus_tard_le"),' ',time_date_string_jma($d[$cday]["option_reser"][$i],$dformat),'" width="20" height="20" class="image" />',PHP_EOL;
 									if ((isset($d[$cday]["moderation"][$i])) && ($d[$cday]["moderation"][$i == 1]))
-										echo " <img src=\"img_grr/flag_moderation.png\" alt=\"".get_vocab("en_attente_moderation")."\" title=\"".get_vocab("en_attente_moderation")."\" class=\"image\" /> \n";
+										echo '<img src="img_grr/flag_moderation.png" alt="',get_vocab("en_attente_moderation"),'" title="',get_vocab("en_attente_moderation"),'" class="image" />',PHP_EOL;
 									$Son_GenreRepeat = grr_sql_query1("SELECT ".TABLE_PREFIX."_type_area.type_name FROM ".TABLE_PREFIX."_type_area,".TABLE_PREFIX."_entry  WHERE  ".TABLE_PREFIX."_entry.type=".TABLE_PREFIX."_type_area.type_letter  AND ".TABLE_PREFIX."_entry.id = '".$d[$cday]["id"][$i]."';");
 									if ($Son_GenreRepeat == -1 )
 									{
-										echo "<span class=\"small_planning\">
-										<b>". $d[$cday]["data"][$i]."</b><br/>";
+										echo '<span class="small_planning">',PHP_EOL,'<b>',$d[$cday]["data"][$i],'</b><br>';
 									}
 									else
 									{
@@ -532,15 +509,15 @@ else
 					$hour = date("H", $date_now);
 					$date_booking = mktime(24, 0, 0, $cmonth, $cday, $cyear);
 					if (est_hors_reservation(mktime(0, 0, 0, $cmonth, $cday, $cyear), $area))
-						echo "<img src=\"img_grr/stop.png\" alt=\"".get_vocab("reservation_impossible")."\" title=\"".get_vocab("reservation_impossible")."\" width=\"16\" height=\"16\" class=\"".$class_image."\" />";
+						echo '<img src="img_grr/stop.png" alt="',get_vocab("reservation_impossible"),'" title="',get_vocab("reservation_impossible"),'" width="16" height="16" class\"',$class_image,'" />',PHP_EOL;
 					else
 					{
 						if ((($authGetUserLevel > 1) || ($auth_visiteur == 1)) && ($UserRoomMaxBooking != 0) && verif_booking_date(getUserName(), -1, $row['2'], $date_booking, $date_now, $enable_periods) && verif_delais_max_resa_room(getUserName(), $row['2'], $date_booking) && verif_delais_min_resa_room(getUserName(), $row['2'], $date_booking) && plages_libre_semaine_ressource($row['2'], $cmonth, $cday, $cyear) && (($row['4'] == "1") || (($row['4'] == "0") && (authGetUserLevel(getUserName(),$row['2']) > 2) )) && $_GET['pview'] != 1)
 						{
 							if ($enable_periods == 'y')
-								echo "<a href=\"edit_entry.php?room=".$row['2']."&amp;period=&amp;year=$cyear&amp;month=$cmonth&amp;day=$cday&amp;page=week_all\" title=\"".get_vocab("cliquez_pour_effectuer_une_reservation")."\"><span class=\"glyphicon glyphicon-plus\"></span></a>";
+								echo '<a href="edit_entry.php?room=',$row["2"],'&amp;period=&amp;year=',$cyear,'&amp;month=',$cmonth,'&amp;day=',$cday,'&amp;page=week_all" title="',get_vocab("cliquez_pour_effectuer_une_reservation"),'"><span class="glyphicon glyphicon-plus"></span></a>',PHP_EOL;
 							else
-								echo "<a href=\"edit_entry.php?room=".$row['2']."&amp;hour=$hour&amp;minute=0&amp;year=$cyear&amp;month=$cmonth&amp;day=$cday&amp;page=week_all\" title=\"".get_vocab("cliquez_pour_effectuer_une_reservation")."\"><span class=\"glyphicon glyphicon-plus\"></span></a>";
+								echo '<a href="edit_entry.php?room=',$row["2"],'&amp;hour=',$hour,'&amp;minute=0&amp;year=',$cyear,'&amp;month=',$cmonth,'&amp;day=',$cday,'&amp;page=week_all" title="',get_vocab("cliquez_pour_effectuer_une_reservation"),'"><span class="glyphicon glyphicon-plus"></span></a>',PHP_EOL;;
 						}
 						else
 							echo ' '.PHP_EOL;
