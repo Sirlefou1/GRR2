@@ -1,3 +1,0 @@
-[18-Dec-2014 15:23:19 Europe/Paris] PHP Parse error:  syntax error, unexpected ''.?year='' (T_CONSTANT_ENCAPSED_STRING) in C:\UwAmp\www\grr\include\functions.inc.php on line 1847
-[18-Dec-2014 15:23:19 Europe/Paris] PHP Stack trace:
-[18-Dec-2014 15:23:19 Europe/Paris] PHP   1. {main}() C:\UwAmp\www\grr\month_all.php:0
