@@ -276,7 +276,7 @@ if ($etape == 3)
 	echo "<tr>\n<td><span class='small'><a href='admin_calend.php' onclick=\"setCheckboxesGrr(document.getElementById('formulaire'), false, 'all'); return false;\">".get_vocab("uncheck_all_")."</a></span></td>\n";
 	echo "<td> </td></tr>\n";
 	echo "</table>\n";
-	echo "<table cellspacing=\"20\">\n";
+	echo '<table class="table table-bordered">'.PHP_EOL;
 	$n = Settings::get("begin_bookings");
 	$end_bookings = Settings::get("end_bookings");
 	$debligne = 1;
@@ -485,9 +485,9 @@ else if (!$etape)
 	echo "<h3 style=\"text-align:center;\">".get_vocab("etape_n")."1/3</h3>\n";
 	// Choix des domaines
 	echo "<form action=\"admin_calend.php\" method=\"post\">\n";
-	echo "<table border=\"1\"><tr><td>\n";
+	echo '<table class="table table-bordered">'.PHP_EOL.'<tr>'.PHP_EOL.'<td>'.PHP_EOL;
 	echo "<p><b>".get_vocab("choix_domaines")."</b></p>";
-	echo "<select name=\"areas[]\" multiple=\"multiple\" class=\"form-control\">\n";
+	echo '<select name="areas[]" multiple="multiple" class="form-control">'.PHP_EOL;
 	if (authGetUserLevel(getUserName(), -1) >= 2)
 		$sql = "SELECT id, area_name FROM ".TABLE_PREFIX."_area
 	ORDER BY order_display, area_name";
