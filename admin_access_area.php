@@ -138,14 +138,14 @@ if (empty($id_area))
 	$id_area = -1;
 echo "<h2>".get_vocab('admin_access_area.php')."</h2>\n";
 affiche_pop_up($msg,"admin");
-echo "<table><tr>\n";
+echo '<table>'.PHP_EOL.'<tr>'.PHP_EOL;
 $this_area_name = "";
 # Show all areas
 $existe_domaine = 'no';
-echo "<td ><p><b>".get_vocab('areas')."</b></p>\n";
-$out_html = "\n<form id=\"area\" action=\"admin_access_area.php\" method=\"post\">\n<div><select name=\"area\" onchange=\"area_go()\">";
+echo '<td>'.PHP_EOL.'<p>'.PHP_EOL.'<b>'.get_vocab("areas").'</b>'.PHP_EOL.'</p>'.PHP_EOL;
+$out_html = '<form id="area" action="admin_access_area.php" method="post">'.PHP_EOL.'<div>'.PHP_EOL.'<select class="form-control" name="area" onchange="area_go()">'.PHP_EOL;
 $out_html .= "\n<option value=\"admin_access_area.php?id_area=-1\">".get_vocab('select')."</option>";
-$sql = "select id, area_name from ".TABLE_PREFIX."_area where access='r' order by area_name";
+$sql = "SELECT id, area_name FROM ".TABLE_PREFIX."_area WHERE access='r' order by area_name";
 $res = grr_sql_query($sql);
 $nb = grr_sql_count($res);
 if ($res)
@@ -177,13 +177,13 @@ if ($res)
 </form>";
 if ($existe_domaine == 'yes')
 	echo $out_html;
-$this_area_name = grr_sql_query1("select area_name from ".TABLE_PREFIX."_area where id=$id_area");
+$this_area_name = grr_sql_query1("SELECT area_name FROM ".TABLE_PREFIX."_area WHERE id=$id_area");
 echo "</td>\n";
 echo "</tr></table>\n";
 # Show area :
 if ($id_area != -1)
 {
-	echo "<table border=\"1\" cellpadding=\"5\"><tr><td>";
+	echo '<table class="table table-bordered">'.PHP_EOL.'<tr>'.PHP_EOL.'<td>'.PHP_EOL;
 	$sql = "SELECT u.login, u.nom, u.prenom FROM ".TABLE_PREFIX."_utilisateurs u, ".TABLE_PREFIX."_j_user_area j WHERE (j.id_area='$id_area' and u.login=j.login)  order by u.nom, u.prenom";
 	$res = grr_sql_query($sql);
 	$nombre = grr_sql_count($res);
@@ -202,70 +202,77 @@ if ($id_area != -1)
 			echo "<h3 class='avertissement'>".get_vocab("no_user_area")."</h3>\n";
 		?>
 		<h3><?php echo get_vocab("add_user_to_list"); ?></h3>
-		<form action="admin_access_area.php" method='post'>
-			<div><select size="1" name="reg_user_login">
-				<option value=''><?php echo get_vocab("nobody"); ?></option>
-				<?php
+		<form class="form-inline" action="admin_access_area.php" method='post'>
+			<div class="form-group">
+				<select class="form-control" size="1" name="reg_user_login">
+					<option value=''><?php echo get_vocab("nobody"); ?></option>
+					<?php
 				// Pour mysql >= 4.1
-				$sql = "SELECT login, nom, prenom FROM ".TABLE_PREFIX."_utilisateurs WHERE (etat!='inactif' and (statut='utilisateur' or statut='visiteur' or statut='gestionnaire_utilisateur')) AND login NOT IN (SELECT login FROM ".TABLE_PREFIX."_j_user_area WHERE id_area = '$id_area') order by nom, prenom";
+					$sql = "SELECT login, nom, prenom FROM ".TABLE_PREFIX."_utilisateurs WHERE (etat!='inactif' and (statut='utilisateur' or statut='visiteur' or statut='gestionnaire_utilisateur')) AND login NOT IN (SELECT login FROM ".TABLE_PREFIX."_j_user_area WHERE id_area = '$id_area') order by nom, prenom";
 				// Pour mysql < 4.1
-				$sql = "SELECT DISTINCT u.login, u.nom, u.prenom FROM ".TABLE_PREFIX."_utilisateurs u left join ".TABLE_PREFIX."_j_user_area on ".TABLE_PREFIX."_j_user_area.login=u.login WHERE ((etat!='inactif' and (statut='utilisateur' or statut='visiteur' or statut='gestionnaire_utilisateur')) AND (".TABLE_PREFIX."_j_user_area.login is null or (".TABLE_PREFIX."_j_user_area.login=u.login and ".TABLE_PREFIX."_j_user_area.id_area!=".$id_area.")))  order by u.nom, u.prenom";
-				$res = grr_sql_query($sql);
+					$sql = "SELECT DISTINCT u.login, u.nom, u.prenom FROM ".TABLE_PREFIX."_utilisateurs u left join ".TABLE_PREFIX."_j_user_area on ".TABLE_PREFIX."_j_user_area.login=u.login WHERE ((etat!='inactif' and (statut='utilisateur' or statut='visiteur' or statut='gestionnaire_utilisateur')) AND (".TABLE_PREFIX."_j_user_area.login is null or (".TABLE_PREFIX."_j_user_area.login=u.login and ".TABLE_PREFIX."_j_user_area.id_area!=".$id_area.")))  order by u.nom, u.prenom";
+					$res = grr_sql_query($sql);
+					if ($res)
+					{
+						for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
+							echo "<option value=\"$row[0]\">".htmlspecialchars($row[1])." ".htmlspecialchars($row[2])." </option>\n";
+					}
+					?>
+				</select>
+				<input type="hidden" name="id_area" value="<?php echo $id_area;?>" />
+				<input class="btn btn-primary" type="submit" value="Enregistrer" />
+			</div>
+		</form>
+	</td>
+</tr>
+<!-- selection pour ajout de masse !-->
+<?php
+		// Pour mysql >= 4.1
+$sql = "SELECT login, nom, prenom FROM ".TABLE_PREFIX."_utilisateurs WHERE (etat!='inactif' and (statut='utilisateur' or statut='visiteur' or statut='gestionnaire_utilisateur')) AND login NOT IN (SELECT login FROM ".TABLE_PREFIX."_j_user_area WHERE id_area = '$id_area') order by nom, prenom";
+		// Pour mysql < 4.1
+$sql = "SELECT DISTINCT u.login, u.nom, u.prenom FROM ".TABLE_PREFIX."_utilisateurs u left join ".TABLE_PREFIX."_j_user_area on ".TABLE_PREFIX."_j_user_area.login=u.login WHERE ((etat!='inactif' and (statut='utilisateur' or statut='visiteur' or statut='gestionnaire_utilisateur')) AND (".TABLE_PREFIX."_j_user_area.login is null or (".TABLE_PREFIX."_j_user_area.login=u.login and ".TABLE_PREFIX."_j_user_area.id_area!=".$id_area.")))  order by u.nom, u.prenom";
+$res = grr_sql_query($sql);
+$nb_users = grr_sql_count($res);
+if ($nb_users > 0)
+{
+	?>
+	<tr>
+	<td>
+		<h3><?php echo get_vocab("add_multiple_user_to_list").get_vocab("deux_points"); ?></h3>
+		<form class="form-inline" action="admin_access_area.php" method='post'>
+			<div class="form-group">
+			<select class="form-control" name="agent" size="8" style="width:200px;" multiple="multiple" ondblclick="Deplacer(this.form.agent,this.form.elements['reg_multi_user_login[]'])">
+				<?php
 				if ($res)
 					for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 						echo "<option value=\"$row[0]\">".htmlspecialchars($row[1])." ".htmlspecialchars($row[2])." </option>\n";
 					?>
 				</select>
-				<input type="hidden" name="id_area" value="<?php echo $id_area;?>" />
-				<input type="submit" value="Enregistrer" /></div>
-			</form>
-		</td></tr>
-		<!-- selection pour ajout de masse !-->
-		<?php
-		// Pour mysql >= 4.1
-		$sql = "SELECT login, nom, prenom FROM ".TABLE_PREFIX."_utilisateurs WHERE (etat!='inactif' and (statut='utilisateur' or statut='visiteur' or statut='gestionnaire_utilisateur')) AND login NOT IN (SELECT login FROM ".TABLE_PREFIX."_j_user_area WHERE id_area = '$id_area') order by nom, prenom";
-		// Pour mysql < 4.1
-		$sql = "SELECT DISTINCT u.login, u.nom, u.prenom FROM ".TABLE_PREFIX."_utilisateurs u left join ".TABLE_PREFIX."_j_user_area on ".TABLE_PREFIX."_j_user_area.login=u.login WHERE ((etat!='inactif' and (statut='utilisateur' or statut='visiteur' or statut='gestionnaire_utilisateur')) AND (".TABLE_PREFIX."_j_user_area.login is null or (".TABLE_PREFIX."_j_user_area.login=u.login and ".TABLE_PREFIX."_j_user_area.id_area!=".$id_area.")))  order by u.nom, u.prenom";
-		$res = grr_sql_query($sql);
-		$nb_users = grr_sql_count($res);
-		if ($nb_users > 0)
-		{
-			?>
-			<tr><td>
-				<h3><?php echo get_vocab("add_multiple_user_to_list").get_vocab("deux_points"); ?></h3>
-				<form action="admin_access_area.php" method='post'>
-					<div><select name="agent" size="8" style="width:200px;" multiple="multiple" ondblclick="Deplacer(this.form.agent,this.form.elements['reg_multi_user_login[]'])">
-						<?php
-						if ($res)
-							for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
-								echo "<option value=\"$row[0]\">".htmlspecialchars($row[1])." ".htmlspecialchars($row[2])." </option>\n";
-							?>
-						</select>
-						<input type="button" value="&lt;&lt;" onclick="Deplacer(this.form.elements['reg_multi_user_login[]'],this.form.agent)"/>
-						<input type="button" value="&gt;&gt;" onclick="Deplacer(this.form.agent,this.form.elements['reg_multi_user_login[]'])"/>
-						<select name="reg_multi_user_login[]" id="reg_multi_user_login" size="8" style="width:200px;" multiple="multiple" ondblclick="Deplacer(this.form.elements['reg_multi_user_login[]'],this.form.agent)">
-							<option> </option>
-						</select>
-						<input type="hidden" name="id_area" value="<?php echo $id_area; ?>" />
-						<input type="submit" value="Enregistrer"  onclick="selectionner_liste(this.form.reg_multi_user_login);"/></div>
-						<script type="text/javascript">
-							vider_liste(document.getElementById('reg_multi_user_login'));
-						</script> </form>
-						<?php
-						echo "</td></tr>";
-					}
-					echo "</table>";
-
-				}
-				else
-				{
-					if (($nb =0) || ($existe_domaine != 'yes'))
-						echo "<h3>".get_vocab("no_restricted_area")."</h3>";
-					else
-						echo "<h3>".get_vocab("no_area")."</h3>";
-				}
+				<input class="btn btn-primary" type="button" value="&lt;&lt;" onclick="Deplacer(this.form.elements['reg_multi_user_login[]'],this.form.agent)"/>
+				<input class="btn btn-primary" type="button" value="&gt;&gt;" onclick="Deplacer(this.form.agent,this.form.elements['reg_multi_user_login[]'])"/>
+				<select class="form-control" name="reg_multi_user_login[]" id="reg_multi_user_login" size="8" style="width:200px;" multiple="multiple" ondblclick="Deplacer(this.form.elements['reg_multi_user_login[]'],this.form.agent)">
+					<option> </option>
+				</select>
+				<input type="hidden" name="id_area" value="<?php echo $id_area; ?>" />
+				<input class="btn btn-primary" type="submit" value="Enregistrer"  onclick="selectionner_liste(this.form.reg_multi_user_login);"/></div>
+				<script type="text/javascript">
+					vider_liste(document.getElementById('reg_multi_user_login'));
+				</script> </form>
+				<?php
 				echo "</td></tr>";
-				echo "</table>";
-				?>
-			</body>
-			</html>
+			}
+			echo "</table>";
+
+		}
+		else
+		{
+			if (($nb =0) || ($existe_domaine != 'yes'))
+				echo "<h3>".get_vocab("no_restricted_area")."</h3>";
+			else
+				echo "<h3>".get_vocab("no_area")."</h3>";
+		}
+		echo "</td></tr>";
+		echo "</table>";
+		?>
+	</body>
+	</html>

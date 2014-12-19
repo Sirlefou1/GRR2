@@ -99,7 +99,7 @@ if (isset($_POST['record']) && ($_POST['record'] == 'yes'))
 	}
 }
 echo '<p>',get_vocab("les_journees_cochees_sont_ignorees"),'</p>',PHP_EOL;
-echo '<table cellpadding="3">',PHP_EOL;
+echo '<table class="table table-bordered">',PHP_EOL;
 $basetime = mktime(12, 0, 0, 6, 11 + $weekstarts, 2000);
 for ($i = 0; $i < 7; $i++)
 {
@@ -114,7 +114,7 @@ echo '<tr>',PHP_EOL,'<td>',PHP_EOL,'<span class="small"><a href="admin_calend_ig
 echo '<td>',PHP_EOL,'</td>',PHP_EOL,'</tr>',PHP_EOL;
 echo '</table>',PHP_EOL;
 echo '<form action="admin_calend_ignore.php" method="post" id="formulaire">',PHP_EOL;
-echo '<table cellspacing="20">',PHP_EOL;
+echo '<table class="table table-bordered">',PHP_EOL;
 $n = Settings::get("begin_bookings");
 $end_bookings = Settings::get("end_bookings");
 $debligne = 1;

@@ -233,7 +233,7 @@ if ($action)
 			exit();
 		}
 		unset($login_admin); $login_admin = $_GET["login_admin"];
-		$sql = "DELETE FROM ".TABLE_PREFIX."_j_user_room WHERE (login='$login_admin' and id_room = '$room')";
+		$sql = "DELETE FROM ".TABLE_PREFIX."_j_user_room WHERE (login='$login_admin' AND id_room = '$room')";
 		if (grr_sql_command($sql) < 0)
 			fatal_error(0, "<p>" . grr_sql_error());
 		else
@@ -250,13 +250,13 @@ if ($action)
 		// on ne cherche pas parmi les ressources invisibles pour l'utilisateur
 		foreach ($tab_rooms_noaccess as $key)
 			$sql .= " and id != $key ";
-		$sql .= " order by room_name";
+		$sql .= " ORDER BY room_name";
 		$res = grr_sql_query($sql);
 		if ($res)
 		{
 			for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 			{
-				$sql2 = "DELETE FROM ".TABLE_PREFIX."_j_user_room WHERE (login='".$_GET['login_admin']."' and id_room = '$row[0]')";
+				$sql2 = "DELETE FROM ".TABLE_PREFIX."_j_user_room WHERE (login='".$_GET['login_admin']."' AND id_room = '$row[0]')";
 				if (grr_sql_command($sql2) < 0)
 					fatal_error(0, "<p>" . grr_sql_error());
 				else
@@ -291,7 +291,7 @@ $this_area_name = "";
 $this_room_name = "";
 //Show all areas
 echo "<td ><p><b>".get_vocab("areas")."</b></p>\n";
-$out_html = "<form id=\"area\" action=\"admin_right.php\" method=\"post\">\n<div><SELECT name=\"area\" onchange=\"area_go()\">\n";
+$out_html = '<form class="form-inline" id="area" action="admin_right.php" method="post">'.PHP_EOL.'<div class="form-group">'.PHP_EOL.'<select class="form-control" name="area" onchange="area_go()">'.PHP_EOL;
 $out_html .= "<option value=\"admin_right.php?id_area=-1\">".get_vocab('select')."</option>\n";
 $sql = "SELECT id, area_name FROM ".TABLE_PREFIX."_area order by order_display";
 $res = grr_sql_query($sql);
@@ -329,7 +329,7 @@ echo "</td>\n";
 //Show all rooms in the current area
 echo "<td><p><b>".get_vocab('rooms')."</b></p>";
 //should we show a drop-down for the room list, or not?
-$out_html = "<form id=\"room\" action=\"admin_right.php\" method=\"post\">\n<div><SELECT name=\"room\" onchange=\"room_go()\">\n";
+$out_html = '<form id="room" action="admin_right.php" method="post">'.PHP_EOL.'<div>'.PHP_EOL.'<select class="form-control" name="room" onchange="room_go()">'.PHP_EOL;
 $out_html .= "<option value=\"admin_right.php?id_area=$id_area&amp;room=-1\">".get_vocab('select_all')."</option>\n";
 $sql = "SELECT id, room_name, description FROM ".TABLE_PREFIX."_room WHERE area_id=$id_area ";
 foreach ($tab_rooms_noaccess as $key)
@@ -380,7 +380,7 @@ if ($this_room_name_des != '-1')
 	$this_room_name_des = " (".$this_room_name_des.")";
 else
 	$this_room_name_des = '';
-echo "<table border=\"1\" cellpadding=\"5\"><tr><td>";
+echo '<table class="table table-bordered">'.PHP_EOL.'<tr>'.PHP_EOL.'<td>'.PHP_EOL;
 if ($room != -1)
 {
 	$sql = "SELECT u.login, u.nom, u.prenom FROM ".TABLE_PREFIX."_utilisateurs u, ".TABLE_PREFIX."_j_user_room j WHERE (j.id_room='$room' and u.login=j.login)  order by u.nom, u.prenom";
@@ -451,27 +451,30 @@ else
 }
 ?>
 <h3><?php echo get_vocab("add_user_to_list");?></h3>
-<form  action="admin_right.php" method='post'>
-	<div><SELECT size="1" name="reg_admin_login">
-		<option value=''><?php echo get_vocab("nobody"); ?></option>
-		<?php
-		$sql = "SELECT login, nom, prenom FROM ".TABLE_PREFIX."_utilisateurs WHERE  (etat!='inactif' and (statut='utilisateur' or statut='gestionnaire_utilisateur')) order by nom, prenom";
-		$res = grr_sql_query($sql);
-		if ($res)
-		{
-			for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
+<form class="form-inline" action="admin_right.php" method='post'>
+	<div class="form-group">
+		<select class="form-control" size="1" name="reg_admin_login">
+			<option value=''><?php echo get_vocab("nobody"); ?></option>
+			<?php
+			$sql = "SELECT login, nom, prenom FROM ".TABLE_PREFIX."_utilisateurs WHERE  (etat!='inactif' and (statut='utilisateur' or statut='gestionnaire_utilisateur')) order by nom, prenom";
+			$res = grr_sql_query($sql);
+			if ($res)
 			{
-				if (authUserAccesArea($row[0],$id_area) == 1)
-					echo "<option value=\"$row[0]\">".htmlspecialchars($row[1])." ".htmlspecialchars($row[2])." </option>";
+				for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
+				{
+					if (authUserAccesArea($row[0],$id_area) == 1)
+						echo "<option value=\"$row[0]\">".htmlspecialchars($row[1])." ".htmlspecialchars($row[2])." </option>";
+				}
 			}
-		}
-		?>
-	</select>
-	<input type="hidden" name="id_area" value="<?php echo $id_area;?>" />
-	<input type="hidden" name="room" value="<?php echo $room;?>" />
-	<input type="submit" value="Enregistrer" />
-</div></form>
-</td></tr>
+			?>
+		</select>
+		<input type="hidden" name="id_area" value="<?php echo $id_area;?>" />
+		<input  type="hidden" name="room" value="<?php echo $room;?>" />
+		<input class="btn btn-primary" type="submit" value="Enregistrer" />
+	</div>
+</form>
+</td>
+</tr>
 <!-- selection pour ajout de masse !-->
 <?php
 $sql = "SELECT login, nom, prenom FROM ".TABLE_PREFIX."_utilisateurs WHERE  (etat!='inactif' and (statut='utilisateur' or statut='gestionnaire_utilisateur')) order by nom, prenom";
@@ -480,10 +483,12 @@ $nb_users = grr_sql_count($res);
 if ($nb_users > 0)
 {
 	?>
-	<tr><td>
+	<tr>
+	<td>
 		<h3><?php echo get_vocab("add_multiple_user_to_list").get_vocab("deux_points");?></h3>
-		<form action="admin_right.php" method='post'>
-			<div><select name="agent" size="8" style="width:200px;" multiple="multiple" ondblclick="Deplacer(this.form.agent,this.form.elements['reg_multi_admin_login[]'])">
+		<form class="form-inline" action="admin_right.php" method='post'>
+			<div class="form-group">
+			<select class="form-control" name="agent" size="8" style="width:200px;" multiple="multiple" ondblclick="Deplacer(this.form.agent,this.form.elements['reg_multi_admin_login[]'])">
 				<?php
 				if ($res)
 				{
@@ -495,23 +500,23 @@ if ($nb_users > 0)
 				}
 				?>
 			</select>
-			<input type="button" value="&lt;&lt;" onclick="Deplacer(this.form.elements['reg_multi_admin_login[]'],this.form.agent)"/>
-			<input type="button" value="&gt;&gt;" onclick="Deplacer(this.form.agent,this.form.elements['reg_multi_admin_login[]'])"/>
-			<select name="reg_multi_admin_login[]" id="reg_multi_admin_login" size="8" style="width:200px;" multiple="multiple" ondblclick="Deplacer(this.form.elements['reg_multi_admin_login[]'],this.form.agent)">
+			<input class="btn btn-primary" type="button" value="&lt;&lt;" onclick="Deplacer(this.form.elements['reg_multi_admin_login[]'],this.form.agent)"/>
+			<input class="btn btn-primary" type="button" value="&gt;&gt;" onclick="Deplacer(this.form.agent,this.form.elements['reg_multi_admin_login[]'])"/>
+			<select class="form-control" name="reg_multi_admin_login[]" id="reg_multi_admin_login" size="8" style="width:200px;" multiple="multiple" ondblclick="Deplacer(this.form.elements['reg_multi_admin_login[]'],this.form.agent)">
 				<option> </option>
 			</select>
 			<input type="hidden" name="id_area" value="<?php echo $id_area;?>" />
 			<input type="hidden" name="room" value="<?php echo $room;?>" />
-			<input type="submit" value="Enregistrer"  onclick="selectionner_liste(this.form.reg_multi_admin_login);"/></div>
+			<input class="btn btn-primary" type="submit" value="Enregistrer"  onclick="selectionner_liste(this.form.reg_multi_admin_login);"/></div>
 			<script type="text/javascript">
 				vider_liste(document.getElementById('reg_multi_admin_login'));
 			</script> </form>
 			<?php
-			echo "</td></tr>";
+			echo '</td>'.PHP_EOL.'</tr>'.PHP_EOL;
 		}
-		echo "</table>";
+		echo '</table>'.PHP_EOL;
 // fin de l'affichage de la colonne de droite
-		echo "</td></tr></table>";
+		echo '</td>'.PHP_EOL.'</tr>'.PHP_EOL.'</table>'.PHP_EOL;
 		?>
 	</body>
 	</html>

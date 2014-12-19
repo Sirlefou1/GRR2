@@ -38,10 +38,10 @@ function cal3($month, $year)
     $date = mktime(12, 0, 0, $month, 1, $year);
     $first = (strftime("%w",$date) + 7 - $weekstarts) % 7;
     $monthName = utf8_strftime("%B",$date);
-    $s .= "<table class=\"calendar2\" border=\"1\" cellspacing=\"2\">\n";
-    $s .= "<tr>\n";
+    $s .= '<table class="calendar2 table">'.PHP_EOL;
+    $s .= '<tr>'.PHP_EOL;
     $s .= "<td class=\"calendarHeader2\" colspan=\"8\">$monthName&nbsp;$year</td>\n";
-    $s .= "</tr>\n";
+    $s .= '</tr>'.PHP_EOL;
     $d = 1 - $first;
     $is_ligne1 = 'y';
     while ($d <= $daysInMonth)
@@ -183,7 +183,7 @@ if (isset($_SERVER['HTTP_REFERER']))
 		}
 	}
 	$basetime = mktime(12, 0, 0, 6, 11 + $weekstarts, 2000);
-	echo "<table cellspacing=\"20\" border=\"0\">\n";
+	echo '<table class="table table-bordered">'.PHP_EOL;
 	$n = Settings::get("begin_bookings");
 	$end_bookings = Settings::get("end_bookings");
 	$debligne = 1;

@@ -119,7 +119,7 @@ function cal($month, $year)
 	$date = mktime(12, 0, 0, $month, 1, $year);
 	$first = (strftime("%w",$date) + 7 - $weekstarts) % 7;
 	$monthName = ucfirst(utf8_strftime("%B", $date));
-	$s .= '<table class="calendar2" border="1" cellspacing="3">'.PHP_EOL;
+	$s .= '<table class="table calendar2">'.PHP_EOL;
 	$s .= '<tr>'.PHP_EOL;
 	$s .= '<td class="calendarHeader2" colspan="8">'.$monthName.' '.$year.'</td>'.PHP_EOL;
 	$s .= '</tr>'.PHP_EOL;

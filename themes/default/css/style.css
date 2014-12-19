@@ -80,7 +80,7 @@ td.cell_month_o{background-color:#ccc}
 .center{width:100%;margin-left:auto;margin-right:auto;text-align:center}
 .avertissement{background-color:#ff8585;text-align:center}
 td.calendar2{text-align:center;border:2px;font-size:8pt}
-td.calendarHeader2{text-align:center;border:0;font-size:10pt;width:200px}
+td.calendarHeader2{text-align:center;border:0;font-size:10pt;width:200px;background-color:#47b061;color:#FFF;font-weight:bold;font-size:18px;}
 .formo{width:100%;background-color:#fff0e0;background-position:center bottom;float:none;color:#000}
 .fondo{background-color:#fff0e0;background-position:center bottom;float:none;color:#000}
 .fondl{background-color:#CCC;background-position:center bottom;float:none;color:#000}

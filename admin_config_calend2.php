@@ -66,7 +66,7 @@ if (isset($_POST['record']) && ($_POST['record'] == 'yes'))
 				$starttime = mktime($morningstarts, 0, 0, $month, $day  , $year);
 				$endtime   = mktime($eveningends, 0, $resolution, $month, $day, $year);
 				 // On efface toutes les résa en conflit
-				$sql = "select id from ".TABLE_PREFIX."_room";
+				$sql = "SELECT id from ".TABLE_PREFIX."_room";
 				$res = grr_sql_query($sql);
 				if ($res)
 				{
@@ -90,7 +90,7 @@ echo "<p>".get_vocab("les_journees_cochees_sont_valides").get_vocab("deux_points
 echo "<br />* ".get_vocab("nombre_jours_Jours/Cycles").get_vocab("deux_points").Settings::get("nombre_jours_Jours/Cycles");
 echo "<br />* ".get_vocab("debut_Jours/Cycles").get_vocab("deux_points").Settings::get("jour_debut_Jours/Cycles");
 echo "<br /><br />".get_vocab("explication_Jours_Cycles2")."</p>";
-echo "<table cellpadding=\"3\">\n";
+echo '<table class="table table-bordered">'.PHP_EOL;
 $basetime = mktime(12, 0, 0, 6, 11 + $weekstarts, 2000);
 for ($i = 0; $i < 7; $i++)
 {
@@ -105,7 +105,7 @@ echo "<tr>\n<td><span class='small'><a href='admin_calend_jour_cycle.php' onclic
 echo "<td></td></tr>\n";
 echo "</table>\n";
 echo "<form action=\"admin_calend_jour_cycle.php?page_calend=2\" method=\"post\" id=\"formulaire\">\n";
-echo "<table cellspacing=\"20\">\n";
+echo '<table class="table table-bordered">'.PHP_EOL;
 $n = Settings::get("begin_bookings");
 $end_bookings = Settings::get("end_bookings");
 $debligne = 1;

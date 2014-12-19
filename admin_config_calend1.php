@@ -59,7 +59,7 @@ echo "<br />".get_vocab("explication_Jours_Cycles2");
 ?>
 <br /><br />
 </p>
-<table border="1" cellpadding="5" cellspacing="1">
+<table class="table table-bordered">
 	<tr>
 		<td>
 			<?php echo get_vocab("nombre_jours_Jours/Cycles").get_vocab("deux_points"); ?>
@@ -67,7 +67,7 @@ echo "<br />".get_vocab("explication_Jours_Cycles2");
 		<td>
 			<!-- Pour sélectionner le nombre de jours par Cycle  -->
 			<?php
-			echo "<select name='nombreJours' id='nombreJours'>\n";
+			echo '<select class="form-control" name="nombreJours" id="nombreJours">'.PHP_EOL;
 			for($i = 1; $i < 21; $i++)
 			{
 				if ($i == Settings::get("nombre_jours_Jours/Cycles"))
@@ -83,12 +83,12 @@ echo "<br />".get_vocab("explication_Jours_Cycles2");
 	<tr>
 		<td>
 			<?php
-			echo get_vocab("debut_Jours/Cycles").get_vocab("deux_points")."<br /><i>".get_vocab("explication_debut_Jours_Cycles")."</i>"; 
+			echo get_vocab("debut_Jours/Cycles").get_vocab("deux_points")."<br /><i>".get_vocab("explication_debut_Jours_Cycles")."</i>";
 			?>
 		</td>
 		<td>
 			<?php
-			echo "<select name='jourDebut' id='jourDebut'>";
+			echo '<select class="form-control" name="jourDebut" id="jourDebut">';
 			for($i = 1; $i < 21; $i++)
 			{
 				if ($i == Settings::get("jour_debut_Jours/Cycles"))
