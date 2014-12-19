@@ -265,10 +265,10 @@ if (Settings::get("sso_statut") == "lcs")
 // Par ailleurs un gestionnaire d'utilisateurs ne peut pas Autoriser ou non la modification par un utilisateur de ses informations personnelles
 if (authGetUserLevel(getUserName(),-1,'user') !=  1)
 {
-	echo "<form action=\"admin_user.php\" method=\"get\">\n";
-	echo "<table border=\"1\">\n";
-	echo "<tr>\n";
-	echo "<td>".get_vocab("modification_parametres_personnels").get_vocab("deux_points")."<select name=\"allow_users_modify_profil\" size=\"1\">\n";
+	echo '<form action="admin_user.php" method="get">',PHP_EOL;
+	echo '<table class="table table-bordered">',PHP_EOL;
+	echo '<tr>',PHP_EOL;
+	echo '<td>',get_vocab("modification_parametres_personnels"),get_vocab("deux_points"),'</td><td><select class="form-control" name="allow_users_modify_profil" size="1">',PHP_EOL;
 	echo "<option value = '1' ";
 	if (Settings::get("allow_users_modify_profil") == '1')
 		echo " selected=\"selected\"";
@@ -280,21 +280,19 @@ if (authGetUserLevel(getUserName(),-1,'user') !=  1)
 	echo "<option value = '5' ";
 	if (Settings::get("allow_users_modify_profil") == '5')
 		echo " selected=\"selected\"";
-	echo ">".get_vocab("only_administrators")."</option>\n";
-	echo "</select>";
-	echo "</td>\n<td><div><input type=\"submit\" value=\"".get_vocab("OK")."\" /></div></td></tr></table>\n";
-	echo "<div><input type=\"hidden\" name=\"action\" value=\"modif_profil\" />\n
-	<input type=\"hidden\" name=\"display\" value=\"$display\" /></div>
-</form>\n";
+	echo '>',get_vocab("only_administrators"),'</option>',PHP_EOL;
+	echo '</select>',PHP_EOL;
+	echo '</td>',PHP_EOL,'<td>',PHP_EOL,'<div>',PHP_EOL,'<input class="btn btn-primary" type="submit" value="',get_vocab("OK"),'" />',PHP_EOL,'</div>',PHP_EOL,'</td>',PHP_EOL,'</tr>',PHP_EOL,'</table>',PHP_EOL;
+	echo '<div>',PHP_EOL,'<input type="hidden" name="action" value="modif_profil" />',PHP_EOL,'<input type="hidden" name="display" value="',$display,'" />',PHP_EOL,'</div>',PHP_EOL,'</form>',PHP_EOL;
 }
 // Autoriser ou non la modification par un utilisateur de son email
 // Par ailleurs un gestionnaire d'utilisateurs ne peut pas Autoriser ou non la modification par un utilisateur de ses informations personnelles
 if (authGetUserLevel(getUserName(), -1, 'user') != 1)
 {
-	echo "<form action=\"admin_user.php\" method=\"get\">\n";
-	echo "<table border=\"1\">\n";
-	echo "<tr>\n";
-	echo "<td>".get_vocab("modification_parametre_email").get_vocab("deux_points")."<select name=\"allow_users_modify_email\" size=\"1\">\n";
+	echo '<form action="admin_user.php" method="get">',PHP_EOL;
+	echo '<table class="table table-bordered">',PHP_EOL;
+	echo '<tr>',PHP_EOL;
+	echo '<td>',get_vocab("modification_parametre_email"),get_vocab("deux_points"),'</td><td><select class="form-control" name="allow_users_modify_email" size="1">',PHP_EOL;
 	echo "<option value = '1' ";
 	if (Settings::get("allow_users_modify_email") == '1')
 		echo " selected=\"selected\"";
@@ -302,25 +300,23 @@ if (authGetUserLevel(getUserName(), -1, 'user') != 1)
 	echo "<option value = '2' ";
 	if (Settings::get("allow_users_modify_email") == '2')
 		echo " selected=\"selected\"";
-	echo ">".get_vocab("all_but_visitors")."</option>\n";
+	echo '>',get_vocab("all_but_visitors"),'</option>',PHP_EOL;
 	echo "<option value = '5' ";
 	if (Settings::get("allow_users_modify_email") == '5')
 		echo " selected=\"selected\"";
-	echo ">".get_vocab("only_administrators")."</option>\n";
-	echo "</select>";
-	echo "</td>\n<td><div><input type=\"submit\" value=\"".get_vocab("OK")."\" /></div></td></tr></table>\n";
-	echo "<div><input type=\"hidden\" name=\"action\" value=\"modif_email\" />\n
-	<input type=\"hidden\" name=\"display\" value=\"$display\" /></div>
-</form>\n";
+	echo '>',get_vocab("only_administrators"),'</option>',PHP_EOL;
+	echo '</select>',PHP_EOL;
+	echo '</td>',PHP_EOL,'<td>',PHP_EOL,'<div>',PHP_EOL,'<input class="btn btn-primary" type="submit" value="',get_vocab("OK"),'" />',PHP_EOL,'</div>',PHP_EOL,'</td>',PHP_EOL,'</tr>',PHP_EOL,'</table>',PHP_EOL;
+	echo '<div>',PHP_EOL,'<input type="hidden" name="action" value="modif_email" />',PHP_EOL,'<input type="hidden" name="display" value="',$display,'" />',PHP_EOL,'</div>',PHP_EOL,'</form>',PHP_EOL;
 }
 // Autoriser ou non la modification par un utilisateur de son mot de passe,
 // Par ailleurs un gestionnaire d'utilisateurs ne peut pas Autoriser ou non la modification par un utilisateur de son mot de passe
 if (authGetUserLevel(getUserName(), -1, 'user') != 1)
 {
-	echo "<form action=\"admin_user.php\" method=\"get\">\n";
-	echo "<table border=\"1\">\n";
-	echo "<tr>\n";
-	echo "<td>".get_vocab("modification_mdp").get_vocab("deux_points")."<select name=\"allow_users_modify_mdp\" size=\"1\">\n";
+	echo '<form action="admin_user.php" method="get">',PHP_EOL;
+	echo '<table class="table table-bordered">',PHP_EOL;
+	echo '<tr>',PHP_EOL;
+	echo '<td>',get_vocab("modification_mdp"),get_vocab("deux_points"),'</td><td><select class="form-control" name="allow_users_modify_mdp" size="1">',PHP_EOL;
 	echo "<option value = '1' ";
 	if (Settings::get("allow_users_modify_mdp") == '1')
 		echo " selected=\"selected\"";
@@ -333,25 +329,23 @@ if (authGetUserLevel(getUserName(), -1, 'user') != 1)
 	if (Settings::get("allow_users_modify_mdp") == '5')
 		echo " selected=\"selected\"";
 	echo ">".get_vocab("only_administrators")."</option>\n";
-	echo "</select>";
-	echo "</td>\n<td><div><input type=\"submit\" value=\"".get_vocab("OK")."\" /></div></td></tr></table>\n";
-	echo "<div><input type=\"hidden\" name=\"action\" value=\"modif_mdp\" />\n
-	<input type=\"hidden\" name=\"display\" value=\"$display\" />
-</div></form>\n";
+	echo '</select>',PHP_EOL;
+	echo '</td>',PHP_EOL,'<td>',PHP_EOL,'<div>',PHP_EOL,'<input class="btn btn-primary" type="submit" value="',get_vocab("OK"),'" />',PHP_EOL,'</div>',PHP_EOL,'</td>',PHP_EOL,'</tr>',PHP_EOL,'</table>',PHP_EOL;
+	echo '<div>',PHP_EOL,'<input type="hidden" name="action" value="modif_mdp" />',PHP_EOL,'<input type="hidden" name="display" value="',$display,'" />',PHP_EOL,'</div>',PHP_EOL,'</form>',PHP_EOL;
 }
-echo "<form action=\"admin_user.php\" method=\"get\">\n";
-echo "<table border=\"1\">\n";
-echo "<tr>\n";
-echo "<td>".get_vocab("display_all_user.php")."<input type=\"radio\" name=\"display\" value=\"tous\"";
+echo '<form action="admin_user.php" method="get">',PHP_EOL;
+echo '<table class="table table-bordered">',PHP_EOL;
+echo '<tr>',PHP_EOL;
+echo '<td>',get_vocab("display_all_user.php"),' <input type="radio" name="display" value="tous"';
 if ($display == 'tous')
 	echo " checked=\"checked\"";
 echo " /></td>";
 ?>
 <td>
-	<?php echo get_vocab("display_user_on.php"); ?><input type="radio" name="display" value='actifs' <?php if ($display == 'actifs') {echo " checked=\"checked\"";} ?> /></td>
+	<?php echo get_vocab("display_user_on.php"); ?> <input type="radio" name="display" value='actifs' <?php if ($display == 'actifs') {echo " checked=\"checked\"";} ?> /></td>
 	<td>
-		<?php echo get_vocab("display_user_off.php"); ?><input type="radio" name="display" value='inactifs' <?php if ($display == 'inactifs') {echo " checked=\"checked\"";} ?> /></td>
-		<td><input type="submit" value="<?php echo get_vocab("OK");?>" /></td>
+		<?php echo get_vocab("display_user_off.php"); ?> <input type="radio" name="display" value='inactifs' <?php if ($display == 'inactifs') {echo " checked=\"checked\"";} ?> /></td>
+		<td><input class="btn btn-primary" type="submit" value="<?php echo get_vocab("OK");?>" /></td>
 	</tr>
 </table>
 <div><input type="hidden" name="order_by" value="<?php echo $order_by;?>" /></div>
