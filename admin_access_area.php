@@ -30,7 +30,6 @@
 
 include "include/admin.inc.php";
 $grr_script_name = "admin_access_area.php";
-
 $id_area = isset($_POST["id_area"]) ? $_POST["id_area"] : (isset($_GET["id_area"]) ? $_GET["id_area"] : NULL);
 if (!isset($id_area))
 	settype($id_area,"integer");
@@ -39,8 +38,6 @@ $reg_multi_user_login = isset($_POST["reg_multi_user_login"]) ? $_POST["reg_mult
 $test_user =  isset($_POST["reg_multi_user_login"]) ? "multi" : (isset($_POST["reg_user_login"]) ? "simple" : NULL);
 $action = isset($_GET["action"]) ? $_GET["action"] : NULL;
 $msg = '';
-
-
 $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
@@ -52,10 +49,8 @@ check_access(4, $back);
 print_header("", "", "", $type="with_session");
 // Affichage de la colonne de gauche
 include "admin_col_gauche.php";
-
 // Si la table j_user_area est vide, il faut modifier la requête
 $test_grr_j_user_area = grr_sql_count(grr_sql_query("SELECT * from ".TABLE_PREFIX."_j_user_area"));
-
 if ($test_user == "multi")
 {
 	foreach ($reg_multi_user_login as $valeur)
@@ -87,8 +82,6 @@ if ($test_user == "multi")
 		}
 	}
 }
-
-
 if ($test_user == "simple")
 {
    // On commence par vérifier que le professeur n'est pas déjà présent dans cette liste.
@@ -117,7 +110,6 @@ if ($test_user == "simple")
 		}
 	}
 }
-
 if ($action=='del_user')
 {
 	if (authGetUserLevel(getUserName(), $id_area, 'area') < 4)
@@ -133,7 +125,6 @@ if ($action=='del_user')
 	else
 		$msg = get_vocab("del_user_succeed");
 }
-
 if (empty($id_area))
 	$id_area = -1;
 echo "<h2>".get_vocab('admin_access_area.php')."</h2>\n";
@@ -237,42 +228,43 @@ if ($nb_users > 0)
 {
 	?>
 	<tr>
-	<td>
-		<h3><?php echo get_vocab("add_multiple_user_to_list").get_vocab("deux_points"); ?></h3>
-		<form class="form-inline" action="admin_access_area.php" method='post'>
-			<div class="form-group">
-			<select class="form-control" name="agent" size="8" style="width:200px;" multiple="multiple" ondblclick="Deplacer(this.form.agent,this.form.elements['reg_multi_user_login[]'])">
-				<?php
-				if ($res)
-					for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
-						echo "<option value=\"$row[0]\">".htmlspecialchars($row[1])." ".htmlspecialchars($row[2])." </option>\n";
-					?>
-				</select>
-				<input class="btn btn-primary" type="button" value="&lt;&lt;" onclick="Deplacer(this.form.elements['reg_multi_user_login[]'],this.form.agent)"/>
-				<input class="btn btn-primary" type="button" value="&gt;&gt;" onclick="Deplacer(this.form.agent,this.form.elements['reg_multi_user_login[]'])"/>
-				<select class="form-control" name="reg_multi_user_login[]" id="reg_multi_user_login" size="8" style="width:200px;" multiple="multiple" ondblclick="Deplacer(this.form.elements['reg_multi_user_login[]'],this.form.agent)">
-					<option> </option>
-				</select>
-				<input type="hidden" name="id_area" value="<?php echo $id_area; ?>" />
-				<input class="btn btn-primary" type="submit" value="Enregistrer"  onclick="selectionner_liste(this.form.reg_multi_user_login);"/></div>
-				<script type="text/javascript">
-					vider_liste(document.getElementById('reg_multi_user_login'));
-				</script> </form>
-				<?php
-				echo "</td></tr>";
-			}
-			echo "</table>";
+		<td>
+			<h3><?php echo get_vocab("add_multiple_user_to_list").get_vocab("deux_points"); ?></h3>
+			<form class="form-inline" action="admin_access_area.php" method='post'>
+				<div class="form-group">
+					<select class="form-control" name="agent" size="8" style="width:200px;" multiple="multiple" ondblclick="Deplacer(this.form.agent,this.form.elements['reg_multi_user_login[]'])">
+						<?php
+						if ($res)
+							for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
+								echo "<option value=\"$row[0]\">".htmlspecialchars($row[1])." ".htmlspecialchars($row[2])." </option>\n";
+							?>
+						</select>
+						<input class="btn btn-primary" type="button" value="&lt;&lt;" onclick="Deplacer(this.form.elements['reg_multi_user_login[]'],this.form.agent)"/>
+						<input class="btn btn-primary" type="button" value="&gt;&gt;" onclick="Deplacer(this.form.agent,this.form.elements['reg_multi_user_login[]'])"/>
+						<select class="form-control" name="reg_multi_user_login[]" id="reg_multi_user_login" size="8" style="width:200px;" multiple="multiple" ondblclick="Deplacer(this.form.elements['reg_multi_user_login[]'],this.form.agent)">
+							<option> </option>
+						</select>
+						<input type="hidden" name="id_area" value="<?php echo $id_area; ?>" />
+						<input class="btn btn-primary" type="submit" value="Enregistrer"  onclick="selectionner_liste(this.form.reg_multi_user_login);"/></div>
+						<script type="text/javascript">
+							vider_liste(document.getElementById('reg_multi_user_login'));
+						</script>
+					</form>
+					<?php
+					echo "</td></tr>";
+				}
+				echo "</table>";
 
-		}
-		else
-		{
-			if (($nb =0) || ($existe_domaine != 'yes'))
-				echo "<h3>".get_vocab("no_restricted_area")."</h3>";
+			}
 			else
-				echo "<h3>".get_vocab("no_area")."</h3>";
-		}
-		echo "</td></tr>";
-		echo "</table>";
-		?>
-	</body>
-	</html>
+			{
+				if (($nb =0) || ($existe_domaine != 'yes'))
+					echo "<h3>".get_vocab("no_restricted_area")."</h3>";
+				else
+					echo "<h3>".get_vocab("no_area")."</h3>";
+			}
+			echo "</td></tr>";
+			echo "</table>";
+			?>
+		</body>
+		</html>

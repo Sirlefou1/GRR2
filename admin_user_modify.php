@@ -367,12 +367,12 @@ else
 	?>
 	<br /><?php echo get_vocab("required"); ?>
 </p>
-<form action="admin_user_modify.php?display=<?php echo $display; ?>" method='get'><div>
+<form class="form-inline" action="admin_user_modify.php?display=<?php echo $display; ?>" method='get'><div>
 	<?php
 	if ((Settings::get("sso_statut") != "") || (Settings::get("ldap_statut") != '') || (Settings::get("imap_statut") != ''))
 	{
 		echo get_vocab("authentification").get_vocab("deux_points");
-		echo "<select id=\"select_auth_mode\" name='type_authentification' onchange=\"display_password_fields(this.id);\">\n";
+		echo '<select class="form-control" id="select_auth_mode" name="type_authentification" onchange="display_password_fields(this.id);">'.PHP_EOL;
 		echo "<option value='locale'";
 		if ($user_source == 'local')
 			echo "selected=\"selected\" ";
@@ -391,86 +391,86 @@ else
 	}
 	else
 	{
-		echo "<input type=\"text\" name=\"new_login\" size=\"40\" value=\"".htmlentities($user_login)."\" />\n";
+		echo '<input class="form-control" type="text" name="new_login" size="40" value="'.htmlentities($user_login).'" />'.PHP_EOL;
 	}
-	echo "<table border=\"0\" cellpadding=\"5\"><tr>\n";
-	echo "<td>".get_vocab("last_name")." *".get_vocab("deux_points")."</td>\n<td><input type=\"text\" name=\"reg_nom\" size=\"40\" value=\"";
+	echo '<table class="table table-noborder">'.PHP_EOL.'<tr>'.PHP_EOL;
+	echo '<td>'.get_vocab("last_name").' *'.get_vocab("deux_points").'</td>'.PHP_EOL.'<td>'.PHP_EOL.'<input class="form-control" type="text" name="reg_nom" size="40" value="';
 	if ($user_nom)
 		echo htmlspecialchars($user_nom);
-	echo "\" /></td>\n";
-	echo "<td>".get_vocab("first_name")." *".get_vocab("deux_points")."</td>\n<td><input type=\"text\" name=\"reg_prenom\" size=\"20\" value=\"";
+	echo '" />'.PHP_EOL.'</td>'.PHP_EOL;
+	echo '<td>'.get_vocab("first_name").' *'.get_vocab("deux_points").'</td>'.PHP_EOL.'<td>'.PHP_EOL.'<input class="form-control" type="text" name="reg_prenom" size="20" value="';
 	if ($user_nom)
 		echo htmlspecialchars($user_prenom);
-	echo "\" /></td>\n";
-	echo "<td></td><td></td>";
-	echo "</tr>\n";
-	echo "<tr><td>".get_vocab("mail_user").get_vocab("deux_points")."</td><td><input type=\"text\" name=\"reg_email\" size=\"30\" value=\"";
+	echo '" />'.PHP_EOL.'</td>'.PHP_EOL;
+	echo '<td>'.PHP_EOL.'</td>'.PHP_EOL.'<td>'.PHP_EOL.'</td>'.PHP_EOL;
+	echo '</tr>'.PHP_EOL;
+	echo '<tr>'.PHP_EOL.'<td>'.get_vocab("mail_user").get_vocab("deux_points").'</td>'.PHP_EOL.'<td>'.PHP_EOL.'<input class="form-control" type="text" name="reg_email" size="30" value="';
 	if ($user_mail)
 		echo htmlspecialchars($user_mail);
-	echo "\" /></td>\n";
-	echo "<td>".get_vocab("statut").get_vocab("deux_points")."</td>\n";
-	echo "<td><select name=\"reg_statut\" size=\"1\">\n";
-	echo "<option value=\"visiteur\" ";
+	echo '" />'.PHP_EOL.'</td>'.PHP_EOL;
+	echo '<td>'.get_vocab("statut").get_vocab("deux_points").'</td>'.PHP_EOL;
+	echo '<td>'.PHP_EOL.'<select class="form-control" name="reg_statut" size="1">'.PHP_EOL;
+	echo '<option value="visiteur" ';
 	if ($user_statut == "visiteur")
 	{
-		echo "selected=\"selected\"";
+		echo 'selected="selected"';
 	}
-	echo ">".get_vocab("statut_visitor")."</option>\n";
-	echo "<option value=\"utilisateur\" ";
+	echo '>'.get_vocab("statut_visitor").'</option>'.PHP_EOL;
+	echo '<option value="utilisateur" ';
 	if ($user_statut == "utilisateur")
 	{
-		echo "selected=\"selected\"";
+		echo 'selected="selected"';
 	}
-	echo ">".get_vocab("statut_user")."</option>\n";
+	echo '>'.get_vocab("statut_user").'</option>'.PHP_EOL;
 // un gestionnaire d'utilisateurs ne peut pas créer un administrateur général ou un gestionnaire d'utilisateurs
 	if (authGetUserLevel(getUserName(),-1) >= 6)
 	{
-		echo "<option value=\"gestionnaire_utilisateur\" ";
+		echo '<option value="gestionnaire_utilisateur" ';
 		if ($user_statut == "gestionnaire_utilisateur")
 		{
-			echo "selected=\"selected\"";
+			echo 'selected="selected"';
 		}
-		echo ">".get_vocab("statut_user_administrator")."</option>\n";
-		echo "<option value=\"administrateur\" ";
+		echo '>'.get_vocab("statut_user_administrator").'</option>'.PHP_EOL;
+		echo '<option value="administrateur" ';
 		if ($user_statut == "administrateur")
 		{
-			echo "selected=\"selected\"";
+			echo 'selected="selected"';
 		}
-		echo ">".get_vocab("statut_administrator")."</option>\n";
+		echo '>'.get_vocab("statut_administrator").'</option>'.PHP_EOL;
 	}
-	echo "</select></td>\n";
+	echo '</select>'.PHP_EOL.'</td>'.PHP_EOL;
 	if (strtolower(getUserName()) != strtolower($user_login))
 	{
-		echo "<td>".get_vocab("activ_no_activ").get_vocab("deux_points")."</td>";
-		echo "<td><select name=\"reg_etat\" size=\"1\">\n";
-		echo "<option value=\"actif\" ";
+		echo '<td>'.get_vocab("activ_no_activ").get_vocab("deux_points").'</td>'.PHP_EOL;
+		echo '<td>'.PHP_EOL.'<select class="form-control" name="reg_etat" size="1">'.PHP_EOL;
+		echo '<option value="actif" ';
 		if ($user_etat == "actif")
-			echo "selected=\"selected\"";
-		echo ">".get_vocab("activ_user")."</option>\n";
-		echo "<option value=\"inactif\" ";
+			echo 'selected="selected"';
+		echo '>'.get_vocab("activ_user").'</option>'.PHP_EOL;
+		echo '<option value="inactif" ';
 		if ($user_etat == "inactif")
-			echo "selected=\"selected\"";
-		echo ">".get_vocab("no_activ_user")."</option>\n";
-		echo "</select></td>";
+			echo 'selected="selected"';
+		echo '>'.get_vocab("no_activ_user").'</option>'.PHP_EOL;
+		echo '</select>'.PHP_EOL.'</td>'.PHP_EOL;
 	}
 	else
 	{
-		echo "<td></td><td><input type=\"hidden\" name=\"reg_etat\" value=\"$user_etat\" /></td>\n";
+		echo '<td>'.PHP_EOL.'</td>'.PHP_EOL.'<td>'.PHP_EOL.'<input type="hidden" name="reg_etat" value="'.$user_etat.'" />'.PHP_EOL.'</td>'.PHP_EOL;
 	}
-	echo "</tr>\n";
-	echo "</table>";
-	echo "<div id='password_fields' style='visibility: ".$statut_div.";'>";
+	echo '</tr>'.PHP_EOL;
+	echo '</table>'.PHP_EOL;
+	echo '<div id="password_fields" style="visibility: '.$statut_div.';">'.PHP_EOL;
 	if ((isset($user_login)) && ($user_login!='') && ($flag_is_local=="y"))
-		echo "<b>".get_vocab("champ_vide_mot_de_passe_inchange")."</b>";
-	echo "<br />".get_vocab("pwd_toot_short")." *".get_vocab("deux_points")."<input type=\"password\" name=\"reg_password\" size=\"20\" />\n";
-	echo "<br />".get_vocab("confirm_pwd")." *".get_vocab("deux_points")."<input type=\"password\" name=\"reg_password2\" size=\"20\" />\n";
-	echo "</div>";
-	echo "<br />";
-	echo "<input type=\"hidden\" name=\"valid\" value=\"yes\" />\n";
+		echo '<b>'.get_vocab("champ_vide_mot_de_passe_inchange").'</b>';
+	echo '<br>'.get_vocab("pwd_toot_short").' *'.get_vocab("deux_points").'<input class="form-control" type="password" name="reg_password" size="20" />'.PHP_EOL;
+	echo '<br>'.get_vocab("confirm_pwd").' *'.get_vocab("deux_points").'<input class="form-control" type="password" name="reg_password2" size="20" />'.PHP_EOL;
+	echo '</div>'.PHP_EOL;
+	echo '<br>'.PHP_EOL;
+	echo '<input type="hidden" name="valid" value="yes" />'.PHP_EOL;
 	if (isset($user_login))
-		echo "<input type=\"hidden\" name=\"user_login\" value=\"".$user_login."\" />\n";
-	echo "<br /><div style=\"text-align:center;\"><input type=\"submit\" value=\"".get_vocab("save")."\" /></div>\n";
-	echo "</div></form>\n";
+		echo '<input type="hidden" name="user_login" value="'.$user_login.'" />'.PHP_EOL;
+	echo '<br>'.PHP_EOL.'<div style="text-align:center;"><input class="btn btn-primary" type="submit" value="'.get_vocab("save").'" />'.PHP_EOL.'</div>'.PHP_EOL;
+	echo '</div>'.PHP_EOL.'</form>'.PHP_EOL;
 	if ((isset($user_login)) && ($user_login != ''))
 	{
 		echo "<h2>".get_vocab('liste_privileges').$user_prenom." ".$user_nom." :</h2>";

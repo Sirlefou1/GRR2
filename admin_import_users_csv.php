@@ -40,6 +40,7 @@ if ((authGetUserLevel(getUserName(), -1) < 6) && (authGetUserLevel(getUserName()
 }
 # print the page header
 print_header("", "", "", $type="with_session");
+include "admin_col_gauche.php";
 ?>
 <p>| <a href="admin_user.php"><?php echo get_vocab("back");?></a> |</p>
 <?php
@@ -59,15 +60,15 @@ if ($reg_data != 'yes')
 			<?php $csvfile=""; ?>
 			<p>
 				<?php echo get_vocab("admin_import_users_csv0"); ?>
-				<input type="file" name="csvfile" />
+				<input class="form-control" type="file" name="csvfile" />
 			</p>
 			<div>
 				<input type="hidden" name="is_posted" value="1" />
 				<p>
-					<?php echo get_vocab("admin_import_users_csv1"); ?> 
+					<?php echo get_vocab("admin_import_users_csv1"); ?>
 					<input type="checkbox" name="en_tete" value="yes" checked="checked" />
 				</p>
-				<input type="submit" value="<?php echo get_vocab("submit");?>" />
+				<input class="btn btn-primary" type="submit" value="<?php echo get_vocab("submit");?>" />
 				<br />
 				</div
 				></form>
@@ -91,7 +92,7 @@ if ($reg_data != 'yes')
 						else
 						{
 							$row = 0;
-							echo "<table border=\"1\"><tr><td><p>".get_vocab("login")."</p></td>
+							echo "<table class=\"table\"><tr><td><p>".get_vocab("login")."</p></td>
 							<td><p>".get_vocab("name")."</p></td>
 							<td><p>".get_vocab("first_name")."</p></td>
 							<td><p>".get_vocab("pwd")."</p></td>
@@ -175,7 +176,7 @@ if ($reg_data != 'yes')
 										{
 											if ($test_nom_prenom_existant == 'yes')
 												echo "<td><p><font color=\"blue\">$data[$c]</font></p>";
-											else 
+											else
 												echo "<td><p>$data[$c]</p>";
 											$data_prenom = htmlentities($data[$c]);
 											echo "<input type=\"hidden\" name=\"reg_prenom[$row]\" value=\"$data_prenom\" /></td>";

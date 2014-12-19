@@ -171,7 +171,7 @@ if (isset($_GET['ok']))
 include "admin_col_gauche.php";
 // Affichage du tableau de choix des sous-configuration
 include "include/admin_config_tableau.inc.php";
-echo "<form action=\"./admin_config.php\"  method=\"get\" style=\"width: 100%;\">\n";
+echo "<form class=\"form-inline\" action=\"./admin_config.php\"  method=\"get\" style=\"width: 100%;\">\n";
 //
 // Automatic mail
 //********************************
@@ -213,20 +213,20 @@ if (Settings::get('grr_mail_method') == "smtp")
 echo "/>\n";
 echo get_vocab('methode smtp');
 echo "\n<br /><br />".get_vocab('Explications methode smtp 1').get_vocab('deux_points');
-echo "\n<input type = \"text\" name=\"grr_mail_smtp\" value =\"".Settings::get('grr_mail_smtp')."\" />";
+echo "\n<input class=\"form-control\" type=\"text\" name=\"grr_mail_smtp\" value =\"".Settings::get('grr_mail_smtp')."\" />";
 echo "\n<br />".get_vocab('Explications methode smtp 2');
 echo "\n<br />".get_vocab('utilisateur smtp').get_vocab('deux_points');
-echo "\n<input type = \"text\" name=\"grr_mail_Username\" value =\"".Settings::get('grr_mail_Username')."\" />";
+echo "\n<input class=\"form-control\" type=\"text\" name=\"grr_mail_Username\" value =\"".Settings::get('grr_mail_Username')."\" />";
 echo "\n<br />".get_vocab('pwd').get_vocab('deux_points');
-echo "\n<input type = \"password\" name=\"grr_mail_Password\" value =\"".Settings::get('grr_mail_Password')."\" />";
+echo "\n<input class=\"form-control\" type=\"password\" name=\"grr_mail_Password\" value =\"".Settings::get('grr_mail_Password')."\" />";
 echo "\n<br />".get_vocab('Email_expediteur_messages_automatiques').get_vocab('deux_points');
 if (trim(Settings::get('grr_mail_from')) == "")
 	$grr_mail_from = "noreply@mon.site.fr";
 else
 	$grr_mail_from = Settings::get('grr_mail_from');
-echo "\n<input type = \"text\" name=\"grr_mail_from\" value =\"".$grr_mail_from."\" size=\"30\" />";
+echo "\n<input class=\"form-control\" type=\"text\" name=\"grr_mail_from\" value =\"".$grr_mail_from."\" size=\"30\" />";
 echo "\n<br />".get_vocab('Nom_expediteur_messages_automatiques').get_vocab('deux_points');
-echo "\n<input type = \"text\" name=\"grr_mail_fromname\" value =\"".Settings::get('grr_mail_fromname')."\" size=\"30\" />";
+echo "\n<input class=\"form-control\" type=\"text\" name=\"grr_mail_fromname\" value =\"".Settings::get('grr_mail_fromname')."\" size=\"30\" />";
 echo "\n<br /><br />";
 echo "\n<input type=\"checkbox\" name=\"grr_mail_Bcc\" value=\"y\" ";
 if (Settings::get('grr_mail_Bcc') == "y")
@@ -286,10 +286,10 @@ if (Settings::get("verif_reservation_auto") == '1')
 echo " />";
 echo "\n</td></tr>";
 echo "\n<tr><td>".get_vocab("verif_reservation_auto2").get_vocab("deux_points")."</td><td>";
-echo "\n<input type=\"text\" name=\"motdepasse_verif_auto_grr\" value=\"".Settings::get("motdepasse_verif_auto_grr")."\" size=\"20\" />";
+echo "\n<input class=\"form-control\" type=\"text\" name=\"motdepasse_verif_auto_grr\" value=\"".Settings::get("motdepasse_verif_auto_grr")."\" size=\"20\" />";
 echo "\n</td></tr>";
 echo "\n<tr><td>".get_vocab("verif_reservation_auto3").get_vocab("deux_points")."</td><td>";
-echo "\n<input type=\"text\" name=\"chemin_complet_grr\" value=\"".Settings::get("chemin_complet_grr")."\" size=\"20\" />";
+echo "\n<input class=\"form-control\" type=\"text\" name=\"chemin_complet_grr\" value=\"".Settings::get("chemin_complet_grr")."\" size=\"20\" />";
 echo "\n</td></tr>";
 echo "\n</table>";
 echo "\n<p><input type=\"hidden\" name=\"page_config\" value=\"3\" />";

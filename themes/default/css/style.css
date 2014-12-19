@@ -39,7 +39,7 @@ table.table-striped th{background-color:gray !important; border:0px !important;}
 .cal_current_day{color:#000;vertical-align:middle;text-align:center;line-height:30px}
 .week td a{background-color:#8b8b8b;vertical-align:middle;text-align:center;height:100%;width:100%}
 .table-header{width:100%}
-.table-noborder{width:100%;border:0px}
+.table-noborder{width:100%;border:0px !important}
 .table-bordered{border-collapse:collapse;border-spacing:0;width:100%}
 table.calendar{text-align:center;width:99%;padding:1px;margin:auto;background-color:#fff}
 .calendar caption{background-color:#47b061}
