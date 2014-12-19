@@ -154,58 +154,57 @@ echo get_vocab('admin_type_explications')."<br /><br />";
 ?>
 <form action="admin_type_modify.php" method='get'>
 	<?php
-	echo "<div><input type=\"hidden\" name=\"id_type\" value=\"".$id_type."\" /></div>\n";
+	echo '<div>',PHP_EOL,'<input type="hidden" name="id_type" value="',$id_type,'" /></div>',PHP_EOL;
 
 	echo '<table class="table table-bordered">',PHP_EOL;
-	echo "<tr>";
-	echo "<td>".get_vocab("type_name").get_vocab("deux_points")."</td>\n";
-	echo "<td><input type=\"text\" name=\"type_name\" value=\"".htmlspecialchars($row["type_name"])."\" size=\"20\" /></td>\n";
-	echo "</tr><tr>\n";
-	echo "<td>".get_vocab("type_num").get_vocab("deux_points")."</td>\n";
-	echo "<td>";
-	echo "<select name=\"type_letter\" size=\"1\">\n";
-	echo "<option value=''>".get_vocab("choose")."</option>\n";
+	echo '<tr>',PHP_EOL;
+	echo '<td>',get_vocab("type_name"),get_vocab("deux_points"),'</td>',PHP_EOL;
+	echo '<td>',PHP_EOL,'<input class="form-control" type="text" name="type_name" value="',htmlspecialchars($row["type_name"]),'" size="20" />',PHP_EOL,'</td>',PHP_EOL;
+	echo '</tr>',PHP_EOL,'<tr>',PHP_EOL;
+	echo '<td>',get_vocab("type_num"),get_vocab("deux_points"),'</td>',PHP_EOL;
+	echo '<td>',PHP_EOL;
+	echo '<select class="form-control" name="type_letter" size="1">',PHP_EOL;
+	echo '<option value="">',get_vocab("choose"),'</option>',PHP_EOL;
 	$letter = "A";
 	for ($i = 1; $i <= 100; $i++)
 	{
-		echo "<option value='".$letter."' ";
+		echo '<option value="',$letter,'" ';
 		if ($row['type_letter'] == $letter)
-			echo " selected=\"selected\"";
-		echo ">".$letter."</option>\n";
+			echo ' selected="selected"';
+		echo '>',$letter,'</option>',PHP_EOL;
 		$letter++;
 	}
-
-	echo "</select>";
-	echo "</td>\n";
-	echo "</tr><tr>\n";
-	echo "<td>".get_vocab("type_order").get_vocab("deux_points")."</td>\n";
-	echo "<td><input type=\"text\" name=\"order_display\" value=\"".htmlspecialchars($row["order_display"])."\" size=\"20\" /></td>\n";
-	echo "</tr>";
-	echo "<tr><td>".get_vocab("disponible_pour").get_vocab("deux_points")."</td>\n";
-	echo "<td>"."<select name=\"disponible\" size=\"1\">\n";
-	echo "<option value = '2' ";
-	if ($row['disponible']=='2')
-		echo " selected=\"selected\"";
-	echo ">".get_vocab("all")."</option>\n";
-	echo "<option value = '3' ";
-	if ($row['disponible']=='3')
-		echo " selected=\"selected\"";
-	echo ">".get_vocab("gestionnaires_et_administrateurs")."</option>\n";
-	echo "<option value = '5' ";
-	if ($row['disponible']=='5')
-		echo " selected=\"selected\"";
-	echo ">".get_vocab("only_administrators")."</option>\n";
-	echo "</select>";
-	echo "</td></tr>";
-	if ($row["couleur"]  != '')
+	echo '</select>',PHP_EOL;
+	echo '</td>',PHP_EOL;
+	echo '</tr>',PHP_EOL,'<tr>',PHP_EOL;
+	echo '<td>',get_vocab("type_order"),get_vocab("deux_points"),'</td>',PHP_EOL;
+	echo '<td>',PHP_EOL,'<input class="form-control" type="text" name="order_display" value="',htmlspecialchars($row["order_display"]),'" size="20" /></td>',PHP_EOL;
+	echo '</tr>',PHP_EOL;
+	echo '<tr>',PHP_EOL,'<td>',get_vocab("disponible_pour"),get_vocab("deux_points"),'</td>',PHP_EOL;
+	echo '<td>',PHP_EOL,'<select class="form-control" name="disponible" size="1">',PHP_EOL;
+	echo '<option value="2"';
+	if ($row['disponible'] == '2')
+		echo ' selected="selected"';
+	echo '>',get_vocab("all"),'</option>',PHP_EOL;
+	echo '<option value="3"';
+	if ($row['disponible'] == '3')
+		echo ' selected="selected"';
+	echo '>',get_vocab("gestionnaires_et_administrateurs"),'</option>',PHP_EOL;
+	echo '<option value="5"';
+	if ($row['disponible'] == '5')
+		echo ' selected="selected"';
+	echo '>',get_vocab("only_administrators"),'</option>',PHP_EOL;
+	echo '</select>',PHP_EOL;
+	echo '</td>',PHP_EOL,'</tr>',PHP_EOL;
+	if ($row["couleur"] != '')
 	{
-		echo "<tr>\n";
-		echo "<td>".get_vocab("type_color").get_vocab("deux_points")."</td>\n";
-		echo "<td bgcolor=\"".$tab_couleur[$row["couleur"]]."\"> </td>";
-		echo "</tr>";
+		echo '<tr>',PHP_EOL;
+		echo '<td>',get_vocab("type_color"),get_vocab("deux_points"),'</td>',PHP_EOL;
+		echo '<td bgcolor="',$tab_couleur[$row["couleur"]],'"> </td>',PHP_EOL;
+		echo '</tr>',PHP_EOL;
 	}
-	echo "</table>\n";
-	echo "<p>".get_vocab("type_color").get_vocab("deux_points")."</p>";
+	echo '</table>',PHP_EOL;
+	echo '<p>',get_vocab("type_color"),get_vocab("deux_points"),'</p>',PHP_EOL;
 	echo '<table class="table table-bordered">',PHP_EOL;
 	echo '<tr>',PHP_EOL;
 	$nct = 0;
@@ -213,22 +212,22 @@ echo get_vocab('admin_type_explications')."<br /><br />";
 	{
 		$checked = " ";
 		if ($key == $row["couleur"])
-			$checked = "checked=\"checked\"";
+			$checked = 'checked="checked"';
 		if (++$nct > 4)
 		{
 			$nct = 1;
-			echo "</tr><tr>";
+			echo '</tr>',PHP_EOL,'<tr>';
 		}
-		echo "<td  style=\"background-color:".$tab_couleur[$key].";\"><input type=\"radio\" name=\"couleur\" value=\"".$key."\" ".$checked." />______________</td>";
+		echo '<td style="background-color:',$tab_couleur[$key],';">',PHP_EOL,'<input type="radio" name="couleur" value="',$key,'" ',$checked,' />______________</td>',PHP_EOL;
 	}
-	echo "</tr></table>\n";
-	echo "<table><tr><td>\n";
-	echo "<input type=\"submit\" name=\"change_type\"  value=\"".get_vocab("save")."\" />\n";
-	echo "</td><td>\n";
-	echo "<input type=\"submit\" name=\"change_done\" value=\"".get_vocab("back")."\" />";
-	echo "</td><td>\n";
-	echo "<input type=\"submit\" name=\"change_room_and_back\" value=\"".get_vocab("save_and_back")."\" />";
-	echo "</td></tr></table>";
+	echo '</tr>',PHP_EOL,'</table>',PHP_EOL;
+	echo '<table>',PHP_EOL,'<tr>',PHP_EOL,'<td>',PHP_EOL;
+	echo '<input class="btn btn-primary" type="submit" name="change_type"  value="',get_vocab("save"),'" />',PHP_EOL;
+	echo '</td>',PHP_EOL,'<td>',PHP_EOL;
+	echo '<input class="btn btn-primary" type="submit" name="change_done" value="',get_vocab("back"),'" />',PHP_EOL;
+	echo '</td>',PHP_EOL,'<td>',PHP_EOL;
+	echo '<input class="btn btn-primary" type="submit" name="change_room_and_back" value="',get_vocab("save_and_back"),'" />',PHP_EOL;
+	echo '</td>',PHP_EOL,'</tr>',PHP_EOL,'</table>',PHP_EOL;
 	?>
 </form>
 </div>

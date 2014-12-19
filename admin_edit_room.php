@@ -418,19 +418,19 @@ if ((!empty($room)) || (isset($area_id)))
 		if ($row['picture_room'] != '') $nom_picture = "./images/".$row['picture_room'];
 		if (Settings::get("use_fckeditor") == 1)
 			echo "<script type=\"text/javascript\" src=\"js/ckeditor/ckeditor.js\"></script>\n";
-		echo "<table border=\"1\" cellspacing=\"1\" cellpadding=\"6\">\n";
+		echo '<table class="table table-bordered">',PHP_EOL;
 		echo "<tr><td>".get_vocab("name").get_vocab("deux_points")."</td><td style=\"width:30%;\">\n";
 		// seul l'administrateur peut modifier le nom de la ressource
 		if ((authGetUserLevel(getUserName(),$area_id,"area") >= 4) || (authGetUserLevel(getUserName(),$room) >= 4))
-			echo "<input type=\"text\" name=\"room_name\" size=\"40\" value=\"".htmlspecialchars($row["room_name"])."\" />\n";
+			echo '<input class="form-control" type="text" name="room_name" size="40" value="',htmlspecialchars($row["room_name"]),'" />',PHP_EOL;
 		else
 		{
 			echo "<input type=\"hidden\" name=\"room_name\" value=\"".htmlspecialchars($row["room_name"])."\" />\n";
 			echo "<b>".htmlspecialchars($row["room_name"])."</b>\n";
 		}
-		echo "</td></tr>\n";
+		echo '</td>',PHP_EOL,'</tr>',PHP_EOL;
 		// Description
-		echo "<tr><td>".get_vocab("description")."</td><td><input type=\"text\" name=\"description\"  size=\"40\" value=\"".htmlspecialchars($row["description"])."\" /></td></tr>\n";
+		echo '<tr>',PHP_EOL,'<td>',get_vocab("description"),'</td>',PHP_EOL,'<td>',PHP_EOL,'<input class="form-control" type="text" name="description" size="40" value="',htmlspecialchars($row["description"]),'" />',PHP_EOL,'</td>',PHP_EOL,'</tr>',PHP_EOL;
 		// Domaine
 		$enable_periods = grr_sql_query1("select enable_periods from ".TABLE_PREFIX."_area where id='".$area_id."'");
 		if (((authGetUserLevel(getUserName(),$area_id,"area") >=4 ) || (authGetUserLevel(getUserName(),$room) >= 4)) && ($enable_periods == 'n'))
@@ -454,16 +454,15 @@ if ((!empty($room)) || (isset($area_id)))
 			$nb_area = grr_sql_count($res);
 			if ($nb_area > 1)
 			{
-				echo "<tr><td>".get_vocab('match_area').get_vocab('deux_points')."</td>\n";
-				echo "<td><select class=\"form-control\" name=\"area_id\" >\n
-				<option value=\"-1\">".get_vocab('choose_an_area')."</option>\n";
+				echo '<tr>',PHP_EOL,'<td>',get_vocab('match_area'),get_vocab('deux_points'),'</td>',PHP_EOL;
+				echo '<td>',PHP_EOL,'<select class="form-control" name="area_id" >',PHP_EOL,'<option value="-1">',get_vocab('choose_an_area'),'</option>',PHP_EOL;
 				for ($enr = 0; ($row1 = grr_sql_row($res, $enr)); $enr++)
 				{
-					echo "<option value=\"".$row1[0]."\"";
+					echo '<option value="',$row1[0],'"';
 					if ($area_id == $row1[0])
 						echo ' selected="selected"';
-					echo '>'.htmlspecialchars($row1[1]);
-					echo '</option>'."\n";
+					echo '>',htmlspecialchars($row1[1]);
+					echo '</option>',PHP_EOL;
 				}
 				grr_sql_free($res);
 				echo "</select></td></tr>";
@@ -483,7 +482,7 @@ if ((!empty($room)) || (isset($area_id)))
 		// Ordre d'affichage du domaine
 		echo "<tr><td>".get_vocab("order_display").get_vocab("deux_points")."</td>\n";
 		echo "<td><input class=\"form-control\" type=\"text\" name=\"area_order\" size=\"1\" value=\"".htmlspecialchars($row["order_display"])."\" /></td>\n";
-		echo "</tr>\n";
+		echo '</tr>',PHP_EOL;
 		// Qui peut voir cette ressource
 		echo "<tr><td colspan=\"2\">".get_vocab("qui_peut_voir_ressource")."<br />\n";
 		echo "<select class=\"form-control\" name=\"who_can_see\" size=\"1\">\n
@@ -567,10 +566,10 @@ if ((!empty($room)) || (isset($area_id)))
 			}
 			else
 				echo "<textarea class=\"form-control\" name=\"comment_room\" rows=\"8\" cols=\"120\" >".$row['comment_room']."</textarea>";
-			echo "</td></tr></table>\n";
+			echo '</td>',PHP_EOL,'</tr>',PHP_EOL,'</table>',PHP_EOL;
 			echo "<h3>".get_vocab("configuration_ressource")."</h3>\n";
 // Type d'affichage : duree ou heure/date de fin de reservation
-			echo "<table border=\"1\" cellspacing=\"1\" cellpadding=\"6\">\n";
+			echo '<table class="table table-bordered">',PHP_EOL;
 			echo "<tr><td>".get_vocab("type_affichage_reservation").get_vocab("deux_points")."</td>\n";
 			echo "<td>";
 			echo "<label><input type=\"radio\" name=\"type_affichage_reser\" value=\"0\" ";
@@ -583,8 +582,8 @@ if ((!empty($room)) || (isset($area_id)))
 				echo " checked=\"checked\" ";
 			echo "/>";
 			echo get_vocab("affichage_reservation_date_heure");
-			echo "</label></td>\n";
-			echo "</tr>\n";
+			echo '</label>',PHP_EOL,'</td>',PHP_EOL;
+			echo '</tr>',PHP_EOL;
 
 	// Capacite
 			echo "<tr><td>".get_vocab("capacity").": </td><td><input class=\"form-control\" type=\"text\" name=\"capacity\" size=\"1\" value=\"".$row["capacity"]."\" /></td></tr>\n";
@@ -962,7 +961,7 @@ if ((!empty($id_area)) || (isset($add_area)))
 		if (isset($add_area))
 			echo "<input type=\"hidden\" name=\"add_area\" value=\"".$add_area."\" />\n";
 		echo "</div>";
-		echo "<table border=\"1\" cellspacing=\"1\" cellpadding=\"6\"><tr>";
+		echo '<table class="table-bordered">',PHP_EOL,'<tr>',PHP_EOL;
 		// Nom du domaine
 		echo "<td>".get_vocab("name").get_vocab("deux_points")."</td>\n";
 		echo "<td style=\"width:30%;\"><input type=\"text\" name=\"area_name\" size=\"40\" value=\"".htmlspecialchars($row["area_name"])."\" /></td>\n";
@@ -1019,20 +1018,20 @@ if ((!empty($id_area)) || (isset($add_area)))
 		// Adresse IP client :
 		if (OPTION_IP_ADR == 1)
 		{
-			echo "<tr>\n";
+			echo '<tr>',PHP_EOL;
 			echo "<td>".get_vocab("ip_adr").get_vocab("deux_points")."</td>";
 			echo "<td><input class=\"form-control\" type=\"text\" name=\"ip_adr\" value=\"".htmlspecialchars($row["ip_adr"])."\" /></td>\n";
-			echo "</tr>\n";
-			echo "<tr>\n";
+			echo '</tr>',PHP_EOL;
+			echo '<tr>',PHP_EOL;
 			echo "<td colspan=\"2\">".get_vocab("ip_adr_explain")."</td>\n";
-			echo "</tr>\n";
+			echo '</tr>',PHP_EOL;
 		}
-		echo "</table>";
+		echo '</table>',PHP_EOL;
 		// Configuration des plages horaires ...
 		echo "<h3>".get_vocab("configuration_plages_horaires")."</h3>";
 		// Debut de la semaine: 0 pour dimanche, 1 pou lundi, etc.
-		echo "<table border=\"1\" cellspacing=\"1\" cellpadding=\"6\">";
-		echo "<tr>\n";
+		echo '<table class="table-bordered">',PHP_EOL;
+		echo '<tr>',PHP_EOL;
 		echo "<td>".get_vocab("weekstarts_area").get_vocab("deux_points")."</td>\n";
 		echo "<td style=\"width:30%;\"><select class=\"form-control\" name=\"weekstarts_area\" size=\"1\">\n";
 		$k = 0;
@@ -1045,12 +1044,12 @@ if ((!empty($id_area)) || (isset($add_area)))
 			echo ">".utf8_strftime("%A", $tmp)."</option>\n";
 			$k++;
 		}
-		echo "</select></td>\n";
-		echo "</tr>";
+		echo '</select>',PHP_EOL,'</td>',PHP_EOL;
+		echo '</tr>',PHP_EOL;
 		// Definition des jours de la semaine e afficher sur les plannings et calendriers
-		echo "<tr>\n";
+		echo '<tr>',PHP_EOL;
 		echo "<td>".get_vocab("cocher_jours_a_afficher")."</td>\n";
-		echo "<td>\n";
+		echo '<td>',PHP_EOL;
 		for ($i = 0; $i < 7; $i++)
 		{
 			echo "<label><input name=\"display_day[".$i."]\" type=\"checkbox\"";
@@ -1058,8 +1057,8 @@ if ((!empty($id_area)) || (isset($add_area)))
 				echo " checked=\"checked\"";
 			echo " />" . day_name($i) . "</label><br />\n";
 		}
-		echo "</td>\n";
-		echo "</tr></table>";
+		echo '</td>',PHP_EOL;
+		echo '</tr>',PHP_EOL,'</table>',PHP_EOL;
 		echo "<h3>".get_vocab("type_de_creneaux")."</h3>";
 		echo "<table>";
 		//echo "<p style=\"text-align:left;\"><b>ATTENTION :</b> Les deux types de configuration des creneaux sont incompatibles entre eux : un changement du type de creneaux entraene donc, apres validation, un <b>effacement de toutes les reservations  de ce domaine</b></p>.";
@@ -1081,13 +1080,13 @@ if ((!empty($id_area)) || (isset($add_area)))
 				$number_periodes = $num_periodes;
 
 			if ($row["enable_periods"] == 'y')
-				echo "<table id=\"menu2\" border=\"1\" cellspacing=\"1\" cellpadding=\"6\">";
+				echo '<table id="menu2" class="table-bordered">',PHP_EOL;
 			else
-				echo "<table style=\"display:none\" id=\"menu2\" border=\"1\" cellspacing=\"1\" cellpadding=\"6\">";
+				echo '<table style="display:none" id="menu2" class="table-bordered">',PHP_EOL;
 			echo "<tr><td>".get_vocab("nombre_de_creneaux").get_vocab("deux_points")."</td>";
 			echo "<td style=\"width:30%;\"><input type=\"text\" id=\"nb_per\" name=\"number_periodes\" size=\"1\" onkeypress=\"if (event.keyCode==13) return aff_creneaux()\" value=\"$number_periodes\" />
 			<a href=\"#Per\" onclick=\"javascript:return(aff_creneaux())\">".get_vocab("goto")."</a>\n";
-			echo "</td></tr>\n<tr><td colspan=\"2\">";
+			echo '</td>',PHP_EOL,'</tr>',PHP_EOL,'<tr>',PHP_EOL,'<td colspan="2">',PHP_EOL;
 			$i = 0;
 			while ($i < 50)
 			{
@@ -1105,12 +1104,12 @@ if ((!empty($id_area)) || (isset($add_area)))
 				$nb_jour = -1;
 			echo "</td></tr>\n<tr><td>".get_vocab("duree_max_resa_area2").get_vocab("deux_points");
 			echo "\n</td><td><input class=\"form-control\" type=\"text\" name=\"duree_max_resa_area2\" size=\"5\" value=\"".$nb_jour."\" /></td></tr>\n";
-			echo "</table>";
+			echo '</table>',PHP_EOL;
 			// Cas ou les creneaux de reservations sont bases sur le temps
 			if ($row["enable_periods"] == 'n')
-				echo "<table id=\"menu1\" border=\"1\" cellspacing=\"1\" cellpadding=\"6\">";
+				echo '<table id="menu1" class="table-bordered">',PHP_EOL;
 			else
-				echo "<table style=\"display:none\" id=\"menu1\" border=\"1\" cellspacing=\"1\" cellpadding=\"6\">";
+				echo '<table style="display:none" id="menu1" class="table-bordered">',PHP_EOL;
 			// Heure de debut de reservation
 			echo "<tr>";
 			echo "<td>".get_vocab("morningstarts_area").get_vocab("deux_points")."</td>\n";
@@ -1126,7 +1125,7 @@ if ((!empty($id_area)) || (isset($add_area)))
 			echo "</select></td>\n";
 			echo "</tr>";
 			// Heure de fin de reservation
-			echo "<tr>\n";
+			echo '<tr>',PHP_EOL;
 			echo "<td>".get_vocab("eveningends_area").get_vocab("deux_points")."</td>\n";
 			echo "<td><select class=\"form-control\" name=\"eveningends_area\" size=\"1\">\n";
 			$k = 0;
@@ -1140,52 +1139,52 @@ if ((!empty($id_area)) || (isset($add_area)))
 			echo "</select></td>\n";
 			echo "</tr>";
 			// Minutes e ajouter e l'heure $eveningends pour avoir la fin reelle d'une journee.
-			echo "<tr>\n";
+			echo '<tr>',PHP_EOL;
 			echo "<td>".get_vocab("eveningends_minutes_area").get_vocab("deux_points")."</td>\n";
 			echo "<td><input class=\"form-control\" type=\"text\" name=\"eveningends_minutes_area\" size=\"5\" value=\"".htmlspecialchars($row["eveningends_minutes_area"])."\" /></td>\n";
 			echo "</tr>";
 			// Resolution - quel bloc peut etre reserve, en secondes
-			echo "<tr>\n";
+			echo '<tr>',PHP_EOL;
 			echo "<td>".get_vocab("resolution_area").get_vocab("deux_points")."</td>\n";
 			echo "<td><input class=\"form-control\" type=\"text\" name=\"resolution_area\" size=\"5\" value=\"".htmlspecialchars($row["resolution_area"])."\" /></td>\n";
 			echo "</tr>";
 			// Valeur par defaut de la duree d'une reservation
-			echo "<tr>\n";
+			echo '<tr>',PHP_EOL;
 			echo "<td>".get_vocab("duree_par_defaut_reservation_area").get_vocab("deux_points")."</td>\n";
 			echo "<td><input class=\"form-control\" type=\"text\" name=\"duree_par_defaut_reservation_area\" size=\"5\" value=\"".htmlspecialchars($row["duree_par_defaut_reservation_area"])."\" /></td>\n";
-			echo "</tr>";
+			echo '</tr>',PHP_EOL;
 			// Format d'affichage du temps : valeur 0 pour un affichage ee12 heuresee et valeur 1 pour un affichage  ee24 heureee.
-			echo "<tr>\n";
-			echo "<td>".get_vocab("twentyfourhour_format_area").get_vocab("deux_points")."</td>\n";
-			echo "<td>\n";
-			echo "<label><input type=\"radio\" name=\"twentyfourhour_format_area\" value=\"0\" ";
+			echo '<tr>',PHP_EOL;
+			echo '<td>',get_vocab("twentyfourhour_format_area"),get_vocab("deux_points"),'</td>',PHP_EOL;
+			echo '<td>',PHP_EOL;
+			echo '<label>',PHP_EOL,'<input type="radio" name="twentyfourhour_format_area" value="0" ';
 			if ($row['twentyfourhour_format_area'] == 0)
-				echo " checked=\"checked\"";
-			echo " />".get_vocab("twentyfourhour_format_12")."</label>\n<br />";
-			echo "<label><input type=\"radio\" name=\"twentyfourhour_format_area\" value=\"1\" ";
+				echo ' checked="checked"';
+			echo ' />',get_vocab("twentyfourhour_format_12"),'</label>',PHP_EOL,'<br>',PHP_EOL;
+			echo '<label>',PHP_EOL,'<input type="radio" name="twentyfourhour_format_area" value="1" ';
 			if ($row['twentyfourhour_format_area'] == 1)
-				echo " checked=\"checked\"";
-			echo " />".get_vocab("twentyfourhour_format_24")."</label>\n";
-			echo "</td>\n";
-			echo "</tr>\n";
+				echo ' checked="checked';
+			echo ' />',get_vocab("twentyfourhour_format_24"),'</label>',PHP_EOL;
+			echo '</td>',PHP_EOL;
+			echo '</tr>',PHP_EOL;
 			// L'utilisateur ne peut reserver qu'une duree limitee (-1 desactivee), exprimee en minutes
-			echo "<tr>\n<td>".get_vocab("duree_max_resa_area").get_vocab("deux_points");
-			echo "</td>\n<td><input class=\"form-control\" type=\"text\" name=\"duree_max_resa_area1\" size=\"5\" value=\"".$row["duree_max_resa_area"]."\" /></td></tr>\n";
-			echo "</table>";
-			echo "<table>";
+			echo '<tr>',PHP_EOL,'<td>',get_vocab("duree_max_resa_area"),get_vocab("deux_points");
+			echo '</td>',PHP_EOL,'<td>',PHP_EOL,'<input class="form-control" type="text" name="duree_max_resa_area1" size="5" value="',$row["duree_max_resa_area"],'" />',PHP_EOL,'</td>',PHP_EOL,'</tr>',PHP_EOL;
+			echo '</table>',PHP_EOL;
+			echo '<table>',PHP_EOL;
 			// Nombre max de reservation par domaine
-			echo "<tr><td>".get_vocab("max_booking")." -  ".get_vocab("all_rooms_of_area").get_vocab("deux_points");
-			echo "</td><td><input class=\"form-control\" type=\"text\" name=\"max_booking\" value=\"".$row['max_booking']."\" /></td>\n";
-			echo "</tr></table>";
-			echo "<div style=\"text-align:center;\">\n";
-			echo "<input class=\"btn btn-primary\" type=\"submit\" name=\"change_area\" value=\"".get_vocab("save")."\" />\n";
-			echo "<input class=\"btn btn-primary\" type=\"submit\" name=\"change_done\" value=\"".get_vocab("back")."\" />\n";
-			echo "<input class=\"btn btn-primary\" type=\"submit\" name=\"change_area_and_back\" value=\"".get_vocab("save_and_back")."\" />";
-			echo "</div></form>";
-			echo "<script type=\"text/javascript\">";
-			echo "aff_creneaux();";
-			echo "</script>";
-			echo "</div>";
+			echo '<tr>',PHP_EOL,'<td>',get_vocab("max_booking"),' -  ',get_vocab("all_rooms_of_area"),get_vocab("deux_points");
+			echo '</td>',PHP_EOL,'<td>',PHP_EOL,'<input class="form-control" type="text" name="max_booking" value="',$row["max_booking"],'" />',PHP_EOL,'</td>',PHP_EOL;
+			echo '</tr>',PHP_EOL,'</table>',PHP_EOL;
+			echo '<div style="text-align:center;">',PHP_EOL;
+			echo '<input class="btn btn-primary" type="submit" name="change_area" value="',get_vocab("save"),'" />',PHP_EOL;;
+			echo '<input class="btn btn-primary" type="submit" name="change_done" value="',get_vocab("back"),'" />',PHP_EOL;
+			echo '<input class="btn btn-primary" type="submit" name="change_area_and_back" value="',get_vocab("save_and_back"),'" />',PHP_EOL;
+			echo '</div>',PHP_EOL,'</form>',PHP_EOL;
+			echo '<script type="text/javascript">',PHP_EOL;
+			echo 'aff_creneaux();',PHP_EOL;
+			echo '</script>',PHP_EOL;
+			echo '</div>',PHP_EOL;
 		}
 		?>
 	</body>

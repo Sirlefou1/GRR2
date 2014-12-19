@@ -40,7 +40,7 @@ $year  = date("Y");
 check_access(4, $back);
 print_header("", "", "", $type = "with_session");
 include "admin_col_gauche.php";
-echo "<h2>".get_vocab("admin_overload.php")."</h2>\n";
+echo '<h2>'.get_vocab("admin_overload.php").'</h2>'.PHP_EOL;
 if (isset($_POST["action"]))
 	$action = $_POST["action"];
 else
@@ -206,123 +206,124 @@ if ($action == "delete")
 					fatal_error(0, "$sql \n\n" . grr_sql_error());
 			}
 		}
-		$html = get_vocab("explication_champs_additionnels")."\n";
-		$html .= "<form method=\"post\" action=\"admin_overload.php\" >\n<table border=\"0\">";
-		$html .= "<tr><td>".get_vocab("match_area").get_vocab("deux_points")."</td>\n";
-		$html .= "<td>".get_vocab("fieldname").get_vocab("deux_points")."</td>\n";
-		$html .= "<td>".get_vocab("fieldtype").get_vocab("deux_points")."</td>\n";
-		$html .= "<td><span class='small'>".get_vocab("champ_obligatoire")."</span></td>\n";
-		$html .= "<td><span class='small'>".get_vocab("affiche_dans_les vues")."</span></td>\n";
-		$html .= "<td><span class='small'>".get_vocab("affiche_dans_les mails")."</span></td>\n";
-		$html .= "<td><span class='small'>".get_vocab("champ_confidentiel")."</span></td>\n";
-		$html .= "<td> </td></tr>\n";
-		$html .= "\n<tr><td>";
-		$html .= "<select name=\"id_area\" size=\"1\">";
+		$html = get_vocab("explication_champs_additionnels").PHP_EOL;
+		$html .= '<form method="post" action="admin_overload.php" >'.PHP_EOL.'<table class="table table-bordered">'.PHP_EOL;
+		$html .= '<tr><td>'.get_vocab("match_area").get_vocab("deux_points").'</td>'.PHP_EOL;
+		$html .= '<td>'.get_vocab("fieldname").get_vocab("deux_points").'</td>'.PHP_EOL;
+		$html .= '<td>'.get_vocab("fieldtype").get_vocab("deux_points").'</td>'.PHP_EOL;
+		$html .= '<td>'.PHP_EOL.'<span class="small">'.get_vocab("champ_obligatoire").'</span>'.PHP_EOL.'</td>'.PHP_EOL;
+		$html .= '<td>'.PHP_EOL.'<span class="small">'.get_vocab("affiche_dans_les vues").'</span>'.PHP_EOL.'</td>'.PHP_EOL;
+		$html .= '<td>'.PHP_EOL.'<span class="small">'.get_vocab("affiche_dans_les mails").'</span>'.PHP_EOL.'</td>'.PHP_EOL;
+		$html .= '<td>'.PHP_EOL.'<span class="small">'.get_vocab("champ_confidentiel").'</span>'.PHP_EOL.'</td>'.PHP_EOL;
+		$html .= '<td>'.PHP_EOL.'</td>'.PHP_EOL.'</tr>'.PHP_EOL;
+		$html .= '<tr>'.PHP_EOL.'<td>'.PHP_EOL;
+		$html .= '<select class="form-control" name="id_area" size="1">'.PHP_EOL;
 		foreach ($userdomain as $key=>$value)
-			$html .= "<option value=\"$key\">".$userdomain[$key]."</option>\n";
-		$html .= "</select></td>\n";
-		$html .= "<td><div><input type=\"text\" name=\"fieldname\" size=\"20\" /></div></td>\n";
-		$html .= "<td><div><select name=\"fieldtype\" size=\"1\">\n
-		<option value=\"text\">".get_vocab("type_text")."</option>\n
-		<option value=\"numeric\">".get_vocab("type_numeric")."</option>\n
-		<option value=\"textarea\">".get_vocab("type_area")."</option>\n
-		<option value=\"list\">".get_vocab("type_list")."</option>\n
-	</select></div></td>\n";
-	$html .= "<td><div> ";
-	$html .= "<input type=\"checkbox\" id=\"obligatoire\" name=\"obligatoire\" title=\"".get_vocab("champ_obligatoire")."\" value=\"y\" />\n";
-	$html .= "<input type=\"hidden\" name=\"action\" value=\"add\" /></div></td>\n";
-	$html .= "<td><div> ";
-	$html .= "<input type=\"checkbox\" id=\"affichage\" name=\"affichage\" title=\"\" value=\"n\" />\n";
-	$html .= "</div></td>\n";
-	$html .= "<td><div> ";
-	$html .= "<input type=\"checkbox\" id=\"overload_mail\" name=\"overload_mail\" title=\"\" value=\"n\" />\n";
-	$html .= "<input type=\"hidden\" name=\"action\" value=\"add\" /></div></td>\n";
-	$html .= "<td><div> ";
-	$html .= "<input type=\"checkbox\" id=\"confidentiel\" name=\"confidentiel\" title=\"".get_vocab("champ_confidentiel")."\" value=\"y\" />\n";
-	$html .= "<input type=\"hidden\" name=\"action\" value=\"add\" /></div></td>\n";
-	$html .= "<td><div><input type=\"submit\" name=\"submit\" value=\"".get_vocab('add')."\" /></div></td>\n";
-	$html .= "</tr></table></form>\n";
-	$breakkey = "";
-	$ouvre_table = false;
-	$ferme_table = false;
-	$ind_div = 0;
-	foreach ($userdomain as $key=>$value)
-	{
-		$res = grr_sql_query("SELECT id, fieldname, fieldtype, obligatoire, fieldlist, affichage, overload_mail, confidentiel FROM ".TABLE_PREFIX."_overload WHERE id_area=$key ORDER BY fieldname;");
-		if (!$res)
-			fatal_error(0, grr_sql_error());
-		if (($key != $breakkey) && (grr_sql_count($res) != 0))
+			$html .= '<option value="'.$key.'">'.$userdomain[$key].'</option>'.PHP_EOL;
+		$html .= '</select>'.PHP_EOL.'</td>'.PHP_EOL;
+		$html .= '<td>'.PHP_EOL.'<div>'.PHP_EOL.'<input class="form-control" type="text" name="fieldname" size="20" />'.PHP_EOL.'</div>'.PHP_EOL.'</td>'.PHP_EOL;
+		$html .= '<td>'.PHP_EOL.'<div>'.PHP_EOL.'<select class="form-control" name="fieldtype" size="1">'.PHP_EOL.
+		'<option value="text">'.get_vocab("type_text").'</option>'.PHP_EOL.
+		'<option value="numeric">'.get_vocab("type_numeric").'</option>'.PHP_EOL.
+		'<option value="textare">'.get_vocab("type_area").'</option>'.PHP_EOL.
+		'<option value="list">'.get_vocab("type_list").'</option>'.PHP_EOL.
+		'</select>'.PHP_EOL.'</div>'.PHP_EOL.'</td>'.PHP_EOL;
+		$html .= '<td>'.PHP_EOL.'<div>'.PHP_EOL;
+		$html .= '<input type="checkbox" id="obligatoire" name="obligatoire" title="'.get_vocab("champ_obligatoire").'" value="y" />'.PHP_EOL;
+		$html .= '<input type="hidden" name="action" value="add" /></div></td>'.PHP_EOL;
+		$html .= '<td>'.PHP_EOL.'<div>'.PHP_EOL;
+		$html .= '<input type="checkbox" id="affichage" name="affichage" title="" value="n" />'.PHP_EOL;
+		$html .= '</div>'.PHP_EOL.'</td>'.PHP_EOL;
+		$html .= '<td>'.PHP_EOL.'<div> '.PHP_EOL;
+		$html .= '<input type="checkbox" id="overload_mail" name="overload_mail" title="" value="n" />'.PHP_EOL;
+		$html .= '<input type="hidden" name="action" value="add" />'.PHP_EOL.'</div>'.PHP_EOL.'</td>'.PHP_EOL;
+		$html .= '<td>'.PHP_EOL.'<div> '.PHP_EOL;
+		$html .= '<input type="checkbox" id="confidentiel" name="confidentiel" title="'.get_vocab("champ_confidentiel").'" value="y" />'.PHP_EOL;
+		$html .= '<input type="hidden" name="action" value="add" />'.PHP_EOL.'</div>'.PHP_EOL.'</td>'.PHP_EOL;
+		$html .= '<td>'.PHP_EOL.'<div>'.PHP_EOL.'<input class="btn btn-primary" type="submit" name="submit" value="'.get_vocab('add').'" /></div></td>'.PHP_EOL;
+		$html .= '</tr>'.PHP_EOL.'</table>'.PHP_EOL.'</form>'.PHP_EOL;
+		$breakkey = "";
+		$ouvre_table = false;
+		$ferme_table = false;
+		$ind_div = 0;
+		foreach ($userdomain as $key=>$value)
 		{
-			if (!$ouvre_table)
+			$res = grr_sql_query("SELECT id, fieldname, fieldtype, obligatoire, fieldlist, affichage, overload_mail, confidentiel FROM ".TABLE_PREFIX."_overload WHERE id_area=$key ORDER BY fieldname;");
+			if (!$res)
+				fatal_error(0, grr_sql_error());
+			if (($key != $breakkey) && (grr_sql_count($res) != 0))
 			{
-				$html .= "<table border=\"0\" cellpadding=\"3\">";
-				$ferme_table = true;
-				$ouvre_table = true;
-			}
-			$html .= "<tr><td colspan=\"5\"><hr /></td></tr>";
-		}
-		$breakkey = $key;
-		if (grr_sql_count($res) != 0)
-			for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
-			{
-				$html .= "<tr>\n";
-				$html .= "<td style=\"vertical-align:middle;\">$userdomain[$key]</td>\n";
-				$html .= "<td><form method=\"post\" action=\"admin_overload.php\">\n";
-				$html .= "<div><input type=\"hidden\" name=\"id_overload\" value=\"$row[0]\" />\n";
-				$html .= "<input type=\"hidden\" name=\"action\" value=\"change\" />\n";
-				$html .= "<input type=\"text\" name=\"fieldname\" value=\"".htmlspecialchars($row[1])."\" />\n";
-				$html .= "<select name=\"fieldtype\">\n";
-				$html .= "<option value=\"textarea\" ";
-				if ($row[2] =="textarea")
-					$html .= " selected=\"selected\"";
-				$html .= " >".get_vocab("type_area")."</option>\n";
-				$html .= "<option value=\"text\" ";
-				if ($row[2] =="text")
-					$html .= " selected=\"selected\"";
-				$html .= " >".get_vocab("type_text")."</option>\n";
-				$html .= "<option value=\"list\" ";
-				if ($row[2] =="list")
-					$html .= " selected=\"selected\"";
-				$html .= " >".get_vocab("type_list")."</option>\n";
-				$html .= "<option value=\"numeric\" ";
-				if ($row[2] =="numeric")
-					$html .= " selected=\"selected\"";
-				$html .= " >".get_vocab("type_numeric")."</option>\n";
-				$html .= "</select>\n";
-				$ind_div++;
-				$html .= "<input type=\"checkbox\" data-toggle=\"tooltip\" data-placement=\"bottom\" id=\"obligatoire_".$ind_div."\" name=\"obligatoire\" title=\"".get_vocab("champ_obligatoire")."\" value=\"y\" ";
-				if ($row[3] =="y")
-					$html .= " checked=\"checked\" ";
-				$html .= "/>\n";
-				$html .= "<input type=\"checkbox\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"".get_vocab("affiche_dans_les vues")."\" id=\"affichage_".$ind_div."\" name=\"affichage\" value=\"y\" ";
-				if ($row[5] =="y")
-					$html .= " checked=\"checked\" ";
-				$html .= "/>\n";
-				$html .= "<input type=\"checkbox\" data-toggle=\"tooltip\" data-placement=\"bottom\" id=\"overload_mail_".$ind_div."\" name=\"overload_mail\" title=\"".get_vocab("affiche_dans_les mails")."\" value=\"y\" ";
-				if ($row[6] =="y")
-					$html .= " checked=\"checked\" ";
-				$html .= "/>\n";
-				$html .= "<input type=\"checkbox\" data-toggle=\"tooltip\" data-placement=\"bottom\" id=\"confidentiel_".$ind_div."\" name=\"confidentiel\" title=\"".get_vocab("champ_obligatoire")."\" value=\"y\" ";
-				if ($row[7] =="y")
-					$html .= " checked=\"checked\" ";
-				$html .= "/>\n";
-				$html .= "<input type=\"submit\" value=\"".get_vocab('change')."\" />";
-				if ($row[2] == "list") {
-					$html .= "<br />".get_vocab("Liste des champs").get_vocab("deux_points")."<br />";
-					$html .= "<input type=\"text\" name=\"fieldlist\" value=\"".htmlspecialchars($row[4])."\" size=\"50\" />";
+				if (!$ouvre_table)
+				{
+					$html .= '<table class="table table-bordered">';
+					$ferme_table = true;
+					$ouvre_table = true;
 				}
-				$html .= "</div></form></td>\n";
-				$html .= "<td><form method=\"post\" action=\"admin_overload.php\">\n";
-				$html .= "<div><input type=\"submit\" value=\"".get_vocab('del')."\" onclick=\"return confirmlink(this, '".addslashes(get_vocab("avertissement_suppression_champ_additionnel"))."', '".get_vocab("confirm_del")."')\" />\n";
-				$html .= "<input type=\"hidden\" name=\"id_overload\" value=\"$row[0]\" />\n";
-				$html .= "<input type=\"hidden\" name=\"action\" value=\"delete\" />\n";
-				$html .= "</div></form></td></tr>\n";
+				$html .= '<tr>'.PHP_EOL.'<td colspan="3">'.PHP_EOL.'<h4>Liste des champs additionnels</h4>'.PHP_EOL.'</td>'.PHP_EOL.'</tr>'.PHP_EOL;
 			}
-		}
-		echo $html;
-		if ($ferme_table)
-			echo "</table>";
-		echo "</td></tr></table>\n";
-		?>
-	</body>
-	</html>
+			$breakkey = $key;
+			if (grr_sql_count($res) != 0)
+				for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
+				{
+					$html .= '<tr>'.PHP_EOL;
+					$html .= '<td style="vertical-align:middle;">'.$userdomain[$key].'</td>'.PHP_EOL;
+					$html .= '<td>'.PHP_EOL.'<form class="form-inline" method="post" action="admin_overload.php">'.PHP_EOL;
+					$html .= '<div>'.PHP_EOL.'<input type="hidden" name="id_overload" value="'.$row[0].'" />'.PHP_EOL;
+					$html .= '<input type="hidden" name="action" value="change" />'.PHP_EOL;
+					$html .= '<div class="form-group"><input class="form-control" type="text" name="fieldname" value="'.htmlspecialchars($row[1]).'" />'.PHP_EOL;
+					$html .= '<select class="form-control" name="fieldtype">'.PHP_EOL;
+					$html .= '<option value="textarea" ';
+					if ($row[2] =="textarea")
+						$html .= ' selected="selected"';
+					$html .= ' >".get_vocab("type_area")."</option>'.PHP_EOL;
+					$html .= '<option value="text" ';
+					if ($row[2] =="text")
+						$html .= ' selected="selected"';
+					$html .= ' >'.get_vocab("type_text").'</option>'.PHP_EOL;
+					$html .= '<option value="list" ';
+					if ($row[2] == "list")
+						$html .= ' selected="selected"';
+					$html .= ' >".get_vocab("type_list")."</option>'.PHP_EOL;
+					$html .= '<option value="numeric" ';
+					if ($row[2] =="numeric")
+						$html .= ' selected="selected"';
+					$html .= ' >".get_vocab("type_numeric")."</option>'.PHP_EOL;
+					$html .= '</select></div>'.PHP_EOL;
+					$ind_div++;
+					$html .= '<input type="checkbox" data-toggle="tooltip" data-placement="bottom" id="obligatoire_'.$ind_div.'" name="obligatoire" title="'.get_vocab("champ_obligatoire").'" value="y" ';
+					if ($row[3] =="y")
+						$html .= ' checked="checked" ';
+					$html .= '/>'.PHP_EOL;
+					$html .= '<input type="checkbox" data-toggle="tooltip" data-placement="bottom" title="'.get_vocab("affiche_dans_les vues").'" id="affichage_'.$ind_div.'" name="affichage" value="y" ';
+					if ($row[5] =="y")
+						$html .= ' checked="checked" ';
+					$html .= '/>'.PHP_EOL;
+					$html .= '<input type="checkbox" data-toggle="tooltip" data-placement="bottom" id="overload_mail_'.$ind_div.'" name="overload_mail" title="'.get_vocab("affiche_dans_les mails").'" value="y" ';
+					if ($row[6] =="y")
+						$html .= ' checked="checked" ';
+					$html .= '/>'.PHP_EOL;
+					$html .= '<input type="checkbox" data-toggle="tooltip" data-placement="bottom" id="confidentiel_'.$ind_div.'" name="confidentiel" title="'.get_vocab("champ_obligatoire").'" value="y" ';
+					if ($row[7] =="y")
+						$html .= ' checked="checked" ';
+					$html .= '/>'.PHP_EOL;
+					$html .= '<input class="btn btn-primary" type="submit" value="'.get_vocab('change').'" />'.PHP_EOL;
+					if ($row[2] == "list")
+					{
+						$html .= '<br />'.get_vocab("Liste des champs").get_vocab("deux_points").'<br />';
+						$html .= '<input type="text" name="fieldlist" value="'.htmlspecialchars($row[4]).'" size="50" />'.PHP_EOL;
+					}
+					$html .= '</div>'.PHP_EOL.'</form>'.PHP_EOL.'</td>'.PHP_EOL;
+					$html .= '<td>'.PHP_EOL.'<form method="post" action="admin_overload.php">'.PHP_EOL;
+					$html .= '<div><input class="btn btn-primary" type="submit" value="'.get_vocab('del').'" onclick="return confirmlink(this, \''.addslashes(get_vocab("avertissement_suppression_champ_additionnel")).'\', \''.get_vocab("confirm_del").'\')" />'.PHP_EOL;
+					$html .= '<input type="hidden" name="id_overload" value="'.$row[0].'" />'.PHP_EOL;
+					$html .= '<input type="hidden" name="action" value="delete" />'.PHP_EOL;
+					$html .= '</div>'.PHP_EOL.'</form>'.PHP_EOL.'</td>'.PHP_EOL.'</tr>'.PHP_EOL;
+				}
+			}
+			echo $html;
+			if ($ferme_table)
+				echo '</table>'.PHP_EOL;
+			echo '</td>'.PHP_EOL.'</tr>'.PHP_EOL.'</table>'.PHP_EOL;
+			?>
+		</body>
+		</html>
