@@ -97,22 +97,22 @@ function create_site($id_site)
 		echo '      <h2>'.get_vocab('addsite').'</h2>';
 		echo '
 		<form action="admin_site.php?action=create" method="post">
-			<table>
-				<tr><td>'.get_vocab('site_code').' *</td><td><input type="text" name="sitecode" value="'.$sitecode.'" size="10" title="'.get_vocab('site_code').'" /></td></tr>
-				<tr><td>'.get_vocab('site_name').' *</td><td><input type="text" name="sitename" value="'.$sitename.'" size="50" title="'.get_vocab('site_name').'" /></td></tr>
-				<tr><td>'.get_vocab('site_adresse_ligne1').'</td><td><input type="text" name="adresse_ligne1" value="'.$adresse_ligne1.'" size="38" title="'.get_vocab('site_adresse_ligne1').'" /></td></tr>
-				<tr><td>'.get_vocab('site_adresse_ligne2').'</td><td><input type="text" name="adresse_ligne2" value="'.$adresse_ligne2.'" size="38" title="'.get_vocab('site_adresse_ligne2').'" /></td></tr>
-				<tr><td>'.get_vocab('site_adresse_ligne3').'</td><td><input type="text" name="adresse_ligne3" value="'.$adresse_ligne3.'" size="38" title="'.get_vocab('site_adresse_ligne3').'" /></td></tr>
-				<tr><td>'.get_vocab('site_cp').'</td><td><input type="text" name="cp" value="'.$cp.'" size="5" title="'.get_vocab('site_cp').'" /></td></tr>
-				<tr><td>'.get_vocab('site_ville').'</td><td><input type="text" name="ville" value="'.$ville.'" size="50" title="'.get_vocab('site_ville').'" /></td></tr>
-				<tr><td>'.get_vocab('site_pays').'</td><td><input type="text" name="pays" value="'.$pays.'" size="50" title="'.get_vocab('site_pays').'" /></td></tr>
-				<tr><td>'.get_vocab('site_tel').'</td><td><input type="text" name="tel" value="'.$tel.'" size="25" title="'.get_vocab('site_tel').'" /></td></tr>
-				<tr><td>'.get_vocab('site_fax').'</td><td><input type="text" name="fax" value="'.$fax.'" size="25" title="'.get_vocab('site_fax').'" /></td></tr>
+			<table class="table table-bordered">
+				<tr><td>'.get_vocab('site_code').' *</td><td><input class="form-control" type="text" name="sitecode" value="'.$sitecode.'" size="10" title="'.get_vocab('site_code').'" /></td></tr>
+				<tr><td>'.get_vocab('site_name').' *</td><td><input class="form-control" type="text" name="sitename" value="'.$sitename.'" size="50" title="'.get_vocab('site_name').'" /></td></tr>
+				<tr><td>'.get_vocab('site_adresse_ligne1').'</td><td><input class="form-control" type="text" name="adresse_ligne1" value="'.$adresse_ligne1.'" size="38" title="'.get_vocab('site_adresse_ligne1').'" /></td></tr>
+				<tr><td>'.get_vocab('site_adresse_ligne2').'</td><td><input class="form-control" type="text" name="adresse_ligne2" value="'.$adresse_ligne2.'" size="38" title="'.get_vocab('site_adresse_ligne2').'" /></td></tr>
+				<tr><td>'.get_vocab('site_adresse_ligne3').'</td><td><input class="form-control" type="text" name="adresse_ligne3" value="'.$adresse_ligne3.'" size="38" title="'.get_vocab('site_adresse_ligne3').'" /></td></tr>
+				<tr><td>'.get_vocab('site_cp').'</td><td><input class="form-control" type="text" name="cp" value="'.$cp.'" size="5" title="'.get_vocab('site_cp').'" /></td></tr>
+				<tr><td>'.get_vocab('site_ville').'</td><td><input class="form-control" type="text" name="ville" value="'.$ville.'" size="50" title="'.get_vocab('site_ville').'" /></td></tr>
+				<tr><td>'.get_vocab('site_pays').'</td><td><input class="form-control" type="text" name="pays" value="'.$pays.'" size="50" title="'.get_vocab('site_pays').'" /></td></tr>
+				<tr><td>'.get_vocab('site_tel').'</td><td><input class="form-control" type="text" name="tel" value="'.$tel.'" size="25" title="'.get_vocab('site_tel').'" /></td></tr>
+				<tr><td>'.get_vocab('site_fax').'</td><td><input class="form-control" type="text" name="fax" value="'.$fax.'" size="25" title="'.get_vocab('site_fax').'" /></td></tr>
 			</table>
 			<div>
 				<input type="hidden" name="valid" value="yes" />
-				<input type="submit" name="save" value="'.get_vocab('save').'" />
-				<input type="submit" name="back" value="'.get_vocab('back').'" />
+				<input class="btn btn-primary" type="submit" name="save" value="'.get_vocab('save').'" />
+				<input class="btn btn-primary" type="submit" name="back" value="'.get_vocab('back').'" />
 			</div>
 		</form>';
 		echo get_vocab("required");
@@ -164,7 +164,7 @@ function read_sites()
 		if ($res)
 		{
 			// Affichage de l'entête du tableau
-			echo '      <table border="1" cellpadding="3">
+			echo '      <table class="table table-bordered">
 			<tr>
 				<th>'.get_vocab('action').get_vocab('deux_points').'</th>
 				<th>'.get_vocab('site_code').'</th>
@@ -231,23 +231,23 @@ function update_site($id)
 		echo '      <h2>'.get_vocab('modifier site').'</h2>';
 		echo '
 		<form action="admin_site.php?action=update" method="post">
-			<table>
-				<tr><td>'.get_vocab('site_code').' *</td><td><input type="text" name="sitecode" value="'.$sitecode.'" size="10" title="'.get_vocab('site_code').'" /></td></tr>
-				<tr><td>'.get_vocab('site_name').' *</td><td><input type="text" name="sitename" value="'.$sitename.'" size="50" title="'.get_vocab('site_name').'" /></td></tr>
-				<tr><td>'.get_vocab('site_adresse_ligne1').'</td><td><input type="text" name="adresse_ligne1" value="'.$adresse_ligne1.'" size="38" title="'.get_vocab('site_adresse_ligne1').'" /></td></tr>
-				<tr><td>'.get_vocab('site_adresse_ligne2').'</td><td><input type="text" name="adresse_ligne2" value="'.$adresse_ligne2.'" size="38" title="'.get_vocab('site_adresse_ligne2').'" /></td></tr>
-				<tr><td>'.get_vocab('site_adresse_ligne3').'</td><td><input type="text" name="adresse_ligne3" value="'.$adresse_ligne3.'" size="38" title="'.get_vocab('site_adresse_ligne3').'" /></td></tr>
-				<tr><td>'.get_vocab('site_cp').'</td><td><input type="text" name="cp" value="'.$cp.'" size="5" title="'.get_vocab('site_cp').'" /></td></tr>
-				<tr><td>'.get_vocab('site_ville').'</td><td><input type="text" name="ville" value="'.$ville.'" size="50" title="'.get_vocab('site_ville').'" /></td></tr>
-				<tr><td>'.get_vocab('site_pays').'</td><td><input type="text" name="pays" value="'.$pays.'" size="50" title="'.get_vocab('site_pays').'" /></td></tr>
-				<tr><td>'.get_vocab('site_tel').'</td><td><input type="text" name="tel" value="'.$tel.'" size="25" title="'.get_vocab('site_tel').'" /></td></tr>
-				<tr><td>'.get_vocab('site_fax').'</td><td><input type="text" name="fax" value="'.$fax.'" size="25" title="'.get_vocab('site_fax').'" /></td></tr>
+			<table class="table table-bordered">
+				<tr><td>'.get_vocab('site_code').' *</td><td><input class="form-control" type="text" name="sitecode" value="'.$sitecode.'" size="10" title="'.get_vocab('site_code').'" /></td></tr>
+				<tr><td>'.get_vocab('site_name').' *</td><td><input class="form-control" type="text" name="sitename" value="'.$sitename.'" size="50" title="'.get_vocab('site_name').'" /></td></tr>
+				<tr><td>'.get_vocab('site_adresse_ligne1').'</td><td><input class="form-control" type="text" name="adresse_ligne1" value="'.$adresse_ligne1.'" size="38" title="'.get_vocab('site_adresse_ligne1').'" /></td></tr>
+				<tr><td>'.get_vocab('site_adresse_ligne2').'</td><td><input class="form-control" type="text" name="adresse_ligne2" value="'.$adresse_ligne2.'" size="38" title="'.get_vocab('site_adresse_ligne2').'" /></td></tr>
+				<tr><td>'.get_vocab('site_adresse_ligne3').'</td><td><input class="form-control" type="text" name="adresse_ligne3" value="'.$adresse_ligne3.'" size="38" title="'.get_vocab('site_adresse_ligne3').'" /></td></tr>
+				<tr><td>'.get_vocab('site_cp').'</td><td><input class="form-control" type="text" name="cp" value="'.$cp.'" size="5" title="'.get_vocab('site_cp').'" /></td></tr>
+				<tr><td>'.get_vocab('site_ville').'</td><td><input class="form-control" type="text" name="ville" value="'.$ville.'" size="50" title="'.get_vocab('site_ville').'" /></td></tr>
+				<tr><td>'.get_vocab('site_pays').'</td><td><input class="form-control" type="text" name="pays" value="'.$pays.'" size="50" title="'.get_vocab('site_pays').'" /></td></tr>
+				<tr><td>'.get_vocab('site_tel').'</td><td><input class="form-control" type="text" name="tel" value="'.$tel.'" size="25" title="'.get_vocab('site_tel').'" /></td></tr>
+				<tr><td>'.get_vocab('site_fax').'</td><td><input class="form-control" type="text" name="fax" value="'.$fax.'" size="25" title="'.get_vocab('site_fax').'" /></td></tr>
 			</table>
 			<div>
 				<input type="hidden" name="valid" value="yes" />
 				<input type="hidden" name="id" value="'.$id.'" />
-				<input type="submit" name="save" value="'.get_vocab('save').'" />
-				<input type="submit" name="back" value="'.get_vocab('back').'" /></div>
+				<input class="btn btn-primary" type="submit" name="save" value="'.get_vocab('save').'" />
+				<input class="btn btn-primary" type="submit" name="back" value="'.get_vocab('back').'" /></div>
 			</form>';
 			echo get_vocab("required");
 			// Sinon, il faut valider le formulaire

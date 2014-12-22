@@ -120,69 +120,57 @@ if (empty($room))
 echo "<h2>".get_vocab('admin_email_manager.php')."</h2>\n";
 if (Settings::get("automatic_mail") != 'yes')
 	echo "<h3 class=\"avertissement\">".get_vocab("attention_mail_automatique_désactive")."</h3>";
-echo get_vocab("explain_automatic_mail3")."<br /><br /><hr />\n";
-echo "<form action=\"admin_email_manager.php\" method=\"post\">\n";
-echo "<div><input type=\"checkbox\" name=\"send_always_mail_to_creator\" value=\"y\" ";
+echo get_vocab("explain_automatic_mail3").'<br>'.PHP_EOL.'<br>'.PHP_EOL.'<hr>'.PHP_EOL;
+echo '<form action="admin_email_manager.php" method="post">'.PHP_EOL;
+echo '<div>'.PHP_EOL.'<input class="btn btn-primary" type="checkbox" name="send_always_mail_to_creator" value="y" ';
 if (Settings::get('send_always_mail_to_creator')=='1')
 	echo ' checked="checked" ';
-echo ' />'."\n";
+echo ' />'.PHP_EOL;
 echo get_vocab("explain_automatic_mail1");
-echo "\n".'<br /><br /><div style="text-align:center;"><input type="submit" name="mail1" value="'.get_vocab('save').'" /></div></div></form><hr />';
+echo "\n".'<br /><br /><div style="text-align:center;"><input class="btn btn-primary" type="submit" name="mail1" value="'.get_vocab('save').'" /></div></div></form><hr />';
 echo get_vocab("explain_automatic_mail2")."<br />";
 echo $msg;
 # Table with areas, rooms.
-echo "\n<table><tr>\n";
+echo '<table>'.PHP_EOL.'<tr>'.PHP_EOL;
 $this_area_name = "";
 $this_room_name = "";
 # Show all areas
-echo "<td ><p><b>".get_vocab("areas")."</b></p>\n";
-$out_html = "<form  id=\"area\" action=\"admin_email_manager.php\" method=\"post\">\n<div><select name=\"area\" onchange=\"area_go()\">\n";
-$out_html .= "<option value=\"admin_email_manager.php?id_area=-1\">".get_vocab('select')."</option>\n";
-$sql = "select id, area_name from ".TABLE_PREFIX."_area order by area_name";
+echo '<td>'.PHP_EOL.'<p><b>'.get_vocab("areas").'</b></p>'.PHP_EOL;
+$out_html = '<form  id="area" action="admin_email_manager.php" method="post">'.PHP_EOL.'<div>'.PHP_EOL.'<select class="form-control" name="area" onchange="area_go()">'.PHP_EOL;
+$out_html .= '<option value="admin_email_manager.php?id_area=-1">'.get_vocab("select").'</option>'.PHP_EOL;
+$sql = "SELECT id, area_name FROM ".TABLE_PREFIX."_area order by area_name";
 $res = grr_sql_query($sql);
 if ($res)
 {
 	for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
 	{
-		$selected = ($row[0] == $id_area) ? "selected=\"selected\"" : "";
-		$link = "admin_email_manager.php?id_area=$row[0]";
+		$selected = ($row[0] == $id_area) ? 'selected="selected"' : "";
+		$link = 'admin_email_manager.php?id_area='.$row[0];
 			// On affiche uniquement les domaines administrés par l'utilisateur
 		if (authGetUserLevel(getUserName(), $row[0], 'area') >= 4)
-			$out_html .= "<option $selected value=\"$link\">" . htmlspecialchars($row[1])."</option>\n";
+			$out_html .= '<option '.$selected.' value="'.$link.'">'.htmlspecialchars($row[1]).'</option>'.PHP_EOL;
 	}
 }
-$out_html .= "</select></div>
-<script type=\"text/javascript\" >
-	<!--
-	function area_go()
-	{
-		box = document.getElementById(\"area\").area;
-		destination = box.options[box.selectedIndex].value;
-		if (destination) location.href = destination;
-	}
-	// -->
-</script>
-<noscript>
-	<div><input type=\"submit\" value=\"Change\" /></div>
-</noscript>
-</form>";
+$out_html .= '</select>'.PHP_EOL.'</div>'.PHP_EOL.'<script type="text/javascript">'.PHP_EOL.'<!--'.PHP_EOL.'function area_go()'.PHP_EOL.'{'.PHP_EOL.'box = document.getElementById("area").area;'.PHP_EOL.'
+destination = box.options[box.selectedIndex].value;'.PHP_EOL.'if (destination) location.href = destination;'.PHP_EOL.'}'.PHP_EOL.'// -->'.PHP_EOL.'
+</script>'.PHP_EOL.'<noscript>'.PHP_EOL.'<div>'.PHP_EOL.'<input type="submit" value="Change" />'.PHP_EOL.'</div>'.PHP_EOL.'</noscript>'.PHP_EOL.'</form>'.PHP_EOL;
 echo $out_html;
-$this_area_name = grr_sql_query1("select area_name from ".TABLE_PREFIX."_area where id=$id_area");
-$this_room_name = grr_sql_query1("select room_name from ".TABLE_PREFIX."_room where id=$room");
-$this_room_name_des = grr_sql_query1("select description from ".TABLE_PREFIX."_room where id=$room");
-echo "</td>\n";
+$this_area_name = grr_sql_query1("SELECT area_name FROM ".TABLE_PREFIX."_area WHERE id=$id_area");
+$this_room_name = grr_sql_query1("SELECT room_name FROM ".TABLE_PREFIX."_room WHERE id=$room");
+$this_room_name_des = grr_sql_query1("SELECT description FROM ".TABLE_PREFIX."_room WHERE id=$room");
+echo '</td>'.PHP_EOL;
 # Show all rooms in the current area
-echo "<td><p><b>".get_vocab("rooms")."</b></p>";
+echo '<td>'.PHP_EOL.'<p><b>'.get_vocab("rooms").'</b>'.PHP_EOL.'</p>'.PHP_EOL;
 # should we show a drop-down for the room list, or not?
-$out_html = "<form id=\"room\" action=\"admin_email_manager.php\" method=\"post\">\n<div><select name=\"room\" onchange=\"room_go()\">\n";
-$out_html .= "<option value=\"admin_email_manager.php?id_area=$id_area&amp;room=-1\">".get_vocab('select')."</option>\n";
-$sql = "select id, room_name, description from ".TABLE_PREFIX."_room where area_id=$id_area ";
+$out_html = '<form id="room" action="admin_email_manager.php" method="post">'.PHP_EOL.'<div>'.PHP_EOL.'<select class="form-control" name="room" onchange="room_go()">'.PHP_EOL;
+$out_html .= '<option value="admin_email_manager.php?id_area='.$id_area.'&amp;room=-1">'.get_vocab("select").'</option>'.PHP_EOL;
+$sql = "SELECT id, room_name, description FROM ".TABLE_PREFIX."_room WHERE area_id=$id_area ";
 	// on ne cherche pas parmi les ressources invisibles pour l'utilisateur
 foreach ($tab_rooms_noaccess as $key)
 {
 	$sql .= " and id != $key ";
 };
-$sql .= "order by room_name";
+$sql .= "ORDER BY room_name";
 $res = grr_sql_query($sql);
 if ($res)
 {
@@ -214,8 +202,8 @@ $out_html .= "</select></div>\n
 </noscript>
 </form>";
 echo $out_html;
-echo "</td>\n";
-echo "</tr></table>\n";
+echo '</td>'.PHP_EOL;
+echo '</tr>'.PHP_EOL.'</table>'.PHP_EOL;
 # Don't continue if this area has no rooms:
 if ($id_area <= 0)
 {
@@ -238,7 +226,7 @@ if ($room == '-1')
 }
 else
 {
-	echo "<table border=\"1\" cellpadding=\"5\"><tr><td>";
+	echo '<table class="table table-bordered">'.PHP_EOL.'<tr>'.PHP_EOL.'<td>'.PHP_EOL;
 	$sql = "SELECT u.login, u.nom, u.prenom FROM ".TABLE_PREFIX."_utilisateurs u, ".TABLE_PREFIX."_j_mailuser_room j WHERE (j.id_room='$room' and u.login=j.login)  order by u.nom, u.prenom";
 	$res = grr_sql_query($sql);
 	$nombre = grr_sql_count($res);
@@ -251,42 +239,42 @@ else
 			$login_admin = $row[0];
 			$nom_admin = htmlspecialchars($row[1]);
 			$prenom_admin = htmlspecialchars($row[2]);
-			echo "<b>";
-			echo "$nom_admin $prenom_admin</b> | <a href='admin_email_manager.php?action=del_admin&amp;login_admin=".urlencode($login_admin)."&amp;room=$room&amp;id_area=$id_area'>".get_vocab("delete")."</a><br />";
+			echo '<b>';
+			echo $nom_admin.' '.$prenom_admin.'</b> | <a href="admin_email_manager.php?action=del_admin&amp;login_admin='.urlencode($login_admin).'&amp;room='.$room.'&amp;id_area='.$id_area.'">'.get_vocab("delete").'</a><br />'.PHP_EOL;
 		}
 	}
 	if ($nombre == 0)
-		echo "<h3><span class=\"avertissement\">".get_vocab("no_mail_user_list")."</span></h3>";
+		echo '<h3><span class="avertissement">'.get_vocab("no_mail_user_list").'</span></h3>'.PHP_EOL;
 }
 ?>
 <h3><?php echo get_vocab("add_user_to_list"); ?></h3>
-<form action="admin_email_manager.php" method='get'>
-	<div><select size="1" name="reg_admin_login">
-		<option value=''><?php echo get_vocab("nobody"); ?></option>
-		<?php
-		$sql = "SELECT DISTINCT login, nom, prenom FROM ".TABLE_PREFIX."_utilisateurs WHERE  (etat!='inactif' and email!='' and statut!='visiteur' ) order by nom, prenom";
-		$res = grr_sql_query($sql);
-		if ($res)
-		{
-			for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
+<form class="form-inline" action="admin_email_manager.php" method='get'>
+	<div>
+		<select class="form-control" size="1" name="reg_admin_login">
+			<option value=''><?php echo get_vocab("nobody"); ?></option>
+			<?php
+			$sql = "SELECT DISTINCT login, nom, prenom FROM ".TABLE_PREFIX."_utilisateurs WHERE (etat!='inactif' and email!='' and statut!='visiteur' ) ORDER BY nom, prenom";
+			$res = grr_sql_query($sql);
+			if ($res)
 			{
-				if (authUserAccesArea($row[0], $id_area) == 1)
-					echo "<option value=\"$row[0]\">".htmlspecialchars($row[1])." ".htmlspecialchars($row[2])." </option>";
+				for ($i = 0; ($row = grr_sql_row($res, $i)); $i++)
+				{
+					if (authUserAccesArea($row[0], $id_area) == 1)
+						echo "<option value=\"$row[0]\">".htmlspecialchars($row[1])." ".htmlspecialchars($row[2])." </option>";
+				}
 			}
-		}
-		?>
-	</select>
-	<input type="hidden" name="add_admin" value="yes" />
-	<input type="hidden" name="id_area" value="<?php echo $id_area;?>" />
-	<input type="hidden" name="room" value="<?php echo $room;?>" />
-	<input class="btn btn-primary" type="submit" value="Enregistrer" /></div>
-</form>
+			?>
+		</select>
+		<input type="hidden" name="add_admin" value="yes" />
+		<input type="hidden" name="id_area" value="<?php echo $id_area;?>" />
+		<input type="hidden" name="room" value="<?php echo $room;?>" />
+		<input class="btn btn-primary" type="submit" value="Enregistrer" /></div>
+	</form>
 </td>
 </tr>
 </table>
-<?php
-// fin de l'affichage de la colonne de droite
-echo "</td></tr></table>";
-?>
+</td>
+</tr>
+</table>
 </body>
 </html>

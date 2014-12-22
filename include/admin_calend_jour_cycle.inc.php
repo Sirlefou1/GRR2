@@ -35,26 +35,26 @@
 	}
 </script>
 <?php
-echo "<div style=\"text-align:center;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n";
-echo "<tbody>\n";
-echo "<tr>";
+echo '<div style="text-align:center;"><table class="table-header">',PHP_EOL;
+echo '<tbody>',PHP_EOL;
+echo '<tr>',PHP_EOL;
 if (!isset($page_calend))
 	$page_calend = 1;
 for ($k = 1; $k < 4; $k++)
 {
-	echo "<td>";
+	echo '<td>',PHP_EOL;
 	if ($page_calend == $k)
 	{
-		echo "<div style=\"position: relative;\"><div class=\"onglet_off\" style=\"position: relative; top: 0px; padding-left: 30px; padding-right: 30px;\">".
-		get_vocab('admin_config_calend'.$k.'.php')."</div></div>";
+		echo '<div style="position: relative;">',PHP_EOL,'<div class="onglet_off" style="position: relative; top: 0px; padding-left: 30px; padding-right: 30px;">',
+		get_vocab('admin_config_calend'.$k.'.php'),'</div>',PHP_EOL,'</div>',PHP_EOL;
 	}
 	else
 	{
-		echo "<div style=\"position: relative;\">".PHP_EOL;
-		echo "<div onmouseover=\"changeclass(this, 'onglet_on');\" onmouseout=\"changeclass(this, 'onglet');\" class=\"onglet\" style=\"position: relative; top: 0px; padding-left: 30px; padding-right: 30px;\">".PHP_EOL;
-		echo "<a href=\"admin_calend_jour_cycle.php?page_calend=".$k."\">".get_vocab('admin_config_calend'.$k.'.php')."</a></div></div>".PHP_EOL;
+		echo '<div style="position: relative;">',PHP_EOL;
+		echo '<div onmouseover="changeclass(this, \'onglet_on\');" onmouseout="changeclass(this, \'onglet\');\" class="onglet" style="position: relative; top: 0px; padding-left: 30px; padding-right: 30px;">',PHP_EOL;
+		echo '<a href="admin_calend_jour_cycle.php?page_calend=',$k,'">',get_vocab('admin_config_calend'.$k.'.php'),'</a>',PHP_EOL,'</div>',PHP_EOL,'</div>',PHP_EOL;
 	}
-	echo "</td>\n";
+	echo '</td>',PHP_EOL;
 }
-echo "</tr></tbody></table></div>".PHP_EOL;
+echo '</tr>',PHP_EOL,'</tbody>',PHP_EOL,'</table>',PHP_EOL,'</div>',PHP_EOL;
 ?>

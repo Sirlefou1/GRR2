@@ -430,7 +430,7 @@ echo ('
 				<tr>
 					<td>'.get_vocab('default_site').get_vocab('deux_points').'</td>
 					<td>
-						<select id="id_site" name="id_site" onchange="modifier_liste_domaines();modifier_liste_ressources(2)">
+						<select class="form-control" id="id_site" name="id_site" onchange="modifier_liste_domaines();modifier_liste_ressources(2)">
 							<option value="-1">'.get_vocab('choose_a_site').'</option>'."\n";
 							for ($enr = 0; ($row = grr_sql_row($resultat, $enr)); $enr++)
 							{
