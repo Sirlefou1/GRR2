@@ -731,14 +731,14 @@ function mrbsGetAreaSite($id)
  * @param integer $_moderate
  * @param string $_description
  */
-function moderate_entry_do($_id,$_moderate,$_description,$send_mail="yes")
+function moderate_entry_do($_id, $_moderate, $_description, $send_mail = "yes")
 {
 	global $dformat;
 	// On vérifie que l'utilisateur a bien le droit d'être ici
 	$room_id = grr_sql_query1("SELECT room_id FROM ".TABLE_PREFIX."_entry WHERE id='".$_id."'");
 	if (authGetUserLevel(getUserName(),$room_id) < 3)
 	{
-		fatal_error(0,"Opération interdite");
+		fatal_error(0, "Opération interdite");
 		exit();
 	}
 	// j'ai besoin de $repeat_id '
@@ -760,7 +760,7 @@ function moderate_entry_do($_id,$_moderate,$_description,$send_mail="yes")
 		$_moderate = "0";
 		$series = 1;
 	}
-	if ($series==0)
+	if ($series == 0)
 	{
 		//moderation de la ressource
 		if ($_moderate == 1)
@@ -812,7 +812,7 @@ function moderate_entry_do($_id,$_moderate,$_description,$send_mail="yes")
 	}
 	// Avant d'effacer la réservation, on procède à la notification par mail, uniquement si la salle n'a pas déjà été modérée.
 	if ($send_mail=="yes")
-		send_mail($_id,6,$dformat,$tab_id_moderes);
+		send_mail($_id, 6, $dformat, $tab_id_moderes);
 	//moderation de la ressource
 	if ($_moderate != 1)
 	{

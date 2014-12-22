@@ -73,7 +73,10 @@ $back = '';
 if (isset($_SERVER['HTTP_REFERER']))
 	$back = htmlspecialchars($_SERVER['HTTP_REFERER']);
 if (isset($_GET["action_moderate"]))
+{
 	moderate_entry_do($id,$_GET["moderate"], $_GET["description"]);
+	header("Location:".$_GET['page'].".php");
+}
 $sql = "SELECT ".TABLE_PREFIX."_entry.name,
 ".TABLE_PREFIX."_entry.description,
 ".TABLE_PREFIX."_entry.beneficiaire,
