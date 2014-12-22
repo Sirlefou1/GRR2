@@ -4234,7 +4234,6 @@ function affiche_nom_prenom_email($_beneficiaire, $_beneficiaire_ext, $type = "n
  		else
  			$year = date("Y");
  	}
- 	echo '<div class="form-inline">'.PHP_EOL;
  	genDateSelector("".$typeDate."_", "$day", "$month", "$year","");
  	echo '<input type="hidden" disabled="disabled" id="mydate_' .$typeDate. '">'.PHP_EOL;
  	echo '<script>'.PHP_EOL;
@@ -4257,7 +4256,6 @@ echo '			$(\'#' .$typeDate. '_year\').val(date.substring(6, 10));'.PHP_EOL;
 echo '		}'.PHP_EOL;
 echo '	});'.PHP_EOL;
 echo '</script>'.PHP_EOL;
-echo '</div>'.PHP_EOL;
 }
 
 function jQuery_TimePicker($typeTime, $start_hour, $start_min)

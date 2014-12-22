@@ -613,7 +613,7 @@ $moderate = grr_sql_query1("SELECT moderate FROM ".TABLE_PREFIX."_room WHERE id=
 echo '<h2>'.$A.'</h2>'.PHP_EOL;
 if ($moderate)
 	echo '<h3><span class="texte_ress_moderee">'.$vocab["reservations_moderees"].'</span></h3>'.PHP_EOL;
-echo '<form id="main" action="edit_entry_handler.php" method="get">'.PHP_EOL;
+echo '<form class="form-inline" id="main" action="edit_entry_handler.php" method="get">'.PHP_EOL;
 ?>
 <script type="text/javascript" >
 	function changeRooms( formObj )
@@ -745,13 +745,13 @@ echo '<tr><td class="E">'.PHP_EOL;
 echo '<b>'.$B.'</b>'.PHP_EOL;
 echo '</td></tr>'.PHP_EOL;
 echo '<tr><td class="CL">'.PHP_EOL;
-echo '<div class="col-xs-12"><input id="name" class="form-control" name="name" size="80" value="'.$C.'" /></div>'.PHP_EOL;
+echo '<input id="name" class="form-control" name="name" size="80" value="'.$C.'" />'.PHP_EOL;
 echo '</td></tr>'.PHP_EOL;
 echo '<tr><td class="E">'.PHP_EOL;
 echo '<b>'.$D.'</b>'.PHP_EOL;
 echo '</td></tr>'.PHP_EOL;
 echo '<tr><td class="TL">'.PHP_EOL;
-echo '<div class="col-xs-12"><textarea name="description" class="form-control" rows="4">'.$E.'</textarea></div>'.PHP_EOL;
+echo '<textarea name="description" class="form-control" rows="4" cols="82">'.$E.'</textarea>'.PHP_EOL;
 echo '</td></tr>'.PHP_EOL;
 echo '<tr><td>'.PHP_EOL;
 echo '<div id="div_champs_add">'.PHP_EOL;
@@ -784,18 +784,11 @@ echo '<tr><td class="E">'.PHP_EOL;
 echo '<b>'.$F.'</b>'.PHP_EOL;
 echo '</td></tr>'.PHP_EOL;
 echo '<tr><td class="CL">'.PHP_EOL;
-echo '<table border="0">'.PHP_EOL;
-echo '<tr>'.PHP_EOL;
-echo '<td>'.PHP_EOL;
-echo '<div class="col-xs-12">'.PHP_EOL;
+echo '<div class="form-group">'.PHP_EOL;
 jQuery_DatePicker('start');
-echo '</div>'.PHP_EOL;
-echo '</td></tr>'.PHP_EOL;
 if ($enable_periods == 'y')
 {
-	echo '<tr><td class="E">'.PHP_EOL;
-	echo '<b>'.get_vocab("period").'</b></td>'.PHP_EOL;
-	echo '<td class="CL">'.PHP_EOL;
+	echo '<b>'.get_vocab("period").'</b>'.PHP_EOL;
 	echo '<select name="period">'.PHP_EOL;
 	foreach ($periods_name as $p_num => $p_val)
 	{
@@ -804,11 +797,11 @@ if ($enable_periods == 'y')
 			echo ' selected="selected"';
 		echo '>'.$p_val.'</option>'.PHP_EOL;
 	}
-	echo '</select></td></tr>'.PHP_EOL;
+	echo '</select>'.PHP_EOL;
 }
 else
 {
-	echo "<tr><td class=\"E\"><b>".get_vocab("time")."</b></td></tr><tr><td class=\"CL\">";
+	echo "<b>".get_vocab("time")." : </b>";
 	if (isset ($_GET['id']))
 	{
 		jQuery_TimePicker('start_', $start_hour, $start_min);
@@ -824,21 +817,17 @@ else
 		$checked = ($start_hour >= 12) ? 'checked="checked"' : "";
 		echo '<input name="ampm" type="radio" value="pm" '.$checked.' />'.date("a",mktime(13,0,0,1,1,1970));
 	}
-	echo "</td></tr>".PHP_EOL;
 }
-echo '</table>'.PHP_EOL;
-echo '</td></tr>';
+echo '</div>'.PHP_EOL;
+echo "</td></tr>".PHP_EOL;
 if ($type_affichage_reser == 0)
 {
 	echo '<tr><td class="E">'.PHP_EOL;
 	echo '<b>'.get_vocab("duration").'</b>'.PHP_EOL;
 	echo '</td></tr>'.PHP_EOL;
 	echo '<tr><td class="CL">'.PHP_EOL;
-	echo '<div class="row">'.PHP_EOL;
-	echo '<div class="col-xs-2">'.PHP_EOL;
+	echo '<div class="form-group">'.PHP_EOL;
 	spinner($duration);
-	echo '</div>'.PHP_EOL;
-	echo '<div class="col-xs-2">'.PHP_EOL;
 	echo '<select class="form-control" name="dur_units" size="1">'.PHP_EOL;
 	if ($enable_periods == 'y')
 		$units = array("periods", "days");
@@ -864,7 +853,6 @@ if ($type_affichage_reser == 0)
 		echo '>'.get_vocab($unit).'</option>'.PHP_EOL;
 	}
 	echo '</select>'.PHP_EOL;
-	echo '</div>'.PHP_EOL;
 	$fin_jour = $eveningends;
 	$minute = $resolution / 60;
 	$minute_restante = $minute % 60;
@@ -889,17 +877,11 @@ else
 {
 	echo '<tr><td class="E"><b>'.get_vocab("fin_reservation").get_vocab("deux_points").'</b></td></tr>'.PHP_EOL;
 	echo '<tr><td class="CL" >'.PHP_EOL;
-	echo '<table border="0">'.PHP_EOL;
-	echo '<tr>'.PHP_EOL;
-	echo '<td>'.PHP_EOL;
-	echo '<div class="col-xs-12">'.PHP_EOL;
+	echo '<div class="form-group">'.PHP_EOL;
 	jQuery_DatePicker('end');
-	echo '</div>'.PHP_EOL;
-	echo '</td></tr>'.PHP_EOL;
 	if ($enable_periods=='y')
 	{
-		echo "<tr><td class=\"E\"><b>".get_vocab("period")."</b></td>\n";
-		echo "<td class=\"CL\">\n";
+		echo "<b>".get_vocab("period")."</b>";
 		echo "<select class=\"form-control\" name=\"end_period\">";
 		foreach ($periods_name as $p_num => $p_val)
 		{
@@ -908,11 +890,11 @@ else
 				echo " selected=\"selected\"";
 			echo ">$p_val</option>\n";
 		}
-		echo "</select>\n</td>\n</tr>";
+		echo '</select>'.PHP_EOL;
 	}
 	else
 	{
-		echo "<tr><td class=\"E\"><b>".get_vocab("time")."</b></td></tr><tr><td class=\"CL\">";
+		echo "<b>".get_vocab("time")." : </b>";
 		if (isset ($_GET['id']))
 		{
 			jQuery_TimePicker ('end_', $end_hour, $end_min);
@@ -928,9 +910,9 @@ else
 			$checked = ($end_hour >= 12) ? "checked=\"checked\"" : "";
 			echo "<input name=\"ampm\" type=\"radio\" value=\"pm\" $checked />".date("a",mktime(13,0,0,1,1,1970));
 		}
-		echo "</td></tr>";
 	}
-	echo "</table>\n</td></tr>";
+	echo '</div>'.PHP_EOL;
+	echo '</td></tr>'.PHP_EOL;
 }
 if (($delais_option_reservation > 0) && (($modif_option_reservation == 'y') || ((($modif_option_reservation == 'n') && ($option_reservation != -1)))))
 {
@@ -1060,7 +1042,7 @@ if (($edit_type == "series") || (isset($flag_periodicite)))
 	'</td>',PHP_EOL,'</tr>',PHP_EOL;
 	echo '<tr>',PHP_EOL,'<td>',PHP_EOL,'<table id="menu1" style="display:none;">',PHP_EOL,'<tr>',PHP_EOL,
 	'<td class="F"><b>',get_vocab("rep_type"),'</b></td>',PHP_EOL,'</tr>',PHP_EOL,'<tr>',PHP_EOL,'<td class="CL">',PHP_EOL;
-	echo '<table class="table-header" >',PHP_EOL;
+	echo '<table class="table" >',PHP_EOL;
 	if (Settings::get("jours_cycles_actif") == "Oui")
 		$max = 8;
 	else
@@ -1082,7 +1064,7 @@ if (($edit_type == "series") || (isset($flag_periodicite)))
 			echo PHP_EOL;
 			if ($i == '2')
 			{
-				echo '<select name="rep_num_weeks" size="1" onfocus="check_2()" onclick="check_2()">',PHP_EOL;
+				echo '<select class="form-control" name="rep_num_weeks" size="1" onfocus="check_2()" onclick="check_2()">',PHP_EOL;
 				echo '<option value="1" >',get_vocab("every week"),'</option>',PHP_EOL;
 				for ($weekit = 2; $weekit < 6; $weekit++)
 				{
@@ -1101,21 +1083,21 @@ if (($edit_type == "series") || (isset($flag_periodicite)))
 					$monthrep3 = " selected=\"selected\" ";
 				if ($rep_type == 5)
 					$monthrep5 = " selected=\"selected\" ";
-				echo "<select name=\"rep_month\" size=\"1\" onfocus=\"check_3()\" onclick=\"check_3()\">\n";
+				echo '<select class="form-control" name="rep_month" size="1" onfocus="check_3()" onclick="check_3()">'.PHP_EOL;
 				echo "<option value=\"3\" $monthrep3>".get_vocab("rep_type_3")."</option>\n";
 				echo "<option value=\"5\" $monthrep5>".get_vocab("rep_type_5")."</option>\n";
 				echo "</select>\n";
 			}
 			if ($i == '7')
 			{
-				echo "<select name=\"rep_month_abs1\" size=\"1\" onfocus=\"check_7()\" onclick=\"check_7()\">\n";
+				echo '<select class="form-control" name="rep_month_abs1" size="1" onfocus="check_7()" onclick="check_7()">'.PHP_EOL;
 				for ($weekit = 0; $weekit < 6; $weekit++)
 				{
 					echo "<option value=\"".$weekit."\"";
 					echo ">".get_vocab($monthlist[$weekit])."</option>\n";
 				}
-				echo "</select>\n";
-				echo "<select name=\"rep_month_abs2\" size=\"1\" onfocus=\"check_8()\" onclick=\"check_8()\">\n";
+				echo '</select>'.PHP_EOL;
+				echo '<select class="form-control" name="rep_month_abs2" size="1" onfocus="check_8()" onclick="check_8()">'.PHP_EOL;
 				for ($weekit = 1; $weekit < 8; $weekit++)
 				{
 					echo "<option value=\"".$weekit."\"";
