@@ -1163,7 +1163,7 @@ if ((!empty($id_area)) || (isset($add_area)))
 			echo ' />',get_vocab("twentyfourhour_format_12"),'</label>',PHP_EOL,'<br>',PHP_EOL;
 			echo '<label>',PHP_EOL,'<input type="radio" name="twentyfourhour_format_area" value="1" ';
 			if ($row['twentyfourhour_format_area'] == 1)
-				echo ' checked="checked';
+				echo ' checked="checked"';
 			echo ' />',get_vocab("twentyfourhour_format_24"),'</label>',PHP_EOL;
 			echo '</td>',PHP_EOL;
 			echo '</tr>',PHP_EOL;
