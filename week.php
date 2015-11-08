@@ -503,6 +503,8 @@ for ($t = $week_start; $t <= $week_end; $t += 86400)
 						if (isset($d[$weekday][$slot - $decale_slot * $nb_case]["id"]))
 						{
 							$nbrow =  $d[$weekday][$slot - $decale_slot * $nb_case]["duree"];
+							if ($d[$weekday][$slot - $decale_slot * $nb_case]["horaireDebut"] % $resolution != 0)
+								$nbrow += 1;
 							tdcell_rowspan($d[$weekday][$slot - $decale_slot * $nb_case]["color"], $nbrow);
 							if ($acces_fiche_reservation)
 							{
@@ -513,7 +515,7 @@ for ($t = $week_start; $t <= $week_end; $t += 86400)
 									echo "<a title=\"".htmlspecialchars($d[$weekday][$slot - $decale_slot * $nb_case]["who"])."\"  data-width=\"675\" onclick=\"request($id,$wday,$wmonth,$wyear,'$currentPage',readData);\" data-rel=\"popup_name\" class=\"poplight\">" ;
 								}
 								else
-									echo "<a class=\"lienCellule\" title=\"".htmlspecialchars($d[$weekday][$slot-$decale_slot*$nb_case]["who"])."\"  href=\"view_entry.php?id=" . $d[$weekday][$slot - $decale_slot * $nb_case]["id"]."&amp;day=$wday&amp;month=$wmonth&amp;year=$wyear&amp;page=week\">";
+									echo "<a class=\"lienCellule\" title=\"".htmlspecialchars($d[$weekday][$slot - $decale_slot * $nb_case]["who"])."\"  href=\"view_entry.php?id=" . $d[$weekday][$slot - $decale_slot * $nb_case]["id"]."&amp;day=$wday&amp;month=$wmonth&amp;year=$wyear&amp;page=week\">";
 							}
 							echo $d[$weekday][$slot - $decale_slot * $nb_case]["data"]."";
 							$Son_GenreRepeat = grr_sql_query1("SELECT type_name FROM ".TABLE_PREFIX."_type_area ,".TABLE_PREFIX."_entry  WHERE  ".TABLE_PREFIX."_entry.id= ". $d[$weekday][$slot - $decale_slot * $nb_case]['id']." AND ".TABLE_PREFIX."_entry.type= ".TABLE_PREFIX."_type_area.type_letter");
